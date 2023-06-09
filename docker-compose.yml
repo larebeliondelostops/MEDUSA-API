@@ -1,0 +1,70 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: ignicion
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: medusa
+    container_name: medusa-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    ports:
+      - 6001:6001
+    volumes:
+      - ./:/var/www
+    networks:
+      - medusa
+
+  nginx:
+    image: nginx:alpine
+    container_name: medusa-nginx
+    restart: unless-stopped
+    ports:
+      - 81:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - medusa
+
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    restart: always
+    shm_size: 1gb
+    ports:
+      - 9001:5432
+    environment:
+      POSTGRES_USER: ignicion
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: medusa
+    volumes:
+      - ./postgres/pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+      - 9002:80
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ignicion
+      POSTGRES_PASS: root
+      PGADMIN_DEFAULT_EMAIL: ignicion@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - postgres
+    networks:
+      - medusa
+
+volumes:
+  postgres_data:
+
+networks:
+  medusa:
+    driver: bridge

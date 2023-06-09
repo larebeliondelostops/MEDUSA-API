@@ -43,6 +43,8 @@ services:
       POSTGRES_DB: medusa
     networks:
       - medusa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -57,6 +59,8 @@ services:
       - postgres
     networks:
       - medusa
+    volumes:
+    - pgadmin_data:/var/lib/pgadmin
 
 volumes:
   postgres_data:

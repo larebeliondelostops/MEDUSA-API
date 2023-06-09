@@ -31,39 +31,38 @@ services:
       - medusa
 
   postgres:
-    container_name: postgres
-    image: postgres:14
-    restart: always
-    shm_size: 1gb
+    image: postgres:latest
+    container_name: postgres_container
     ports:
-      - 9001:5432
-    environment:
-      POSTGRES_USER: ignicion
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: medusa
+      - "5432:5432"
     volumes:
-      - ./postgres/pgdata:/var/lib/postgresql/data
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    restart: always
-    ports:
-      - 9002:80
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
+      POSTGRES_PASSWORD: root
       POSTGRES_USER: ignicion
-      POSTGRES_PASS: root
-      PGADMIN_DEFAULT_EMAIL: ignicion@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    depends_on:
-      - postgres
+      POSTGRES_DB: medusa
     networks:
       - medusa
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: "pgadmin_container"
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ignicion@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: ignicion
+      POSTGRES_DB: medusa
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
+  pgadmin_data:
 
 networks:
   medusa:

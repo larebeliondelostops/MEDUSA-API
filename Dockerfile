@@ -17,7 +17,12 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libmagickwand-dev --no-install-recommends
 
-
+# Instalar nodejs para utilizar npm.
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+  
 #test postgres
 RUN apt-get update && \
     apt-get install -y libpq-dev && \
@@ -40,6 +45,9 @@ RUN docker-php-ext-enable imagick
 #opcache
 RUN docker-php-ext-install opcache
 #COPY docker-compose/php/opcache.ini /usr/local/etc/php/conf.d/
+
+#Eliminar el postgres.ini para no tener problemas al usar el pdo_pgsql
+RUN rm /usr/local/etc/php/conf.d/postgres.ini
 
 
 # Get latest Composer

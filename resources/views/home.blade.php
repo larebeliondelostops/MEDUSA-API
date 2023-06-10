@@ -10,7 +10,12 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">Dashboard Content</h3>
+                            <h3 class="text-center">Google Maps</h3>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <x-maps-google :markers="[['lat' => 4.1340, 'long' => -73.6257]]" :zoomLevel="14" :centerPoint="['lat' => 4.1340, 'long' => -73.6257]"></x-maps-google> 
                         </div>
                     </div>
                 </div>

@@ -15,12 +15,30 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <x-maps-google :markers="[['lat' => 4.1340, 'long' => -73.6257]]" :zoomLevel="14" :centerPoint="['lat' => 4.1340, 'long' => -73.6257]"></x-maps-google> 
+                            <!-- aqui va el mapa -->
+                            <div id="map" style="height: 500px; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Define la función de inicialización del mapa -->
+    <script>
+        let map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 4.1340, lng: -73.6257 },
+                zoom: 14,
+            });
+        }
+    </script>
+
+    @push('scripts')
+        <!-- Carga la API de Google Maps con tu clave -->
+        <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&callback=initMap">
+        </script>
+    @endpush
 @endsection
 

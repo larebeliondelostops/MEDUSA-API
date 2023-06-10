@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- aqui va el mapa -->
-                            <div id="map" style="height: 500px; width: 100%;"></div>
+                            <div id="map" style="height: 800px; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -32,6 +32,7 @@
                 center: { lat: 4.1340, lng: -73.6257 },
                 zoom: 14,
             });
+            map.data.loadGeoJson('js/Cabeceras.json');
         }
     </script>
 

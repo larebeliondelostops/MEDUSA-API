@@ -27,12 +27,26 @@
     <!-- Define la función de inicialización del mapa -->
     <script>
         let map;
+        // Transformar el GeoJSON a un objeto JavaScript
+        let geoJson = JSON.parse(@json($geoJsonGeometry));
+        
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 4.1340, lng: -73.6257 },
                 zoom: 14,
             });
             map.data.loadGeoJson('js/Cabeceras.json');
+            // Procesa el polígono
+            if (geoJson.type === 'Polygon') {
+                // Crea un nuevo polígono de Google Maps
+                let polygon = new google.maps.Polygon({
+                    paths: geoJson.coordinates[0].map(function(coord) {
+                        // Recuerda que Google Maps usa la estructura {lat: Number, lng: Number}, y el orden de las coordenadas es latitud, luego longitud
+                        return {lat: coord[1], lng: coord[0]};
+                    }),
+                    map: map,
+                });
+            }
         }
     </script>
 

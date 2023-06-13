@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Shapefile\ShapefileReader;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $shapefile = new ShapefileReader(storage_path() . '/app/public/shp/MGN_ANM_DPTOS.shp');
+        $Geometry = $shapefile->fetchRecord();
+        $geoJsonGeometry = $Geometry->getGeoJSON();
+
+        return view('home', ['geoJsonGeometry' => $geoJsonGeometry]);
     }
 }

@@ -7,13 +7,16 @@
     "require": {
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0.5",
+        "gasparesganga/php-shapefile": "^3.4",
         "guzzlehttp/guzzle": "^7.2",
         "infyomlabs/laravel-ui-stisla": "^4.0",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "larswiegers/laravel-maps": "^0.15.0",
-        "spatie/laravel-permission": "^5.10"
+        "mjaschen/phpgeo": "^4.2",
+        "spatie/laravel-permission": "^5.10",
+        "teamzac/laravel-shapefiles": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

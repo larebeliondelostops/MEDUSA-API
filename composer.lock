@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9b0edcdb217ca3ad921d985633d0fb4",
+    "content-hash": "b71820604bb5a6e8913ac8da39a6fe76",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -687,6 +687,58 @@
                 "source": "https://github.com/gajus/dindent/tree/master"
             },
             "time": "2014-10-08T10:03:04+00:00"
+        },
+        {
+            "name": "gasparesganga/php-shapefile",
+            "version": "v3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gasparesganga/php-shapefile.git",
+                "reference": "3c7e4cb80edb40ff184e3971458577a04845f8da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gasparesganga/php-shapefile/zipball/3c7e4cb80edb40ff184e3971458577a04845f8da",
+                "reference": "3c7e4cb80edb40ff184e3971458577a04845f8da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Shapefile\\": "src/Shapefile/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gaspare Sganga",
+                    "email": "contact@gasparesganga.com",
+                    "homepage": "https://gasparesganga.com/labs/php-shapefile/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP library to read and write ESRI Shapefiles, compatible with WKT and GeoJSON",
+            "homepage": "https://gasparesganga.com/labs/php-shapefile/",
+            "keywords": [
+                "ESRI",
+                "Shapefile",
+                "dbf",
+                "geojson",
+                "shape",
+                "shp",
+                "wkt"
+            ],
+            "support": {
+                "issues": "https://github.com/gasparesganga/php-shapefile/issues",
+                "source": "https://github.com/gasparesganga/php-shapefile/tree/v3.4.0"
+            },
+            "time": "2021-01-23T08:10:45+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2176,6 +2228,118 @@
             "time": "2022-04-17T13:12:02+00:00"
         },
         {
+            "name": "mjaschen/phpgeo",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mjaschen/phpgeo.git",
+                "reference": "b2e593cf1e9aceea36510158ddb80c7395a80d5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/b2e593cf1e9aceea36510158ddb80c7395a80d5a",
+                "reference": "b2e593cf1e9aceea36510158ddb80c7395a80d5a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.6",
+                "vimeo/psalm": "^4.13"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Location\\": "src/"
+                }
+            },
+            "scripts": {
+                "ci:composer-validate": [
+                    "composer validate --no-check-all --no-check-lock --strict"
+                ],
+                "ci:lint": [
+                    "find src tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l"
+                ],
+                "ci:psalm": [
+                    "./vendor/bin/psalm"
+                ],
+                "ci:sniff": [
+                    "./vendor/bin/phpcs src tests"
+                ],
+                "ci:tests": [
+                    "./vendor/bin/phpunit tests/"
+                ],
+                "ci:static": [
+                    "@ci:composer-validate",
+                    "@ci:lint",
+                    "@ci:psalm",
+                    "@ci:sniff"
+                ],
+                "ci:dynamic": [
+                    "@ci:tests"
+                ],
+                "ci": [
+                    "@ci:static",
+                    "@ci:dynamic"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Jaschen",
+                    "email": "mjaschen@gmail.com",
+                    "homepage": "https://www.marcusjaschen.de/"
+                }
+            ],
+            "description": "Simple Yet Powerful Geo Library",
+            "homepage": "https://phpgeo.marcusjaschen.de/",
+            "keywords": [
+                "area",
+                "bearing",
+                "bounds",
+                "calculation",
+                "coordinate",
+                "distance",
+                "earth",
+                "ellipsoid",
+                "geo",
+                "geofence",
+                "gis",
+                "gps",
+                "haversine",
+                "length",
+                "perpendicular",
+                "point",
+                "polygon",
+                "polyline",
+                "projection",
+                "simplify",
+                "track",
+                "vincenty"
+            ],
+            "support": {
+                "issues": "https://github.com/mjaschen/phpgeo/issues",
+                "docs": "https://phpgeo.marcusjaschen.de/Installation.html",
+                "email": "mjaschen@gmail.com",
+                "source": "https://github.com/mjaschen/phpgeo/tree/4.2.0"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/mjaschen"
+                },
+                {
+                    "type": "custom",
+                    "url": "https://www.paypal.com/paypalme/mjaschen"
+                }
+            ],
+            "time": "2022-07-25T08:36:36+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.9.1",
             "source": {
@@ -2744,6 +2908,70 @@
                 }
             ],
             "time": "2023-02-25T19:38:58+00:00"
+        },
+        {
+            "name": "proj4php/proj4php",
+            "version": "2.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/proj4php/proj4php.git",
+                "reference": "17f2a5eea4f587f46ad7d0c62a4855d6b734ac69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/proj4php/proj4php/zipball/17f2a5eea4f587f46ad7d0c62a4855d6b734ac69",
+                "reference": "17f2a5eea4f587f46ad7d0c62a4855d6b734ac69",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "proj4php\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "julien2512",
+                    "email": "moquet.julien@gmail.com",
+                    "homepage": "https://github.com/julien2512",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jason Judge",
+                    "email": "jason.judge@academe.co.uk",
+                    "homepage": "http://academe.co.uk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nick Blackwell",
+                    "email": "nickblackwell82@gmail.com",
+                    "homepage": "https://people.ok.ubc.ca/nblackwe",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP-Class for geographic coordinates transformation using proj4 definitions, thanks to a translation from Proj4JS",
+            "homepage": "https://github.com/proj4php/proj4php",
+            "keywords": [
+                "coordinates",
+                "geographic",
+                "proj4",
+                "proj4js"
+            ],
+            "support": {
+                "issues": "https://github.com/proj4php/proj4php/issues",
+                "source": "https://github.com/proj4php/proj4php/tree/2.0.13"
+            },
+            "time": "2023-05-10T04:07:19+00:00"
         },
         {
             "name": "psr/container",
@@ -5736,6 +5964,59 @@
             "time": "2023-05-25T13:09:35+00:00"
         },
         {
+            "name": "teamzac/laravel-shapefiles",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teamzac/laravel-shapefiles.git",
+                "reference": "415ec0f6dac1010f6044138e3a51a9823a686c35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teamzac/laravel-shapefiles/zipball/415ec0f6dac1010f6044138e3a51a9823a686c35",
+                "reference": "415ec0f6dac1010f6044138e3a51a9823a686c35",
+                "shasum": ""
+            },
+            "require": {
+                "gasparesganga/php-shapefile": "^3.4",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "php": "^7.1|^8.0",
+                "proj4php/proj4php": "^2.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TeamZac\\LaravelShapefiles\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chad Janicek",
+                    "email": "chad@zactax.com"
+                }
+            ],
+            "description": "A wrapper for gasparesganga/php-shapefile with a Laravel-ish collections API",
+            "homepage": "https://github.com/teamzac/laravel-shapefiles",
+            "keywords": [
+                "Shapefile",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/teamzac/laravel-shapefiles/issues",
+                "source": "https://github.com/teamzac/laravel-shapefiles/tree/master"
+            },
+            "time": "2023-02-20T21:00:45+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.6",
             "source": {
@@ -8480,7 +8761,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "teamzac/laravel-shapefiles": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

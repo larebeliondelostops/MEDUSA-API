@@ -124,19 +124,16 @@
             } else {
                 dataInstance.loadGeoJson(url);
 
-                // Agrega un listener para el evento 'click' a dataInstance.
-                dataInstance.addListener('click', function(event) {
+                    // Agrega un listener para el evento 'click' a dataInstance.
+                    dataInstance.addListener('click', function(event) {
 
-                    const properties = event.feature.getProperty('properties');
+                    const nombre = event.feature.getProperty('Nombre');
+                    const direccion = event.feature.getProperty('Direccion');
 
-                    // Verificar si las propiedades existen antes de acceder a ellas
-                    const nombre = properties && properties.Nombre ? properties.Nombre : '';
-                    const direccion = properties && properties.Direccion ? properties.Direccion : '';
-                
-                    const contentString =     '<div id="content">' +
+                    const contentString = '<div id="content">' +
                     '<div id="siteNotice">' +
-                    '<p class="card-title">' + "nombre: "+ nombre + '</p>' +
-                    '<p class="card-text">' + "direccion: "+ direccion + '</p>' +
+                    '<p class="card-title">' + "Nombre: "+ nombre + '</p>' +
+                    '<p class="card-text">' + "Direccion: "+ direccion + '</p>' +
                     "</div>" +
                     "</div>";
 
@@ -150,6 +147,7 @@
                         map,
                         shouldFocus: false,
                     });
+                    
                 });
                 
                 dataInstance.setMap(map);

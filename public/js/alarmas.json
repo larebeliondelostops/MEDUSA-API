@@ -1,0 +1,896 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.641353, 4.1464485]
+      },
+      "properties": {
+        "Nombre": "Barzal Alto",
+        "Direccion": "Calle 37 Carrera 40"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.639435, 4.149519]
+      },
+      "properties": {
+        "Nombre": "Barzal Bajo",
+        "Direccion": "Calle 37 Nº 34-42"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.632661, 4.13666]
+      },
+      "properties": {
+        "Nombre": "San Benito",
+        "Direccion": "Calle 23 Nº 36-40"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.621957, 4.132329]
+      },
+      "properties": {
+        "Nombre": "Bochica II",
+        "Direccion": "Calle 11a Nº19c-05"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6125492, 4.1306919]
+      },
+      "properties": {
+        "Nombre": "Estero",
+        "Direccion": "Calle 7a Nº 10B-35"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.961237, 4.13399]
+      },
+      "properties": {
+        "Nombre": "Bello Horizonte",
+        "Direccion": "Calle 15a Nº 14B-22"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.628243, 4.119868]
+      },
+      "properties": {
+        "Nombre": "Carulu",
+        "Direccion": "Calle 3D Nº 29a-03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.622254, 4.133272]
+      },
+      "properties": {
+        "Nombre": "Cantarrana II",
+        "Direccion": "Carrera 19 Nº 12-39"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.62332, 4.13829]
+      },
+      "properties": {
+        "Nombre": "Antonio Pinilla",
+        "Direccion": "Calle 22 Nº 18-09"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.627621, 4.15318]
+      },
+      "properties": {
+        "Nombre": "Industrial",
+        "Direccion": "Carrera 22 Nº 37b-86"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.649732, 4.106553]
+      },
+      "properties": {
+        "Nombre": "Maranatha",
+        "Direccion": "Calle 18b Nº 43a-04"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.617402, 4.148217]
+      },
+      "properties": {
+        "Nombre": "Santa Helena II",
+        "Direccion": "Carrera 17a Nº 35b-10"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.62112, 4.12976]
+      },
+      "properties": {
+        "Nombre": "La Primavera",
+        "Direccion": "Carrera 20c Nº 8-41"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.622716, 4.152531]
+      },
+      "properties": {
+        "Nombre": "Jordan",
+        "Direccion": "Carrera 20c Nº 39a-08"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.628235, 4.144355]
+      },
+      "properties": {
+        "Nombre": "Porvenir",
+        "Direccion": "Calle 26B Nº 25-52"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.652394, 4.161848]
+      },
+      "properties": {
+        "Nombre": "Santa Josefa",
+        "Direccion": "Calle 49a Nº 45-79"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.61509, 4.126027]
+      },
+      "properties": {
+        "Nombre": "Hacaritama",
+        "Direccion": "Carrera 18 Nº 3B-03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.631766, 4.15055]
+      },
+      "properties": {
+        "Nombre": "Villa Julia",
+        "Direccion": "Calle 37 Nº 25-52"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.62842, 4.15088]
+      },
+      "properties": {
+        "Nombre": "Santa Ines",
+        "Direccion": "Carrera 23 Nº 37-77(Fábrica de Colchones)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.624423, 4.119644]
+      },
+      "properties": {
+        "Nombre": "Villas del Palmar",
+        "Direccion": "Calle 3a Nº28b-41"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.617925, 4.132485]
+      },
+      "properties": {
+        "Nombre": "Estero Alto",
+        "Direccion": "Calle 11 Nº 15c-17"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.612379, 4.132146]
+      },
+      "properties": {
+        "Nombre": "Estero Bajo",
+        "Direccion": "Calle 10 Nº 12-58"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.60878, 4.137651]
+      },
+      "properties": {
+        "Nombre": "Camelias",
+        "Direccion": "Carrera 8 Nº 20-23"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.613767, 4.151437]
+      },
+      "properties": {
+        "Nombre": "Hierba Buena",
+        "Direccion": "Calle 40b Nº 14-44"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.616205, 4.139302]
+      },
+      "properties": {
+        "Nombre": "Los Maracos",
+        "Direccion": "Calle 24 Este Nº 15-24"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.601206, 4.15157]
+      },
+      "properties": {
+        "Nombre": "Vencedores",
+        "Direccion": "Calle 47 carrera 18 Mz A Casa 55"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.675282, 4.137311]
+      },
+      "properties": {
+        "Nombre": "Vereda del Carmen",
+        "Direccion": "Vereda el Carmen"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.626257, 4.153104]
+      },
+      "properties": {
+        "Nombre": "Industrial",
+        "Direccion": "Carrera 21a Nº 37b-08"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.638332, 4.147692]
+      },
+      "properties": {
+        "Nombre": "Barzal",
+        "Direccion": "Calle 35 Nº 35-49"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.633203, 4.123198]
+      },
+      "properties": {
+        "Nombre": "Villa Bolivar",
+        "Direccion": "Calle 7 Nº 37-33"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.641154, 4.160009]
+      },
+      "properties": {
+        "Nombre": "El Triunfo",
+        "Direccion": "Calle 46 Nº 33-46"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.653123, 4.161131]
+      },
+      "properties": {
+        "Nombre": "La Campina",
+        "Direccion": "Calle 49 Nº 46-66 Barrio La Campiña"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.63301, 4.14497]
+      },
+      "properties": {
+        "Nombre": "Porvenir",
+        "Direccion": "Calle 31 Nº 29-100 Alkosto  Distri Camperos"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.637917, 4.148302]
+      },
+      "properties": {
+        "Nombre": "Barzal",
+        "Direccion": "Barrio Barzal"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.605867, 4.147722]
+      },
+      "properties": {
+        "Nombre": "Manatial",
+        "Direccion": "Calle 39 N°6C-53B "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.608205, 4.145019]
+      },
+      "properties": {
+        "Nombre": "SEIS DE ABRIL",
+        "Direccion": "Carrera 8° N° 32-07"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.61095, 4.14228]
+      },
+      "properties": {
+        "Nombre": "EL RECREO III",
+        "Direccion": "Calle 29A N° 10A-07 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.615634, 4.133913]
+      },
+      "properties": {
+        "Nombre": "URBANIZACION CASTILLA",
+        "Direccion": "Carrera 13 Con 13A "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65071, 4.09859]
+      },
+      "properties": {
+        "Nombre": "GUATAPE I",
+        "Direccion": "Diagonal 30 Sur N° 40-55"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.61095, 4.14229]
+      },
+      "properties": {
+        "Nombre": "ALTOS DE GUATAPE",
+        "Direccion": "Calle 26 Sur N° 38C-03 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65305, 4.10382]
+      },
+      "properties": {
+        "Nombre": "VILLA DEL RIO I",
+        "Direccion": "Calle 24 A Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65236, 4.10405]
+      },
+      "properties": {
+        "Nombre": "VILLA DEL RIO II",
+        "Direccion": "Calle 23b Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.597224, 4.1154]
+      },
+      "properties": {
+        "Nombre": "GAVIOTAS",
+        "Direccion": "Carrera 11 Este N° 23-04 Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.610783, 4.145617]
+      },
+      "properties": {
+        "Nombre": "El Recreo",
+        "Direccion": "Calle 31g N° 11b-27 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.622097, 4.133067]
+      },
+      "properties": {
+        "Nombre": "CANTARRANA II",
+        "Direccion": "Carrera 19a N° 12-08"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6078793, 4.1392829]
+      },
+      "properties": {
+        "Nombre": "MENEGUA",
+        "Direccion": "Calle 25 N°6-21"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.612083, 4.136259]
+      },
+      "properties": {
+        "Nombre": "GUADALAJARA",
+        "Direccion": "calle 17C N° 11-70"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.62634, 4.12033]
+      },
+      "properties": {
+        "Nombre": "CARULU",
+        "Direccion": "Calle 3D N° 29a-03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.615647, 4.152711]
+      },
+      "properties": {
+        "Nombre": "MADRIGAL",
+        "Direccion": "Carrera 17 N° 41-02"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.635606, 4.12944]
+      },
+      "properties": {
+        "Nombre": "LA ESPERANZA SEPTIMA ETAPA",
+        "Direccion": "Calle 11a N° 31B-03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.61404, 4.1374]
+      },
+      "properties": {
+        "Nombre": "VILLA ORTIZ ETAPA I",
+        "Direccion": "calle 19 N° 12C-32"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6226156, 4.103963]
+      },
+      "properties": {
+        "Nombre": "JUAN PABLO II",
+        "Direccion": "Carrera 31 N° 16-03"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65408, 4.10077]
+      },
+      "properties": {
+        "Nombre": "GUATAPE II",
+        "Direccion": "Calle 28a Sur N° 35-46"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6334, 4.12996]
+      },
+      "properties": {
+        "Nombre": "BRISAS DE LA ESPERANZA",
+        "Direccion": "Calle 12B N° 39-111"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.638214, 4.149033]
+      },
+      "properties": {
+        "Nombre": "Barzal Bajo",
+        "Direccion": "Calle 36 N° 33-28 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.622319, 4.123082]
+      },
+      "properties": {
+        "Nombre": "la Alborada",
+        "Direccion": "Calle 4D N° 24-135 Esquina"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.609594, 4.133167]
+      },
+      "properties": {
+        "Nombre": "Bello Horizonte",
+        "Direccion": "Calle 15a N° 8-20"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.596344, 4.115914]
+      },
+      "properties": {
+        "Nombre": "Gaviotas",
+        "Direccion": " Carrera 12A Este N° 22A - 06 Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65336, 4.10501]
+      },
+      "properties": {
+        "Nombre": "Catumare",
+        "Direccion": "Carrera 45a N° 21a-33 Sur "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.627919, 4.125336]
+      },
+      "properties": {
+        "Nombre": "los Comuneros",
+        "Direccion": "Calle 10 N° 29-32 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.583705, 4.142531]
+      },
+      "properties": {
+        "Nombre": "el Delirio",
+        "Direccion": "Calle 40a N° 19-25 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.612317, 4.141625]
+      },
+      "properties": {
+        "Nombre": "Popular",
+        "Direccion": "Carrera 12 N° 26-40"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6246, 4.124238]
+      },
+      "properties": {
+        "Nombre": "la Serrania",
+        "Direccion": "Carrera 26 N° 5C-15"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.6313, 4.12113]
+      },
+      "properties": {
+        "Nombre": "La Vega",
+        "Direccion": "Calle 5 N° 30-34"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.587982, 4.138907]
+      },
+      "properties": {
+        "Nombre": "Prados de Siberia",
+        "Direccion": "Calle 38 N° 16-16 Este"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.603832, 4.116755]
+      },
+      "properties": {
+        "Nombre": "Valles de Aragon",
+        "Direccion": "Manzana G Casa 14"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.621106, 4.1346]
+      },
+      "properties": {
+        "Nombre": "Cantarrana 4",
+        "Direccion": "Calle 14 N° 18E 12"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.65303, 4.125]
+      },
+      "properties": {
+        "Nombre": "las Americas",
+        "Direccion": "Carrera 60 N° 6B-29 Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.631045, 4.121891]
+      },
+      "properties": {
+        "Nombre": "La Vega",
+        "Direccion": "Calle 5B N° 33b-52"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.584876, 4.11613]
+      },
+      "properties": {
+        "Nombre": "Kirpas",
+        "Direccion": "Carrera 19a N° 22a-25 Sur"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.615044, 4.14963]
+      },
+      "properties": {
+        "Nombre": "Madrigal",
+        "Direccion": "Calle 41 N° 15-72"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.563605, 4.119928]
+      },
+      "properties": {
+        "Nombre": "San Antonio Sector I",
+        "Direccion": "Calle 13a N° 40a-50"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.646719, 4.104293]
+      },
+      "properties": {
+        "Nombre": "Nuevo Horizonte",
+        "Direccion": "Calle 20a Sur N° 38-46 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.629046, 4.125601]
+      },
+      "properties": {
+        "Nombre": "Villa Claudia",
+        "Direccion": "Calle 10a 31-57 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.634204, 4.125254]
+      },
+      "properties": {
+        "Nombre": "La Esperanza 5 Etapa",
+        "Direccion": "Calle 8 N° 41-35 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.615325, 4.148134]
+      },
+      "properties": {
+        "Nombre": "la Bastilla",
+        "Direccion": "Calle 36a N° 14b-64 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.608037, 4.115857]
+      },
+      "properties": {
+        "Nombre": "Dona Luz",
+        "Direccion": "Carrera 21 N° 9 -93 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.634341, 4.157435]
+      },
+      "properties": {
+        "Nombre": "El Emporio",
+        "Direccion": "Calle 40A N° 25 -03 "
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.649679, 4.160872]
+      },
+      "properties": {
+        "Nombre": "Panorama",
+        "Direccion": "Calle 47a N° 41-37"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.635489, 4.130769]
+      },
+      "properties": {
+        "Nombre": "la Esperanza I Etapa",
+        "Direccion": "Calle 12B N° 46-43"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.615044, 4.14963]
+      },
+      "properties": {
+        "Nombre": "Madrigal",
+        "Direccion": "Calle 41a N° 16-51"
+      }
+    }
+  ]
+}

@@ -1,0 +1,622 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.638124, 4.153038]
+        },
+        "properties": {
+          "Nombre": "Col. Nstr Sra de la Sabiduria",
+          "Direccion": "Cl 40 N° 31-42"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.604002, 4.132268]
+        },
+        "properties": {
+          "Nombre": "Terminal de Transportes",
+          "Direccion": "Cr 1 N° 15-05"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.628154, 4.122657]
+        },
+        "properties": {
+          "Nombre": "Col. Gilberto Alzate Avendano",
+          "Direccion": "Cr 30a Cl 5a"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.625371, 4.144447]
+        },
+        "properties": {
+          "Nombre": "Carcel",
+          "Direccion": "Transversal 26c N° 22a-14"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.62917, 4.151709]
+        },
+        "properties": {
+          "Nombre": "Col. Santa Ines",
+          "Direccion": "Cl 37a N° 24-04"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.652665, 4.108823]
+        },
+        "properties": {
+          "Nombre": "Colegio Catumare",
+          "Direccion": "Cr 46 Cl 18 Sur"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.642395, 4.145918]
+        },
+        "properties": {
+          "Nombre": "Universidad de los Llanos",
+          "Direccion": "Cl 37 N° 41-02"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.552276, 4.132658]
+        },
+        "properties": {
+          "Nombre": "Col. Isaac Tacha",
+          "Direccion": "Km 8 Vía Catama"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.634207, 4.131653]
+        },
+        "properties": {
+          "Nombre": "Col. Departamental de la Esperanza",
+          "Direccion": "Cr 45 N° 13b-25"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.667807, 4.083761]
+        },
+        "properties": {
+          "Nombre": "Col. Luis Carlos Galan",
+          "Direccion": "Cr 40 N° 51-10"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.617888, 4.1395]
+        },
+        "properties": {
+          "Nombre": "Villa Olimpica",
+          "Direccion": "Cr 19"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.647829, 4.160147]
+        },
+        "properties": {
+          "Nombre": "Col. Antonio Narino",
+          "Direccion": "Cl 45 N° 39-40"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.614353, 4.140174]
+        },
+        "properties": {
+          "Nombre": "Col. Eduardo Carranza",
+          "Direccion": "Cl 25 N° 12a-17"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.726229, 4.201293]
+        },
+        "properties": {
+          "Nombre": "Pipiral",
+          "Direccion": "Pipiral"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.613088, 4.15123]
+        },
+        "properties": {
+          "Nombre": "Col. Narciso Matus Torres",
+          "Direccion": "Cr 14 N° 40b-02"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.632755, 4.135918]
+        },
+        "properties": {
+          "Nombre": "Col. Antony Phiipps",
+          "Direccion": "Cr 37 Cl 22a"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.649341, 4.123555]
+        },
+        "properties": {
+          "Nombre": "Colegio Juan B. Caballero M.",
+          "Direccion": "Km 1 Nueva Via Bogota"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.611703, 4.129961]
+        },
+        "properties": {
+          "Nombre": "Col. Alberto Lleras Camargo",
+          "Direccion": "Cl 5a N° 10a-21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.626665, 4.126569]
+        },
+        "properties": {
+          "Nombre": "Col. San Francisco De Asis",
+          "Direccion": "Cl 11 N°25-15"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.620789, 4.147486]
+        },
+        "properties": {
+          "Nombre": "Colegio Cofrem",
+          "Direccion": "Av.circunvalar19-55 Via Catama"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.597561, 4.115589]
+        },
+        "properties": {
+          "Nombre": "Escuela Las Gaviotas",
+          "Direccion": "Cl 23 Sur N°10- 76"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.635167, 4.040722]
+        },
+        "properties": {
+          "Nombre": "Rincon De Pompeya",
+          "Direccion": "Rincon De Pompeya"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.635694, 4.149307]
+        },
+        "properties": {
+          "Nombre": "Escuela Francisco Miranda",
+          "Direccion": "Cl 35 N° 29-09"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.541575, 4.122942]
+        },
+        "properties": {
+          "Nombre": "Megacolegio La Reliquia",
+          "Direccion": "Br. La Reliquia"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.636221, 4.127089]
+        },
+        "properties": {
+          "Nombre": "Col. German Arciniegas",
+          "Direccion": "Cr 47b N° 7b-20"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.627768, 4.136457]
+        },
+        "properties": {
+          "Nombre": "Col De Bachillerato Femenino",
+          "Direccion": "Cr 33 N° 18 A-43"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.650353, 4.101207]
+        },
+        "properties": {
+          "Nombre": "Aca.mil.jose Antonio Paez",
+          "Direccion": "Calle 24a No. 40b - 27"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.427489, 4.062244]
+        },
+        "properties": {
+          "Nombre": "Alto De Pompeya",
+          "Direccion": "Alto De Pompeya"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.640991, 4.150678]
+        },
+        "properties": {
+          "Nombre": "Colegio La Salle",
+          "Direccion": "Cl 39 N° 34-56"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.585991, 4.138281]
+        },
+        "properties": {
+          "Nombre": "Col. Jorge Eliecer Gaitan",
+          "Direccion": "Cl 36a N° 17-0"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.621418, 4.12182]
+        },
+        "properties": {
+          "Nombre": "I.e. La Alborada",
+          "Direccion": "Cr 25 Cl 48"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.673211, 4.076993]
+        },
+        "properties": {
+          "Nombre": "Megacol.porfia-pinares Del Or",
+          "Direccion": "Cl 67 Sur Cr 47"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.6425, 4.1349]
+        },
+        "properties": {
+          "Nombre": "Colegio Don Bosco",
+          "Direccion": "Cl 14 N° 42-70"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.609218, 4.137172]
+        },
+        "properties": {
+          "Nombre": "Escuela Las Camelias",
+          "Direccion": "Cl 19 N° 8-62"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.607504, 4.14222]
+        },
+        "properties": {
+          "Nombre": "Unidad Basica 6 De Abril",
+          "Direccion": "Cl 32 Cr 6"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.626523, 4.142068]
+        },
+        "properties": {
+          "Nombre": "Col. Abrahan Lincoln",
+          "Direccion": "Cl 25 N° 23-150"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.639866, 4.143803]
+        },
+        "properties": {
+          "Nombre": "I.e. Francisco Arango",
+          "Direccion": "Cl 33 B N° 39-55"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.612114, 4.139661]
+        },
+        "properties": {
+          "Nombre": "Col. Manuela Beltran",
+          "Direccion": "Cl 25 N° 6-115"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.634593, 4.128951]
+        },
+        "properties": {
+          "Nombre": "Esc. Jhon F. Kennedy",
+          "Direccion": "Cr 46 N° 11- 28"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.68301, 4.166323]
+        },
+        "properties": {
+          "Nombre": "Buenavista",
+          "Direccion": "Buenavista"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.6516, 4.158698]
+        },
+        "properties": {
+          "Nombre": "Inst. Educativo 12 De Octubr",
+          "Direccion": "Cl 46 N°50"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.616314, 4.143826]
+        },
+        "properties": {
+          "Nombre": "Escuela La Ceiba",
+          "Direccion": "Cl 30 Cr 15"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.563194, 4.123189]
+        },
+        "properties": {
+          "Nombre": "Esc. Nva Arnulfo Briceno",
+          "Direccion": "Ciudadela San Antonio"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.633715, 4.156926]
+        },
+        "properties": {
+          "Nombre": "Col.General Santander",
+          "Direccion": "Transversal 25 N° 39d-46"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.656516, 4.149667]
+        },
+        "properties": {
+          "Nombre": "Polideportivo Villa Florez",
+          "Direccion": "La Azotea"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.626019, 4.137142]
+        },
+        "properties": {
+          "Nombre": "Esc. Antonio Ricaurte",
+          "Direccion": "Cr 24c N°26c-09"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.62661, 4.146734]
+        },
+        "properties": {
+          "Nombre": "Hogar Infantil 20 de Julio",
+          "Direccion": "Cl 27 N° 22C-39"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.5833524, 4.1451533]
+        },
+        "properties": {
+          "Nombre": "Esc. San Carlos",
+          "Direccion": "Mz 1 Casa 1"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.627598, 4.131983]
+        },
+        "properties": {
+          "Nombre": "Col.Miguel Angel Martin",
+          "Direccion": "Cr 25 N° 15-60"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.6130435, 4.113525]
+        },
+        "properties": {
+          "Nombre": "Esc. Los Centauros",
+          "Direccion": "Cl 9 Cr 27-28"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.631458, 4.112424]
+        },
+        "properties": {
+          "Nombre": "Multifamiliares Centauros",
+          "Direccion": "Cl 4 Sur N° 35-94"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.559629, 4.090467]
+        },
+        "properties": {
+          "Nombre": "Apiay",
+          "Direccion": "Vereda Apiay"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.637835, 4.158439]
+        },
+        "properties": {
+          "Nombre": "Esc. Policarpa Salavarrieta",
+          "Direccion": "Cl 25 N° 42-22"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.695751, 4.079224]
+        },
+        "properties": {
+          "Nombre": "Bemposta",
+          "Direccion": "Vía Acacias"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.741269, 4.051694]
+        },
+        "properties": {
+          "Nombre": "La Concepción",
+          "Direccion": "La Cuncia"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.697844, 4.186423]
+        },
+        "properties": {
+          "Nombre": "Servita",
+          "Direccion": "Servita"
+        }
+      }
+    ]
+  }
+  

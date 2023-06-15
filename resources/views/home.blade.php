@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+<styles>
+    .info-window {
+    max-width: 200px;
+    }
+</styles>
 @section('content')
     <section class="section">
         <div class="section-header">
@@ -24,11 +28,20 @@
         </div>
 
         <div id="floating-panel">
-            <button id="show-geojson" class="btn btn-primary">
-                <i class="fas fa-eye"></i> Show GeoJSON
+            <button id="toggle-Alarmas" class="btn btn-primary invisible">
+                <i class="fas fa-eye-slash"></i>Alarmas
             </button>
-            <button id="hide-geojson" class="btn btn-primary">
-                <i class="fas fa-eye-slash"></i> Hide GeoJSON
+            <button id="toggle-Cais" class="btn btn-primary invisible">
+                <i class="fas fa-eye-slash"></i>Cais
+            </button>
+            <button id="toggle-Camaras" class="btn btn-primary invisible">
+                <i class="fas fa-eye-slash"></i>Camaras
+            </button>
+            <button id="toggle-PuestosVotacion" class="btn btn-primary invisible">
+                <i class="fas fa-eye-slash"></i>PuestosVotacion
+            </button>
+            <button id="toggle-Salud" class="btn btn-primary invisible">
+                <i class="fas fa-eye-slash"></i>Salud
             </button>
         </div>
     </section>
@@ -36,56 +49,123 @@
     <!-- Define la función de inicialización del mapa -->
     <script>
         let map;
+        let mapStyles;
         let geoJsonFeatures;
         let polygon;
+        let puntos;
+        let mapStates = {
+            alarmas: false,
+            cais: false,
+            camaras: false,
+            puestosVotacion: false,
+            salud: false
+        }
         // Transformar el GeoJSON a un objeto JavaScript
-        let geoJson = JSON.parse(@json($geoJsonGeometry));
-        
+        let geoJson = JSON.parse(@json($geoJsonGeometry))
+
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 4.1340, lng: -73.6257 },
                 zoom: 14,
             });
-            map.data.loadGeoJson('js/Cabeceras.json');
 
-            // Crea un nuevo polígono de Google Maps
-            let polygon = new google.maps.Polygon({
-                paths: geoJson.coordinates[0].map(function(coord) {
-                    // Recuerda que Google Maps usa la estructura {lat: Number, lng: Number}, y el orden de las coordenadas es latitud, luego longitud
-                    return {lat: coord[1], lng: coord[0]};
-                }),
-                map: map,
+            let alarmasData = new google.maps.Data();
+            let caisData = new google.maps.Data();
+            let camarasData = new google.maps.Data();
+            let puestosVotacionData = new google.maps.Data();
+            let saludData = new google.maps.Data();
+
+            const toggleAlarmas = document.getElementById('toggle-Alarmas');
+            const toggleCais = document.getElementById('toggle-Cais');
+            const toggleCamaras = document.getElementById('toggle-Camaras');
+            const togglePuestosVotacion = document.getElementById('toggle-PuestosVotacion');
+            const toggleSalud = document.getElementById('toggle-Salud');
+
+            map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(toggleAlarmas);
+            map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(toggleCais);
+            map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(toggleCamaras);
+            map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(togglePuestosVotacion);
+            map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(toggleSalud);
+
+            map.addListener('tilesloaded', function() {
+                toggleAlarmas.classList.remove('invisible');
+                toggleCais.classList.remove('invisible');
+                toggleCamaras.classList.remove('invisible');
+                togglePuestosVotacion.classList.remove('invisible');
+                toggleSalud.classList.remove('invisible');
             });
 
-            // Crear los elementos de control (botones)
-            const showGeoJsonButton = document.getElementById('show-geojson');
-            const hideGeoJsonButton = document.getElementById('hide-geojson');
-
-            // Crear una nueva div para contener los elementos de control
-            const controlDiv = document.createElement('div');
-            controlDiv.style.margin = '10px';
-            controlDiv.appendChild(showGeoJsonButton);
-            controlDiv.appendChild(hideGeoJsonButton);
-
-            // Añadir la div de control al mapa
-            map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
-
-            // Añadir funcionalidad a los botones
-            showGeoJsonButton.addEventListener('click', () => {
-                polygon.setMap(map);
-                map.data.setMap(map);
+            toggleAlarmas.addEventListener('click', () => {
+                toggleData(alarmasData, 'alarmas', 'js/GeoJson/alarmas.json', toggleAlarmas, '<i class="fas fa-eye-slash"></i>alarmas', '<i class="fas fa-eye"></i>alarmas');
             });
-            hideGeoJsonButton.addEventListener('click', () => {
-                polygon.setMap(null);
-                map.data.setMap(null);
+
+            toggleCais.addEventListener('click', () => {
+                toggleData(caisData, 'cais', 'js/GeoJson/cais.json', toggleCais, '<i class="fas fa-eye-slash"></i>cais', '<i class="fas fa-eye"></i>cais');
             });
+
+            toggleCamaras.addEventListener('click', () => {
+                toggleData(camarasData, 'camaras', 'js/GeoJson/camaras.json', toggleCamaras, '<i class="fas fa-eye-slash"></i>camaras', '<i class="fas fa-eye"></i>camaras');
+            });
+
+            togglePuestosVotacion.addEventListener('click', () => {
+                toggleData(puestosVotacionData, 'puestosVotacion', 'js/GeoJson/puestosVotacion.json', togglePuestosVotacion, '<i class="fas fa-eye-slash"></i>PuestosVotacion', '<i class="fas fa-eye"></i>PuestosVotacion');
+            });
+
+            toggleSalud.addEventListener('click', () => {
+                toggleData(saludData, 'salud', 'js/GeoJson/salud.json', toggleSalud, '<i class="fas fa-eye-slash"></i>Salud', '<i class="fas fa-eye"></i>Salud');
+            });
+            
         }
+
+        function toggleData(dataInstance, key, url, button, showHtml, hideHtml) {
+            if (mapStates[key]) {
+                dataInstance.setMap(null);
+                button.innerHTML = hideHtml;
+            } else {
+                dataInstance.loadGeoJson(url);
+
+                // Agrega un listener para el evento 'click' a dataInstance.
+                dataInstance.addListener('click', function(event) {
+
+                    const properties = event.feature.getProperty('properties');
+
+                    // Verificar si las propiedades existen antes de acceder a ellas
+                    const nombre = properties && properties.Nombre ? properties.Nombre : '';
+                    const direccion = properties && properties.Direccion ? properties.Direccion : '';
+                
+                    const contentString =     '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '<p class="card-title">' + "nombre: "+ nombre + '</p>' +
+                    '<p class="card-text">' + "direccion: "+ direccion + '</p>' +
+                    "</div>" +
+                    "</div>";
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        position: event.latLng, // Posición del marcador
+                    });
+
+                    infowindow.open({
+                        anchor: event.feature,
+                        map,
+                        shouldFocus: false,
+                    });
+                });
+                
+                dataInstance.setMap(map);
+                button.innerHTML = showHtml;
+            }
+            mapStates[key] = !mapStates[key];
+        }
+
+
     </script>
 
     @push('scripts')
-        <!-- Carga la API de Google Maps con tu clave -->
+        <!-- Carga la API de Google Maps -->
         <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&callback=initMap">
         </script>
     @endpush
+    
 @endsection
 

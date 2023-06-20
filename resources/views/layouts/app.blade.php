@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>@yield('title') | {{ config('app.name') }}</title>
@@ -47,7 +48,9 @@
 @include('profile.change_password')
 @include('profile.edit_profile')
 @stack('scripts')
+@stack('map_scripts')
 </body>
+
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -79,4 +82,6 @@
         };
     }(jQuery));
 </script>
+
+
 </html>

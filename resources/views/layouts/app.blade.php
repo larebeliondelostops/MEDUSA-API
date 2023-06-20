@@ -22,8 +22,9 @@
     @yield('page_css')
 
     @yield('css')
+
 </head>
-<body>
+<body class="sidebar-mini" style="background-color: #23233b;">
 
 <div id="app">
     <div class="main-wrapper main-wrapper-1">

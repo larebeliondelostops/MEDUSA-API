@@ -2,9 +2,6 @@
 
 @section('content')
     <section class="section">
-        <div class="section-header">
-            <h3 class="page__heading">Dashboard</h3>
-        </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
@@ -46,7 +43,11 @@
                 <i class="fas fa-eye"></i>Calor
             </button>
         </div>
+
+        
     </section>
+
+
 
     <!-- Define la función de inicialización del mapa -->
     <script>
@@ -201,7 +202,7 @@
                 // Agrega un listener para el evento 'click' a dataInstance.
                 dataInstance.addListener('click', function(event) {
                     const properties = event.feature.h;
-                    let contentString = '<div id="content">';
+                    let contentString = '<div id="content" style="color:#000">';
                     console.log(properties);
                     for (const key in properties) {
                         console.log(key);

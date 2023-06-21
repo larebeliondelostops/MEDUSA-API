@@ -23,6 +23,17 @@
 
     @yield('css')
 
+<style>
+#floating-panel {
+    position: absolute;
+    top: 270px;
+    right: 35px;
+    z-index: 1;
+}
+#map {
+  position: relative;
+}
+</style>
 </head>
 <body class="sidebar-mini" style="background-color: #23233b;">
 

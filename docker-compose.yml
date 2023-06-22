@@ -17,6 +17,7 @@ services:
       - ./:/var/www
     networks:
       - medusa
+    user: root
 
   nginx:
     image: nginx:alpine

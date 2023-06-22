@@ -1,84 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section">
-    <div class="section-body">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="text-center">MEDUSA</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <!-- aqui va el mapa -->
-                        <div id="map" style="height: 800px; width: 100%;"></div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <button id="toggle-dark" class="btn btn-primary">Dark</button>
-                        <button id="toggle-normal" class="btn btn-primary">Normal</button>
-                        <button id="toggle-bonito" class="btn btn-primary">Bonito</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="floating-panel">
-        <div class="divmap">
-            <div class="carta">
-                <button id="toggle-Alarmas" class="button-74" data-tooltip="Alarmas">
-                    <span class="material-icons">upcoming</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-Cais" class="button-74" data-tooltip="Cais">
-                    <span class="material-icons">local_police</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-Camaras" class="button-74" data-tooltip="Camaras">
-                    <span class="material-icons">videocam</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-PuestosVotacion" class="button-74" data-tooltip="Puestos de Votacion">
-                    <span class="material-icons">where_to_vote</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-Salud" class="button-74" data-tooltip="Salud">
-                    <span class="material-icons">local_hospital</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-heatmap" class="button-74" data-tooltip="Calor">
-                    <span class="material-icons">local_fire_department</span>
-                </button>
-            </div>
-            <div class="carta">
-                <button id="toggle-trafic" class="button-74" data-tooltip="Trafico">
-                    <span class="material-icons">traffic</span>
-                </button>
-            </div>
-        </div>
-    </div>
+@include('Modulos.Mapa.body')
 
-
-</section>
-
-
-
-<!-- Define la función de inicialización del mapa -->
 <script>
+
+
     let map;
     let mapStyles;
     let geoJsonFeatures;
     let polygon;
     let puntos;
+    let heatmap;
+    let trafficLayer;
+
+    /* Variables de estado para activar o desactivar las capas del mapa */
+
     let mapStates = {
         alarmas: false,
         cais: false,
@@ -86,6 +24,11 @@
         puestosVotacion: false,
         salud: false
     }
+    let trafficLayerVisible = true;
+    let heatmapVisible = true;
+
+    /* Variables de estado para activar o desactivar los infowindows del mapa */
+
     let openInfoWindows = {
         alarmas: [],
         cais: [],
@@ -93,17 +36,23 @@
         puestosVotacion: [],
         salud: []
     };
+
     // Transformar el GeoJSON a un objeto JavaScript
+
     let geoJson = JSON.parse(@json($geoJsonGeometry))
-    let heatmap;
-    let heatmapVisible = true;
-    let trafficLayer;
-    let trafficLayerVisible = true;
+
+    /* Funcion para cargar el mapa */
 
     function initMap() {
         loadMapStyles('js/mapStylesNormal.json');
+        loadHeadMap();
 
-        fetch('js/GeoJson/locations.json')
+    }
+
+    /* Carga el mapa de calor */
+
+    function loadHeadMap(){
+            fetch('js/GeoJson/locations.json')
             .then(response => response.json())
             .then(json => {
                 var locations = [];
@@ -112,7 +61,7 @@
                     locations.push(new google.maps.LatLng(coords[1], coords[0]));
                 }
 
-                // Add a new heatmap layer
+                // Aplica estilo al mapa
                 heatmap = new google.maps.visualization.HeatmapLayer({
                     data: locations,
                     map: null,
@@ -120,65 +69,85 @@
             });
     }
 
-    function loadMapStyles(stylePath) {
+     /* Funcion para cargar los estilos del mapa */
+
+     function loadMapStyles(stylePath) {
         fetch(stylePath)
             .then(response => response.json())
             .then(styles => {
 
-                // If the map hasn't been initialized yet, create it
-                if (!map) {
-                    map = new google.maps.Map(document.getElementById("map"), {
-                        center: {
-                            lat: 4.1340,
-                            lng: -73.6257
-                        },
-                        zoom: 14
-                    });
-
-                    trafficLayer = new google.maps.TrafficLayer();
-                    let alarmasData = new google.maps.Data();
-                    let caisData = new google.maps.Data();
-                    let camarasData = new google.maps.Data();
-                    let puestosVotacionData = new google.maps.Data();
-                    let saludData = new google.maps.Data();
-
-                    const toggleAlarmas = document.getElementById('toggle-Alarmas');
-                    const toggleCais = document.getElementById('toggle-Cais');
-                    const toggleCamaras = document.getElementById('toggle-Camaras');
-                    const togglePuestosVotacion = document.getElementById('toggle-PuestosVotacion');
-                    const toggleSalud = document.getElementById('toggle-Salud');
-                    const toggleHeatmap = document.getElementById('toggle-heatmap');
-
-                    toggleAlarmas.addEventListener('click', () => {
-                        toggleData(alarmasData, 'alarmas', 'js/GeoJson/alarmas.json', toggleAlarmas, '<span class="material-icons">upcoming</span>', '<span class="material-icons">upcoming</span>');
-                    });
-
-                    toggleCais.addEventListener('click', () => {
-                        toggleData(caisData, 'cais', 'js/GeoJson/cais.json', toggleCais, '<span class="material-icons">local_police</span>', '<span class="material-icons">local_police</span>');
-                    });
-
-                    toggleCamaras.addEventListener('click', () => {
-                        toggleData(camarasData, 'camaras', 'js/GeoJson/camaras.json', toggleCamaras, '<span class="material-icons">videocam</span>', '<span class="material-icons">videocam</span>');
-                    });
-
-                    togglePuestosVotacion.addEventListener('click', () => {
-                        toggleData(puestosVotacionData, 'puestosVotacion', 'js/GeoJson/puestosVotacion.json', togglePuestosVotacion, '<span class="material-icons">where_to_vote</span>', '<span class="material-icons">where_to_vote</span>');
-                    });
-
-                    toggleSalud.addEventListener('click', () => {
-                        toggleData(saludData, 'salud', 'js/GeoJson/salud.json', toggleSalud, '<span class="material-icons">local_hospital</span>', '<span class="material-icons">local_hospital</span>');
-                    });
-
-                }
-
-                // Apply the new styles to the map
-                map.setOptions({
-                    styles: styles
-                });
+                inicializarMap();
 
             });
     }
-    // Event listeners for the style toggle buttons
+
+    /* Funcion para inicializar mapa */
+
+    function inicializarMap(){
+
+        // Si el mapa no ha sido inicializado aun, lo crea
+
+        if (!map) {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: 4.1340,
+                    lng: -73.6257
+                },
+                zoom: 14
+            });
+            
+            loadButtonsMap();
+
+            // Aplica estilo al mapa
+            map.setOptions({
+                styles: styles
+            });
+        }
+    }
+
+    /* Carga la funcionalidad de los botones para el mapa */
+
+    function loadButtonsMap(){
+
+        trafficLayer = new google.maps.TrafficLayer();
+        let alarmasData = new google.maps.Data();
+        let caisData = new google.maps.Data();
+        let camarasData = new google.maps.Data();
+        let puestosVotacionData = new google.maps.Data();
+        let saludData = new google.maps.Data();
+
+        const toggleAlarmas = document.getElementById('toggle-Alarmas');
+        const toggleCais = document.getElementById('toggle-Cais');
+        const toggleCamaras = document.getElementById('toggle-Camaras');
+        const togglePuestosVotacion = document.getElementById('toggle-PuestosVotacion');
+        const toggleSalud = document.getElementById('toggle-Salud');
+        const toggleHeatmap = document.getElementById('toggle-heatmap');
+
+        /* Añade EventListener a cada boton */
+
+        toggleAlarmas.addEventListener('click', () => {
+            toggleData(alarmasData, 'alarmas', 'js/GeoJson/alarmas.json', toggleAlarmas, '<span class="material-icons">upcoming</span>', '<span class="material-icons">upcoming</span>');
+         });
+
+        toggleCais.addEventListener('click', () => {
+            toggleData(caisData, 'cais', 'js/GeoJson/cais.json', toggleCais, '<span class="material-icons">local_police</span>', '<span class="material-icons">local_police</span>');
+        });
+
+        toggleCamaras.addEventListener('click', () => {
+            toggleData(camarasData, 'camaras', 'js/GeoJson/camaras.json', toggleCamaras, '<span class="material-icons">videocam</span>', '<span class="material-icons">videocam</span>');
+        });
+
+        togglePuestosVotacion.addEventListener('click', () => {
+            toggleData(puestosVotacionData, 'puestosVotacion', 'js/GeoJson/puestosVotacion.json', togglePuestosVotacion, '<span class="material-icons">where_to_vote</span>', '<span class="material-icons">where_to_vote</span>');
+        });
+
+        toggleSalud.addEventListener('click', () => {
+            toggleData(saludData, 'salud', 'js/GeoJson/salud.json', toggleSalud, '<span class="material-icons">local_hospital</span>', '<span class="material-icons">local_hospital</span>');
+        });
+    }
+
+    // Interaccion para botones de filtros
+
     document.getElementById('toggle-dark').addEventListener('click', () => {
         loadMapStyles('js/mapStylesDark.json');
     });
@@ -191,7 +160,8 @@
         loadMapStyles('js/mapStylesBonito.json');
     });
 
-    // Event listener for the heatmap toggle button
+    // Interaccion para boton de mapa de calor
+
     document.getElementById('toggle-heatmap').addEventListener('click', () => {
         if (heatmap) {
             if (heatmapVisible) {
@@ -203,7 +173,8 @@
         }
     });
 
-    // Event listener for the heatmap toggle button
+    // Interaccion para boton de trafico
+
     document.getElementById('toggle-trafic').addEventListener('click', () => {
         if (trafficLayer) {
             if (trafficLayerVisible) {
@@ -215,18 +186,29 @@
         }
     });
 
+    /* Funcion para cargar la informacion de cada marcador segun corresponda */
+
     function toggleData(dataInstance, key, url, button, showHtml, hideHtml) {
         if (mapStates[key]) {
+
+            /* Apaga los marcadores si el boton se apaga */
+
             dataInstance.setMap(null);
             button.innerHTML = hideHtml;
 
-            // Cerrar todas las infowindows abiertas de este tipo de datos.
+            // Cerrar todas las infowindows abiertas cuando se apague boton.
+
             openInfoWindows[key].forEach((infoWindow) => infoWindow.close());
             openInfoWindows[key] = [];
+
         } else {
+
+            /* Carga informacion del .json */
+
             dataInstance.loadGeoJson(url);
 
-            // Agrega un listener para el evento 'click' a dataInstance.
+            // Agrega la informacion a cada infowindow
+
             dataInstance.addListener('click', function(event) {
                 const properties = event.feature.h;
                 let contentString = '<div id="content" class="card" style="color:#000">';
@@ -238,6 +220,9 @@
                         contentString += '<div class="card-body">' + '<h1 class="hinfo">' + key + ': ' + '</h1>' + value + '</div>';
                     }
                 }
+
+                /*Si son marcadores de camara muestra una camara en infowindow  */
+
                 if (key == "camaras") {
                     contentString += '<iframe width="560" height="315" src="https://cam.xcom.kz:8081/9ring/embed.html" frameborder="0" allowfullscreen></iframe>'
                 }
@@ -267,7 +252,9 @@
 
 @push('scripts')
 <!-- Carga la API de Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=visualization&callback=initMap" async defer>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=visualization&callback=initMap"
+    async defer>
 </script>
 @endpush
 

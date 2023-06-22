@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>@yield('title') | {{ config('app.name') }}</title>
@@ -21,8 +22,20 @@
     @yield('page_css')
 
     @yield('css')
+
+<style>
+#floating-panel {
+    position: absolute;
+    top: 270px;
+    right: 35px;
+    z-index: 1;
+}
+#map {
+  position: relative;
+}
+</style>
 </head>
-<body>
+<body class="sidebar-mini" style="background-color: #23233b;">
 
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
@@ -47,7 +60,9 @@
 @include('profile.change_password')
 @include('profile.edit_profile')
 @stack('scripts')
+@stack('map_scripts')
 </body>
+
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -79,4 +94,6 @@
         };
     }(jQuery));
 </script>
+
+
 </html>

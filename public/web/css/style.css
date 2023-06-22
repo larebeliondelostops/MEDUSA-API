@@ -55,6 +55,78 @@
 /* 3.1 Misc */
 @import url("//fonts.googleapis.com/css?family=Nunito:400,600,700,800");
 
+.hinfo {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.divmap{
+    box-shadow: 0 4px 8px rgba(87, 91, 129, 0.984);
+    background-color: #15162e;
+    border-radius: 50px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;   
+    padding-bottom: 20px;
+}
+
+.divmap .carta{
+    padding-top: 20px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.button-74 {
+    position: relative;
+    background-color: #6777ef;
+    border: 2px solid #f0eff4;
+    border-radius: 30px;
+    box-shadow: #b1a1f1 4px 4px 0 0;
+    color: #ffff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-74:hover {
+    background-color: #5a4ded;
+  }
+  
+  .button-74:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 50%;
+    right: 100px; /* Cambiar el lado del pseudoelemento */
+    transform: translate(10px, -50%); /* Ajustar el desplazamiento */
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  
+  .button-74:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+  }
+  
+  @media (min-width: 768px) {
+    .button-74 {
+      min-width: 20px;
+      padding: 0 25px;
+    }
+  }
+
+
 .btn:focus,
 .btn:active,
 .btn:active:focus,

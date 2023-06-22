@@ -7,7 +7,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="text-center">Google Maps</h3>
+                        <h3 class="text-center">MEDUSA</h3>
                     </div>
                 </div>
                 <div class="card">
@@ -28,36 +28,40 @@
     </div>
 
     <div id="floating-panel">
-        <div class="card">
-            <div class="card-body">
-                <button id="toggle-Alarmas" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>Alarmas
+        <div class="divmap">
+            <div class="carta">
+                <button id="toggle-Alarmas" class="button-74" data-tooltip="Alarmas">
+                    <span class="material-icons">upcoming</span>
                 </button>
             </div>
-            <div class="card-body">
-                <button id="toggle-Cais" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>Cais
+            <div class="carta">
+                <button id="toggle-Cais" class="button-74" data-tooltip="Cais">
+                    <span class="material-icons">local_police</span>
                 </button>
             </div>
-            <div class="card-body">
-
-                <button id="toggle-Camaras" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>Camaras
+            <div class="carta">
+                <button id="toggle-Camaras" class="button-74" data-tooltip="Camaras">
+                    <span class="material-icons">videocam</span>
                 </button>
             </div>
-            <div class="card-body">
-                <button id="toggle-PuestosVotacion" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>PuestosVotacion
+            <div class="carta">
+                <button id="toggle-PuestosVotacion" class="button-74" data-tooltip="Puestos de Votacion">
+                    <span class="material-icons">where_to_vote</span>
                 </button>
             </div>
-            <div class="card-body">
-                <button id="toggle-Salud" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>Salud
+            <div class="carta">
+                <button id="toggle-Salud" class="button-74" data-tooltip="Salud">
+                    <span class="material-icons">local_hospital</span>
                 </button>
             </div>
-            <div class="card-body">
-                <button id="toggle-heatmap" class="btn btn-primary">
-                    <i class="fas fa-eye"></i>Calor
+            <div class="carta">
+                <button id="toggle-heatmap" class="button-74" data-tooltip="Calor">
+                    <span class="material-icons">local_fire_department</span>
+                </button>
+            </div>
+            <div class="carta">
+                <button id="toggle-trafic" class="button-74" data-tooltip="Trafico">
+                    <span class="material-icons">traffic</span>
                 </button>
             </div>
         </div>
@@ -93,6 +97,8 @@
     let geoJson = JSON.parse(@json($geoJsonGeometry))
     let heatmap;
     let heatmapVisible = true;
+    let trafficLayer;
+    let trafficLayerVisible = true;
 
     function initMap() {
         loadMapStyles('js/mapStylesNormal.json');
@@ -109,7 +115,7 @@
                 // Add a new heatmap layer
                 heatmap = new google.maps.visualization.HeatmapLayer({
                     data: locations,
-                    map: map,
+                    map: null,
                 });
             });
     }
@@ -129,6 +135,7 @@
                         zoom: 14
                     });
 
+                    trafficLayer = new google.maps.TrafficLayer();
                     let alarmasData = new google.maps.Data();
                     let caisData = new google.maps.Data();
                     let camarasData = new google.maps.Data();
@@ -143,23 +150,23 @@
                     const toggleHeatmap = document.getElementById('toggle-heatmap');
 
                     toggleAlarmas.addEventListener('click', () => {
-                        toggleData(alarmasData, 'alarmas', 'js/GeoJson/alarmas.json', toggleAlarmas, '<i class="fas fa-eye-slash"></i>alarmas', '<i class="fas fa-eye"></i>alarmas');
+                        toggleData(alarmasData, 'alarmas', 'js/GeoJson/alarmas.json', toggleAlarmas, '<span class="material-icons">upcoming</span>', '<span class="material-icons">upcoming</span>');
                     });
 
                     toggleCais.addEventListener('click', () => {
-                        toggleData(caisData, 'cais', 'js/GeoJson/cais.json', toggleCais, '<i class="fas fa-eye-slash"></i>cais', '<i class="fas fa-eye"></i>cais');
+                        toggleData(caisData, 'cais', 'js/GeoJson/cais.json', toggleCais, '<span class="material-icons">local_police</span>', '<span class="material-icons">local_police</span>');
                     });
 
                     toggleCamaras.addEventListener('click', () => {
-                        toggleData(camarasData, 'camaras', 'js/GeoJson/camaras.json', toggleCamaras, '<i class="fas fa-eye-slash"></i>camaras', '<i class="fas fa-eye"></i>camaras');
+                        toggleData(camarasData, 'camaras', 'js/GeoJson/camaras.json', toggleCamaras, '<span class="material-icons">videocam</span>', '<span class="material-icons">videocam</span>');
                     });
 
                     togglePuestosVotacion.addEventListener('click', () => {
-                        toggleData(puestosVotacionData, 'puestosVotacion', 'js/GeoJson/puestosVotacion.json', togglePuestosVotacion, '<i class="fas fa-eye-slash"></i>PuestosVotacion', '<i class="fas fa-eye"></i>PuestosVotacion');
+                        toggleData(puestosVotacionData, 'puestosVotacion', 'js/GeoJson/puestosVotacion.json', togglePuestosVotacion, '<span class="material-icons">where_to_vote</span>', '<span class="material-icons">where_to_vote</span>');
                     });
 
                     toggleSalud.addEventListener('click', () => {
-                        toggleData(saludData, 'salud', 'js/GeoJson/salud.json', toggleSalud, '<i class="fas fa-eye-slash"></i>Salud', '<i class="fas fa-eye"></i>Salud');
+                        toggleData(saludData, 'salud', 'js/GeoJson/salud.json', toggleSalud, '<span class="material-icons">local_hospital</span>', '<span class="material-icons">local_hospital</span>');
                     });
 
                 }
@@ -188,11 +195,23 @@
     document.getElementById('toggle-heatmap').addEventListener('click', () => {
         if (heatmap) {
             if (heatmapVisible) {
-                heatmap.setMap(null);
-            } else {
                 heatmap.setMap(map);
+            } else {
+                heatmap.setMap(null);
             }
             heatmapVisible = !heatmapVisible;
+        }
+    });
+
+    // Event listener for the heatmap toggle button
+    document.getElementById('toggle-trafic').addEventListener('click', () => {
+        if (trafficLayer) {
+            if (trafficLayerVisible) {
+                trafficLayer.setMap(map);
+            } else {
+                trafficLayer.setMap(null);
+            }
+            trafficLayerVisible = !trafficLayerVisible;
         }
     });
 
@@ -210,12 +229,14 @@
             // Agrega un listener para el evento 'click' a dataInstance.
             dataInstance.addListener('click', function(event) {
                 const properties = event.feature.h;
-                let contentString = '<div id="content" style="color:#000">';
+                let contentString = '<div id="content" class="card" style="color:#000">';
                 console.log(properties);
                 for (const key in properties) {
                     console.log(key);
                     const value = properties[key];
-                    contentString += '<p class="card-text">' + key + ': ' + value + '</p>';
+                    if (key != "URL") {
+                        contentString += '<div class="card-body">' + '<h1 class="hinfo">' + key + ': ' + '</h1>' + value + '</div>';
+                    }
                 }
                 if (key == "camaras") {
                     contentString += '<iframe width="560" height="315" src="https://cam.xcom.kz:8081/9ring/embed.html" frameborder="0" allowfullscreen></iframe>'

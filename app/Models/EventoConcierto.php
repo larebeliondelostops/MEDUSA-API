@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Eventos extends Model
+class EventoConcierto extends Model
 {
-    protected $table= 'eventos';
     use HasFactory;
+
+    protected $table = 'evento_concierto';
 }

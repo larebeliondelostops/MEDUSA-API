@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/v1/import/excel', [ImportExcelController::class, 'import']);
+
+Route::resource('salud', SaludController::class);

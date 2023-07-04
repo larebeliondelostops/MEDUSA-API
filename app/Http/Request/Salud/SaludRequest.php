@@ -35,18 +35,19 @@ class SaludRequest extends FormRequest
     public function rules()
     {
         return [
-            'direccion' => 'required',
-            'municipio' => 'required',
-            'telefono' => 'required',
-            'correo' => 'required|email',
-            'radio' => 'required',
-            'anioGravable' => 'required',
-            'periodo' => 'required',
-            'tipoDeclaracion' => 'required',
-            'fechaVencimiento' => 'required',
-            'formaPago' => 'required',
-            'firmantes' => 'required|min:1',
-            'tacargo' => 'required|integer|min:2'
+            'entidades' => 'required',
+            'pacientes_urgencia' => 'required',
+            'camas_urgencias_disponibles' => 'required|integer|min:0',
+            'salas_cirugias_disponibles' => 'required|integer|min:0',
+            'unidad_intensivos_disponibles' => 'required|integer|min:0',
+            'camas_primer_nivel' => 'required|integer|min:0',
+            'camas_segundo_nivel' => 'required|integer|min:0',
+            'camas_tercer_nivel' => 'required|integer|min:0',
+            'banco_sangre' => 'required|boolean',
+            'medicos_en_turno' => 'required|integer|min:0',
+            'enfermeras_en_turno' => 'required|integer|min:0',
+            'ips_afiliada' => 'required',
+            'cantidad_urgencias_dia' => 'required|integer|min:0'
         ];
     }
 
@@ -61,17 +62,19 @@ class SaludRequest extends FormRequest
     public function attributes()
     {
         return [
-            'direccion' => 'Dirección de Notificación',
-            'municipio' => 'Municipio del Contribuyente',
-            'telefono' => 'Teléfono',
-            'correo' => 'Correo electrónico',
-            'radio' => 'Calidad de Declarante',
-            'anioGravable' => 'Año Gravable',
-            'periodo' => 'Mes',
-            'tipoDeclaracion' => 'Tipo de Declaración',
-            'formaPago' => 'Forma de Pago',
-            'firmantes' => 'Seleccionar firmantes',
-            'tacargo' => 'TOTAL A CARGO'
+            'entidades' => 'Entidades',
+            'pacientes_urgencia' => 'Pacientes en Urgencia',
+            'camas_urgencias_disponibles' => 'Camas de urgencias disponibles',
+            'salas_cirugias_disponibles' => 'Salas de cirugias disponibles',
+            'unidad_intensivos_disponibles' => 'Unidades de cuidados intensivos disponibles',
+            'camas_primer_nivel' => 'Cama de primer nivel',
+            'camas_segundo_nivel' => 'Camas de segundo nivel',
+            'camas_tercer_nivel' => 'Camas de tercer nivel',
+            'banco_sangre' => 'Banco de sangre',
+            'medicos_en_turno' => 'Medicos en turno',
+            'enfermeras_en_turno' => 'Enfermeras en turno',
+            'ips_afiliada' => 'IPS afiliada',
+            'cantidad_urgencias_dia' => 'Cantidad de urgencias en el dia'
         ];
     }
 

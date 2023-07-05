@@ -16,19 +16,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function() {
+    $data = [
+        'message' => "Welcome to our API"
+    ];
+    return response()->json($data, 200);
 });
 
 Route::post('/v1/import/excel', [ImportExcelController::class, 'import']);
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
-    Route::post('register', [AuthController::class, 'register']);
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('auth/register', [AuthController::class, 'register']);
+    Route::post('auth/login', [AuthController::class, 'login']);
+    Route::get('auth/user', [AuthController::class, 'getUser']);
+
+    Route::middleware('jwt.verify')->group(function() {
+        Route::get('/dashboard', function() {
+            return response()->json(['message' => 'Welcome to dashboard'], 200);
+        });
+    });
+
 });

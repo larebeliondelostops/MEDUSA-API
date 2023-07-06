@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_evento');
+            $table->bigInteger('id_tipo_evento')->unsigned();
             $table->string('nombre');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('estado');
             $table->string('lugar');
             $table->string('entidad_autorizante');
+
+            $table->foreign('id_tipo_evento')->references('id')->on('tipo_eventos');
         });
     }
 

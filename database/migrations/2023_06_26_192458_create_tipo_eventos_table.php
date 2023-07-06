@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evento_concierto', function (Blueprint $table) {
+        Schema::create('tipo_eventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_evento');
-            $table->json('coordenada_punto');
-            $table->foreign('id_evento')->references('id')->on('eventos');
+            $table->string('nombre_evento');
+            $table->string('descripcion_evento');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evento_concierto');
+        Schema::dropIfExists('tipo_eventos');
     }
 };

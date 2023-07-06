@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evento_cierre_vial', function (Blueprint $table) {
+        Schema::create('coordenadas_eventos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_evento');
             $table->json('coordenada_punto');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evento_cierre_vial');
+        Schema::dropIfExists('evento_carrera');
     }
 };

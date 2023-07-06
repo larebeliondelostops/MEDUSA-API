@@ -23,17 +23,16 @@ Route::get('/', function() {
     return response()->json($data, 200);
 });
 
-Route::post('/v1/import/excel', [ImportExcelController::class, 'import']);
+Route::post('/import/excel', [ImportExcelController::class, 'import']);
 
-Route::group(['prefix' => 'v1'], function () {
-    Route::post('auth/register', [AuthController::class, 'register']);
-    Route::post('auth/login', [AuthController::class, 'login']);
-    Route::get('auth/user', [AuthController::class, 'getUser']);
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('auth/login', [AuthController::class, 'login']);
+Route::get('auth/user', [AuthController::class, 'getUser']);
 
-    Route::middleware('jwt.verify')->group(function() {
-        Route::get('/dashboard', function() {
-            return response()->json(['message' => 'Welcome to dashboard'], 200);
-        });
+
+Route::middleware('jwt.verify')->group(function() {
+    Route::post('auth/refresh', [AuthController::class, 'refresh']);
+    Route::get('/dashboard', function() {
+        return response()->json(['message' => 'Welcome to dashboard'], 200);
     });
-
 });

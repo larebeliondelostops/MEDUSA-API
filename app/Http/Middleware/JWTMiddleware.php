@@ -19,9 +19,15 @@ class JWTMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
+
+            $token = $request->header('Authorization');
+            if (!$token) {
+                return response()->json(['message' => 'No se proporcionó un token'], 401);
+            }
+
             $user = JWTAuth::parseToken()->authenticate();
             if (!$user) {
-                return response()->json(['message' => 'user not found'], 500);
+                return response()->json(['message' => 'Usuario no encontrado'], 500);
             }
         } catch (JWTException $e) {
             return response()->json(['message' => $e->getMessage()], 500);

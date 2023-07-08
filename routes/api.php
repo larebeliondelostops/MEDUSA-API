@@ -36,3 +36,5 @@ Route::middleware('jwt.verify')->group(function() {
         return response()->json(['message' => 'Welcome to dashboard'], 200);
     });
 });
+
+Route::resource('salud', SaludController::class);

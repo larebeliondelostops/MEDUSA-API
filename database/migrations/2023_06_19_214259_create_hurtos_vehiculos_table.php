@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('numero_unico')->nullable();
             $table->string('cantidad_2')->nullable();
             $table->string('placa')->nullable();
+            $table->timestamps();
         });
     }
 

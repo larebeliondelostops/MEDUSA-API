@@ -4,49 +4,46 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Values\CreateEventoValues;
+use App\Values\GetEventoValues;
 
 class EventoController extends Controller
 {
-    public function allEvents()
+
+    public function getAllEvents()
     {
-        $eventos = Evento::all();
-        return request()->json(200, $eventos);
+        $state = request()->input('state');
+
+        $strategy = GetEventoValues::STRATEGY[$state];
+
+        return (new $strategy)->getAllEvents();
     }
 
-    public function getEvent($id)
+    public function getTipoEvents(Request $request)
     {
-        $evento = Evento::find($id);
-        return request()->json(200, $evento);
+        $state = request()->input('state');
+
+        $strategy = GetEventoValues::STRATEGY[$state];
+
+        return (new $strategy)->getTipoEvents($request);
+    }
+
+    public function getEventsForDate(Request $request)
+    {
+        $state = request()->input('state');
+
+        $strategy = GetEventoValues::STRATEGY[$state];
+
+        return (new $strategy)->getEventsForDate($request);
     }
 
     public function createEvent(Request $request)
     {
-        $evento = new Evento();
-        $evento->nombre = $request->nombre;
-        $evento->fecha = $request->fecha;
-        $evento->hora = $request->hora;
-        $evento->lugar = $request->lugar;
-        $evento->descripcion = $request->descripcion;
-        $evento->save();
-        return request()->json(200, $evento);
+        $state = $request->input('state');
+
+        $strategy = CreateEventoValues::STRATEGY[$state];
+
+        return (new $strategy)->createEvent($request);
     }
 
-    public function updateEvent(Request $request, $id)
-    {
-        $evento = Evento::find($id);
-        $evento->nombre = $request->nombre;
-        $evento->fecha = $request->fecha;
-        $evento->hora = $request->hora;
-        $evento->lugar = $request->lugar;
-        $evento->descripcion = $request->descripcion;
-        $evento->save();
-        return request()->json(200, $evento);
-    }
-
-    public function deleteEvent($id)
-    {
-        $evento = Evento::find($id);
-        $evento->delete();
-        return request()->json(200, $evento);
-    }
 }

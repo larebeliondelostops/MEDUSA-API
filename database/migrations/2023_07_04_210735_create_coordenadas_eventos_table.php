@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_evento');
             $table->json('coordenada_punto');
             $table->foreign('id_evento')->references('id')->on('eventos');
+            $table->timestamps();
         });
     }
 

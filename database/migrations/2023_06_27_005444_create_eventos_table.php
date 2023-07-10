@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('estado');
             $table->string('lugar');
             $table->string('entidad_autorizante');
+            $table->timestamps();
 
             $table->foreign('id_tipo_evento')->references('id')->on('tipo_eventos');
         });

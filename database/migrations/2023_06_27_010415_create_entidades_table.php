@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->double('latitud');
             $table->double('longitud');
+            $table->timestamps();
         });
     }
 

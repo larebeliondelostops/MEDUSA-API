@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Response;
+use App\Http\Request\RolesPermisos\SaveRolRequest;
+use App\Http\Request\RolesPermisos\savePermisoRequest;
+use App\Http\Request\RolesPermisos\AssignPermissionsRequest;
 
 /**
  * Controlador para Roles y Permisos.
@@ -25,28 +27,26 @@ class RolController extends Controller
     /**
      * Constructor de la clase.
      *
-     * @access protected
+     * @access public
      */
     public function __construct()
     {
-        //estableciendo los permisos para el apartado habitación
-        /* $this->middleware('permission:ver-habitacion|crear-habitacion|borrar-habitacion', ['only'=>['index']]);
-        $this->middleware('permission:crear-habitacion', ['only'=>['create', 'store']]);
-        $this->middleware('permission:editar-habitacion', ['only'=>['edit', 'update']]);
-        $this->middleware('permission:borrar-habitacion', ['only'=>['destroy']]); */
     }
 
+    /**
+     * Método para devolver todos los roles registrados
+     *
+     * @access public
+     * @return Illuminate\Support\Facades\Response
+     */
     public function getRoles()
     {
         try{
-
-            $roles = Role::all();
-
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
                 'message' => 'Solicitud exitosa',
-                'data' => $roles
+                'data' => Role::all()
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -58,12 +58,25 @@ class RolController extends Controller
         }
     }
 
-    public function saveRol(Request $request)
+    /**
+     * Método para el asignado de roles para determinado usuario
+     *
+     * @access public
+     * @param SaveRolRequest $request
+     * @return Illuminate\Support\Facades\Response
+     */
+    public function saveRol(SaveRolRequest $request)
     {
         try{
-            $request->validate([
-                'name' => 'required|unique:roles|max:255',
-            ]);
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
 
             $role = Role::create(['name' => $request->input('name')]);
 
@@ -83,9 +96,72 @@ class RolController extends Controller
         }
     }
 
-    public function savePermissions(Request $request)
+    /**
+     * Método para el asignado de roles para determinado usuario
+     *
+     * @access public
+     * @param savePermisoRequest $request
+     * @return Illuminate\Support\Facades\Response
+     */
+    public function savePermiso(savePermisoRequest $request)
     {
         try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            if (Permission::where('name', $request->input('name'))->exists()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status'=> 'error',
+                    'message' => 'El permisos ya existe'
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $permission = Permission::create(['name' => $request->input('name')]);
+
+            return Response::json([
+                'code' => '200',
+                'status'=> 'succes',
+                'message' => 'Permisos guardados correctamente',
+                'data' => $permission
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
+     * Método para el asignado de roles para determinado usuario
+     *
+     * @access public
+     * @param AssignPermissionsRequest $request
+     * @return Illuminate\Support\Facades\Response
+     */
+    public function assignPermissions(AssignPermissionsRequest $request)
+    {
+        try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
             $role = Role::findOrFail($request->input('role_id'));
 
             // Obtén los permisos seleccionados desde el cliente
@@ -94,8 +170,6 @@ class RolController extends Controller
             // Asigna los permisos al rol
             $permissions = Permission::whereIn('name', $permissionNames)->get();
             $role->syncPermissions($permissions);
-
-            // Opcional: Puedes realizar alguna acción adicional después de guardar los permisos, si es necesario
 
             return Response::json([
                 'code' => '200',

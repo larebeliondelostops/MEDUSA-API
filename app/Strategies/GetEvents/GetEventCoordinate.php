@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Strategies\GetEventos;
+namespace App\Strategies\GetEvents;
 
 use Exception;
-use App\Strategies\GetEventoInterface;
-use App\Models\Evento;
-use App\Models\CoordenadaEvento;
+use App\Strategies\GetEventInterface;
+use App\Models\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class GetEventoCoordenada implements GetEventoInterface
+class GetEventCoordinate implements GetEventInterface
 {
     public function getAllEvents()
     {
         try {
 
-            $eventos = Evento::with('tipoEvento','coordenadaEvento')->get();
+            $eventos = Event::with('eventType','eventCoordinate')->get();
 
             return response()->json($eventos, 200);
         } catch (Exception $exception) {
@@ -29,13 +28,13 @@ class GetEventoCoordenada implements GetEventoInterface
         }
     }
 
-    public function getTipoEvents($request)
+    public function getEventsType($request)
     {
         try {
 
-            $eventos = Evento::where('id_tipo_evento', $request->id_tipo_evento)->with('tipoEvento','coordenadaEvento')->get();
+            $events = Event::where('idEventType', $request->idEventType)->with('eventType','eventCoordinate')->get();
 
-            return response()->json($eventos, 200);
+            return response()->json($events, 200);
 
         } catch (Exception $exception) {
 
@@ -52,9 +51,9 @@ class GetEventoCoordenada implements GetEventoInterface
     {
         try{
 
-            $eventos = Evento::where('fecha_inicio', '>=', $request->fecha_inicio)->where('fecha_fin', '<=', $request->fecha_fin)->with('tipoEvento','coordenadaEvento')->get();
+            $events = Event::where('startDate', '>=', $request->startDate)->where('endDate', '<=', $request->endDate)->with('eventType','eventCoordinate')->get();
 
-            return response()->json($eventos, 200);
+            return response()->json($events, 200);
 
         } catch (Exception $exception) {
 

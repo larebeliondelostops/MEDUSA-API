@@ -2,9 +2,9 @@
 
 namespace App\Strategies;
 
-interface GetEventoInterface
+interface GetEventInterface
 {
     public function getAllEvents();
-    public function getTipoEvents($request);
+    public function getEventsType($request);
     public function getEventsForDate($request);
 }

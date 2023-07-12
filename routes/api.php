@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImportExcelController;
-use App\Http\Controllers\TipoEventoController;
-use App\Http\Controllers\EventoController;
+use App\Http\Controllers\EventTypeController;
+use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,16 +35,16 @@ Route::middleware('jwt.verify')->group(function () {
 
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
-    Route::get('tipo_evento/all', [TipoEventoController::class, 'allTipoEventos']);
-    Route::get('tipo_evento/{id}', [TipoEventoController::class, 'getTipoEvento']);
-    Route::post('tipo_evento/create', [TipoEventoController::class, 'createTipoEvento']);
-    Route::put('tipo_evento/update/{id}', [TipoEventoController::class, 'updateTipoEvento']);
-    Route::delete('tipo_evento/delete/{id}', [TipoEventoController::class, 'deleteTipoEvento']);
+    Route::get('tipo_evento/all', [EventTypeController::class, 'allEventTypes']);
+    Route::get('tipo_evento/{id}', [EventTypeController::class, 'getEventType']);
+    Route::post('tipo_evento/create', [EventTypeController::class, 'createEventType']);
+    Route::put('tipo_evento/update/{id}', [EventTypeController::class, 'updateEventType']);
+    Route::delete('tipo_evento/delete/{id}', [EventTypeController::class, 'deleteEventType']);
 
-    Route::post('evento/create', [EventoController::class, 'createEvent']);
-    Route::get('evento/all', [EventoController::class, 'getAllEvents']);
-    Route::get('evento/tipo_evento', [EventoController::class, 'getTipoEvents']);
-    Route::get('evento/date', [EventoController::class, 'getEventsForDate']);
+    Route::post('evento/create', [EventController::class, 'createEvent']);
+    Route::get('evento/all', [EventController::class, 'getAllEvents']);
+    Route::get('evento/tipo_evento', [EventController::class, 'getEventsType']);
+    Route::get('evento/date', [EventController::class, 'getEventsForDate']);
 
     Route::get('/dashboard', function () {
         return response()->json(['message' => 'Welcome to dashboard'], 200);

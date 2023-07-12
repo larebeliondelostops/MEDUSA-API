@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_eventos', function (Blueprint $table) {
+        Schema::create('coordinatesEvents', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_evento');
-            $table->string('descripcion_evento');
+            $table->unsignedBigInteger('eventId');
+            $table->json('pointCoordinates');
+            $table->foreign('eventId')->references('id')->on('events');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_eventos');
+        Schema::dropIfExists('coordinatesEvents');
     }
 };

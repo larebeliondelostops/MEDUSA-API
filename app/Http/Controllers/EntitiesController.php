@@ -2,28 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Request\Entities\EntitiesRequest;
+use App\Models\Entities;
 use Exception;
-use App\Models\Salud;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Ica\Http\Requests\Salud\SaludRequest;
 use Illuminate\Support\Facades\Response;
 
-class SaludController extends Controller
+
+
+/**
+ * Controlador Maneja Lógica de Entidades.
+ *
+ * Controlador que maneja la lógica de centros de Entidades y las modificaciones posibles con el sistema.
+ *
+ * @package    Controllers
+ * @copyright  2023 Ignicion S.A.S.
+ * @author     David Acosta Ojeda <Dacostaojeda2000@gmail.com>
+ * @version    v1.0.0
+ */
+class EntitiesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function all()
     {
         try {
-            $salud = Salud::all();
+            $entities = Entities::all();
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $salud,
+                'data' => $entities,
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -36,44 +47,34 @@ class SaludController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        try {
-            $salud = Salud::all();
-
-            return Response::json([
-                'status' => 'succes',
-                'data' => $salud,
-            ], 201, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Metodo para guardar un nuevo centro de Entidades.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaludRequest $request)
+    public function store(EntitiesRequest $request)
     {
         try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
 
-            $salud = Salud::create($request->all());
+            //$entidades = Entidades::create($request->all());
+            $entities = new Entities();
+            $entities->name = $request->name;
+            $entities->address = $request->address;
+            $entities->pointCoordinates = json_encode($request->pointCoordinates);
+            $entities->save();
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $salud
+                'data' => $entities
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -86,23 +87,12 @@ class SaludController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Metodo para cargar un centro de Entidades especifico en un formulario para su edición.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Salud $id)
+    public function edit(Entities $id)
     {
         try {
             //Borrando de la base de datos la habitación seleccionada desde la vista de inicio
@@ -121,25 +111,34 @@ class SaludController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Metodo para actualizar un centro de Entidades especifico.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaludRequest $request, $id)
+    public function update(EntitiesRequest $request, $id)
     {
         try {
-            //Borrando de la base de datos la habitación seleccionada desde la vista de inicio
 
-            $salud = Salud::find($id);
+            // Validación
+            // if (isset($request->validator) && $request->validator->fails()) {
+            //     return Response::json([
+            //         'code' => '2001',
+            //         'status' => 'error',
+            //         'message' => 'Datos Recibidos Incorrectos',
+            //         'errors' => $request->validator->messages()
+            //     ], 400, [], JSON_PRETTY_PRINT);
+            // }
 
-            $salud->update($request->all());
+            $entities = Entities::find($id);
+
+            $entities->update($request->all());
 
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $salud
+                'data' => $entities
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -152,7 +151,7 @@ class SaludController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Metodo para eliminar un centro de Entidades especifico.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -161,7 +160,7 @@ class SaludController extends Controller
     {
         try {
 
-            return Salud::destroy($id);
+            return Entities::destroy($id);
 
             return Response::json([
                 'status' => 'succes',

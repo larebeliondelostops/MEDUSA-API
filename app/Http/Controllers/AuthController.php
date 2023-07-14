@@ -134,12 +134,14 @@ class AuthController extends Controller
 
             if ($remember) {
                 // Crear el refresh token
-                $refresh_token = $this->refreshToken($input);
+                $refresh_token = auth()->setTTL(7200)->attempt($input);
+            } else {
+                $refresh_token = auth()->setTTL(1440)->attempt($input);
             }
 
             $success = [
                 'token' => $token,
-                'refresh_token' => $refresh_token ?? null
+                'refresh_token' => $refresh_token
             ];
 
             $this->data = $success;
@@ -147,31 +149,6 @@ class AuthController extends Controller
             $this->status_code = 200;
 
             return $this->sendResponse();
-        } catch (JWTException $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    /**
-     * Método crear el token de refresco
-     *
-     * @access public
-     * @return Illuminate\Support\Facades\Response
-     */
-    public function refreshToken($input)
-    {
-        try {
-            // Obtener la duración extendida para el token
-            $expiration = config('jwt.refresh_ttl');
-
-            $refresh_token = auth()->setTTL($expiration)->attempt($input);
-
-            return $refresh_token;
         } catch (JWTException $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -227,7 +204,10 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Petición exitosa']);
+        return Response::json([
+            'status' => 'success',
+            'message' => 'Petición exitosa',
+        ], 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -253,7 +233,7 @@ class AuthController extends Controller
                 return Response::json([
                     'status' => 'success',
                     'message' => 'Token Vigente',
-                    'duration' => ($expiration - $currentTimestamp) / 60,
+                    'duration' => intval(($expiration - $currentTimestamp) / 60) . ' Minutos',
                 ], 200, [], JSON_PRETTY_PRINT);
             } else {
 
@@ -302,46 +282,25 @@ class AuthController extends Controller
             // Extraer la expiración del token
             $expiration_at = $access_token->getPayload()->get('exp');
 
-            // Establecer la nueva duración del refresh token
-            JWTAuth::factory()->setTTL(1440);
-
-            // Generar un nuevo refresh token
-            $newRefreshToken = JWTAuth::refresh($currentToken);
-
-            // Restaurar la duración original del refresh token (opcional)
-            JWTAuth::factory()->setTTL(config('jwt.refresh_ttl'));
-
             // Setear el token para trabajar con él
-            $refresh_token = JWTAuth::setToken($newRefreshToken);
+            $refresh_token = JWTAuth::setToken($currentToken);
 
             // Extraer la expiración del token
             $expiration_rt = $refresh_token->getPayload()->get('exp');
 
             return response()->json([
                 'accessToken' => $newAccessToken,
-                'refreshToken' => $newRefreshToken,
-                'expirationAT' => ($expiration_at - $currentTimestamp) / 60,
-                'expirationRT' => ($expiration_rt - $currentTimestamp) / 60
+                'refreshToken' => $token,
+                'expirationAT' => intval(($expiration_at - $currentTimestamp) / 60) . ' Minutos',
+                'expirationRT' => intval(($expiration_rt - $currentTimestamp) / 60) . ' Minutos',
             ]);
-        } catch (\Exception $e) {
-            dd($e);
-            return response()->json(['error' => 'Unauthorized'], 401);
+        } catch (JWTException $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    /* protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL()
-        ]);
-    } */
 }

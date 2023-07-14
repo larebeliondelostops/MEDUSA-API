@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('enfermeras_en_turno');
             $table->string('ips_afiliada');
             $table->integer('cantidad_urgencias_dia');
+            $table->timestamps();
         });
     }
 

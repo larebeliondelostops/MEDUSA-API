@@ -7,9 +7,9 @@
               "type": "Point",
               "coordinates": [-73.6377, 4.15138]
           },
+          "id": "1",
+          "title": "INST. EDUCATIVO 12 DE OCTUBR",
           "properties": {
-              "id": "1",
-              "nombre": "INST. EDUCATIVO 12 DE OCTUBR",
               "tipo": "1",
               "cam_dis": "1",
               "uniCI": "2/19",

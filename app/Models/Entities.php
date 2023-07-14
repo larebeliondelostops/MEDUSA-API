@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Formulario_salud extends Model
+class Entities extends Model
 {
-    protected $table = 'formulario_salud';
+    protected $table = 'entities';
+    
     use HasFactory;
+
+    protected $guarded = [];
+
 }

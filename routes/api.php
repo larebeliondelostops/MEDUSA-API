@@ -28,10 +28,11 @@ Route::post('/import/excel', [ImportExcelController::class, 'import']);
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('auth/user', [AuthController::class, 'getUser']);
-
+Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
 Route::middleware('jwt.verify')->group(function() {
-    Route::post('auth/refresh', [AuthController::class, 'refresh']);
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::post('auth/validateToken', [AuthController::class, 'validateToken']);
     Route::get('/dashboard', function() {
         return response()->json(['message' => 'Welcome to dashboard'], 200);
     });

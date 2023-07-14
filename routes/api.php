@@ -32,7 +32,8 @@ Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('auth/user', [AuthController::class, 'getUser']);
 
 Route::middleware('jwt.verify')->group(function () {
-
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::post('auth/validateToken', [AuthController::class, 'validateToken']);
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
     Route::get('tipo_evento/all', [EventTypeController::class, 'allEventTypes']);

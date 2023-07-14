@@ -23,18 +23,13 @@ class JWTMiddleware
 
             // Verficar si existe un token en el header
             $token = $request->header('Authorization');
+            JWTAuth::setToken($token);
             if (!$token) {
                 return response()->json(['message' => 'No se proporcionó un token'], 401);
             }
 
-            // Verificar si el token ha expirado
-            /* dd(JWTAuth::check(substr($token, 7)));
-            if (!JWTAuth::check(substr($token, 7))) {
-                throw new TokenExpiredException('Token expirado');
-            } */
-
             // Verificar que el usuario con este token exista en la base de datos
-            $user = JWTAuth::parseToken()->authenticate();
+            $user = JWTAuth::authenticate();
             if (!$user) {
                 return response()->json(['message' => 'Usuario no encontrado'], 500);
             }

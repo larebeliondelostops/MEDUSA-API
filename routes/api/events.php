@@ -23,7 +23,8 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::get('evento/tipo_evento', [EventController::class, 'getEventsType']);
     Route::get('evento/date', [EventController::class, 'getEventsForDate']);
 
-
+    //endpoints para reportes
+    
     Route::get('evento/EventsForMonth', [EventController::class, 'EventsForMonth']); 
     Route::get('evento/EventsForType', [EventController::class, 'EventsForType']); 
     Route::get('evento/EventsPastAndFuture', [EventController::class, 'EventsPastAndFuture']); 

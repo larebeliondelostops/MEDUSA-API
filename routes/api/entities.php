@@ -6,12 +6,10 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes Roles
+| API Routes Entities
 |--------------------------------------------------------------------------
 |
-| Aqui estarán todas las rutas relacionadas con el manejo de roles
-| y los permisos de la aplicación siguiendo ciertos estandares
-| además de estar alejadas de las demás para manejar un orden estructurado
+| Aqui estarán todas las rutas relacionadas con el manejo de entidades
 |
 */
 

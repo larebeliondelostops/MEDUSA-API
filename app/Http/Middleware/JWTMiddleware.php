@@ -23,10 +23,13 @@ class JWTMiddleware
 
             // Verficar si existe un token en el header
             $token = $request->header('Authorization');
-            JWTAuth::setToken($token);
+            
             if (!$token) {
                 return response()->json(['message' => 'No se proporcionó un token'], 401);
             }
+
+            // Set del token para trabajar con el mismo
+            JWTAuth::setToken($token);
 
             // Verificar que el usuario con este token exista en la base de datos
             $user = JWTAuth::authenticate();

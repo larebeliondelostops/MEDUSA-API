@@ -47,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
                     require base_path('routes/api/roles.php');
                     require base_path('routes/api/health.php');
                     require base_path('routes/api/entities.php');
-                    require base_path('routes/api/reportEvents.php');
+                    require base_path('routes/api/events.php');
                 });
 
             Route::middleware('web')

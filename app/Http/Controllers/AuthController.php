@@ -124,7 +124,7 @@ class AuthController extends Controller
         try {
             // this authenticates the user details with the database and generates a token
             if (! $token = JWTAuth::attempt($input)) {
-                //auth()->setTTL($expiration)->attempt($input)
+
                 $this->data = [];
                 $this->message = 'La contraseña es incorrecta';
                 $this->status_code = 400;
@@ -136,7 +136,7 @@ class AuthController extends Controller
                 // Crear el refresh token
                 $refresh_token = auth()->setTTL(7200)->attempt($input);
             } else {
-                $refresh_token = auth()->setTTL(1440)->attempt($input);
+                $refresh_token = auth()->setTTL(540)->attempt($input);
             }
 
             $success = [

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Request\Auth\LoginRequest;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Request\Auth\RegisterRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Controlador Maneja Lógica de Auth.
@@ -117,6 +119,8 @@ class AuthController extends Controller
 
         $input = $request->only('email', 'password');
 
+        $remember = $request->filled('remember') ?? false;
+
         try {
             // this authenticates the user details with the database and generates a token
             if (! $token = JWTAuth::attempt($input)) {
@@ -128,8 +132,16 @@ class AuthController extends Controller
                 return $this->sendResponse();
             }
 
+            if ($remember) {
+                // Crear el refresh token
+                $refresh_token = auth()->setTTL(7200)->attempt($input);
+            } else {
+                $refresh_token = auth()->setTTL(540)->attempt($input);
+            }
+
             $success = [
                 'token' => $token,
+                'refresh_token' => $refresh_token
             ];
 
             $this->data = $success;
@@ -192,32 +204,103 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Petición exitosa']);
+        return Response::json([
+            'status' => 'success',
+            'message' => 'Petición exitosa',
+        ], 200, [], JSON_PRETTY_PRINT);
     }
 
     /**
-     * Refresh a token.
+     * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
+    public function validateToken(Request $request)
     {
-        return $this->respondWithToken(auth()->refresh());
+        // Recuperación del token
+        $token = $request->header('Authorization');
+
+        // Setear el token para trabajar con él
+        $jwtAuth = JWTAuth::setToken($token);
+
+        try {
+            if (JWTAuth::check()) {
+
+                // Extraemos el tiempo de expiración del token en formato UNIX
+                $expiration = $jwtAuth->getPayload()->get('exp');
+                $currentTimestamp = time();
+
+                return Response::json([
+                    'status' => 'success',
+                    'message' => 'Token Vigente',
+                    'duration' => intval(($expiration - $currentTimestamp) / 60) . ' Minutos',
+                ], 200, [], JSON_PRETTY_PRINT);
+            } else {
+
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'Token Expirado'
+                ], 500, [], JSON_PRETTY_PRINT);
+            }
+        } catch (JWTException $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
     }
 
     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
+     * Refresh de los token's.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    public function refresh(Request $request)
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        $token = $request->header('Authorization');
+        // Setear el token para trabajar con él
+        $jwtAuth = JWTAuth::setToken($token);
+
+        // Obtener el token actual en una variable
+        $currentToken = JWTAuth::getToken();
+
+        // Invoación del modelo asociado al token
+        $user = $jwtAuth->authenticate();
+
+        // Almacenar el tiempo actual en un formato entendible para el JWT
+        $currentTimestamp = time();
+
+        try {
+            // Generar un nuevo access token para el usuario
+            $newAccessToken = JWTAuth::fromUser($user, ['exp' => time() + (15 * 60)]);
+
+            // Setear el token para trabajar con él
+            $access_token = JWTAuth::setToken($newAccessToken);
+
+            // Extraer la expiración del token
+            $expiration_at = $access_token->getPayload()->get('exp');
+
+            // Setear el token para trabajar con él
+            $refresh_token = JWTAuth::setToken($currentToken);
+
+            // Extraer la expiración del token
+            $expiration_rt = $refresh_token->getPayload()->get('exp');
+
+            return response()->json([
+                'accessToken' => $newAccessToken,
+                'refreshToken' => $token,
+                'expirationAT' => intval(($expiration_at - $currentTimestamp) / 60) . ' Minutos',
+                'expirationRT' => intval(($expiration_rt - $currentTimestamp) / 60) . ' Minutos',
+            ]);
+        } catch (JWTException $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
     }
 }

@@ -13,22 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('formulario_salud', function (Blueprint $table) {
+        Schema::create('health', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('entidades_id');
-            $table->foreign('entidades_id')->references('id')->on('entidades');
-            $table->integer('pacientes_urgencia');
-            $table->integer('camas_urgencias_disponibles');
-            $table->integer('salas_cirugias_disponibles');
-            $table->integer('unidad_intensivos_disponibles');
-            $table->integer('camas_primer_nivel');
-            $table->integer('camas_segundo_nivel');
-            $table->integer('camas_tercer_nivel');
-            $table->boolean('banco_sangre');
-            $table->integer('medicos_en_turno');
-            $table->integer('enfermeras_en_turno');
-            $table->string('ips_afiliada');
-            $table->integer('cantidad_urgencias_dia');
+            $table->bigInteger('idEntities');
+            $table->foreign('idEntities')->references('id')->on('entities');
+            $table->integer('emergencyPatients');
+            $table->integer('emergencyBedsAvailable');
+            $table->integer('availableOperatingRooms');
+            $table->integer('intensiveCareUnitAvailable');
+            $table->integer('firstLevelBeds');
+            $table->integer('secondLevelBeds');
+            $table->integer('thirdLevelBeds');
+            $table->boolean('bloodBank');
+            $table->integer('doctorsInTheShift');
+            $table->integer('nursesInTheShift');
+            $table->string('affiliatedIps');
+            $table->integer('numberOfEmergenciesDay');
             $table->timestamps();
         });
     }
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('formulario_salud');
+        Schema::dropIfExists('Health');
     }
 };

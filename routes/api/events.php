@@ -6,22 +6,23 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes Entities
+| API Routes Events
 |--------------------------------------------------------------------------
 |
-| Aqui estarán todas las rutas relacionadas con el manejo de entidades
+| Aqui estarán todas las rutas relacionadas con el manejo de eventos
 |
 */
 
 Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
     /**
-     * Manejo de entidades
+     * Manejo de eventos
      */
 
     Route::post('evento/create', [EventController::class, 'createEvent']);
     Route::get('evento/all', [EventController::class, 'getAllEvents']);
     Route::get('evento/tipo_evento', [EventController::class, 'getEventsType']);
     Route::get('evento/date', [EventController::class, 'getEventsForDate']);
+    Route::delete('evento/delete/{id}', [EventController::class, 'deleteEvent']);
 
     //endpoints para reportes
     

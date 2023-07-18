@@ -36,12 +36,6 @@ Route::middleware('jwt.verify')->group(function () {
     Route::post('auth/validateToken', [AuthController::class, 'validateToken']);
     Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
-    Route::get('tipo_evento/all', [EventTypeController::class, 'allEventTypes']);
-    Route::get('tipo_evento/{id}', [EventTypeController::class, 'getEventType']);
-    Route::post('tipo_evento/create', [EventTypeController::class, 'createEventType']);
-    Route::put('tipo_evento/update/{id}', [EventTypeController::class, 'updateEventType']);
-    Route::delete('tipo_evento/delete/{id}', [EventTypeController::class, 'deleteEventType']);
-
     Route::get('/dashboard', function () {
         return response()->json(['message' => 'Welcome to dashboard'], 200);
     });

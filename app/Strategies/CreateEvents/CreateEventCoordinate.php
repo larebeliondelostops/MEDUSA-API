@@ -2,32 +2,39 @@
 
 namespace App\Strategies\CreateEvents;
 
-use Exception;
 use App\Strategies\CreateEventInterface;
 use App\Models\Event;
 use App\Models\EventCoordinate;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+
+/**
+ * Clase que maneja toda la logica para la creacion de eventos con coordenadas
+ *
+ * 
+ *
+ * @package    Controllers
+ * @copyright  2023 Ignicion S.A.S.
+ * @author     Daniel Martinez <danielxz331@gmail.com>
+ * @version    v1.0.0
+ */
 
 class CreateEventCoordinate implements CreateEventInterface
 {
+
+    //Metodo para crear un evento
     public function createEvent($request)
     {
 
-        try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
 
-            $request->validate([
-                'idEventType' => 'required',
-                'name' => 'required',
-                'startDate' => 'required',
-                'endDate' => 'required',
-                'capacity' => 'required',
-                'place' => 'required',
-                'authorizingEntity' => 'required',
-                'pointCoordinates' => 'required',
-            ]);
-
-            
             $event = new Event();
 
             $event->idEventType = $request->idEventType;
@@ -37,25 +44,16 @@ class CreateEventCoordinate implements CreateEventInterface
             $event->capacity = $request->capacity;
             $event->place = $request->place;
             $event->authorizingEntity = $request->authorizingEntity;
-            
+
             $event->save();
 
             $pointCoordinate = $this->asingCoordinateEvent($request, $event->id);
 
             return response()->json([$event, $pointCoordinate], 200);
-
-        } catch (Exception $exception) {
-
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-
-        }
+        
     }
 
+    //Metodo para asignar las coordenadas a un evento
     public function asingCoordinateEvent($request, $eventId)
     {
 
@@ -67,6 +65,5 @@ class CreateEventCoordinate implements CreateEventInterface
         $pointCoordinate->save();
 
         return $pointCoordinate;
-
     }
 }

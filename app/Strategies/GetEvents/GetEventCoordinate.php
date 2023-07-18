@@ -2,79 +2,56 @@
 
 namespace App\Strategies\GetEvents;
 
-use Exception;
 use App\Strategies\GetEventInterface;
 use App\Models\Event;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+
+/**
+ * Clase que maneja toda la logica para la consulta de eventos con coordenadas
+ *
+ * 
+ *
+ * @package    Controllers
+ * @copyright  2023 Ignicion S.A.S.
+ * @author     Daniel Martinez <danielxz331@gmail.com>
+ * @version    v1.0.0
+ */
 
 class GetEventCoordinate implements GetEventInterface
 {
+    //Metodo para traer todos los eventos
     public function getAllEvents()
     {
 
-        try {
+        $events = Event::with('eventType', 'eventCoordinate')->get();
 
-            $events = Event::with('eventType', 'eventCoordinate')->get();
+        $eventsOrder = $this->OrderEvents($events);
 
-            $eventsOrder = $this->OrderEvents($events);
-
-            return $eventsOrder;
-
-        } catch (Exception $exception) {
-
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500);
-        }
+        return $eventsOrder;
     }
 
+    //Metodo para traer eventos por su tipo
     public function getEventsType($request)
     {
-        try {
 
-            $events = Event::where('idEventType', $request->idEventType)->with('eventType', 'eventCoordinate')->get();
+        $events = Event::where('idEventType', $request->idEventType)->with('eventType', 'eventCoordinate')->get();
 
-            $eventsOrder = $this->OrderEvents($events);
+        $eventsOrder = $this->OrderEvents($events);
 
-            return $eventsOrder;
-
-        } catch (Exception $exception) {
-
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500);
-        }
+        return $eventsOrder;
     }
 
+    //Metodo para traer eventos por su fecha
     public function getEventsForDate($request)
     {
-        try {
 
-            $events = Event::where('startDate', '>=', $request->startDate)->where('endDate', '<=', $request->endDate)->with('eventType', 'eventCoordinate')->get();
+        $events = Event::where('startDate', '>=', $request->startDate)->where('endDate', '<=', $request->endDate)->with('eventType', 'eventCoordinate')->get();
 
-            $eventsOrder = $this->OrderEvents($events);
+        $eventsOrder = $this->OrderEvents($events);
 
-            return $eventsOrder;
-            
-        } catch (Exception $exception) {
-
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500);
-        }
+        return $eventsOrder;
     }
 
+    //Metodo para organizar en un mismo formato el retorno de la informacion de los eventos
     public function OrderEvents($events)
     {
         $eventosOrganizados = $events->map(function ($evento) {

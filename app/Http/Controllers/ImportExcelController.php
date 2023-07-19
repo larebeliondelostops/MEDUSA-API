@@ -71,7 +71,7 @@ class ImportExcelController extends Controller
             $this->errores = HurtoVehiculo::$IMPORT_RESPONSE;
             // Extraemos la información sin errores
             $this->data = HurtoVehiculo::$FILE_DATA;
-
+            
             if ($this->errores != NULL) {
                 return Response::json([
                     'code' => '2002',

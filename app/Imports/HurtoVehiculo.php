@@ -74,7 +74,7 @@ class HurtoVehiculo implements ToArray, WithStartRow, WithChunkReading, WithMult
                     'CUADRANTE'    => $row[4],
                     'BARRIO'       => $row[5],
                     'CANTIDAD'      => $row[6],
-                    'DIRECCION'     => $row[7],
+                    'DIRECCION'     => $this->geocoding($row[7] . ' Villavicencio, Meta'),
                     'SITIO'         => $row[8],
                     'MES'           => $row[9],
                     'SEMANA'        => $row[10],
@@ -223,5 +223,14 @@ class HurtoVehiculo implements ToArray, WithStartRow, WithChunkReading, WithMult
             }
         }
         return false;
+    }
+
+    public function geocoding($address)
+    {
+        $address = str_replace(" ", "+", $address);
+        $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=" . config('services.google.maps.key');
+        $response = file_get_contents($url);
+        $json = json_decode($response,TRUE); //generate array object from the response from the web
+        return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
     }
 }

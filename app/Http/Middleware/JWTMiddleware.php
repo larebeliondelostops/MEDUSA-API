@@ -23,7 +23,7 @@ class JWTMiddleware
 
             // Verficar si existe un token en el header
             $token = $request->header('Authorization');
-            
+
             if (!$token) {
                 return response()->json(['message' => 'No se proporcionó un token'], 401);
             }
@@ -36,6 +36,11 @@ class JWTMiddleware
             if (!$user) {
                 return response()->json(['message' => 'Usuario no encontrado'], 500);
             }
+        } catch (TokenExpiredException $e) {
+            // Si el token ha expirado, retorna tu propia respuesta personalizada
+            return response()->json([
+                'message' => 'El token ha expirado.',
+            ], 401);
         } catch (JWTException $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

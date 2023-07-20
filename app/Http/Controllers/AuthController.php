@@ -140,8 +140,8 @@ class AuthController extends Controller
             }
 
             $success = [
-                'token' => $token,
-                'refresh_token' => $refresh_token
+                'accessToken' => $token,
+                'refreshToken' => $refresh_token
             ];
 
             $this->data = $success;

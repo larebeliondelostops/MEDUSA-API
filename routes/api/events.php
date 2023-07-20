@@ -25,11 +25,11 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::delete('evento/delete/{id}', [EventController::class, 'deleteEvent']);
 
     //endpoints para reportes
-    
-    Route::get('evento/EventsForMonth', [EventController::class, 'EventsForMonth']); 
-    Route::get('evento/EventsForType', [EventController::class, 'EventsForType']); 
-    Route::get('evento/EventsPastAndFuture', [EventController::class, 'EventsPastAndFuture']); 
-    Route::get('evento/EventsByAuthorizingEntity', [EventController::class, 'EventsByAuthorizingEntity']); 
-    Route::get('evento/EventsByCapacityRange', [EventController::class, 'EventsByCapacityRange']); 
-    Route::get('evento/EventsByTypeAndAuthorizingEntity', [EventController::class, 'EventsByTypeAndAuthorizingEntity']); 
+
+    Route::get('evento/EventsForMonth', [EventController::class, 'EventsForMonth']);
+    Route::get('evento/EventsForType', [EventController::class, 'EventsForType']);
+    Route::get('evento/EventsPastAndFuture', [EventController::class, 'EventsPastAndFuture']);
+    Route::get('evento/EventsByAuthorizingEntity', [EventController::class, 'EventsByAuthorizingEntity']);
+    Route::get('evento/EventsByCapacityRange', [EventController::class, 'EventsByCapacityRange']);
+    Route::get('evento/EventsByTypeAndAuthorizingEntity', [EventController::class, 'EventsByTypeAndAuthorizingEntity']);
 });

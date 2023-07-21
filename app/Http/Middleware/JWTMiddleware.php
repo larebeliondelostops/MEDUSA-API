@@ -20,9 +20,10 @@ class JWTMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
-
+            //dd($request);
             // Verficar si existe un token en el header
-            $token = $request->header('Authorization');
+            //$token = $request->header('Authorization');
+            $token = str_replace('Bearer ', '', $request->header('Authorization'));
 
             if (!$token) {
                 return response()->json(['message' => 'No se proporcionó un token'], 401);

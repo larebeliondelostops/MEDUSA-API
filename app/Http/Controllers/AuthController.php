@@ -140,8 +140,8 @@ class AuthController extends Controller
             }
 
             $success = [
-                'token' => $token,
-                'refresh_token' => $refresh_token
+                'accessToken' => $token,
+                'refreshToken' => $refresh_token
             ];
 
             $this->data = $success;
@@ -218,7 +218,8 @@ class AuthController extends Controller
     public function validateToken(Request $request)
     {
         // Recuperación del token
-        $token = $request->header('Authorization');
+        //$token = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $request->header('Authorization'));
 
         // Setear el token para trabajar con él
         $jwtAuth = JWTAuth::setToken($token);
@@ -259,7 +260,8 @@ class AuthController extends Controller
      */
     public function refresh(Request $request)
     {
-        $token = $request->header('Authorization');
+        //$token = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $request->header('Authorization'));
         // Setear el token para trabajar con él
         $jwtAuth = JWTAuth::setToken($token);
 

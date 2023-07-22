@@ -15,12 +15,28 @@ return new class extends Migration
     {
         Schema::create('ProbabilisticGrid', function (Blueprint $table) {
             $table->id();
-            $table->float('ActualState', 6, 6);
-            $table->float('FutureState', 6, 6);
             $table->string('type');
             $table->json('coordinates');
-            $table->string('CurrentPercentage');
-            $table->string('FuturePercentage');
+            $table->float('ActualStatePersonalInjuries', 6, 6);
+            $table->float('FutureStatePersonalInjuries', 6, 6);
+            $table->float('ActualStateTheftResidences', 6, 6);
+            $table->float('FutureStateTheftResidences', 6, 6);
+            $table->float('ActualStateTheftCommerce', 6, 6);
+            $table->float('FutureStateTheftCommerce', 6, 6);
+            $table->float('ActualStateTheftAutomotive', 6, 6);
+            $table->float('FutureStateTheftAutomotive', 6, 6);
+            $table->float('FutureStateTheftMotorcycles', 6, 6);
+            $table->float('ActualStateTheftMotorcycles', 6, 6);
+            $table->float('ActualStateTheftFinancialEntities', 6, 6);
+            $table->float('FutureStateTheftFinancialEntities', 6, 6);
+            $table->float('ActualStateHomicide', 6, 6);
+            $table->float('FutureStateHomicide', 6, 6);
+            $table->float('ActualStateKidnapping', 6, 6);
+            $table->float('FutureStateKidnapping', 6, 6);
+            $table->float('ActualStateExtortion', 6, 6);
+            $table->float('FutureStateExtortion', 6, 6);
+            $table->float('ActualStateTerrorism', 6, 6);
+            $table->float('FutureStateTerrorism', 6, 6);
         });
     }
 

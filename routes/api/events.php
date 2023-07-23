@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProbabilisticController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,4 +33,8 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::get('evento/EventsByAuthorizingEntity', [EventController::class, 'EventsByAuthorizingEntity']);
     Route::get('evento/EventsByCapacityRange', [EventController::class, 'EventsByCapacityRange']);
     Route::get('evento/EventsByTypeAndAuthorizingEntity', [EventController::class, 'EventsByTypeAndAuthorizingEntity']);
+
+    //endpoints temporales para modelo probabilistico
+
+    Route::get('modeloprobabilistico/ProbabilisticGrid', [ProbabilisticController::class, 'obtenerCuadriculaProbabilistica']);   
 });

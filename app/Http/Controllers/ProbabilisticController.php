@@ -32,8 +32,8 @@ class ProbabilisticController extends Controller
                         "Extortion" => [$grid->ActualStateExtortion, $grid->FutureStateExtortion],
                         "Terrorism" => [$grid->ActualStateTerrorism, $grid->FutureStateTerrorism]
                     ],
-                    "ActualState" => round($grid->ActualStateAverage/10),
-                    "FutureState" => round($grid->FutureStateAverage/10),
+                    "ActualState" => $grid->ActualStateAverage/10,
+                    "FutureState" => $grid->FutureStateAverage/10,
                     "CurrentPercentage" => $grid->ActualStateAverage,
                     "FuturePercentage" => $grid->FutureStateAverage
                 ],
@@ -45,6 +45,6 @@ class ProbabilisticController extends Controller
             $resultData["features"][] = $feature;
         }
 
-        return response()->json($resultData);
+        return response()->json($resultData, 200, [], JSON_NUMERIC_CHECK);
     }
 }

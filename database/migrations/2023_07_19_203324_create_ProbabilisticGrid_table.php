@@ -37,6 +37,8 @@ return new class extends Migration
             $table->float('FutureStateExtortion', 6, 6);
             $table->float('ActualStateTerrorism', 6, 6);
             $table->float('FutureStateTerrorism', 6, 6);
+            $table->float('ActualStateAverage', 6, 6);
+            $table->float('FutureStateAverage', 6, 6);
         });
     }
 

@@ -16,6 +16,8 @@ class ProbabilisticController extends Controller
         ];
 
         foreach ($data as $grid) {
+            $coordinates = json_decode($grid->coordinates, true);
+
             $feature = [
                 "type" => "Feature",
                 "properties" => [
@@ -39,7 +41,7 @@ class ProbabilisticController extends Controller
                 ],
                 "geometry" => [
                     "type" => $grid->type,
-                    "coordinates" => [$grid->coordinates]
+                    "coordinates" => $coordinates
                 ]
             ];
             $resultData["features"][] = $feature;

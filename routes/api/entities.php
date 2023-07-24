@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EntitiesController;
+use App\Http\Controllers\MovementEntitiesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,4 +22,6 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('entities/store', [EntitiesController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::post('entities/update/{id}', [EntitiesController::class, 'update']); // editar un campo en la tabla entidades
     Route::post('entities/destroy/{id}', [EntitiesController::class, 'destroy']); // editar un campo en la tabla entidades
+
+    Route::apiResource('/entities/movement', MovementEntitiesController::class);
 });

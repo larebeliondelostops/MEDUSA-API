@@ -2,28 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Request\Health\HealthRequest;
-use Exception;
-use App\Models\Health;
-use App\Values\HealthValues;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+use App\Http\Request\Alarms\AlarmsRequest;
+use App\Values\AlarmsValues;
+use App\Models\Alarms;
 
+use Exception;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 
 /**
- * Controlador Maneja Lógica de Salud.
+ * Controlador manejan todo lo que tiene que ver con Entidades
  *
- * Controlador que maneja la lógica de centros de salud y las modificaciones posibles con el sistema.
+ * Controlador que maneja el llamado a las strategias ya sea para crear, actualizar, eliminar o consultar entidades
  *
  * @package    Controllers
  * @copyright  2023 Ignicion S.A.S.
- * @author     David Acosta Ojeda <Dacostaojeda2000@gmail.com>
+ * @author     David Acosta <Dacostaojeda2000@gmail.com>
  * @version    v1.0.0
  */
-class HealthController extends Controller
+
+class AlarmsController extends Controller
 {
+
+    //Metodo para traer todas las entidades
     public function all()
     {
 
@@ -31,7 +34,7 @@ class HealthController extends Controller
 
             $state = request()->input('state');
 
-            $strategy = HealthValues::STRATEGY[$state];
+            $strategy = AlarmsValues::STRATEGY[$state];
 
             return (new $strategy)->all();
 
@@ -47,14 +50,14 @@ class HealthController extends Controller
         }
     }
 
-    public function store(HealthRequest $request)
+    public function store(AlarmsRequest $request)
     {
 
         try {
 
             $state = request()->input('state');
 
-            $strategy = HealthValues::STRATEGY[$state];
+            $strategy = AlarmsValues::STRATEGY[$state];
 
             return (new $strategy)->store($request);
 
@@ -77,7 +80,7 @@ class HealthController extends Controller
 
             $state = request()->input('state');
 
-            $strategy = HealthValues::STRATEGY[$state];
+            $strategy = AlarmsValues::STRATEGY[$state];
 
             return (new $strategy)->update($request, $id);
 
@@ -100,7 +103,7 @@ class HealthController extends Controller
 
             $state = request()->input('state');
 
-            $strategy = HealthValues::STRATEGY[$state];
+            $strategy = AlarmsValues::STRATEGY[$state];
 
             return (new $strategy)->destroy($id);
             

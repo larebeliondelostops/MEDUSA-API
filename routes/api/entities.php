@@ -18,10 +18,10 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     /**
      * Manejo de entidades
      */
-    Route::post('entities/all', [EntitiesController::class, 'all']); // Obtener todos los campos de la tabla entidades
+    Route::get('entities/all', [EntitiesController::class, 'all']); // Obtener todos los campos de la tabla entidades
     Route::post('entities/store', [EntitiesController::class, 'store']); // Agregar un campo en la tabla entidades
-    Route::post('entities/update/{id}', [EntitiesController::class, 'update']); // editar un campo en la tabla entidades
-    Route::post('entities/destroy/{id}', [EntitiesController::class, 'destroy']); // editar un campo en la tabla entidades
+    Route::put('entities/update/{id}', [EntitiesController::class, 'update']); // editar un campo en la tabla entidades
+    Route::delete('entities/destroy/{id}', [EntitiesController::class, 'destroy']); // editar un campo en la tabla entidades
 
     Route::apiResource('/entities/movement', MovementEntitiesController::class);
 });

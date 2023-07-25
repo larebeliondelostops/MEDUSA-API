@@ -50,6 +50,10 @@ class RouteServiceProvider extends ServiceProvider
                     require base_path('routes/api/events.php');
                     require base_path('routes/api/eventsType.php');
                     require base_path('routes/api/reports.php');
+                    require base_path('routes/api/alarms.php');
+                    require base_path('routes/api/cameras.php');
+                    require base_path('routes/api/cai.php');
+                    require base_path('routes/api/pollingPlace.php');
                 });
 
             Route::middleware('web')

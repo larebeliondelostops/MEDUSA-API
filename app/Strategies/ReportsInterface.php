@@ -5,7 +5,7 @@ namespace App\Strategies;
 interface ReportsInterface
 {
     //reportes de eventos
-    
+
     public function EventsForMonth();
     public function EventsForType();
     public function EventsByAuthorizingEntity();
@@ -15,10 +15,10 @@ interface ReportsInterface
 
     //reportes de criminalidad
 
-    public function MostOccurrencesDateOfTheMonth();
-    public function HourMostOccurrencesOfTheMonth();
-    public function DayWeekMostOccurrencesOfMonth();
+    public function MostOccurrencesDateHistorical();
+    public function HourMostOccurrencesHistorical();
+    public function DayWeekMostOccurrencesHistorical();
     public function MostFrequentCrime();
     public function CrimeLessFrequent();
-    public function MostFrequentCrimeByZone();
+    public function CrimeByZone();
 }

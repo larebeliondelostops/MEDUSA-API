@@ -77,31 +77,31 @@ class ReportController extends Controller
 
     //reportes de criminalidad
 
-    public function MostOccurrencesDateOfTheMonth(Request $request)
+    public function MostOccurrencesDateHistorical(Request $request)
     {
         $state = $request->input('state');
 
         $strategy = ReportsValues::STRATEGY[$state];
 
-        return (new $strategy)->MostOccurrencesDateOfTheMonth();
+        return (new $strategy)->MostOccurrencesDateHistorical();
     }
 
-    public function HourMostOccurrencesOfTheMonth(Request $request)
+    public function HourMostOccurrencesHistorical(Request $request)
     {
         $state = $request->input('state');
 
         $strategy = ReportsValues::STRATEGY[$state];
 
-        return (new $strategy)->HourMostOccurrencesOfTheMonth();
+        return (new $strategy)->HourMostOccurrencesHistorical();
     }
 
-    public function DayWeekMostOccurrencesOfMonth(Request $request)
+    public function DayWeekMostOccurrencesHistorical(Request $request)
     {
         $state = $request->input('state');
 
         $strategy = ReportsValues::STRATEGY[$state];
 
-        return (new $strategy)->DayWeekMostOccurrencesOfMonth();
+        return (new $strategy)->DayWeekMostOccurrencesHistorical();
     }
 
     public function MostFrequentCrime(Request $request)
@@ -122,13 +122,13 @@ class ReportController extends Controller
         return (new $strategy)->CrimeLessFrequent();
     }
 
-    public function MostFrequentCrimeByZone(Request $request)
+    public function CrimeByZone(Request $request)
     {
         $state = $request->input('state');
 
         $strategy = ReportsValues::STRATEGY[$state];
 
-        return (new $strategy)->MostFrequentCrimeByZone();
+        return (new $strategy)->CrimeByZone();
     }
 
 

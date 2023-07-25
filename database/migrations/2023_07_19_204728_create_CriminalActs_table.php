@@ -30,10 +30,10 @@ return new class extends Migration
             $table->string('site')->nullable();
             $table->string('month')->nullable();
             $table->string('week')->nullable();
-            $table->string('date')->nullable();
+            $table->date('date')->nullable();
             $table->string('day')->nullable();
-            $table->string('time')->nullable();
-            $table->string('hour_24')->nullable();
+            $table->time('time')->nullable();
+            $table->integer('hour_24')->nullable();
             $table->string('crime')->nullable();
             $table->string('conduct')->nullable();
             $table->string('modality')->nullable();
@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->string('zone')->nullable();
             $table->string('unique_number')->nullable();
-            $table->string('quantity_2')->nullable();
+            $table->integer('quantity_2')->nullable();
             $table->string('plate')->nullable();
             $table->json('coordinates')->nullable();
             $table->timestamps();

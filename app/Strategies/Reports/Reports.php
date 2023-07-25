@@ -2,6 +2,7 @@
 
 namespace App\Strategies\Reports;
 
+use App\Models\CriminalActs;
 use Exception;
 use App\Models\Event;
 use App\Strategies\ReportsInterface;
@@ -170,4 +171,77 @@ class Reports implements ReportsInterface
 
         return response()->json(['reporte' => $reporte]);
     }
+
+    //REPORTES DE DELITOS
+
+    public function MostOccurrencesDateOfTheMonth()
+    {
+        // Obtener la fecha con más ocurrencias de delitos del mes
+        dd (Carbon::now()->month);
+        $fechaMasOcurrencias = CriminalActs::wheremonth('date', Carbon::now()->month)
+            ->groupBy('date')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('date')
+            ->first();
+
+        return response()->json(['fechaMasOcurrencias' => $fechaMasOcurrencias]);
+    }
+
+    public function HourMostOccurrencesOfTheMonth()
+    {
+        // Obtener la hora con más ocurrencias de delitos del mes
+        $horaMasOcurrencias = CriminalActs::whereMonth('date', Carbon::now()->month)
+            ->groupBy('hour_24')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('hour_24')
+            ->first();
+
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias]);
+    }
+
+    public function DayWeekMostOccurrencesOfMonth()
+    {
+        // Obtener el día de la semana con más ocurrencias de delitos del mes
+        $diaSemanaMasOcurrencias = CriminalActs::whereMonth('date', Carbon::now()->month)
+            ->groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('day')
+            ->first();
+
+        return response()->json(['diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias]);
+    }
+
+    public function MostFrequentCrime()
+    {
+        // Obtener el delito más frecuente
+        $delitoMasFrecuente = CriminalActs::groupBy('crime')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('crime')
+            ->first();
+
+        return response()->json(['delitoMasFrecuente' => $delitoMasFrecuente]);
+    }
+
+    public function CrimeLessFrequent()
+    {
+        // Obtener el delito menos frecuente
+        $delitoMenosFrecuente = CriminalActs::groupBy('crime')
+            ->orderByRaw('COUNT(*) ASC')
+            ->pluck('crime')
+            ->first();
+
+        return response()->json(['delitoMenosFrecuente' => $delitoMenosFrecuente]);
+    }
+
+    public function MostFrequentCrimeByZone()
+    {
+        // Obtener el delito más frecuente por zona
+        $delitoMasFrecuentePorZona = CriminalActs::groupBy('zone', 'crime')
+            ->selectRaw('zone, crime, COUNT(*) as total')
+            ->orderByRaw('total DESC')
+            ->get();
+
+        return response()->json(['delitoMasFrecuentePorZona' => $delitoMasFrecuentePorZona]);
+    }
+
 }

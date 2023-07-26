@@ -22,6 +22,7 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('entities/store', [EntitiesController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::put('entities/update/{id}', [EntitiesController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('entities/destroy/{id}', [EntitiesController::class, 'destroy']); // editar un campo en la tabla entidades
+    Route::post('entities/storeMax', [EntitiesController::class, 'storeMax']);
 
     Route::apiResource('/entities/movement', MovementEntitiesController::class);
 });

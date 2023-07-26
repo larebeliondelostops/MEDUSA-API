@@ -21,4 +21,5 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('health/store', [HealthController::class, 'store']); // Agregar un campo en la tabla salud
     Route::put('health/update/{id}', [HealthController::class, 'update']); // editar un campo en la tabla salud
     Route::delete('health/destroy/{id}', [HealthController::class, 'destroy']); // editar un campo en la tabla salud
+    Route::post('health/storeMax', [HealthController::class, 'storeMax']);
 });

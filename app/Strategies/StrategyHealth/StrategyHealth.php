@@ -191,4 +191,50 @@ class StrategyHealth implements HealthInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
+    public function storeMax(Request $request)
+    {
+        try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response()->json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+    
+            // Recorrer el array de JSON y guardar cada elemento en la base de datos
+            foreach ($request->array as $Data) {
+                $health = new Health();
+                $health->idEntities = $Data['idEntities'];
+                $health->emergencyPatients = $Data['emergencyPatients'];
+                $health->emergencyBedsAvailable = $Data['emergencyBedsAvailable'];
+                $health->availableOperatingRooms = $Data['availableOperatingRooms'];
+                $health->intensiveCareUnitAvailable = $Data['intensiveCareUnitAvailable'];
+                $health->firstLevelBeds = $Data['firstLevelBeds'];
+                $health->secondLevelBeds = $Data['secondLevelBeds'];
+                $health->thirdLevelBeds = $Data['thirdLevelBeds'];
+                $health->bloodBank = $Data['bloodBank'];
+                $health->doctorsInTheShift = $Data['doctorsInTheShift'];
+                $health->nursesInTheShift = $Data['nursesInTheShift'];
+                $health->affiliatedIps = $Data['affiliatedIps'];
+                $health->numberOfEmergenciesDay= $Data['numberOfEmergenciesDay'];
+                $health->save();
+            }
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Datos almacenados exitosamente'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return response()->json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
 }

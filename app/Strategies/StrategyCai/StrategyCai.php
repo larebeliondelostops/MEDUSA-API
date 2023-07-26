@@ -31,7 +31,7 @@ class StrategyCai implements CaiInterface
     
                 $transformedData[] = [
                     'type' => 'feature',
-                    'markerType' => 7,
+                    'markerType' => 2,
                     'id' => $cai->id,
                     'title' => $cai->name,
                     'geometry' => $geometry,

@@ -50,7 +50,7 @@ class StrategyEntities implements EntitiesInterface
     
                 $transformedData[] = [
                     'type' => 'feature',
-                    'markerType' => 7,
+                    'markerType' => 4,
                     'id' => $entity->id,
                     'title' => $entity->name,
                     'geometry' => $geometry,

@@ -169,4 +169,40 @@ class StrategyCai implements CaiInterface
         }
     }
 
+    public function storeMax(Request $request)
+    {
+        try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return response()->json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+    
+            // Recorrer el array de JSON y guardar cada elemento en la base de datos
+            foreach ($request->array as $Data) {
+                $cai = new Cai();
+                $cai->name = $Data['name'];
+                $cai->address = $Data['address'];
+                $cai->pointCoordinates = json_encode($Data['pointCoordinates']);
+                $cai->save();
+            }
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Datos almacenados exitosamente'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return response()->json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
 }

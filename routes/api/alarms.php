@@ -20,4 +20,5 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('alarms/store', [AlarmsController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::put('alarms/update/{id}', [AlarmsController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('alarms/destroy/{id}', [AlarmsController::class, 'destroy']); // editar un campo en la tabla entidades
+    Route::post('alarms/storeMax', [AlarmsController::class, 'storeMax']); // Agregar un campo en la tabla entidades
 });

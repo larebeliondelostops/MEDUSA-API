@@ -12,5 +12,6 @@ interface AlarmsInterface
     public function store(AlarmsRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);
+    public function storeMax(Request $request);
 
 }

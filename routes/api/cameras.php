@@ -20,4 +20,5 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('cameras/store', [CamerasController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::put('cameras/update/{id}', [CamerasController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('cameras/destroy/{id}', [CamerasController::class, 'destroy']); // editar un campo en la tabla entidades
+    Route::post('cameras/storeMax', [CamerasController::class, 'storeMax']);
 });

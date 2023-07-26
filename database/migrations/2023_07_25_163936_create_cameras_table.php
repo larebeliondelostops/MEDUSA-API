@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->string('url');
+            $table->text('url');
             $table->json('pointCoordinates');
             $table->timestamps();
         });

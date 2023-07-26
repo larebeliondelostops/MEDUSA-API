@@ -20,4 +20,5 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::post('pollingPlace/store', [PollingPlaceController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::put('pollingPlace/update/{id}', [PollingPlaceController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('pollingPlace/destroy/{id}', [PollingPlaceController::class, 'destroy']); // editar un campo en la tabla entidades
+    Route::post('pollingPlace/storeMax', [PollingPlaceController::class, 'storeMax']);
 });

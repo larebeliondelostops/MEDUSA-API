@@ -12,5 +12,5 @@ interface CamerasInterface
     public function store(CamerasRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);
-
+    public function storeMax(Request $request);
 }

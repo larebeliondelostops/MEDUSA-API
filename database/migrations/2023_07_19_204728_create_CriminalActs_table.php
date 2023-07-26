@@ -56,6 +56,12 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('CriminalActs', function (Blueprint $table) {
+            // Eliminar la clave foránea 'IndicatorId'
+            $table->dropForeign(['IndicatorId']);
+            // Eliminar la clave foránea 'ProbabilisticGridId'
+            $table->dropForeign(['ProbabilisticGridId']);            
+        });
         Schema::dropIfExists('CriminalActs');
     }
 };

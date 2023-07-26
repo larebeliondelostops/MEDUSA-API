@@ -35,6 +35,11 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('events', function (Blueprint $table) {
+            // Eliminar la clave foránea 'idEventType'
+            $table->dropForeign(['idEventType']);
+        });
+        
         Schema::dropIfExists('events');
     }
 };

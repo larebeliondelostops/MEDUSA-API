@@ -41,7 +41,7 @@ class ProbabilisticController extends Controller
                 ],
                 "geometry" => [
                     "type" => $grid->type,
-                    "coordinates" => $coordinates
+                    "coordinates" => [$coordinates]
                 ]
             ];
             $resultData["features"][] = $feature;

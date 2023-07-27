@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('incident', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('IndicatorId');
+            $table->foreign('IndicatorId')->references('id')->on('Indicators');
+            $table->string('address');
+            $table->text('description');
+            $table->json('pointCoordinates');
+            $table->string('image');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('incident', function (Blueprint $table) {
+            // Eliminar la clave foránea 'IndicatorId'
+            $table->dropForeign(['IndicatorId']);
+        });
+        Schema::dropIfExists('incident');
+    }
+};

@@ -7,6 +7,11 @@
 <input type="text" id="coords" />
 <button onclick="exportToJson()">Descargar JSON</button>
 
+<!-- Agregar un elemento para mostrar el contador -->
+<div>
+    <p>Contador de direcciones almacenadas: <span id="address-counter" class="large-counter">0</span></p>
+</div>
+
 <script>
 var marker;
 var coords = {};
@@ -80,6 +85,10 @@ function getAddressFromCoords(coords) {
 function updateAddressList() {
     var addressList = document.getElementById('address-list');
     addressList.innerHTML = addressData.map((address) => '<li>' + address + '</li>').join('');
+
+    // Actualizar el contador
+    var addressCounter = document.getElementById('address-counter');
+    addressCounter.textContent = addressData.length;
 }
 
 function exportToJson() {
@@ -106,5 +115,12 @@ function exportToJson() {
 <div>
     <ul id="address-list"></ul>
 </div>
+
+<style>
+    /* Estilos para el contador grande */
+    .large-counter {
+        font-size: 24px;
+    }
+</style>
 
 @endsection

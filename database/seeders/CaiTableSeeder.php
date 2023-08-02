@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CaiTableSeeder extends Seeder
 {
@@ -190,6 +191,7 @@ class CaiTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('cai')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])
             ]);

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EntitiesTableSeeder extends Seeder
 {
@@ -622,6 +623,7 @@ class EntitiesTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('entities')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])
             ]);

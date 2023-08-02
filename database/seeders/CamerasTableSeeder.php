@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CamerasTableSeeder extends Seeder
 {
@@ -1529,6 +1530,7 @@ class CamerasTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('cameras')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'url' => $Data['url'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])

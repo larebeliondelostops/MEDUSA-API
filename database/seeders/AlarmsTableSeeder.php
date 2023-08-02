@@ -17,7 +17,7 @@ class AlarmsTableSeeder extends Seeder
     {
         $data = '
         {
-          "array":[
+          "array": [
             {
               "name": "Barzal Alto",
               "address": "Calle 37 Carrera 40",
@@ -28,8 +28,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.641353,
-                        4.1464485
+                        4.1464485,
+                        -73.641353
                       ]
                     }
                   }
@@ -38,7 +38,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Barzal Bajo",
-              "address": "Calle 37 N\u00ba 34-42",
+              "address": "Calle 37 Nº 34-42",
               "pointCoordinates": {
                 "features": [
                   {
@@ -46,8 +46,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.639435,
-                        4.149519
+                        4.149519,
+                        -73.639435
                       ]
                     }
                   }
@@ -56,7 +56,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "San Benito",
-              "address": "Calle 23 N\u00ba 36-40",
+              "address": "Calle 23 Nº 36-40",
               "pointCoordinates": {
                 "features": [
                   {
@@ -64,8 +64,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.632661,
-                        4.13666
+                        4.13666,
+                        -73.632661
                       ]
                     }
                   }
@@ -74,7 +74,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Bochica II",
-              "address": "Calle 11a N\u00ba19c-05",
+              "address": "Calle 11a Nº19c-05",
               "pointCoordinates": {
                 "features": [
                   {
@@ -82,8 +82,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.621957,
-                        4.132329
+                        4.132329,
+                        -73.621957
                       ]
                     }
                   }
@@ -92,7 +92,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Estero",
-              "address": "Calle 7a N\u00ba 10B-35",
+              "address": "Calle 7a Nº 10B-35",
               "pointCoordinates": {
                 "features": [
                   {
@@ -100,8 +100,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6125492,
-                        4.1306919
+                        4.1306919,
+                        -73.6125492
                       ]
                     }
                   }
@@ -110,7 +110,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Bello Horizonte",
-              "address": "Calle 15a N\u00ba 14B-22",
+              "address": "Calle 15a Nº 14B-22",
               "pointCoordinates": {
                 "features": [
                   {
@@ -118,8 +118,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.961237,
-                        4.13399
+                        4.13399,
+                        -73.961237
                       ]
                     }
                   }
@@ -128,7 +128,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Carulu",
-              "address": "Calle 3D N\u00ba 29a-03",
+              "address": "Calle 3D Nº 29a-03",
               "pointCoordinates": {
                 "features": [
                   {
@@ -136,8 +136,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.628243,
-                        4.119868
+                        4.119868,
+                        -73.628243
                       ]
                     }
                   }
@@ -146,7 +146,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Cantarrana II",
-              "address": "Carrera 19 N\u00ba 12-39",
+              "address": "Carrera 19 Nº 12-39",
               "pointCoordinates": {
                 "features": [
                   {
@@ -154,8 +154,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.622254,
-                        4.133272
+                        4.133272,
+                        -73.622254
                       ]
                     }
                   }
@@ -164,7 +164,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Antonio Pinilla",
-              "address": "Calle 22 N\u00ba 18-09",
+              "address": "Calle 22 Nº 18-09",
               "pointCoordinates": {
                 "features": [
                   {
@@ -172,8 +172,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62332,
-                        4.13829
+                        4.13829,
+                        -73.62332
                       ]
                     }
                   }
@@ -182,7 +182,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Industrial",
-              "address": "Carrera 22 N\u00ba 37b-86",
+              "address": "Carrera 22 Nº 37b-86",
               "pointCoordinates": {
                 "features": [
                   {
@@ -190,8 +190,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.627621,
-                        4.15318
+                        4.15318,
+                        -73.627621
                       ]
                     }
                   }
@@ -200,7 +200,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Maranatha",
-              "address": "Calle 18b N\u00ba 43a-04",
+              "address": "Calle 18b Nº 43a-04",
               "pointCoordinates": {
                 "features": [
                   {
@@ -208,8 +208,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.649732,
-                        4.106553
+                        4.106553,
+                        -73.649732
                       ]
                     }
                   }
@@ -218,7 +218,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Santa Helena II",
-              "address": "Carrera 17a N\u00ba 35b-10",
+              "address": "Carrera 17a Nº 35b-10",
               "pointCoordinates": {
                 "features": [
                   {
@@ -226,8 +226,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.617402,
-                        4.148217
+                        4.148217,
+                        -73.617402
                       ]
                     }
                   }
@@ -236,7 +236,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "La Primavera",
-              "address": "Carrera 20c N\u00ba 8-41",
+              "address": "Carrera 20c Nº 8-41",
               "pointCoordinates": {
                 "features": [
                   {
@@ -244,8 +244,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62112,
-                        4.12976
+                        4.12976,
+                        -73.62112
                       ]
                     }
                   }
@@ -254,7 +254,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Jordan",
-              "address": "Carrera 20c N\u00ba 39a-08",
+              "address": "Carrera 20c Nº 39a-08",
               "pointCoordinates": {
                 "features": [
                   {
@@ -262,8 +262,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.622716,
-                        4.152531
+                        4.152531,
+                        -73.622716
                       ]
                     }
                   }
@@ -272,7 +272,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Porvenir",
-              "address": "Calle 26B N\u00ba 25-52",
+              "address": "Calle 26B Nº 25-52",
               "pointCoordinates": {
                 "features": [
                   {
@@ -280,8 +280,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.628235,
-                        4.144355
+                        4.144355,
+                        -73.628235
                       ]
                     }
                   }
@@ -290,7 +290,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Santa Josefa",
-              "address": "Calle 49a N\u00ba 45-79",
+              "address": "Calle 49a Nº 45-79",
               "pointCoordinates": {
                 "features": [
                   {
@@ -298,8 +298,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.652394,
-                        4.161848
+                        4.161848,
+                        -73.652394
                       ]
                     }
                   }
@@ -308,7 +308,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Hacaritama",
-              "address": "Carrera 18 N\u00ba 3B-03",
+              "address": "Carrera 18 Nº 3B-03",
               "pointCoordinates": {
                 "features": [
                   {
@@ -316,8 +316,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.61509,
-                        4.126027
+                        4.126027,
+                        -73.61509
                       ]
                     }
                   }
@@ -326,7 +326,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Villa Julia",
-              "address": "Calle 37 N\u00ba 25-52",
+              "address": "Calle 37 Nº 25-52",
               "pointCoordinates": {
                 "features": [
                   {
@@ -334,8 +334,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.631766,
-                        4.15055
+                        4.15055,
+                        -73.631766
                       ]
                     }
                   }
@@ -344,7 +344,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Santa Ines",
-              "address": "Carrera 23 N\u00ba 37-77(F\u00e1brica de Colchones)",
+              "address": "Carrera 23 Nº 37-77(Fábrica de Colchones)",
               "pointCoordinates": {
                 "features": [
                   {
@@ -352,8 +352,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62842,
-                        4.15088
+                        4.15088,
+                        -73.62842
                       ]
                     }
                   }
@@ -362,7 +362,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Villas del Palmar",
-              "address": "Calle 3a N\u00ba28b-41",
+              "address": "Calle 3a Nº28b-41",
               "pointCoordinates": {
                 "features": [
                   {
@@ -370,8 +370,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.624423,
-                        4.119644
+                        4.119644,
+                        -73.624423
                       ]
                     }
                   }
@@ -380,7 +380,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Estero Alto",
-              "address": "Calle 11 N\u00ba 15c-17",
+              "address": "Calle 11 Nº 15c-17",
               "pointCoordinates": {
                 "features": [
                   {
@@ -388,8 +388,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.617925,
-                        4.132485
+                        4.132485,
+                        -73.617925
                       ]
                     }
                   }
@@ -398,7 +398,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Estero Bajo",
-              "address": "Calle 10 N\u00ba 12-58",
+              "address": "Calle 10 Nº 12-58",
               "pointCoordinates": {
                 "features": [
                   {
@@ -406,8 +406,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.612379,
-                        4.132146
+                        4.132146,
+                        -73.612379
                       ]
                     }
                   }
@@ -416,7 +416,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Camelias",
-              "address": "Carrera 8 N\u00ba 20-23",
+              "address": "Carrera 8 Nº 20-23",
               "pointCoordinates": {
                 "features": [
                   {
@@ -424,8 +424,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.60878,
-                        4.137651
+                        4.137651,
+                        -73.60878
                       ]
                     }
                   }
@@ -434,7 +434,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Hierba Buena",
-              "address": "Calle 40b N\u00ba 14-44",
+              "address": "Calle 40b Nº 14-44",
               "pointCoordinates": {
                 "features": [
                   {
@@ -442,8 +442,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.613767,
-                        4.151437
+                        4.151437,
+                        -73.613767
                       ]
                     }
                   }
@@ -452,7 +452,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Los Maracos",
-              "address": "Calle 24 Este N\u00ba 15-24",
+              "address": "Calle 24 Este Nº 15-24",
               "pointCoordinates": {
                 "features": [
                   {
@@ -460,8 +460,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.616205,
-                        4.139302
+                        4.139302,
+                        -73.616205
                       ]
                     }
                   }
@@ -478,8 +478,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.601206,
-                        4.15157
+                        4.15157,
+                        -73.601206
                       ]
                     }
                   }
@@ -496,8 +496,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.675282,
-                        4.137311
+                        4.137311,
+                        -73.675282
                       ]
                     }
                   }
@@ -506,7 +506,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Industrial",
-              "address": "Carrera 21a N\u00ba 37b-08",
+              "address": "Carrera 21a Nº 37b-08",
               "pointCoordinates": {
                 "features": [
                   {
@@ -514,8 +514,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.626257,
-                        4.153104
+                        4.153104,
+                        -73.626257
                       ]
                     }
                   }
@@ -524,7 +524,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Barzal",
-              "address": "Calle 35 N\u00ba 35-49",
+              "address": "Calle 35 Nº 35-49",
               "pointCoordinates": {
                 "features": [
                   {
@@ -532,8 +532,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.638332,
-                        4.147692
+                        4.147692,
+                        -73.638332
                       ]
                     }
                   }
@@ -542,7 +542,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Villa Bolivar",
-              "address": "Calle 7 N\u00ba 37-33",
+              "address": "Calle 7 Nº 37-33",
               "pointCoordinates": {
                 "features": [
                   {
@@ -550,8 +550,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.633203,
-                        4.123198
+                        4.123198,
+                        -73.633203
                       ]
                     }
                   }
@@ -560,7 +560,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "El Triunfo",
-              "address": "Calle 46 N\u00ba 33-46",
+              "address": "Calle 46 Nº 33-46",
               "pointCoordinates": {
                 "features": [
                   {
@@ -568,8 +568,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.641154,
-                        4.160009
+                        4.160009,
+                        -73.641154
                       ]
                     }
                   }
@@ -578,7 +578,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "La Campina",
-              "address": "Calle 49 N\u00ba 46-66 Barrio La Campi\u00f1a",
+              "address": "Calle 49 Nº 46-66 Barrio La Campiña",
               "pointCoordinates": {
                 "features": [
                   {
@@ -586,8 +586,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.653123,
-                        4.161131
+                        4.161131,
+                        -73.653123
                       ]
                     }
                   }
@@ -596,7 +596,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Porvenir",
-              "address": "Calle 31 N\u00ba 29-100 Alkosto  Distri Camperos",
+              "address": "Calle 31 Nº 29-100 Alkosto  Distri Camperos",
               "pointCoordinates": {
                 "features": [
                   {
@@ -604,8 +604,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.63301,
-                        4.14497
+                        4.14497,
+                        -73.63301
                       ]
                     }
                   }
@@ -622,8 +622,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.637917,
-                        4.148302
+                        4.148302,
+                        -73.637917
                       ]
                     }
                   }
@@ -632,7 +632,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Manatial",
-              "address": "Calle 39 N\u00b06C-53B ",
+              "address": "Calle 39 N°6C-53B ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -640,8 +640,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.605867,
-                        4.147722
+                        4.147722,
+                        -73.605867
                       ]
                     }
                   }
@@ -650,7 +650,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "SEIS DE ABRIL",
-              "address": "Carrera 8\u00b0 N\u00b0 32-07",
+              "address": "Carrera 8° N° 32-07",
               "pointCoordinates": {
                 "features": [
                   {
@@ -658,8 +658,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.608205,
-                        4.145019
+                        4.145019,
+                        -73.608205
                       ]
                     }
                   }
@@ -668,7 +668,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "EL RECREO III",
-              "address": "Calle 29A N\u00b0 10A-07 ",
+              "address": "Calle 29A N° 10A-07 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -676,8 +676,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.61095,
-                        4.14228
+                        4.14228,
+                        -73.61095
                       ]
                     }
                   }
@@ -694,8 +694,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615634,
-                        4.133913
+                        4.133913,
+                        -73.615634
                       ]
                     }
                   }
@@ -704,7 +704,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "GUATAPE I",
-              "address": "Diagonal 30 Sur N\u00b0 40-55",
+              "address": "Diagonal 30 Sur N° 40-55",
               "pointCoordinates": {
                 "features": [
                   {
@@ -712,8 +712,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65071,
-                        4.09859
+                        4.09859,
+                        -73.65071
                       ]
                     }
                   }
@@ -722,7 +722,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "ALTOS DE GUATAPE",
-              "address": "Calle 26 Sur N\u00b0 38C-03 ",
+              "address": "Calle 26 Sur N° 38C-03 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -730,8 +730,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.61095,
-                        4.14229
+                        4.14229,
+                        -73.61095
                       ]
                     }
                   }
@@ -748,8 +748,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65305,
-                        4.10382
+                        4.10382,
+                        -73.65305
                       ]
                     }
                   }
@@ -766,8 +766,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65236,
-                        4.10405
+                        4.10405,
+                        -73.65236
                       ]
                     }
                   }
@@ -776,7 +776,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "GAVIOTAS",
-              "address": "Carrera 11 Este N\u00b0 23-04 Sur",
+              "address": "Carrera 11 Este N° 23-04 Sur",
               "pointCoordinates": {
                 "features": [
                   {
@@ -784,8 +784,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.597224,
-                        4.1154
+                        4.1154,
+                        -73.597224
                       ]
                     }
                   }
@@ -794,7 +794,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "El Recreo",
-              "address": "Calle 31g N\u00b0 11b-27 ",
+              "address": "Calle 31g N° 11b-27 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -802,8 +802,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.610783,
-                        4.145617
+                        4.145617,
+                        -73.610783
                       ]
                     }
                   }
@@ -812,7 +812,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "CANTARRANA II",
-              "address": "Carrera 19a N\u00b0 12-08",
+              "address": "Carrera 19a N° 12-08",
               "pointCoordinates": {
                 "features": [
                   {
@@ -820,8 +820,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.622097,
-                        4.133067
+                        4.133067,
+                        -73.622097
                       ]
                     }
                   }
@@ -830,7 +830,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "MENEGUA",
-              "address": "Calle 25 N\u00b06-21",
+              "address": "Calle 25 N°6-21",
               "pointCoordinates": {
                 "features": [
                   {
@@ -838,8 +838,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6078793,
-                        4.1392829
+                        4.1392829,
+                        -73.6078793
                       ]
                     }
                   }
@@ -848,7 +848,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "GUADALAJARA",
-              "address": "calle 17C N\u00b0 11-70",
+              "address": "calle 17C N° 11-70",
               "pointCoordinates": {
                 "features": [
                   {
@@ -856,8 +856,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.612083,
-                        4.136259
+                        4.136259,
+                        -73.612083
                       ]
                     }
                   }
@@ -866,7 +866,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "CARULU",
-              "address": "Calle 3D N\u00b0 29a-03",
+              "address": "Calle 3D N° 29a-03",
               "pointCoordinates": {
                 "features": [
                   {
@@ -874,8 +874,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62634,
-                        4.12033
+                        4.12033,
+                        -73.62634
                       ]
                     }
                   }
@@ -884,7 +884,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "MADRIGAL",
-              "address": "Carrera 17 N\u00b0 41-02",
+              "address": "Carrera 17 N° 41-02",
               "pointCoordinates": {
                 "features": [
                   {
@@ -892,8 +892,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615647,
-                        4.152711
+                        4.152711,
+                        -73.615647
                       ]
                     }
                   }
@@ -902,7 +902,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "LA ESPERANZA SEPTIMA ETAPA",
-              "address": "Calle 11a N\u00b0 31B-03",
+              "address": "Calle 11a N° 31B-03",
               "pointCoordinates": {
                 "features": [
                   {
@@ -910,8 +910,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.635606,
-                        4.12944
+                        4.12944,
+                        -73.635606
                       ]
                     }
                   }
@@ -920,7 +920,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "VILLA ORTIZ ETAPA I",
-              "address": "calle 19 N\u00b0 12C-32",
+              "address": "calle 19 N° 12C-32",
               "pointCoordinates": {
                 "features": [
                   {
@@ -928,8 +928,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.61404,
-                        4.1374
+                        4.1374,
+                        -73.61404
                       ]
                     }
                   }
@@ -938,7 +938,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "JUAN PABLO II",
-              "address": "Carrera 31 N\u00b0 16-03",
+              "address": "Carrera 31 N° 16-03",
               "pointCoordinates": {
                 "features": [
                   {
@@ -946,8 +946,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6226156,
-                        4.103963
+                        4.103963,
+                        -73.6226156
                       ]
                     }
                   }
@@ -956,7 +956,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "GUATAPE II",
-              "address": "Calle 28a Sur N\u00b0 35-46",
+              "address": "Calle 28a Sur N° 35-46",
               "pointCoordinates": {
                 "features": [
                   {
@@ -964,8 +964,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65408,
-                        4.10077
+                        4.10077,
+                        -73.65408
                       ]
                     }
                   }
@@ -974,7 +974,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "BRISAS DE LA ESPERANZA",
-              "address": "Calle 12B N\u00b0 39-111",
+              "address": "Calle 12B N° 39-111",
               "pointCoordinates": {
                 "features": [
                   {
@@ -982,8 +982,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6334,
-                        4.12996
+                        4.12996,
+                        -73.6334
                       ]
                     }
                   }
@@ -992,7 +992,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Barzal Bajo",
-              "address": "Calle 36 N\u00b0 33-28 ",
+              "address": "Calle 36 N° 33-28 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1000,8 +1000,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.638214,
-                        4.149033
+                        4.149033,
+                        -73.638214
                       ]
                     }
                   }
@@ -1010,7 +1010,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "la Alborada",
-              "address": "Calle 4D N\u00b0 24-135 Esquina",
+              "address": "Calle 4D N° 24-135 Esquina",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1018,8 +1018,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.622319,
-                        4.123082
+                        4.123082,
+                        -73.622319
                       ]
                     }
                   }
@@ -1028,7 +1028,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Bello Horizonte",
-              "address": "Calle 15a N\u00b0 8-20",
+              "address": "Calle 15a N° 8-20",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1036,8 +1036,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.609594,
-                        4.133167
+                        4.133167,
+                        -73.609594
                       ]
                     }
                   }
@@ -1046,7 +1046,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Gaviotas",
-              "address": " Carrera 12A Este N\u00b0 22A - 06 Sur",
+              "address": " Carrera 12A Este N° 22A - 06 Sur",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1054,8 +1054,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.596344,
-                        4.115914
+                        4.115914,
+                        -73.596344
                       ]
                     }
                   }
@@ -1064,7 +1064,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Catumare",
-              "address": "Carrera 45a N\u00b0 21a-33 Sur ",
+              "address": "Carrera 45a N° 21a-33 Sur ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1072,8 +1072,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65336,
-                        4.10501
+                        4.10501,
+                        -73.65336
                       ]
                     }
                   }
@@ -1082,7 +1082,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "los Comuneros",
-              "address": "Calle 10 N\u00b0 29-32 ",
+              "address": "Calle 10 N° 29-32 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1090,8 +1090,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.627919,
-                        4.125336
+                        4.125336,
+                        -73.627919
                       ]
                     }
                   }
@@ -1100,7 +1100,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "el Delirio",
-              "address": "Calle 40a N\u00b0 19-25 ",
+              "address": "Calle 40a N° 19-25 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1108,8 +1108,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.583705,
-                        4.142531
+                        4.142531,
+                        -73.583705
                       ]
                     }
                   }
@@ -1118,7 +1118,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Popular",
-              "address": "Carrera 12 N\u00b0 26-40",
+              "address": "Carrera 12 N° 26-40",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1126,8 +1126,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.612317,
-                        4.141625
+                        4.141625,
+                        -73.612317
                       ]
                     }
                   }
@@ -1136,7 +1136,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "la Serrania",
-              "address": "Carrera 26 N\u00b0 5C-15",
+              "address": "Carrera 26 N° 5C-15",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1144,8 +1144,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6246,
-                        4.124238
+                        4.124238,
+                        -73.6246
                       ]
                     }
                   }
@@ -1154,7 +1154,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "La Vega",
-              "address": "Calle 5 N\u00b0 30-34",
+              "address": "Calle 5 N° 30-34",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1162,8 +1162,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6313,
-                        4.12113
+                        4.12113,
+                        -73.6313
                       ]
                     }
                   }
@@ -1172,7 +1172,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Prados de Siberia",
-              "address": "Calle 38 N\u00b0 16-16 Este",
+              "address": "Calle 38 N° 16-16 Este",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1180,8 +1180,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.587982,
-                        4.138907
+                        4.138907,
+                        -73.587982
                       ]
                     }
                   }
@@ -1198,8 +1198,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.603832,
-                        4.116755
+                        4.116755,
+                        -73.603832
                       ]
                     }
                   }
@@ -1208,7 +1208,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Cantarrana 4",
-              "address": "Calle 14 N\u00b0 18E 12",
+              "address": "Calle 14 N° 18E 12",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1216,8 +1216,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.621106,
-                        4.1346
+                        4.1346,
+                        -73.621106
                       ]
                     }
                   }
@@ -1226,7 +1226,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "las Americas",
-              "address": "Carrera 60 N\u00b0 6B-29 Sur",
+              "address": "Carrera 60 N° 6B-29 Sur",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1234,8 +1234,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.65303,
-                        4.125
+                        4.125,
+                        -73.65303
                       ]
                     }
                   }
@@ -1244,7 +1244,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "La Vega",
-              "address": "Calle 5B N\u00b0 33b-52",
+              "address": "Calle 5B N° 33b-52",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1252,8 +1252,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.631045,
-                        4.121891
+                        4.121891,
+                        -73.631045
                       ]
                     }
                   }
@@ -1262,7 +1262,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Kirpas",
-              "address": "Carrera 19a N\u00b0 22a-25 Sur",
+              "address": "Carrera 19a N° 22a-25 Sur",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1270,8 +1270,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.584876,
-                        4.11613
+                        4.11613,
+                        -73.584876
                       ]
                     }
                   }
@@ -1280,7 +1280,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Madrigal",
-              "address": "Calle 41 N\u00b0 15-72",
+              "address": "Calle 41 N° 15-72",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1288,8 +1288,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615044,
-                        4.14963
+                        4.14963,
+                        -73.615044
                       ]
                     }
                   }
@@ -1298,7 +1298,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "San Antonio Sector I",
-              "address": "Calle 13a N\u00b0 40a-50",
+              "address": "Calle 13a N° 40a-50",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1306,8 +1306,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.563605,
-                        4.119928
+                        4.119928,
+                        -73.563605
                       ]
                     }
                   }
@@ -1316,7 +1316,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Nuevo Horizonte",
-              "address": "Calle 20a Sur N\u00b0 38-46 ",
+              "address": "Calle 20a Sur N° 38-46 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1324,8 +1324,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.646719,
-                        4.104293
+                        4.104293,
+                        -73.646719
                       ]
                     }
                   }
@@ -1342,8 +1342,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.629046,
-                        4.125601
+                        4.125601,
+                        -73.629046
                       ]
                     }
                   }
@@ -1352,7 +1352,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "La Esperanza 5 Etapa",
-              "address": "Calle 8 N\u00b0 41-35 ",
+              "address": "Calle 8 N° 41-35 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1360,8 +1360,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.634204,
-                        4.125254
+                        4.125254,
+                        -73.634204
                       ]
                     }
                   }
@@ -1370,7 +1370,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "la Bastilla",
-              "address": "Calle 36a N\u00b0 14b-64 ",
+              "address": "Calle 36a N° 14b-64 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1378,8 +1378,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615325,
-                        4.148134
+                        4.148134,
+                        -73.615325
                       ]
                     }
                   }
@@ -1388,7 +1388,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Dona Luz",
-              "address": "Carrera 21 N\u00b0 9 -93 ",
+              "address": "Carrera 21 N° 9 -93 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1396,8 +1396,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.608037,
-                        4.115857
+                        4.115857,
+                        -73.608037
                       ]
                     }
                   }
@@ -1406,7 +1406,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "El Emporio",
-              "address": "Calle 40A N\u00b0 25 -03 ",
+              "address": "Calle 40A N° 25 -03 ",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1414,8 +1414,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.634341,
-                        4.157435
+                        4.157435,
+                        -73.634341
                       ]
                     }
                   }
@@ -1424,7 +1424,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Panorama",
-              "address": "Calle 47a N\u00b0 41-37",
+              "address": "Calle 47a N° 41-37",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1432,8 +1432,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.649679,
-                        4.160872
+                        4.160872,
+                        -73.649679
                       ]
                     }
                   }
@@ -1442,7 +1442,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "la Esperanza I Etapa",
-              "address": "Calle 12B N\u00b0 46-43",
+              "address": "Calle 12B N° 46-43",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1450,8 +1450,8 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.635489,
-                        4.130769
+                        4.130769,
+                        -73.635489
                       ]
                     }
                   }
@@ -1460,7 +1460,7 @@ class AlarmsTableSeeder extends Seeder
             },
             {
               "name": "Madrigal",
-              "address": "Calle 41a N\u00b0 16-51",
+              "address": "Calle 41a N° 16-51",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1468,16 +1468,17 @@ class AlarmsTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615044,
-                        4.14963
+                        4.14963,
+                        -73.615044
                       ]
                     }
                   }
                 ]
               }
             }
-         ]
+          ]
         }
+        
         ';
 
         $dataArray = json_decode($data, true);

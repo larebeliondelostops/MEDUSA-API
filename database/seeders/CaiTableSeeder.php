@@ -17,7 +17,7 @@ class CaiTableSeeder extends Seeder
     {
         $data = '
         {
-            "array":[
+          "array":[
             {
               "name": "Cai. Buque",
               "address": "1",
@@ -28,8 +28,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.645871,
-                        4.136891
+                        4.136891,
+                        -73.645871
                       ]
                     }
                   }
@@ -46,8 +46,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.601354,
-                        4.142744
+                        4.142744,
+                        -73.601354
                       ]
                     }
                   }
@@ -64,8 +64,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.641032,
-                        4.165108
+                        4.165108,
+                        -73.641032
                       ]
                     }
                   }
@@ -82,8 +82,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.656584,
-                        4.1557
+                        4.1557,
+                        -73.656584
                       ]
                     }
                   }
@@ -100,8 +100,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.565435,
-                        4.132944
+                        4.132944,
+                        -73.565435
                       ]
                     }
                   }
@@ -118,8 +118,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.631119,
-                        4.156319
+                        4.156319,
+                        -73.631119
                       ]
                     }
                   }
@@ -136,8 +136,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6425,
-                        4.12099
+                        4.12099,
+                        -73.6425
                       ]
                     }
                   }
@@ -154,8 +154,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.633103,
-                        4.142716
+                        4.142716,
+                        -73.633103
                       ]
                     }
                   }
@@ -172,8 +172,8 @@ class CaiTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.623553,
-                        4.167184
+                        4.167184,
+                        -73.623553
                       ]
                     }
                   }
@@ -181,8 +181,9 @@ class CaiTableSeeder extends Seeder
               }
             }
           ]
-          
-          }';
+        }
+        
+        ';
 
         $dataArray = json_decode($data, true);
 

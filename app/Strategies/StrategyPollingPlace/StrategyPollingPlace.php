@@ -30,8 +30,8 @@ class StrategyPollingPlace implements PollingPlaceInterface
     
                 $transformedData[] = [
                     'type' => 'feature',
-                    'markerType' => 7,
-                    'id' => $pollingPlace->id,
+                    'markerType' => 5,
+                    'id' => $pollingPlace->uuid,
                     'title' => $pollingPlace->name,
                     'geometry' => $geometry,
                     'properties' => [

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PollingPlaceTableSeeder extends Seeder
 {
@@ -1260,6 +1261,7 @@ class PollingPlaceTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('pollingPlace')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 "potencialWomen" => $Data['potencialWomen'], 
                 "potencialMen" => $Data['potencialMen'], 

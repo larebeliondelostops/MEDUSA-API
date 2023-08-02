@@ -1,0 +1,70 @@
+version: "3.8"
+services:
+  app:
+    build:
+      args:
+        user: ignicion
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: medusa
+    container_name: medusa-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    ports:
+      - 6001:6001
+    volumes:
+      - ./:/var/www
+    networks:
+      - medusa
+    user: root
+
+  nginx:
+    image: nginx:alpine
+    container_name: medusa-nginx
+    restart: unless-stopped
+    ports:
+      - 81:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - medusa
+
+  postgres:
+    image: postgres:14.2
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ignicion
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: medusa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - medusa
+
+  pgadmin:
+    image: neimheadh/phppgadmin:7.13.0
+    container_name: phppgadmin
+    ports:
+      - "80:80"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ignicion
+      POSTGRES_PASS: root
+    depends_on:
+      - postgres
+    networks:
+      - medusa
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  medusa:
+    driver: bridge

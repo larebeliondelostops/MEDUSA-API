@@ -194,7 +194,10 @@ class Reports implements ReportsInterface
             ->pluck('day')
             ->first();
 
-        // Obtener cantidad de delitos por dia de la semana
+        // Definir todos los días de la semana
+        $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
+
+        // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
             ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->selectRaw('day, COUNT(*) as count')
@@ -202,15 +205,20 @@ class Reports implements ReportsInterface
             ->orderByRaw('COUNT(*) DESC')
             ->get();
 
-        // Calcular porcentaje por dia de la semana
-        $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
-            return [
-                'day' => $delitos->day,
-                'percentage' => ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100,
+        // Crear una colección para almacenar los resultados
+        $porcentajePorDiaSemana = collect();
+
+        // Iterar sobre todos los días de la semana
+        foreach ($diasSemana as $dia) {
+            $delitos = $delitosPorDiaSemana->firstWhere('day', $dia);
+
+            $porcentaje = [
+                'day' => $dia,
+                'percentage' => $delitos ? ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100 : 0,
             ];
-        });
 
-
+            $porcentajePorDiaSemana->push($porcentaje);
+        }
 
         return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
     }
@@ -245,18 +253,23 @@ class Reports implements ReportsInterface
             ->pluck('crime')
             ->first();
 
-        // Obtener cantidad de delitos por dia de la semana
+        // Obtener todos los días de la semana en mayúsculas
+        $diasSemana = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"];
+
+        // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->selectRaw('day, COUNT(*) as count')
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->get();
 
-        // Calcular porcentaje por dia de la semana
-        $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
+        // Crear una colección con todos los días de la semana y sus recuentos
+        $porcentajePorDiaSemana = collect($diasSemana)->map(function ($dia) use ($delitosPorDiaSemana) {
+            $delitos = $delitosPorDiaSemana->firstWhere('day', $dia);
+
             return [
-                'day' => $delitos->day,
-                'percentage' => ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100,
+                'day' => $dia,
+                'percentage' => $delitos ? ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100 : 0,
             ];
         });
 

@@ -36,5 +36,7 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
 
     //endpoints temporales para modelo probabilistico
 
-    Route::get('modeloprobabilistico/ProbabilisticGrid', [ProbabilisticController::class, 'obtenerCuadriculaProbabilistica']);   
+    Route::get('modeloprobabilistico/ProbabilisticGrid', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaGeneral']);
+    Route::get('modeloprobabilistico/Indicators', [ProbabilisticController::class, 'GetIndicators']); 
+    Route::get('modeloprobabilistico/ProbabilisticGrid/{id}', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaPorIndicador']);  
 });

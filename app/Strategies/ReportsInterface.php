@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Strategies;
+use Illuminate\Http\Request;
 
 interface ReportsInterface
 {
@@ -15,10 +16,6 @@ interface ReportsInterface
 
     //reportes de criminalidad
 
-    public function MostOccurrencesDateHistorical();
-    public function HourMostOccurrencesHistorical();
-    public function DayWeekMostOccurrencesHistorical();
-    public function MostFrequentCrime();
-    public function CrimeLessFrequent();
-    public function CrimeByZone();
+    public function StatisticsByIndicatorAndGrid(Request $request);
+    public function StatisticsGeneral(Request $request);
 }

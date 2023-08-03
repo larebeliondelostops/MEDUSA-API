@@ -28,11 +28,7 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
 
     //endpoints para criminalidad
 
-    Route::get('reporte/MostOccurrencesDateHistorical', [ReportController::class, 'MostOccurrencesDateHistorical']);
-    Route::get('reporte/HourMostOccurrencesHistorical', [ReportController::class, 'HourMostOccurrencesHistorical']);
-    Route::get('reporte/DayWeekMostOccurrencesHistorical', [ReportController::class, 'DayWeekMostOccurrencesHistorical']);
-    Route::get('reporte/MostFrequentCrime', [ReportController::class, 'MostFrequentCrime']);
-    Route::get('reporte/CrimeLessFrequent', [ReportController::class, 'CrimeLessFrequent']);
-    Route::get('reporte/CrimeByZone', [ReportController::class, 'CrimeByZone']);
+    Route::get('reporte/StatisticsByIndicatorAndGrid', [ReportController::class, 'StatisticsByIndicatorAndGrid']);
+    Route::get('reporte/StatisticsGeneral', [ReportController::class, 'StatisticsGeneral']);
 
 });

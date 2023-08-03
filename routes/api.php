@@ -37,8 +37,8 @@ Route::get('/heatmap', function () {
             "geometry" => [
                 "type" => "Point",
                 "coordinates" => [
-                    $coordinates->lng,
-                    $coordinates->lat
+                    $coordinates->lat,
+                    $coordinates->lng
                 ]
             ]
         ];

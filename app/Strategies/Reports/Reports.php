@@ -6,6 +6,7 @@ use App\Models\CriminalActs;
 use Exception;
 use App\Models\Event;
 use App\Strategies\ReportsInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
@@ -39,10 +40,10 @@ class Reports implements ReportsInterface
         $finalMesActual = Carbon::now()->endOfMonth();
 
         // Consulta para obtener los eventos del mes actual con el tipo de evento
-        $eventosytipos= Event::join('eventsType', 'events.idEventType', '=', 'eventsType.id')
-        ->whereBetween('events.startDate', [$inicioMesActual, $finalMesActual])
-        ->select('events.*', 'eventsType.eventName as eventName')
-        ->get();
+        $eventosytipos = Event::join('eventsType', 'events.idEventType', '=', 'eventsType.id')
+            ->whereBetween('events.startDate', [$inicioMesActual, $finalMesActual])
+            ->select('events.*', 'eventsType.eventName as eventName')
+            ->get();
 
         // Obtener la cantidad de eventos por tipo de evento
         $eventosPorTipo = $eventosytipos->groupBy('eventName')
@@ -83,10 +84,10 @@ class Reports implements ReportsInterface
     {
         // Obtener el inicio del mes actual
         $inicioMesActual = Carbon::now()->startOfMonth();
-    
+
         // Obtener el final del mes actual
         $finalMesActual = Carbon::now()->endOfMonth();
-    
+
         $rangos = [
             ['min' => 0, 'max' => 100],
             ['min' => 101, 'max' => 500],
@@ -97,28 +98,28 @@ class Reports implements ReportsInterface
             ['min' => 6001, 'max' => 8000],
             ['min' => 8001, 'max' => 10000],
         ];
-    
+
         $reporte = [];
-    
+
         foreach ($rangos as $rango) {
             // Obtener los eventos que se encuentren dentro del rango de capacidad y del mes actual
             $eventos = Event::whereBetween('capacity', [$rango['min'], $rango['max']])
                 ->whereBetween('startDate', [$inicioMesActual, $finalMesActual])
                 ->get();
-    
+
             // Obtener la cantidad de eventos para el rango de capacidad
             $cantidadEventos = $eventos->count();
-    
+
             // Agregar el rango de capacidad y cantidad de eventos al reporte
             $reporte[] = [
                 'rangoCapacidad' => $rango['min'] . '-' . $rango['max'],
                 'eventCount' => $cantidadEventos,
             ];
         }
-    
+
         return response()->json(['reporte' => $reporte]);
     }
-    
+
 
     public function EventsPastAndFuture()
     {
@@ -172,75 +173,60 @@ class Reports implements ReportsInterface
         return response()->json(['reporte' => $reporte]);
     }
 
-    //REPORTES DE DELITOS
+    //reportes de actos delictivos
 
-    public function MostOccurrencesDateHistorical()
+    public function StatisticsByIndicatorAndGrid(Request $request)
     {
-        // Obtener la fecha con más ocurrencias de delitos históricos
-        $fechaMasOcurrencias = CriminalActs::groupBy('date')
-            ->orderByRaw('COUNT(*) DESC')
-            ->pluck('date')
-            ->first();
-    
-        return response()->json(['fechaMasOcurrencias' => $fechaMasOcurrencias]);
-    }
-    
 
-    public function HourMostOccurrencesHistorical()
-    {
-        // Obtener la hora con más ocurrencias de delitos históricamente
+        // Obtener la hora con más ocurrencias de delitos históricamente por inidicador y cuadrícula
         $horaMasOcurrencias = CriminalActs::groupBy('time')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('time')
+            ->where('IndicatorId', '=', $request->indicatorId)
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
-    
-        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias]);
-    }
-    
 
-    public function DayWeekMostOccurrencesHistorical()
-    {
-        // Obtener el día de la semana con más ocurrencias de delitos históricamente
+        // Obtener el día de la semana con más ocurrencias de delitos históricamente por inidicador y cuadrícula
         $diaSemanaMasOcurrencias = CriminalActs::groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
+            ->where('IndicatorId', '=', $request->indicatorId)
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
-    
-        return response()->json(['diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias]);
-    }
-    
 
-    public function MostFrequentCrime()
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias]);
+    }
+
+    public function StatisticsGeneral(Request $request)
     {
+        // Obtener la hora con más ocurrencias de delitos históricamente por cuadrícula general
+        $horaMasOcurrencias = CriminalActs::groupBy('time')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('time')
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->first();
+
+        // Obtener el día de la semana con más ocurrencias de delitos históricamente por cuadrícula general
+        $diaSemanaMasOcurrencias = CriminalActs::groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('day')
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->first();
+        
         // Obtener el delito más frecuente
         $delitoMasFrecuente = CriminalActs::groupBy('crime')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('crime')
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
-        return response()->json(['delitoMasFrecuente' => $delitoMasFrecuente]);
-    }
-
-    public function CrimeLessFrequent()
-    {
         // Obtener el delito menos frecuente
         $delitoMenosFrecuente = CriminalActs::groupBy('crime')
             ->orderByRaw('COUNT(*) ASC')
             ->pluck('crime')
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
-        return response()->json(['delitoMenosFrecuente' => $delitoMenosFrecuente]);
+            return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente]);
     }
-
-    public function CrimeByZone()
-    {
-        // Obtener el delito más frecuente por zona
-        $delitoMasFrecuentePorZona = CriminalActs::groupBy('zone', 'crime')
-            ->selectRaw('zone, crime, COUNT(*) as total')
-            ->orderByRaw('total DESC')
-            ->get();
-
-        return response()->json(['delitoMasFrecuentePorZona' => $delitoMasFrecuentePorZona]);
-    }
-
 }

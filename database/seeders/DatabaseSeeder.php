@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PollingPlaceTableSeeder::class);
         $this->call(EntitiesTableSeeder::class);
         $this->call(HealthTableSeeder::class);
+        $this->call(IndicatorSeeder::class);
     }
 }

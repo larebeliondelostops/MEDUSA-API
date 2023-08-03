@@ -95,3 +95,9 @@ Route::get('/ver-video3', function () {
     $filePath = Storage::disk('public')->path($videoPath);
     return response()->file($filePath);
 });
+
+Route::get('/ver-video4', function () {
+    $videoPath = 'videos/trafico_4.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
+    $filePath = Storage::disk('public')->path($videoPath);
+    return response()->file($filePath);
+});

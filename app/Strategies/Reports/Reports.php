@@ -194,8 +194,24 @@ class Reports implements ReportsInterface
             ->pluck('day')
             ->first();
 
+        // Obtener cantidad de delitos por dia de la semana
+        $delitosPorDiaSemana = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('day')
+            ->first();
 
-        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias]);
+        // Calcular porcentaje por dia de la semana
+        $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
+            return [
+                'day' => $delitos->day,
+                'percentage' => ($delitos->count() / $delitosPorDiaSemana->count()) * 100,
+            ];
+        });
+
+
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
     }
 
     public function StatisticsGeneral(Request $request)
@@ -227,8 +243,23 @@ class Reports implements ReportsInterface
             ->orderByRaw('COUNT(*) ASC')
             ->pluck('crime')
             ->first();
+        
+        // Obtener cantidad de delitos por dia de la semana
+        $delitosPorDiaSemana = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('day')
+            ->first();
+        
+        // Calcular porcentaje por dia de la semana
+        $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
+            return [
+                'day' => $delitos->day,
+                'percentage' => ($delitos->count() / $delitosPorDiaSemana->count()) * 100,
+            ];
+        });
 
 
-        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente]);
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
     }
 }

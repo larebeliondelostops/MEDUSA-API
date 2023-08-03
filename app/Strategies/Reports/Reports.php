@@ -178,21 +178,22 @@ class Reports implements ReportsInterface
     public function StatisticsByIndicatorAndGrid(Request $request)
     {
 
-        // Obtener la hora con más ocurrencias de delitos históricamente por inidicador y cuadrícula
-        $horaMasOcurrencias = CriminalActs::groupBy('time')
+        // Obtener la hora con más ocurrencias de delitos históricamente por indicador y cuadrícula
+        $horaMasOcurrencias = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('time')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('time')
-            ->where('IndicatorId', '=', $request->indicatorId)
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
-        // Obtener el día de la semana con más ocurrencias de delitos históricamente por inidicador y cuadrícula
-        $diaSemanaMasOcurrencias = CriminalActs::groupBy('day')
+        // Obtener el día de la semana con más ocurrencias de delitos históricamente por indicador y cuadrícula
+        $diaSemanaMasOcurrencias = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
+            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
-            ->where('IndicatorId', '=', $request->indicatorId)
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
+
 
         return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias]);
     }
@@ -200,33 +201,34 @@ class Reports implements ReportsInterface
     public function StatisticsGeneral(Request $request)
     {
         // Obtener la hora con más ocurrencias de delitos históricamente por cuadrícula general
-        $horaMasOcurrencias = CriminalActs::groupBy('time')
+        $horaMasOcurrencias = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('time')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('time')
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
         // Obtener el día de la semana con más ocurrencias de delitos históricamente por cuadrícula general
-        $diaSemanaMasOcurrencias = CriminalActs::groupBy('day')
+        $diaSemanaMasOcurrencias = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
-        
+
         // Obtener el delito más frecuente
-        $delitoMasFrecuente = CriminalActs::groupBy('crime')
+        $delitoMasFrecuente = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('crime')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('crime')
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
         // Obtener el delito menos frecuente
-        $delitoMenosFrecuente = CriminalActs::groupBy('crime')
+        $delitoMenosFrecuente = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->groupBy('crime')
             ->orderByRaw('COUNT(*) ASC')
             ->pluck('crime')
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
             ->first();
 
-            return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente]);
+
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente]);
     }
 }

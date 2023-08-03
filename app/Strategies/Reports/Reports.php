@@ -197,18 +197,19 @@ class Reports implements ReportsInterface
         // Obtener cantidad de delitos por dia de la semana
         $delitosPorDiaSemana = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
             ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->selectRaw('day, COUNT(*) as count')
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
-            ->pluck('day')
-            ->first();
+            ->get();
 
         // Calcular porcentaje por dia de la semana
         $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
             return [
                 'day' => $delitos->day,
-                'percentage' => ($delitos->count() / $delitosPorDiaSemana->count()) * 100,
+                'percentage' => ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100,
             ];
         });
+
 
 
         return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
@@ -243,22 +244,21 @@ class Reports implements ReportsInterface
             ->orderByRaw('COUNT(*) ASC')
             ->pluck('crime')
             ->first();
-        
+
         // Obtener cantidad de delitos por dia de la semana
         $delitosPorDiaSemana = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+            ->selectRaw('day, COUNT(*) as count')
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
-            ->pluck('day')
-            ->first();
-        
+            ->get();
+
         // Calcular porcentaje por dia de la semana
         $porcentajePorDiaSemana = $delitosPorDiaSemana->map(function ($delitos) use ($delitosPorDiaSemana) {
             return [
                 'day' => $delitos->day,
-                'percentage' => ($delitos->count() / $delitosPorDiaSemana->count()) * 100,
+                'percentage' => ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100,
             ];
         });
-
 
         return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'delitoMasFrecuente' => $delitoMasFrecuente, 'delitoMenosFrecuente' => $delitoMenosFrecuente, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
     }

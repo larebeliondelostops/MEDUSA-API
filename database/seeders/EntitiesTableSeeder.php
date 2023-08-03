@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EntitiesTableSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class EntitiesTableSeeder extends Seeder
     {
         $data = '
         {
-            "array":[
+          "array": [
             {
               "name": "INST. EDUCATIVO 12 DE OCTUBR",
               "address": "CALLE 12 # 19-20",
@@ -28,8 +29,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6377,
-                        4.15138
+                        4.15138,
+                        -73.6377
                       ]
                     }
                   }
@@ -46,8 +47,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6406,
-                        4.15558
+                        4.15558,
+                        -73.6406
                       ]
                     }
                   }
@@ -64,8 +65,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6386,
-                        4.15756
+                        4.15756,
+                        -73.6386
                       ]
                     }
                   }
@@ -73,7 +74,7 @@ class EntitiesTableSeeder extends Seeder
               }
             },
             {
-              "name": "COLEGIO ANTONIO NARI\u00d1O",
+              "name": "COLEGIO ANTONIO NARIÑO",
               "address": "CALLE 17 # 20-20",
               "pointCoordinates": {
                 "features": [
@@ -82,8 +83,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6516,
-                        4.13881
+                        4.13881,
+                        -73.6516
                       ]
                     }
                   }
@@ -100,8 +101,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6381,
-                        4.15306
+                        4.15306,
+                        -73.6381
                       ]
                     }
                   }
@@ -118,8 +119,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6379,
-                        4.14475
+                        4.14475,
+                        -73.6379
                       ]
                     }
                   }
@@ -136,8 +137,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6375,
-                        4.13032
+                        4.13032,
+                        -73.6375
                       ]
                     }
                   }
@@ -154,8 +155,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6693,
-                        4.08172
+                        4.08172,
+                        -73.6693
                       ]
                     }
                   }
@@ -172,8 +173,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6269,
-                        4.12397
+                        4.12397,
+                        -73.6269
                       ]
                     }
                   }
@@ -190,8 +191,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6106,
-                        4.14544
+                        4.14544,
+                        -73.6106
                       ]
                     }
                   }
@@ -208,8 +209,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6446,
-                        4.14372
+                        4.14372,
+                        -73.6446
                       ]
                     }
                   }
@@ -217,7 +218,7 @@ class EntitiesTableSeeder extends Seeder
               }
             },
             {
-              "name": "Cl\u00ednica Martha",
+              "name": "Clínica Martha",
               "address": "CALLE 25 # 20-20",
               "pointCoordinates": {
                 "features": [
@@ -226,8 +227,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.639,
-                        4.14695
+                        4.14695,
+                        -73.639
                       ]
                     }
                   }
@@ -235,7 +236,7 @@ class EntitiesTableSeeder extends Seeder
               }
             },
             {
-              "name": "Cl\u00ednica Meta",
+              "name": "Clínica Meta",
               "address": "CALLE 26 # 20-20",
               "pointCoordinates": {
                 "features": [
@@ -244,8 +245,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6369,
-                        4.1446
+                        4.1446,
+                        -73.6369
                       ]
                     }
                   }
@@ -253,7 +254,7 @@ class EntitiesTableSeeder extends Seeder
               }
             },
             {
-              "name": "Cl\u00ednica Universidad Cooperativa",
+              "name": "Clínica Universidad Cooperativa",
               "address": "CALLE 27 # 20-20",
               "pointCoordinates": {
                 "features": [
@@ -262,8 +263,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6393,
-                        4.14819
+                        4.14819,
+                        -73.6393
                       ]
                     }
                   }
@@ -280,8 +281,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.428942,
-                        4.060567
+                        4.060567,
+                        -73.428942
                       ]
                     }
                   }
@@ -298,8 +299,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.63769,
-                        4.130914
+                        4.130914,
+                        -73.63769
                       ]
                     }
                   }
@@ -316,8 +317,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.584502,
-                        4.137375
+                        4.137375,
+                        -73.584502
                       ]
                     }
                   }
@@ -334,8 +335,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.670571,
-                        4.081542
+                        4.081542,
+                        -73.670571
                       ]
                     }
                   }
@@ -352,8 +353,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.611165,
-                        4.143518
+                        4.143518,
+                        -73.611165
                       ]
                     }
                   }
@@ -370,8 +371,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.651609,
-                        4.159317
+                        4.159317,
+                        -73.651609
                       ]
                     }
                   }
@@ -388,8 +389,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.626665,
-                        4.123946
+                        4.123946,
+                        -73.626665
                       ]
                     }
                   }
@@ -406,8 +407,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.585906,
-                        4.118907
+                        4.118907,
+                        -73.585906
                       ]
                     }
                   }
@@ -424,8 +425,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.696636,
-                        4.07967
+                        4.07967,
+                        -73.696636
                       ]
                     }
                   }
@@ -442,8 +443,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.614652,
-                        4.140197
+                        4.140197,
+                        -73.614652
                       ]
                     }
                   }
@@ -460,8 +461,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.638309,
-                        4.146666
+                        4.146666,
+                        -73.638309
                       ]
                     }
                   }
@@ -478,8 +479,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.680838,
-                        4.168947
+                        4.168947,
+                        -73.680838
                       ]
                     }
                   }
@@ -496,8 +497,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.641758,
-                        4.142582
+                        4.142582,
+                        -73.641758
                       ]
                     }
                   }
@@ -514,8 +515,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.366101,
-                        4.038493
+                        4.038493,
+                        -73.366101
                       ]
                     }
                   }
@@ -532,8 +533,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.643612,
-                        4.144622
+                        4.144622,
+                        -73.643612
                       ]
                     }
                   }
@@ -550,8 +551,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.638913,
-                        4.147147
+                        4.147147,
+                        -73.638913
                       ]
                     }
                   }
@@ -568,8 +569,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.639143,
-                        4.148295
+                        4.148295,
+                        -73.639143
                       ]
                     }
                   }
@@ -586,8 +587,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.637407,
-                        4.143877
+                        4.143877,
+                        -73.637407
                       ]
                     }
                   }
@@ -604,8 +605,8 @@ class EntitiesTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.64085,
-                        4.142172
+                        4.142172,
+                        -73.64085
                       ]
                     }
                   }
@@ -613,9 +614,8 @@ class EntitiesTableSeeder extends Seeder
               }
             }
           ]
-          
-          
-          }
+        }
+        
           ';
 
         $dataArray = json_decode($data, true);
@@ -623,6 +623,7 @@ class EntitiesTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('entities')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])
             ]);

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pollingPlace', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique(); 
             $table->string('name');
             $table->string('address');
             $table->json('pointCoordinates');

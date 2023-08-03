@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CamerasTableSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class CamerasTableSeeder extends Seeder
     {
         $data = '
         {
-            "array":[
+          "array": [
             {
               "name": "01. IGLESIA PORFIA",
               "address": "PU",
@@ -29,8 +30,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6694145,
-                        4.082492168
+                        4.082492168,
+                        -73.6694145
                       ]
                     }
                   }
@@ -48,8 +49,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6564804,
-                        4.104435675
+                        4.104435675,
+                        -73.6564804
                       ]
                     }
                   }
@@ -67,8 +68,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6124916,
-                        4.142513528
+                        4.142513528,
+                        -73.6124916
                       ]
                     }
                   }
@@ -86,8 +87,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6343266,
-                        4.115452504
+                        4.115452504,
+                        -73.6343266
                       ]
                     }
                   }
@@ -105,8 +106,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6408079,
-                        4.150838507
+                        4.150838507,
+                        -73.6408079
                       ]
                     }
                   }
@@ -124,8 +125,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6353551,
-                        4.154000353
+                        4.154000353,
+                        -73.6353551
                       ]
                     }
                   }
@@ -143,8 +144,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6206604,
-                        4.150313337
+                        4.150313337,
+                        -73.6206604
                       ]
                     }
                   }
@@ -162,8 +163,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6160647,
-                        4.12653531
+                        4.12653531,
+                        -73.6160647
                       ]
                     }
                   }
@@ -181,8 +182,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6141847,
-                        4.139742765
+                        4.139742765,
+                        -73.6141847
                       ]
                     }
                   }
@@ -200,8 +201,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6314078,
-                        4.128946092
+                        4.128946092,
+                        -73.6314078
                       ]
                     }
                   }
@@ -219,8 +220,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6198352,
-                        4.147111003
+                        4.147111003,
+                        -73.6198352
                       ]
                     }
                   }
@@ -238,8 +239,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6246818,
-                        4.148066504
+                        4.148066504,
+                        -73.6246818
                       ]
                     }
                   }
@@ -257,8 +258,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6180555,
-                        4.135400999
+                        4.135400999,
+                        -73.6180555
                       ]
                     }
                   }
@@ -276,8 +277,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6263363,
-                        4.143106706
+                        4.143106706,
+                        -73.6263363
                       ]
                     }
                   }
@@ -295,8 +296,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6193326,
-                        4.125115756
+                        4.125115756,
+                        -73.6193326
                       ]
                     }
                   }
@@ -314,8 +315,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6274772,
-                        4.153469819
+                        4.153469819,
+                        -73.6274772
                       ]
                     }
                   }
@@ -333,8 +334,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6292444,
-                        4.147876665
+                        4.147876665,
+                        -73.6292444
                       ]
                     }
                   }
@@ -352,8 +353,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6279773,
-                        4.135838412
+                        4.135838412,
+                        -73.6279773
                       ]
                     }
                   }
@@ -371,8 +372,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.5424442,
-                        4.123763189
+                        4.123763189,
+                        -73.5424442
                       ]
                     }
                   }
@@ -390,8 +391,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.547041,
-                        4.127308594
+                        4.127308594,
+                        -73.547041
                       ]
                     }
                   }
@@ -409,8 +410,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6343508,
-                        4.150179234
+                        4.150179234,
+                        -73.6343508
                       ]
                     }
                   }
@@ -428,8 +429,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.611611,
-                        4.146161609
+                        4.146161609,
+                        -73.611611
                       ]
                     }
                   }
@@ -447,8 +448,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6742013,
-                        4.07908049
+                        4.07908049,
+                        -73.6742013
                       ]
                     }
                   }
@@ -466,8 +467,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6254501,
-                        4.149752104
+                        4.149752104,
+                        -73.6254501
                       ]
                     }
                   }
@@ -485,8 +486,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6715228,
-                        4.083909619
+                        4.083909619,
+                        -73.6715228
                       ]
                     }
                   }
@@ -504,8 +505,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6367259,
-                        4.144027455
+                        4.144027455,
+                        -73.6367259
                       ]
                     }
                   }
@@ -523,8 +524,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6176239,
-                        4.147121965
+                        4.147121965,
+                        -73.6176239
                       ]
                     }
                   }
@@ -542,8 +543,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6694246,
-                        4.078543968
+                        4.078543968,
+                        -73.6694246
                       ]
                     }
                   }
@@ -561,8 +562,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6105586,
-                        4.137103722
+                        4.137103722,
+                        -73.6105586
                       ]
                     }
                   }
@@ -580,8 +581,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6361089,
-                        4.151005058
+                        4.151005058,
+                        -73.6361089
                       ]
                     }
                   }
@@ -599,8 +600,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6476916,
-                        4.137608398
+                        4.137608398,
+                        -73.6476916
                       ]
                     }
                   }
@@ -618,8 +619,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6117336,
-                        4.123176586
+                        4.123176586,
+                        -73.6117336
                       ]
                     }
                   }
@@ -637,8 +638,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6153347,
-                        4.119375462
+                        4.119375462,
+                        -73.6153347
                       ]
                     }
                   }
@@ -656,8 +657,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6285029,
-                        4.13113547
+                        4.13113547,
+                        -73.6285029
                       ]
                     }
                   }
@@ -675,8 +676,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6285841,
-                        4.143131182
+                        4.143131182,
+                        -73.6285841
                       ]
                     }
                   }
@@ -694,8 +695,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6317051,
-                        4.148978012
+                        4.148978012,
+                        -73.6317051
                       ]
                     }
                   }
@@ -713,8 +714,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6322248,
-                        4.153025932
+                        4.153025932,
+                        -73.6322248
                       ]
                     }
                   }
@@ -732,8 +733,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.625789,
-                        4.139431758
+                        4.139431758,
+                        -73.625789
                       ]
                     }
                   }
@@ -751,8 +752,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.615248,
-                        4.154188794
+                        4.154188794,
+                        -73.615248
                       ]
                     }
                   }
@@ -770,8 +771,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6132963,
-                        4.153491165
+                        4.153491165,
+                        -73.6132963
                       ]
                     }
                   }
@@ -789,8 +790,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.660721,
-                        4.107297738
+                        4.107297738,
+                        -73.660721
                       ]
                     }
                   }
@@ -808,8 +809,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.5885898,
-                        4.133186653
+                        4.133186653,
+                        -73.5885898
                       ]
                     }
                   }
@@ -827,8 +828,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6344848,
-                        4.153995923
+                        4.153995923,
+                        -73.6344848
                       ]
                     }
                   }
@@ -846,8 +847,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6170945,
-                        4.141934227
+                        4.141934227,
+                        -73.6170945
                       ]
                     }
                   }
@@ -865,8 +866,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.5867173,
-                        4.137229625
+                        4.137229625,
+                        -73.5867173
                       ]
                     }
                   }
@@ -884,8 +885,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6376209,
-                        4.14146709
+                        4.14146709,
+                        -73.6376209
                       ]
                     }
                   }
@@ -903,8 +904,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6219415,
-                        4.152681062
+                        4.152681062,
+                        -73.6219415
                       ]
                     }
                   }
@@ -922,8 +923,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6264263,
-                        4.12396548
+                        4.12396548,
+                        -73.6264263
                       ]
                     }
                   }
@@ -941,8 +942,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6376273,
-                        4.133919409
+                        4.133919409,
+                        -73.6376273
                       ]
                     }
                   }
@@ -960,8 +961,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6132963,
-                        4.153491165
+                        4.153491165,
+                        -73.6132963
                       ]
                     }
                   }
@@ -979,8 +980,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6427047,
-                        4.123398069
+                        4.123398069,
+                        -73.6427047
                       ]
                     }
                   }
@@ -998,8 +999,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6084591,
-                        4.139693475
+                        4.139693475,
+                        -73.6084591
                       ]
                     }
                   }
@@ -1017,8 +1018,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6406753,
-                        4.147040476
+                        4.147040476,
+                        -73.6406753
                       ]
                     }
                   }
@@ -1036,8 +1037,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6390251,
-                        4.159507285
+                        4.159507285,
+                        -73.6390251
                       ]
                     }
                   }
@@ -1055,8 +1056,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6565583,
-                        4.155571492
+                        4.155571492,
+                        -73.6565583
                       ]
                     }
                   }
@@ -1074,8 +1075,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6243205,
-                        4.141626625
+                        4.141626625,
+                        -73.6243205
                       ]
                     }
                   }
@@ -1093,8 +1094,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.639455,
-                        4.150503866
+                        4.150503866,
+                        -73.639455
                       ]
                     }
                   }
@@ -1112,8 +1113,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6400788,
-                        4.147608061
+                        4.147608061,
+                        -73.6400788
                       ]
                     }
                   }
@@ -1131,8 +1132,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6551367,
-                        4.098903735
+                        4.098903735,
+                        -73.6551367
                       ]
                     }
                   }
@@ -1150,8 +1151,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.613117,
-                        4.133879219
+                        4.133879219,
+                        -73.613117
                       ]
                     }
                   }
@@ -1169,8 +1170,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6273276,
-                        4.153925884
+                        4.153925884,
+                        -73.6273276
                       ]
                     }
                   }
@@ -1188,8 +1189,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6336132,
-                        4.123404207
+                        4.123404207,
+                        -73.6336132
                       ]
                     }
                   }
@@ -1207,8 +1208,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6129116,
-                        4.129288068
+                        4.129288068,
+                        -73.6129116
                       ]
                     }
                   }
@@ -1226,8 +1227,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6286006,
-                        4.155344425
+                        4.155344425,
+                        -73.6286006
                       ]
                     }
                   }
@@ -1245,8 +1246,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6389936,
-                        4.14128166
+                        4.14128166,
+                        -73.6389936
                       ]
                     }
                   }
@@ -1264,8 +1265,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6395551,
-                        4.150079161
+                        4.150079161,
+                        -73.6395551
                       ]
                     }
                   }
@@ -1283,8 +1284,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6318753,
-                        4.141316296
+                        4.141316296,
+                        -73.6318753
                       ]
                     }
                   }
@@ -1302,8 +1303,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6221623,
-                        4.134614751
+                        4.134614751,
+                        -73.6221623
                       ]
                     }
                   }
@@ -1321,8 +1322,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6374085,
-                        4.150873462
+                        4.150873462,
+                        -73.6374085
                       ]
                     }
                   }
@@ -1340,8 +1341,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6432183,
-                        4.14791563
+                        4.14791563,
+                        -73.6432183
                       ]
                     }
                   }
@@ -1359,8 +1360,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6330589,
-                        4.151647192
+                        4.151647192,
+                        -73.6330589
                       ]
                     }
                   }
@@ -1378,8 +1379,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6351372,
-                        4.151963462
+                        4.151963462,
+                        -73.6351372
                       ]
                     }
                   }
@@ -1397,8 +1398,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6389157,
-                        4.146931616
+                        4.146931616,
+                        -73.6389157
                       ]
                     }
                   }
@@ -1416,8 +1417,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6433724,
-                        4.14454629
+                        4.14454629,
+                        -73.6433724
                       ]
                     }
                   }
@@ -1435,8 +1436,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6378572,
-                        4.126589895
+                        4.126589895,
+                        -73.6378572
                       ]
                     }
                   }
@@ -1454,8 +1455,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6063572,
-                        4.145280801
+                        4.145280801,
+                        -73.6063572
                       ]
                     }
                   }
@@ -1463,7 +1464,7 @@ class CamerasTableSeeder extends Seeder
               }
             },
             {
-              "name": "78. CALLE 36 DIVINO NI\u00d1O",
+              "name": "78. CALLE 36 DIVINO NIÑO",
               "address": "PU",
               "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
               "pointCoordinates": {
@@ -1473,8 +1474,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6348115,
-                        4.151220681
+                        4.151220681,
+                        -73.6348115
                       ]
                     }
                   }
@@ -1492,8 +1493,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6435063,
-                        4.137811103
+                        4.137811103,
+                        -73.6435063
                       ]
                     }
                   }
@@ -1511,8 +1512,8 @@ class CamerasTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6437316,
-                        4.137072742
+                        4.137072742,
+                        -73.6437316
                       ]
                     }
                   }
@@ -1520,8 +1521,8 @@ class CamerasTableSeeder extends Seeder
               }
             }
           ]
-          
-          }
+        }
+        
           ';
 
         $dataArray = json_decode($data, true);
@@ -1529,6 +1530,7 @@ class CamerasTableSeeder extends Seeder
         foreach ($dataArray['array'] as $Data) {
             DB::table('cameras')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'url' => $Data['url'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])

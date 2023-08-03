@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PollingPlaceTableSeeder extends Seeder
 {
@@ -17,10 +18,10 @@ class PollingPlaceTableSeeder extends Seeder
     {
         $data = '
         {
-            "array":[
+          "array": [
             {
               "name": "Col. Nstr Sra de la Sabiduria",
-              "address": "Cl 40 N\u00b0 31-42",
+              "address": "Cl 40 N° 31-42",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -32,8 +33,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.638124,
-                        4.153038
+                        4.153038,
+                        -73.638124
                       ]
                     }
                   }
@@ -42,7 +43,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Terminal de Transportes",
-              "address": "Cr 1 N\u00b0 15-05",
+              "address": "Cr 1 N° 15-05",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -54,8 +55,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.604002,
-                        4.132268
+                        4.132268,
+                        -73.604002
                       ]
                     }
                   }
@@ -76,8 +77,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.628154,
-                        4.122657
+                        4.122657,
+                        -73.628154
                       ]
                     }
                   }
@@ -86,7 +87,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Carcel",
-              "address": "Transversal 26c N\u00b0 22a-14",
+              "address": "Transversal 26c N° 22a-14",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -98,8 +99,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.625371,
-                        4.144447
+                        4.144447,
+                        -73.625371
                       ]
                     }
                   }
@@ -108,7 +109,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Santa Ines",
-              "address": "Cl 37a N\u00b0 24-04",
+              "address": "Cl 37a N° 24-04",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -120,8 +121,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62917,
-                        4.151709
+                        4.151709,
+                        -73.62917
                       ]
                     }
                   }
@@ -142,8 +143,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.652665,
-                        4.108823
+                        4.108823,
+                        -73.652665
                       ]
                     }
                   }
@@ -152,7 +153,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Universidad de los Llanos",
-              "address": "Cl 37 N\u00b0 41-02",
+              "address": "Cl 37 N° 41-02",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -164,8 +165,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.642395,
-                        4.145918
+                        4.145918,
+                        -73.642395
                       ]
                     }
                   }
@@ -174,7 +175,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Isaac Tacha",
-              "address": "Km 8 V\u00eda Catama",
+              "address": "Km 8 Vía Catama",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -186,8 +187,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.552276,
-                        4.132658
+                        4.132658,
+                        -73.552276
                       ]
                     }
                   }
@@ -196,7 +197,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Departamental de la Esperanza",
-              "address": "Cr 45 N\u00b0 13b-25",
+              "address": "Cr 45 N° 13b-25",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -208,8 +209,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.634207,
-                        4.131653
+                        4.131653,
+                        -73.634207
                       ]
                     }
                   }
@@ -218,7 +219,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Luis Carlos Galan",
-              "address": "Cr 40 N\u00b0 51-10",
+              "address": "Cr 40 N° 51-10",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -230,8 +231,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.667807,
-                        4.083761
+                        4.083761,
+                        -73.667807
                       ]
                     }
                   }
@@ -252,8 +253,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.617888,
-                        4.1395
+                        4.1395,
+                        -73.617888
                       ]
                     }
                   }
@@ -262,7 +263,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Antonio Narino",
-              "address": "Cl 45 N\u00b0 39-40",
+              "address": "Cl 45 N° 39-40",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -274,8 +275,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.647829,
-                        4.160147
+                        4.160147,
+                        -73.647829
                       ]
                     }
                   }
@@ -284,7 +285,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Eduardo Carranza",
-              "address": "Cl 25 N\u00b0 12a-17",
+              "address": "Cl 25 N° 12a-17",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -296,8 +297,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.614353,
-                        4.140174
+                        4.140174,
+                        -73.614353
                       ]
                     }
                   }
@@ -318,8 +319,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.726229,
-                        4.201293
+                        4.201293,
+                        -73.726229
                       ]
                     }
                   }
@@ -328,7 +329,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Narciso Matus Torres",
-              "address": "Cr 14 N\u00b0 40b-02",
+              "address": "Cr 14 N° 40b-02",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -340,8 +341,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.613088,
-                        4.15123
+                        4.15123,
+                        -73.613088
                       ]
                     }
                   }
@@ -362,8 +363,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.632755,
-                        4.135918
+                        4.135918,
+                        -73.632755
                       ]
                     }
                   }
@@ -384,8 +385,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.649341,
-                        4.123555
+                        4.123555,
+                        -73.649341
                       ]
                     }
                   }
@@ -394,7 +395,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Alberto Lleras Camargo",
-              "address": "Cl 5a N\u00b0 10a-21",
+              "address": "Cl 5a N° 10a-21",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -406,8 +407,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.611703,
-                        4.129961
+                        4.129961,
+                        -73.611703
                       ]
                     }
                   }
@@ -416,7 +417,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. San Francisco De Asis",
-              "address": "Cl 11 N\u00b025-15",
+              "address": "Cl 11 N°25-15",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -428,8 +429,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.626665,
-                        4.126569
+                        4.126569,
+                        -73.626665
                       ]
                     }
                   }
@@ -450,8 +451,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.620789,
-                        4.147486
+                        4.147486,
+                        -73.620789
                       ]
                     }
                   }
@@ -460,7 +461,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Escuela Las Gaviotas",
-              "address": "Cl 23 Sur N\u00b010- 76",
+              "address": "Cl 23 Sur N°10- 76",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -472,8 +473,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.597561,
-                        4.115589
+                        4.115589,
+                        -73.597561
                       ]
                     }
                   }
@@ -494,8 +495,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.635167,
-                        4.040722
+                        4.040722,
+                        -73.635167
                       ]
                     }
                   }
@@ -504,7 +505,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Escuela Francisco Miranda",
-              "address": "Cl 35 N\u00b0 29-09",
+              "address": "Cl 35 N° 29-09",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -516,8 +517,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.635694,
-                        4.149307
+                        4.149307,
+                        -73.635694
                       ]
                     }
                   }
@@ -538,8 +539,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.541575,
-                        4.122942
+                        4.122942,
+                        -73.541575
                       ]
                     }
                   }
@@ -548,7 +549,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. German Arciniegas",
-              "address": "Cr 47b N\u00b0 7b-20",
+              "address": "Cr 47b N° 7b-20",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -560,8 +561,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.636221,
-                        4.127089
+                        4.127089,
+                        -73.636221
                       ]
                     }
                   }
@@ -570,7 +571,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col De Bachillerato Femenino",
-              "address": "Cr 33 N\u00b0 18 A-43",
+              "address": "Cr 33 N° 18 A-43",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -582,8 +583,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.627768,
-                        4.136457
+                        4.136457,
+                        -73.627768
                       ]
                     }
                   }
@@ -604,8 +605,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.650353,
-                        4.101207
+                        4.101207,
+                        -73.650353
                       ]
                     }
                   }
@@ -626,8 +627,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.427489,
-                        4.062244
+                        4.062244,
+                        -73.427489
                       ]
                     }
                   }
@@ -636,7 +637,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Colegio La Salle",
-              "address": "Cl 39 N\u00b0 34-56",
+              "address": "Cl 39 N° 34-56",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -648,8 +649,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.640991,
-                        4.150678
+                        4.150678,
+                        -73.640991
                       ]
                     }
                   }
@@ -658,7 +659,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Jorge Eliecer Gaitan",
-              "address": "Cl 36a N\u00b0 17-0",
+              "address": "Cl 36a N° 17-0",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -670,8 +671,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.585991,
-                        4.138281
+                        4.138281,
+                        -73.585991
                       ]
                     }
                   }
@@ -692,8 +693,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.621418,
-                        4.12182
+                        4.12182,
+                        -73.621418
                       ]
                     }
                   }
@@ -714,8 +715,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.673211,
-                        4.076993
+                        4.076993,
+                        -73.673211
                       ]
                     }
                   }
@@ -724,7 +725,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Colegio Don Bosco",
-              "address": "Cl 14 N\u00b0 42-70",
+              "address": "Cl 14 N° 42-70",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -736,8 +737,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6425,
-                        4.1349
+                        4.1349,
+                        -73.6425
                       ]
                     }
                   }
@@ -746,7 +747,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Escuela Las Camelias",
-              "address": "Cl 19 N\u00b0 8-62",
+              "address": "Cl 19 N° 8-62",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -758,8 +759,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.609218,
-                        4.137172
+                        4.137172,
+                        -73.609218
                       ]
                     }
                   }
@@ -780,8 +781,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.607504,
-                        4.14222
+                        4.14222,
+                        -73.607504
                       ]
                     }
                   }
@@ -790,7 +791,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Abrahan Lincoln",
-              "address": "Cl 25 N\u00b0 23-150",
+              "address": "Cl 25 N° 23-150",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -802,8 +803,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.626523,
-                        4.142068
+                        4.142068,
+                        -73.626523
                       ]
                     }
                   }
@@ -812,7 +813,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "I.e. Francisco Arango",
-              "address": "Cl 33 B N\u00b0 39-55",
+              "address": "Cl 33 B N° 39-55",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -824,8 +825,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.639866,
-                        4.143803
+                        4.143803,
+                        -73.639866
                       ]
                     }
                   }
@@ -834,7 +835,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col. Manuela Beltran",
-              "address": "Cl 25 N\u00b0 6-115",
+              "address": "Cl 25 N° 6-115",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -846,8 +847,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.612114,
-                        4.139661
+                        4.139661,
+                        -73.612114
                       ]
                     }
                   }
@@ -856,7 +857,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Esc. Jhon F. Kennedy",
-              "address": "Cr 46 N\u00b0 11- 28",
+              "address": "Cr 46 N° 11- 28",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -868,8 +869,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.634593,
-                        4.128951
+                        4.128951,
+                        -73.634593
                       ]
                     }
                   }
@@ -890,8 +891,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.68301,
-                        4.166323
+                        4.166323,
+                        -73.68301
                       ]
                     }
                   }
@@ -900,7 +901,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Inst. Educativo 12 De Octubr",
-              "address": "Cl 46 N\u00b050",
+              "address": "Cl 46 N°50",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -912,8 +913,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6516,
-                        4.158698
+                        4.158698,
+                        -73.6516
                       ]
                     }
                   }
@@ -934,8 +935,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.616314,
-                        4.143826
+                        4.143826,
+                        -73.616314
                       ]
                     }
                   }
@@ -956,8 +957,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.563194,
-                        4.123189
+                        4.123189,
+                        -73.563194
                       ]
                     }
                   }
@@ -966,7 +967,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col.General Santander",
-              "address": "Transversal 25 N\u00b0 39d-46",
+              "address": "Transversal 25 N° 39d-46",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -978,8 +979,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.633715,
-                        4.156926
+                        4.156926,
+                        -73.633715
                       ]
                     }
                   }
@@ -1000,8 +1001,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.656516,
-                        4.149667
+                        4.149667,
+                        -73.656516
                       ]
                     }
                   }
@@ -1010,7 +1011,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Esc. Antonio Ricaurte",
-              "address": "Cr 24c N\u00b026c-09",
+              "address": "Cr 24c N°26c-09",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1022,8 +1023,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.626019,
-                        4.137142
+                        4.137142,
+                        -73.626019
                       ]
                     }
                   }
@@ -1032,7 +1033,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Hogar Infantil 20 de Julio",
-              "address": "Cl 27 N\u00b0 22C-39",
+              "address": "Cl 27 N° 22C-39",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1044,8 +1045,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.62661,
-                        4.146734
+                        4.146734,
+                        -73.62661
                       ]
                     }
                   }
@@ -1066,8 +1067,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.5833524,
-                        4.1451533
+                        4.1451533,
+                        -73.5833524
                       ]
                     }
                   }
@@ -1076,7 +1077,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Col.Miguel Angel Martin",
-              "address": "Cr 25 N\u00b0 15-60",
+              "address": "Cr 25 N° 15-60",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1088,8 +1089,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.627598,
-                        4.131983
+                        4.131983,
+                        -73.627598
                       ]
                     }
                   }
@@ -1110,8 +1111,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.6130435,
-                        4.113525
+                        4.113525,
+                        -73.6130435
                       ]
                     }
                   }
@@ -1120,7 +1121,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Multifamiliares Centauros",
-              "address": "Cl 4 Sur N\u00b0 35-94",
+              "address": "Cl 4 Sur N° 35-94",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1132,8 +1133,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.631458,
-                        4.112424
+                        4.112424,
+                        -73.631458
                       ]
                     }
                   }
@@ -1154,8 +1155,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.559629,
-                        4.090467
+                        4.090467,
+                        -73.559629
                       ]
                     }
                   }
@@ -1164,7 +1165,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Esc. Policarpa Salavarrieta",
-              "address": "Cl 25 N\u00b0 42-22",
+              "address": "Cl 25 N° 42-22",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1176,8 +1177,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.637835,
-                        4.158439
+                        4.158439,
+                        -73.637835
                       ]
                     }
                   }
@@ -1186,7 +1187,7 @@ class PollingPlaceTableSeeder extends Seeder
             },
             {
               "name": "Bemposta",
-              "address": "V\u00eda Acacias",
+              "address": "Vía Acacias",
               "potencialWomen": 850,
               "potencialMen": 950,
               "totalVotes": 1800,
@@ -1198,8 +1199,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.695751,
-                        4.079224
+                        4.079224,
+                        -73.695751
                       ]
                     }
                   }
@@ -1207,7 +1208,7 @@ class PollingPlaceTableSeeder extends Seeder
               }
             },
             {
-              "name": "La Concepci\u00f3n",
+              "name": "La Concepción",
               "address": "La Cuncia",
               "potencialWomen": 850,
               "potencialMen": 950,
@@ -1220,8 +1221,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.741269,
-                        4.051694
+                        4.051694,
+                        -73.741269
                       ]
                     }
                   }
@@ -1242,8 +1243,8 @@ class PollingPlaceTableSeeder extends Seeder
                     "geometry": {
                       "type": "Point",
                       "coordinates": [
-                        -73.697844,
-                        4.186423
+                        4.186423,
+                        -73.697844
                       ]
                     }
                   }
@@ -1251,15 +1252,16 @@ class PollingPlaceTableSeeder extends Seeder
               }
             }
           ]
-          
-          
-          }';
+        }
+        
+        ';
 
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
             DB::table('pollingPlace')->insert([
                 'name' => $Data['name'],
+                'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 "potencialWomen" => $Data['potencialWomen'], 
                 "potencialMen" => $Data['potencialMen'], 

@@ -24,10 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $shapefile = new ShapefileReader(storage_path() . '/app/public/shp/MGN_ANM_DPTOS.shp');
-        $Geometry = $shapefile->fetchRecord();
-        $geoJsonGeometry = $Geometry->getGeoJSON();
+        //$shapefile = new ShapefileReader(storage_path() . '/app/public/shp/MGN_ANM_DPTOS.shp');
+        //$Geometry = $shapefile->fetchRecord();
+        //$geoJsonGeometry = $Geometry->getGeoJSON();
 
-        return view('home', ['geoJsonGeometry' => $geoJsonGeometry]);
+        return view('home');
     }
 }

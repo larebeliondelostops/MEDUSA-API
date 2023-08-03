@@ -32,7 +32,7 @@ class StrategyAlarms implements AlarmsInterface
                 $transformedData[] = [
                     'type' => 'feature',
                     'markerType' => 1,
-                    'id' => $alarms->id,
+                    'id' => $alarms->uuid,
                     'title' => $alarms->name,
                     'geometry' => $geometry,
                     'properties' => [

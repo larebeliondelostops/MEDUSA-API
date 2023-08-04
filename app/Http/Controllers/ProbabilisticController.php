@@ -12,7 +12,19 @@ class ProbabilisticController extends Controller
     public function GetIndicators()
     {
         $indicators = Indicator::all();
-        return response()->json($indicators, 200, [], JSON_NUMERIC_CHECK);
+
+        $dataIndicators = [];
+
+        foreach ($indicators as $indicator) {
+            $dataIndicators[] = [
+                "id" => $indicator->id,
+                "name" => $indicator->Name,
+                "description" => $indicator->Description,
+            ];
+        }
+
+
+        return response()->json($dataIndicators, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function obtenerCuadriculaProbabilisticaPorIndicador($id)

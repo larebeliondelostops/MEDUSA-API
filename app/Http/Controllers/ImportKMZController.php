@@ -40,43 +40,54 @@ class ImportKMZController extends Controller
     public function importLines(Request $request)
     {
         $uploadedFile = $request->file('kmz_file');
-
+    
         $zip = new \ZipArchive();
         if ($zip->open($uploadedFile) === true) {
-            // Resto del código de descompresión
+            // Rest of the decompression code
             $extractPath = storage_path('app/public/kml_files/');
             $zip->extractTo($extractPath);
             $zip->close();
         } else {
-            // Manejo de error si no se pudo abrir el archivo Zip
+            // Handle error if Zip file couldn't be opened
             dd('error');
         }
-
+    
         $this->kmlfilename = Uuid::uuid4()->toString() . '.kml';
         rename($extractPath . 'doc.kml', $extractPath . $this->kmlfilename);
-
+    
         $kmlFilePath = $extractPath . $this->kmlfilename;
         $kmlContents = file_get_contents($kmlFilePath);
         $kml = simplexml_load_string($kmlContents);
-
-        $contador = 0;
+    
         $geometry = [];
-
+    
         foreach ($kml->Document->Folder->Placemark as $placemark) {
-
             $name = (string) $placemark->name[0];
             $coordinates = (string) $placemark->LineString->coordinates[0];
-
-            $geometry[$contador] = [
+    
+            // Process coordinates to create LineString coordinates array
+            $coordinatesArray = [];
+            $coordinatesList = explode(' ', trim($coordinates));
+            foreach ($coordinatesList as $coord) {
+                list($longitude, $latitude, $altitude) = explode(',', $coord);
+                $coordinatesArray[] = [(float) $longitude, (float) $latitude, (float) $altitude];
+            }
+    
+            $geometry[] = [
                 'name' => $name,
-                'coordinates' => $coordinates
+                'lineCoordinates' => [
+                    'type' => 'Feature',
+                    'geometry' => [
+                        'type' => 'LineString',
+                        'coordinates' => $coordinatesArray,
+                    ],
+                ],
             ];
-
-            $contador++;
         }
-
+    
         return $geometry;
     }
+    
 
     /**
      * Método para realizar la importación de archivos Excel los cuales contienen información acerca de hurtos
@@ -110,21 +121,36 @@ class ImportKMZController extends Controller
         $geometry = [];
 
         foreach ($kml->Document->Folder->Folder->Placemark as $placemark) {
-
-            if(isset($placemark->Point))
-            {
+            if (isset($placemark->Point)) {
                 $name = (string) $placemark->name[0];
                 $coordinates = (string) $placemark->Point->coordinates[0];
-
-                $geometry[$contador] = [
-                    'name' => $name,
-                    'coordinates' => $coordinates
+    
+                list($longitude, $latitude) = explode(',', $coordinates);
+    
+                $feature = [
+                    "type" => "Feature",
+                    "geometry" => [
+                        "type" => "Point",
+                        "coordinates" => [
+                            (float) $longitude,
+                            (float) $latitude,
+                        ],
+                    ],
                 ];
-
-                $contador++;
+    
+                $pointCoordinates = [
+                    "features" => [$feature],
+                ];
+    
+                $entry = [
+                    "name" => $name,
+                    "pointCoordinates" => $pointCoordinates,
+                ];
+    
+                $features[] = $entry;
             }
         }
-
-        return $geometry;
+    
+        return $features;
     }
 }

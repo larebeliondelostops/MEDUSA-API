@@ -9,7 +9,7 @@ class Incident extends Model
 {
     use HasFactory;
 
-    protected $table = 'Incidents';
+    protected $table = 'incident';
 
     protected $guarded = [];
 
@@ -17,6 +17,4 @@ class Incident extends Model
     {
         return $this->belongsTo(Indicator::class, 'IndicatorId');
     }
-
-    
 }

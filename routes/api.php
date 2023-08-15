@@ -4,9 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ImportKMZController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\CriminalActs;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,8 @@ Route::get('/heatmap', function () {
 
 
 Route::post('/import/excel', [ImportExcelController::class, 'import']);
+Route::post('/import/importLines', [ImportKMZController::class, 'importLines']);
+Route::post('/import/importPoints', [ImportKMZController::class, 'importPoints']);
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -77,3 +81,26 @@ Route::middleware('jwt.verify')->group(function () {
     });
 });
 
+Route::get('/ver-video1', function () {
+    $videoPath = 'videos/trafico_1.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
+    $filePath = Storage::disk('public')->path($videoPath);
+    return response()->file($filePath);
+});
+
+Route::get('/ver-video2', function () {
+    $videoPath = 'videos/trafico_2.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
+    $filePath = Storage::disk('public')->path($videoPath);
+    return response()->file($filePath);
+});
+
+Route::get('/ver-video3', function () {
+    $videoPath = 'videos/trafico_3.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
+    $filePath = Storage::disk('public')->path($videoPath);
+    return response()->file($filePath);
+});
+
+Route::get('/ver-video4', function () {
+    $videoPath = 'videos/trafico_4.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
+    $filePath = Storage::disk('public')->path($videoPath);
+    return response()->file($filePath);
+});

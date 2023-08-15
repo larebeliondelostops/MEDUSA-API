@@ -158,12 +158,12 @@ class IncidentController extends Controller
             $filename = Uuid::uuid4()->toString() . '.' . $extension;
             $photoPath = $photoFile->storeAs('photos', $filename, 'public');
 
-            $incident = new Incident();
-            $incident->IndicatorId = $request->IndicatorId;
-            $incident->address = $request->address;
-            $incident->description = $request->description;
-            $incident->image = $photoPath;
-            $incident->pointCoordinates = json_encode($request->pointCoordinates);
+            $incident = Incident::find($id);
+            $incident->IndicatorId = $request->IndicatorId ?? $incident->IndicatorId;
+            $incident->address = $request->address ?? $incident->address;
+            $incident->description = $request->description ?? $incident->description;
+            $incident->image = $photoPath ?? $incident->photoPath;
+            $incident->pointCoordinates = json_encode($request->pointCoordinates) ?? $incident->pointCoordinates;
             $incident->save();
 
             return Response::json([

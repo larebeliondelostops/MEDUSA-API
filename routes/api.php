@@ -5,6 +5,7 @@ use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ImportKMZController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\CriminalActs;

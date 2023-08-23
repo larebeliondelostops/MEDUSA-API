@@ -179,7 +179,7 @@ class AuthController extends Controller
 
                 return $this->sendResponse();
             }
-
+            $user->getRoleNames();
             $this->data = $user;
             $this->message = 'Informacion del usuario';
             $this->status_code = 200;

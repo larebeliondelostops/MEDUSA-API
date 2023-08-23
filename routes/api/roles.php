@@ -20,10 +20,11 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
      */
     Route::get('roles/getRoles', [RolController::class, 'getRoles']); // Listar todos los roles
     Route::post('roles/saveRol', [RolController::class, 'saveRol']); // Guardar un rol
+    Route::post('roles/assignRol', [RolController::class, 'assignRol']); // Asigna un rol
 
     /**
      * Manejo de permisos
      */
     Route::post('roles/savePermiso', [RolController::class, 'savePermiso']);
-    Route::post('roles/assignPermisos', [RolController::class, 'assignPermisos']);
+    Route::post('roles/assignPermissions', [RolController::class, 'assignPermissions']);
 });

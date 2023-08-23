@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\public_seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -72,7 +72,7 @@ class IndicatorSeeder extends Seeder
         $user8->save();
 
         $user9 = new Indicator();
-        
+
         $user9->Name = 'Extorsión';
         $user9->Description = '.';
 

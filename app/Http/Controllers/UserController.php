@@ -52,6 +52,30 @@ class UserController extends Controller
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
+
+    public function getUser($id)
+    {
+        try {
+            $user = User::find($id);
+    
+            $transformedData = [];
+            $transformedData[] = [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ];
+    
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
     
     /**
      * Metodo para actualizar un centro de Entidades especifico.

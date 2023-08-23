@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use App\Http\Request\Users\AssignRolRequest;
+use App\Http\Request\Users\StoreRequest;
 
 /**
  * Controlador Maneja Lógica de Users.
@@ -24,7 +25,7 @@ use App\Http\Request\Users\AssignRolRequest;
 class UserController extends Controller
 {
     /**
-     * Metodo para obtener 
+     * Metodo para obtener
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +33,7 @@ class UserController extends Controller
     {
         try {
             $user = User::all();
-    
+
             $transformedData = [];
             foreach ($user as $user) {
                 $transformedData[] = [
@@ -41,7 +42,7 @@ class UserController extends Controller
                     'email' => $user->email,
                 ];
             }
-    
+
             return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -58,14 +59,14 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
-    
+
             $transformedData = [];
             $transformedData[] = [
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
                 ];
-    
+
             return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -76,7 +77,7 @@ class UserController extends Controller
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-    
+
     /**
      * Metodo para actualizar un centro de Entidades especifico.
      *
@@ -140,28 +141,27 @@ class UserController extends Controller
         }
     }
 
-    public function storeMax(Request $request)
+    public function store(StoreRequest $request)
     {
         try {
             // Validación
             if (isset($request->validator) && $request->validator->fails()) {
-                return response()->json([
+                return Response::json([
                     'code' => '2001',
                     'status' => 'error',
                     'message' => 'Datos Recibidos Incorrectos',
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
-    
-            // Recorrer el array de JSON y guardar cada elemento en la base de datos
-            foreach ($request->array as $alarmData) {
-                $user = new user();
-                $user->name = $alarmData['name'];
-                $user->address = $alarmData['address'];
-                $user->pointCoordinates = json_encode($alarmData['pointCoordinates']);
-                $user->save();
-            }
-    
+
+            $input = $request->only('name', 'email', 'password', 'password_confirmation');
+
+            $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
+            $user = User::create($input); // eloquent creation of data
+            $user->assignRole($request->role_id);
+
+            $success['user'] = $user;
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos almacenados exitosamente'

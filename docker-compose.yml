@@ -24,12 +24,10 @@ services:
     container_name: medusa-nginx
     restart: unless-stopped
     ports:
-      - 80:80
-      - 443:443
+      - 81:80
     volumes:
       - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d
-      - /etc/letsencrypt:/etc/letsencrypt
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
       - medusa
 
@@ -52,7 +50,7 @@ services:
     image: neimheadh/phppgadmin:7.13.0
     container_name: phppgadmin
     ports:
-      - "81:80"
+      - "80:80"
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432

@@ -21,6 +21,6 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::get('incident/index', [IncidentController::class, 'index']);
     Route::post('incident/store', [IncidentController::class, 'store']);
     Route::get('incident/show/{incident}', [IncidentController::class, 'show']);
-    Route::post('incident/update', [IncidentController::class, 'update']);
-    Route::post('incident/destroy', [IncidentController::class, 'destroy']);
+    Route::post('incident/update/{id}', [IncidentController::class, 'update']);
+    Route::post('incident/destroy/{id}', [IncidentController::class, 'destroy']);
 });

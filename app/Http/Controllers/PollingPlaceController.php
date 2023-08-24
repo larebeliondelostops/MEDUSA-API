@@ -50,6 +50,50 @@ class PollingPlaceController extends Controller
         }
     }
 
+    public function allTable()
+    {
+
+        try {
+
+            $state = request()->input('state');
+
+            $strategy = PollingPlaceValues::STRATEGY[$state];
+
+            return (new $strategy)->allTable();
+        } catch (Exception $exception) {
+
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function getOne($id)
+    {
+
+        try {
+
+            $state = request()->input('state');
+
+            $strategy = PollingPlaceValues::STRATEGY[$state];
+
+            return (new $strategy)->getOne($id);
+        } catch (Exception $exception) {
+
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     public function store(PollingPlaceRequest $request)
     {
 

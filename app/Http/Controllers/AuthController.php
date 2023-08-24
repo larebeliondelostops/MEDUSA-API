@@ -139,9 +139,14 @@ class AuthController extends Controller
                 $refresh_token = auth()->setTTL(540)->attempt($input);
             }
 
+            $user = Auth::user();
+
             $success = [
                 'accessToken' => $token,
-                'refreshToken' => $refresh_token
+                'refreshToken' => $refresh_token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roleName' => $user->getRoleNames()[0],
             ];
 
             $this->data = $success;

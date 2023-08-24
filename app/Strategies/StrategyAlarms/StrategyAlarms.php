@@ -23,7 +23,6 @@ class StrategyAlarms implements AlarmsInterface
     {
         try {
             $alarms = Alarms::all();
-            dd($alarms);
             $transformedData = [];
             foreach ($alarms as $alarms) {
                 $coordinates = json_decode($alarms->pointCoordinates, true);

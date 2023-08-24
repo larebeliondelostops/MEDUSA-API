@@ -9,6 +9,8 @@ use \Illuminate\Http\Request;
 interface CaiInterface
 {
     public function all();
+    public function allTable();
+    public function getOne($id);
     public function store(CaiRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);

@@ -14,7 +14,7 @@ use \Illuminate\Http\Request;
 
 class StrategyAlarms implements AlarmsInterface
 {
-     /**
+    /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
@@ -23,12 +23,12 @@ class StrategyAlarms implements AlarmsInterface
     {
         try {
             $alarms = Alarms::all();
-    
+            dd($alarms);
             $transformedData = [];
             foreach ($alarms as $alarms) {
                 $coordinates = json_decode($alarms->pointCoordinates, true);
                 $geometry = $coordinates['features'][0]['geometry'];
-    
+
                 $transformedData[] = [
                     'type' => 'feature',
                     'markerType' => 1,
@@ -40,7 +40,7 @@ class StrategyAlarms implements AlarmsInterface
                     ]
                 ];
             }
-    
+
             return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -51,10 +51,63 @@ class StrategyAlarms implements AlarmsInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-    
-        
-    
-    
+
+    public function getOne($id)
+    {
+        try {
+            $alarms = Alarms::find($id);
+
+            $transformedData = [];
+
+            $transformedData[] = [
+                'id' => $alarms->id,
+                'uuid' => $alarms->uuid,
+                'name' => $alarms->name,
+                'address' => $alarms->address,
+                'created_at' => $alarms->created_at,
+                'updated_at' => $alarms->updated_at,
+            ];
+
+
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function allTable()
+    {
+        try {
+            $alarms = Alarms::all();
+
+            $transformedData = [];
+            foreach ($alarms as $alarms) {
+                $transformedData[] = [
+                    'id' => $alarms->id,
+                    'uuid' => $alarms->uuid,
+                    'name' => $alarms->name,
+                    'address' => $alarms->address,
+                    'created_at' => $alarms->created_at,
+                    'updated_at' => $alarms->updated_at,
+                ];
+            }
+
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.
@@ -103,7 +156,7 @@ class StrategyAlarms implements AlarmsInterface
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
 
@@ -118,13 +171,13 @@ class StrategyAlarms implements AlarmsInterface
             // }
 
             $alarms = Alarms::find($id);
-            if ($request->name != null){
+            if ($request->name != null) {
                 $alarms->name = $request->name;
             }
-            if ($request->address != null){
+            if ($request->address != null) {
                 $alarms->address = $request->address;
             }
-            if ($request->pointCoordinates != null){
+            if ($request->pointCoordinates != null) {
                 $alarms->pointCoordinates = json_encode($request->pointCoordinates);
             }
             $alarms->save();
@@ -133,7 +186,6 @@ class StrategyAlarms implements AlarmsInterface
                 'status' => 'succes',
                 'data' => $alarms
             ], 201, [], JSON_PRETTY_PRINT);
-
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -181,7 +233,7 @@ class StrategyAlarms implements AlarmsInterface
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
-    
+
             // Recorrer el array de JSON y guardar cada elemento en la base de datos
             foreach ($request->array as $alarmData) {
                 $alarms = new Alarms();
@@ -190,7 +242,7 @@ class StrategyAlarms implements AlarmsInterface
                 $alarms->pointCoordinates = json_encode($alarmData['pointCoordinates']);
                 $alarms->save();
             }
-    
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos almacenados exitosamente'
@@ -204,6 +256,4 @@ class StrategyAlarms implements AlarmsInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
-
 }

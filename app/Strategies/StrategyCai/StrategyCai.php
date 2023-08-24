@@ -53,7 +53,61 @@ class StrategyCai implements CaiInterface
     }
     
         
-    
+    public function getOne($id)
+    {
+        try {
+            $cai = Cai::find($id);
+
+            $transformedData = [];
+
+            $transformedData[] = [
+                'id' => $cai->id,
+                'uuid' => $cai->uuid,
+                'name' => $cai->name,
+                'address' => $cai->address,
+                'created_at' => $cai->created_at,
+                'updated_at' => $cai->updated_at,
+            ];
+
+
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function allTable()
+    {
+        try {
+            $cai = Cai::all();
+
+            $transformedData = [];
+            foreach ($cai as $cai) {
+                $transformedData[] = [
+                    'id' => $cai->id,
+                    'uuid' => $cai->uuid,
+                    'name' => $cai->name,
+                    'address' => $cai->address,
+                    'created_at' => $cai->created_at,
+                    'updated_at' => $cai->updated_at,
+                ];
+            }
+
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }  
     
 
     /**

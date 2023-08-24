@@ -9,6 +9,8 @@ use \Illuminate\Http\Request;
 interface EntitiesInterface
 {
     public function all();
+    public function allTable();
+    public function getOne($id);
     public function store(EntitiesRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);

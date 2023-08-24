@@ -75,6 +75,41 @@ class UserController extends Controller
         }
     }
 
+    public function store(StoreRequest $request)
+    {
+        try {
+            // Validación
+            if (isset($request->validator) && $request->validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $request->validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $input = $request->only('name', 'email', 'password', 'password_confirmation');
+
+            $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
+            $user = User::create($input); // eloquent creation of data
+            $user->assignRole($request->role_id);
+
+            $success['user'] = $user;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Datos almacenados exitosamente'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return response()->json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     /**
      * Metodo para actualizar un centro de Entidades especifico.
      *
@@ -87,14 +122,11 @@ class UserController extends Controller
         try {
 
             $user = User::find($id);
-            if ($request->name != null){
-                $user->name = $request->name;
-            }
-            if ($request->email != null){
-                $user->email = $request->email;
-            }
-            if ($request->password != null){
-                $user->password = $request->password;
+            $user->name = $request->name ?? $user->name;
+            $user->email = $request->email ?? $user->email;
+            $user->password = bcrypt($request->password) ?? $user->password;
+            if ($request->role_id) {
+                $user->assignRole($request->role_id);
             }
             $user->save();
 
@@ -137,43 +169,6 @@ class UserController extends Controller
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
-    public function store(StoreRequest $request)
-    {
-        try {
-            // Validación
-            if (isset($request->validator) && $request->validator->fails()) {
-                return Response::json([
-                    'code' => '2001',
-                    'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
-                    'errors' => $request->validator->messages()
-                ], 400, [], JSON_PRETTY_PRINT);
-            }
-
-            $input = $request->only('name', 'email', 'password', 'password_confirmation');
-
-            $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
-            $user = User::create($input); // eloquent creation of data
-            $user->assignRole($request->role_id);
-
-            $success['user'] = $user;
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Datos almacenados exitosamente'
-            ], 201, [], JSON_PRETTY_PRINT);
-        } catch (\Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return response()->json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-
 
     /**
      * Método para el asignado de roles para determinado usuario

@@ -59,15 +59,12 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
+            $user->getRoleNames();
 
-            $transformedData = [];
-            $transformedData[] = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                ];
-
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json([
+                'status' => 'succes',
+                'data' => $user
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

@@ -46,6 +46,9 @@ class StoreRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'role_id' => 'required|exists:roles,id',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string',
+            'avatar' => 'nullable|file',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
         ];
@@ -78,6 +81,10 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'email' => 'Email',
+            'role_id' => 'Rol',
+            'phone_number' => 'Número de teléfono',
+            'address' => 'Dirección',
+            'avatar' => 'Avatar',
             'password' => 'Contraseña',
             'password_confirmation' => 'Confirmación de contraseña',
         ];

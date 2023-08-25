@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use App\Http\Request\Users\AssignRolRequest;
 use App\Http\Request\Users\StoreRequest;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Controlador Maneja Lógica de Users.
@@ -88,13 +89,23 @@ class UserController extends Controller
                 ], 400, [], JSON_PRETTY_PRINT);
             }
 
-            $input = $request->only('name', 'email', 'password', 'password_confirmation');
+            if (isset($request->avatar)) {
+                $photoFile = $request->file('avatar');
+                $extension = $photoFile->getClientOriginalExtension();
+                $filename = Uuid::uuid4()->toString() . '.' . $extension;
+                $photoPath = $photoFile->storeAs('avatar', $filename, 'public');
+            }
 
-            $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
-            $user = User::create($input); // eloquent creation of data
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone_number = $request->phone_number;
+            $user->address = $request->address;
+            $user->avatar = $request->avatar != NULL ? $filename : NULL;
+            $user->password = bcrypt($request->password);
+            $user->save();
             $user->assignRole($request->role_id);
-
-            $success['user'] = $user;
 
             return response()->json([
                 'status' => 'success',
@@ -121,9 +132,19 @@ class UserController extends Controller
     {
         try {
 
+            if (isset($request->avatar)) {
+                $photoFile = $request->file('avatar');
+                $extension = $photoFile->getClientOriginalExtension();
+                $filename = Uuid::uuid4()->toString() . '.' . $extension;
+                $photoPath = $photoFile->storeAs('avatar', $filename, 'public');
+            }
+
             $user = User::find($id);
             $user->name = $request->name ?? $user->name;
             $user->email = $request->email ?? $user->email;
+            $user->phone_number = $request->phone_number ?? $user->phone_number;
+            $user->address = $request->address ?? $user->address;
+            $user->avatar = $request->avatar != NULL ? $filename : $user->avatar;
             $user->password = bcrypt($request->password) ?? $user->password;
             if ($request->role_id) {
                 $user->assignRole($request->role_id);

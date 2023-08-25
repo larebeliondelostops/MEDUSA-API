@@ -50,7 +50,7 @@ class AlarmsController extends Controller
     }
 
     //Metodo para traer todas las entidades
-    public function allTable()
+    public function allTable(Request $request)
     {
 
         try {
@@ -59,7 +59,7 @@ class AlarmsController extends Controller
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
-            return (new $strategy)->allTable();
+            return (new $strategy)->allTable($request);
         } catch (Exception $exception) {
 
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

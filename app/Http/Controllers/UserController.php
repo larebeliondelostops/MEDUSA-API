@@ -30,13 +30,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(Request $request)
     {
         try {
-            $user = User::all();
+
+            $users = User::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($user as $user) {
+            foreach ($users as $user) {
                 $transformedData[] = [
                     'id' => $user->id,
                     'name' => $user->name,
@@ -44,7 +45,19 @@ class UserController extends Controller
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $users->total(),
+                        'perPage' => $users->perPage(),
+                        'currentPage' => $users->currentPage(),
+                        'lastPage' => $users->lastPage(),
+                        'from' => $users->firstItem(),
+                        'to' => $users->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

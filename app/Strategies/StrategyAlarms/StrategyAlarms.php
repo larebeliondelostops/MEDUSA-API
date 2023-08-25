@@ -79,24 +79,36 @@ class StrategyAlarms implements AlarmsInterface
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
         try {
-            $alarms = Alarms::all();
+            $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($alarms as $alarms) {
+            foreach ($alarms as $alarm) {
                 $transformedData[] = [
-                    'id' => $alarms->id,
-                    'uuid' => $alarms->uuid,
-                    'name' => $alarms->name,
-                    'address' => $alarms->address,
-                    'created_at' => $alarms->created_at,
-                    'updated_at' => $alarms->updated_at,
+                    'id' => $alarm->id,
+                    'uuid' => $alarm->uuid,
+                    'name' => $alarm->name,
+                    'address' => $alarm->address,
+                    'created_at' => $alarm->created_at,
+                    'updated_at' => $alarm->updated_at,
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $alarms->total(),
+                        'perPage' => $alarms->perPage(),
+                        'currentPage' => $alarms->currentPage(),
+                        'lastPage' => $alarms->lastPage(),
+                        'from' => $alarms->firstItem(),
+                        'to' => $alarms->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

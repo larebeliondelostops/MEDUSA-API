@@ -9,7 +9,7 @@ use \Illuminate\Http\Request;
 interface AlarmsInterface
 {
     public function all();
-    public function allTable();
+    public function allTable(Request $request);
     public function getOne($id);
     public function store(AlarmsRequest $request);
     public function update(Request $request, $id);

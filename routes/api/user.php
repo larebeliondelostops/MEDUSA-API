@@ -20,8 +20,8 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
      */
     Route::get('user/all', [UserController::class, 'all']); // Obtener todos los campos de la tabla entidades
     Route::get('user/getUser/{id}', [UserController::class, 'getUser']); // editar un campo en la tabla entidades
-    Route::put('user/update/{id}', [UserController::class, 'update']); // editar un campo en la tabla entidades
+    Route::post('user/update/{id}', [UserController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('user/destroy/{id}', [UserController::class, 'destroy']); // editar un campo en la tabla entidades
-    Route::post('users/asignacion/rol', [UserController::class, 'assignRol']); // Asignación de roles
-    Route::post('users/store', [UserController::class, 'store']); // Creación de usuarios
+    Route::post('user/asignacion/rol', [UserController::class, 'assignRol']); // Asignación de roles
+    Route::post('user/store', [UserController::class, 'store']); // Creación de usuarios
 });

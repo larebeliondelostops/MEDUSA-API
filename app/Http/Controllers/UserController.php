@@ -60,6 +60,7 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
+            $user->avatar = env('APP_URL') . '/storage/avatar/' . $user->avatar;
             $user->getRoleNames();
 
             return Response::json([
@@ -128,7 +129,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
 
@@ -146,10 +147,11 @@ class UserController extends Controller
             $user->address = $request->address ?? $user->address;
             $user->avatar = $request->avatar != NULL ? $filename : $user->avatar;
             $user->password = bcrypt($request->password) ?? $user->password;
+            $user->save();
+
             if ($request->role_id) {
                 $user->assignRole($request->role_id);
             }
-            $user->save();
 
             return Response::json([
                 'status' => 'succes',

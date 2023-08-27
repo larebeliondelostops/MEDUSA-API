@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>@yield('title') | {{ config('app.name') }}</title>
@@ -8,6 +9,7 @@
     <!-- Bootstrap 4.1.1 -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Ionicons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="//fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link href="{{ asset('assets/css/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
@@ -21,8 +23,20 @@
     @yield('page_css')
 
     @yield('css')
+
+<style>
+#floating-panel {
+    position: absolute;
+    bottom: 240px;
+    right: 35px;
+    z-index: 1;
+}
+#map {
+  position: relative;
+}
+</style>
 </head>
-<body>
+<body class="sidebar-mini" style="background-color: #23233b;">
 
 <div id="app">
     <div class="main-wrapper main-wrapper-1">
@@ -46,8 +60,10 @@
 
 @include('profile.change_password')
 @include('profile.edit_profile')
-
+@stack('scripts')
+@stack('map_scripts')
 </body>
+
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -79,4 +95,6 @@
         };
     }(jQuery));
 </script>
+
+
 </html>

@@ -61,4 +61,9 @@ RUN mkdir -p /home/$user/.composer && \
 # Set working directory
 WORKDIR /var/www
 
+RUN apt-get update && apt-get install -y libzip-dev zip && docker-php-ext-install zip
+
+USER root
+RUN echo 'ignicion ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER $user
+

@@ -1,0 +1,953 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6694145, 4.082492168]
+            },
+            "properties": {
+                "NOMBRE": "01. IGLESIA PORFIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6564804, 4.104435675]
+            },
+            "properties": {
+                "NOMBRE": "02. BARRIO MONTECARLO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6124916, 4.142513528]
+            },
+            "properties": {
+                "NOMBRE": "03. PUENTE UNION RECREO Y POPULAR",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6343266, 4.115452504]
+            },
+            "properties": {
+                "NOMBRE": "04. ENTRADA M CENTAUROS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6408079, 4.150838507]
+            },
+            "properties": {
+                "NOMBRE": "05. ENTRADA LA SALLE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6353551, 4.154000353]
+            },
+            "properties": {
+                "NOMBRE": "06. CC VILLLA JULIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6206604, 4.150313337]
+            },
+            "properties": {
+                "NOMBRE": "07. TRANSITO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6160647, 4.12653531]
+            },
+            "properties": {
+                "NOMBRE": "08. CHANTILLY VIZCAYA - HACARITAMA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6141847, 4.139742765]
+            },
+            "properties": {
+                "NOMBRE": "09. ESTADIO BOMBONERA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6314078, 4.128946092]
+            },
+            "properties": {
+                "NOMBRE": "10. PUENTE ESPERANZA ENTRE 6 Y 7",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6198352, 4.147111003]
+            },
+            "properties": {
+                "NOMBRE": "11. COLEGIO COFREM",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6246818, 4.148066504]
+            },
+            "properties": {
+                "NOMBRE": "12. BOMBA LA SABANA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6180555, 4.135400999]
+            },
+            "properties": {
+                "NOMBRE": "13. BOMBA ESSO VIA MARACOS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6263363, 4.143106706]
+            },
+            "properties": {
+                "NOMBRE": "14. COLEGIO ABRAHAM LINCOLN",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6193326, 4.125115756]
+            },
+            "properties": {
+                "NOMBRE": "15. ENTRADA ALBORADA BOMBA TEXACO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6274772, 4.153469819]
+            },
+            "properties": {
+                "NOMBRE": "16. BARRIO INDUSTRIAL",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6292444, 4.147876665]
+            },
+            "properties": {
+                "NOMBRE": "17. LAVAUTOS LOS TIGRES",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6279773, 4.135838412]
+            },
+            "properties": {
+                "NOMBRE": "18. COLEGIO FEMENINO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.5424442, 4.123763189]
+            },
+            "properties": {
+                "NOMBRE": "19. MEGA COLEGIO LA RELIQUIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.547041, 4.127308594]
+            },
+            "properties": {
+                "NOMBRE": "20. RELIQUIA CENTRO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6343508, 4.150179234]
+            },
+            "properties": {
+                "NOMBRE": "21. CALLE DE LAS FERRETERIAS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.611611, 4.146161609]
+            },
+            "properties": {
+                "NOMBRE": "22. ENTRADA RECREO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6742013, 4.07908049]
+            },
+            "properties": {
+                "NOMBRE": "23. PORFIA BARRIO PLAYITA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6254501, 4.149752104]
+            },
+            "properties": {
+                "NOMBRE": "24. BARRIO SANTA FE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6715228, 4.083909619]
+            },
+            "properties": {
+                "NOMBRE": "25. PORFIA GAVIONES",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6367259, 4.144027455]
+            },
+            "properties": {
+                "NOMBRE": "26. RESPALDO CLINICA META",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6176239, 4.147121965]
+            },
+            "properties": {
+                "NOMBRE": "27. HATO GRANDE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6694246, 4.078543968]
+            },
+            "properties": {
+                "NOMBRE": "28. PORFIA BANCO CONGENTE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6105586, 4.137103722]
+            },
+            "properties": {
+                "NOMBRE": "29. CAMELIAS PLANCHON",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6361089, 4.151005058]
+            },
+            "properties": {
+                "NOMBRE": "30. PLAZOLETA LOS CENTAUROS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6476916, 4.137608398]
+            },
+            "properties": {
+                "NOMBRE": "31. IGLESIA BUQUE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6117336, 4.123176586]
+            },
+            "properties": {
+                "NOMBRE": "32. LLANO ABASTOS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6153347, 4.119375462]
+            },
+            "properties": {
+                "NOMBRE": "33. SEPTIMA BRIGADA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6285029, 4.13113547]
+            },
+            "properties": {
+                "NOMBRE": "34. ETELL",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6285841, 4.143131182]
+            },
+            "properties": {
+                "NOMBRE": "35. GAITAN MOTELES",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6317051, 4.148978012]
+            },
+            "properties": {
+                "NOMBRE": "36. MEGA COLEGIO CALDAS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6322248, 4.153025932]
+            },
+            "properties": {
+                "NOMBRE": "37. BARRIO VILLA JULIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.625789, 4.139431758]
+            },
+            "properties": {
+                "NOMBRE": "38. EL NOGAL",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.615248, 4.154188794]
+            },
+            "properties": {
+                "NOMBRE": "39. VILLA SUAREZ",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6132963, 4.153491165]
+            },
+            "properties": {
+                "NOMBRE": "40. BARRIO CALAMAR",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.660721, 4.107297738]
+            },
+            "properties": {
+                "NOMBRE": "41. BARRIO PLAYA RICA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.5885898, 4.133186653]
+            },
+            "properties": {
+                "NOMBRE": "42. BARRIO ANTONIO PINILLA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6344848, 4.153995923]
+            },
+            "properties": {
+                "NOMBRE": "43. BOMBEROS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6170945, 4.141934227]
+            },
+            "properties": {
+                "NOMBRE": "44. ENTRADA POPULAR CEIBA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.5867173, 4.137229625]
+            },
+            "properties": {
+                "NOMBRE": "45. ENTRADA COVISAN",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6376209, 4.14146709]
+            },
+            "properties": {
+                "NOMBRE": "46. 7 DE AGOSTO PLAZA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6219415, 4.152681062]
+            },
+            "properties": {
+                "NOMBRE": "47. IGLESIA JORDAN",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6264263, 4.12396548]
+            },
+            "properties": {
+                "NOMBRE": "48. P SALUD BARRIO COMUNEROS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6376273, 4.133919409]
+            },
+            "properties": {
+                "NOMBRE": "49. VILLA SUAREZ",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6132963, 4.153491165]
+            },
+            "properties": {
+                "NOMBRE": "50. BARRIO CALAMAR",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6427047, 4.123398069]
+            },
+            "properties": {
+                "NOMBRE": "51. PARQUE FUNDADORES",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6084591, 4.139693475]
+            },
+            "properties": {
+                "NOMBRE": "52. VILLA DEL SOL",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6406753, 4.147040476]
+            },
+            "properties": {
+                "NOMBRE": "53. SAN JOSE ENTRADA PRINCIPAL",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6390251, 4.159507285]
+            },
+            "properties": {
+                "NOMBRE": "54. CAUDAL ALTO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6565583, 4.155571492]
+            },
+            "properties": {
+                "NOMBRE": "55. CAI GALAN",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6243205, 4.141626625]
+            },
+            "properties": {
+                "NOMBRE": "56. BARRIO EL RETIRO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.639455, 4.150503866]
+            },
+            "properties": {
+                "NOMBRE": "57. REGISTRADURIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6400788, 4.147608061]
+            },
+            "properties": {
+                "NOMBRE": "58. SAN JOSE, (via BARZAL Bajo)",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6551367, 4.098903735]
+            },
+            "properties": {
+                "NOMBRE": "59. ENTRADA MONTECARLO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.613117, 4.133879219]
+            },
+            "properties": {
+                "NOMBRE": "60. HOTEL BAHIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6273276, 4.153925884]
+            },
+            "properties": {
+                "NOMBRE": "61. ENTRADA BRISAS DE GUATIQUIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6336132, 4.123404207]
+            },
+            "properties": {
+                "NOMBRE": "62. CHANTILLY VILLA BOLIVAR",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6129116, 4.129288068]
+            },
+            "properties": {
+                "NOMBRE": "63. BARRIO ESTERO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6286006, 4.155344425]
+            },
+            "properties": {
+                "NOMBRE": "64. POLIDEPORTIVO BRISAS GUATIQUIA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6389936, 4.14128166]
+            },
+            "properties": {
+                "NOMBRE": "65. BARRIO 7 DE AGOSTO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6395551, 4.150079161]
+            },
+            "properties": {
+                "NOMBRE": "66. PUENTE LA CRUZ",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6318753, 4.141316296]
+            },
+            "properties": {
+                "NOMBRE": "67. PIEL CANELA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6221623, 4.134614751]
+            },
+            "properties": {
+                "NOMBRE": "68. ENTRADA CANTA RANA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6374085, 4.150873462]
+            },
+            "properties": {
+                "NOMBRE": "69. DIAN",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6432183, 4.14791563]
+            },
+            "properties": {
+                "NOMBRE": "70. COLEGIO BARRIO SAN JOSE",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6330589, 4.151647192]
+            },
+            "properties": {
+                "NOMBRE": "71. PLAZA DE MERCADO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6351372, 4.151963462]
+            },
+            "properties": {
+                "NOMBRE": "72. EXITO VECINO",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6389157, 4.146931616]
+            },
+            "properties": {
+                "NOMBRE": "73. CLINICA MARTHA",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-73.6433724, 4.14454629]
+            },
+            "properties": {
+                "NOMBRE": "74. GLORIETA DAS",
+                "TIPO": "PU",
+                "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6378572,4.126589895]
+            },
+            "properties": {
+              "NOMBRE": "76. EXITO DE LA SABANA",
+              "TIPO": "PU",
+              "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6063572,4.145280801]
+            },
+            "properties": {
+              "NOMBRE": "77. MANANTIAL",
+              "TIPO": "PU",
+              "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6348115,4.151220681]
+            },
+            "properties": {
+              "NOMBRE": "78. CALLE 36 DIVINO NIÑO",
+              "TIPO": "PU",
+              "URL": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365"
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6435063,4.137811103]
+            },
+            "properties": {
+              "NOMBRE": "CODALTEC CASA 1",
+              "TIPO": "PR",
+              "URL": "http://181.63.246.86:8093"
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6437316,4.137072742]
+            },
+            "properties": {
+              "NOMBRE": "CODALTEC CASA 2",
+              "TIPO": "PR",
+              "URL": "http://181.49.7.246:8093"
+            }
+          }
+    ]
+}

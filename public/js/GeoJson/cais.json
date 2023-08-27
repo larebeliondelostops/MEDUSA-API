@@ -1,0 +1,104 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.645871, 4.136891]
+        },
+        "properties": {
+          "Nombre": "Cai. Buque",
+          "Direccion": "1"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.601354, 4.142744]
+        },
+        "properties": {
+          "Nombre": "Cai. Catama",
+          "Direccion": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.641032, 4.165108]
+        },
+        "properties": {
+          "Nombre": "Cai. Caudal",
+          "Direccion": "3"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.656584, 4.1557]
+        },
+        "properties": {
+          "Nombre": "Cai. Galan",
+          "Direccion": "4"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.565435, 4.132944]
+        },
+        "properties": {
+          "Nombre": "Cai. Ganadero",
+          "Direccion": "5"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.631119, 4.156319]
+        },
+        "properties": {
+          "Nombre": "Cai. Guatiquia",
+          "Direccion": "6"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.6425, 4.12099]
+        },
+        "properties": {
+          "Nombre": "Cai. La Esperanza",
+          "Direccion": "8"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.633103, 4.142716]
+        },
+        "properties": {
+          "Nombre": "Cai. Maizaro",
+          "Direccion": "7"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.623553, 4.167184]
+        },
+        "properties": {
+          "Nombre": "Cai. Vanguardia",
+          "Direccion": "9"
+        }
+      }
+    ]
+  }

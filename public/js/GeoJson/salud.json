@@ -1,0 +1,499 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6377, 4.15138]
+          },
+          "id": "1",
+          "title": "INST. EDUCATIVO 12 DE OCTUBR",
+          "properties": {
+              "tipo": "1",
+              "cam_dis": "1",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "14",
+              "mespecialistas": "1",
+              "enfermeros": "1",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6406, 4.15558]
+          },
+          "properties": {
+              "id": "2",
+              "nombre": "COLEGIO GENERAL SANTANDER",
+              "tipo": "1",
+              "cam_dis": "2",
+              "uniCI": "1/20",
+              "Host": false,
+              "mgenerales": "10",
+              "mespecialistas": "4",
+              "enfermeros": "5",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6386, 4.15756]
+          },
+          "properties": {
+              "id": "3",
+              "nombre": "ESCUELA POLICARPA SALAVARRIET",
+              "tipo": "1",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "4",
+              "mespecialistas": "47",
+              "enfermeros": "2",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6516, 4.13881]
+          },
+          "properties": {
+              "id": "4",
+              "nombre": "COLEGIO ANTONIO NARIÑO",
+              "tipo": "1",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "17",
+              "mespecialistas": "71",
+              "enfermeros": "0",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6381, 4.15306]
+          },
+          "properties": {
+              "id": "5",
+              "nombre": "COL NTRA SRA DE LA SABIDURIA",
+              "tipo": "1",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "24",
+              "mespecialistas": "11",
+              "enfermeros": "6",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6379, 4.14475]
+          },
+          "properties": {
+              "id": "6",
+              "nombre": "Sede Administrativa",
+              "tipo": "2",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "19",
+              "mespecialistas": "21",
+              "enfermeros": "7",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6375, 4.13032]
+          },
+          "properties": {
+              "id": "7",
+              "nombre": "Centro de Salud La Esperanza",
+              "tipo": "2",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "41",
+              "mespecialistas": "8",
+              "enfermeros": "1",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6693, 4.08172]
+          },
+          "properties": {
+              "id": "8",
+              "nombre": "Centro de Salud Porfia",
+              "tipo": "2",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "63",
+              "mespecialistas": "52",
+              "enfermeros": "8",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6269, 4.12397]
+          },
+          "properties": {
+              "id": "9",
+              "nombre": "Centro de Salud Comuneros",
+              "tipo": "2",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "78",
+              "mespecialistas": "10",
+              "enfermeros": "2",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6106, 4.14544]
+          },
+          "properties": {
+              "id": "10",
+              "nombre": "Centro de Salud Recreo",
+              "tipo": "2",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "91",
+              "mespecialistas": "37",
+              "enfermeros": "9",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6446, 4.14372]
+          },
+          "properties": {
+              "id": "11",
+              "nombre": "Hospital departamental",
+              "tipo": "3",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": false,
+              "mgenerales": "73",
+              "mespecialistas": "74",
+              "enfermeros": "4",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.639, 4.14695]
+          },
+          "properties": {
+              "id": "12",
+              "nombre": "Clínica Martha",
+              "tipo": "4",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "25",
+              "mespecialistas": "1",
+              "enfermeros": "6",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6369, 4.1446]
+          },
+          "properties": {
+              "id": "13",
+              "nombre": "Clínica Meta",
+              "tipo": "4",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "12",
+              "mespecialistas": "0",
+              "enfermeros": "5",
+              "auxiliares": "2"
+          }
+      },
+      {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-73.6393, 4.14819]
+          },
+          "properties": {
+              "id": "14",
+              "nombre": "Clínica Universidad Cooperativa",
+              "tipo": "4",
+              "cam_dis": "2",
+              "uniCI": "2/19",
+              "Host": true,
+              "mgenerales": "14",
+              "mespecialistas": "1",
+              "enfermeros": "1",
+              "auxiliares": "2"
+          }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.428942, 4.060567]
+        },
+        "properties": {
+            "id": "1",
+            "nombre": "Centro de Salud Alto Pompeya",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.63769, 4.130914]
+        },
+        "properties": {
+            "id": "2",
+            "nombre": "Centro de Salud La Esperanza",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.584502, 4.137375]
+        },
+        "properties": {
+            "id": "3",
+            "nombre": "Centro de Salud Morichal",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.670571, 4.081542]
+        },
+        "properties": {
+            "id": "4",
+            "nombre": "Centro de Salud Porfia",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.611165, 4.143518]
+        },
+        "properties": {
+            "id": "5",
+            "nombre": "Centro de Salud Recreo",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.651609, 4.159317]
+        },
+        "properties": {
+            "id": "6",
+            "nombre": "Centro de Salud 12 de Octubre",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.626665, 4.123946]
+        },
+        "properties": {
+            "id": "7",
+            "nombre": "Centro de Salud Comuneros",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.585906, 4.118907]
+        },
+        "properties": {
+            "id": "8",
+            "nombre": "Centro de Salud Kirpas",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.696636, 4.07967]
+        },
+        "properties": {
+            "id": "9",
+            "nombre": "Centro de Salud La Nohora",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.614652, 4.140197]
+        },
+        "properties": {
+            "id": "10",
+            "nombre": "Centro de Salud Popular",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.638309, 4.146666]
+        },
+        "properties": {
+            "id": "11",
+            "nombre": "Centro de Salud Barzal",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.680838, 4.168947]
+        },
+        "properties": {
+            "id": "12",
+            "nombre": "Puesto de Salud Buenavista",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.641758, 4.142582]
+        },
+        "properties": {
+            "id": "13",
+            "nombre": "Sede Administrativa",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.366101, 4.038493]
+        },
+        "properties": {
+            "id": "14",
+            "nombre": "Puesto de Salud Rincon Pompeya",
+            "tipo": "3"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.643612, 4.144622]
+        },
+        "properties": {
+            "id": "15",
+            "nombre": "Hospital Departamental",
+            "tipo": "2"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.638913, 4.147147]
+        },
+        "properties": {
+            "id": "16",
+            "nombre": "Clinica Martha",
+            "tipo": "4"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.639143, 4.148295]
+        },
+        "properties": {
+            "id": "17",
+            "nombre": "Clinica Cooperativa",
+            "tipo": "4"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.637407, 4.143877]
+        },
+        "properties": {
+            "id": "18",
+            "nombre": "Clinica Meta",
+            "tipo": "4"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-73.64085, 4.142172]
+        },
+        "properties": {
+            "id": "19",
+            "nombre": "Clinica Servimedicos",
+            "tipo": "4"
+        }
+    }
+  ]
+}

@@ -51,20 +51,20 @@ class ImportKMZController extends Controller
             // Handle error if Zip file couldn't be opened
             dd('error');
         }
-    
+
         $this->kmlfilename = Uuid::uuid4()->toString() . '.kml';
         rename($extractPath . 'doc.kml', $extractPath . $this->kmlfilename);
-    
+
         $kmlFilePath = $extractPath . $this->kmlfilename;
         $kmlContents = file_get_contents($kmlFilePath);
         $kml = simplexml_load_string($kmlContents);
-    
+
         $geometry = [];
-    
+
         foreach ($kml->Document->Folder->Placemark as $placemark) {
             $name = (string) $placemark->name[0];
             $coordinates = (string) $placemark->LineString->coordinates[0];
-    
+
             // Process coordinates to create LineString coordinates array
             $coordinatesArray = [];
             $coordinatesList = explode(' ', trim($coordinates));
@@ -72,7 +72,7 @@ class ImportKMZController extends Controller
                 list($longitude, $latitude, $altitude) = explode(',', $coord);
                 $coordinatesArray[] = [(float) $longitude, (float) $latitude, (float) $altitude];
             }
-    
+
             $geometry[] = [
                 'name' => $name,
                 'lineCoordinates' => [
@@ -84,10 +84,10 @@ class ImportKMZController extends Controller
                 ],
             ];
         }
-    
+
         return $geometry;
     }
-    
+
 
     /**
      * Método para realizar la importación de archivos Excel los cuales contienen información acerca de hurtos
@@ -124,9 +124,9 @@ class ImportKMZController extends Controller
             if (isset($placemark->Point)) {
                 $name = (string) $placemark->name[0];
                 $coordinates = (string) $placemark->Point->coordinates[0];
-    
+
                 list($longitude, $latitude) = explode(',', $coordinates);
-    
+
                 $feature = [
                     "type" => "Feature",
                     "geometry" => [
@@ -137,20 +137,113 @@ class ImportKMZController extends Controller
                         ],
                     ],
                 ];
-    
+
                 $pointCoordinates = [
                     "features" => [$feature],
                 ];
-    
+
                 $entry = [
                     "name" => $name,
                     "pointCoordinates" => $pointCoordinates,
                 ];
-    
+
                 $features[] = $entry;
             }
         }
-    
+
+        return $features;
+    }
+
+    /**
+     * Método para realizar la importación de archivos Excel los cuales contienen información y su lectura dinamica
+     *
+     * @access public
+     * @param Request $request
+     */
+    public function importDinamic(Request $request)
+    {
+        ini_set('memory_limit', '12G');
+        ini_set('max_execution_time', 20000);
+
+        $uploadedFile = $request->file('kmz_file');
+
+        $zip = new \ZipArchive();
+        if ($zip->open($uploadedFile) === true) {
+            // Resto del código de descompresión
+            $extractPath = storage_path('app/public/kml_files/');
+            $zip->extractTo($extractPath);
+            $zip->close();
+        } else {
+            // Manejo de error si no se pudo abrir el archivo Zip
+            dd('error');
+        }
+
+        $this->kmlfilename = Uuid::uuid4()->toString() . '.kml';
+        rename($extractPath . 'doc.kml', $extractPath . $this->kmlfilename);
+
+        $kmlFilePath = $extractPath . $this->kmlfilename;
+        $kmlContents = file_get_contents($kmlFilePath);
+        $kml = simplexml_load_string($kmlContents);
+
+        $contador = 0;
+        $geometry = [];
+        dd($kml->Document->Folder->Folder[1]);
+        foreach ($kml->Document->Folder->Document->Placemark as $placemark) {
+            if (isset($placemark->Point)) {
+                $name = (string) $placemark->name[0];
+                $coordinates = (string) $placemark->Point->coordinates[0];
+
+                list($longitude, $latitude) = explode(',', $coordinates);
+
+                $feature = [
+                    "type" => "Feature",
+                    "geometry" => [
+                        "type" => "Point",
+                        "coordinates" => [
+                            (float) $longitude,
+                            (float) $latitude,
+                        ],
+                    ],
+                ];
+
+                $pointCoordinates = [
+                    "features" => [$feature],
+                ];
+
+                $entry = [
+                    "name" => $name,
+                    "pointCoordinates" => $pointCoordinates,
+                ];
+
+                $features[] = $entry;
+            } elseif (isset($placemark->LineString)) {
+                $name = (string) $placemark->name[0];
+                $coordinates = (string) $placemark->LineString->coordinates[0];
+
+                // Process coordinates to create LineString coordinates array
+                $coordinatesArray = [];
+                $coordinatesList = explode(' ', trim($coordinates));
+                foreach ($coordinatesList as $coord) {
+                    list($longitude, $latitude, $altitude) = explode(',', $coord);
+                    $coordinatesArray[] = [(float) $longitude, (float) $latitude, (float) $altitude];
+                }
+
+                $geometry[] = [
+                    'name' => $name,
+                    'lineCoordinates' => [
+                        'type' => 'Feature',
+                        'geometry' => [
+                            'type' => 'LineString',
+                            'coordinates' => $coordinatesArray,
+                        ],
+                    ],
+                ];
+
+                $features[] = $geometry;
+            }
+            $contador++;
+        }
+        dd($contador);
         return $features;
     }
 }

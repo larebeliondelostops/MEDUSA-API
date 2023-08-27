@@ -146,7 +146,7 @@ class AuthController extends Controller
                 'refreshToken' => $refresh_token,
                 'name' => $user->name,
                 'email' => $user->email,
-                'roleName' => $user->getRoleNames()[0],
+                'roleName' => $user->getRoleNames()[0] ?? null,
             ];
 
             $this->data = $success;

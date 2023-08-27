@@ -9,7 +9,7 @@ use \Illuminate\Http\Request;
 interface EntitiesInterface
 {
     public function all();
-    public function allTable();
+    public function allTable(Request $request);
     public function getOne($id);
     public function store(EntitiesRequest $request);
     public function update(Request $request, $id);

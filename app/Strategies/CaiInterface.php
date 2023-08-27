@@ -9,7 +9,7 @@ use \Illuminate\Http\Request;
 interface CaiInterface
 {
     public function all();
-    public function allTable();
+    public function allTable(Request $request);
     public function getOne($id);
     public function store(CaiRequest $request);
     public function update(Request $request, $id);

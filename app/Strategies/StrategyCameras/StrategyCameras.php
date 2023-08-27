@@ -81,24 +81,36 @@ class StrategyCameras implements CamerasInterface
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
         try {
-            $cameras = Cameras::all();
+            $cameras = Cameras::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($cameras as $cameras) {
+            foreach ($cameras as $camera) {
                 $transformedData[] = [
-                    'id' => $cameras->id,
-                    'uuid' => $cameras->uuid,
-                    'name' => $cameras->name,
-                    'address' => $cameras->address,
-                    'created_at' => $cameras->created_at,
-                    'updated_at' => $cameras->updated_at,
+                    'id' => $camera->id,
+                    'uuid' => $camera->uuid,
+                    'name' => $camera->name,
+                    'address' => $camera->address,
+                    'created_at' => $camera->created_at,
+                    'updated_at' => $camera->updated_at,
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $cameras->total(),
+                        'perPage' => $cameras->perPage(),
+                        'currentPage' => $cameras->currentPage(),
+                        'lastPage' => $cameras->lastPage(),
+                        'from' => $cameras->firstItem(),
+                        'to' => $cameras->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -107,9 +119,8 @@ class StrategyCameras implements CamerasInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    }       
-    
-    
+    }
+
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.

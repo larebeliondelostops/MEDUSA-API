@@ -47,7 +47,7 @@ class EntitiesController extends Controller
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-    public function allTable()
+    public function allTable(Request $request)
     {
 
         try {
@@ -56,7 +56,7 @@ class EntitiesController extends Controller
 
             $strategy = EntitiesValues::STRATEGY[$state];
 
-            return (new $strategy)->allTable();
+            return (new $strategy)->allTable($request);
         } catch (Exception $exception) {
 
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

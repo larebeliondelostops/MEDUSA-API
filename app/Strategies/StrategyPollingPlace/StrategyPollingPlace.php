@@ -87,13 +87,13 @@ class StrategyPollingPlace implements PollingPlaceInterface
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
         try {
-            $pollingPlace = PollingPlace::all();
+            $pollingPlaces = PollingPlace::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($pollingPlace as $pollingPlace) {
+            foreach ($pollingPlaces as $pollingPlace) {
                 $transformedData[] = [
                     'id' => $pollingPlace->id,
                     'uuid' => $pollingPlace->uuid,
@@ -108,7 +108,19 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $pollingPlaces->total(),
+                        'perPage' => $pollingPlaces->perPage(),
+                        'currentPage' => $pollingPlaces->currentPage(),
+                        'lastPage' => $pollingPlaces->lastPage(),
+                        'from' => $pollingPlaces->firstItem(),
+                        'to' => $pollingPlaces->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -117,9 +129,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    }        
-    
-    
+    }
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.

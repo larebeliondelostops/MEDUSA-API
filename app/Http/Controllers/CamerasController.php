@@ -50,7 +50,7 @@ class CamerasController extends Controller
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
 
         try {
@@ -59,7 +59,7 @@ class CamerasController extends Controller
 
             $strategy = CamerasValues::STRATEGY[$state];
 
-            return (new $strategy)->allTable();
+            return (new $strategy)->allTable($request);
         } catch (Exception $exception) {
 
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

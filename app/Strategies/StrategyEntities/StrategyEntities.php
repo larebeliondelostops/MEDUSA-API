@@ -113,10 +113,10 @@ class StrategyEntities implements EntitiesInterface
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
         try {
-            $entities = Entities::all();
+            $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
             foreach ($entities as $entity) {
@@ -146,7 +146,19 @@ class StrategyEntities implements EntitiesInterface
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $entities->total(),
+                        'perPage' => $entities->perPage(),
+                        'currentPage' => $entities->currentPage(),
+                        'lastPage' => $entities->lastPage(),
+                        'from' => $entities->firstItem(),
+                        'to' => $entities->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

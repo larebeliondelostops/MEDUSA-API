@@ -81,13 +81,13 @@ class StrategyCai implements CaiInterface
         }
     }
 
-    public function allTable()
+    public function allTable(Request $request)
     {
         try {
-            $cai = Cai::all();
+            $cais = Cai::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($cai as $cai) {
+            foreach ($cais as $cai) {
                 $transformedData[] = [
                     'id' => $cai->id,
                     'uuid' => $cai->uuid,
@@ -98,7 +98,19 @@ class StrategyCai implements CaiInterface
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $cais->total(),
+                        'perPage' => $cais->perPage(),
+                        'currentPage' => $cais->currentPage(),
+                        'lastPage' => $cais->lastPage(),
+                        'from' => $cais->firstItem(),
+                        'to' => $cais->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -107,8 +119,8 @@ class StrategyCai implements CaiInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    }  
-    
+    }
+
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.

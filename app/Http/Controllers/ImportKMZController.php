@@ -186,15 +186,21 @@ class ImportKMZController extends Controller
         $kml = simplexml_load_string($kmlContents);
 
         $contador = 0;
+        $features = [];
         $geometry = [];
-        dd($kml->Document->Folder->Folder[1]);
-        foreach ($kml->Document->Folder->Document->Placemark as $placemark) {
+        //dd($kml->Document->Folder->Folder[8]->Folder[1]);
+        foreach ($kml->Document->Folder->Folder[8]->Folder[1]->Placemark as $placemark) {
+            $entry = [
+                'name' => (string) $placemark->name[0],
+                'properties' => [
+                    'Estado' => 'Dañadas'
+                ]
+            ];
+    
             if (isset($placemark->Point)) {
-                $name = (string) $placemark->name[0];
                 $coordinates = (string) $placemark->Point->coordinates[0];
-
                 list($longitude, $latitude) = explode(',', $coordinates);
-
+    
                 $feature = [
                     "type" => "Feature",
                     "geometry" => [
@@ -205,21 +211,14 @@ class ImportKMZController extends Controller
                         ],
                     ],
                 ];
-
-                $pointCoordinates = [
+    
+                $entry['pointCoordinates'] = [
                     "features" => [$feature],
                 ];
-
-                $entry = [
-                    "name" => $name,
-                    "pointCoordinates" => $pointCoordinates,
-                ];
-
-                $features[] = $entry;
             } elseif (isset($placemark->LineString)) {
                 $name = (string) $placemark->name[0];
                 $coordinates = (string) $placemark->LineString->coordinates[0];
-
+    
                 // Process coordinates to create LineString coordinates array
                 $coordinatesArray = [];
                 $coordinatesList = explode(' ', trim($coordinates));
@@ -227,23 +226,31 @@ class ImportKMZController extends Controller
                     list($longitude, $latitude, $altitude) = explode(',', $coord);
                     $coordinatesArray[] = [(float) $longitude, (float) $latitude, (float) $altitude];
                 }
-
-                $geometry[] = [
-                    'name' => $name,
-                    'lineCoordinates' => [
-                        'type' => 'Feature',
-                        'geometry' => [
-                            'type' => 'LineString',
-                            'coordinates' => $coordinatesArray,
-                        ],
+    
+                $entry['lineCoordinates'] = [
+                    'type' => 'Feature',
+                    'geometry' => [
+                        'type' => 'LineString',
+                        'coordinates' => $coordinatesArray,
                     ],
                 ];
-
-                $features[] = $geometry;
             }
+    
+            if (isset($placemark->ExtendedData)) {
+                $properties = [];
+                foreach ($placemark->ExtendedData->SchemaData->SimpleData as $simpleData) {
+                    $propertyName = (string) $simpleData->attributes()->name;
+                    $propertyValue = (string) $simpleData;
+                    $properties[$propertyName] = $propertyValue;
+                }
+    
+                $entry['properties'] = $properties;
+            }
+    
+            $features[] = $entry;
             $contador++;
         }
-        dd($contador);
+        //dd($contador);
         return $features;
     }
 }

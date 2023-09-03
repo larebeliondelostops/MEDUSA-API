@@ -47,7 +47,7 @@ class IncidentRequest extends FormRequest
             'address' => 'required|string',
             'description' => 'required|string',
             'pointCoordinates' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            //'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

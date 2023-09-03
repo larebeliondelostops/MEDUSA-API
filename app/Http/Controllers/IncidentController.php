@@ -71,6 +71,7 @@ class IncidentController extends Controller
      */
     public function store(IncidentRequest $request)
     {
+        Log::info($request->all());
         $user = $request->user(); // Obtener el usuario actual
 
         // Aplicar límite de tasa por usuario
@@ -114,7 +115,7 @@ class IncidentController extends Controller
             $incident->IndicatorId = $request->IndicatorId;
             $incident->address = $request->address;
             $incident->description = $request->description;
-            $incident->image = $photoPath;
+            $incident->image = env('APP_URL') . '/storage/' . $photoPath;
             $incident->pointCoordinates = json_encode($request->pointCoordinates);
             $incident->save();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\public_seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -615,7 +615,7 @@ class EntitiesTableSeeder extends Seeder
             }
           ]
         }
-        
+
           ';
 
         $dataArray = json_decode($data, true);

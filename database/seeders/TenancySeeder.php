@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\public_seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Tenancy;

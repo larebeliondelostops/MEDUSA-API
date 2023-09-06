@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\public_seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -1479,7 +1479,7 @@ class AlarmsTableSeeder extends Seeder
             }
           ]
         }
-        
+
         ';
 
         $dataArray = json_decode($data, true);

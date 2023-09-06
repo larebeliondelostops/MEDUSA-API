@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cai', function (Blueprint $table) {
+        Schema::create('neiva.cai', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); 
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('address');
             $table->json('pointCoordinates');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cai');
+        Schema::dropIfExists('neiva.cai');
     }
 };

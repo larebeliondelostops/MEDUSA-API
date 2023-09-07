@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Spatie\Multitenancy\Models\Tenant;
@@ -43,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         if (app()->runningInConsole()) {
-            $subdomain = env('APP_ENV', 'local') == 'local' ? 'local' : 'production'; // Usar 'local' por defecto si no está definido en .env
+            $subdomain = env('APP_ENV', 'local') == 'local' ? 'local' : 'villavicencio'; // Usar 'local' por defecto si no está definido en .env
             $http = env('APP_ENV') == 'local' ? 'http://' : 'https://'; // Usar 'http://' en entorno local y 'https://' en producción
             $dominio = env('APP_ENV') == 'local' ? '.localhost' : '.medusaapi.online'; // Usar 'localhost' en entorno local y 'medusaapi.online' en producción
 
@@ -70,8 +71,7 @@ class RouteServiceProvider extends ServiceProvider
             $databaseConnection = $this->getDatabaseConnectionForSubdomain($subdomain);
 
             // Establecemos la conexión de base de datos
-            config(['database.connections.pgsql.schema' => $databaseConnection]);
-
+            DB::setDefaultConnection($databaseConnection);
         }
 
         Route::prefix('api/v1')->group(function () {
@@ -101,7 +101,7 @@ class RouteServiceProvider extends ServiceProvider
 
         if ($tenant) {
             $tenant->makeCurrent();
-            return $tenant->schema; // Devuelve el esquema del inquilino si existe
+            return $tenant->domain; // Devuelve el esquema del inquilino si existe
         } else {
             throw new Exception("Este subdominio no está registrado en nuestro sistema");
         }

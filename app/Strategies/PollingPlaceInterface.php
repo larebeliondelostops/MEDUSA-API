@@ -9,6 +9,8 @@ use \Illuminate\Http\Request;
 interface PollingPlaceInterface
 {
     public function all();
+    public function allTable(Request $request);
+    public function getOne($id);
     public function store(PollingPlaceRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use App\Http\Request\Incidents\IncidentRequest;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
 
 /**
  * Controlador Incidentes.
@@ -69,6 +71,29 @@ class IncidentController extends Controller
      */
     public function store(IncidentRequest $request)
     {
+        $user = $request->user(); // Obtener el usuario actual
+
+        // Aplicar límite de tasa por usuario
+        if ($user) {
+            $userId = $user->id;
+            $limitKey = "store_limit_$userId";
+
+            // Intentos máximos: 3
+            $rateLimit = 3;
+            $decaySeconds= 60;
+
+            if (RateLimiter::tooManyAttempts($limitKey, $rateLimit, $decaySeconds)) {
+                $timeUntilUnlock = RateLimiter::availableIn($limitKey);
+
+                return Response::json([
+                    'code' => '3002',
+                    'status' => 'error',
+                    'message' => 'Límite de llamadas alcanzado. Inténtalo más tarde.',
+                    'retry_after' => $timeUntilUnlock,
+                ], 429);
+            }
+        }
+
         try {
             // Validación
             if (isset($request->validator) && $request->validator->fails()) {
@@ -93,6 +118,10 @@ class IncidentController extends Controller
             $incident->pointCoordinates = json_encode($request->pointCoordinates);
             $incident->save();
 
+            // Incrementar el contador del límite de tasa por usuario
+            if ($user) {
+                RateLimiter::hit($limitKey, $decaySeconds);
+            }
             return Response::json([
                 'status' => 'succes',
                 'data' => $incident
@@ -158,12 +187,12 @@ class IncidentController extends Controller
             $filename = Uuid::uuid4()->toString() . '.' . $extension;
             $photoPath = $photoFile->storeAs('photos', $filename, 'public');
 
-            $incident = new Incident();
-            $incident->IndicatorId = $request->IndicatorId;
-            $incident->address = $request->address;
-            $incident->description = $request->description;
-            $incident->image = $photoPath;
-            $incident->pointCoordinates = json_encode($request->pointCoordinates);
+            $incident = Incident::find($id);
+            $incident->IndicatorId = $request->IndicatorId ?? $incident->IndicatorId;
+            $incident->address = $request->address ?? $incident->address;
+            $incident->description = $request->description ?? $incident->description;
+            $incident->image = $photoPath ?? $incident->photoPath;
+            $incident->pointCoordinates = json_encode($request->pointCoordinates) ?? $incident->pointCoordinates;
             $incident->save();
 
             return Response::json([

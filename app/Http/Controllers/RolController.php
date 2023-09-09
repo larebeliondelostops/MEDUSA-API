@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Request\RolesPermisos\SaveRolRequest;
 use App\Http\Request\RolesPermisos\savePermisoRequest;
 use App\Http\Request\RolesPermisos\AssignPermissionsRequest;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Controlador para Roles y Permisos.
@@ -170,6 +172,50 @@ class RolController extends Controller
             // Asigna los permisos al rol
             $permissions = Permission::whereIn('name', $permissionNames)->get();
             $role->syncPermissions($permissions);
+
+            return Response::json([
+                'code' => '200',
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function assignRol(Request $request)
+    {
+        try {
+            // Validacion
+            $rules = [
+                'role_id' => [
+                    'required',
+                    'exists:roles,id',
+                ]
+            ];
+            $messages = [
+                'required' => 'El campo :attribute es obligatorio',
+                'exists' => 'El campo :attribute no es válido'
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $user = JWTAuth::parseToken()->authenticate();
+
+            $user->assignRole($request->role_id);
 
             return Response::json([
                 'code' => '200',

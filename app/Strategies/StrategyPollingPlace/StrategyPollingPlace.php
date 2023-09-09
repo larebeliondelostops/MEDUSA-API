@@ -55,9 +55,81 @@ class StrategyPollingPlace implements PollingPlaceInterface
         }
     }
     
-        
-    
-    
+    public function getOne($id)
+    {
+        try {
+            $pollingPlace = PollingPlace::find($id);
+
+            $transformedData = [];
+
+            $transformedData[] = [
+                'id' => $pollingPlace->id,
+                'uuid' => $pollingPlace->uuid,
+                'name' => $pollingPlace->name,
+                'address' => $pollingPlace->address,
+                'created_at' => $pollingPlace->created_at,
+                'updated_at' => $pollingPlace->updated_at,
+                'Potencial de mujeres' => $pollingPlace->potencialWomen,
+                'Potencial de hombres' => $pollingPlace->potencialMen,
+                'Total Votos' => $pollingPlace->totalVotes,
+                'Mesas' => $pollingPlace->tables,
+            ];
+
+
+            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function allTable(Request $request)
+    {
+        try {
+            $pollingPlaces = PollingPlace::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+
+            $transformedData = [];
+            foreach ($pollingPlaces as $pollingPlace) {
+                $transformedData[] = [
+                    'id' => $pollingPlace->id,
+                    'uuid' => $pollingPlace->uuid,
+                    'name' => $pollingPlace->name,
+                    'address' => $pollingPlace->address,
+                    'created_at' => $pollingPlace->created_at,
+                    'updated_at' => $pollingPlace->updated_at,
+                    'Potencial de mujeres' => $pollingPlace->potencialWomen,
+                    'Potencial de hombres' => $pollingPlace->potencialMen,
+                    'Total Votos' => $pollingPlace->totalVotes,
+                    'Mesas' => $pollingPlace->tables,
+                ];
+            }
+
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $pollingPlaces->total(),
+                        'perPage' => $pollingPlaces->perPage(),
+                        'currentPage' => $pollingPlaces->currentPage(),
+                        'lastPage' => $pollingPlaces->lastPage(),
+                        'from' => $pollingPlaces->firstItem(),
+                        'to' => $pollingPlaces->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.

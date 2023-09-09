@@ -189,7 +189,7 @@ class CaiTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('neiva.cai')->insert([
+            DB::table('cai')->insert([
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],

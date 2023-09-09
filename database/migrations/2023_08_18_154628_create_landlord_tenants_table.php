@@ -12,7 +12,7 @@ class CreateLandlordTenantsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('domain')->unique();
-            $table->string('schema')->unique();
+            $table->string('schema');
             $table->timestamps();
         });
     }

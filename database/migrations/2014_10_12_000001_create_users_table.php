@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'neiva';
 
     /**
      * Run the migrations.

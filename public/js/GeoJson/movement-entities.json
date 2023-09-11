@@ -5,7 +5,7 @@
       "type": "Feature",
       "title": "Ambulancia 1",
       "id": "1",
-      "markerType": 6,
+      "markerType": 54,
       "properties": {
         "unitType": 1
       },

@@ -188,32 +188,27 @@ class ImportKMZController extends Controller
         $contador = 0;
         $features = [];
         $geometry = [];
-        //dd($kml->Document->Folder->Folder[8]->Folder[1]);
-        foreach ($kml->Document->Folder->Folder[8]->Folder[1]->Placemark as $placemark) {
+        //dd($kml->Document->Folder->Folder[9]->Folder[1]);
+        foreach ($kml->Document->Folder->Folder[9]->Folder[1]->Placemark as $placemark) {
             $entry = [
-                'name' => (string) $placemark->name[0],
+                'type' => 'Feature',
+                'markerType' => 30,
+                'tittle' => (string) $placemark->name[0],
                 'properties' => [
-                    'Estado' => 'Dañadas'
+                    'Tipo' => 'Puntos Vive Digital y Acceso Comunitario'
                 ]
             ];
     
             if (isset($placemark->Point)) {
                 $coordinates = (string) $placemark->Point->coordinates[0];
                 list($longitude, $latitude) = explode(',', $coordinates);
-    
-                $feature = [
-                    "type" => "Feature",
-                    "geometry" => [
-                        "type" => "Point",
-                        "coordinates" => [
-                            (float) $longitude,
-                            (float) $latitude,
-                        ],
+
+                $entry['geometry'] = [
+                    "type" => "Point",
+                    "coordinates" => [
+                        (float) $longitude,
+                        (float) $latitude,
                     ],
-                ];
-    
-                $entry['pointCoordinates'] = [
-                    "features" => [$feature],
                 ];
             } elseif (isset($placemark->LineString)) {
                 $name = (string) $placemark->name[0];
@@ -227,12 +222,9 @@ class ImportKMZController extends Controller
                     $coordinatesArray[] = [(float) $longitude, (float) $latitude, (float) $altitude];
                 }
     
-                $entry['lineCoordinates'] = [
-                    'type' => 'Feature',
-                    'geometry' => [
-                        'type' => 'LineString',
-                        'coordinates' => $coordinatesArray,
-                    ],
+                $entry['geometry'] = [
+                    'type' => 'LineString',
+                    'coordinates' => $coordinatesArray,
                 ];
             }
     

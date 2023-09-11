@@ -56,12 +56,13 @@ class GetEventCoordinate implements GetEventInterface
     {
         $eventosOrganizados = $events->map(function ($evento) {
             return [
+                'type' => 'feature',
+                'markerType' => 55,
+                'id' => $evento->uuid,
+                'title' => $evento->name,
                 'properties' => [
-                    'id' => $evento->uuid,
-                    'markerType' => 55,
                     'idEventType' => $evento->idEventType,
                     'eventTypeName' => $evento['eventType']->eventName,
-                    'name' => $evento->name,
                     'startDate' => $evento->startDate,
                     'endDate' => $evento->endDate,
                     'capacity' => $evento->capacity,

@@ -53,22 +53,6 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'Eventos',
-                'icon' => 'event',
-                'color' => 'pink',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 6,
-                'name' => 'Unidades móviles',
-                'icon' => 'radar',
-                'color' => 'orange',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 7,
                 'name' => 'Fibra Óptica',
                 'icon' => 'cable',
                 'color' => 'cyan',
@@ -107,7 +91,7 @@ class TypeMarkersSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            /* [
+            [
                 'id' => 54,
                 'name' => 'Unidades móviles',
                 'icon' => 'radar',
@@ -117,12 +101,12 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 55,
-                'name' => 'Fibra Óptica',
-                'icon' => 'cable',
-                'color' => 'cyan',
+                'name' => 'Eventos',
+                'icon' => 'event',
+                'color' => 'pink',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ], */
+            ],
         ]);
 
         /**

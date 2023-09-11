@@ -22,7 +22,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "01. IGLESIA PORFIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -41,7 +41,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "02. BARRIO MONTECARLO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -60,7 +60,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "03. PUENTE UNION RECREO Y POPULAR",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -79,7 +79,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "04. ENTRADA M CENTAUROS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -98,7 +98,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "05. ENTRADA LA SALLE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -117,7 +117,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "06. CC VILLLA JULIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -136,7 +136,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "07. TRANSITO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -155,7 +155,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "08. CHANTILLY VIZCAYA - HACARITAMA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -174,7 +174,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "09. ESTADIO BOMBONERA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -193,7 +193,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "10. PUENTE ESPERANZA ENTRE 6 Y 7",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -212,7 +212,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "11. COLEGIO COFREM",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -231,7 +231,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "12. BOMBA LA SABANA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -250,7 +250,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "13. BOMBA ESSO VIA MARACOS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -269,7 +269,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "14. COLEGIO ABRAHAM LINCOLN",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -288,7 +288,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "15. ENTRADA ALBORADA BOMBA TEXACO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -307,7 +307,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "16. BARRIO INDUSTRIAL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -326,7 +326,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "17. LAVAUTOS LOS TIGRES",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -345,7 +345,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "18. COLEGIO FEMENINO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -364,7 +364,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "19. MEGA COLEGIO LA RELIQUIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -383,7 +383,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "20. RELIQUIA CENTRO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_1.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -402,7 +402,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "21. CALLE DE LAS FERRETERIAS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -421,7 +421,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "22. ENTRADA RECREO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -440,7 +440,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "23. PORFIA BARRIO PLAYITA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -459,7 +459,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "24. BARRIO SANTA FE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -478,7 +478,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "25. PORFIA GAVIONES",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -497,7 +497,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "26. RESPALDO CLINICA META",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -516,7 +516,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "27. HATO GRANDE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -535,7 +535,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "28. PORFIA BANCO CONGENTE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -554,7 +554,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "29. CAMELIAS PLANCHON",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -573,7 +573,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "30. PLAZOLETA LOS CENTAUROS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -592,7 +592,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "31. IGLESIA BUQUE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -611,7 +611,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "32. LLANO ABASTOS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -630,7 +630,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "33. SEPTIMA BRIGADA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -649,7 +649,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "34. ETELL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -668,7 +668,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "35. GAITAN MOTELES",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -687,7 +687,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "36. MEGA COLEGIO CALDAS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -706,7 +706,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "37. BARRIO VILLA JULIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -725,7 +725,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "38. EL NOGAL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -744,7 +744,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "39. VILLA SUAREZ",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -763,7 +763,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "40. BARRIO CALAMAR",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_2.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -782,7 +782,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "41. BARRIO PLAYA RICA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -801,7 +801,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "42. BARRIO ANTONIO PINILLA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -820,7 +820,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "43. BOMBEROS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -839,7 +839,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "44. ENTRADA POPULAR CEIBA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -858,7 +858,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "45. ENTRADA COVISAN",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -877,7 +877,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "46. 7 DE AGOSTO PLAZA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -896,7 +896,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "47. IGLESIA JORDAN",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -915,7 +915,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "48. P SALUD BARRIO COMUNEROS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -934,7 +934,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "49. VILLA SUAREZ",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -953,7 +953,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "50. BARRIO CALAMAR",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -972,7 +972,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "51. PARQUE FUNDADORES",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -991,7 +991,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "52. VILLA DEL SOL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1010,7 +1010,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "53. SAN JOSE ENTRADA PRINCIPAL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1029,7 +1029,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "54. CAUDAL ALTO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1048,7 +1048,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "55. CAI GALAN",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1067,7 +1067,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "56. BARRIO EL RETIRO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1086,7 +1086,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "57. REGISTRADURIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1105,7 +1105,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "58. SAN JOSE, (via BARZAL Bajo)",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1124,7 +1124,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "59. ENTRADA MONTECARLO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1143,7 +1143,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "60. HOTEL BAHIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_3.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1162,7 +1162,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "61. ENTRADA BRISAS DE GUATIQUIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1181,7 +1181,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "62. CHANTILLY VILLA BOLIVAR",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1200,7 +1200,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "63. BARRIO ESTERO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1219,7 +1219,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "64. POLIDEPORTIVO BRISAS GUATIQUIA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1238,7 +1238,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "65. BARRIO 7 DE AGOSTO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1257,7 +1257,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "66. PUENTE LA CRUZ",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1276,7 +1276,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "67. PIEL CANELA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1295,7 +1295,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "68. ENTRADA CANTA RANA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1314,7 +1314,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "69. DIAN",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1333,7 +1333,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "70. COLEGIO BARRIO SAN JOSE",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1352,7 +1352,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "71. PLAZA DE MERCADO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1371,7 +1371,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "72. EXITO VECINO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1390,7 +1390,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "73. CLINICA MARTHA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1409,7 +1409,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "74. GLORIETA DAS",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1428,7 +1428,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "76. EXITO DE LA SABANA",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1447,7 +1447,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "77. MANANTIAL",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1466,7 +1466,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "78. CALLE 36 DIVINO NIÑO",
               "address": "PU",
-              "url": "http://streaming.com.co/player/preview.php?servidor=vbox.cehis.net/IP-servinformacion&stream=931-4-5-servi.stream&titulo=C%C3%A1mara%20en%20VIVO&smil=no&tamano=personalizado&aspecto=a&ancho=640&alto=365",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1485,7 +1485,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "CODALTEC CASA 1",
               "address": "PR",
-              "url": "http://181.63.246.86:8093",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {
@@ -1504,7 +1504,7 @@ class CamerasTableSeeder extends Seeder
             {
               "name": "CODALTEC CASA 2",
               "address": "PR",
-              "url": "http://181.49.7.246:8093",
+              "url": "https://villavicencio.medusaapi.online/storage/videos/trafico_4.mp4",
               "pointCoordinates": {
                 "features": [
                   {

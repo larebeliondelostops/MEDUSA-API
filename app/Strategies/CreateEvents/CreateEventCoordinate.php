@@ -4,6 +4,7 @@ namespace App\Strategies\CreateEvents;
 
 use App\Strategies\CreateEventInterface;
 use App\Models\Event;
+use Illuminate\Support\Str;
 use App\Models\EventCoordinate;
 use Illuminate\Support\Facades\Response;
 
@@ -37,6 +38,7 @@ class CreateEventCoordinate implements CreateEventInterface
 
             $event = new Event();
 
+            $event->uuid = Str::uuid();
             $event->idEventType = $request->idEventType;
             $event->name = $request->name;
             $event->startDate = $request->startDate;

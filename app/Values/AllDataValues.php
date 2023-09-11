@@ -25,22 +25,4 @@ class AllDataValues
         54 => StrategyMovementUnitis::class,
         55 => GetEventCoordinate::class,
     ];
-
-    /**
-     * Método para generar las clases de cada uno de los importadores
-     *
-     */
-    /* public static function getImport($key, $vigencia, $data)
-    {
-        $importClass = self::IMPORT[$key];
-        $importClass = $importClass::create($vigencia);
-        Excel::import($importClass, $data);
-        $errors = $importClass::$IMPORT_RESPONSE;
-        $fileData = $importClass::$FILE_DATA;
-
-        return [
-            'errors' => $errors,
-            'fileData' => $fileData
-        ];
-    } */
 }

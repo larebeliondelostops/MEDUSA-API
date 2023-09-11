@@ -89,6 +89,7 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api/pollingPlace.php');
             require base_path('routes/api/incidents.php');
             require base_path('routes/api/menu.php');
+            require base_path('routes/api/allData.php');
             // ... otras rutas
         });
     }

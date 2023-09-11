@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'neiva';
 
     /**
      * Run the migrations.
@@ -20,16 +20,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('bar_menu', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone_number', 20)->nullable();
-            $table->string('address')->nullable();
-            $table->string('avatar')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('type_marker')->constrained('type_marker');
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }
@@ -41,6 +35,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('bar_menu', function (Blueprint $table) {
+            // Eliminar la clave foránea 'type_marker'
+            $table->dropForeign(['type_marker']);
+        });
+        Schema::dropIfExists('bar_menu');
     }
 };

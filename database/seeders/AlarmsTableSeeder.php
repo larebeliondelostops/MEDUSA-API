@@ -1479,7 +1479,7 @@ class AlarmsTableSeeder extends Seeder
             }
           ]
         }
-        
+
         ';
 
         $dataArray = json_decode($data, true);

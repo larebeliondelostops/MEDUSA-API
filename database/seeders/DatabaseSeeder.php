@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenancy;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call(AlarmsTableSeeder::class);
         $this->call(CaiTableSeeder::class);
         $this->call(CamerasTableSeeder::class);
@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(EntitiesTableSeeder::class);
         $this->call(HealthTableSeeder::class);
         $this->call(IndicatorSeeder::class);
+        $this->call(TenancySeeder::class);
+        $this->call(TypeMarkersSeeder::class);
+        $this->call(MenuBarSeeder::class);
+        $this->call(MenuSeeder::class);
     }
 }

@@ -40,10 +40,10 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //\App\Http\Middleware\JWTMiddleware::class, // Middleware de validación para el JWT
+            //\App\Http\Middleware\SetTenantFromSubdomain::class,
+            \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
         ],
     ];
 

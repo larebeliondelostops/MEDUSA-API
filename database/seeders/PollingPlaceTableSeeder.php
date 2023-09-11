@@ -1253,7 +1253,7 @@ class PollingPlaceTableSeeder extends Seeder
             }
           ]
         }
-        
+
         ';
 
         $dataArray = json_decode($data, true);
@@ -1263,8 +1263,8 @@ class PollingPlaceTableSeeder extends Seeder
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
-                "potencialWomen" => $Data['potencialWomen'], 
-                "potencialMen" => $Data['potencialMen'], 
+                "potencialWomen" => $Data['potencialWomen'],
+                "potencialMen" => $Data['potencialMen'],
                 "totalVotes" => $Data['totalVotes'],
                 "tables" => $Data['tables'],
                 'pointCoordinates' => json_encode($Data['pointCoordinates'])

@@ -19,7 +19,7 @@ class StrategyCameras implements CamerasInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public static function all()
     {
         try {
             $cameras = Cameras::all();
@@ -42,7 +42,7 @@ class StrategyCameras implements CamerasInterface
                 ];
             }
     
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

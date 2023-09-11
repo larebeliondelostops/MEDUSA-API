@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllDataController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\EventTypeController;
@@ -56,7 +57,7 @@ Route::get('/heatmap', function () {
     return response()->json($geojson, 200);
 });
 
-
+Route::get('allData/allPoints', [AllDataController::class, 'allPoints']);
 
 Route::post('/import/excel', [ImportExcelController::class, 'import']);
 Route::post('/import/importLines', [ImportKMZController::class, 'importLines']);

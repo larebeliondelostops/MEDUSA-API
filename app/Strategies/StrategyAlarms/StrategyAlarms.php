@@ -19,7 +19,7 @@ class StrategyAlarms implements AlarmsInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public static function all()
     {
         try {
             $alarms = Alarms::all();
@@ -40,7 +40,7 @@ class StrategyAlarms implements AlarmsInterface
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

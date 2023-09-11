@@ -19,7 +19,7 @@ class StrategyEntities implements EntitiesInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public static function all()
     {
         try {
             $entities = Entities::all();
@@ -58,7 +58,7 @@ class StrategyEntities implements EntitiesInterface
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

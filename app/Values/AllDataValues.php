@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Values;
+
+use App\Strategies\StrategyCai\StrategyCai;
+use App\Strategies\GetEvents\GetEventCoordinate;
+use App\Strategies\StrategyAlarms\StrategyAlarms;
+use App\Strategies\StrategyCameras\StrategyCameras;
+use App\Strategies\StrategyEntities\StrategyEntities;
+use App\Strategies\StrategyPollingPlace\StrategyPollingPlace;
+use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
+
+class AllDataValues
+{
+    /**
+     * variable para invocar la clase dependiendo la key
+     *
+     */
+    const STRATEGY = [
+        1 => StrategyAlarms::class,
+        2 => StrategyCai::class,
+        3 => StrategyEntities::class,
+        4 => StrategyPollingPlace::class,
+        50 => StrategyCameras::class,
+        54 => StrategyMovementUnitis::class,
+        55 => GetEventCoordinate::class,
+    ];
+
+    /**
+     * Método para generar las clases de cada uno de los importadores
+     *
+     */
+    /* public static function getImport($key, $vigencia, $data)
+    {
+        $importClass = self::IMPORT[$key];
+        $importClass = $importClass::create($vigencia);
+        Excel::import($importClass, $data);
+        $errors = $importClass::$IMPORT_RESPONSE;
+        $fileData = $importClass::$FILE_DATA;
+
+        return [
+            'errors' => $errors,
+            'fileData' => $fileData
+        ];
+    } */
+}

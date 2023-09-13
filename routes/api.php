@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ImportKMZController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -56,6 +57,8 @@ Route::get('/heatmap', function () {
 
     return response()->json($geojson, 200);
 });
+
+
 
 Route::post('/import/excel', [ImportExcelController::class, 'import']);
 Route::post('/import/importLines', [ImportKMZController::class, 'importLines']);

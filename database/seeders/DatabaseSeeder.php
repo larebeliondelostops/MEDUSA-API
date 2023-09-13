@@ -26,5 +26,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeMarkersSeeder::class);
         $this->call(MenuBarSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(SelectTypeSeeder::class);
+        $this->call(ModulesSeeder::class);
+        $this->call(FieldsSeeder::class);
+        $this->call(FormsSeeder::class);
     }
 }

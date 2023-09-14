@@ -15,6 +15,6 @@ class Form extends Model
 
     public function Fields()
     {
-        return $this->belongsTo(Field::class, 'id');
+        return $this->belongsTo(Field::class, 'field');
     }
 }

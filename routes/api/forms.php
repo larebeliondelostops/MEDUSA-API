@@ -18,4 +18,5 @@ Route::middleware(['jwt.verify'])->group(function() {
      * Manejo de formularios
      */
     Route::get('forms/user', [FormsController::class, 'user']);
+    Route::get('forms/alarm', [FormsController::class, 'alarm']);
 });

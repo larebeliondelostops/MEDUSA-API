@@ -69,7 +69,7 @@ class FieldsSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 5,
+                'id' => 6,
                 'name' => 'Posición',
                 'key' => 'position',
                 'type' => 6,

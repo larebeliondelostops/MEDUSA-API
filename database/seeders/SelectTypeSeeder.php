@@ -48,6 +48,24 @@ class SelectTypeSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 6,
+                'type' => 'Map Marker',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 7,
+                'type' => 'Map Polygon',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 8,
+                'type' => 'Map Polyline',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         /**
@@ -91,13 +109,13 @@ class SelectTypeSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 5,
+                'id' => 7,
                 'type' => 'Map Polygon',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 5,
+                'id' => 8,
                 'type' => 'Map Polyline',
                 'created_at' => now(),
                 'updated_at' => now(),

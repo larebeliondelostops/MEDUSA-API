@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SelectTypeSeeder::class);
         $this->call(ModulesSeeder::class);
         $this->call(FieldsSeeder::class);
-        $this->call(FormsSeeder::class);
+        $this->call(FormUsersSeeder::class);
+        $this->call(FormAlarmsSeeder::class);
     }
 }

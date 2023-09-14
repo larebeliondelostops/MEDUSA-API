@@ -27,6 +27,7 @@ return new class extends Migration
             $table->bigInteger('type');
             $table->foreign('type')->references('id')->on('select_type');
             $table->boolean('required');
+            $table->string('schema');
             //$table->boolean('accions');
             $table->timestamps();
         });

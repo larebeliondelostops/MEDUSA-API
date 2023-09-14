@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use \Illuminate\Http\Request;
-
+use Ramsey\Uuid\Uuid;
 
 class StrategyAlarms implements AlarmsInterface
 {
@@ -141,9 +141,10 @@ class StrategyAlarms implements AlarmsInterface
 
             //$entidades = Entidades::create($request->all());
             $alarms = new Alarms();
+            $alarms->uuid = Uuid::uuid4()->toString();
             $alarms->name = $request->name;
             $alarms->address = $request->address;
-            $alarms->pointCoordinates = json_encode($request->pointCoordinates);
+            $alarms->pointCoordinates = json_encode($request->position);
             $alarms->save();
 
             return Response::json([
@@ -188,8 +189,8 @@ class StrategyAlarms implements AlarmsInterface
             if ($request->address != null) {
                 $alarms->address = $request->address;
             }
-            if ($request->pointCoordinates != null) {
-                $alarms->pointCoordinates = json_encode($request->pointCoordinates);
+            if ($request->position != null) {
+                $alarms->pointCoordinates = json_encode($request->position);
             }
             $alarms->save();
 

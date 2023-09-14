@@ -65,25 +65,14 @@ class ModulesSeeder extends Seeder
         /**
          * Marcadores para neiva
          */
-        /* DB::connection('neiva')->table('menu')->insert([
+        DB::connection('neiva')->table('modules')->insert([
             [
-                'id' => 1,
-                'name' => 'CREAR',
+                'id' => 6,
+                'name' => 'Alarmas',
+                'description' => 'Módulo para la gestión de las alarmas',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'id' => 2,
-                'name' => 'ACTUALIZAR',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'BORRAR',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]); */
+        ]);
     }
 }

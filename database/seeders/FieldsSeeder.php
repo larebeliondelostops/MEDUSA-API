@@ -83,25 +83,67 @@ class FieldsSeeder extends Seeder
         /**
          * Marcadores para neiva
          */
-        /* DB::connection('neiva')->table('menu')->insert([
+        DB::connection('neiva')->table('fields')->insert([
             [
                 'id' => 1,
-                'name' => 'CREAR',
+                'name' => 'Nombre',
+                'key' => 'name',
+                'type' => 1,
+                'required' => true,
+                'schema' => 'text',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'name' => 'ACTUALIZAR',
+                'name' => 'Email',
+                'key' => 'email',
+                'type' => 3,
+                'required' => true,
+                'schema' => 'email',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 3,
-                'name' => 'BORRAR',
+                'name' => 'Rol',
+                'key' => 'role',
+                'type' => 4,
+                'required' => true,
+                'schema' => 'text',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]); */
+            [
+                'id' => 4,
+                'name' => 'Dirección',
+                'key' => 'address',
+                'type' => 1,
+                'required' => true,
+                'schema' => 'text',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 5,
+                'name' => 'Teléfono',
+                'key' => 'phone',
+                'type' => 2,
+                'required' => true,
+                'schema' => 'phone',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 6,
+                'name' => 'Posición',
+                'key' => 'position',
+                'type' => 6,
+                'required' => true,
+                'schema' => 'position',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

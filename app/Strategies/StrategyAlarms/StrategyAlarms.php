@@ -87,12 +87,9 @@ class StrategyAlarms implements AlarmsInterface
             $transformedData = [];
             foreach ($alarms as $alarm) {
                 $transformedData[] = [
-                    'id' => $alarm->id,
-                    //'uuid' => $alarm->uuid,
-                    'nombre' => $alarm->name,
-                    'direccion' => $alarm->address,
-                    //'created_at' => $alarm->created_at,
-                    //'updated_at' => $alarm->updated_at,
+                    'name' => $alarm->name,
+                    'address' => $alarm->address,
+                    'position' => json_decode($alarms->pointCoordinates)
                 ];
             }
 

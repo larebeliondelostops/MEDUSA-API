@@ -19,37 +19,43 @@ class FormPollingPlacesSeeder extends Seeder
          */
         DB::connection('villavicencio')->table('forms')->insert([
             [
-                'module' => 6,
+                'module' => 7,
                 'field' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 6,
+                'module' => 7,
                 'field' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 6,
+                'module' => 7,
+                'field' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'module' => 7,
                 'field' => 7,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 6,
+                'module' => 7,
                 'field' => 8,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 6,
+                'module' => 7,
                 'field' => 9,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 6,
+                'module' => 7,
                 'field' => 10,
                 'created_at' => now(),
                 'updated_at' => now(),

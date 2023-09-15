@@ -13,10 +13,11 @@ use App\Http\Controllers\FormsController;
 |
 */
 
-Route::middleware(['jwt.verify'])->group(function() {
+Route::middleware([/* 'jwt.verify' */])->group(function() {
     /**
      * Manejo de formularios
      */
     Route::get('forms/user', [FormsController::class, 'user']);
     Route::get('forms/alarm', [FormsController::class, 'alarm']);
+    Route::get('forms/pollingPlace', [FormsController::class, 'pollingPlace']);
 });

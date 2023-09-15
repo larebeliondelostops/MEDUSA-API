@@ -60,11 +60,11 @@ class StrategyAlarms implements AlarmsInterface
 
             $transformedData[] = [
                 'id' => $alarms->id,
-                'uuid' => $alarms->uuid,
-                'name' => $alarms->name,
-                'address' => $alarms->address,
-                'created_at' => $alarms->created_at,
-                'updated_at' => $alarms->updated_at,
+                //'uuid' => $alarms->uuid,
+                'nombre' => $alarms->name,
+                'direccion' => $alarms->address,
+                //'created_at' => $alarms->created_at,
+                //'updated_at' => $alarms->updated_at,
             ];
 
 
@@ -88,11 +88,11 @@ class StrategyAlarms implements AlarmsInterface
             foreach ($alarms as $alarm) {
                 $transformedData[] = [
                     'id' => $alarm->id,
-                    'uuid' => $alarm->uuid,
-                    'name' => $alarm->name,
-                    'address' => $alarm->address,
-                    'created_at' => $alarm->created_at,
-                    'updated_at' => $alarm->updated_at,
+                    //'uuid' => $alarm->uuid,
+                    'nombre' => $alarm->name,
+                    'direccion' => $alarm->address,
+                    //'created_at' => $alarm->created_at,
+                    //'updated_at' => $alarm->updated_at,
                 ];
             }
 
@@ -149,7 +149,11 @@ class StrategyAlarms implements AlarmsInterface
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $alarms
+                'data' => [
+                    'name' => $alarms->name,
+                    'address' => $alarms->address,
+                    'position' => json_decode($alarms->pointCoordinates)
+                ]
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

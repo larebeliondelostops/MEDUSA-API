@@ -60,6 +60,13 @@ class ModulesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 7,
+                'name' => 'Mesas de votación',
+                'description' => 'Módulo para la gestión de las mesas de votación (lugares)',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         /**

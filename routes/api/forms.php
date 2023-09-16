@@ -15,6 +15,12 @@ use App\Http\Controllers\FormsController;
 
 Route::middleware([/* 'jwt.verify' */])->group(function() {
     /**
+     * Exposición de data para hacer un CRUD
+     */
+    Route::get('forms/modules', [FormsController::class, 'modules']);
+    Route::get('forms/fields', [FormsController::class, 'fields']);
+
+    /**
      * Manejo de formularios
      */
     Route::get('forms/user', [FormsController::class, 'user']);

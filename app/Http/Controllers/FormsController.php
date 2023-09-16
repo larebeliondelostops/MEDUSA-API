@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Form;
+use App\Models\Field;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -90,6 +92,56 @@ class FormsController extends Controller
         $fields = $alarm_data->map(function ($data) {
             return $data->fields;
         });
+
+        try{
+            return Response::json([
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa',
+                'data' => $fields
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
+     * Servicio para exponer el contenido de la tabla modules
+     *
+     * @access public
+     */
+    public function modules()
+    {
+        $modules = Module::select('id', 'name')->orderby('id')->get();
+
+        try{
+            return Response::json([
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa',
+                'data' => $modules
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
+     * Servicio para exponer el contenido de la tabla fields
+     *
+     * @access public
+     */
+    public function fields()
+    {
+        $fields = Field::orderby('id')->get();
 
         try{
             return Response::json([

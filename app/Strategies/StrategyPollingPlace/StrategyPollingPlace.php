@@ -154,7 +154,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
             $pollingPlace = new PollingPlace();
             $pollingPlace->name = $request->name;
             $pollingPlace->address = $request->address;
-            $pollingPlace->pointCoordinates = json_encode($request->pointCoordinates);
+            $pollingPlace->pointCoordinates = json_encode($request->position);
             $pollingPlace->potencialWomen = $request->potencialWomen;
             $pollingPlace->potencialMen = $request->potencialMen;
             $pollingPlace->totalVotes = $request->totalVotes;

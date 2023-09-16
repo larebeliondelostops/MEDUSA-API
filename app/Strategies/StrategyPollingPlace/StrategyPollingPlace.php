@@ -6,6 +6,7 @@ use App\Http\Request\pollingPlace\pollingPlaceRequest;
 use App\Models\PollingPlace;
 use App\Strategies\PollingPlaceInterface;
 use Exception;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use \Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
         try {
             $pollingPlace = PollingPlace::find($id);
 
-            $transformedData = [];
+            /* $transformedData = [];
 
             $transformedData[] = [
                 'id' => $pollingPlace->id,
@@ -74,9 +75,24 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 'Total Votos' => $pollingPlace->totalVotes,
                 'Mesas' => $pollingPlace->tables,
             ];
+ */
+            $cordenadas = json_decode($pollingPlace->pointCoordinates)->features[0]->geometry;
 
-
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json([
+                'status' => 'succes',
+                'data' => [
+                    'name' => $pollingPlace->name,
+                    'address' => $pollingPlace->address,
+                    'potencialWomen' => $pollingPlace->potencialWomen,
+                    'potencialMen' => $pollingPlace->potencialMen,
+                    'totalVotes' => $pollingPlace->totalVotes,
+                    'tables' => $pollingPlace->tables,
+                    'position' => [
+                        'type' => "Point",
+                        'coordinates' => [$cordenadas->coordinates]
+                    ]
+                ]
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -96,15 +112,15 @@ class StrategyPollingPlace implements PollingPlaceInterface
             foreach ($pollingPlaces as $pollingPlace) {
                 $transformedData[] = [
                     'id' => $pollingPlace->id,
-                    'uuid' => $pollingPlace->uuid,
-                    'name' => $pollingPlace->name,
-                    'address' => $pollingPlace->address,
-                    'created_at' => $pollingPlace->created_at,
-                    'updated_at' => $pollingPlace->updated_at,
-                    'Potencial de mujeres' => $pollingPlace->potencialWomen,
-                    'Potencial de hombres' => $pollingPlace->potencialMen,
-                    'Total Votos' => $pollingPlace->totalVotes,
-                    'Mesas' => $pollingPlace->tables,
+                    //'uuid' => $pollingPlace->uuid,
+                    'nombre' => $pollingPlace->name,
+                    'direccion' => $pollingPlace->address,
+                    //'created_at' => $pollingPlace->created_at,
+                    //'updated_at' => $pollingPlace->updated_at,
+                    //'Potencial de mujeres' => $pollingPlace->potencialWomen,
+                    //'Potencial de hombres' => $pollingPlace->potencialMen,
+                    //'Total Votos' => $pollingPlace->totalVotes,
+                    //'Mesas' => $pollingPlace->tables,
                 ];
             }
 
@@ -152,6 +168,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
 
             //$entidades = Entidades::create($request->all());
             $pollingPlace = new PollingPlace();
+            $pollingPlace->uuid = Uuid::uuid4()->toString();
             $pollingPlace->name = $request->name;
             $pollingPlace->address = $request->address;
             $pollingPlace->pointCoordinates = json_encode($request->position);

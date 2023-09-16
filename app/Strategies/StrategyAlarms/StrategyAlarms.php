@@ -56,16 +56,19 @@ class StrategyAlarms implements AlarmsInterface
         try {
             $alarms = Alarms::find($id);
 
-            $transformedData = [];
+            $cordenadas = json_decode($alarms->pointCoordinates)->features[0]->geometry;
 
-            $transformedData[] = [
-                'name' => $alarms->name,
-                'adress' => $alarms->address,
-                'position' => json_decode($alarms->pointCoordinates)
-            ];
-
-
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json([
+                'status' => 'succes',
+                'data' => [
+                    'name' => $alarms->name,
+                    'address' => $alarms->address,
+                    'position' => [
+                        'type' => "Point",
+                        'coordinates' => [$cordenadas->coordinates]
+                    ]
+                ]
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

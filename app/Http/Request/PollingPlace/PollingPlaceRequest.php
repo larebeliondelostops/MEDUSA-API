@@ -38,7 +38,7 @@ class PollingPlaceRequest extends FormRequest
             'potencialMen' => 'required',
             'totalVotes' => 'required',
             'tables' => 'required',
-            'pointCoordinates' => 'required',
+            'position' => 'required',
         ];
     }
 
@@ -68,7 +68,7 @@ class PollingPlaceRequest extends FormRequest
             'potencialMen' => 'Potencial de hombres',
             'totalVotes' => 'Total de votos',
             'tables' => 'Mesas',
-            'pointCoordinates' => 'Coordenadas',
+            'position' => 'Coordenadas',
         ];
     }
 

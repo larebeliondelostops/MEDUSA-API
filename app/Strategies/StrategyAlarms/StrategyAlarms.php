@@ -174,26 +174,11 @@ class StrategyAlarms implements AlarmsInterface
     {
         try {
 
-            // Validación
-            // if (isset($request->validator) && $request->validator->fails()) {
-            //     return Response::json([
-            //         'code' => '2001',
-            //         'status' => 'error',
-            //         'message' => 'Datos Recibidos Incorrectos',
-            //         'errors' => $request->validator->messages()
-            //     ], 400, [], JSON_PRETTY_PRINT);
-            // }
-
             $alarms = Alarms::find($id);
-            if ($request->name != null) {
-                $alarms->name = $request->name;
-            }
-            if ($request->address != null) {
-                $alarms->address = $request->address;
-            }
-            if ($request->position != null) {
-                $alarms->pointCoordinates = json_encode($request->position);
-            }
+
+            $request->name != null ? $alarms->name = $request->name : $alarms->name = $alarms->name;
+            $request->address != null ? $alarms->address = $request->address : $alarms->address = $alarms->address;
+            $request->position != null ? $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position) : $alarms->pointCoordinates = $alarms->pointCoordinates;
             $alarms->save();
 
             return Response::json([

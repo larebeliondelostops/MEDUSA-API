@@ -15,6 +15,6 @@ class BarMenu extends Model
 
     public function Marker()
     {
-        return $this->belongsTo(Marker::class, 'type_marker', 'id');
+        return $this->belongsTo(Marker::class, 'marker', 'id');
     }
 }

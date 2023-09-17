@@ -189,44 +189,23 @@ class StrategyPollingPlace implements PollingPlaceInterface
     {
         try {
 
-            // Validación
-            // if (isset($request->validator) && $request->validator->fails()) {
-            //     return Response::json([
-            //         'code' => '2001',
-            //         'status' => 'error',
-            //         'message' => 'Datos Recibidos Incorrectos',
-            //         'errors' => $request->validator->messages()
-            //     ], 400, [], JSON_PRETTY_PRINT);
-            // }
 
             $pollingPlace = PollingPlace::find($id);
-            if ($request->name != null){
-                $pollingPlace->name = $request->name;
-            }
-            if ($request->address != null){
-                $pollingPlace->address = $request->address;
-            }
-            if ($request->pointCoordinates != null){
-                $pollingPlace->pointCoordinates = json_encode($request->pointCoordinates);
-            }
-            if ($request->potencialWomen != null){
-                $pollingPlace->potencialWomen = $request->potencialWomen;
-            }
-            if ($request->potencialMen != null){
-                $pollingPlace->potencialMen = $request->potencialMen;
-            }
-            if ($request->totalVotes != null){
-                $pollingPlace->totalVotes = $request->totalVotes;
-            }
-            if ($request->tables != null){
-                $pollingPlace->tables = $request->tables;
-            }
+
+            $request->name != null ? $pollingPlace->name = $request->name : $pollingPlace->name = $pollingPlace->name;
+            $request->address != null ? $pollingPlace->address = $request->address : $pollingPlace->address = $pollingPlace->address;
+            $request->position != null ? $pollingPlace->pointCoordinates = SaveGeoJson::saveLikePoint($request->position) : $pollingPlace->pointCoordinates = $pollingPlace->pointCoordinates;
+            $request->potencialWomen != null ? $pollingPlace->potencialWomen = $request->potencialWomen : $pollingPlace->potencialWomen = $pollingPlace->potencialWomen;
+            $request->potencialMen != null ? $pollingPlace->potencialMen = $request->potencialMen : $pollingPlace->potencialMen = $pollingPlace->potencialMen;
+            $request->totalVotes != null ? $pollingPlace->totalVotes = $request->totalVotes : $pollingPlace->totalVotes = $pollingPlace->totalVotes;
+            $request->tables != null ? $pollingPlace->tables = $request->tables : $pollingPlace->tables = $pollingPlace->tables;
+
             $pollingPlace->save();
 
             return Response::json([
                 'status' => 'succes',
                 'data' => $pollingPlace
-            ], 201, [], JSON_PRETTY_PRINT);
+            ], 204, [], JSON_PRETTY_PRINT);
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

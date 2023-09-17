@@ -2,6 +2,7 @@
 
 namespace App\Strategies\StrategyAlarms;
 
+use App\Clases\SaveGeoJson;
 use App\Http\Request\Alarms\AlarmsRequest;
 use App\Models\Alarms;
 use App\Strategies\AlarmsInterface;
@@ -65,7 +66,7 @@ class StrategyAlarms implements AlarmsInterface
                     'address' => $alarms->address,
                     'position' => [
                         'type' => "Point",
-                        'coordinates' => [$cordenadas->coordinates]
+                        'coordinates' => $cordenadas->coordinates
                     ]
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
@@ -141,7 +142,7 @@ class StrategyAlarms implements AlarmsInterface
             $alarms->uuid = Uuid::uuid4()->toString();
             $alarms->name = $request->name;
             $alarms->address = $request->address;
-            $alarms->pointCoordinates = json_encode($request->position);
+            $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position);
             $alarms->save();
 
             return Response::json([

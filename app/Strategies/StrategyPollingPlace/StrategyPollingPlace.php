@@ -2,6 +2,7 @@
 
 namespace App\Strategies\StrategyPollingPlace;
 
+use App\Clases\SaveGeoJson;
 use App\Http\Request\pollingPlace\pollingPlaceRequest;
 use App\Models\PollingPlace;
 use App\Strategies\PollingPlaceInterface;
@@ -61,21 +62,6 @@ class StrategyPollingPlace implements PollingPlaceInterface
         try {
             $pollingPlace = PollingPlace::find($id);
 
-            /* $transformedData = [];
-
-            $transformedData[] = [
-                'id' => $pollingPlace->id,
-                'uuid' => $pollingPlace->uuid,
-                'name' => $pollingPlace->name,
-                'address' => $pollingPlace->address,
-                'created_at' => $pollingPlace->created_at,
-                'updated_at' => $pollingPlace->updated_at,
-                'Potencial de mujeres' => $pollingPlace->potencialWomen,
-                'Potencial de hombres' => $pollingPlace->potencialMen,
-                'Total Votos' => $pollingPlace->totalVotes,
-                'Mesas' => $pollingPlace->tables,
-            ];
- */
             $cordenadas = json_decode($pollingPlace->pointCoordinates)->features[0]->geometry;
 
             return Response::json([
@@ -89,7 +75,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                     'tables' => $pollingPlace->tables,
                     'position' => [
                         'type' => "Point",
-                        'coordinates' => [$cordenadas->coordinates]
+                        'coordinates' => $cordenadas->coordinates
                     ]
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
@@ -171,7 +157,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
             $pollingPlace->uuid = Uuid::uuid4()->toString();
             $pollingPlace->name = $request->name;
             $pollingPlace->address = $request->address;
-            $pollingPlace->pointCoordinates = json_encode($request->position);
+            $pollingPlace->pointCoordinates = SaveGeoJson::saveLikePoint($request->position);
             $pollingPlace->potencialWomen = $request->potencialWomen;
             $pollingPlace->potencialMen = $request->potencialMen;
             $pollingPlace->totalVotes = $request->totalVotes;

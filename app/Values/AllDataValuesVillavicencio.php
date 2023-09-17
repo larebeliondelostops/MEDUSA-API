@@ -10,7 +10,7 @@ use App\Strategies\StrategyEntities\StrategyEntities;
 use App\Strategies\StrategyPollingPlace\StrategyPollingPlace;
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
 
-class AllDataValues
+class AllDataValuesVillavicencio
 {
     /**
      * variable para invocar la clase dependiendo la key

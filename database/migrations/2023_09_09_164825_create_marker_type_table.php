@@ -20,11 +20,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('type_marker', function (Blueprint $table) {
+        Schema::create('marker_type', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('icon');
-            $table->string('color');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_marker');
+        Schema::dropIfExists('marker_type');
     }
 };

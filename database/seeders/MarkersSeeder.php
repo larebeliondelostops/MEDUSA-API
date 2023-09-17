@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TypeMarkersSeeder extends Seeder
+class MarkersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,9 +18,10 @@ class TypeMarkersSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('type_marker')->insert([
+        DB::connection('villavicencio')->table('marker')->insert([
             [
                 'id' => 1,
+                'marker_type' => 1,
                 'name' => 'Alarmas',
                 'icon' => 'notifications_active',
                 'color' => 'yellow',
@@ -29,6 +30,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 2,
+                'marker_type' => 1,
                 'name' => 'Cais',
                 'icon' => 'local_police',
                 'color' => 'green',
@@ -37,6 +39,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 3,
+                'marker_type' => 1,
                 'name' => 'Salud',
                 'icon' => 'health_and_safety',
                 'color' => 'red',
@@ -45,6 +48,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 4,
+                'marker_type' => 1,
                 'name' => 'Puestos de votación',
                 'icon' => 'how_to_vote',
                 'color' => 'purple',
@@ -53,6 +57,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 5,
+                'marker_type' => 1,
                 'name' => 'Fibra Óptica',
                 'icon' => 'cable',
                 'color' => 'cyan',
@@ -61,6 +66,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 50,
+                'marker_type' => 1,
                 'name' => 'Camaras',
                 'icon' => 'videocam',
                 'color' => 'blue',
@@ -69,6 +75,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 51,
+                'marker_type' => 4,
                 'name' => 'Modelo Probabilistico',
                 'icon' => 'data_usage',
                 'color' => 'cyan',
@@ -77,6 +84,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 52,
+                'marker_type' => 4,
                 'name' => 'Mapa de Calor',
                 'icon' => 'local_fire_department',
                 'color' => 'lightgreen',
@@ -85,6 +93,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 53,
+                'marker_type' => 4,
                 'name' => 'Tráfico',
                 'icon' => 'traffic',
                 'color' => 'bluegreen',
@@ -93,6 +102,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 54,
+                'marker_type' => 4,
                 'name' => 'Unidades móviles',
                 'icon' => 'radar',
                 'color' => 'orange',
@@ -101,6 +111,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 55,
+                'marker_type' => 3,
                 'name' => 'Eventos',
                 'icon' => 'event',
                 'color' => 'pink',
@@ -112,9 +123,10 @@ class TypeMarkersSeeder extends Seeder
         /**
          * Marcadores para neiva
          */
-        DB::connection('neiva')->table('type_marker')->insert([
+        DB::connection('neiva')->table('marker')->insert([
             [
                 'id' => 1,
+                'marker_type' => 2,
                 'name' => 'Fibra Óptica SIES',
                 'icon' => 'e911_emergency',
                 'color' => 'yellow',
@@ -123,6 +135,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 2,
+                'marker_type' => 2,
                 'name' => 'Fibra Óptica de Cámaras',
                 'icon' => 'videocam',
                 'color' => 'blue',
@@ -131,6 +144,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 3,
+                'marker_type' => 2,
                 'name' => 'Alumbrado Público',
                 'icon' => 'emoji_objects',
                 'color' => 'green',
@@ -139,6 +153,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 4,
+                'marker_type' => 1,
                 'name' => 'Ambiente',
                 'icon' => 'eco',
                 'color' => 'purple',
@@ -147,6 +162,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 5,
+                'marker_type' => 4,
                 'name' => 'Escenarios Deportivos',
                 'icon' => 'sports_soccer',
                 'color' => 'pink',
@@ -155,6 +171,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 6,
+                'marker_type' => 4,
                 'name' => 'Movilidad',
                 'icon' => 'traffic',
                 'color' => 'orange',
@@ -163,6 +180,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 7,
+                'marker_type' => 4,
                 'name' => 'Salud',
                 'icon' => 'health_and_safety',
                 'color' => 'red',
@@ -171,6 +189,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 8,
+                'marker_type' => 4,
                 'name' => 'Sedes las Ceibas EPN',
                 'icon' => 'water_drop',
                 'color' => 'cyan',
@@ -179,6 +198,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 9,
+                'marker_type' => 4,
                 'name' => 'Seguridad Ciudadana',
                 'icon' => 'local_police',
                 'color' => 'lightgreen',
@@ -187,6 +207,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 10,
+                'marker_type' => 4,
                 'name' => 'Zonas Digitales',
                 'icon' => 'share',
                 'color' => 'bluegreen',
@@ -195,6 +216,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 11,
+                'marker_type' => 4,
                 'name' => 'Sedes Educativas',
                 'icon' => 'school',
                 'color' => 'cyan',
@@ -203,6 +225,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 50,
+                'marker_type' => 4,
                 'name' => 'Camaras',
                 'icon' => 'videocam',
                 'color' => 'blue',
@@ -211,6 +234,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 51,
+                'marker_type' => 4,
                 'name' => 'Modelo Probabilistico',
                 'icon' => 'data_usage',
                 'color' => 'cyan',
@@ -219,6 +243,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 52,
+                'marker_type' => 4,
                 'name' => 'Mapa de Calor',
                 'icon' => 'local_fire_department',
                 'color' => 'lightgreen',
@@ -227,6 +252,7 @@ class TypeMarkersSeeder extends Seeder
             ],
             [
                 'id' => 53,
+                'marker_type' => 4,
                 'name' => 'Tráfico',
                 'icon' => 'traffic',
                 'color' => 'bluegreen',

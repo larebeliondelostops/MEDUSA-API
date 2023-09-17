@@ -22,7 +22,7 @@ return new class extends Migration
     {
         Schema::create('bar_menu', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_marker')->constrained('type_marker');
+            $table->foreignId('marker')->constrained('marker');
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
@@ -36,8 +36,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('bar_menu', function (Blueprint $table) {
-            // Eliminar la clave foránea 'type_marker'
-            $table->dropForeign(['type_marker']);
+            // Eliminar la clave foránea 'marker'
+            $table->dropForeign(['marker']);
         });
         Schema::dropIfExists('bar_menu');
     }

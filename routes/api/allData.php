@@ -12,7 +12,7 @@ use App\Http\Controllers\AllDataController;
 |
 */
 
-Route::middleware(['jwt.verify'])->group(function() {
+Route::middleware([/* 'jwt.verify' */])->group(function() {
     /**
      * Manejo de data
      */

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Values\AllDataValues;
+use App\Models\Marker;
+use App\Contexts\AllDataContext;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
@@ -12,12 +13,17 @@ class AllDataController extends Controller
     /**
      * Variable para almacenar todos los marcadores cuyo contenido se basa en puntos
      */
-    private $pointsMarkers = [1, 2, 3, 4, 50, 54];
+    private $pointsMarkers = [];
+
+    /**
+     * Variable para almacenar todos los marcadores cuyo contenido se basa en lineas
+     */
+    private $LinesMarkers = [];
 
     /**
      * Variable para almacenar todos los marcadores cuyo contenido se basa en puntos
      */
-    private $polygonsMarkers = [55];
+    private $polygonsMarkers = [];
 
     /**
      * Variable para almacenar todos los puntos
@@ -30,6 +36,19 @@ class AllDataController extends Controller
     private $polygons = [];
 
     /**
+     * Variable para almacenar el contexto de la data
+     */
+    private $value;
+
+    /**
+     * AllDataController constructor.
+     */
+    public function __construct()
+    {
+        $this->value = AllDataContext::VALUE[config("database.default")];
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,9 +56,10 @@ class AllDataController extends Controller
     public function allPoints()
     {
         try {
+            $this->pointsMarkers = Marker::where('marker_type', 1)->pluck('id')->toArray();
 
             foreach ($this->pointsMarkers as $key) {
-                $data = AllDataValues::STRATEGY[$key]::all();
+                $data = $this->value::STRATEGY[$key]::all();
                 $data = json_decode($data->content(), true);
                 $this->points = array_merge($this->points, $data);
             }
@@ -63,9 +83,10 @@ class AllDataController extends Controller
     public function allPolygons()
     {
         try {
+            $this->polygonsMarkers = Marker::where('marker_type', 3)->pluck('id')->toArray();
 
             foreach ($this->polygonsMarkers as $key) {
-                $strategy = AllDataValues::STRATEGY[$key];
+                $strategy = $this->value::STRATEGY[$key];
                 $strategy = new $strategy();
                 $data = $strategy->getAllEvents();
                 $data = json_decode($data->content(), true);

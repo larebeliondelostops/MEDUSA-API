@@ -28,17 +28,17 @@ class MenuController extends Controller
      */
     public function commandBar()
     {
-        $data_menu = BarMenu::with('typeMarker')->where('bar_menu.enabled', true)->orderby('bar_menu.id')->get();
+        $data_menu = BarMenu::with('Marker')->where('bar_menu.enabled', true)->orderby('bar_menu.id')->get();
 
         // Crear un nuevo arreglo en la estructura deseada
         $menu = [];
 
         foreach ($data_menu as $data) {
             $menu[] = [
-                "color" => $data->typeMarker->color,
-                "icon" => $data->typeMarker->icon,
-                "name" => $data->typeMarker->name,
-                "id" => $data->typeMarker->id
+                "color" => $data->Marker->color,
+                "icon" => $data->Marker->icon,
+                "name" => $data->Marker->name,
+                "id" => $data->Marker->id
             ];
         }
 

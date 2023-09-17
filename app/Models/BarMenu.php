@@ -13,8 +13,8 @@ class BarMenu extends Model
 
     protected $guarded = [];
 
-    public function typeMarker()
+    public function Marker()
     {
-        return $this->belongsTo(TypeMarker::class, 'type_marker', 'id');
+        return $this->belongsTo(Marker::class, 'type_marker', 'id');
     }
 }

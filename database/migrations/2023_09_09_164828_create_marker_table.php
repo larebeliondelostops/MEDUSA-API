@@ -20,12 +20,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cai', function (Blueprint $table) {
+        Schema::create('marker', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->foreignId('marker_type')->constrained('marker_type');
             $table->string('name');
-            $table->string('address');
-            $table->json('pointCoordinates');
+            $table->string('icon');
+            $table->string('color');
             $table->timestamps();
         });
     }
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cai');
+        Schema::dropIfExists('marker');
     }
 };

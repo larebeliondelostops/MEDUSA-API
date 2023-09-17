@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeMarker extends Model
+class Marker extends Model
 {
     use HasFactory;
 
-    protected $table = 'type_marker';
+    protected $table = 'marker';
 
     protected $guarded = [];
 

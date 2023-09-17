@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'neiva';
 
     /**
      * Run the migrations.
@@ -20,8 +20,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('type_marker', function (Blueprint $table) {
+        Schema::create('marker', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('marker_type')->constrained('marker_type');
             $table->string('name');
             $table->string('icon');
             $table->string('color');
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_marker');
+        Schema::dropIfExists('marker');
     }
 };

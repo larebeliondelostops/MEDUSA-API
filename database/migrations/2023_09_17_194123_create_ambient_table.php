@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'neiva';
 
     /**
      * Run the migrations.
@@ -20,12 +20,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cai', function (Blueprint $table) {
+        Schema::create('ambient', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('address');
-            $table->json('pointCoordinates');
+            $table->json('position');
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cai');
+        Schema::dropIfExists('ambient');
     }
 };

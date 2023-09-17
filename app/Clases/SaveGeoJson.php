@@ -13,7 +13,10 @@ class SaveGeoJson
             'features' => [
                 [
                     'type' => 'Feature',
-                    'geometry' => $position
+                    'geometry' => [
+                        'type' => $position['type'],
+                        'coordinates' => $position['coordinates'][0]
+                    ]
                 ]
             ]
         ]);

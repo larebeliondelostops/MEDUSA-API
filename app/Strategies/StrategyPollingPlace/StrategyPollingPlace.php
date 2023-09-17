@@ -75,7 +75,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                     'tables' => $pollingPlace->tables,
                     'position' => [
                         'type' => "Point",
-                        'coordinates' => $cordenadas->coordinates
+                        'coordinates' => [$cordenadas->coordinates]
                     ]
                 ]
             ], 200, [], JSON_PRETTY_PRINT);

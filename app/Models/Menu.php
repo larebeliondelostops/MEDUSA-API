@@ -29,6 +29,6 @@ class Menu extends Model
 
     public function SubMenu()
     {
-        return $this->hasMany(SubMenu::class, 'menu', 'id');
+        return $this->hasMany(SubMenu::class, 'menu', 'id')->where('enabled', true)->orderBy('sub_menu', 'asc');
     }
 }

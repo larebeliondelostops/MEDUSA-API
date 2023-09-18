@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class SubMenu extends Model
 {
     use HasFactory;
 
-    protected $table = 'menu';
+    protected $table = 'sub_menu';
+
+    protected $primaryKey = 'sub_menu';
 
     protected $guarded = [];
 
@@ -19,16 +21,9 @@ class Menu extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+        'sub_menu',
+        'menu',
         'created_at',
         'updated_at',
     ];
-
-    protected $casts = [
-        'id' => 'string',
-    ];
-
-    public function SubMenu()
-    {
-        return $this->hasMany(SubMenu::class, 'menu', 'id');
-    }
 }

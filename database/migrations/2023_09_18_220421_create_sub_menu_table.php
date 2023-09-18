@@ -20,10 +20,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
-            $table->id();
+        Schema::create('sub_menu', function (Blueprint $table) {
+            $table->id('sub_menu');
+            $table->string('identifier');
+            $table->foreignId('menu')->constrained('menu');
+            $table->integer('level');
             $table->string('name');
-            $table->string('path')->nullable();
+            $table->string('path');
             $table->string('icon');
             $table->string('slug');
             $table->boolean('enabled')->default(true);
@@ -38,6 +41,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::table('sub_menu', function (Blueprint $table) {
+            // Eliminar la clave foránea 'menu'
+            $table->dropForeign(['menu']);
+        });
+        Schema::dropIfExists('sub_menu');
     }
 };

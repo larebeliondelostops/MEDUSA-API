@@ -23,8 +23,9 @@ return new class extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->string('icon');
+            $table->string('slug');
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });

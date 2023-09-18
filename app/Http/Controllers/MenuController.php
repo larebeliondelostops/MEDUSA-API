@@ -67,19 +67,7 @@ class MenuController extends Controller
      */
     public function menuBar()
     {
-        $data_menu = Menu::where('menu.enabled', true)->orderby('menu.id')->get();
-
-        // Crear un nuevo arreglo en la estructura deseada
-        $menu = [];
-
-        foreach ($data_menu as $data) {
-            $menu[] = [
-                "icon" => $data->icon,
-                "name" => $data->name,
-                "path" => $data->path,
-                "id" => $data->id
-            ];
-        }
+        $menu = Menu::with('SubMenu:menu,icon,name,slug,path,identifier as id')->where('menu.enabled', true)->orderby('menu.id')->get();
 
         try{
             return Response::json([

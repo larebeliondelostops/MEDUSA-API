@@ -14,7 +14,7 @@ use App\Http\Controllers\MenuController;
 |
 */
 
-Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
+Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
     /**
      * Manejo de acciones para el menu
      */

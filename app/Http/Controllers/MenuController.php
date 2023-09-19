@@ -69,6 +69,22 @@ class MenuController extends Controller
     {
         $menu = Menu::with('SubMenu:menu,icon,name,slug,path,identifier as id')->where('menu.enabled', true)->orderby('menu.id')->get();
 
+        $menu = $menu->map(function ($item) {
+            // Realiza aquí la organización o transformación personalizada que necesitas
+            $organizedItem = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'path' => $item->path,
+                'icon' => $item->icon,
+                'slug' => $item->slug,
+            ];
+
+            // Agrega la relación 'submenu' con el nombre deseado
+            $organizedItem['submenu'] = $item->SubMenu;
+
+            return $organizedItem;
+        });
+
         try{
             return Response::json([
                 'code' => '200',

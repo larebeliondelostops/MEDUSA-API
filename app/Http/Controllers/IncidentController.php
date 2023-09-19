@@ -37,15 +37,15 @@ class IncidentController extends Controller
 
             $transformedData = [];
             foreach ($incidents as $incident) {
-                $coordinates = json_decode($incident->pointCoordinates, true);
-                $geometry = $coordinates['features'][0]['geometry'];
+                $coordinates = $incident->position;
+                //$geometry = $coordinates['features'][0]['geometry'];
 
                 $transformedData[] = [
                     'type' => 'feature',
                     'markerType' => 8,
                     'id' => $incident->uuid,
                     'title' => $incident->name,
-                    'geometry' => $geometry,
+                    'geometry' => $coordinates,
                     'properties' => [
                         'Direccion' => $incident->address
                     ]
@@ -111,11 +111,12 @@ class IncidentController extends Controller
             $photoPath = $photoFile->storeAs('photos', $filename, 'public');
 
             $incident = new Incident();
-            $incident->IndicatorId = $request->IndicatorId;
+            $incident->uuid = Uuid::uuid4()->toString();
+            $incident->indicator = $request->IndicatorId;
             $incident->address = $request->address;
             $incident->description = $request->description;
             $incident->image = $photoPath;
-            $incident->pointCoordinates = json_encode($request->pointCoordinates);
+            $incident->position = $request->pointCoordinates;
             $incident->save();
 
             // Incrementar el contador del límite de tasa por usuario
@@ -146,12 +147,20 @@ class IncidentController extends Controller
     {
         try {
 
-            $incident = Incident::find($incident);
+            $incident = Incident::findorfail($incident);
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $incident
-            ], 201, [], JSON_PRETTY_PRINT);
+                'data' => [
+                    'id' => $incident->uuid,
+                    'indicator' => $incident->indicator,
+                    'date' => $incident->created_at,
+                    'address' => $incident->address,
+                    'description' => $incident->description,
+                    'image' => $incident->image,
+                    'position' => $incident->position,
+                ]
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -188,11 +197,11 @@ class IncidentController extends Controller
             $photoPath = $photoFile->storeAs('photos', $filename, 'public');
 
             $incident = Incident::find($id);
-            $incident->IndicatorId = $request->IndicatorId ?? $incident->IndicatorId;
+            $incident->indicator = $request->IndicatorId ?? $incident->indicator;
             $incident->address = $request->address ?? $incident->address;
             $incident->description = $request->description ?? $incident->description;
             $incident->image = $photoPath ?? $incident->photoPath;
-            $incident->pointCoordinates = json_encode($request->pointCoordinates) ?? $incident->pointCoordinates;
+            $incident->position = $request->pointCoordinates ?? $incident->position;
             $incident->save();
 
             return Response::json([
@@ -224,6 +233,48 @@ class IncidentController extends Controller
             return Response::json([
                 'status' => 'succes',
             ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function inspection()
+    {
+        try {
+
+            $incidents = Incident::select('uuid as identifier', 'indicator as incident', 'created_at as date', 'position as position')->where('reviewed', false)->get();
+
+            return Response::json([
+                'status' => 'succes',
+                'data' => $incidents
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function review(Request $request)
+    {
+        try {
+
+            $incident = Incident::find($request->incident);
+            $incident->reviewed = true;
+            $incident->save();
+
+            return Response::json([
+                'status' => 'succes',
+                'data' => $incident
+            ], 202, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

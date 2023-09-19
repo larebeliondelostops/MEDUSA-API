@@ -35,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FormAlarmsSeeder::class);
         $this->call(FormPollingPlacesSeeder::class);
         $this->call(AmbientSeeder::class);
+        $this->call(FormAmbientSeeder::class);
     }
 }

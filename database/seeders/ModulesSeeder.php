@@ -74,6 +74,13 @@ class ModulesSeeder extends Seeder
          */
         DB::connection('neiva')->table('modules')->insert([
             [
+                'id' => 4,
+                'name' => 'Ambiente',
+                'description' => 'Módulo para la gestión del tema ambiental',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'id' => 6,
                 'name' => 'Alarmas',
                 'description' => 'Módulo para la gestión de las alarmas',

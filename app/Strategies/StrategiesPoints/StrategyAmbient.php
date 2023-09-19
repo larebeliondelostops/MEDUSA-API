@@ -6,6 +6,7 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use App\Models\Ambient;
 use App\Clases\SaveGeoJson;
+use App\Http\Request\Ambient\AmbientRequest;
 use \Illuminate\Http\Request;
 use App\Strategies\PointsInterface;
 use Illuminate\Support\Facades\Log;
@@ -63,18 +64,17 @@ class StrategyAmbient implements PointsInterface
         }
     }
 
-    /* public function getOne($id)
+    public function getOne($id)
     {
         try {
-            $alarms = Alarms::find($id);
+            $ambient = Ambient::find($id);
 
-            $cordenadas = json_decode($alarms->pointCoordinates)->features[0]->geometry;
+            $cordenadas = json_decode($ambient->pointCoordinates)->features[0]->geometry;
 
             return Response::json([
                 'status' => 'succes',
                 'data' => [
-                    'name' => $alarms->name,
-                    'address' => $alarms->address,
+                    'name' => $ambient->name,
                     'position' => [
                         'type' => "Point",
                         'coordinates' => [$cordenadas->coordinates]
@@ -89,19 +89,18 @@ class StrategyAmbient implements PointsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    } */
+    }
 
-    /* public function allTable(Request $request)
+    public function allTable(Request $request)
     {
         try {
-            $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            $ambient = Ambient::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
-            foreach ($alarms as $alarm) {
+            foreach ($ambient as $alarm) {
                 $transformedData[] = [
                     'id' => $alarm->id,
                     'nombre' => $alarm->name,
-                    'direccion' => $alarm->address,
                 ];
             }
 
@@ -109,12 +108,12 @@ class StrategyAmbient implements PointsInterface
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [
-                        'total' => $alarms->total(),
-                        'perPage' => $alarms->perPage(),
-                        'currentPage' => $alarms->currentPage(),
-                        'lastPage' => $alarms->lastPage(),
-                        'from' => $alarms->firstItem(),
-                        'to' => $alarms->lastItem(),
+                        'total' => $ambient->total(),
+                        'perPage' => $ambient->perPage(),
+                        'currentPage' => $ambient->currentPage(),
+                        'lastPage' => $ambient->lastPage(),
+                        'from' => $ambient->firstItem(),
+                        'to' => $ambient->lastItem(),
                     ],
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
@@ -126,7 +125,7 @@ class StrategyAmbient implements PointsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    } */
+    }
 
 
     /**
@@ -135,7 +134,7 @@ class StrategyAmbient implements PointsInterface
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /* public function store(AlarmsRequest $request)
+    public function store(AmbientRequest $request)
     {
         try {
             // Validación
@@ -149,10 +148,9 @@ class StrategyAmbient implements PointsInterface
             }
 
             //$entidades = Entidades::create($request->all());
-            $alarms = new Alarms();
+            $alarms = new Ambient();
             $alarms->uuid = Uuid::uuid4()->toString();
             $alarms->name = $request->name;
-            $alarms->address = $request->address;
             $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position);
             $alarms->save();
 
@@ -160,7 +158,6 @@ class StrategyAmbient implements PointsInterface
                 'status' => 'succes',
                 'data' => [
                     'name' => $alarms->name,
-                    'address' => $alarms->address,
                     'position' => json_decode($alarms->pointCoordinates)
                 ]
             ], 201, [], JSON_PRETTY_PRINT);
@@ -172,7 +169,7 @@ class StrategyAmbient implements PointsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    } */
+    }
 
     /**
      * Metodo para actualizar un centro de Entidades especifico.
@@ -181,14 +178,13 @@ class StrategyAmbient implements PointsInterface
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 
-            $alarms = Alarms::find($id);
+            $alarms = Ambient::find($id);
 
             $request->name != null ? $alarms->name = $request->name : $alarms->name = $alarms->name;
-            $request->address != null ? $alarms->address = $request->address : $alarms->address = $alarms->address;
             $request->position != null ? $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position) : $alarms->pointCoordinates = $alarms->pointCoordinates;
             $alarms->save();
 
@@ -204,7 +200,7 @@ class StrategyAmbient implements PointsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    } */
+    }
 
     /**
      * Metodo para eliminar un centro de Entidades especifico.
@@ -212,15 +208,15 @@ class StrategyAmbient implements PointsInterface
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    /* public function destroy($id)
+    public function destroy($id)
     {
         try {
 
-            return Alarms::destroy($id);
+            Ambient::destroy($id);
 
             return Response::json([
                 'status' => 'succes',
-            ], 201, [], JSON_PRETTY_PRINT);
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -229,41 +225,5 @@ class StrategyAmbient implements PointsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    } */
-
-    /* public function storeMax(Request $request)
-    {
-        try {
-            // Validación
-            if (isset($request->validator) && $request->validator->fails()) {
-                return response()->json([
-                    'code' => '2001',
-                    'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
-                    'errors' => $request->validator->messages()
-                ], 400, [], JSON_PRETTY_PRINT);
-            }
-
-            // Recorrer el array de JSON y guardar cada elemento en la base de datos
-            foreach ($request->array as $alarmData) {
-                $alarms = new Alarms();
-                $alarms->name = $alarmData['name'];
-                $alarms->address = $alarmData['address'];
-                $alarms->pointCoordinates = json_encode($alarmData['pointCoordinates']);
-                $alarms->save();
-            }
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Datos almacenados exitosamente'
-            ], 201, [], JSON_PRETTY_PRINT);
-        } catch (\Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return response()->json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    } */
+    }
 }

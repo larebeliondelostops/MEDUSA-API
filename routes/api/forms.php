@@ -25,5 +25,6 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
      */
     Route::get('forms/user', [FormsController::class, 'user']);
     Route::get('forms/alarm', [FormsController::class, 'alarm']);
+    Route::get('forms/ambient', [FormsController::class, 'ambient']);
     Route::get('forms/pollingPlace', [FormsController::class, 'pollingPlace']);
 });

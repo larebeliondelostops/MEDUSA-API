@@ -102,7 +102,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 54,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Unidades móviles',
                 'icon' => 'radar',
                 'color' => 'orange',

@@ -140,14 +140,14 @@ class IncidentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function show($incident)
     {
         try {
 
-            $incident = Incident::findorfail($incident);
+            $incident = Incident::where('uuid', $incident)->first();
 
             return Response::json([
                 'status' => 'succes',
@@ -267,14 +267,23 @@ class IncidentController extends Controller
     {
         try {
 
-            $incident = Incident::find($request->incident);
-            $incident->reviewed = true;
-            $incident->save();
+            $incident = Incident::where('uuid', $request->incident)->first();
 
-            return Response::json([
-                'status' => 'succes',
-                'data' => $incident
-            ], 202, [], JSON_PRETTY_PRINT);
+            if (isset($incident)) {
+                
+                $incident->update(['reviewed' => true]);
+
+                return Response::json([
+                    'status' => 'succes',
+                    'data' => $incident
+                ], 202, [], JSON_PRETTY_PRINT);
+            } else {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'No existe un registro con el id' . $request->incident
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+            
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

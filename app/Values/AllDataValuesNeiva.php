@@ -7,7 +7,7 @@ use App\Strategies\StrategiesPoints\StrategyAmbient;
 class AllDataValuesNeiva
 {
     /**
-     * variable para invocar la clase dependiendo la key
+     * variable para invocar la clase dependiendo la key para el manejo de puntos
      *
      */
     const STRATEGY = [
@@ -27,4 +27,6 @@ class AllDataValuesNeiva
         52 => StrategyFiberSIES::class,
         53 => StrategyFiberSIES::class,
     ];
+
+
 }

@@ -31,6 +31,11 @@ class AllDataController extends Controller
     private $points = [];
 
     /**
+     * Variable para almacenar todas las lineas
+     */
+    private $lines = [];
+
+    /**
      * Variable para almacenar todos los ppoligonos
      */
     private $polygons = [];
@@ -56,7 +61,7 @@ class AllDataController extends Controller
     public function allPoints()
     {
         try {
-            $this->pointsMarkers = Marker::where('marker_type', 1)->pluck('id')->toArray();
+            $this->pointsMarkers = Marker::whereIn('marker_type', [1,4])->pluck('id')->toArray();
 
             foreach ($this->pointsMarkers as $key) {
                 $data = $this->value::STRATEGY[$key]::all();
@@ -65,6 +70,28 @@ class AllDataController extends Controller
             }
 
             return Response::json($this->points, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function allLines()
+    {
+        try {
+            $this->LinesMarkers = Marker::whereIn('marker_type', [2,4])->pluck('id')->toArray();
+
+            foreach ($this->LinesMarkers as $key) {
+                $data = $this->value::STRATEGY_LINES[$key]::all();
+                $data = json_decode($data->content(), true);
+                $this->lines = array_merge($this->lines, $data);
+            }
+
+            return Response::json($this->lines, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

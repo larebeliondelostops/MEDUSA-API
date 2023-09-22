@@ -46,7 +46,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DigitalZonesSeeder::class);
         $this->call(EducationalCentersSeeder::class);
         $this->call(HealthCentersSeeder::class);
-        $this->call(EnvironmentSeeder::class);
         $this->call(HeadquartersLasCeibasEPNSeeder::class);
         $this->call(LightingSeeder::class);
         $this->call(PublicSafetySeeder::class);

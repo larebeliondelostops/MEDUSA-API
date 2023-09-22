@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TenancySeeder::class);
         $this->call(MarkerTypeSeeder::class);
         $this->call(MarkersSeeder::class);
-        $this->call(MenuBarSeeder::class);
-        $this->call(SubMenuBarSeeder::class);
+        //$this->call(MenuBarSeeder::class);
+        //$this->call(SubMenuBarSeeder::class);
         $this->call(MenuSeeder::class);
         $this->call(SelectTypeSeeder::class);
         $this->call(ModulesSeeder::class);
@@ -36,5 +36,21 @@ class DatabaseSeeder extends Seeder
         $this->call(FormPollingPlacesSeeder::class);
         $this->call(AmbientSeeder::class);
         $this->call(FormAmbientSeeder::class);
+
+        //Exclusivo Neiva
+        $this->call(FiberSiesLinesSeeder::class);
+        $this->call(FiberSiesPointsSeeder::class);
+        $this->call(FiberCamerasPointsSeeder::class);
+        $this->call(FiberCamerasLinesSeeder::class);
+        $this->call(BusStopsSeeder::class);
+        $this->call(DigitalZonesSeeder::class);
+        $this->call(EducationalCentersSeeder::class);
+        $this->call(HealthCentersSeeder::class);
+        $this->call(EnvironmentSeeder::class);
+        $this->call(HeadquartersLasCeibasEPNSeeder::class);
+        $this->call(LightingSeeder::class);
+        $this->call(PublicSafetySeeder::class);
+        $this->call(SportsVenuesSeeder::class);
+        $this->call(TrafficLightSeeder::class);
     }
 }

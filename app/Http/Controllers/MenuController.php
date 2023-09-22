@@ -128,13 +128,19 @@ class MenuController extends Controller
             {
                 case 'villavicencio':
                     $data = [
-                        'mapCenter' =>  env('MAP_CENTER_VILLAVICENCIO'),
+                        'mapCenter' => [
+                            'lat' => env('MAP_CENTER_VILLAVICENCIO_LATITUD'),
+                            'lng' => env('MAP_CENTER_VILLAVICENCIO_LONGITUD')
+                        ],
                         'mapRequest' => ['incidents', 'indicators']
                     ];
                     break;
                 case 'neiva':
                     $data = [
-                        'mapCenter' =>  env('MAP_CENTER_NEIVA'),
+                        'mapCenter' =>  [
+                            'lat' => env('MAP_CENTER_NEIVA_LATITUD'),
+                            'lng' => env('MAP_CENTER_NEIVA_LONGITUD')
+                        ],
                         'mapRequest' => []
                     ];
                     break;

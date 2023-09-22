@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Strategies\StrategiesPoints;
+
+use Exception;
+use App\Models\TrafficLight;
+use App\Models\BusStop;
+use App\Strategies\PointsInterface;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+
+class StrategyMobility implements PointsInterface
+{
+    /**
+     * Metodo para obtener todos los centros de Entidades
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public static function all()
+    {
+        try {
+            $BusStop = BusStop::all();
+
+            $StopBus = $BusStop->map(function ($item) {
+
+                $BusStop = [
+                    'type' => 'feature',
+                    'markerType' => 6,
+                    'id' => $item->uuid,
+                    'title' => $item->name,
+                    'properties' => [
+                        'ParaderosSETP' => $item->paraderosSETP,
+                    ],
+                    'geometry' => json_decode($item->position),
+                ];
+
+                return $BusStop;
+            });
+
+            $TrafficLight = TrafficLight::all();
+
+            $TrafficLights = $TrafficLight->map(function ($item) {
+
+                $TrafficLight = [
+                    'type' => 'feature',
+                    'markerType' => 6,
+                    'id' => $item->uuid,
+                    'title' => $item->name,
+                    'properties' => [
+                        'Estado' => $item->status,
+                    ],
+                    'geometry' => json_decode($item->position),
+                ];
+
+                return $TrafficLight;
+            });
+
+            $Mobility = $StopBus->merge($TrafficLights);
+
+            return Response::json($Mobility, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+}

@@ -2,13 +2,8 @@
 
 namespace App\Strategies\StrategiesPoints;
 
-
 use Exception;
-use Ramsey\Uuid\Uuid;
-use App\Clases\SaveGeoJson;
 use App\Models\FiberPoint;
-use App\Models\PollingPlace;
-use \Illuminate\Http\Request;
 use App\Strategies\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

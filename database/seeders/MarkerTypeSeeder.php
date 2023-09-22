@@ -83,6 +83,13 @@ class MarkerTypeSeeder extends Seeder
             ],
             [
                 'id' => 4,
+                'name' => 'Point And Polyline',
+                'description' => 'Todos los marcadores de tipo punto y linea',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 5,
                 'name' => 'Special',
                 'description' => 'Todos los marcadores de tipo especial',
                 'created_at' => now(),

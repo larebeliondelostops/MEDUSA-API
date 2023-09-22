@@ -24,5 +24,5 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
     /**
      * Manejo de data precargada al iniciar sesion
      */
-    Route::get('seetings/initialData', [MenuController::class, 'initialData']);
+    Route::get('settings/initialData', [MenuController::class, 'initialData']);
 });

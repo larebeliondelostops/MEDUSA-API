@@ -22,7 +22,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-  
+
 #test postgres
 RUN apt-get update && \
     apt-get install -y libpq-dev && \
@@ -32,6 +32,7 @@ RUN echo "extension=pdo_pgsql.so" >> /usr/local/etc/php/conf.d/postgres.ini
 
 RUN echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
 RUN echo "post_max_size=50M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
+RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

@@ -7,7 +7,7 @@ use App\Models\Marker;
 use App\Contexts\AllDataContext;
 use App\Models\Slug;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class CRUDController extends Controller
@@ -56,16 +56,16 @@ class CRUDController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function allTable($slug)
+    public function allTable(Request $request, $slug)
     {
         try {
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
             $strategy = new $strategy();
-            $data = $strategy->allTable();
+            $data = $strategy->allTable($request);
 
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -83,9 +83,9 @@ class CRUDController extends Controller
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
             $strategy = new $strategy();
-            $data = $strategy->get($id);
+            $data = $strategy->getOne($id);
 
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -103,9 +103,9 @@ class CRUDController extends Controller
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
             $strategy = new $strategy();
-            $data = $strategy->store($request->all());
+            $data = $strategy->store($request);
 
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -123,9 +123,9 @@ class CRUDController extends Controller
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
             $strategy = new $strategy();
-            $data = $strategy->update($request->all());
+            $data = $strategy->update($request, $id);
 
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -145,7 +145,7 @@ class CRUDController extends Controller
             $strategy = new $strategy();
             $data = $strategy->destroy($id);
 
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

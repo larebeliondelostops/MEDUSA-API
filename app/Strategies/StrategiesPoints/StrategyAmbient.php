@@ -69,7 +69,7 @@ class StrategyAmbient implements PointsInterface
         try {
             $ambient = Ambient::find($id);
 
-            $cordenadas = json_decode($ambient->pointCoordinates)->features[0]->geometry;
+            $cordenadas = json_decode($ambient->position)->features[0]->geometry;
 
             return Response::json([
                 'status' => 'succes',
@@ -134,7 +134,7 @@ class StrategyAmbient implements PointsInterface
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AmbientRequest $request)
+    public function store(Request $request)
     {
         try {
             // Validación
@@ -151,14 +151,14 @@ class StrategyAmbient implements PointsInterface
             $alarms = new Ambient();
             $alarms->uuid = Uuid::uuid4()->toString();
             $alarms->name = $request->name;
-            $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position);
+            $alarms->position = SaveGeoJson::saveLikePoint($request->position);
             $alarms->save();
 
             return Response::json([
                 'status' => 'succes',
                 'data' => [
                     'name' => $alarms->name,
-                    'position' => json_decode($alarms->pointCoordinates)
+                    'position' => json_decode($alarms->position)
                 ]
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -182,15 +182,15 @@ class StrategyAmbient implements PointsInterface
     {
         try {
 
-            $alarms = Ambient::find($id);
+            $ambient = Ambient::find($id);
 
-            $request->name != null ? $alarms->name = $request->name : $alarms->name = $alarms->name;
-            $request->position != null ? $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position) : $alarms->pointCoordinates = $alarms->pointCoordinates;
-            $alarms->save();
+            $request->name != null ? $ambient->name = $request->name : $ambient->name = $ambient->name;
+            $request->position != null ? $ambient->position = SaveGeoJson::saveLikePoint($request->position) : $ambient->position = $ambient->position;
+            $ambient->save();
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $alarms
+                'data' => $ambient
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

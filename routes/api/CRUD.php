@@ -18,7 +18,7 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
      */
     Route::get('{slug}/all', [CRUDController::class, 'all']);
     Route::get('{slug}/allTable', [CRUDController::class, 'allTable']);
-    Route::get('{slug}/get/{id}', [CRUDController::class, 'getOne']);
+    Route::get('{slug}/get/{id}', [CRUDController::class, 'get']);
     Route::post('{slug}/store', [CRUDController::class, 'store']);
     Route::put('{slug}/update/{id}', [CRUDController::class, 'update']);
     Route::delete('{slug}/destroy/{id}', [CRUDController::class, 'destroy']);

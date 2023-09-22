@@ -20,4 +20,9 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
      */
     Route::get('menu/commandBar', [MenuController::class, 'commandBar']);
     Route::get('menu/menuBar', [MenuController::class, 'menuBar']);
+
+    /**
+     * Manejo de data precargada al iniciar sesion
+     */
+    Route::get('menu/initialData', [MenuController::class, 'initialData']);
 });

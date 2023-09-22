@@ -22,6 +22,18 @@ use Illuminate\Support\Facades\Response;
 class MenuController extends Controller
 {
     /**
+     * Slugs para generar las peticiones de las respectivas ciudades
+     */
+    CONST MARKERS_VILLAVICENCIO = [
+        'alarm', 'cai', 'healt', 'pollingPlace', 'OpticalFiber', 'camera', 'event'
+    ];
+
+    CONST MARKERS_NEIVA = [
+        'SIESOpticalFiber', 'cameraOpticalFiber', 'deportiveScenary', 'mobility', 'healt', 'EPNceiba', 'citizenSecurity',
+        'digitalZone', 'educationalHeadquarters', 'camera'
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -105,34 +117,42 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function initialData()
     {
-        //
-    }
+        try{
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $sub_domain = config("database.default");
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            switch ($sub_domain)
+            {
+                case 'villavicencio':
+                    $data = [
+                        'mapCenter' =>  env('MAP_CENTER_VILLAVICENCIO'),
+                        'mapRequest' => ['incidents', 'indicators']
+                    ];
+                    break;
+                case 'neiva':
+                    $data = [
+                        'mapCenter' =>  env('MAP_CENTER_NEIVA'),
+                        'mapRequest' => []
+                    ];
+                    break;
+            }
+
+            return Response::json([
+                'code' => '200',
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa',
+                'data' => $data
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
     }
 }

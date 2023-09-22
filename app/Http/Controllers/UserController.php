@@ -171,12 +171,12 @@ class UserController extends Controller
                 $user->password = bcrypt($request->input('password'));
             }
 
-            $user->save();
-
-            // Elimina todos los roles existentes antes de asignar uno nuevo.
-            $user->roles()->detach();
+            $user->save();            
 
             if ($request->has('role_id')) {
+                // Elimina todos los roles existentes antes de asignar uno nuevo.
+                $user->roles()->detach();
+                
                 $role = Role::find($request->input('role_id'));
 
                 if ($role) {

@@ -27,7 +27,8 @@ class StrategyFiberPoints implements PointsInterface
                     'markerType' => 5,
                     'id' => $item->uuid,
                     'title' => $item->name,
-                    'geometry' => json_decode($item->position)
+                    'geometry' => json_decode($item->position),
+                    'properties' => []
                 ];
 
                 return $fiberLines;

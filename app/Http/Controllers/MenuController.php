@@ -50,7 +50,8 @@ class MenuController extends Controller
                 "color" => $data->Marker->color,
                 "icon" => $data->Marker->icon,
                 "name" => $data->Marker->name,
-                "id" => $data->Marker->id
+                "id" => $data->Marker->id,
+                "defaultActive" => $data->Marker->id == 54 ? true : false
             ];
         }
 
@@ -129,8 +130,8 @@ class MenuController extends Controller
                 case 'villavicencio':
                     $data = [
                         'mapCenter' => [
-                            'lat' => env('MAP_CENTER_VILLAVICENCIO_LATITUD'),
-                            'lng' => env('MAP_CENTER_VILLAVICENCIO_LONGITUD')
+                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
+                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
                         ],
                         'mapRequest' => ['incidents', 'indicators']
                     ];
@@ -138,8 +139,8 @@ class MenuController extends Controller
                 case 'neiva':
                     $data = [
                         'mapCenter' =>  [
-                            'lat' => env('MAP_CENTER_NEIVA_LATITUD'),
-                            'lng' => env('MAP_CENTER_NEIVA_LONGITUD')
+                            'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
+                            'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
                         ],
                         'mapRequest' => []
                     ];

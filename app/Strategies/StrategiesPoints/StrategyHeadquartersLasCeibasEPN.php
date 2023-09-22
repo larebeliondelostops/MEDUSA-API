@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Strategies\StrategyLines;
-
+namespace App\Strategies\StrategiesPoints;
 
 use Exception;
-use App\Models\FiberLine;
-use App\Strategies\LinesInterface;
+use App\Models\HeadquarterLasCeibasEPN;
+use App\Strategies\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class StrategyFiberLines implements LinesInterface
+class StrategyHeadquartersLasCeibasEPN implements PointsInterface
 {
-     /**
+    /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
@@ -19,22 +18,22 @@ class StrategyFiberLines implements LinesInterface
     public static function all()
     {
         try {
-            $fiberLines = FiberLine::all();
+            $Headquarters = HeadquarterLasCeibasEPN::all();
 
-            $Lines = $fiberLines->map(function ($item) {
+            $Headquarter = $Headquarters->map(function ($item) {
 
-                $fiberLines = [
+                $Headquarters = [
                     'type' => 'feature',
-                    'markerType' => 5,
+                    'markerType' => 8,
                     'id' => $item->uuid,
                     'title' => $item->name,
                     'geometry' => json_decode($item->position)
                 ];
 
-                return $fiberLines;
+                return $Headquarters;
             });
 
-            return Response::json($Lines, 200, [], JSON_PRETTY_PRINT);
+            return Response::json($Headquarter, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -44,4 +43,5 @@ class StrategyFiberLines implements LinesInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
 }

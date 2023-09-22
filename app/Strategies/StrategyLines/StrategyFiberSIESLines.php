@@ -4,12 +4,12 @@ namespace App\Strategies\StrategyLines;
 
 
 use Exception;
-use App\Models\FiberLine;
+use App\Models\FiberSiesLine;
 use App\Strategies\LinesInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class StrategyFiberLines implements LinesInterface
+class StrategyFiberSIESLines implements LinesInterface
 {
      /**
      * Metodo para obtener todos los centros de Entidades
@@ -19,13 +19,13 @@ class StrategyFiberLines implements LinesInterface
     public static function all()
     {
         try {
-            $fiberLines = FiberLine::all();
+            $fiberLines = FiberSiesLine::all();
 
             $Lines = $fiberLines->map(function ($item) {
 
                 $fiberLines = [
                     'type' => 'feature',
-                    'markerType' => 5,
+                    'markerType' => 1,
                     'id' => $item->uuid,
                     'title' => $item->name,
                     'geometry' => json_decode($item->position)

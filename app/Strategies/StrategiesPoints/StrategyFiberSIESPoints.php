@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Strategies\StrategyLines;
-
+namespace App\Strategies\StrategiesPoints;
 
 use Exception;
-use App\Models\FiberLine;
-use App\Strategies\LinesInterface;
+use App\Models\FiberSiesPoint;
+use App\Strategies\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
-class StrategyFiberLines implements LinesInterface
+class StrategyFiberSIESPoints implements PointsInterface
 {
-     /**
+    /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
@@ -19,13 +18,13 @@ class StrategyFiberLines implements LinesInterface
     public static function all()
     {
         try {
-            $fiberLines = FiberLine::all();
+            $fiberLines = FiberSiesPoint::all();
 
             $Lines = $fiberLines->map(function ($item) {
 
                 $fiberLines = [
                     'type' => 'feature',
-                    'markerType' => 5,
+                    'markerType' => 1,
                     'id' => $item->uuid,
                     'title' => $item->name,
                     'geometry' => json_decode($item->position)
@@ -44,4 +43,5 @@ class StrategyFiberLines implements LinesInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
 }

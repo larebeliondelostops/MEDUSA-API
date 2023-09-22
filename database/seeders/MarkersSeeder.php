@@ -126,7 +126,7 @@ class MarkersSeeder extends Seeder
         DB::connection('neiva')->table('marker')->insert([
             [
                 'id' => 1,
-                'marker_type' => 2,
+                'marker_type' => 4,
                 'name' => 'Fibra Óptica SIES',
                 'icon' => 'e911_emergency',
                 'color' => 'yellow',
@@ -135,7 +135,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'marker_type' => 2,
+                'marker_type' => 4,
                 'name' => 'Fibra Óptica de Cámaras',
                 'icon' => 'videocam',
                 'color' => 'blue',
@@ -144,7 +144,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'marker_type' => 2,
+                'marker_type' => 1,
                 'name' => 'Alumbrado Público',
                 'icon' => 'emoji_objects',
                 'color' => 'green',
@@ -162,7 +162,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Escenarios Deportivos',
                 'icon' => 'sports_soccer',
                 'color' => 'pink',
@@ -171,7 +171,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Movilidad',
                 'icon' => 'traffic',
                 'color' => 'orange',
@@ -180,7 +180,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Salud',
                 'icon' => 'health_and_safety',
                 'color' => 'red',
@@ -189,7 +189,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Sedes las Ceibas EPN',
                 'icon' => 'water_drop',
                 'color' => 'cyan',
@@ -198,7 +198,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Seguridad Ciudadana',
                 'icon' => 'local_police',
                 'color' => 'lightgreen',
@@ -207,7 +207,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Zonas Digitales',
                 'icon' => 'share',
                 'color' => 'bluegreen',
@@ -216,7 +216,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 11,
-                'marker_type' => 4,
+                'marker_type' => 1,
                 'name' => 'Sedes Educativas',
                 'icon' => 'school',
                 'color' => 'cyan',
@@ -225,7 +225,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 50,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Camaras',
                 'icon' => 'videocam',
                 'color' => 'blue',
@@ -234,7 +234,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 51,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Modelo Probabilistico',
                 'icon' => 'data_usage',
                 'color' => 'cyan',
@@ -243,7 +243,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 52,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Mapa de Calor',
                 'icon' => 'local_fire_department',
                 'color' => 'lightgreen',
@@ -252,7 +252,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 53,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Tráfico',
                 'icon' => 'traffic',
                 'color' => 'bluegreen',

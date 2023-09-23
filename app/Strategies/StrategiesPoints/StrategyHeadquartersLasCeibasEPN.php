@@ -23,10 +23,8 @@ class StrategyHeadquartersLasCeibasEPN implements PointsInterface
             $Headquarter = $Headquarters->map(function ($item) {
 
                 $Headquarters = [
-                    'type' => 'feature',
                     'markerType' => 8,
                     'id' => $item->uuid,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position)
                 ];
 

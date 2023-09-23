@@ -23,16 +23,9 @@ class StrategySportVenues implements PointsInterface
             $SportVenue = $SportVenues->map(function ($item) {
 
                 $SportVenues = [
-                    'type' => 'feature',
                     'markerType' => 5,
                     'id' => $item->uuid,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position),
-                    'properties' => [
-                        'BARRIO' => $item->neighborhood,
-                        'ESCENARIO' => $item->scenery,
-                        'DIRECCION' => $item->address,
-                    ]
                 ];
 
                 return $SportVenues;

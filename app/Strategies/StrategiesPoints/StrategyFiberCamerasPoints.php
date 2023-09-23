@@ -23,10 +23,8 @@ class StrategyFiberCamerasPoints implements PointsInterface
             $Lines = $fiberLines->map(function ($item) {
 
                 $fiberLines = [
-                    'type' => 'feature',
                     'markerType' => 2,
                     'id' => $item->uuid,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position)
                 ];
 

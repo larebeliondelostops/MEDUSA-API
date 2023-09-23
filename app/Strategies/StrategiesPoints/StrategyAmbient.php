@@ -42,14 +42,9 @@ class StrategyAmbient implements PointsInterface
                 $geometry = $coordinates['features'][0]['geometry'];
 
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 4,
                     'id' => $ambient->uuid,
-                    'title' => $ambient->name,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $ambient->address
-                    ]
                 ];
             }
 

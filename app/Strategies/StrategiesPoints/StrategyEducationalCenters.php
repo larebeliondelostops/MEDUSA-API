@@ -23,10 +23,8 @@ class StrategyEducationalCenters implements PointsInterface
             $Centers = $EducationalCenters->map(function ($item) {
 
                 $EducationalCenters = [
-                    'type' => 'feature',
                     'markerType' => 11,
                     'id' => $item->uuid,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position)
                 ];
 

@@ -24,13 +24,8 @@ class StrategyMobility implements PointsInterface
             $StopBus = $BusStop->map(function ($item) {
 
                 $BusStop = [
-                    'type' => 'feature',
                     'markerType' => 6,
                     'id' => $item->uuid,
-                    'title' => $item->name,
-                    'properties' => [
-                        'ParaderosSETP' => $item->paraderosSETP,
-                    ],
                     'geometry' => json_decode($item->position),
                 ];
 

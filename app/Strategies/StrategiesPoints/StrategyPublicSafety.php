@@ -23,13 +23,8 @@ class StrategyPublicSafety implements PointsInterface
             $Centers = $Safeties->map(function ($item) {
 
                 $Safeties = [
-                    'type' => 'feature',
                     'markerType' => 9,
                     'id' => $item->uuid,
-                    'title' => $item->name,
-                    'properties' => [
-                        'Estado' => $item->state,
-                    ],
                     'geometry' => json_decode($item->position)
                 ];
 

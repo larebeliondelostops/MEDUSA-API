@@ -23,13 +23,8 @@ class StrategyDigitalZones implements PointsInterface
             $Zones = $DigitalZones->map(function ($item) {
 
                 $DigitalZones = [
-                    'type' => 'feature',
                     'markerType' => 10,
                     'id' => $item->uuid,
-                    'title' => $item->name,
-                    'properties' => [
-                        'Tipo' => $item->type,
-                    ],
                     'geometry' => json_decode($item->position)
                 ];
 

@@ -23,10 +23,8 @@ class StrategyHealthCenters implements PointsInterface
             $Centers = $HealthCenters->map(function ($item) {
 
                 $HealthCenters = [
-                    'type' => 'feature',
                     'markerType' => 7,
                     'id' => $item->uuid,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position)
                 ];
 

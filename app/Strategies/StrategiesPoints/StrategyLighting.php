@@ -23,26 +23,9 @@ class StrategyLighting implements PointsInterface
             $Lighting = $Lightings->map(function ($item) {
 
                 $Lightings = [
-                    'type' => 'feature',
                     'markerType' => 3,
-                    'title' => $item->name,
                     'geometry' => json_decode($item->position),
-                    'properties' => [
-                        'name' => $item->name,
-                        'farola' => $item->farola,
-                        'sticker' => $item->sticker,
-                        'potencia' => $item->potencia,
-                        'tecnologia' => $item->tecnologia,
-                        'cuadrante' => $item->cuadrante,
-                        'departamento' => $item->departamento,
-                        'municipio' => $item->municipio,
-                        'w' => $item->w,
-                        'h' => $item->h,
-                        'transformador' => $item->transformador,
-                        'imagen' => $item->imagen,
-                    ],
                     'id' => $item->uuid,
-
                 ];
 
                 return $Lightings;

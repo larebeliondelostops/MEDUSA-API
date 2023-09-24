@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('scenery')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

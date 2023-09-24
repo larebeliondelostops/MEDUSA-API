@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('authorizingEntity');
             $table->timestamps();
 
+            $table->index('uuid');
             $table->foreign('idEventType')->references('id')->on('eventsType');
         });
     }
@@ -47,7 +48,7 @@ return new class extends Migration
             // Eliminar la clave foránea 'idEventType'
             $table->dropForeign(['idEventType']);
         });
-        
+
         Schema::dropIfExists('events');
     }
 };

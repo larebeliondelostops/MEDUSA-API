@@ -19,4 +19,5 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
     Route::get('allData/allPoints', [AllDataController::class, 'allPoints']);
     Route::get('allData/allLines', [AllDataController::class, 'allLines']);
     Route::get('allData/allPolygons', [AllDataController::class, 'allPolygons']);
+    Route::get('allData/getInfoPoint', [AllDataController::class, 'getInfoPoint']);
 });

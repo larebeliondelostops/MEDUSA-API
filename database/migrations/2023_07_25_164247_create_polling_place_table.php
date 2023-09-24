@@ -22,7 +22,7 @@ return new class extends Migration
     {
         Schema::create('pollingPlace', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); 
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('address');
             $table->json('pointCoordinates');
@@ -31,6 +31,8 @@ return new class extends Migration
             $table->integer('totalVotes');
             $table->integer('tables');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

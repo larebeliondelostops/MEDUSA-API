@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('paraderosSETP')->nullable();
             $table->json('position');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

@@ -30,9 +30,34 @@ class StrategyEntities implements EntitiesInterface
                 $geometry = $coordinates['features'][0]['geometry'];
 
                 // Fetch health data for the current entity
-                $healthData = Health::where('idEntities', $entity->id)->first();
+                // $healthData = Health::where('idEntities', $entity->id)->first();
 
-                $properties = [
+                $transformedData[] = [
+                    'markerType' => 3,
+                    'id' => $entity->uuid,
+                    'geometry' => $geometry,
+                ];
+            }
+
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $entity = Entities::where('uuid', $uuid)->first();
+
+            $healthData = Health::where('idEntities', $entity->id)->first();
+
+            $properties = [
                     'Direccion' => $entity->address,
                     'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
                     'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
@@ -48,17 +73,12 @@ class StrategyEntities implements EntitiesInterface
                     'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
                 ];
 
-                $transformedData[] = [
-                    'type' => 'feature',
-                    'markerType' => 3,
-                    'id' => $entity->uuid,
-                    'title' => $entity->name,
-                    'geometry' => $geometry,
-                    'properties' => $properties
-                ];
-            }
+            $entity = [
+                'title' => $entity->name,
+                'properties' => $properties
+            ];
 
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
+            return Response::json($entity, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -67,6 +87,7 @@ class StrategyEntities implements EntitiesInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+
     }
 
     public function getOne($id)

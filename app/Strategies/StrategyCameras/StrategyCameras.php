@@ -30,15 +30,9 @@ class StrategyCameras implements CamerasInterface
                 $geometry = $coordinates['features'][0]['geometry'];
     
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 50,
                     'id' => $cameras->uuid,
-                    'title' => $cameras->name,
-                    'url' => $cameras->url,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $cameras->address
-                    ]
                 ];
             }
     
@@ -51,6 +45,31 @@ class StrategyCameras implements CamerasInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $camera = Cameras::where('uuid', $uuid)->first();
+
+            $camera = [
+                'title' => $camera->name,
+                'url' => $camera->url,
+                'properties' => [
+                    'Direccion' => $camera->address
+                ]
+            ];
+
+            return Response::json($camera, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+
     }
     
     public function getOne($id)

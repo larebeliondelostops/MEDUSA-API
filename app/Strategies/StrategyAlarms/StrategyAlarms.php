@@ -30,14 +30,9 @@ class StrategyAlarms implements AlarmsInterface
                 $geometry = $coordinates['features'][0]['geometry'];
 
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 1,
                     'id' => $alarms->uuid,
-                    'title' => $alarms->name,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $alarms->address
-                    ]
                 ];
             }
 
@@ -50,6 +45,30 @@ class StrategyAlarms implements AlarmsInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $alarm = Alarms::where('uuid', $uuid)->first();
+
+            $alarm = [
+                'title' => $alarm->name,
+                'properties' => [
+                    'Direccion' => $alarm->address,
+                ]
+            ];
+
+            return Response::json($alarm, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+
     }
 
     public function getOne($id)

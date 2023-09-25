@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Marker;
 use App\Contexts\AllDataContext;
+use DragonCode\Contracts\Cashier\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
@@ -121,6 +122,28 @@ class AllDataController extends Controller
             }
 
             return Response::json($this->polygons, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function getInfoPoint()
+    {
+        try {
+            $uuid = request()->input('uuid');
+            $markerType = request()->input('markerType');
+
+            $strategy = $this->value::STRATEGY[$markerType];
+            $strategy = new $strategy();
+            $data = $strategy->getInfoPoint($uuid);
+            $data = json_decode($data->content(), true);
+
+            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

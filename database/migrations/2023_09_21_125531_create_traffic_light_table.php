@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->json('position');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

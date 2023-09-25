@@ -42,4 +42,24 @@ class StrategyFiberSIESPoints implements PointsInterface
         }
     }
 
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $fiberLines = FiberSiesPoint::where('uuid', $uuid)->first();
+
+            $fiberLines = [
+                'title' => $fiberLines->name,
+            ];
+
+            return Response::json($fiberLines, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
 }

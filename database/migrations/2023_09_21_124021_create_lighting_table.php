@@ -12,7 +12,7 @@ return new class extends Migration
      * @return string
      */
     protected $connection = 'neiva';
-    
+
     /**
      * Run the migrations.
      *
@@ -39,6 +39,8 @@ return new class extends Migration
             $table->string('imagen')->nullable();
             $table->json('position');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

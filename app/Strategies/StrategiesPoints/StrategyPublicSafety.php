@@ -42,4 +42,27 @@ class StrategyPublicSafety implements PointsInterface
         }
     }
 
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $Safeties = PublicSafety::where('uuid', $uuid)->first();
+
+            $Safeties = [
+                'title' => $Safeties->name,
+                'properties' => [
+                    'Estado' => $Safeties->status,
+                ]
+            ];
+
+            return Response::json($Safeties, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
 }

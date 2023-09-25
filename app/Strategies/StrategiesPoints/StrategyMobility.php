@@ -37,13 +37,8 @@ class StrategyMobility implements PointsInterface
             $TrafficLights = $TrafficLight->map(function ($item) {
 
                 $TrafficLight = [
-                    'type' => 'feature',
                     'markerType' => 6,
                     'id' => $item->uuid,
-                    'title' => $item->name,
-                    'properties' => [
-                        'Estado' => $item->status,
-                    ],
                     'geometry' => json_decode($item->position),
                 ];
 
@@ -53,6 +48,42 @@ class StrategyMobility implements PointsInterface
             $Mobility = $StopBus->merge($TrafficLights);
 
             return Response::json($Mobility, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $BusStop = BusStop::where('uuid', $uuid)->first();
+
+            if (!$BusStop) {
+                $TrafficLight = TrafficLight::where('uuid', $uuid)->first();
+
+                $Mobility = [
+                    'title' => $TrafficLight->name,
+                    'properties' => [
+                        'Estado' => $TrafficLight->status,
+                    ],
+                ];
+
+                return Response::json($Mobility, 200, [], JSON_PRETTY_PRINT);
+            } else {
+                $Mobility = [
+                    'title' => $BusStop->name,
+                    'properties' => [
+                        'ParaderosSETP' => $BusStop->paraderosSETP,
+                    ]
+                ];
+
+                return Response::json($Mobility, 200, [], JSON_PRETTY_PRINT);
+            }
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

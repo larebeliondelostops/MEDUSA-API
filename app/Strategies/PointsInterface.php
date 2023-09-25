@@ -8,4 +8,5 @@ interface PointsInterface
 {
     public static function all();
 
+    public static function getInfoPoint($uuid);
 }

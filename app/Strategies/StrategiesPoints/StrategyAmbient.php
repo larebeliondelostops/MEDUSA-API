@@ -59,6 +59,29 @@ class StrategyAmbient implements PointsInterface
         }
     }
 
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $ambient = Ambient::where('uuid', $uuid)->first();
+
+            $ambient = [
+                'title' => $ambient->name,
+                'properties' => [
+                    'Direccion' => $ambient->address,
+                ]
+            ];
+
+            return Response::json($ambient, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     public function getOne($id)
     {
         try {

@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('image');
             $table->boolean('reviewed')->default(false);
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

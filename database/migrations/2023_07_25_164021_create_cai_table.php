@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('address');
             $table->json('pointCoordinates');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

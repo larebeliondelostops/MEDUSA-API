@@ -42,4 +42,29 @@ class StrategySportVenues implements PointsInterface
         }
     }
 
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $SportVenues = SportVenues::where('uuid', $uuid)->first();
+
+            $SportVenues = [
+                'title' => $SportVenues->name,
+                'properties' => [
+                    'BARRIO' => $SportVenues->neighborhood,
+                    'ESCENARIO' => $SportVenues->scenery,
+                    'DIRECCION' => $SportVenues->address,
+                ]
+            ];
+
+            return Response::json($SportVenues, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
 }

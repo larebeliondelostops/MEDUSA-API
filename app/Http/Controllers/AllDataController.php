@@ -135,7 +135,7 @@ class AllDataController extends Controller
     public function getInfoPoint()
     {
         try {
-            $uuid = request()->input('uuid');
+            $uuid = request()->input('id');
             $markerType = request()->input('markerType');
 
             $strategy = $this->value::STRATEGY[$markerType];

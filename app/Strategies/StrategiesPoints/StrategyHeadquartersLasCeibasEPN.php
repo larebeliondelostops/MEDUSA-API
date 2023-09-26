@@ -49,6 +49,7 @@ class StrategyHeadquartersLasCeibasEPN implements PointsInterface
 
             $Headquarters = [
                 'title' => $Headquarters->name,
+                'properties' => []
             ];
 
             return Response::json($Headquarters, 200, [], JSON_PRETTY_PRINT);

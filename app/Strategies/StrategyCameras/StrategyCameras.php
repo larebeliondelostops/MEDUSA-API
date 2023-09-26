@@ -31,6 +31,7 @@ class StrategyCameras implements CamerasInterface
     
                 $transformedData[] = [
                     'markerType' => 50,
+                    'url' => $cameras->url,
                     'id' => $cameras->uuid,
                     'geometry' => $geometry,
                 ];
@@ -54,7 +55,6 @@ class StrategyCameras implements CamerasInterface
 
             $camera = [
                 'title' => $camera->name,
-                'url' => $camera->url,
                 'properties' => [
                     'Direccion' => $camera->address
                 ]

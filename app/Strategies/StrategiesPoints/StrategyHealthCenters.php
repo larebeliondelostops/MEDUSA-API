@@ -49,6 +49,7 @@ class StrategyHealthCenters implements PointsInterface
 
             $HealthCenters = [
                 'title' => $HealthCenters->name,
+                'properties' => []
             ];
 
             return Response::json($HealthCenters, 200, [], JSON_PRETTY_PRINT);

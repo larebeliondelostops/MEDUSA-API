@@ -16,11 +16,11 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     /**
      * Manejo de entidades
      */
-    Route::get('cai/all', [CaiController::class, 'all']); // Obtener todos los campos de la tabla entidades
+    /* Route::get('cai/all', [CaiController::class, 'all']); // Obtener todos los campos de la tabla entidades
     Route::post('cai/store', [CaiController::class, 'store']); // Agregar un campo en la tabla entidades
     Route::get('cai/getOne/{id}', [caiController::class, 'getOne']); // editar un campo en la tabla entidades
     Route::get('cai/allTable', [caiController::class, 'allTable']); // editar un campo en la tabla entidades
     Route::put('cai/update/{id}', [CaiController::class, 'update']); // editar un campo en la tabla entidades
     Route::delete('cai/destroy/{id}', [CaiController::class, 'destroy']); // editar un campo en la tabla entidades
-    Route::post('cai/storeMax', [CaiController::class, 'storeMax']);
+    Route::post('cai/storeMax', [CaiController::class, 'storeMax']); */
 });

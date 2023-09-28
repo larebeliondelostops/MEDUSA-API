@@ -138,11 +138,15 @@ class StrategyEntities implements EntitiesInterface
     {
         try {
             // Obtener fechas de inicio y fin
-            $fechaInicial = $request->fecha_inicial;
-            $fechaFinal = $request->fecha_final;
-            // Aplicar la restricción whereBetween en la consulta           
-            $entities = Entities::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+            $start = $request->start;
+            $end = $request->end;
+           
+            if ($start && $end) {        
+            $entities = Entities::whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }else{
+                $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($entities as $entity) {
@@ -153,8 +157,8 @@ class StrategyEntities implements EntitiesInterface
                     'id' => $entity->id,
                     'idHealth' => $healthData->id,
                     'uuid' => $entity->uuid,
-                    'name' => $entity->name,
-                    'address' => $entity->address,
+                    'Nombre' => $entity->name,
+                    'Direccion' => $entity->address,
                     'created_at' => $entity->created_at,
                     'updated_at' => $entity->updated_at,
                     'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,

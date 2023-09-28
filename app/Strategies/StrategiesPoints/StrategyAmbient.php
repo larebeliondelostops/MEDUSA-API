@@ -113,11 +113,15 @@ class StrategyAmbient implements PointsInterface
     {
         try {
             // Obtener fechas de inicio y fin
-            $fechaInicial = $request->fecha_inicial;
-            $fechaFinal = $request->fecha_final;
-            // Aplicar la restricción whereBetween en la consulta           
-            $ambient = Ambient::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+            $start = $request->start;
+            $end = $request->end;
+            // Aplicar la restricción whereBetween en la consulta   
+            if ($start && $end) {
+                $ambient = Ambient::whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }else{
+                $ambient = Ambient::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($ambient as $alarm) {

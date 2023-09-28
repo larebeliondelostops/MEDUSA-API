@@ -103,13 +103,17 @@ class StrategyAlarms implements AlarmsInterface
     {
         try {
             // Obtener fechas de inicio y fin
-            $fechaInicial = $request->fecha_inicial;
-            $fechaFinal = $request->fecha_final;
+            $start = $request->start;
+            $end = $request->end;
             //dd($fechaInicial);
             // Aplicar la restricción whereBetween en la consulta
-            $alarms = Alarms::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+            if ($start && $end) {
+            $alarms = Alarms::whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
-    
+            }else{
+                $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
+
             $transformedData = [];
             foreach ($alarms as $alarm) {
                 $transformedData[] = [

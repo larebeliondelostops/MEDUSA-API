@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FormAmbientSeeder::class);
         $this->call(FiberLinesTableSeeder::class);
         $this->call(FiberPointsTableSeeder::class);
+        $this->call(SlugsSeeder::class);
 
         //Exclusivo Neiva
         $this->call(FiberSiesLinesSeeder::class);

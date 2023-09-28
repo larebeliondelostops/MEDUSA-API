@@ -23,6 +23,7 @@ return new class extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('placeholder')->nullable();
             $table->string('key');
             $table->bigInteger('type');
             $table->foreign('type')->references('id')->on('select_type');

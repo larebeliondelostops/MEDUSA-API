@@ -21,6 +21,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Nombre',
+                'placeholder' => 'Ingrese el nombre',
                 'key' => 'name',
                 'type' => 1,
                 'required' => true,
@@ -31,6 +32,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 2,
                 'name' => 'Email',
+                'placeholder' => 'Ingrese el email',
                 'key' => 'email',
                 'type' => 3,
                 'required' => true,
@@ -41,6 +43,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => 'Rol',
+                'placeholder' => 'Ingrese el rol',
                 'key' => 'role',
                 'type' => 4,
                 'required' => true,
@@ -51,6 +54,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 4,
                 'name' => 'Dirección',
+                'placeholder' => 'Ingrese la dirección',
                 'key' => 'address',
                 'type' => 1,
                 'required' => true,
@@ -61,6 +65,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 5,
                 'name' => 'Teléfono',
+                'placeholder' => 'Ingrese el teléfono',
                 'key' => 'phone',
                 'type' => 2,
                 'required' => true,
@@ -71,6 +76,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 6,
                 'name' => 'Posición',
+                'placeholder' => NULL,
                 'key' => 'position',
                 'type' => 6,
                 'required' => true,
@@ -81,6 +87,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 7,
                 'name' => 'Potencial de mujeres',
+                'placeholder' => 'Ingrese la cantidad',
                 'key' => 'potencialWomen',
                 'type' => 2,
                 'required' => true,
@@ -91,6 +98,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 8,
                 'name' => 'Potencial de hombres',
+                'placeholder' => 'Ingrese la cantidad',
                 'key' => 'potencialMen',
                 'type' => 2,
                 'required' => true,
@@ -101,6 +109,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 9,
                 'name' => 'Total votos',
+                'placeholder' => 'Ingrese la cantidad de votos',
                 'key' => 'totalVotes',
                 'type' => 2,
                 'required' => true,
@@ -111,6 +120,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 10,
                 'name' => 'Mesas',
+                'placeholder' => 'Ingrese la cantidad de mesas',
                 'key' => 'tables',
                 'type' => 2,
                 'required' => true,
@@ -127,6 +137,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Nombre',
+                'placeholder' => 'Ingrese el nombre',
                 'key' => 'name',
                 'type' => 1,
                 'required' => true,
@@ -137,6 +148,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 2,
                 'name' => 'Email',
+                'placeholder' => 'Ingrese el email',
                 'key' => 'email',
                 'type' => 3,
                 'required' => true,
@@ -147,6 +159,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => 'Rol',
+                'placeholder' => 'Ingrese el rol',
                 'key' => 'role',
                 'type' => 4,
                 'required' => true,
@@ -157,6 +170,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 4,
                 'name' => 'Dirección',
+                'placeholder' => 'Ingrese la dirección',
                 'key' => 'address',
                 'type' => 1,
                 'required' => true,
@@ -167,6 +181,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 5,
                 'name' => 'Teléfono',
+                'placeholder' => 'Ingrese el teléfono',
                 'key' => 'phone',
                 'type' => 2,
                 'required' => true,
@@ -177,6 +192,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 6,
                 'name' => 'Posición',
+                'placeholder' => NULL,
                 'key' => 'position',
                 'type' => 6,
                 'required' => true,
@@ -187,6 +203,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 7,
                 'name' => 'Potencial de mujeres',
+                'placeholder' => 'Ingrese la cantidad',
                 'key' => 'potencialWomen',
                 'type' => 2,
                 'required' => true,
@@ -197,6 +214,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 8,
                 'name' => 'Potencial de hombres',
+                'placeholder' => 'Ingrese la cantidad',
                 'key' => 'potencialMen',
                 'type' => 2,
                 'required' => true,
@@ -207,6 +225,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 9,
                 'name' => 'Total votos',
+                'placeholder' => 'Ingrese la cantidad de votos',
                 'key' => 'totalVotes',
                 'type' => 2,
                 'required' => true,
@@ -217,6 +236,7 @@ class FieldsSeeder extends Seeder
             [
                 'id' => 10,
                 'name' => 'Mesas',
+                'placeholder' => 'Ingrese la cantidad de mesas',
                 'key' => 'tables',
                 'type' => 2,
                 'required' => true,

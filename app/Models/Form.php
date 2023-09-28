@@ -17,4 +17,13 @@ class Form extends Model
     {
         return $this->belongsTo(Field::class, 'field');
     }
+
+    public static function boot()
+	{
+		parent::boot();
+		self::creating(function ($model) {
+			$max = self::max('id'); // obtiene el valor máximo de la columna id
+			$model->id = $max + 1; // asigna el valor siguiente al atributo id
+		});
+	}
 }

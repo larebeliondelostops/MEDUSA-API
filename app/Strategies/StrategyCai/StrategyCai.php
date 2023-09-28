@@ -30,14 +30,9 @@ class StrategyCai implements CaiInterface
                 $geometry = $coordinates['features'][0]['geometry'];
     
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 2,
                     'id' => $cai->uuid,
-                    'title' => $cai->name,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $cai->address
-                    ]
                 ];
             }
     
@@ -50,6 +45,30 @@ class StrategyCai implements CaiInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $cai = Cai::where('uuid', $uuid)->first();
+
+            $cai = [
+                'title' => $cai->name,
+                'properties' => [
+                    'Direccion' => $cai->address,
+                ]
+            ];
+
+            return Response::json($cai, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+
     }
     
         

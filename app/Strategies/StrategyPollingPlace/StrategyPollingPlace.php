@@ -31,18 +31,9 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 $geometry = $coordinates['features'][0]['geometry'];
     
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 4,
                     'id' => $pollingPlace->uuid,
-                    'title' => $pollingPlace->name,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $pollingPlace->address,
-                        'Potencial de mujeres' => $pollingPlace->potencialWomen,
-                        'Potencial de hombres' => $pollingPlace->potencialMen,
-                        'Total Votos' => $pollingPlace->totalVotes,
-                        'Mesas' => $pollingPlace->tables,
-                    ]
                 ];
             }
     
@@ -55,6 +46,34 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $pollingPlace = PollingPlace::where('uuid', $uuid)->first();
+
+            $pollingPlace = [
+                'title' => $pollingPlace->name,
+                'properties' => [
+                    'Direccion' => $pollingPlace->address,
+                    'Potencial de mujeres' => $pollingPlace->potencialWomen,
+                    'Potencial de hombres' => $pollingPlace->potencialMen,
+                    'Total Votos' => $pollingPlace->totalVotes,
+                    'Mesas' => $pollingPlace->tables,
+                ]
+            ];
+
+            return Response::json($pollingPlace, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+
     }
     
     public function getOne($id)

@@ -49,6 +49,7 @@ class StrategyEducationalCenters implements PointsInterface
 
             $EducationalCenters = [
                 'title' => $EducationalCenters->name,
+                'properties' => []
             ];
 
             return Response::json($EducationalCenters, 200, [], JSON_PRETTY_PRINT);

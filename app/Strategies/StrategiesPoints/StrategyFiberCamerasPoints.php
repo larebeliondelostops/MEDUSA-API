@@ -49,6 +49,7 @@ class StrategyFiberCamerasPoints implements PointsInterface
 
             $fiberLines = [
                 'title' => $fiberLines->name,
+                'properties' => []
             ];
 
             return Response::json($fiberLines, 200, [], JSON_PRETTY_PRINT);

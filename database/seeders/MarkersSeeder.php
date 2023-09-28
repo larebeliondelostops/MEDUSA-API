@@ -57,7 +57,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'marker_type' => 1,
+                'marker_type' => 4,
                 'name' => 'Fibra Óptica',
                 'icon' => 'cable',
                 'color' => 'cyan',
@@ -75,7 +75,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 51,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Modelo Probabilistico',
                 'icon' => 'data_usage',
                 'color' => 'cyan',
@@ -84,7 +84,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 52,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Mapa de Calor',
                 'icon' => 'local_fire_department',
                 'color' => 'lightgreen',
@@ -93,7 +93,7 @@ class MarkersSeeder extends Seeder
             ],
             [
                 'id' => 53,
-                'marker_type' => 4,
+                'marker_type' => 5,
                 'name' => 'Tráfico',
                 'icon' => 'traffic',
                 'color' => 'bluegreen',

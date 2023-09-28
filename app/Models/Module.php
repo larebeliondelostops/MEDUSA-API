@@ -22,4 +22,13 @@ class Module extends Model
         'created_at',
         'updated_at',
     ];
+
+    public static function boot()
+	{
+		parent::boot();
+		self::creating(function ($model) {
+			$max = self::max('id'); // obtiene el valor máximo de la columna id
+			$model->id = $max + 1; // asigna el valor siguiente al atributo id
+		});
+	}
 }

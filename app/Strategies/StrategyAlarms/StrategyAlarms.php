@@ -102,8 +102,14 @@ class StrategyAlarms implements AlarmsInterface
     public function allTable(Request $request)
     {
         try {
-            $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
-
+            // Obtener fechas de inicio y fin
+            $fechaInicial = $request->fecha_inicial;
+            $fechaFinal = $request->fecha_final;
+            //dd($fechaInicial);
+            // Aplicar la restricción whereBetween en la consulta
+            $alarms = Alarms::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+    
             $transformedData = [];
             foreach ($alarms as $alarm) {
                 $transformedData[] = [
@@ -112,7 +118,7 @@ class StrategyAlarms implements AlarmsInterface
                     'direccion' => $alarm->address,
                 ];
             }
-
+    
             return response()->json([
                 'data' => $transformedData,
                 'meta' => [
@@ -135,7 +141,7 @@ class StrategyAlarms implements AlarmsInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
+    
 
     /**
      * Metodo para guardar un nuevo centro de Entidades.

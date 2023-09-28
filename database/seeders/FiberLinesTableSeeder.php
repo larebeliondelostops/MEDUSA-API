@@ -3440,7 +3440,9 @@ class FiberLinesTableSeeder extends Seeder
             DB::table('fiber_lines')->insert([
                 'name' => $data['name'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($data['lineCoordinates']['geometry'])
+                'position' => json_encode($data['lineCoordinates']['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

@@ -137,7 +137,12 @@ class StrategyEntities implements EntitiesInterface
     public function allTable(Request $request)
     {
         try {
-            $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $fechaInicial = $request->fecha_inicial;
+            $fechaFinal = $request->fecha_final;
+            // Aplicar la restricción whereBetween en la consulta           
+            $entities = Entities::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
             foreach ($entities as $entity) {

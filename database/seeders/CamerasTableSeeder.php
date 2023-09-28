@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -1533,7 +1534,9 @@ class CamerasTableSeeder extends Seeder
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
                 'url' => $Data['url'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates'])
+                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

@@ -1503,7 +1503,9 @@ class TrafficLightSeeder extends Seeder
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
                 'status'=> $Data['properties']['Estado'],
-                'position' => json_encode($Data['geometry'])
+                'position' => json_encode($Data['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         } 
     }

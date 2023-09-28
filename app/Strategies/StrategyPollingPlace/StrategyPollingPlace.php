@@ -111,7 +111,12 @@ class StrategyPollingPlace implements PollingPlaceInterface
     public function allTable(Request $request)
     {
         try {
-            $pollingPlaces = PollingPlace::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $fechaInicial = $request->fecha_inicial;
+            $fechaFinal = $request->fecha_final;
+            // Aplicar la restricción whereBetween en la consulta           
+            $pollingPlaces = PollingPlace::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
             foreach ($pollingPlaces as $pollingPlace) {

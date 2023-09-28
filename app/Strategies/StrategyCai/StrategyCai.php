@@ -103,7 +103,14 @@ class StrategyCai implements CaiInterface
     public function allTable(Request $request)
     {
         try {
-            $cais = Cai::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $fechaInicial = $request->fecha_inicial;
+            $fechaFinal = $request->fecha_final;
+            //dd($fechaInicial);
+            // Aplicar la restricción whereBetween en la consulta     
+            $cais = Cai::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+            ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+
 
             $transformedData = [];
             foreach ($cais as $cai) {

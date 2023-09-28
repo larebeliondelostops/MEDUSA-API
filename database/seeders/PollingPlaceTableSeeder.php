@@ -1267,7 +1267,9 @@ class PollingPlaceTableSeeder extends Seeder
                 "potencialMen" => $Data['potencialMen'],
                 "totalVotes" => $Data['totalVotes'],
                 "tables" => $Data['tables'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates'])
+                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

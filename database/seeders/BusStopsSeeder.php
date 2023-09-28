@@ -10606,7 +10606,9 @@ class BusStopsSeeder extends Seeder
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
                 'paraderosSETP'=> $Data['properties']['ParaderosSETP'],
-                'position' => json_encode($Data['geometry'])
+                'position' => json_encode($Data['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         } 
     }

@@ -103,7 +103,13 @@ class StrategyCameras implements CamerasInterface
     public function allTable(Request $request)
     {
         try {
-            $cameras = Cameras::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $fechaInicial = $request->fecha_inicial;
+            $fechaFinal = $request->fecha_final;
+            //dd($fechaInicial);
+            // Aplicar la restricción whereBetween en la consulta           
+            $cameras = Cameras::whereBetween('created_at', [$fechaInicial, $fechaFinal])
+            ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
             foreach ($cameras as $camera) {

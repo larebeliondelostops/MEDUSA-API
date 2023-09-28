@@ -1238,7 +1238,9 @@ class FiberSiesPointsSeeder extends Seeder
             DB::table('fiber_sies_points')->insert([
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($Data['geometry'])
+                'position' => json_encode($Data['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         } 
     }

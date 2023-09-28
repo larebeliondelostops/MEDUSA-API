@@ -3053,7 +3053,9 @@ class SportsVenuesSeeder extends Seeder
                 'neighborhood'=> $Data['properties']['BARRIO'],
                 'address'=> $Data['properties']['DIRECCIÓN'],
                 'scenery'=> $Data['properties']['ESCENARIO'],
-                'position' => json_encode($Data['geometry'])
+                'position' => json_encode($Data['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         } 
     }

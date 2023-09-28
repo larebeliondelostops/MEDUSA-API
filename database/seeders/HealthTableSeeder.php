@@ -535,6 +535,8 @@ class HealthTableSeeder extends Seeder
                 'nursesInTheShift' => $Data['nursesInTheShift'],
                 'affiliatedIps' => $Data['affiliatedIps'],
                 'numberOfEmergenciesDay' => $Data['numberOfEmergenciesDay'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

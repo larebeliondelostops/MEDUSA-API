@@ -14,7 +14,7 @@ use \Illuminate\Http\Request;
 
 class StrategyCai implements CaiInterface
 {
-     /**
+    /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
@@ -23,19 +23,19 @@ class StrategyCai implements CaiInterface
     {
         try {
             $cai = Cai::all();
-    
+
             $transformedData = [];
             foreach ($cai as $cai) {
                 $coordinates = json_decode($cai->pointCoordinates, true);
                 $geometry = $coordinates['features'][0]['geometry'];
-    
+
                 $transformedData[] = [
                     'markerType' => 2,
                     'id' => $cai->uuid,
                     'geometry' => $geometry,
                 ];
             }
-    
+
             return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -68,10 +68,9 @@ class StrategyCai implements CaiInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-
     }
-    
-        
+
+
     public function getOne($id)
     {
         try {
@@ -103,17 +102,26 @@ class StrategyCai implements CaiInterface
     public function allTable(Request $request)
     {
         try {
-            $cais = Cai::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+
+            if ($start && $end) {
+                $cais = Cai::whereBetween('created_at', [$start, $end])
+                    ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            } else {
+                $cais = Cai::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($cais as $cai) {
                 $transformedData[] = [
-                    'id' => $cai->id,
-                    'uuid' => $cai->uuid,
-                    'name' => $cai->name,
-                    'address' => $cai->address,
-                    'created_at' => $cai->created_at,
-                    'updated_at' => $cai->updated_at,
+                    'ID' => $cai->id,
+                    //'uuid' => $cai->uuid,
+                    'Nombre' => $cai->name,
+                    'Direccion' => $cai->address,
+                    //'created_at' => $cai->created_at,
+                    //'updated_at' => $cai->updated_at,
                 ];
             }
 
@@ -188,7 +196,7 @@ class StrategyCai implements CaiInterface
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
 
@@ -203,13 +211,13 @@ class StrategyCai implements CaiInterface
             // }
 
             $cai = Cai::find($id);
-            if ($request->name != null){
+            if ($request->name != null) {
                 $cai->name = $request->name;
             }
-            if ($request->address != null){
+            if ($request->address != null) {
                 $cai->address = $request->address;
             }
-            if ($request->pointCoordinates != null){
+            if ($request->pointCoordinates != null) {
                 $cai->pointCoordinates = json_encode($request->pointCoordinates);
             }
             $cai->save();
@@ -218,7 +226,6 @@ class StrategyCai implements CaiInterface
                 'status' => 'succes',
                 'data' => $cai
             ], 201, [], JSON_PRETTY_PRINT);
-
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -266,7 +273,7 @@ class StrategyCai implements CaiInterface
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
-    
+
             // Recorrer el array de JSON y guardar cada elemento en la base de datos
             foreach ($request->array as $Data) {
                 $cai = new Cai();
@@ -275,7 +282,7 @@ class StrategyCai implements CaiInterface
                 $cai->pointCoordinates = json_encode($Data['pointCoordinates']);
                 $cai->save();
             }
-    
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos almacenados exitosamente'
@@ -289,5 +296,4 @@ class StrategyCai implements CaiInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
 }

@@ -137,7 +137,16 @@ class StrategyEntities implements EntitiesInterface
     public function allTable(Request $request)
     {
         try {
-            $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+           
+            if ($start && $end) {        
+            $entities = Entities::whereBetween('created_at', [$start, $end])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }else{
+                $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($entities as $entity) {
@@ -145,25 +154,25 @@ class StrategyEntities implements EntitiesInterface
                 $healthData = Health::where('idEntities', $entity->id)->first();
 
                 $transformedData[] = [
-                    'id' => $entity->id,
-                    'idHealth' => $healthData->id,
-                    'uuid' => $entity->uuid,
-                    'name' => $entity->name,
-                    'address' => $entity->address,
-                    'created_at' => $entity->created_at,
-                    'updated_at' => $entity->updated_at,
-                    'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
-                    'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
-                    'Quirófanos Disponibles' => $healthData->availableOperatingRooms ?? null,
-                    'Unidad de Cuidados Intensivos Disponible' => $healthData->intensiveCareUnitAvailable ?? null,
-                    'Camas de Primer Nive' => $healthData->firstLevelBeds ?? null,
-                    'Camas de Segundo Nivel' => $healthData->secondLevelBeds ?? null,
-                    'Camas de Tercer Nivel' => $healthData->thirdLevelBeds ?? null,
-                    'Banco de Sangre' => $healthData->bloodBank ?? null,
-                    'Médicos en Turno' => $healthData->doctorsInTheShift ?? null,
-                    'Enfermeras en Turno' => $healthData->nursesInTheShift ?? null,
+                    //'ID' => $entity->id,
+                    'ID' => $healthData->id,
+                    //'uuid' => $entity->uuid,
+                    'Nombre' => $entity->name,
+                    'Direccion' => $entity->address,
+                    //'created_at' => $entity->created_at,
+                    //'updated_at' => $entity->updated_at,
+                    //'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
+                    //'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
+                    //'Quirófanos Disponibles' => $healthData->availableOperatingRooms ?? null,
+                    //'Unidad de Cuidados Intensivos Disponible' => $healthData->intensiveCareUnitAvailable ?? null,
+                    //'Camas de Primer Nive' => $healthData->firstLevelBeds ?? null,
+                    //'Camas de Segundo Nivel' => $healthData->secondLevelBeds ?? null,
+                    //'Camas de Tercer Nivel' => $healthData->thirdLevelBeds ?? null,
+                    //'Banco de Sangre' => $healthData->bloodBank ?? null,
+                    //'Médicos en Turno' => $healthData->doctorsInTheShift ?? null,
+                    //'Enfermeras en Turno' => $healthData->nursesInTheShift ?? null,
                     'IPS Afiliada' => $healthData->affiliatedIps ?? null,
-                    'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
+                    //'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
                 ];
             }
 

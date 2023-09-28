@@ -15,7 +15,7 @@ use \Illuminate\Http\Request;
 
 class StrategyPollingPlace implements PollingPlaceInterface
 {
-     /**
+    /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
@@ -24,19 +24,19 @@ class StrategyPollingPlace implements PollingPlaceInterface
     {
         try {
             $pollingPlace = PollingPlace::all();
-    
+
             $transformedData = [];
             foreach ($pollingPlace as $pollingPlace) {
                 $coordinates = json_decode($pollingPlace->pointCoordinates, true);
                 $geometry = $coordinates['features'][0]['geometry'];
-    
+
                 $transformedData[] = [
                     'markerType' => 4,
                     'id' => $pollingPlace->uuid,
                     'geometry' => $geometry,
                 ];
             }
-    
+
             return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -73,9 +73,8 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-
     }
-    
+
     public function getOne($id)
     {
         try {
@@ -111,15 +110,24 @@ class StrategyPollingPlace implements PollingPlaceInterface
     public function allTable(Request $request)
     {
         try {
-            $pollingPlaces = PollingPlace::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+
+            if ($start && $end) {
+                $pollingPlaces = PollingPlace::whereBetween('created_at', [$start, $end])
+                    ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            } else {
+                $pollingPlaces = PollingPlace::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($pollingPlaces as $pollingPlace) {
                 $transformedData[] = [
-                    'id' => $pollingPlace->id,
+                    'ID' => $pollingPlace->id,
                     //'uuid' => $pollingPlace->uuid,
-                    'nombre' => $pollingPlace->name,
-                    'direccion' => $pollingPlace->address,
+                    'Nombre' => $pollingPlace->name,
+                    'Direccion' => $pollingPlace->address,
                     //'created_at' => $pollingPlace->created_at,
                     //'updated_at' => $pollingPlace->updated_at,
                     //'Potencial de mujeres' => $pollingPlace->potencialWomen,
@@ -204,7 +212,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
 
@@ -225,7 +233,6 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 'status' => 'succes',
                 'data' => $pollingPlace
             ], 204, [], JSON_PRETTY_PRINT);
-
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -273,7 +280,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
-    
+
             // Recorrer el array de JSON y guardar cada elemento en la base de datos
             foreach ($request->array as $Data) {
                 $pollingPlace = new PollingPlace();
@@ -286,7 +293,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                 $pollingPlace->pointCoordinates = json_encode($Data['pointCoordinates']);
                 $pollingPlace->save();
             }
-    
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Datos almacenados exitosamente'
@@ -300,5 +307,4 @@ class StrategyPollingPlace implements PollingPlaceInterface
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
 }

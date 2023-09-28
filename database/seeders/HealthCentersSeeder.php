@@ -394,7 +394,9 @@ class HealthCentersSeeder extends Seeder
             DB::table('health_centers')->insert([
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($Data['geometry'])
+                'position' => json_encode($Data['geometry']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

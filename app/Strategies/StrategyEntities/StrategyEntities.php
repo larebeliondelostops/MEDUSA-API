@@ -155,7 +155,7 @@ class StrategyEntities implements EntitiesInterface
 
                 $transformedData[] = [
                     //'ID' => $entity->id,
-                    'IDHealth' => $healthData->id,
+                    'ID' => $healthData->id,
                     //'uuid' => $entity->uuid,
                     'Nombre' => $entity->name,
                     'Direccion' => $entity->address,

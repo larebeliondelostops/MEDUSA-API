@@ -51,6 +51,16 @@ class GetEventCoordinate implements GetEventInterface
         return $eventsOrder;
     }
 
+    // Metodo para trer un evento por su id
+    public function getEvent($id)
+    {
+        $event = Event::where('uuid', $id)->with('eventType', 'eventCoordinate')->get();
+
+        $eventsOrder = $this->OrderEvents($event);
+
+        return $eventsOrder;
+    }
+
     //Metodo para organizar en un mismo formato el retorno de la informacion de los eventos
     public function OrderEvents($events)
     {

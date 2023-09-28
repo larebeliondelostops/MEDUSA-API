@@ -11,6 +11,7 @@ use App\Strategies\StrategyEntities\StrategyEntities;
 use App\Strategies\StrategiesPoints\StrategyFiberPoints;
 use App\Strategies\StrategyPollingPlace\StrategyPollingPlace;
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
+use App\Strategies\StrategyPolygons\StrategyEvents;
 
 class AllDataValuesVillavicencio
 {
@@ -26,7 +27,7 @@ class AllDataValuesVillavicencio
         5 => StrategyFiberPoints::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
-        55 => GetEventCoordinate::class,
+        55 => StrategyEvents::class,
     ];
 
     /**

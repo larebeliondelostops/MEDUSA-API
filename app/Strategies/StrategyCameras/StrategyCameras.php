@@ -116,7 +116,7 @@ class StrategyCameras implements CamerasInterface
             $transformedData = [];
             foreach ($cameras as $camera) {
                 $transformedData[] = [
-                    'id' => $camera->id,
+                    'ID' => $camera->id,
                     //'uuid' => $camera->uuid,
                     'Nombre' => $camera->name,
                     'Direccion' => $camera->address,

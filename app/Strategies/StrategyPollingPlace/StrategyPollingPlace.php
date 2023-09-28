@@ -124,10 +124,10 @@ class StrategyPollingPlace implements PollingPlaceInterface
             $transformedData = [];
             foreach ($pollingPlaces as $pollingPlace) {
                 $transformedData[] = [
-                    'id' => $pollingPlace->id,
+                    'ID' => $pollingPlace->id,
                     //'uuid' => $pollingPlace->uuid,
-                    'nombre' => $pollingPlace->name,
-                    'direccion' => $pollingPlace->address,
+                    'Nombre' => $pollingPlace->name,
+                    'Direccion' => $pollingPlace->address,
                     //'created_at' => $pollingPlace->created_at,
                     //'updated_at' => $pollingPlace->updated_at,
                     //'Potencial de mujeres' => $pollingPlace->potencialWomen,

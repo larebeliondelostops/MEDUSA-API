@@ -116,12 +116,12 @@ class StrategyCai implements CaiInterface
             $transformedData = [];
             foreach ($cais as $cai) {
                 $transformedData[] = [
-                    'id' => $cai->id,
-                    'uuid' => $cai->uuid,
+                    'ID' => $cai->id,
+                    //'uuid' => $cai->uuid,
                     'Nombre' => $cai->name,
                     'Direccion' => $cai->address,
-                    'created_at' => $cai->created_at,
-                    'updated_at' => $cai->updated_at,
+                    //'created_at' => $cai->created_at,
+                    //'updated_at' => $cai->updated_at,
                 ];
             }
 

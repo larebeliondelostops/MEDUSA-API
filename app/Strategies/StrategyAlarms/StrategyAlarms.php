@@ -117,9 +117,9 @@ class StrategyAlarms implements AlarmsInterface
             $transformedData = [];
             foreach ($alarms as $alarm) {
                 $transformedData[] = [
-                    'id' => $alarm->id,
-                    'nombre' => $alarm->name,
-                    'direccion' => $alarm->address,
+                    'ID' => $alarm->id,
+                    'Nombre' => $alarm->name,
+                    'Direccion' => $alarm->address,
                 ];
             }
     

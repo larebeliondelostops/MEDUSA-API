@@ -45,7 +45,7 @@ class StrategyEvents
                 $transformedData[] = [
                     'ID' => $event->id,
                     'nombre' => $event->name,
-                    'direccion' => $event->address,
+                    'direccion' => $event->place,
                 ];
             }
 

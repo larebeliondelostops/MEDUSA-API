@@ -63,6 +63,54 @@ class IncidentController extends Controller
         }
     }
 
+    public function allTable(Request $request)
+    {
+        try {
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+            // Aplicar la restricción whereBetween en la consulta
+            if ($start && $end) {
+            $incidents = Incident::with('Indicator')->whereBetween('created_at', [$start, $end])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }else{
+                $incidents = Incident::with('Indicator')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
+
+            $transformedData = [];
+            foreach ($incidents as $incident) {
+                $transformedData[] = [
+                    'Id' => $incident->id,
+                    'Nombre' => $incident->description,
+                    'Indicador' => $incident->Indicator->Name,
+                    'Direccion' => $incident->address,
+                    'Fecha' => $incident->created_at,
+                ];
+            }
+
+            return response()->json([
+                'data' => $transformedData,
+                'meta' => [
+                    'pagination' => [
+                        'total' => $incidents->total(),
+                        'perPage' => $incidents->perPage(),
+                        'currentPage' => $incidents->currentPage(),
+                        'lastPage' => $incidents->lastPage(),
+                        'from' => $incidents->firstItem(),
+                        'to' => $incidents->lastItem(),
+                    ],
+                ],
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

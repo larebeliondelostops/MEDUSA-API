@@ -19,6 +19,7 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
      * Manejo de Incidents
      */
     Route::get('incident/index', [IncidentController::class, 'index']);
+    Route::get('incident/allTable', [IncidentController::class, 'allTable']);
     Route::post('incident/store', [IncidentController::class, 'store']);
     Route::get('incident/show/{incident}', [IncidentController::class, 'show']);
     Route::post('incident/update/{id}', [IncidentController::class, 'update']);

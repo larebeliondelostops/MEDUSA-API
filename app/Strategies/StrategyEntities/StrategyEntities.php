@@ -102,7 +102,7 @@ class StrategyEntities implements EntitiesInterface
             $healthData = Health::where('idEntities', $entities->id)->first();
 
             $transformedData[] = [
-                'id' => $entities->id,
+                'ID' => $entities->id,
                 'idHealth' => $healthData->id,
                 'uuid' => $entities->uuid,
                 'name' => $entities->name,

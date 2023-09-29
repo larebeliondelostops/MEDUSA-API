@@ -79,7 +79,7 @@ class StrategyCai implements CaiInterface
             $transformedData = [];
 
             $transformedData[] = [
-                'id' => $cai->id,
+                'ID' => $cai->id,
                 'uuid' => $cai->uuid,
                 'name' => $cai->name,
                 'address' => $cai->address,

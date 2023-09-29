@@ -147,9 +147,30 @@ class StrategyEvents
 
     public function update(Request $request, $id)
     {
-        // TO DO
         try {
-            //return $this->event->update($request, $id);
+
+            $event = Event::find($id);
+
+            $request->idEventType != null ? $event->idEventType = $request->idEventType : $event->idEventType = $event->idEventType;
+            $request->name != null ? $event->name = $request->name : $event->name = $event->name;
+            $request->startDate != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
+            $request->endDate != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
+            $request->capacity != null ? $event->capacity = $request->capacity : $event->capacity = $event->capacity;
+            $request->place != null ? $event->place = $request->place : $event->place = $event->place;
+            $request->authorizingEntity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
+
+            $event->save();
+
+            if ($request->pointCoordinates != null) {
+                $eventCoordinate = EventCoordinate::where('eventId', $event->id)->first();
+                $eventCoordinate->pointCoordinates = json_encode($request->pointCoordinates);
+                $eventCoordinate->save();
+            }
+
+            return Response::json([
+                'status' => 'succes',
+                'data' => $event
+            ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -163,6 +184,8 @@ class StrategyEvents
     public function destroy($id)
     {
         try {
+            EventCoordinate::where('eventId', $id)->delete();
+
             return Event::destroy($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -173,4 +196,4 @@ class StrategyEvents
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-}
+}http://villavicencio.localhost:81/api/v1/event/store

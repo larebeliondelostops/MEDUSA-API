@@ -71,10 +71,10 @@ class IncidentController extends Controller
             $end = $request->end;
             // Aplicar la restricción whereBetween en la consulta
             if ($start && $end) {
-            $incidents = Incident::with('Indicator')->whereBetween('created_at', [$start, $end])
+            $incidents = Incident::whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }else{
-                $incidents = Incident::with('Indicator')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                $incidents = Incident::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }
 
             $transformedData = [];

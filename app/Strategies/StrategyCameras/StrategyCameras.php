@@ -79,7 +79,7 @@ class StrategyCameras implements CamerasInterface
             $transformedData = [];
 
             $transformedData[] = [
-                'id' => $cameras->id,
+                'ID' => $cameras->id,
                 'uuid' => $cameras->uuid,
                 'name' => $cameras->name,
                 'address' => $cameras->address,

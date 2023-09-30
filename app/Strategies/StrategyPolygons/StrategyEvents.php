@@ -3,6 +3,7 @@
 namespace App\Strategies\StrategyPolygons;
 
 use Exception;
+use App\Clases\SaveGeoJson;
 use App\Models\Event;
 use \Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -54,7 +55,7 @@ class StrategyEvents
                 $transformedData[] = [
                     'ID' => $event->id,
                     'Nombre' => $event->name,
-                    'Direccion' => $event->place,
+                    'Lugar' => $event->place,
                 ];
             }
             
@@ -69,6 +70,7 @@ class StrategyEvents
                         'from' => $events->firstItem(),
                         'to' => $events->lastItem(),
                     ],
+                    'filterDate' => true,
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -84,7 +86,7 @@ class StrategyEvents
     public function getOne($id)
     {
         try {
-            $event = Event::where('uuid', $id)->exists();
+            $event = Event::find($id);
 
             if (!$event) {
                 return Response::json([
@@ -107,7 +109,7 @@ class StrategyEvents
     public function store(Request $request)
     {
         try {
-            // Validación
+            //Validación
             if (isset($request->validator) && $request->validator->fails()) {
                 return Response::json([
                     'code' => '2001',
@@ -116,14 +118,13 @@ class StrategyEvents
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
-
             $event = new Event();
-            $event->idEventType = $request->idEventType;
+            $event->idEventType = $request->eventType;
             $event->name = $request->name;
             $event->startDate = $request->startDate;
             $event->endDate = $request->endDate;
             $event->capacity = $request->capacity;
-            $event->place = $request->place;
+            $event->place = $request->address;
             $event->authorizingEntity = $request->authorizingEntity;
 
             $event->save();
@@ -146,9 +147,8 @@ class StrategyEvents
     {
 
         $pointCoordinate = new EventCoordinate();
-
         $pointCoordinate->eventId = $eventId;
-        $pointCoordinate->pointCoordinates = json_encode($request->pointCoordinates);
+        $pointCoordinate->pointCoordinates = json_encode($request->position);
 
         $pointCoordinate->save();
 
@@ -166,14 +166,14 @@ class StrategyEvents
             $request->startDate != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
             $request->endDate != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
             $request->capacity != null ? $event->capacity = $request->capacity : $event->capacity = $event->capacity;
-            $request->place != null ? $event->place = $request->place : $event->place = $event->place;
+            $request->address != null ? $event->place = $request->address : $event->place = $event->place;
             $request->authorizingEntity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
 
             $event->save();
 
-            if ($request->pointCoordinates != null) {
+            if ($request->position != null) {
                 $eventCoordinate = EventCoordinate::where('eventId', $event->id)->first();
-                $eventCoordinate->pointCoordinates = json_encode($request->pointCoordinates);
+                $eventCoordinate->pointCoordinates = $request->position;
                 $eventCoordinate->save();
             }
 

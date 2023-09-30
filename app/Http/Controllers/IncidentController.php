@@ -99,6 +99,7 @@ class IncidentController extends Controller
                         'from' => $incidents->firstItem(),
                         'to' => $incidents->lastItem(),
                     ],
+                    'filterDate' => true,
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

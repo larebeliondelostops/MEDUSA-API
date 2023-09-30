@@ -116,7 +116,7 @@ class AllDataController extends Controller
             foreach ($this->polygonsMarkers as $key) {
                 $strategy = $this->value::STRATEGY[$key];
                 $strategy = new $strategy();
-                $data = $strategy->getAllEvents();
+                $data = $strategy->all();
                 $data = json_decode($data->content(), true);
                 $this->polygons = array_merge($this->polygons, $data);
             }

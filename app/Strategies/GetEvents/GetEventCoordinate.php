@@ -54,32 +54,51 @@ class GetEventCoordinate implements GetEventInterface
     // Metodo para trer un evento por su id
     public function getEvent($id)
     {
-        $event = Event::where('uuid', $id)->with('eventType', 'eventCoordinate')->get();
+        $event = Event::where('id', $id)->with('eventType', 'eventCoordinate')->first();
 
-        $eventsOrder = $this->OrderEvents($event);
+        $eventsOrder = $this->OrderEventsOne($event);
 
         return $eventsOrder;
     }
 
     //Metodo para organizar en un mismo formato el retorno de la informacion de los eventos
+    public function OrderEventsOne($events)
+    {
+        $eventosOrganizados = [ 'data' => [
+            
+                'eventType' => $events->idEventType,
+                'address' => $events->place,
+                'name' => $events->name,
+                'startDate' => $events->startDate,
+                'endDate' => $events->endDate,
+                'capacity' => $events->capacity,
+                'authorizingEntity' => $events->authorizingEntity,
+                'position' => json_decode($events['eventCoordinate']->pointCoordinates)
+            
+        ]];
+
+        return response()->json($eventosOrganizados, 200);
+    }
+
     public function OrderEvents($events)
     {
         $eventosOrganizados = $events->map(function ($evento) {
             return [
-                'type' => 'feature',
-                'markerType' => 55,
-                'id' => $evento->uuid,
-                'title' => $evento->name,
                 'properties' => [
+                    'ID' => $evento->id,
                     'idEventType' => $evento->idEventType,
                     'eventTypeName' => $evento['eventType']->eventName,
+                    'name' => $evento->name,
                     'startDate' => $evento->startDate,
                     'endDate' => $evento->endDate,
                     'capacity' => $evento->capacity,
-                    'place' => $evento->place,
+                    'address' => $evento->place,
                     'authorizingEntity' => $evento->authorizingEntity,
                 ],
-                'geometry' => $evento['eventCoordinate']->pointCoordinates
+                'position' => [
+                    'type' => 'polygon',
+                    'coordinates' => $evento['eventCoordinate']->pointCoordinates
+                ]
             ];
         });
 

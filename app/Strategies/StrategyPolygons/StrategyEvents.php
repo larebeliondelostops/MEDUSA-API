@@ -44,8 +44,9 @@ class StrategyEvents
             foreach ($events as $event) {
                 $transformedData[] = [
                     'ID' => $event->id,
-                    'nombre' => $event->name,
-                    'direccion' => $event->place,
+                    'Nombre' => $event->name,
+                    'Direccion' => $event->place,
+                    'Fecha' => $event->startDate,
                 ];
             }
 

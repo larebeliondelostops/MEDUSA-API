@@ -84,7 +84,7 @@ class IncidentController extends Controller
                     'Nombre' => $incident->description,
                     'Indicador' => $incident->Indicator->Name,
                     'Direccion' => $incident->address,
-                    'Fecha' => $incident->created_at,
+                    'Fecha' => substr($incident->created_at, 0, 10),
                 ];
             }
 

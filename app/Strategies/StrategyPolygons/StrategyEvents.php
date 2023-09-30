@@ -37,17 +37,27 @@ class StrategyEvents
     public function allTable(Request $request)
     {
         try {
-            $events = Event::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
-
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+            if ($start && $end) {
+                //dd($start, $end);
+                $events = Event::whereBetween('startDate', [$start, $end])
+                    ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            } else {
+                $events = Event::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                
+            }
+            
             $transformedData = [];
             foreach ($events as $event) {
                 $transformedData[] = [
-                    'id' => $event->id,
-                    'nombre' => $event->name,
-                    'direccion' => $event->address,
+                    'ID' => $event->id,
+                    'Nombre' => $event->name,
+                    'Direccion' => $event->place,
                 ];
             }
-
+            
             return response()->json([
                 'data' => $transformedData,
                 'meta' => [
@@ -196,4 +206,5 @@ class StrategyEvents
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-}http://villavicencio.localhost:81/api/v1/event/store
+}
+http://villavicencio.localhost:81/api/v1/event/store

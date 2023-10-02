@@ -39,9 +39,9 @@ class UserController extends Controller
             $transformedData = [];
             foreach ($users as $user) {
                 $transformedData[] = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
+                    'ID' => $user->id,
+                    'Nombre' => $user->name,
+                    'Email' => $user->email,
                 ];
             }
 

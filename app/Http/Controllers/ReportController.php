@@ -20,6 +20,14 @@ use App\Values\ReportsValues;
 class ReportController extends Controller
 {
     //Generacion de reportes de eventos
+    public function getReportsData(Request $request)
+    {
+        $state = $request->input('state');
+
+        $strategy = ReportsValues::STRATEGY[$state];
+
+        return (new $strategy)->getReportsData();
+    }
 
     public function EventsForMonth(Request $request)
     {

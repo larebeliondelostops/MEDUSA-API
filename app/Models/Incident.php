@@ -15,6 +15,6 @@ class Incident extends Model
 
     public function Indicator()
     {
-        return $this->belongsTo(Indicator::class, 'IndicatorId');
+        return $this->belongsTo(Indicator::class, 'indicator');
     }
 }

@@ -25,6 +25,7 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::get('reporte/EventsByAuthorizingEntity', [ReportController::class, 'EventsByAuthorizingEntity']);
     Route::get('reporte/EventsByCapacityRange', [ReportController::class, 'EventsByCapacityRange']);
     Route::get('reporte/EventsByTypeAndAuthorizingEntity', [ReportController::class, 'EventsByTypeAndAuthorizingEntity']);
+    Route::get('reporte/getReportsData', [ReportController::class, 'getReportsData']);
 
     //endpoints para criminalidad
 

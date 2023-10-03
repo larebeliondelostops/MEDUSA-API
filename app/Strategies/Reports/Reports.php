@@ -14,6 +14,20 @@ use Carbon\Carbon;
 
 class Reports implements ReportsInterface
 {
+    public function getReportsData()
+    {
+        $reportsData = [
+            'eventsForMonth' => $this->EventsForMonth(),
+            'eventsForType' => $this->EventsForType(),
+            'eventsByAuthorizingEntity' => $this->EventsByAuthorizingEntity(),
+            'eventsByCapacityRange' => $this->EventsByCapacityRange(),
+            'eventsPastAndFuture' => $this->EventsPastAndFuture(),
+            'eventsByTypeAndAuthorizingEntity' => $this->EventsByTypeAndAuthorizingEntity()
+        ];
+
+        return response()->json(['reportsData' => $reportsData]);
+    }
+
     public function EventsForMonth()
     {
         // Obtener el inicio del mes actual

@@ -8,7 +8,7 @@ use \Illuminate\Http\Request;
 
 interface CamerasInterface
 {
-    public function all();
+    public static function all();
     public function allTable(Request $request);
     public function getOne($id);
     public function store(CamerasRequest $request);

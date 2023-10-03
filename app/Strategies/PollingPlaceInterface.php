@@ -8,7 +8,7 @@ use \Illuminate\Http\Request;
 
 interface PollingPlaceInterface
 {
-    public function all();
+    public static function all();
     public function allTable(Request $request);
     public function getOne($id);
     public function store(PollingPlaceRequest $request);

@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+
+    /**
      * Run the migrations.
      *
      * @return void
@@ -15,11 +22,13 @@ return new class extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); 
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('address');
             $table->json('pointCoordinates');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 

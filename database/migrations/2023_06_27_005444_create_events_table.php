@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+
+    /**
      * Run the migrations.
      *
      * @return void
@@ -15,6 +22,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->bigInteger('idEventType')->unsigned();
             $table->string('name');
             $table->date('startDate');
@@ -24,6 +32,7 @@ return new class extends Migration
             $table->string('authorizingEntity');
             $table->timestamps();
 
+            $table->index('uuid');
             $table->foreign('idEventType')->references('id')->on('eventsType');
         });
     }
@@ -39,7 +48,7 @@ return new class extends Migration
             // Eliminar la clave foránea 'idEventType'
             $table->dropForeign(['idEventType']);
         });
-        
+
         Schema::dropIfExists('events');
     }
 };

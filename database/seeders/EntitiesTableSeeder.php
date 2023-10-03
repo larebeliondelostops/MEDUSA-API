@@ -615,7 +615,7 @@ class EntitiesTableSeeder extends Seeder
             }
           ]
         }
-        
+
           ';
 
         $dataArray = json_decode($data, true);
@@ -625,7 +625,9 @@ class EntitiesTableSeeder extends Seeder
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates'])
+                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

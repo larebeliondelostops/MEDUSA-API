@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 interface ReportsInterface
 {
     //reportes de eventos
-
+    public function getReportsData();
     public function EventsForMonth();
     public function EventsForType();
     public function EventsByAuthorizingEntity();

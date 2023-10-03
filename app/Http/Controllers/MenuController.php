@@ -127,7 +127,7 @@ class MenuController extends Controller
 
             switch ($sub_domain)
             {
-                case 'villavicencio':
+                case 'dev':
                     $data = [
                         'mapCenter' => [
                             'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),

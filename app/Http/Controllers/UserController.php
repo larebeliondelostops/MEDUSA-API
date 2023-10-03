@@ -172,11 +172,13 @@ class UserController extends Controller
 
                 $image = str_replace($replace, '', $image_64); 
 
-                $image = str_replace(' ', '+', $image); 
+                $image = str_replace(' ', '+', $image);
+
+                $imageName = Uuid::uuid4()->toString().'.'.$extension;
 
                 Storage::disk('public')->put('avatar/' . $imageName, base64_decode($image));
 
-                $user->avatar = Uuid::uuid4()->toString().'.'.$extension;
+                $user->avatar = $imageName;
             }
 
             $user->name = $request->input('name', $user->name);

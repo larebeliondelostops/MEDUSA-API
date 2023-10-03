@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Request\Users\AssignRolRequest;
 use App\Http\Request\Users\StoreRequest;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Controlador Maneja Lógica de Users.
@@ -90,40 +91,45 @@ class UserController extends Controller
         }
     }
 
-    public function store(StoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            // Validación
-            if (isset($request->validator) && $request->validator->fails()) {
-                return Response::json([
-                    'code' => '2001',
-                    'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
-                    'errors' => $request->validator->messages()
-                ], 400, [], JSON_PRETTY_PRINT);
+    
+            // Guardar el avatar (si existe)
+            $imageName = null;
+            if ($request->has('avatar')) {
+
+                $image_64 = $request->avatar; //your base64 encoded data
+
+                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+                $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+
+                // find substring fro replace here eg: data:image/png;base64,
+
+                $image = str_replace($replace, '', $image_64); 
+
+                $image = str_replace(' ', '+', $image); 
+
+                $imageName = Uuid::uuid4()->toString().'.'.$extension;
+
+                Storage::disk('public')->put('avatar/' . $imageName, base64_decode($image));
             }
-
-            if (isset($request->avatar)) {
-                $photoFile = $request->file('avatar');
-                $extension = $photoFile->getClientOriginalExtension();
-                $filename = Uuid::uuid4()->toString() . '.' . $extension;
-                $photoPath = $photoFile->storeAs('avatar', $filename, 'public');
-            }
-
-
+    
+            // Crear el usuario
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone_number = $request->phone_number;
             $user->address = $request->address;
-            $user->avatar = $request->avatar != NULL ? $filename : NULL;
+            $user->avatar = $imageName;
             $user->password = bcrypt($request->password);
             $user->save();
             $user->assignRole($request->role_id);
-
+    
             return response()->json([
                 'status' => 'success',
-                'message' => 'Datos almacenados exitosamente'
+                'message' => 'Datos almacenados exitosamente',
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -155,11 +161,22 @@ class UserController extends Controller
             }
 
             if (isset($request->avatar)) {
-                $photoFile = $request->file('avatar');
-                $extension = $photoFile->getClientOriginalExtension();
-                $filename = Uuid::uuid4()->toString() . '.' . $extension;
-                $photoPath = $photoFile->storeAs('avatar', $filename, 'public');
-                $user->avatar = $filename;
+
+                $image_64 = $request->avatar; //your base64 encoded data
+
+                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+                $replace = substr($image_64, 0, strpos($image_64, ',')+1);
+
+                // find substring fro replace here eg: data:image/png;base64,
+
+                $image = str_replace($replace, '', $image_64); 
+
+                $image = str_replace(' ', '+', $image); 
+
+                Storage::disk('public')->put('avatar/' . $imageName, base64_decode($image));
+
+                $user->avatar = Uuid::uuid4()->toString().'.'.$extension;
             }
 
             $user->name = $request->input('name', $user->name);

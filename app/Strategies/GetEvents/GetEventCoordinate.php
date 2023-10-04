@@ -83,7 +83,9 @@ class GetEventCoordinate implements GetEventInterface
     public function OrderEvents($events)
     {
         $eventosOrganizados = $events->map(function ($evento) {
+
             return [
+                'markerType' => 55,
                 'properties' => [
                     'ID' => $evento->id,
                     'idEventType' => $evento->idEventType,
@@ -97,7 +99,7 @@ class GetEventCoordinate implements GetEventInterface
                 ],
                 'position' => [
                     'type' => 'polygon',
-                    'coordinates' => $evento['eventCoordinate']->pointCoordinates
+                    'coordinates' => json_decode($evento['eventCoordinate']->pointCoordinates)->coordinates
                 ]
             ];
         });

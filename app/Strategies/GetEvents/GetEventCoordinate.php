@@ -97,10 +97,7 @@ class GetEventCoordinate implements GetEventInterface
                     'address' => $evento->place,
                     'authorizingEntity' => $evento->authorizingEntity,
                 ],
-                'position' => [
-                    'type' => 'polygon',
-                    'coordinates' => json_decode($evento['eventCoordinate']->pointCoordinates)->coordinates
-                ]
+                'position' => json_decode($events['eventCoordinate']->pointCoordinates)
             ];
         });
 

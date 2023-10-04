@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
+Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
 
 
     //endpoints para reportes
@@ -32,4 +32,5 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::get('reporte/StatisticsByIndicatorAndGrid', [ReportController::class, 'StatisticsByIndicatorAndGrid']);
     Route::get('reporte/StatisticsGeneral', [ReportController::class, 'StatisticsGeneral']);
 
+    Route::get('report/{slug}/{method}', [ReportController::class, 'index']);
 });

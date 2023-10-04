@@ -120,6 +120,7 @@ class IncidentController extends Controller
      */
     public function store(IncidentRequest $request)
     {
+        Log::info($request->all());
         $user = $request->user(); // Obtener el usuario actual
 
         // Aplicar límite de tasa por usuario
@@ -166,6 +167,7 @@ class IncidentController extends Controller
             $incident->description = $request->description;
             $incident->image = $photoPath;
             $incident->position = $request->pointCoordinates;
+
             $incident->save();
 
             // Incrementar el contador del límite de tasa por usuario

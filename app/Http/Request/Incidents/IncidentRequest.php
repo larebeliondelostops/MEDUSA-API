@@ -44,7 +44,7 @@ class IncidentRequest extends FormRequest
     {
         return [
             'IndicatorId' => 'required|exists:Indicators,id|integer',
-            'address' => 'required|string',
+            //'address' => 'required|string',
             'description' => 'required|string',
             'pointCoordinates' => 'required',
             //'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

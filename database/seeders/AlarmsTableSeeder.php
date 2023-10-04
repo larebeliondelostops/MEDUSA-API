@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -1479,7 +1480,7 @@ class AlarmsTableSeeder extends Seeder
             }
           ]
         }
-        
+
         ';
 
         $dataArray = json_decode($data, true);
@@ -1489,7 +1490,9 @@ class AlarmsTableSeeder extends Seeder
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates'])
+                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

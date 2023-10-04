@@ -5,7 +5,7 @@
       "type": "Feature",
       "title": "Ambulancia 1",
       "id": "1",
-      "markerType": 7,
+      "markerType": 54,
       "properties": {
         "unitType": 1
       },
@@ -52,7 +52,7 @@
       "type": "Feature",
       "title": "Bomberos 1",
       "id": "2",
-      "markerType": 7,
+      "markerType": 54,
       "properties": {
         "unitType": 2
       },
@@ -99,7 +99,7 @@
       "type": "Feature",
       "title": "Policia 1",
       "id": "3",
-      "markerType": 7,
+      "markerType": 54,
       "properties": {
         "unitType": 3
       },
@@ -146,7 +146,7 @@
       "type": "Feature",
       "title": "Grua 1",
       "id": "4",
-      "markerType": 7,
+      "markerType": 54,
       "properties": {
         "unitType": 4
       },
@@ -195,7 +195,7 @@
       "type": "Feature",
       "title": "Cruz Roja 1",
       "id": "5",
-      "markerType": 7,
+      "markerType": 54,
       "properties": {
         "unitType": 5
       },

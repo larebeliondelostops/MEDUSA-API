@@ -72,7 +72,7 @@ class IndicatorSeeder extends Seeder
         $user8->save();
 
         $user9 = new Indicator();
-        
+
         $user9->Name = 'Extorsión';
         $user9->Description = '.';
 

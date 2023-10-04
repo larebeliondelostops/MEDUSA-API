@@ -32,7 +32,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -55,7 +55,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -77,7 +77,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -100,7 +100,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -122,7 +122,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -144,7 +144,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 
@@ -166,7 +166,7 @@ class AlarmsController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'Alarms';
 
             $strategy = AlarmsValues::STRATEGY[$state];
 

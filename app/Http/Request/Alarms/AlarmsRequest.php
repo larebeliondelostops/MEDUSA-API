@@ -34,7 +34,7 @@ class AlarmsRequest extends FormRequest
         return [
             'name' => 'required',
             'address' => 'required',
-            'pointCoordinates' => 'required',
+            'position' => 'required',
         ];
     }
 
@@ -60,7 +60,7 @@ class AlarmsRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'pointCoordinates' => 'Coordenadas',
+            'position' => 'Coordenadas',
         ];
     }
 

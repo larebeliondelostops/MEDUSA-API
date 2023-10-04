@@ -2,6 +2,7 @@
 
 namespace App\Strategies\StrategyAlarms;
 
+use App\Clases\SaveGeoJson;
 use App\Http\Request\Alarms\AlarmsRequest;
 use App\Models\Alarms;
 use App\Strategies\AlarmsInterface;
@@ -10,7 +11,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use \Illuminate\Http\Request;
-
+use Ramsey\Uuid\Uuid;
 
 class StrategyAlarms implements AlarmsInterface
 {
@@ -19,7 +20,7 @@ class StrategyAlarms implements AlarmsInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public static function all()
     {
         try {
             $alarms = Alarms::all();
@@ -29,18 +30,36 @@ class StrategyAlarms implements AlarmsInterface
                 $geometry = $coordinates['features'][0]['geometry'];
 
                 $transformedData[] = [
-                    'type' => 'feature',
                     'markerType' => 1,
                     'id' => $alarms->uuid,
-                    'title' => $alarms->name,
                     'geometry' => $geometry,
-                    'properties' => [
-                        'Direccion' => $alarms->address
-                    ]
                 ];
             }
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $alarm = Alarms::where('uuid', $uuid)->first();
+
+            $alarm = [
+                'title' => $alarm->name,
+                'properties' => [
+                    'Direccion' => $alarm->address,
+                ]
+            ];
+
+            return Response::json($alarm, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -56,19 +75,19 @@ class StrategyAlarms implements AlarmsInterface
         try {
             $alarms = Alarms::find($id);
 
-            $transformedData = [];
+            $cordenadas = json_decode($alarms->pointCoordinates)->features[0]->geometry;
 
-            $transformedData[] = [
-                'id' => $alarms->id,
-                'uuid' => $alarms->uuid,
-                'name' => $alarms->name,
-                'address' => $alarms->address,
-                'created_at' => $alarms->created_at,
-                'updated_at' => $alarms->updated_at,
-            ];
-
-
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json([
+                'status' => 'succes',
+                'data' => [
+                    'name' => $alarms->name,
+                    'address' => $alarms->address,
+                    'position' => [
+                        'type' => "Point",
+                        'coordinates' => [$cordenadas->coordinates]
+                    ]
+                ]
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -82,17 +101,24 @@ class StrategyAlarms implements AlarmsInterface
     public function allTable(Request $request)
     {
         try {
-            $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+            //dd($fechaInicial);
+            // Aplicar la restricción whereBetween en la consulta
+            if ($start && $end) {
+                $alarms = Alarms::whereBetween('created_at', [$start, $end])
+                    ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            } else {
+                $alarms = Alarms::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($alarms as $alarm) {
                 $transformedData[] = [
-                    'id' => $alarm->id,
-                    'uuid' => $alarm->uuid,
-                    'name' => $alarm->name,
-                    'address' => $alarm->address,
-                    'created_at' => $alarm->created_at,
-                    'updated_at' => $alarm->updated_at,
+                    'ID' => $alarm->id,
+                    'Nombre' => $alarm->name,
+                    'Direccion' => $alarm->address,
                 ];
             }
 
@@ -141,14 +167,19 @@ class StrategyAlarms implements AlarmsInterface
 
             //$entidades = Entidades::create($request->all());
             $alarms = new Alarms();
+            $alarms->uuid = Uuid::uuid4()->toString();
             $alarms->name = $request->name;
             $alarms->address = $request->address;
-            $alarms->pointCoordinates = json_encode($request->pointCoordinates);
+            $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position);
             $alarms->save();
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $alarms
+                'data' => [
+                    'name' => $alarms->name,
+                    'address' => $alarms->address,
+                    'position' => json_decode($alarms->pointCoordinates)
+                ]
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -171,26 +202,11 @@ class StrategyAlarms implements AlarmsInterface
     {
         try {
 
-            // Validación
-            // if (isset($request->validator) && $request->validator->fails()) {
-            //     return Response::json([
-            //         'code' => '2001',
-            //         'status' => 'error',
-            //         'message' => 'Datos Recibidos Incorrectos',
-            //         'errors' => $request->validator->messages()
-            //     ], 400, [], JSON_PRETTY_PRINT);
-            // }
-
             $alarms = Alarms::find($id);
-            if ($request->name != null) {
-                $alarms->name = $request->name;
-            }
-            if ($request->address != null) {
-                $alarms->address = $request->address;
-            }
-            if ($request->pointCoordinates != null) {
-                $alarms->pointCoordinates = json_encode($request->pointCoordinates);
-            }
+
+            $request->name != null ? $alarms->name = $request->name : $alarms->name = $alarms->name;
+            $request->address != null ? $alarms->address = $request->address : $alarms->address = $alarms->address;
+            $request->position != null ? $alarms->pointCoordinates = SaveGeoJson::saveLikePoint($request->position) : $alarms->pointCoordinates = $alarms->pointCoordinates;
             $alarms->save();
 
             return Response::json([

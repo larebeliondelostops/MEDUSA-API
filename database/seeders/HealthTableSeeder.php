@@ -515,7 +515,7 @@ class HealthTableSeeder extends Seeder
               }
             ]
           }
-          
+
           ';
 
         $dataArray = json_decode($data, true);
@@ -535,6 +535,8 @@ class HealthTableSeeder extends Seeder
                 'nursesInTheShift' => $Data['nursesInTheShift'],
                 'affiliatedIps' => $Data['affiliatedIps'],
                 'numberOfEmergenciesDay' => $Data['numberOfEmergenciesDay'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

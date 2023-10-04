@@ -14,7 +14,7 @@ use App\Http\Controllers\RolController;
 |
 */
 
-Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
+Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
     /**
      * Manejo de Roles
      */

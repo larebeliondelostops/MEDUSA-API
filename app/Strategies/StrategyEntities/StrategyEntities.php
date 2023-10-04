@@ -19,7 +19,7 @@ class StrategyEntities implements EntitiesInterface
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public static function all()
     {
         try {
             $entities = Entities::all();
@@ -30,9 +30,34 @@ class StrategyEntities implements EntitiesInterface
                 $geometry = $coordinates['features'][0]['geometry'];
 
                 // Fetch health data for the current entity
-                $healthData = Health::where('idEntities', $entity->id)->first();
+                // $healthData = Health::where('idEntities', $entity->id)->first();
 
-                $properties = [
+                $transformedData[] = [
+                    'markerType' => 3,
+                    'id' => $entity->uuid,
+                    'geometry' => $geometry,
+                ];
+            }
+
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function getInfoPoint($uuid)
+    {
+        try {
+            $entity = Entities::where('uuid', $uuid)->first();
+
+            $healthData = Health::where('idEntities', $entity->id)->first();
+
+            $properties = [
                     'Direccion' => $entity->address,
                     'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
                     'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
@@ -48,17 +73,12 @@ class StrategyEntities implements EntitiesInterface
                     'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
                 ];
 
-                $transformedData[] = [
-                    'type' => 'feature',
-                    'markerType' => 4,
-                    'id' => $entity->uuid,
-                    'title' => $entity->name,
-                    'geometry' => $geometry,
-                    'properties' => $properties
-                ];
-            }
+            $entity = [
+                'title' => $entity->name,
+                'properties' => $properties
+            ];
 
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json($entity, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -67,6 +87,7 @@ class StrategyEntities implements EntitiesInterface
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+
     }
 
     public function getOne($id)
@@ -81,7 +102,7 @@ class StrategyEntities implements EntitiesInterface
             $healthData = Health::where('idEntities', $entities->id)->first();
 
             $transformedData[] = [
-                'id' => $entities->id,
+                'ID' => $entities->id,
                 'idHealth' => $healthData->id,
                 'uuid' => $entities->uuid,
                 'name' => $entities->name,
@@ -116,7 +137,16 @@ class StrategyEntities implements EntitiesInterface
     public function allTable(Request $request)
     {
         try {
-            $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            // Obtener fechas de inicio y fin
+            $start = $request->start;
+            $end = $request->end;
+           
+            if ($start && $end) {        
+            $entities = Entities::whereBetween('created_at', [$start, $end])
+                ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }else{
+                $entities = Entities::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+            }
 
             $transformedData = [];
             foreach ($entities as $entity) {
@@ -124,25 +154,25 @@ class StrategyEntities implements EntitiesInterface
                 $healthData = Health::where('idEntities', $entity->id)->first();
 
                 $transformedData[] = [
-                    'id' => $entity->id,
-                    'idHealth' => $healthData->id,
-                    'uuid' => $entity->uuid,
-                    'name' => $entity->name,
-                    'address' => $entity->address,
-                    'created_at' => $entity->created_at,
-                    'updated_at' => $entity->updated_at,
-                    'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
-                    'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
-                    'Quirófanos Disponibles' => $healthData->availableOperatingRooms ?? null,
-                    'Unidad de Cuidados Intensivos Disponible' => $healthData->intensiveCareUnitAvailable ?? null,
-                    'Camas de Primer Nive' => $healthData->firstLevelBeds ?? null,
-                    'Camas de Segundo Nivel' => $healthData->secondLevelBeds ?? null,
-                    'Camas de Tercer Nivel' => $healthData->thirdLevelBeds ?? null,
-                    'Banco de Sangre' => $healthData->bloodBank ?? null,
-                    'Médicos en Turno' => $healthData->doctorsInTheShift ?? null,
-                    'Enfermeras en Turno' => $healthData->nursesInTheShift ?? null,
+                    //'ID' => $entity->id,
+                    'ID' => $healthData->id,
+                    //'uuid' => $entity->uuid,
+                    'Nombre' => $entity->name,
+                    'Direccion' => $entity->address,
+                    //'created_at' => $entity->created_at,
+                    //'updated_at' => $entity->updated_at,
+                    //'Pacientes en Emergencia' => $healthData->emergencyPatients ?? null,
+                    //'Camas de Emergencia Disponibles' => $healthData->emergencyBedsAvailable ?? null,
+                    //'Quirófanos Disponibles' => $healthData->availableOperatingRooms ?? null,
+                    //'Unidad de Cuidados Intensivos Disponible' => $healthData->intensiveCareUnitAvailable ?? null,
+                    //'Camas de Primer Nive' => $healthData->firstLevelBeds ?? null,
+                    //'Camas de Segundo Nivel' => $healthData->secondLevelBeds ?? null,
+                    //'Camas de Tercer Nivel' => $healthData->thirdLevelBeds ?? null,
+                    //'Banco de Sangre' => $healthData->bloodBank ?? null,
+                    //'Médicos en Turno' => $healthData->doctorsInTheShift ?? null,
+                    //'Enfermeras en Turno' => $healthData->nursesInTheShift ?? null,
                     'IPS Afiliada' => $healthData->affiliatedIps ?? null,
-                    'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
+                    //'Número de Emergencias al Día' => $healthData->numberOfEmergenciesDay ?? null
                 ];
             }
 

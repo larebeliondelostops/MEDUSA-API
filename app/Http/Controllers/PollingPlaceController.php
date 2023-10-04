@@ -32,7 +32,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -55,7 +55,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -77,7 +77,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -99,7 +99,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -122,7 +122,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -145,7 +145,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 
@@ -168,7 +168,7 @@ class PollingPlaceController extends Controller
 
         try {
 
-            $state = request()->input('state');
+            $state = 'PollingPlace';
 
             $strategy = PollingPlaceValues::STRATEGY[$state];
 

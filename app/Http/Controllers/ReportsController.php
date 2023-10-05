@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Slug;
 use Illuminate\Http\Request;
 use App\Values\ReportsValues;
-
+use App\Contexts\ReportsContext;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 /**
  * Controlador manejan todo lo que tiene que ver con reportes
@@ -17,8 +21,47 @@ use App\Values\ReportsValues;
  * @version    v1.0.0
  */
 
-class ReportController extends Controller
+class ReportsController extends Controller
 {
+        /**
+     * Variable para almacenar el contexto de la data
+     */
+    private $value;
+    private $all_data;
+    private $slugs;
+
+    /**
+     * AllDataController constructor.
+     */
+    public function __construct()
+    {
+        $this->value = ReportsContext::VALUE[config("database.default")];
+    }
+
+    public function index(Request $request, $slug, string $method)
+    {
+        try {
+
+            $this->slugs = Slug::where('name', $slug)->first();
+
+            $strategy_report = $this->value::STRATEGY[$this->slugs->id];
+
+            $strategy_report_instace = new $strategy_report();
+
+            $data = $strategy_report_instace->{$method}($request);
+
+            return $data;
+            //return Response::json($all_data, 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     //Generacion de reportes de eventos
     public function getReportsData(Request $request)
     {

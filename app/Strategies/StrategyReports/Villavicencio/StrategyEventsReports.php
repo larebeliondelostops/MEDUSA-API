@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Strategies\Reports;
+namespace App\Strategies\StrategyReports\Villavicencio;
 
-use App\Models\CriminalActs;
-use Exception;
-use App\Models\Event;
-use App\Strategies\ReportsInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
+use App\Models\Event;
+use Illuminate\Http\Request;
+use App\Models\CriminalActs;
+use App\Strategies\ReportsInterface;
 
-
-class Reports implements ReportsInterface
+class StrategyEventsReports implements ReportsInterface
 {
     public function getReportsData()
     {
@@ -268,7 +264,7 @@ class Reports implements ReportsInterface
             ->first();
 
         // Obtener todos los días de la semana en mayúsculas
-        $diasSemana = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"];
+        $diasSemana = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SÁBADO", "DOMINGO"];
 
         // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)

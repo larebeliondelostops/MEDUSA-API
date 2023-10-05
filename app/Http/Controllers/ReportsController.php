@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Response;
  * @version    v1.0.0
  */
 
-class ReportController extends Controller
+class ReportsController extends Controller
 {
         /**
      * Variable para almacenar el contexto de la data

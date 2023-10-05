@@ -264,7 +264,7 @@ class StrategyEventsReports implements ReportsInterface
             ->first();
 
         // Obtener todos los días de la semana en mayúsculas
-        $diasSemana = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"];
+        $diasSemana = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SÁBADO", "DOMINGO"];
 
         // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)

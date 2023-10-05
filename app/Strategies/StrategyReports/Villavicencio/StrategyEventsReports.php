@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\CriminalActs;
-use App\Strategies\ReportsInterface;
+use App\Strategies\Interface\ReportsInterface;
 
 class StrategyEventsReports implements ReportsInterface
 {

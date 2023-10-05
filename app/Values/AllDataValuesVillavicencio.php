@@ -2,16 +2,19 @@
 
 namespace App\Values;
 
-use App\Strategies\StrategyCai\StrategyCai;
-use App\Strategies\GetEvents\GetEventCoordinate;
-use App\Strategies\StrategyAlarms\StrategyAlarms;
-use App\Strategies\StrategyCameras\StrategyCameras;
-use App\Strategies\StrategyLines\StrategyFiberLines;
-use App\Strategies\StrategyEntities\StrategyEntities;
-use App\Strategies\StrategiesPoints\StrategyFiberPoints;
-use App\Strategies\StrategyPollingPlace\StrategyPollingPlace;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyAlarms;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyEntities;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyPollingPlace;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyFiberPoints;
+
+use App\Strategies\StrategyLines\Villavicencio\StrategyFiberLines;
+
+use App\Strategies\StrategyPolygons\Villavicencio\StrategyEvents;
+
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
-use App\Strategies\StrategyPolygons\StrategyEvents;
+
 
 class AllDataValuesVillavicencio
 {
@@ -24,7 +27,6 @@ class AllDataValuesVillavicencio
         2 => StrategyCai::class,
         3 => StrategyEntities::class,
         4 => StrategyPollingPlace::class,
-        5 => StrategyFiberPoints::class,
         5 => StrategyFiberPoints::class,
         8 => IncidentController::class,
         50 => StrategyCameras::class,

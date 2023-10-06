@@ -21,11 +21,19 @@ class StrategyHealth implements HealthInterface
     public static function all()
     {
         try {
-            $health = Health::all();
-            return Response::json([
-                'status' => 'succes',
-                'data' => $health,
-            ], 201, [], JSON_PRETTY_PRINT);
+            $healths = Health::all();
+            
+            $transformedData = [];
+            foreach ($healths as $health) {
+
+                $transformedData[] = [
+                    'markerType' => 3,
+                    'id' => $health->uuid,
+                    'geometry' => json_decode($health->position),
+                ];
+            }
+
+            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

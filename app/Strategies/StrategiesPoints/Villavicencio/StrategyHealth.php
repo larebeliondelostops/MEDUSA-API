@@ -76,27 +76,29 @@ class StrategyHealth implements HealthInterface
         try {
             $health = Health::find($id);
 
-            $transformedData = [];
-
-            $transformedData[] = [
-                'Nombre' => $health->name,
-                'Direccion' => $health->address,
-                'Pacientes en Emergencia' => $health->emergencyPatients ?? null,
-                'Camas de Emergencia Disponibles' => $health->emergencyBedsAvailable ?? null,
-                'Quirófanos Disponibles' => $health->availableOperatingRooms ?? null,
-                'Unidad de Cuidados Intensivos Disponible' => $health->intensiveCareUnitAvailable ?? null,
-                'Camas de Primer Nive' => $health->firstLevelBeds ?? null,
-                'Camas de Segundo Nivel' => $health->secondLevelBeds ?? null,
-                'Camas de Tercer Nivel' => $health->thirdLevelBeds ?? null,
-                'Banco de Sangre' => $health->bloodBank ?? null,
-                'Médicos en Turno' => $health->doctorsInTheShift ?? null,
-                'Enfermeras en Turno' => $health->nursesInTheShift ?? null,
-                'IPS Afiliada' => $health->affiliatedIps ?? null,
-                'Número de Emergencias al Día' => $health->numberOfEmergenciesDay ?? null
-            ];
-
-
-            return Response::json($transformedData, 201, [], JSON_PRETTY_PRINT);
+            return Response::json([
+                'status' => 'succes',
+                'data' => [
+                    'name' => $health->name,
+                    'address' => $health->address,
+                    'emergencyPatients' => $health->emergencyPatients,
+                    'emergencyBedsAvailable' => $health->emergencyBedsAvailable,
+                    'availableOperatingRooms' => $health->availableOperatingRooms,
+                    'intensiveCareUnitAvailable' => $health->intensiveCareUnitAvailable,
+                    'firstLevelBeds' => $health->firstLevelBeds,
+                    'secondLevelBeds' => $health->secondLevelBeds,
+                    'thirdLevelBeds' => $health->thirdLevelBeds,
+                    'bloodBank' => $health->bloodBank,
+                    'doctorsInTheShift' => $health->doctorsInTheShift,
+                    'nursesInTheShift' => $health->nursesInTheShift,
+                    'affiliatedIps' => $health->affiliatedIps,
+                    'numberOfEmergenciesDay' => $health->numberOfEmergenciesDay,
+                    'position' => [
+                        'type' => "Point",
+                        'coordinates' => [json_decode($health->position)->coordinates]
+                    ]
+                ]
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

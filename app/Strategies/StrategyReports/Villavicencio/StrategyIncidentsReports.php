@@ -24,10 +24,10 @@ class StrategyIncidentsReports
     public function getReportsData()
     {
         $reportsData = [
-            'incidensByMonth' => $this->incidensByMonth(),
-            'topFive' => $this->topFive(),
-            'incidentsByTypeLastTDays' => $this->incidentsByTypeLastTDays(),
-            'incidentsByWeekDay' => $this->incidentsByWeekDay(),
+            $this->incidensByMonth(),
+            $this->topFive(),
+            $this->incidentsByTypeLastTDays(),
+            $this->incidentsByWeekDay(),
         ];
 
         return response()->json(['reportsData' => $reportsData]);
@@ -53,7 +53,7 @@ class StrategyIncidentsReports
             'title' => 'Incidentes por mes',
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-            'type' => 'bars'
+            'type' => 'area'
         ];
         return $data;
     }
@@ -80,7 +80,7 @@ class StrategyIncidentsReports
             'title' => 'Top 5',
             'series' => $series,
             'labels' => $labels,
-            'type' => 'pie'
+            'type' => 'cards'
         ];
 
         return $data;
@@ -97,10 +97,10 @@ class StrategyIncidentsReports
 
         foreach (Indicator::all() as $indicador) {
             if ($indicadores_usados->contains($indicador->id)) {
-                $series[] = [$incidentes->where('indicator', $indicador->id)->count()];
+                $series[] = $incidentes->where('indicator', $indicador->id)->count();
                 $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->Name;
             } else {
-                $series[] = [0];
+                $series[] = 0;
                 $labels[] = $indicador->Name;
             }
         }
@@ -109,7 +109,7 @@ class StrategyIncidentsReports
             'title' => 'Incidentes por tipo últimos 30 días',
             'series' => $series,
             'labels' => $labels,
-            'type' => 'bars'
+            'type' => 'bar'
         ];
 
         return $data;
@@ -148,7 +148,7 @@ class StrategyIncidentsReports
             'title' => 'Incidentes por día de la semana',
             'series' => $series,
             'labels' => Helper::DAY_NAME,
-            'type' => 'bars'
+            'type' => 'column'
         ];
 
         return $data;

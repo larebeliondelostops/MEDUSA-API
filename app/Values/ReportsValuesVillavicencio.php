@@ -22,8 +22,8 @@ class ReportsValuesVillavicencio
         8 => IncidentController::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class, */
+        8 => StrategyIncidentsReports::class,
         51 => StrategyProbabilisticReports::class,
         55 => StrategyEventsReports::class,
-        60 => StrategyIncidentsReports::class,
     ];
 }

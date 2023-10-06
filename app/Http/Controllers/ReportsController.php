@@ -38,7 +38,7 @@ class ReportsController extends Controller
         $this->value = ReportsContext::VALUE[config("database.default")];
     }
 
-    public function index(Request $request, $slug, string $method)
+    public function index(Request $request, string $method, $slug)
     {
         try {
 

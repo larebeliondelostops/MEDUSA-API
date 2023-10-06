@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'dev';
 
     /**
      * Run the migrations.
@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->text('description');
             $table->string('position');
+            $table->string('day');
+            $table->string('month');
+            $table->string('year');
             $table->string('image');
             $table->boolean('reviewed')->default(false);
             $table->timestamps();

@@ -39,47 +39,13 @@ class Helper
     ];
 
 
-    /**
-     * @var string
-     */
-    public $conector = 'CON';
-
-    /**
-     * @var bool
-     */
-    public $apocope = false;
-
-
-    /**
-     * Valida si debe aplicarse apócope de uno.
-     *
-     * @return void
-     */
-    private function checkApocope()
-    {
-        if ($this->apocope === true) {
-            $this->unidades[1] = 'UN ';
-        }
-    }
-
-    /**
-     * Concatena las partes formateadas del número convertido.
-     *
-     * @param array $splitNumber
-     *
-     * @return string
-     */
-    private function glue($splitNumber)
-    {
-        return implode(' ' . mb_strtoupper($this->conector, 'UTF-8') . ' ', array_filter($splitNumber));
-    }
-
-
-
-
     public function __construct()
     {
     }
+
+    CONST DAY_NUMBER = [0, 1, 2, 3, 4, 5, 6];
+    CONST DAY_NAME = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    CONST MONTH_NUMBER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     /**
      * Reemplaza las comas por punto para guardar en BD.
@@ -386,9 +352,9 @@ class Helper
 
     }
 
-    public static function diaNombre($fecha) {
-      $dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
-      return $dias[date('w', strtotime($fecha))];
+    public static function diaNombre($dia) {
+      $dias = self::DAY_NAME;
+      return $dias[$dia];
     }
 
     public static function monedaColombia2($valor) {
@@ -398,18 +364,4 @@ class Helper
     public static function monedaColombiaSinCeros($valor) {
         return number_format($valor, 0, ',', '.');
     }
-
-    public static function fechaReportesPresupuesto($fechaInicio = null, $fechaFin = null)
-    {
-        // $fechaInicio = isset($fechaInicio) ? $fechaInicio : Carbon::now()->toDateString();
-        // $fechaFin = isset($fechaFin) ? $fechaFin : Carbon::now()->toDateString();
-
-        return json_decode(json_encode([
-            'start_current_month' => Carbon::parse($fechaFin)->startOfMonth()->toDateString(),
-            'end_current_month'   => Carbon::parse($fechaFin)->endOfMonth()->toDateString(),
-            'start_first_month'   => Carbon::parse($fechaInicio)->year .'-01-01',
-            'end_last_month'      => Carbon::parse($fechaFin)->startofMonth()->subMonth()->endOfMonth()->toDateString()
-        ]));
-    }
-
 }

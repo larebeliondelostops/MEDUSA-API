@@ -6,33 +6,28 @@ use App\Helpers\Helper;
 use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Incident;
+use App\Models\Indicator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StrategyIncidentsReports
 {
-    private $incidents;
     private $inicio_mes_actual;
     private $final_mes_actual;
 
     public function __construct()
     {
-        $this->incidents = Incident::class;
         $this->inicio_mes_actual = Carbon::now()->startOfMonth();
         $this->final_mes_actual = Carbon::now()->endOfMonth();
     }
 
-    public function getReportsData(Request $request)
+    public function getReportsData()
     {
         $reportsData = [
             'incidensByMonth' => $this->incidensByMonth(),
-            //'incidensCountByMonth' => $this->incidensCountByMonth(),
-            /* 'incidentsByType' => $this->incidentsByType($request),
-            'incidentsCountByType' => $this->incidentsCountByType($request),
-            'incidentsReviwed' => $this->incidentsReviwed(),
-            'incidentsCountReviwed' => $this->incidentsCountReviwed(),
-            'incidentsUnReviwed' => $this->incidentsUnReviwed(),
-            'incidentsCountUnReviwed' => $this->incidentsCountUnReviwed(), */
+            'topFive' => $this->topFive(),
+            'incidentsByTypeLastTDays' => $this->incidentsByTypeLastTDays(),
+            'incidentsByWeekDay' => $this->incidentsByWeekDay(),
         ];
 
         return response()->json(['reportsData' => $reportsData]);
@@ -40,28 +35,19 @@ class StrategyIncidentsReports
 
     public function incidensByMonth()
     {
-        $incidentesPorMes = DB::table(DB::raw('(
-            SELECT
-                EXTRACT(YEAR FROM created_at) AS year,
-                EXTRACT(MONTH FROM created_at) AS month,
-                COUNT(*) AS count
-            FROM incident
-            GROUP BY year, month
-            ) AS real_data'))
-            ->rightJoin(DB::raw('(
-                SELECT
-                    generate_series(1, 12) AS month
-            ) AS months'), function ($join) {
-                $join->on('real_data.month', '=', 'months.month');
-            })
-            ->select(DB::raw('COALESCE(months.month, 0) AS month, COALESCE(count, 0) AS count'))
-            ->orderBy('month')
+        $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
             ->get();
 
-        $series = $incidentesPorMes
-            ->map(function ($incident) {
-                return $incident->count;
-            });
+        $series = [];
+        foreach (Helper::MONTH_NUMBER as $month) {
+            if ($incidentesPorMes->pluck('month')->contains($month)) {
+                $series[] = $incidentesPorMes->where('month', $month)->first()->count;
+            } else {
+                $series[] = 0;
+            }
+        }
 
         $data = [
             'title' => 'Incidentes por mes',
@@ -71,6 +57,156 @@ class StrategyIncidentsReports
         ];
         return $data;
     }
+
+    public function topFive()
+    {
+        $topFive = Incident::selectRaw('indicator, COUNT(*) as count')
+            ->groupBy('indicator')
+            ->orderBy('count', 'desc')
+            ->limit(5)
+            ->get();
+
+        $series = $topFive
+            ->map(function ($incident) {
+                return $incident->count;
+            });
+
+        $labels = $topFive
+            ->map(function ($incident) {
+                return $incident->Indicator->Name;
+            });
+
+        $data = [
+            'title' => 'Top 5',
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'pie'
+        ];
+
+        return $data;
+    }
+
+    public function incidentsByTypeLastTDays()
+    {
+
+        $incidentes = Incident::with('Indicator')->get();
+        $indicadores_usados = $incidentes->pluck('indicator');
+
+        $series = [];
+        $labels = [];
+
+        foreach (Indicator::all() as $indicador) {
+            if ($indicadores_usados->contains($indicador->id)) {
+                $series[] = [$incidentes->where('indicator', $indicador->id)->count()];
+                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->Name;
+            } else {
+                $series[] = [0];
+                $labels[] = $indicador->Name;
+            }
+        }
+
+        $data = [
+            'title' => 'Incidentes por tipo últimos 30 días',
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'bars'
+        ];
+
+        return $data;
+    }
+
+    public function incidentsByWeekDay()
+    {
+        $incidentes_por_tipo_incidente = Incident::select('indicator')
+            ->groupBy('indicator')
+            ->get();
+
+        $series = [];
+        foreach ($incidentes_por_tipo_incidente as $incidente_por_tipo_incidente) {
+            $incidentes_por_dia = Incident::where('indicator', $incidente_por_tipo_incidente->indicator)
+                ->selectRaw('day, COUNT(*) as count')
+                ->groupBy('day')
+                ->get();
+
+            $data = [];
+            foreach (Helper::DAY_NUMBER as $day) {
+                if ($incidentes_por_dia->pluck('day')->contains($day)) {
+                    $data[] = $incidentes_por_dia->where('day', $day)->first()->count;
+                } else {
+                    $data[] = 0;
+                }
+            }
+
+            $series[] = [
+                'name'  => $incidente_por_tipo_incidente->Indicator->Name,
+                'data' => $data
+            ];
+
+        }
+
+        $data = [
+            'title' => 'Incidentes por día de la semana',
+            'series' => $series,
+            'labels' => Helper::DAY_NAME,
+            'type' => 'bars'
+        ];
+
+        return $data;
+        /* $series = [];
+        foreach (Helper::DAY_NUMBER as $day) {
+            if ($incidentes_por_dia->pluck('day')->contains($day)) {
+                $series[] = [
+                    'name'  => $incidentes_por_dia->where('day', $day)->first()->Indicator->Name,
+                    'data' => $incidentes_por_dia->where('day', $day)->first()->count
+                ];
+            } else {
+                $series[] = 0;
+            }
+        }
+
+        $data = [
+            'title' => 'Incidentes por día de la semana',
+            'series' => $series,
+            'labels' => Helper::DAY_NAME,
+            'type' => 'bars'
+        ];
+
+        return $data; */
+    }
+
+    /* public function incidentsByTypeLastTDays()
+    {
+        $incidentes_ultimos_30_dias = Incident::whereDate('created_at', '>=', now()->subDays(30))
+            ->selectRaw('indicator, COUNT(*) as count, created_at')
+            ->groupBy('indicator', 'created_at')
+            ->get();
+
+        $indicadoresNoUsados = DB::table('Indicators')
+            ->select('id')
+            ->whereNotIn('id', function ($query) {
+                $query->select('indicator')
+                    ->from('incident');
+            })
+            ->pluck('id');
+
+        $series = $incidentes_ultimos_30_dias
+            ->map(function ($incident) use ($indicadoresNoUsados){
+                if ($indicadoresNoUsados->contains($incident->indicator)) {
+                    return 0;
+                } else {
+                    return [$incident->count];
+                }
+            });
+
+        $data = [
+            'title' => 'Incidentes por tipo últimos 30 días',
+            'series' => $series,
+            'labels' => Incident::with('Indicator')->get()->pluck('Indicator.Name'),
+            'type' => 'bars'
+        ];
+
+        return $data;
+    } */
 
     /* public function incidensCountByMonth()
     {

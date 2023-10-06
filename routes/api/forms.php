@@ -37,6 +37,7 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
     Route::get('forms/ambient', [FormsController::class, 'ambient']);
     Route::get('forms/pollingPlace', [FormsController::class, 'pollingPlace']);
     Route::get('forms/event', [FormsController::class, 'event']);
+    Route::get('forms/health', [FormsController::class, 'health']);
 
     /**
      * Creación de formularios

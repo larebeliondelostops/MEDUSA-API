@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'dev';
 
     /**
      * Run the migrations.
@@ -22,8 +22,10 @@ return new class extends Migration
     {
         Schema::create('health', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idEntities');
-            $table->foreign('idEntities')->references('id')->on('entities');
+            $table->uuid('uuid')->unique();
+            $table->string('name');
+            $table->string('address');
+            $table->json('position');
             $table->integer('emergencyPatients');
             $table->integer('emergencyBedsAvailable');
             $table->integer('availableOperatingRooms');
@@ -37,6 +39,8 @@ return new class extends Migration
             $table->string('affiliatedIps');
             $table->integer('numberOfEmergenciesDay');
             $table->timestamps();
+            
+            $table->index('uuid');
         });
     }
 

@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Strategies\Interface\Villavicencio;
+
+use App\Http\Request\PollingPlace\PollingPlaceRequest;
+use App\Models\PollingPlace;
+use \Illuminate\Http\Request;
+
+interface PollingPlaceInterface
+{
+    public static function all();
+    public function allTable(Request $request);
+    public function getOne($id);
+    public function store(PollingPlaceRequest $request);
+    public function update(Request $request, $id);
+    public function destroy($id);
+    public function storeMax(Request $request);
+
+}

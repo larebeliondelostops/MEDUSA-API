@@ -175,13 +175,42 @@ class FormsController extends Controller
     }
 
     /**
+     * Método para devolver el formulario para registro de health
+     *
+     * @access public
+     */
+    public function health()
+    {
+        $health_data = Form::with('Fields')->where('module', 3)->orderby('field')->get();
+
+        $fields = $health_data->map(function ($data) {
+            return $data->fields;
+        });
+
+        try{
+            return Response::json([
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa',
+                'data' => $fields
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
      * Servicio para exponer el contenido de la tabla modules
      *
      * @access public
      */
     public function modules()
     {
-        $modules = Module::select('id', 'name')->orderby('id')->get();
+        $modules = Module::select('id as ID', 'name')->orderby('id')->get();
 
         try{
             return Response::json([

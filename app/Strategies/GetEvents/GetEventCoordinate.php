@@ -2,7 +2,7 @@
 
 namespace App\Strategies\GetEvents;
 
-use App\Strategies\GetEventInterface;
+use App\Strategies\Interface\GetEventInterface;
 use App\Models\Event;
 
 /**
@@ -97,10 +97,8 @@ class GetEventCoordinate implements GetEventInterface
                     'address' => $evento->place,
                     'authorizingEntity' => $evento->authorizingEntity,
                 ],
-                'position' => [
-                    'type' => 'polygon',
-                    'coordinates' => $evento['eventCoordinate']->pointCoordinates
-                ]
+                'position' => json_decode($evento['eventCoordinate']->pointCoordinates)
+
             ];
         });
 

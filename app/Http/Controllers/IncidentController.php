@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use App\Http\Request\Incidents\IncidentRequest;
+use Carbon\Carbon;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -167,6 +168,9 @@ class IncidentController extends Controller
             $incident->description = $request->description;
             $incident->image = $photoPath;
             $incident->position = $request->pointCoordinates;
+            $incident->day = Carbon::now()->dayOfWeek;
+            $incident->month = date('m');
+            $incident->year = date('Y');
 
             $incident->save();
 

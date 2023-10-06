@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
-use App\Strategies\MovementUnitisInterface;
+use App\Strategies\Interface\MovementUnitisInterface;
 
 class StrategyMovementUnitis implements MovementUnitisInterface
 {

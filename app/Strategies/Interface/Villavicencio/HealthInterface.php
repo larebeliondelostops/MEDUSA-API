@@ -7,10 +7,13 @@ use \Illuminate\Http\Request;
 
 interface HealthInterface
 {
-    public function all();
+    public static function all();
+    public function allTable(Request $request);
+    public function getOne($id);
     public function store(HealthRequest $request);
     public function update(Request $request, $id);
     public function destroy($id);
     public function storeMax(Request $request);
+
 
 }

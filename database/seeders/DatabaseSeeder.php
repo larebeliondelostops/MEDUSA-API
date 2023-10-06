@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CaiTableSeeder::class);
         $this->call(CamerasTableSeeder::class);
         $this->call(PollingPlaceTableSeeder::class);
-        $this->call(EntitiesTableSeeder::class);
         $this->call(HealthTableSeeder::class);
         $this->call(IndicatorSeeder::class);
         $this->call(TenancySeeder::class);

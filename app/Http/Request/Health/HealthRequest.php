@@ -32,7 +32,9 @@ class HealthRequest extends FormRequest
     public function rules()
     {
         return [
-            'idEntities' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'position' => 'required',
             'emergencyPatients' => 'required',
             'emergencyBedsAvailable' => 'required|integer|min:0',
             'availableOperatingRooms' => 'required|integer|min:0',
@@ -70,7 +72,9 @@ class HealthRequest extends FormRequest
     public function attributes()
     {
         return [
-            'idEntities' => 'Entidades',
+            'name' => 'Nombre',
+            'address' => 'Dirección',
+            'position' => 'Coordenadas',
             'emergencyPatients' => 'Pacientes en Urgencia',
             'emergencyBedsAvailable' => 'Camas de urgencias disponibles',
             'availableOperatingRooms' => 'Salas de cirugias disponibles',

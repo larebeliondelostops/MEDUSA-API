@@ -5,7 +5,7 @@ namespace App\Values;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyAlarms;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
-use App\Strategies\StrategiesPoints\Villavicencio\StrategyEntities;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyHealth;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyPollingPlace;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyFiberPoints;
 
@@ -25,7 +25,7 @@ class AllDataValuesVillavicencio
     const STRATEGY = [
         1 => StrategyAlarms::class,
         2 => StrategyCai::class,
-        3 => StrategyEntities::class,
+        3 => StrategyHealth::class,
         4 => StrategyPollingPlace::class,
         5 => StrategyFiberPoints::class,
         8 => IncidentController::class,

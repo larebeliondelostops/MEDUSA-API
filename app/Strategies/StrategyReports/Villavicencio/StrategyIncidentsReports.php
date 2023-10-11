@@ -108,9 +108,9 @@ class StrategyIncidentsReports
             return $incident->indicator;
         });
 
-        $series = $series->merge(0);
-        $labels = $labels->merge('General');
-        $key = $key->merge(0);
+        $series = $series->prepend(0);
+        $labels = $labels->prepend('General');
+        $key = $key->prepend(0);
 
         $data = [
             'title' => 'Incidentes por tipo',
@@ -194,6 +194,7 @@ class StrategyIncidentsReports
 
         $data = [
             'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
+            'date' =>  'Historico',
             'series' => $series,
             'labels' => Helper::DAY_NAME,
             'type' => 'column'

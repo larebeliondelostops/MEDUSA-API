@@ -104,9 +104,13 @@ class StrategyIncidentsReports
             });
 
         $key = $cardsIncidents
-        ->map(function ($incident) {
+            ->map(function ($incident) {
             return $incident->indicator;
         });
+
+        $series = $series->merge(0);
+        $labels = $labels->merge('General');
+        $key = $key->merge(0);
 
         $data = [
             'title' => 'Incidentes por tipo',

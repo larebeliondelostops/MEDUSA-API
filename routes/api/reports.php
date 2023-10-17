@@ -32,5 +32,5 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
     Route::get('reporte/StatisticsByIndicatorAndGrid', [ReportsController::class, 'StatisticsByIndicatorAndGrid']);
     Route::get('reporte/StatisticsGeneral', [ReportsController::class, 'StatisticsGeneral']);
 
-    Route::get('report/{method}/{slug}', [ReportsController::class, 'index']);
+    Route::post('report/{method}/{slug}', [ReportsController::class, 'index']);
 });

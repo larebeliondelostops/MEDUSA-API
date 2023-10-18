@@ -2,11 +2,11 @@
 
 namespace App\Values;
 
-use App\Strategies\Reports\Reports;
+use App\Strategies\StrategyReports\Villavicencio\StrategyProbabilisticReports;
 
 final class ReportsValues
 {
     const STRATEGY = [
-        'Reports' => Reports::class,
+        'Reports' => StrategyProbabilisticReports::class,
     ];
 }

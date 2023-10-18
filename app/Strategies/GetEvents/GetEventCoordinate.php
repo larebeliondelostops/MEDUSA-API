@@ -85,7 +85,7 @@ class GetEventCoordinate implements GetEventInterface
         $eventosOrganizados = $events->map(function ($evento) {
 
             return [
-                //'markerType' => 55,
+                'markerType' => 55,
                 'properties' => [
                     'ID' => $evento->id,
                     'idEventType' => $evento->idEventType,

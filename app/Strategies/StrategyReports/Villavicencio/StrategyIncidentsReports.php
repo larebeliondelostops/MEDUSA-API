@@ -65,7 +65,7 @@ class StrategyIncidentsReports
         }
 
         $data = [
-            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por mes' : 'Incidentes por mes',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
             'date' =>  date('Y'),
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -108,12 +108,12 @@ class StrategyIncidentsReports
             return $incident->indicator;
         });
 
-        $series = $series->prepend(0);
+        $series = $series->prepend(Incident::count());
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 
         $data = [
-            'title' => 'Incidentes por tipo',
+            'title' => '# Incidentes por tipo',
             'series' => $series,
             'labels' => $labels,
             'key' => $key,
@@ -146,7 +146,7 @@ class StrategyIncidentsReports
         }
 
         $data = [
-            'title' => 'Incidentes por tipo últimos 30 días',
+            'title' => '# Incidentes por tipo últimos 30 días',
             'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
             'series' => $series,
             'labels' => $labels,
@@ -193,7 +193,7 @@ class StrategyIncidentsReports
         }
 
         $data = [
-            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : '# Incidentes por día de la semana',
             'date' =>  'Historico',
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -213,7 +213,7 @@ class StrategyIncidentsReports
             $latitud = (float)$coordenadas[0];
             $longitud = (float)$coordenadas[1];
 
-            return [$latitud , $longitud];
+            return [$longitud, $latitud];
         });
 
         $incidents = [

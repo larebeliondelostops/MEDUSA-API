@@ -208,4 +208,3 @@ class StrategyEvents
         }
     }
 }
-http://villavicencio.localhost:81/api/v1/event/store

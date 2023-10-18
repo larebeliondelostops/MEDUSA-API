@@ -125,10 +125,10 @@ class StrategyHealth implements HealthInterface
             $end = $request->end;
 
             if ($start && $end) {
-                $health = Health::whereBetween('created_at', [$start, $end])
+                $health = Health::orderBy('id')->whereBetween('created_at', [$start, $end])
                     ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             } else {
-                $health = Health::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                $health = Health::orderBy('id')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }
 
             $transformedData = [];

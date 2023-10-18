@@ -7,8 +7,9 @@ use App\Helpers\Helper;
 use App\Models\Incident;
 use App\Models\Indicator;
 use Illuminate\Http\Request;
+use App\Strategies\Interface\ReportsInterface;
 
-class StrategyIncidentsReports
+class StrategyIncidentsReports implements ReportsInterface
 {
     private $indicator;
 
@@ -21,21 +22,127 @@ class StrategyIncidentsReports
         $this->indicator = $request->indicator ?? null;
         if ($this->indicator != null) {
             $reportsData = [
+                $this->tabsIncidents(),
                 $this->incidensByMonth(),
-                $this->cardsIncidents(),
                 $this->incidentsByWeekDay(),
                 $this->points()
             ];
         } else {
             $reportsData = [
-                $this->incidensByMonth(),
+                $this->tabsIncidents(),
                 $this->cardsIncidents(),
+                $this->incidensByMonth(),
                 $this->incidentsByTypeLastTDays(),
                 $this->incidentsByWeekDay(),
             ];
         }
 
         return response()->json(['reportsData' => $reportsData]);
+    }
+
+    public function cardsIncidents()
+    {
+        $hoy = Carbon::now();
+
+        $hace_30_dias = $hoy->copy()->subDays(30);
+
+        $primerDiaDelMes = $hoy->copy()->firstOfMonth();
+
+        $diasTranscurridos = $hoy->copy()->diffInDays($primerDiaDelMes);
+
+        $cardsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+            ->whereBetween('created_at', [$hace_30_dias, $hoy])
+            ->groupBy('indicator')
+            ->orderBy('count', 'desc')
+            ->take(3)
+            ->get();
+
+        $indicadores = array_column($cardsIncidents->toArray(), 'indicator');
+
+        $cantidadDiaInicioToDiaActualAnterior = [];
+        $cantidadDiaInicioToDiaActualActual = [];
+
+        foreach($indicadores as $indicador) {
+
+            $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+
+            $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+        }
+
+        $series = [];
+
+        for ($i = 0; $i < 3; $i++) {
+            $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
+
+            $series[] = [
+                'data' => $cardsIncidents[$i]->count,
+                'percent' => $porcentaje
+            ];
+        }
+
+        $labels = $cardsIncidents
+            ->map(function ($incident) {
+                return $incident->Indicator->Name;
+            });
+
+        $data = [
+            'title' => 'Cards de incidentes con sus respectivos porcentajes',
+            'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'cards'
+        ];
+
+        return $data;
+    }
+
+    public function tabsIncidents()
+    {
+        $tabsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+            ->groupBy('indicator')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $indicadores = Indicator::all();
+
+        foreach ($indicadores as $indicardor) {
+            if (!$tabsIncidents->pluck('indicator')->contains($indicardor->id)) {
+                $tabsIncidents->push((object) [
+                    'indicator' => $indicardor->id,
+                    'count' => 0,
+                    'Indicator' => $indicardor
+                ]);
+            }
+        }
+
+        $series = $tabsIncidents
+            ->map(function ($incident) {
+                return $incident->count;
+            });
+
+        $labels = $tabsIncidents
+            ->map(function ($incident) {
+                return $incident->Indicator->Name;
+            });
+
+        $key = $tabsIncidents
+            ->map(function ($incident) {
+            return $incident->indicator;
+        });
+
+        $series = $series->prepend(Incident::count());
+        $labels = $labels->prepend('General');
+        $key = $key->prepend(0);
+
+        $data = [
+            'title' => 'Incidentes por tipo',
+            'series' => $series,
+            'labels' => $labels,
+            'key' => $key,
+            'type' => 'tabs'
+        ];
+
+        return $data;
     }
 
     public function incidensByMonth()
@@ -71,55 +178,6 @@ class StrategyIncidentsReports
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
             'type' => 'area'
         ];
-        return $data;
-    }
-
-    public function cardsIncidents()
-    {
-        $cardsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
-            ->groupBy('indicator')
-            ->orderBy('count', 'desc')
-            ->get();
-
-        $indicadores = Indicator::all();
-
-        foreach ($indicadores as $indicardor) {
-            if (!$cardsIncidents->pluck('indicator')->contains($indicardor->id)) {
-                $cardsIncidents->push((object) [
-                    'indicator' => $indicardor->id,
-                    'count' => 0,
-                    'Indicator' => $indicardor
-                ]);
-            }
-        }
-
-        $series = $cardsIncidents
-            ->map(function ($incident) {
-                return $incident->count;
-            });
-
-        $labels = $cardsIncidents
-            ->map(function ($incident) {
-                return $incident->Indicator->Name;
-            });
-
-        $key = $cardsIncidents
-            ->map(function ($incident) {
-            return $incident->indicator;
-        });
-
-        $series = $series->prepend(0);
-        $labels = $labels->prepend('General');
-        $key = $key->prepend(0);
-
-        $data = [
-            'title' => 'Incidentes por tipo',
-            'series' => $series,
-            'labels' => $labels,
-            'key' => $key,
-            'type' => 'cards'
-        ];
-
         return $data;
     }
 

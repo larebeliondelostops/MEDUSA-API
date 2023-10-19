@@ -103,7 +103,7 @@ class StrategyHealth implements HealthInterface
                     'numberOfEmergenciesDay' => $health->numberOfEmergenciesDay,
                     'position' => [
                         'type' => "Point",
-                        'coordinates' => [json_decode($health->position)->coordinates]
+                        'coordinates' => json_decode($health->position)->coordinates
                     ]
                 ]
             ], 200, [], JSON_PRETTY_PRINT);

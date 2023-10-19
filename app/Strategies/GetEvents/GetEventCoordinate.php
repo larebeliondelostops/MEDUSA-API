@@ -2,6 +2,7 @@
 
 namespace App\Strategies\GetEvents;
 
+use Carbon\Carbon;
 use App\Strategies\Interface\GetEventInterface;
 use App\Models\Event;
 
@@ -22,7 +23,7 @@ class GetEventCoordinate implements GetEventInterface
     public function getAllEvents()
     {
 
-        $events = Event::with('eventType', 'eventCoordinate')->get();
+        $events = Event::with('eventType', 'eventCoordinate')->where('endDate', '>=', Carbon::now())->get();
 
         $eventsOrder = $this->OrderEvents($events);
 

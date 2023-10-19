@@ -71,12 +71,13 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $series = [];
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < $cardsIncidents->count(); $i++) {
             $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
 
             $series[] = [
                 'data' => $cardsIncidents[$i]->count,
-                'percent' => $porcentaje
+                'percent' => $porcentaje,
+                'type' => $porcentaje > 0 ? 'red' : 'green'
             ];
         }
 

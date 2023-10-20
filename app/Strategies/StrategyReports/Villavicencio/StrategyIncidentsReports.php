@@ -12,13 +12,11 @@ use App\Strategies\Interface\ReportsInterface;
 class StrategyIncidentsReports implements ReportsInterface
 {
     private $indicator;
-
-    public function __construct()
-    {
-    }
+    private $request;
 
     public function getReportsData(Request $request)
     {
+        $this->request = $request;
         $this->indicator = $request->indicator ?? null;
         if ($this->indicator != null) {
             $reportsData = [
@@ -45,6 +43,14 @@ class StrategyIncidentsReports implements ReportsInterface
         $hoy = Carbon::now();
 
         $hace_30_dias = $hoy->copy()->subDays(30);
+
+        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $hoy = Carbon::parse($this->request->start);
+            $hace_30_dias = Carbon::parse($this->request->end);
+            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+        }
 
         $primerDiaDelMes = $hoy->copy()->firstOfMonth();
 
@@ -88,7 +94,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $data = [
             'title' => 'Cards de incidentes con sus respectivos porcentajes',
-            'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
             'type' => 'cards'
@@ -99,10 +105,18 @@ class StrategyIncidentsReports implements ReportsInterface
 
     public function tabsIncidents()
     {
-        $tabsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
-            ->groupBy('indicator')
-            ->orderBy('count', 'desc')
-            ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $tabsIncidents = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                ->selectRaw('indicator, COUNT(*) as count')
+                ->groupBy('indicator')
+                ->orderBy('count', 'desc')
+                ->get();
+        } else {
+            $tabsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+                ->groupBy('indicator')
+                ->orderBy('count', 'desc')
+                ->get();
+        }
 
         $indicadores = Indicator::all();
 
@@ -148,19 +162,38 @@ class StrategyIncidentsReports implements ReportsInterface
 
     public function incidensByMonth()
     {
-        if ($this->indicator != null){
-            $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                ->where('indicator', $this->indicator)
-                ->where('year', date('Y'))
-                ->groupBy('month')
-                ->orderBy('month', 'asc')
-                ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            if ($this->indicator != null){
+                $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->selectRaw('month, COUNT(*) as count')
+                    ->where('indicator', $this->indicator)
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            } else {
+                $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->selectRaw('month, COUNT(*) as count')
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            }
         } else {
-            $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                ->where('year', date('Y'))
-                ->groupBy('month')
-                ->orderBy('month', 'asc')
-                ->get();
+            if ($this->indicator != null){
+                $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
+                    ->where('indicator', $this->indicator)
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            } else {
+                $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            }
         }
 
         $series = [];
@@ -172,13 +205,20 @@ class StrategyIncidentsReports implements ReportsInterface
             }
         }
 
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = date('Y');
+        }
+
         $data = [
             'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por mes' : 'Incidentes por mes',
-            'date' =>  date('Y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
             'type' => 'area'
         ];
+
         return $data;
     }
 
@@ -188,7 +228,16 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $hace_30_dias = $hoy->subDays(30);
 
-        $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $hace_30_dias)->get();
+        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $hoy = Carbon::parse($this->request->start);
+            $hace_30_dias = Carbon::parse($this->request->end);
+            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+        }
+
+        $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $hace_30_dias->toDateString())->get();
+
         $indicadores_usados = $incidentes->pluck('indicator');
 
         $series = [];
@@ -206,7 +255,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $data = [
             'title' => 'Incidentes por tipo últimos 30 días',
-            'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
             'type' => 'bar'
@@ -217,23 +266,47 @@ class StrategyIncidentsReports implements ReportsInterface
 
     public function incidentsByWeekDay()
     {
-        if ($this->indicator != null){
-            $incidentes_por_tipo_incidente = Incident::select('indicator')
-                ->where('indicator', $this->indicator)
-                ->groupBy('indicator')
-                ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            if ($this->indicator != null){
+                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('indicator')
+                    ->where('indicator', $this->indicator)
+                    ->groupBy('indicator')
+                    ->get();
+            } else {
+                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('indicator')
+                    ->groupBy('indicator')
+                    ->get();
+            }
         } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator')
-                ->groupBy('indicator')
-                ->get();
+            if ($this->indicator != null){
+                $incidentes_por_tipo_incidente = Incident::select('indicator')
+                    ->where('indicator', $this->indicator)
+                    ->groupBy('indicator')
+                    ->get();
+            } else {
+                $incidentes_por_tipo_incidente = Incident::select('indicator')
+                    ->groupBy('indicator')
+                    ->get();
+            }
         }
 
         $series = [];
+
         foreach ($incidentes_por_tipo_incidente as $incidente_por_tipo_incidente) {
-            $incidentes_por_dia = Incident::where('indicator', $incidente_por_tipo_incidente->indicator)
-                ->selectRaw('day, COUNT(*) as count')
-                ->groupBy('day')
-                ->get();
+            if (isset($this->request->start) && isset($this->request->end)) {
+                $incidentes_por_dia = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->where('indicator', $incidente_por_tipo_incidente->indicator)
+                    ->selectRaw('day, COUNT(*) as count')
+                    ->groupBy('day')
+                    ->get();
+            } else {
+                $incidentes_por_dia = Incident::where('indicator', $incidente_por_tipo_incidente->indicator)
+                    ->selectRaw('day, COUNT(*) as count')
+                    ->groupBy('day')
+                    ->get();
+            }
 
             $data = [];
             foreach (Helper::DAY_NUMBER as $day) {
@@ -251,9 +324,15 @@ class StrategyIncidentsReports implements ReportsInterface
 
         }
 
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
         $data = [
             'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
-            'date' =>  'Historico',
+            'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
             'type' => 'column'

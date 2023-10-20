@@ -2,21 +2,22 @@
 
 namespace App\Strategies\StrategyReports\Villavicencio;
 
-use App\Helpers\Helper;
 use Carbon\Carbon;
 use App\Models\Event;
-use Illuminate\Http\Request;
-use App\Models\CriminalActs;
+use App\Helpers\Helper;
 use App\Models\EventType;
+use Illuminate\Http\Request;
 use App\Strategies\GetEvents\GetEventCoordinate;
 use App\Strategies\Interface\ReportsInterface;
 
 class StrategyEventsReports implements ReportsInterface
 {
     private $type;
+    private $request;
 
     public function getReportsData(Request $request)
     {
+        $this->request = $request;
         $this->type = $request->type ?? null;
         if ($this->type != null) {
             $reportsData = [
@@ -40,10 +41,18 @@ class StrategyEventsReports implements ReportsInterface
 
     public function tabsEvents()
     {
-        $tabsEvents = Event::selectRaw('events.id_event_type, COUNT(*) as count')
-            ->groupBy('events.id_event_type')
-            ->orderBy('count', 'desc')
-            ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $tabsEvents = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                ->selectRaw('events.id_event_type, COUNT(*) as count')
+                ->groupBy('events.id_event_type')
+                ->orderBy('count', 'desc')
+                ->get();
+        } else {
+            $tabsEvents = Event::selectRaw('events.id_event_type, COUNT(*) as count')
+                ->groupBy('events.id_event_type')
+                ->orderBy('count', 'desc')
+                ->get();
+        }
 
         $tiposDeEventos = EventType::all();
 
@@ -93,6 +102,14 @@ class StrategyEventsReports implements ReportsInterface
 
         $hace_30_dias = $hoy->copy()->subDays(30);
 
+        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $hoy = Carbon::parse($this->request->start);
+            $hace_30_dias = Carbon::parse($this->request->end);
+            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+        }
+
         $primerDiaDelMes = $hoy->copy()->firstOfMonth();
 
         $diasTranscurridos = $hoy->copy()->diffInDays($primerDiaDelMes);
@@ -135,7 +152,7 @@ class StrategyEventsReports implements ReportsInterface
 
         $data = [
             'title' => 'Cards de eventos con sus respectivos porcentajes',
-            'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
             'type' => 'cards'
@@ -146,19 +163,38 @@ class StrategyEventsReports implements ReportsInterface
 
     public function eventsByMonth()
     {
-        if ($this->type != null){
-            $eventosPorMes = Event::selectRaw('month, COUNT(*) as count')
-                ->where('id_event_type', $this->type)
-                ->where('year', date('Y'))
-                ->groupBy('month')
-                ->orderBy('month', 'asc')
-                ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            if ($this->type != null){
+                $eventosPorMes = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->selectRaw('month, COUNT(*) as count')
+                    ->where('id_event_type', $this->type)
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            } else {
+                $eventosPorMes = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->selectRaw('month, COUNT(*) as count')
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            }
         } else {
-            $eventosPorMes = Event::selectRaw('month, COUNT(*) as count')
-                ->where('year', date('Y'))
-                ->groupBy('month')
-                ->orderBy('month', 'asc')
-                ->get();
+            if ($this->type != null){
+                $eventosPorMes = Event::selectRaw('month, COUNT(*) as count')
+                    ->where('id_event_type', $this->type)
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            } else {
+                $eventosPorMes = Event::selectRaw('month, COUNT(*) as count')
+                    ->where('year', date('Y'))
+                    ->groupBy('month')
+                    ->orderBy('month', 'asc')
+                    ->get();
+            }
         }
 
         $series = [];
@@ -170,9 +206,15 @@ class StrategyEventsReports implements ReportsInterface
             }
         }
 
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = date('Y');
+        }
+
         $data = [
             'title' => $this->type != null ? EventType::find($this->type)->eventName . ' por mes' : 'Eventos por mes',
-            'date' =>  date('Y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
             'type' => 'area'
@@ -183,24 +225,47 @@ class StrategyEventsReports implements ReportsInterface
 
     public function eventsByWeekDay()
     {
-        if ($this->type != null){
-            $eventos_por_tipo = Event::select('id_event_type')
-                ->where('id_event_type', $this->type)
-                ->groupBy('id_event_type')
-                ->get();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            if ($this->type != null){
+                $eventos_por_tipo = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('id_event_type')
+                    ->where('id_event_type', $this->type)
+                    ->groupBy('id_event_type')
+                    ->get();
+            } else {
+                $eventos_por_tipo = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('id_event_type')
+                    ->groupBy('id_event_type')
+                    ->get();
+            }
         } else {
-            $eventos_por_tipo = Event::select('id_event_type')
-                ->groupBy('id_event_type')
-                ->get();
+            if ($this->type != null){
+                $eventos_por_tipo = Event::select('id_event_type')
+                    ->where('id_event_type', $this->type)
+                    ->groupBy('id_event_type')
+                    ->get();
+            } else {
+                $eventos_por_tipo = Event::select('id_event_type')
+                    ->groupBy('id_event_type')
+                    ->get();
+            }
         }
 
         $series = [];
 
         foreach ($eventos_por_tipo as $evento_por_tipo) {
-            $eventos_por_dia = Event::where('id_event_type', $evento_por_tipo->id_event_type)
+            if (isset($this->request->start) && isset($this->request->end)) {
+                $eventos_por_dia = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
+                ->where('id_event_type', $evento_por_tipo->id_event_type)
                 ->selectRaw('day, COUNT(*) as count')
                 ->groupBy('day')
                 ->get();
+            } else {
+                $eventos_por_dia = Event::where('id_event_type', $evento_por_tipo->id_event_type)
+                ->selectRaw('day, COUNT(*) as count')
+                ->groupBy('day')
+                ->get();
+            }
 
             $data = [];
             foreach (Helper::DAY_NUMBER as $day) {
@@ -218,9 +283,15 @@ class StrategyEventsReports implements ReportsInterface
 
         }
 
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
         $data = [
             'title' => $this->type != null ? EventType::find($this->type)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
-            'date' =>  'Historico',
+            'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
             'type' => 'column'
@@ -235,7 +306,15 @@ class StrategyEventsReports implements ReportsInterface
 
         $hace_30_dias = $hoy->subDays(30);
 
-        $eventos = Event::with('eventType')->whereDate('created_at', '>=', $hace_30_dias)->get();
+        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $hoy = Carbon::parse($this->request->start);
+            $hace_30_dias = Carbon::parse($this->request->end);
+            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+        }
+
+        $eventos = Event::with('eventType')->whereDate('created_at', '>=', $hace_30_dias->toDateString())->get();
         $tipos_usados = $eventos->pluck('id_event_type');
 
         $series = [];
@@ -253,7 +332,7 @@ class StrategyEventsReports implements ReportsInterface
 
         $data = [
             'title' => 'Eventos por tipo últimos 30 días',
-            'date' =>  $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y'),
+            'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
             'type' => 'bar'

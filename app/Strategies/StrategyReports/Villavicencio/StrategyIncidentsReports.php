@@ -76,7 +76,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
             $series[] = [
                 'data' => $cardsIncidents[$i]->count,
-                'percent' => $porcentaje
+                'percent' => round($porcentaje, 2)
             ];
         }
 
@@ -172,7 +172,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por mes' : 'Incidentes por mes',
+            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
             'date' =>  date('Y'),
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],

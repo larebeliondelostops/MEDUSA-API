@@ -108,3 +108,19 @@ Route::get('/ver-video4', function () {
     $filePath = Storage::disk('public')->path($videoPath);
     return response()->file($filePath);
 });
+
+Route::get('/correlacionador', function () {
+    $query = request('query');
+    $page = request('page', 1);
+
+    // Construye la URL de la API con los parámetros.
+    $apiUrl = "https://probabilistico.medusaapi.online/correlacionador?query=$query&page=$page";
+
+    // Realiza una solicitud HTTP GET a la API.
+    $response = Http::get($apiUrl);
+
+    // Decodifica la respuesta JSON.
+    $data = $response->json();
+
+    return $data;
+});

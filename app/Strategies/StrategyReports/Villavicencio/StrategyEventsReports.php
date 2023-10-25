@@ -33,6 +33,7 @@ class StrategyEventsReports implements ReportsInterface
                 $this->eventsByMonth(),
                 $this->eventsByTypeLastTDays(),
                 $this->eventsByWeekDay(),
+                $this->EventsByCapacityRange()
             ];
         }
 
@@ -373,15 +374,17 @@ class StrategyEventsReports implements ReportsInterface
         }
 
         return response()->json(['reporte' => $reporte]);
-    }
+    }*/
 
     public function EventsByCapacityRange()
     {
-        // Obtener el inicio del mes actual
-        $inicioMesActual = Carbon::now()->startOfMonth();
-
-        // Obtener el final del mes actual
-        $finalMesActual = Carbon::now()->endOfMonth();
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $inicioMesActual = Carbon::parse($this->request->start);
+            $finalMesActual = Carbon::parse($this->request->end);
+        } else {
+            $inicioMesActual = Carbon::now()->startOfMonth();
+            $finalMesActual = Carbon::now()->endOfMonth();
+        }
 
         $rangos = [
             ['min' => 0, 'max' => 100],
@@ -394,7 +397,8 @@ class StrategyEventsReports implements ReportsInterface
             ['min' => 8001, 'max' => 10000],
         ];
 
-        $reporte = [];
+        $series = [];
+        $labels = [];
 
         foreach ($rangos as $rango) {
             // Obtener los eventos que se encuentren dentro del rango de capacidad y del mes actual
@@ -405,17 +409,31 @@ class StrategyEventsReports implements ReportsInterface
             // Obtener la cantidad de eventos para el rango de capacidad
             $cantidadEventos = $eventos->count();
 
-            // Agregar el rango de capacidad y cantidad de eventos al reporte
-            $reporte[] = [
-                'rangoCapacidad' => $rango['min'] . '-' . $rango['max'],
-                'eventCount' => $cantidadEventos,
-            ];
+            // Agregar la cantidad de eventos a la serie
+            $series[] = $cantidadEventos;
+            $labels[] = 'Entre ' . $rango['min'] . '-' . $rango['max'];
         }
 
-        return response()->json(['reporte' => $reporte]);
+        $date = $inicioMesActual->format('d/m/y') . ' - ' .$finalMesActual->format('d/m/y');
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $title = 'Eventos por capacidad desde ' . $inicioMesActual->format('d/m/y') . ' hasta ' . $finalMesActual->format('d/m/y');
+        } else {
+            $title = 'Eventos por capacidad del último mes';
+        }
+
+        $data = [
+            'title' => $title,
+            'date' =>  $date,
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'pie'
+        ];
+
+        return $data;
     }
 
-
+    /*
     public function EventsPastAndFuture()
     {
         // Obtener la fecha actual

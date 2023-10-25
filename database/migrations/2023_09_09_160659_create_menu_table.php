@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('path')->nullable();
             $table->string('icon');
             $table->string('slug');
+            $table->float('order')->default(0);
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });

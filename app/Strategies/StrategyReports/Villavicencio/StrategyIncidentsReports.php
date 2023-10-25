@@ -145,7 +145,7 @@ class StrategyIncidentsReports implements ReportsInterface
             return $incident->indicator;
         });
 
-        $series = $series->prepend(Incident::count());
+        $series = $series->prepend(Incident::whereBetween('created_at', [$this->request->start, $this->request->end])->count());
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 

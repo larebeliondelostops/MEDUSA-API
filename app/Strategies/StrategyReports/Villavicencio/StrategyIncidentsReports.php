@@ -17,25 +17,36 @@ class StrategyIncidentsReports implements ReportsInterface
     public function getReportsData(Request $request)
     {
         $this->request = $request;
-        $this->indicator = $request->indicator ?? null;
-        if ($this->indicator != null) {
-            $reportsData = [
-                $this->tabsIncidents(),
+
+        $general = [
+            $this->cardsIncidents(),
+            $this->incidensByMonth(),
+            $this->incidentsByTypeLastTDays(),
+            $this->incidentsByWeekDay(),
+        ];
+
+        $dataByType = [];
+
+        $types = Incident::select('indicator')->groupBy('indicator')->get()->toArray();
+
+        foreach ($types as $type) {
+            $this->indicator = $type['indicator'] ?? null;
+            $dataByType[] = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
                 $this->points()
             ];
-        } else {
-            $reportsData = [
-                $this->tabsIncidents(),
-                $this->cardsIncidents(),
-                $this->incidensByMonth(),
-                $this->incidentsByTypeLastTDays(),
-                $this->incidentsByWeekDay(),
-            ];
         }
 
-        return response()->json(['reportsData' => $reportsData]);
+        $data = [
+            'tabs' => $this->tabsIncidents(),
+            'reportsData' => [
+                $general,
+                $dataByType
+            ]
+        ];
+
+        return response()->json($data);
     }
 
     public function cardsIncidents()
@@ -49,7 +60,7 @@ class StrategyIncidentsReports implements ReportsInterface
         if (isset($this->request->start) && isset($this->request->end)) {
             $hoy = Carbon::parse($this->request->start);
             $hace_30_dias = Carbon::parse($this->request->end);
-            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+            $date = $hoy->format('d/m/y') . ' - ' . $hace_30_dias->format('d/m/y');
         }
 
         $primerDiaDelMes = $hoy->copy()->firstOfMonth();
@@ -62,6 +73,22 @@ class StrategyIncidentsReports implements ReportsInterface
             ->orderBy('count', 'desc')
             ->take(3)
             ->get();
+
+        $cantidadEncontrados = count($cardsIncidents);
+
+        if ($cantidadEncontrados < 3) {
+
+            $existingIndicators = $cardsIncidents->pluck('indicator')->toArray();
+
+            $cardsOthersIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+                ->whereNotIn('indicator', $existingIndicators)
+                ->groupBy('indicator')
+                ->orderBy('count', 'desc')
+                ->take(3 - $cantidadEncontrados)
+                ->get();
+
+            $cardsIncidents = $cardsIncidents->concat($cardsOthersIncidents);
+        }
 
         $indicadores = array_column($cardsIncidents->toArray(), 'indicator');
 
@@ -145,7 +172,12 @@ class StrategyIncidentsReports implements ReportsInterface
             return $incident->indicator;
         });
 
-        $series = $series->prepend(Incident::whereBetween('created_at', [$this->request->start, $this->request->end])->count());
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $series = $series->prepend(Incident::whereBetween('created_at', [$this->request->start, $this->request->end])->count());
+        } else {
+            $series = $series->prepend(Incident::count());
+        }
+
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 

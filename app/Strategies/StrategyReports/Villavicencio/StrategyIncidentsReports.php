@@ -25,25 +25,26 @@ class StrategyIncidentsReports implements ReportsInterface
             $this->incidentsByWeekDay(),
         ];
 
-        $dataByType = [];
+        $generalData = [];
+
+        array_push($generalData, $general);
 
         $types = Incident::select('indicator')->groupBy('indicator')->get()->toArray();
 
         foreach ($types as $type) {
+            $data = [];
             $this->indicator = $type['indicator'] ?? null;
-            $dataByType[] = [
+            $data = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
                 $this->points()
             ];
+            array_push($generalData, $data);
         }
 
         $data = [
             'tabs' => $this->tabsIncidents(),
-            'reportsData' => [
-                $general,
-                $dataByType
-            ]
+            'reportsData' => $generalData
         ];
 
         return response()->json($data);

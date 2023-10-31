@@ -29,7 +29,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
         array_push($generalData, $general);
 
-        $types = Incident::select('indicator')->groupBy('indicator')->get()->toArray();
+        $types = Incident::select('indicator')->orderBy('indicator', 'asc')->groupBy('indicator')->get()->toArray();
 
         foreach ($types as $type) {
             $data = [];
@@ -59,9 +59,9 @@ class StrategyIncidentsReports implements ReportsInterface
         $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
 
         if (isset($this->request->start) && isset($this->request->end)) {
-            $hoy = Carbon::parse($this->request->start);
-            $hace_30_dias = Carbon::parse($this->request->end);
-            $date = $hoy->format('d/m/y') . ' - ' . $hace_30_dias->format('d/m/y');
+            $hoy = Carbon::parse($this->request->end);
+            $hace_30_dias = Carbon::parse($this->request->start);
+            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
         }
 
         $primerDiaDelMes = $hoy->copy()->firstOfMonth();
@@ -88,6 +88,10 @@ class StrategyIncidentsReports implements ReportsInterface
                 ->take(3 - $cantidadEncontrados)
                 ->get();
 
+            foreach ($cardsOthersIncidents as $incident) {
+                $incident->count = 0;
+            }
+
             $cardsIncidents = $cardsIncidents->concat($cardsOthersIncidents);
         }
 
@@ -96,18 +100,35 @@ class StrategyIncidentsReports implements ReportsInterface
         $cantidadDiaInicioToDiaActualAnterior = [];
         $cantidadDiaInicioToDiaActualActual = [];
 
-        foreach($indicadores as $indicador) {
+        if (isset($this->request->start) && isset($this->request->end)) {
+            foreach($indicadores as $indicador) {
+                // $hoy es end y $hace_30_dias es start
+                $primerDiaDelMes = $hoy->copy()->firstOfMonth();
 
-            $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+                $diasTranscurridos = $hoy->copy()->diffInDays($hace_30_dias);
 
-            $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
+    
+                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
+            }
+        } else {
+            foreach($indicadores as $indicador) {
+
+                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+    
+                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+            }
         }
 
         $series = [];
 
         for ($i = 0; $i < $cardsIncidents->count(); $i++) {
-            $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
 
+            $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
+            
+            // Si en la actualidad no hay mondaes
+            $porcentaje = $cantidadDiaInicioToDiaActualActual[$i] == 0 ? $cantidadDiaInicioToDiaActualAnterior[$i] * -100 : $porcentaje;
+            
             $series[] = [
                 'data' => $cardsIncidents[$i]->count,
                 'percent' => $porcentaje,
@@ -146,7 +167,7 @@ class StrategyIncidentsReports implements ReportsInterface
                 ->get();
         }
 
-        $indicadores = Indicator::all();
+        $indicadores = Indicator::orderBy('id', 'DESC')->get();
 
         foreach ($indicadores as $indicardor) {
             if (!$tabsIncidents->pluck('indicator')->contains($indicardor->id)) {
@@ -183,7 +204,7 @@ class StrategyIncidentsReports implements ReportsInterface
         $key = $key->prepend(0);
 
         $data = [
-            'title' => 'Incidentes por tipo',
+            'title' => 'Tabs',
             'series' => $series,
             'labels' => $labels,
             'key' => $key,
@@ -245,7 +266,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por mes' : 'Incidentes por mes',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -264,8 +285,8 @@ class StrategyIncidentsReports implements ReportsInterface
         $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
 
         if (isset($this->request->start) && isset($this->request->end)) {
-            $hoy = Carbon::parse($this->request->start);
-            $hace_30_dias = Carbon::parse($this->request->end);
+            $hoy =  Carbon::parse($this->request->end);
+            $hace_30_dias = Carbon::parse($this->request->start);
             $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
         }
 
@@ -287,7 +308,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => 'Incidentes por tipo últimos 30 días',
+            'title' => '# Incidentes por tipo últimos 30 días',
             'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
@@ -364,7 +385,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
             'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -377,14 +398,14 @@ class StrategyIncidentsReports implements ReportsInterface
     public function points()
     {
         $incidents = Incident::where('indicator', $this->indicator)->get();
-
+        
         $incidents = $incidents->map(function ($incident) {
             $coordenadas = explode(', ', $incident->position);
             // Convierte los valores en números
             $latitud = (float)$coordenadas[0];
             $longitud = (float)$coordenadas[1];
 
-            return [$latitud , $longitud];
+            return [$longitud , $latitud];
         });
 
         $incidents = [

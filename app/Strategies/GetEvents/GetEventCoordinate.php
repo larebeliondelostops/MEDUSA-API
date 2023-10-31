@@ -4,6 +4,7 @@ namespace App\Strategies\GetEvents;
 
 use App\Strategies\Interface\GetEventInterface;
 use App\Models\Event;
+use Carbon\Carbon;
 
 /**
  * Clase que maneja toda la logica para la consulta de eventos con coordenadas
@@ -22,7 +23,7 @@ class GetEventCoordinate implements GetEventInterface
     public function getAllEvents()
     {
 
-        $events = Event::with('eventType', 'eventCoordinate')->get();
+        $events = Event::with('eventType', 'eventCoordinate')->where('endDate', '>=', Carbon::now())->get();
 
         $eventsOrder = $this->OrderEvents($events);
 
@@ -85,7 +86,7 @@ class GetEventCoordinate implements GetEventInterface
         $eventosOrganizados = $events->map(function ($evento) {
 
             return [
-                //'markerType' => 55,
+                'markerType' => 55,
                 'properties' => [
                     'ID' => $evento->id,
                     'idEventType' => $evento->idEventType,

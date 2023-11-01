@@ -18,26 +18,38 @@ class StrategyEventsReports implements ReportsInterface
     public function getReportsData(Request $request)
     {
         $this->request = $request;
-        $this->type = $request->type ?? null;
-        if ($this->type != null) {
-            $reportsData = [
-                $this->tabsEvents(),
+
+        $general = [
+            $this->cardsEvents(),
+            $this->eventsByMonth(),
+            $this->eventsByTypeLastTDays(),
+            $this->eventsByWeekDay(),
+            $this->EventsByCapacityRange()
+        ];
+
+        $generalData = [];
+
+        array_push($generalData, $general);
+
+        $types = Event::select('id_event_type')->groupBy('id_event_type')->get()->toArray();
+
+        foreach ($types as $type) {
+            $data = [];
+            $this->type = $type['id_event_type'] ?? null;
+            $data = [
                 $this->eventsByMonth(),
                 $this->eventsByWeekDay(),
                 $this->polygon()
             ];
-        } else {
-            $reportsData = [
-                $this->tabsEvents(),
-                $this->cardsEvents(),
-                $this->eventsByMonth(),
-                $this->eventsByTypeLastTDays(),
-                $this->eventsByWeekDay(),
-                $this->EventsByCapacityRange()
-            ];
+            array_push($generalData, $data);
         }
 
-        return response()->json(['reportsData' => $reportsData]);
+        $data = [
+            'tabs' => $this->tabsEvents(),
+            'reportsData' => $generalData
+        ];
+
+        return response()->json($data);
     }
 
     public function tabsEvents()
@@ -82,7 +94,12 @@ class StrategyEventsReports implements ReportsInterface
             return $event->id_event_type;
         });
 
-        $series = $series->prepend(Event::count());
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $series = $series->prepend(Event::whereBetween('created_at', [$this->request->start, $this->request->end])->count());
+        } else {
+            $series = $series->prepend(Event::count());
+        }
+
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 
@@ -106,8 +123,8 @@ class StrategyEventsReports implements ReportsInterface
         $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
 
         if (isset($this->request->start) && isset($this->request->end)) {
-            $hoy = Carbon::parse($this->request->start);
-            $hace_30_dias = Carbon::parse($this->request->end);
+            $hoy = Carbon::parse($this->request->end);
+            $hace_30_dias = Carbon::parse($this->request->start);
             $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
         }
 
@@ -122,22 +139,58 @@ class StrategyEventsReports implements ReportsInterface
             ->take(3)
             ->get();
 
+        $cantidadEncontrados = count($cardsEvents);
+
+        if ($cantidadEncontrados < 3) {
+
+            $existingIndicators = $cardsEvents->pluck('id_event_type')->toArray();
+
+            $cardsOthersEvents = Event::selectRaw('id_event_type, COUNT(*) as count')
+                ->whereNotIn('id_event_type', $existingIndicators)
+                ->groupBy('id_event_type')
+                ->orderBy('count', 'desc')
+                ->take(3 - $cantidadEncontrados)
+                ->get();
+
+            foreach ($cardsOthersEvents as $incident) {
+                $incident->count = 0;
+            }
+
+            $cardsEvents = $cardsEvents->concat($cardsOthersEvents);
+        }
+
         $tipos = array_column($cardsEvents->toArray(), 'id_event_type');
 
         $cantidadDiaInicioToDiaActualAnterior = [];
         $cantidadDiaInicioToDiaActualActual = [];
 
-        foreach($tipos as $tipo) {
+        if (isset($this->request->start) && isset($this->request->end)) {
+            foreach($tipos as $tipo) {
+                // $hoy es end y $hace_30_dias es start
+                $primerDiaDelMes = $hoy->copy()->firstOfMonth();
 
-            $cantidadDiaInicioToDiaActualAnterior[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+                $diasTranscurridos = $hoy->copy()->diffInDays($hace_30_dias);
 
-            $cantidadDiaInicioToDiaActualActual[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+                $cantidadDiaInicioToDiaActualAnterior[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
+
+                $cantidadDiaInicioToDiaActualActual[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
+            }
+        } else {
+            foreach($tipos as $tipo) {
+
+                $cantidadDiaInicioToDiaActualAnterior[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+
+                $cantidadDiaInicioToDiaActualActual[] = Event::with('eventType')->where('id_event_type', $tipo)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+            }
         }
 
         $series = [];
 
         for ($i = 0; $i < $cardsEvents->count(); $i++) {
+
             $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
+
+            $porcentaje = $cantidadDiaInicioToDiaActualActual[$i] == 0 ? $cantidadDiaInicioToDiaActualAnterior[$i] * 100 : $porcentaje;
 
             $series[] = [
                 'data' => $cardsEvents[$i]->count,
@@ -257,15 +310,15 @@ class StrategyEventsReports implements ReportsInterface
         foreach ($eventos_por_tipo as $evento_por_tipo) {
             if (isset($this->request->start) && isset($this->request->end)) {
                 $eventos_por_dia = Event::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->where('id_event_type', $evento_por_tipo->id_event_type)
-                ->selectRaw('day, COUNT(*) as count')
-                ->groupBy('day')
-                ->get();
+                    ->where('id_event_type', $evento_por_tipo->id_event_type)
+                    ->selectRaw('day, COUNT(*) as count')
+                    ->groupBy('day')
+                    ->get();
             } else {
                 $eventos_por_dia = Event::where('id_event_type', $evento_por_tipo->id_event_type)
-                ->selectRaw('day, COUNT(*) as count')
-                ->groupBy('day')
-                ->get();
+                    ->selectRaw('day, COUNT(*) as count')
+                    ->groupBy('day')
+                    ->get();
             }
 
             $data = [];
@@ -432,57 +485,4 @@ class StrategyEventsReports implements ReportsInterface
 
         return $data;
     }
-
-    /*
-    public function EventsPastAndFuture()
-    {
-        // Obtener la fecha actual
-        $fechaActual = Carbon::now();
-
-        // Obtener los eventos pasados
-        $eventosPasados = Event::where('startDate', '<', $fechaActual)->get();
-
-        // Obtener los eventos futuros
-        $eventosFuturos = Event::where('startDate', '>', $fechaActual)->get();
-
-        $reporte = [
-            'eventosPasados' => $eventosPasados->count(),
-            'eventosFuturos' => $eventosFuturos->count(),
-        ];
-
-        return response()->json(['reporte' => $reporte]);
-    }
-
-    public function EventsByTypeAndAuthorizingEntity()
-    {
-        // Obtener todas las entidades autorizadoras disponibles en los eventos
-        $entidadesAutorizadoras = Event::distinct('authorizingEntity')->pluck('authorizingEntity');
-
-        $reporte = [];
-
-        foreach ($entidadesAutorizadoras as $entidad) {
-            // Obtener los eventos asociados a la entidad autorizadora con su tipo de evento
-            $eventos = Event::join('eventsType', 'events.idEventType', '=', 'eventsType.id')
-                ->where('events.authorizingEntity', $entidad)
-                ->select('events.*', 'eventsType.eventName as eventName')
-                ->get();
-
-            // Obtener la cantidad de eventos por tipo de evento para la entidad autorizadora
-            $eventosPorTipo = $eventos->groupBy('eventName')
-                ->map(function ($events) {
-                    return [
-                        'eventName' => $events->first()->eventName,
-                        'count' => $events->count(),
-                    ];
-                });
-
-            // Agregar entidad autorizadora y eventos por tipo al reporte
-            $reporte[] = [
-                'entidadAutorizadora' => $entidad,
-                'eventosPorTipo' => $eventosPorTipo,
-            ];
-        }
-
-        return response()->json(['reporte' => $reporte]);
-    } */
 }

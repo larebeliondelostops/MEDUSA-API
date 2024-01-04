@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,13 +13,13 @@ class Document extends Model
 
     protected $fillable = [
         'name',
-        'content',
+        'url',
         'responsible',
-        'file_id',
+        'folder_id',
     ];
 
-    public function file()
+    public function folder()
     {
-        return $this->belongsTo(File::class, 'file_id');
+        return $this->belongsTo(Folder::class, 'folder_id');
     }
 }

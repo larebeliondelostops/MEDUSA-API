@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,18 +16,28 @@ class Project extends Model
     protected $fillable = [
         'bpin',
         'name',
+        'ocad',
+        'type',
         'state',
         'substate',
         'total_value',
         'requested_value',
         'executed_value',
         'physical_progress',
-        'financial_advance',
+        'responsible_entity',
+        'sector',
+        'location',
         'beneficiaries',
+        'planner',
+        'execution_approval_date',
+        'completion_date',
+        'reporting_frequency',
+        'general_objective',
+        'responsible',
     ];
 
-    public function files()
+    public function folders()
     {
-        return $this->hasMany(File::class, 'project_id');
+        return $this->hasMany(Folder::class, 'project_id');
     }
 }

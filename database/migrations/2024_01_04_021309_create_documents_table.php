@@ -14,12 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->id('document_id');
-            $table->string('name', 100)->nullable();
-            $table->text('content')->nullable();
-            $table->string('responsible', 100)->nullable();
-            $table->unsignedBigInteger('file_id')->nullable();
-            $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade')->onUpdate('cascade');
+            $table->id();
+            $table->string('name', 100);
+            $table->string('url', 255);
+            $table->string('responsible', 100);
+            $table->unsignedBigInteger('folder_id');
+            $table->timestamps();
+
+            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

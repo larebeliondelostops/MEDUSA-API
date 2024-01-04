@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('name_file_id')->nullable();
-            $table->unsignedBigInteger('stage_id')->nullable();
-            $table->unsignedBigInteger('higher_file_id')->nullable();
-            $table->string('project_id', 255)->nullable();
-            $table->foreign('name_file_id')->references('id')->on('name_files')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('name', 255);
+            $table->unsignedBigInteger('stage_id');
+            $table->string('project_id', 255);
+            $table->timestamps();
+
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('higher_file_id')->references('id')->on('files')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('folders');
     }
 };

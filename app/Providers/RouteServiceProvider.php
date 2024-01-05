@@ -92,6 +92,8 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api/allData.php');
             require base_path('routes/api/forms.php');
             require base_path('routes/api/CRUD.php');
+            require base_path('routes/api/Viper/DocumentRoutes.php');
+            require base_path('routes/api/Viper/FolderRoutes.php');
             // ... otras rutas
         });
     }

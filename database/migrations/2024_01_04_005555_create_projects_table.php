@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('bpin', 255)->primary();
             $table->string('name', 100);
             $table->string('ocad', 100);
-            $table->string('type', 100);
             $table->string('state', 100);
             $table->string('substate', 100);
             $table->decimal('total_value', 15, 2); 
@@ -31,6 +30,8 @@ return new class extends Migration
             $table->string('planner', 255);
             $table->date('execution_approval_date');
             $table->date('completion_date')->nullable();
+            $table->date('start_date_execution_phase')->nullable();
+            $table->integer('project_duration_in_months');
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
             $table->timestamps();

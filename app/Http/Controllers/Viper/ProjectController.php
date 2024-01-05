@@ -112,7 +112,7 @@ class ProjectController extends Controller
         try  
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
-            return response()->json($projectDTO, 200);
+            return response()->json($projectDTO->toArrayLowerCase(), 200);
         }
         catch(Exception $e)
         {

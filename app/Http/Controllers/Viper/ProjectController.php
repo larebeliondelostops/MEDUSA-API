@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Viper;
 
-use \DateTime;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\ProjectDTO;
+use App\Http\Request\Viper\ProjectRequest;
 use App\Interfaces\Viper\ProjectInterface;
+
+// Manejo de excepciones
+use Illuminate\Database\QueryException;
+use PDOException;
+use Exception;
 
 /** 
 *  Space for documentation -- coming soon
 **/
 class ProjectController extends Controller
 {
+    private const DEFAULT_PROJECT_PER_PAGE = 8;
     private ProjectInterface $projectInterface;
 
     public function __construct(ProjectInterface $projectInterface)
@@ -20,49 +25,98 @@ class ProjectController extends Controller
        $this->projectInterface = $projectInterface; 
     }
     
-    public function create(Request $request)
+    public function create(ProjectRequest $request)
     {  
-        $validatedData = $request->validate([
-            'bpin' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'ocad' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'substate' => 'required|string|max:255',
-            'total_value' => 'required|numeric',
-            'requested_value' => 'required|numeric',
-            'executed_value' => 'required|numeric',
-            'physical_progress' => 'required|numeric|between:0,100',
-            'responsible_entity' => 'required|string|max:255',
-            'sector' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'beneficiaries' => 'required|string|max:255',
-            'planner' => 'required|string|max:255',
-            'execution_approval_date' => 'required|date',
-            'completion_date' => 'required|date|after_or_equal:execution_approval_date',
-            'reporting_frequency' => 'required|integer|min:1',
-            'general_objective' => 'required|string|max:1000',
-            'responsible' => 'required|string|max:255',
-        ]);
+        try
+        {
+            $validatedData = $request->validated();
+            $projectDTO = new ProjectDTO($validatedData);
         
-        $validatedData['execution_approval_date'] = new DateTime($validatedData['execution_approval_date']);
-        $validatedData['completion_date'] = new DateTime($validatedData['completion_date']);
-    
-        $projectDTO = new ProjectDTO(...$validatedData);
-    
-        $result = $this->projectInterface->createNewProject($projectDTO);
-
-        if ($result)
+            $this->projectInterface->createNewProject($projectDTO);
             return response()->json([
                 'success' => true,
-                'message' => 'Project created successfully',
-                'data'    => $projectDTO,
+                'message' => 'Project created successfully.',
+                'data'    => $projectDTO->toArrayLowerCase(),
             ], 201);
-        else
+        }
+        catch(QueryException $e) // Error al realizar la consulta 
+        {
+            $errCode = $e->getCode();
+            if ($errCode == 23505)
+                return response()->json([
+                    'success' => false,
+                    'message' => 'A project with the same identifier already exists.',
+                ], 409);
+            else
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error proccesing request.',
+                ], 500);
+        }
+        catch(PDOException $e) // Error en la conexion con la DB
+        {
             return response()->json([
                 'success' => false,
-                'message' => 'Error creating project',
+                'message' => 'Failed to establish a connection with the database.',
             ], 500);
+        }
+        catch(Exception $e) // Error general 
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
+        }
+    }
 
+    public function update(ProjectRequest $request, string $bpin)
+    { 
+        try
+        {
+            $validatedData = $request->validated();
+            $projectDTO = new ProjectDTO($validatedData); 
+            
+            $this->projectInterface->updateProject($projectDTO, $bpin);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Project updated successfully.',
+                'data'    => $projectDTO,
+            ], 200);      
+        }
+        catch(Exception $e)
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
+        }
+    }
+
+    public function list(ProjectRequest $request)
+    {
+        try
+        {
+            $name = $request->input('name', null);
+            $projects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $name);
+            return response()->json($projects, 200);
+        }
+        catch(Exception $e) // Error general
+        {
+            return response()->json(null, 200);
+        }
+    }
+
+    public function get(ProjectRequest $request, string $bpin)
+    {
+        try  
+        {
+            $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
+            return response()->json($projectDTO, 200);
+        }
+        catch(Exception $e)
+        {
+
+        }
     }
 }

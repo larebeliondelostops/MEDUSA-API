@@ -17,7 +17,6 @@ class Project extends Model
         'bpin',
         'name',
         'ocad',
-        'type',
         'state',
         'substate',
         'total_value',
@@ -31,9 +30,10 @@ class Project extends Model
         'planner',
         'execution_approval_date',
         'completion_date',
+        'start_date_execution_phase',
+        'project_duration_in_months',
         'reporting_frequency',
         'general_objective',
-        'responsible',
     ];
 
     public function folders()

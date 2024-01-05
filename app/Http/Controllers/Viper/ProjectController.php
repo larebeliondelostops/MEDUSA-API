@@ -11,6 +11,7 @@ use App\Interfaces\Viper\ProjectInterface;
 use Illuminate\Database\QueryException;
 use PDOException;
 use Exception;
+use Illuminate\Http\Request;
 
 /** 
 *  Space for documentation -- coming soon
@@ -81,7 +82,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Project updated successfully.',
-                'data'    => $projectDTO,
+                'data'    => $projectDTO->toArrayLowerCase(),
             ], 200);      
         }
         catch(Exception $e)
@@ -93,7 +94,7 @@ class ProjectController extends Controller
         }
     }
 
-    public function list(ProjectRequest $request)
+    public function list(Request $request)
     {
         try
         {
@@ -103,20 +104,49 @@ class ProjectController extends Controller
         }
         catch(Exception $e) // Error general
         {
-            return response()->json(null, 200);
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
         }
     }
 
-    public function get(ProjectRequest $request, string $bpin)
+    public function get(Request $request, string $bpin)
     {
         try  
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
             return response()->json($projectDTO->toArrayLowerCase(), 200);
         }
-        catch(Exception $e)
+        catch(Exception $e) // Error general
         {
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
+        }
+    }
 
+    public function delete(Request $request, string $bpin)
+    {
+        try  
+        {
+            $projectDTO = $this->projectInterface->deleteProject($bpin);
+            return response()->json($projectDTO->toArrayLowerCase(), 200);
+        }
+        catch(Exception $e) // Error al eliminar proyecto no existente  
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
+        }
+        catch(Exception $e) // Error general
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'An internal server error occurred.',
+            ], 500);
         }
     }
 }

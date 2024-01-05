@@ -48,4 +48,13 @@ class ProjectService implements ProjectInterface
         $project = Project::find($bpin);
         return new ProjectDTO($project->toArray());
     }
+
+    public function deleteProject(string $bpin) : ProjectDTO
+    {
+        $project = Project::findOrFail($bpin);
+        $projectDTO = new ProjectDTO($project->toArray());
+        $project->delete();
+
+        return $projectDTO;
+    }
 }

@@ -10,4 +10,5 @@ interface ProjectInterface {
     public function updateProject(ProjectDTO $projectDTO, string $bpin):void;
     public function getAllProjectsPaginated(int $perPage, ?string $name) : LengthAwarePaginator;
     public function getProjectByBPIN(string $bpin) : ProjectDTO;
+    public function deleteProject(string $bpin) : ProjectDTO;
 }

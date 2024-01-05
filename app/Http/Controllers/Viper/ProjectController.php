@@ -37,7 +37,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Project created successfully.',
-                'data'    => $projectDTO->toArrayLowerCase(),
+                'data'    => $projectDTO->toArray(),
             ], 201);
         }
         catch(QueryException $e) // Error al realizar la consulta 
@@ -82,7 +82,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Project updated successfully.',
-                'data'    => $projectDTO->toArrayLowerCase(),
+                'data'    => $projectDTO->toArray(),
             ], 200);      
         }
         catch(Exception $e)
@@ -116,7 +116,7 @@ class ProjectController extends Controller
         try  
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
-            return response()->json($projectDTO->toArrayLowerCase(), 200);
+            return response()->json($projectDTO->toArray(), 200);
         }
         catch(Exception $e) // Error general
         {
@@ -132,7 +132,7 @@ class ProjectController extends Controller
         try  
         {
             $projectDTO = $this->projectInterface->deleteProject($bpin);
-            return response()->json($projectDTO->toArrayLowerCase(), 200);
+            return response()->json($projectDTO->toArray(), 200);
         }
         catch(Exception $e) // Error al eliminar proyecto no existente  
         {

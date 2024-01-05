@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Viper;
 
+use \DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\ProjectDTO;
@@ -22,30 +23,46 @@ class ProjectController extends Controller
     public function create(Request $request)
     {  
         $validatedData = $request->validate([
-            'BPINCode' => 'required|string|max:255',
+            'bpin' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'ocad' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'state' => 'required|string|max:255',
-            'subState' => 'required|string|max:255',
-            'totalValue' => 'required|numeric',
-            'requestedValue' => 'required|numeric',
-            'executedValue' => 'required|numeric',
-            'physicalProgress' => 'required|numeric|between:0,100',
-            'responsibleEntity' => 'required|string|max:255',
+            'substate' => 'required|string|max:255',
+            'total_value' => 'required|numeric',
+            'requested_value' => 'required|numeric',
+            'executed_value' => 'required|numeric',
+            'physical_progress' => 'required|numeric|between:0,100',
+            'responsible_entity' => 'required|string|max:255',
             'sector' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'beneficiaries' => 'required|string|max:255',
             'planner' => 'required|string|max:255',
-            'executionApprovalDate' => 'required|date',
-            'completionDate' => 'required|date|after_or_equal:executionApprovalDate',
-            'reportingFrequency' => 'required|integer|min:1',
-            'generalObjetive' => 'required|string|max:1000',
+            'execution_approval_date' => 'required|date',
+            'completion_date' => 'required|date|after_or_equal:execution_approval_date',
+            'reporting_frequency' => 'required|integer|min:1',
+            'general_objective' => 'required|string|max:1000',
             'responsible' => 'required|string|max:255',
         ]);
-
-        $projectDTO = new ProjectDTO($validatedData);
+        
+        $validatedData['execution_approval_date'] = new DateTime($validatedData['execution_approval_date']);
+        $validatedData['completion_date'] = new DateTime($validatedData['completion_date']);
+    
+        $projectDTO = new ProjectDTO(...$validatedData);
+    
         $result = $this->projectInterface->createNewProject($projectDTO);
+
+        if ($result)
+            return response()->json([
+                'success' => true,
+                'message' => 'Project created successfully',
+                'data'    => $projectDTO,
+            ], 201);
+        else
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating project',
+            ], 500);
 
     }
 }

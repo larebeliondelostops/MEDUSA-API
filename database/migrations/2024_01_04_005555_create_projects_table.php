@@ -20,20 +20,19 @@ return new class extends Migration
             $table->string('type', 100);
             $table->string('state', 100);
             $table->string('substate', 100);
-            $table->integer('total_value');
-            $table->integer('requested_value');
-            $table->integer('executed_value');
-            $table->integer('physical_progress');
-            $table->integer('responsible_entity');
+            $table->decimal('total_value', 15, 2); 
+            $table->decimal('requested_value', 15, 2);
+            $table->decimal('executed_value', 15, 2);
+            $table->float('physical_progress');
+            $table->string('responsible_entity', 255);
             $table->string('sector', 255);
             $table->string('location', 255);
-            $table->string('beneficiaries', 255);
+            $table->integer('beneficiaries');
             $table->string('planner', 255);
             $table->date('execution_approval_date');
-            $table->date('completion_date');
-            $table->string('reporting_frequency', 255);
+            $table->date('completion_date')->nullable();
+            $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
-            $table->string('responsible', 255);
             $table->timestamps();
         });
     }

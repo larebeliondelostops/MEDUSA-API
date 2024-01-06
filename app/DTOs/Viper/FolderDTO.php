@@ -10,7 +10,7 @@ class FolderDTO extends DTO
     public function __construct(
         public string $name,
         public int $stage_id,
-        public int $project_id,
+        public string $project_id,
     ){}
     
 }

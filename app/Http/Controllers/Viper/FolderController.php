@@ -41,7 +41,7 @@ class FolderController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'stage_id' => 'required|integer',
-            'project_id' => 'required|integer',
+            'project_id' => 'required|string',
             'higher_folder_id' => 'integer',
         ]);
 

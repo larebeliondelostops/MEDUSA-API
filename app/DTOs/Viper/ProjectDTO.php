@@ -2,31 +2,41 @@
 
 namespace App\DTOs\Viper;
 
-use \DateTime;
-use Carbon\Carbon;
 use App\DTOs\Viper\DTO;
 
-namespace App\DTOs\Viper;
+
+/**
+ * Clase base DTO (Data Transfer Object).
+ *
+ * Data Transfer Object para proyectos.
+ *
+ * Esta clase representa la estructura de datos de un proyecto y se utiliza para transferir
+ * información de proyectos entre diferentes capas de la aplicación.
+ * @package    App\DTOs\Viper
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
+ */
 
 class ProjectDTO extends DTO{
-    public string $bpin;
-    public string $name;
-    public string $ocad;
-    public string $state;
-    public string $substate;
-    public float $total_value;
-    public float $requested_value;
-    public float $executed_value;
-    public float $physical_progress;
-    public string $responsible_entity;
-    public string $sector;
-    public string $location;
-    public int $beneficiaries;
-    public string $planner;
-    public string $execution_approval_date;
-    public ?string $completion_date;
-    public ?string $start_date_execution_phase;
-    public int  $project_duration_in_months;
-    public int $reporting_frequency;
-    public string $general_objective;
+    public string $bpin;                     // Identificador único del proyecto
+    public string $name;                     // Nombre del proyecto
+    public string $ocad;                     // Código OCAD
+    public string $state;                    // Estado del proyecto
+    public string $substate;                 // Subestado del proyecto
+    public float $total_value;               // Valor total del proyecto
+    public float $requested_value;           // Valor solicitado del proyecto
+    public float $executed_value;            // Valor ejecutado del proyecto
+    public float $physical_progress;         // Progreso físico del proyecto
+    public string $responsible_entity;       // Entidad responsable del proyecto
+    public string $sector;                   // Sector del proyecto
+    public string $location;                 // Ubicación del proyecto
+    public int $beneficiaries;               // Número de beneficiarios del proyecto
+    public string $planner;                  // Planificador del proyecto
+    public string $execution_approval_date;  // Fecha de aprobación de ejecución
+    public ?string $completion_date;         // Fecha de finalización (puede ser nulo)
+    public ?string $start_date_execution_phase; // Fecha de inicio de la fase de ejecución (puede ser nulo)
+    public int $project_duration_in_months;  // Duración del proyecto en meses
+    public int $reporting_frequency;         // Frecuencia de reportes
+    public string $general_objective;        // Objetivo general del proyecto
 }

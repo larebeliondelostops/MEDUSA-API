@@ -15,7 +15,7 @@ use App\Models\Viper\Project;
  * de realizar operaciones como la creación, actualización, recuperación
  * y eliminación de proyectos.
  * @package    App\Service\Viper
- * @author     Jorge Abella
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */

@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
  *
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
- * @author     Jorge Abella
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v1.0.0
  */
 class ProjectController extends Controller

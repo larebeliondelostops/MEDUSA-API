@@ -16,5 +16,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectInterface::class, ProjectService::class);
         $this->app->bind(FolderInterface::class, FolderService::class);
         $this->app->bind(DocumentInterface::class, DocumentService::class);
+        $this->app->bind(SectorInterface::class, SectorService::class);
     }
 }

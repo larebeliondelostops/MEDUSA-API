@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('ocad', 100);
             $table->string('state', 100);
             $table->string('substate', 100);
-            $table->decimal('total_value', 15, 2); 
+            $table->decimal('total_value', 15, 2);
             $table->decimal('requested_value', 15, 2);
             $table->decimal('executed_value', 15, 2);
             $table->float('physical_progress');
             $table->string('responsible_entity', 255);
-            $table->string('sector', 255);
+            $table->unsignedBigInteger('sector_id')->nullable(); // Opcional, dependiendo de si todos los proyectos deben tener un sector
             $table->string('location', 255);
             $table->integer('beneficiaries');
             $table->string('planner', 255);
@@ -35,6 +35,8 @@ return new class extends Migration
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
             $table->timestamps();
+
+            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -47,4 +49,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('projects');
     }
-};
+}
+

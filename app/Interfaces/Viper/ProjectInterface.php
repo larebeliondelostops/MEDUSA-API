@@ -3,6 +3,7 @@
 namespace App\Interfaces\Viper;
 
 use App\DTOs\Viper\Project\ProjectDTO;
+use Illuminate\Http\Request;
 
 /**
  * Interfaz para el servicio de manejo de proyectos.
@@ -41,7 +42,7 @@ interface ProjectInterface {
      * @param string|null $name Filtro opcional por nombre del proyecto.
      * @return array Array de proyectos paginados y datos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, ?string $name) : array;
+    public function getAllProjectsPaginated(int $perPage, int $page, Request $request) : array;
 
     /**
      * Recupera un proyecto específico por su identificador 'bpin'.

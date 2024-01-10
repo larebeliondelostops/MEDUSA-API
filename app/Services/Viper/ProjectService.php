@@ -7,6 +7,10 @@ use App\DTOs\Viper\Project\ProjectDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
+use App\Utils\Viper\Filters\ProjectFilter;
+
+// Librerias de terceros
+use Illuminate\Http\Request;
 
 /**
  * Servicio para manejar operaciones relacionadas con proyectos.
@@ -62,16 +66,19 @@ class ProjectService implements ProjectInterface
      * @param string|null $name Nombre opcional para filtrar proyectos.
      * @return array Array que contiene los proyectos paginados y metadatos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, ?string $name): array
+    public function getAllProjectsPaginated(int $perPage, int $page, Request $request): array
     {
-        $query = Project::query();
+        $filter = new ProjectFilter();
+        $queryItems = $filter->transform($request);
 
-        if (!is_null($name))
-        {
-            $query->where('name', 'LIKE', '%'.$name.'%');
+        $projectQuery = Project::query();
+        foreach($queryItems as $item) {
+            if(count($item) === 3) {
+                $projectQuery->orWhere($item[0], $item[1], ($item[1]=="like"?"%".$item[2]."%":$item[2]));
+            }
         }
 
-        $paginatedProjects= $query->paginate(
+        $paginatedProjects= $projectQuery->paginate(
             $perPage,  // numero de paginas por paginado
             ['bpin', 'name', 'state'], // columnas de la tabla Proyectos que requiero
             'page',

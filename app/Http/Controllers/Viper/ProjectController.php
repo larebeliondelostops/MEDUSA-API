@@ -150,14 +150,14 @@ class ProjectController extends Controller
         {
             $page = $request->input('page', 1);
             $name = $request->input('name', null);
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $name);
+            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $request);
             return response()->json($paginatedProjects, 200);
         }
         catch(Exception $e) // Error general
         {
             return response()->json([
                 'success' => false,
-                'message' => 'An internal server error occurred.',
+                'message' => 'An internal server error occurred.'.$e->getMessage(),
             ], 500);
         }
     }

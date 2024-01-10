@@ -1,15 +1,15 @@
-<?php 
+<?php
 
 namespace App\Interfaces\Viper;
 
-use App\DTOs\Viper\ProjectDTO;
+use App\DTOs\Viper\Project\ProjectDTO;
 
 /**
  * Interfaz para el servicio de manejo de proyectos.
  *
  * Define las operaciones necesarias para la gestión de proyectos en el sistema.
  * Las operaciones incluyen la creación, actualización, recuperación y eliminación de proyectos.
- * 
+ *
  * @package    App\Interfaces\Viper
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
@@ -23,7 +23,7 @@ interface ProjectInterface {
      * @return void
      */
     public function createNewProject(ProjectDTO $projectDTO) : void;
-    
+
     /**
      * Actualiza un proyecto existente.
      *
@@ -32,7 +32,7 @@ interface ProjectInterface {
      * @return void
      */
     public function updateProject(ProjectDTO $projectDTO, string $bpin):void;
-    
+
     /**
      * Obtiene una lista de proyectos paginada.
      *
@@ -42,7 +42,7 @@ interface ProjectInterface {
      * @return array Array de proyectos paginados y datos de paginación.
      */
     public function getAllProjectsPaginated(int $perPage, int $page, ?string $name) : array;
-    
+
     /**
      * Recupera un proyecto específico por su identificador 'bpin'.
      *

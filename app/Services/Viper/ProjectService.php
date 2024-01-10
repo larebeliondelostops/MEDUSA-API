@@ -3,8 +3,8 @@
 namespace App\Services\Viper;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\ProjectDTO;
-use App\DTOs\Viper\ProjectSummaryDTO;
+use App\DTOs\Viper\Project\ProjectDTO;
+use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
 
@@ -28,8 +28,8 @@ class ProjectService implements ProjectInterface
      *
      * @param ProjectDTO $projectDTO DTO del proyecto a crear.
      */
-    public function createNewProject(ProjectDTO $projectDTO) : void 
-    {    
+    public function createNewProject(ProjectDTO $projectDTO) : void
+    {
         $project = new Project();
         $project->fill($projectDTO->toArray());
         $project->save();
@@ -66,15 +66,15 @@ class ProjectService implements ProjectInterface
     {
         $query = Project::query();
 
-        if (!is_null($name))  
+        if (!is_null($name))
         {
             $query->where('name', 'LIKE', '%'.$name.'%');
         }
-        
+
         $paginatedProjects= $query->paginate(
             $perPage,  // numero de paginas por paginado
             ['bpin', 'name', 'state'], // columnas de la tabla Proyectos que requiero
-            'page', 
+            'page',
             $page // numero de la pagina solicitada
             );
 

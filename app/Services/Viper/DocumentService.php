@@ -10,17 +10,34 @@ use Illuminate\Support\Collection;
 use App\Models\Viper\Project; 
 use Storage;
 
+/**
+ * Servicio para manejar operaciones relacionadas los documentos de los proyectos.
+ *
+ * Este servicio implementa la interfaz DocumentInterface y es responsable
+ * de realizar operaciones como la creación, actualización, recuperación
+ * y eliminación de documentos en los proyectos y el spaces de DigitalOcean.
+ * @package    App\Service\Viper
+ * @author     Daniel Alférez <dan.alferez1@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
+ */
 class DocumentService implements DocumentInterface
 {
-    public function createNewDocument(DocumentDTO $documentDTO, \Illuminate\Http\UploadedFile $file, int $project_id)
+    /**
+     * Crea un nuevo documento en el sistema Viper.
+     *
+     * @param DocumentDTO $documentDTO Datos del documento a crear.
+     * @param \Illuminate\Http\UploadedFile $file Archivo a cargar.
+     * @param int $project_id Identificador del proyecto al que pertenece el documento.
+     * @return \Illuminate\Http\JsonResponse Contiene los datos del documento creado en caso de éxito.
+     */
+    public function createNewDocument(DocumentDTO $documentDTO, \Illuminate\Http\UploadedFile $file, string $project_id)
     {
         // Verificar si el proyecto existe
         $projectExists = Project::where('bpin', $project_id)->exists();
 
         if (!$projectExists) {
-            return response()->json([
-                'error' => 'El proyecto no existe.',
-            ], 404);
+            throw new \Exception('El proyecto no existe.', 404);
         }
 
         // Crear una nueva instancia de Document
@@ -50,12 +67,16 @@ class DocumentService implements DocumentInterface
         // Guardar el documento en la base de datos
         $document->save();
 
-        return response()->json([
-            'data' => $document->toArray(),
-        ], 201);
+        return $document->toArray();
     }
 
-    // Función para obtener un nombre de archivo único en una carpeta
+    /**
+     * Obtiene un nombre de archivo único en una carpeta
+     *
+     * @param string $folderPath Ruta de la carpeta en "Spaces".
+     * @param string $originalFilename Nombre inicial del documento.
+     * @return string Nombre final del documento.
+     */
     private function getUniqueFilename($folderPath, $originalFilename)
     {
         $filename = $originalFilename;
@@ -69,9 +90,15 @@ class DocumentService implements DocumentInterface
         }
 
         return $filename;
-}
+    }
 
 
+    /**
+     * Elimina un documento del sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a eliminar.
+     * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
+     */
     public function deleteDocument(int $documentId)
     {
         // Obtener el documento por su ID
@@ -92,11 +119,16 @@ class DocumentService implements DocumentInterface
 
             return ['message' => 'Documento eliminado correctamente'];
         }
-
-        return ['error' => 'Documento no encontrado'];
+        throw new \Exception('Documento no encontrado', 404);
     }
 
-
+    /**
+     * Actualiza el nombre de un documento en el sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a actualizar.
+     * @param string $newName Nuevo nombre del documento.
+     * @return array Contiene un mensaje indicando si el nombre del documento fue actualizado correctamente.
+     */
     public function updateDocument(int $documentId, string $newName)
     {
         // Obtener el documento por su ID
@@ -129,34 +161,45 @@ class DocumentService implements DocumentInterface
     
                     return ['message' => 'Nombre del documento actualizado correctamente'];
                 }
-    
-                return ['error' => 'Error al copiar el archivo con el nuevo nombre'];
+                throw new \Exception('Error al copiar el archivo con el nuevo nombre');
             }
-    
-            return ['error' => 'Documento no encontrado en el sistema de archivos'];
+            throw new \Exception('Documento no encontrado en el sistema de archivos', 404);
         }
-    
-        return ['error' => 'Documento no encontrado'];
+        throw new \Exception('Documento no encontrado', 404);
     }
         
-    
+    /**
+     * Obtiene todos los documentos del sistema Viper.
+     *
+     * @return array Contiene los datos de todos los documentos en el sistema.
+     */
     public function getAllDocuments()
     {
         // Obtener todos los documentos de la base de datos
         $documents = Document::all();
-        return response()->json([
-            'data' => $documents->toArray(),
-        ], 200);
+        return $documents->toArray();
     }
 
+    /**
+     * Obtiene documentos por carpeta en el sistema Viper.
+     *
+     * @param int $folderId Identificador de la carpeta.
+     * @return array Contiene los datos de documentos en la carpeta especificada.
+     */
     public function getDocumentsByFolder($folderId)
     {
         // Implementa la lógica para obtener documentos por carpeta
         $documents = Document::where('folder_id', $folderId)->get();
 
-        return $documents;
+        return $documents->toArray();
     }
 
+    /**
+     * Elimina todos los documentos asociados a una carpeta en el sistema Viper.
+     *
+     * @param int $folderId Identificador de la carpeta.
+     * @return void
+     */
     public function deleteDocumentsByFolder(int $folderId)
     {
         // Eliminar todos los documentos asociados a la carpeta
@@ -177,7 +220,13 @@ class DocumentService implements DocumentInterface
         }
     }
 
-    public function listDocumentsInSpaces($folderPath = 'test/')
+    /**
+     * Lista las URLs de los documentos almacenados en el sistema de archivos "Spaces".
+     *
+     * @param string $folderPath Ruta de la carpeta en "Spaces".
+     * @return array Contiene las URLs de los documentos en la carpeta especificada.
+     */
+    public function listDocumentsInSpaces($folderPath = 'test')
     {
         // Verificar si la carpeta existe en el sistema de archivos "spaces"
         if (Storage::disk('spaces')->exists($folderPath)) {
@@ -192,15 +241,16 @@ class DocumentService implements DocumentInterface
             return $fileUrls;
         }
         
-
         // La carpeta no existe
-        return response()->json([
-            'code' => '404',
-            'status' => 'error',
-            'message' => 'La carpeta no existe.',
-        ], 404);
+        throw new \Exception('Carpeta de spaces no encontrada', 404);
     }
 
+    /**
+     * Función interna para obtener la lista de archivos de manera recursiva en una carpeta.
+     *
+     * @param string $folderPath Ruta de la carpeta en "Spaces".
+     * @return array Contiene la lista de archivos en la carpeta y sus subcarpetas.
+     */
     private function listFilesRecursive($folderPath)
     {
         $files = [];

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Request\Viper;
 
@@ -39,14 +39,12 @@ class ProjectRequest extends FormRequest
     {
         return [
             'bpin' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'ocad' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'substate' => 'required|string|max:255',
+            'name' => 'required|string|max:100',
+            'ocad' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'substate' => 'required|string|max:100',
             'total_value' => 'required|numeric',
             'requested_value' => 'required|numeric',
-            'executed_value' => 'required|numeric',
-            'physical_progress' => 'required|numeric|between:0,100',
             'responsible_entity' => 'required|string|max:255',
             'sector' => 'required|string|max:255',
             'location' => 'required|string|max:255',

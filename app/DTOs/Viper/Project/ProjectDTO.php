@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Viper;
+namespace App\DTOs\Viper\Project;
 
 use App\DTOs\Viper\DTO;
 
@@ -12,7 +12,7 @@ use App\DTOs\Viper\DTO;
  *
  * Esta clase representa la estructura de datos de un proyecto y se utiliza para transferir
  * información de proyectos entre diferentes capas de la aplicación.
- * @package    App\DTOs\Viper
+ * @package    App\DTOs\Viper\Project
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
@@ -26,8 +26,9 @@ class ProjectDTO extends DTO{
     public string $substate;                 // Subestado del proyecto
     public float $total_value;               // Valor total del proyecto
     public float $requested_value;           // Valor solicitado del proyecto
-    public float $executed_value;            // Valor ejecutado del proyecto
-    public float $physical_progress;         // Progreso físico del proyecto
+    public float $executed_value = 0.0;      // Valor ejecutado del proyecto
+    public float $physical_progress = 0.0;   // Avance físico del proyecto
+    public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
     public string $sector;                   // Sector del proyecto
     public string $location;                 // Ubicación del proyecto

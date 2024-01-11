@@ -23,6 +23,7 @@ class Project extends Model
         'requested_value',
         'executed_value',
         'physical_progress',
+        'financial_progress',
         'responsible_entity',
         'sector',
         'location',

@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Viper;
 
-use App\DTOs\Viper\FolderDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 
 /**
  * Interface FolderInterface

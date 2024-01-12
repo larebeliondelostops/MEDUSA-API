@@ -1,6 +1,8 @@
 <?php
 
-namespace App\DTOs\Viper;
+namespace App\DTOs\Viper\Folder;
+
+use App\DTOs\Viper\DTO;
 
 /**
  * Clase FolderDTO
@@ -18,9 +20,8 @@ class FolderDTO extends DTO
      * @param int $stage_id Identificador de la etapa a la que pertenece la carpeta.
      * @param string $project_id Identificador del proyecto al que pertenece la carpeta.
      */
-    public function __construct(
-        public string $name,
-        public int $stage_id,
-        public string $project_id
-    ){}
+    public ?int $id = null;
+    public string $name;
+    public int $stage_id;
+    public string $project_id;
 }

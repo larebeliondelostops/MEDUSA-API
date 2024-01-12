@@ -2,7 +2,7 @@
 
 namespace App\Services\Viper;
 
-use App\DTOs\Viper\FolderDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
@@ -83,7 +83,7 @@ class FolderService implements FolderInterface
             $folder->name = $newName;
             $folder->save();
 
-            return $folder->toArray();
+            return new FolderDTO($folder->toArray());
         } else {
             throw new \Exception('Carpeta no encontrada', 404);
         }
@@ -146,7 +146,6 @@ class FolderService implements FolderInterface
         return $result->all();
     }
     
-
     /**
      * Función privada recursiva para construir la jerarquía de carpetas.
      *
@@ -156,13 +155,6 @@ class FolderService implements FolderInterface
      */
     private function buildFolderHierarchy(Folder $folder, Collection $folderDictionary): array
     {
-        // Crear un nuevo FolderDTO
-        $folderDTO = new FolderDTO(
-            $folder->name,
-            $folder->stage_id,
-            $folder->project_id
-        );
-
         // Obtener las subcarpetas
         $subfolders = $folder->lowerFolders->map(
             fn($subfolder) => $this->buildFolderHierarchy($subfolder, $folderDictionary)
@@ -172,7 +164,7 @@ class FolderService implements FolderInterface
         $documents = $this->documentInterface->getDocumentsByFolder($folder->id);
 
         return [
-            'folder' => array_merge($folderDTO->toArray(), ['id' => $folder->id]),
+            'folder' => new FolderDTO($folder->toArray()),
             'subfolders' => $subfolders->all(),
             'documents' => $documents,
         ];

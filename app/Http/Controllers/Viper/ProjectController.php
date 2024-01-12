@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias de terceros
+use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\Http\Controllers\Controller;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\Project\ProjectDTO;
 use App\Http\Request\Viper\ProjectRequest;
 use App\Interfaces\Viper\ProjectInterface;
 
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.0
+ * @version    v1.0.1
  */
 class ProjectController extends Controller
 {
@@ -61,7 +61,7 @@ class ProjectController extends Controller
         try
         {
             $validatedData = $request->validated();
-            $projectDTO = new ProjectDTO($validatedData);
+            $projectDTO = new ProjectRequestDTO($validatedData);
 
             $this->projectInterface->createNewProject($projectDTO);
             return response()->json([
@@ -116,7 +116,7 @@ class ProjectController extends Controller
         try
         {
             $validatedData = $request->validated();
-            $projectDTO = new ProjectDTO($validatedData);
+            $projectDTO = new ProjectRequestDTO($validatedData);
 
             $this->projectInterface->updateProject($projectDTO, $bpin);
 

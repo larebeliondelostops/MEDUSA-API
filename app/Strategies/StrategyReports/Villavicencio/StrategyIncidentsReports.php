@@ -452,8 +452,6 @@ class StrategyIncidentsReports implements ReportsInterface
                 'name' => $incidentes->first()->Indicator->Name,
                 'data' => $countByInterval
             ];
-
-            $labels[] = $incidentes->first()->Indicator->Name;
         }
 
         if (isset($this->request->start) && isset($this->request->end)) {
@@ -466,7 +464,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
-            'labels' => $labels,
+            'labels' => ['00:00 - 04:00', '04:00 - 08:00', '08:00 - 12:00', '12:00 - 16:00', '16:00 - 20:00', '20:00 - 24:00'],
             'type' => 'column'
         ];
 

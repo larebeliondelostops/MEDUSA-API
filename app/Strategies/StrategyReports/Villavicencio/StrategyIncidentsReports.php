@@ -23,6 +23,7 @@ class StrategyIncidentsReports implements ReportsInterface
             $this->incidensByMonth(),
             $this->incidentsByTypeLastTDays(),
             $this->incidentsByWeekDay(),
+            $this->incidentsByHour()
         ];
 
         $generalData = [];
@@ -108,14 +109,14 @@ class StrategyIncidentsReports implements ReportsInterface
                 $diasTranscurridos = $hoy->copy()->diffInDays($hace_30_dias);
 
                 $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
-    
+
                 $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
             }
         } else {
             foreach($indicadores as $indicador) {
 
                 $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
-    
+
                 $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
             }
         }
@@ -125,10 +126,9 @@ class StrategyIncidentsReports implements ReportsInterface
         for ($i = 0; $i < $cardsIncidents->count(); $i++) {
 
             $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
-            
-            // Si en la actualidad no hay mondaes
+
             $porcentaje = $cantidadDiaInicioToDiaActualActual[$i] == 0 ? $cantidadDiaInicioToDiaActualAnterior[$i] * -100 : $porcentaje;
-            
+
             $series[] = [
                 'data' => $cardsIncidents[$i]->count,
                 'percent' => $porcentaje,
@@ -395,10 +395,88 @@ class StrategyIncidentsReports implements ReportsInterface
         return $data;
     }
 
+    public function incidentsByHour()
+    {
+        if (isset($this->request->start) && isset($this->request->end)) {
+            if ($this->indicator != null){
+                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('indicator', 'created_at')
+                    ->where('indicator', $this->indicator)
+                    ->get();
+            } else {
+                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                    ->select('indicator', 'created_at')
+                    ->get();
+            }
+        } else {
+            if ($this->indicator != null){
+                $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at')
+                    ->where('indicator', $this->indicator)
+                    ->get();
+            } else {
+                $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at')
+                    ->get();
+            }
+        }
+
+        // Definir los límites de los intervalos (en horas)
+        $intervalLimits = [
+            ['start' => 0, 'end' => 4],
+            ['start' => 4, 'end' => 8],
+            ['start' => 8, 'end' => 12],
+            ['start' => 12, 'end' => 16],
+            ['start' => 16, 'end' => 20],
+            ['start' => 20, 'end' => 24],
+        ];
+
+        $series = [];
+        $labels = [];
+
+        foreach ($incidentes_por_tipo_incidente->groupBy('indicator') as $incidentes) {
+            $countByInterval = [0, 0, 0, 0, 0, 0, 0];
+            foreach ($incidentes as $incidente) {
+                // Obtener la hora de creación de la instancia de Incident
+                $createdAt = strtotime($incidente->created_at);
+                $hour = date('G', $createdAt);
+
+                // Verificar en qué intervalo cae la hora y aumentar el conteo correspondiente
+                foreach ($intervalLimits as $index => $limit) {
+                    if ($hour >= $limit['start'] && $hour < $limit['end']) {
+                        $countByInterval[$index]++;
+                        break; // Salir del bucle una vez que se ha encontrado el intervalo correcto
+                    }
+                }
+            }
+
+            $series[] = [
+                'name' => $incidentes->first()->Indicator->Name,
+                'data' => $countByInterval
+            ];
+
+            $labels[] = $incidentes->first()->Indicator->Name;
+        }
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
+        $data = [
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por intervalos de horas',
+            'date' =>  $date,
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'column'
+        ];
+
+        return $data;
+    }
+
     public function points()
     {
         $incidents = Incident::where('indicator', $this->indicator)->get();
-        
+
         $incidents = $incidents->map(function ($incident) {
             $coordenadas = explode(', ', $incident->position);
             // Convierte los valores en números

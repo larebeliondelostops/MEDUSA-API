@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('scopes', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->string('project_id', 255);
+            $table->string('project_id', 255)->unique();
             $table->timestamps();
 
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');

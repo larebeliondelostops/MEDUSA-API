@@ -1,9 +1,9 @@
 <?php
 
 namespace App\DTOs\Viper\Project;
-
+use App\DTOs\Viper\Department\DepartmentDTO;
 use App\DTOs\Viper\DTO;
-
+use App\DTOs\Viper\Municipality\MunicipalityDTO;
 
 /**
  * Clase base DTO (Data Transfer Object).
@@ -11,14 +11,17 @@ use App\DTOs\Viper\DTO;
  * Data Transfer Object para proyectos.
  *
  * Esta clase representa la estructura de datos de un proyecto y se utiliza para transferir
- * información de proyectos entre diferentes capas de la aplicación.
+ * información de proyectos a los usuarios. Almacena la información de las tablas con relaciones
+ * a proyectos.
+ *
  * @package    App\DTOs\Viper\Project
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
 
-class ProjectDTO extends DTO{
+class ProjectDataDTO extends DTO
+{
     public string $bpin;                     // Identificador único del proyecto
     public string $name;                     // Nombre del proyecto
     public string $ocad;                     // Código OCAD
@@ -31,7 +34,11 @@ class ProjectDTO extends DTO{
     public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
     public string $sector;                   // Sector del proyecto
-    public string $location;                 // Ubicación del proyecto
+    public string $type_location;            // Tipo de ubicación del proyecto
+    public float $latitude_location;         // Latitud de la coordenada donde se ubica el proyecto
+    public float $longitude_location;        // Longitud de la coordenada donde se ubica el proyecto
+    public DepartmentDTO $department;     // Id del departamento al que pertenece el proyecto
+    public MunicipalityDTO $municipality; // Id del municipio donde pertenece el departamento
     public int $beneficiaries;               // Número de beneficiarios del proyecto
     public string $planner;                  // Planificador del proyecto
     public string $execution_approval_date;  // Fecha de aprobación de ejecución

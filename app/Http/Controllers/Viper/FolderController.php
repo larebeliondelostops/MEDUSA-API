@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\DTOs\Viper\FolderDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 
 /**
@@ -59,15 +59,10 @@ class FolderController extends Controller
                 'higher_folder_id' => 'integer',
             ]);
 
-            // Crear el DTO
-            $folderDTO = new FolderDTO(
-                $validatedData['name'],
-                $validatedData['stage_id'],
-                $validatedData['project_id']
-            );
-
+            $folderDTO = new FolderDTO($validatedData);
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
             $result = $this->folderInterface->createNewFolder($folderDTO, $validatedData['higher_folder_id'] ?? null);
+            
             return response()->json([
                 'message' => 'Proyecto Creado Exitosamente.',
                 'data'    => $result,

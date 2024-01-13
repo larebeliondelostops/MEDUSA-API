@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.1
+ * @version    v1.0.2
  */
 class ProjectController extends BaseController
 {
@@ -70,9 +70,9 @@ class ProjectController extends BaseController
                 'data'    => $projectDTO->toArray(),
             ], 201);
         }
-        catch (Exception $e)
+        catch (Exception $exception)
         {
-            return $this->handleException($e);
+            return $this->handleException($exception);
         }
     }
 
@@ -102,12 +102,9 @@ class ProjectController extends BaseController
                 'data'    => $projectDTO->toArray(),
             ], 200);
         }
-        catch(Exception $e)
+        catch(Exception $exception)
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 
@@ -129,12 +126,9 @@ class ProjectController extends BaseController
             $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $request);
             return response()->json($paginatedProjects, 200);
         }
-        catch(Exception $e) // Error general
+        catch(Exception $exception) // Error general
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.'.$e->getMessage(),
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 
@@ -153,9 +147,9 @@ class ProjectController extends BaseController
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
             return response()->json($projectDTO->toArray(), 200);
         }
-        catch(Exception $e) // Error general
+        catch(Exception $exception) // Error general
         {
-            return $this->handleException($e);
+            return $this->handleException($exception);
         }
     }
 
@@ -174,19 +168,9 @@ class ProjectController extends BaseController
             $projectDTO = $this->projectInterface->deleteProject($bpin);
             return response()->json($projectDTO->toArray(), 200);
         }
-        catch(Exception $e) // Error al eliminar proyecto no existente
+        catch(Exception $exception) // Error al eliminar proyecto no existente
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
-        }
-        catch(Exception $e) // Error general
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 }

@@ -26,7 +26,7 @@ class DTO
      *
      * @param array $data Datos para inicializar el objeto DTO.
      */
-    public function __construct(array $data) {
+    public function __construct(array|null $data) {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;

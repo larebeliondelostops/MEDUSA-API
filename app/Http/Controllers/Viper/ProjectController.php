@@ -65,8 +65,7 @@ class ProjectController extends BaseController
 
             $this->projectInterface->createNewProject($projectDTO);
             return response()->json([
-                'success' => true,
-                'message' => 'Project created successfully.',
+                'message' => 'Proyecto creado satisfactoriamente.',
                 'data'    => $projectDTO,
             ], 201);
         }
@@ -97,8 +96,7 @@ class ProjectController extends BaseController
             $this->projectInterface->updateProject($projectDTO, $bpin);
 
             return response()->json([
-                'success' => true,
-                'message' => 'Project updated successfully.',
+                'message' => 'Proyecto actualizado satisfactoriamente',
                 'data'    => $projectDTO,
             ], 200);
         }
@@ -145,7 +143,9 @@ class ProjectController extends BaseController
         try
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
-            return response()->json($projectDTO, 200);
+            return response()->json([
+                "data" => $projectDTO,
+            ], 200);
         }
         catch(Exception $exception) // Error general
         {
@@ -166,7 +166,10 @@ class ProjectController extends BaseController
         try
         {
             $projectDTO = $this->projectInterface->deleteProject($bpin);
-            return response()->json($projectDTO, 200);
+            return response()->json([
+                "message" => "Proyecto eliminado satisfactoriamente.",
+                "data" => $projectDTO
+            ], 200);
         }
         catch(Exception $exception) // Error al eliminar proyecto no existente
         {

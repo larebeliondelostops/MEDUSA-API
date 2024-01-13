@@ -12,7 +12,10 @@ use App\Http\Controllers\Viper\StageController;
 |
 */
 
-Route::get('stage', [StageController::class, 'index']);
-Route::post('stage', [StageController::class, 'store']);
-Route::put('stage/{stageId}', [StageController::class, 'update']);
-Route::delete('stage/{stageId}', [StageController::class, 'destroy']);
+Route::prefix('/viper/stage')->group(function () {
+    Route::get('/list', [StageController::class, 'index']);
+    Route::post('/create', [StageController::class, 'store']);
+    Route::put('/update/{stageId}', [StageController::class, 'update']);
+    Route::delete('/delete/{stageId}', [StageController::class, 'destroy']);
+});
+

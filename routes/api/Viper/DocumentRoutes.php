@@ -12,8 +12,10 @@ use App\Http\Controllers\Viper\DocumentController;
 |
 */
 
-Route::post('document/create', [DocumentController::class, 'store']);
-Route::get('document/', [DocumentController::class, 'index']);
-Route::get('document/spaces', [DocumentController::class, 'allSpaces']);
-Route::delete('document/{documentId}', [DocumentController::class, 'destroy']);
-Route::put('document/{documentId}', [DocumentController::class, 'update']);
+Route::prefix('/viper/document')->group(function () {
+    Route::post('create', [DocumentController::class, 'store']);
+    Route::get('list', [DocumentController::class, 'index']);
+    Route::get('list-spaces', [DocumentController::class, 'allSpaces']);
+    Route::delete('delete/{documentId}', [DocumentController::class, 'destroy']);
+    Route::put('update/{documentId}', [DocumentController::class, 'update']);
+});

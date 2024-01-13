@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('substates', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 32);
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states');
             $table->timestamps();
         });
     }

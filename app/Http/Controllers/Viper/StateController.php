@@ -92,4 +92,18 @@ class StateController extends BaseController
             $this->handleException($exception);
         }
     }
+
+    public function index(Request $request)
+    {
+        try
+        {
+            return response()->json([
+                "data" => $this->stateInterface->getAllStates(),
+            ]);
+        }
+        catch(Exception $exception)
+        {
+            return $this->handleException($exception);
+        }
+    }
 }

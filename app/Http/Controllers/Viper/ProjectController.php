@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Viper;
 
 // Librerias de terceros
 use App\DTOs\Viper\Project\ProjectRequestDTO;
-use App\Http\Controllers\Controller;
 
 // Librerias del modulo viper
 use App\Http\Request\Viper\ProjectRequest;
@@ -27,7 +26,7 @@ use Illuminate\Http\Request;
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v1.0.1
  */
-class ProjectController extends Controller
+class ProjectController extends BaseController
 {
     // Número de proyectos por página para la paginación.
     private const DEFAULT_PROJECT_PER_PAGE = 8;
@@ -44,7 +43,8 @@ class ProjectController extends Controller
      */
     public function __construct(ProjectInterface $projectInterface)
     {
-       $this->projectInterface = $projectInterface;
+        parent::__construct();
+        $this->projectInterface = $projectInterface;
     }
 
      /**
@@ -70,33 +70,9 @@ class ProjectController extends Controller
                 'data'    => $projectDTO->toArray(),
             ], 201);
         }
-        catch(QueryException $e) // Error al realizar la consulta
+        catch (Exception $e)
         {
-            $errCode = $e->getCode();
-            if ($errCode == 23505)
-                return response()->json([
-                    'success' => false,
-                    'message' => 'A project with the same identifier already exists.',
-                ], 409);
-            else
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error proccesing request.',
-                ], 500);
-        }
-        catch(PDOException $e) // Error en la conexion con la DB
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to establish a connection with the database.',
-            ], 500);
-        }
-        catch(Exception $e) // Error general
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($e);
         }
     }
 
@@ -179,10 +155,7 @@ class ProjectController extends Controller
         }
         catch(Exception $e) // Error general
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($e);
         }
     }
 

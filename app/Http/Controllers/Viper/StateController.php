@@ -1,19 +1,24 @@
 <?php
 
 namespace App\Http\Controllers\Viper;
+
+// Librerias del Modulo Viper
 use App\DTOs\Viper\State\StateDTO;
-use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\StateRequest;
 use App\Interfaces\Viper\StateInterface;
+
+// Librerias de terceros
 use Exception;
+use PDOException;
 use Illuminate\Http\Request;
 
-class StateController extends Controller
+class StateController extends BaseController
 {
     private StateInterface $stateInterface;
 
     public function __construct(StateInterface $stateInterface)
     {
+        parent::__construct();
         $this->stateInterface = $stateInterface;
     }
 
@@ -26,48 +31,65 @@ class StateController extends Controller
             $newStateDTO = new StateDTO($data);
             $stateCreatedDTO = $this->stateInterface->createNewState($newStateDTO);
             return response()->json([
-                'success'=> true,
                 'message' => 'State created successfully',
                 'data' => $stateCreatedDTO
-            ]);
+            ], 201);
         }
-        catch (Exception $e)
+        catch (Exception $exception)
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.'.$e->getMessage(),
-            ], 500);
+            return $this->handleException($exception);
         }
     }
     public function update(StateRequest $request, int $id)
     {
-        $data = $request->validated();
-        $stateUpdatedDTO = new StateDTO($data);
-        $stateUpdatedDTO = $this->stateInterface->updateState($id, $stateUpdatedDTO);
+        try
+        {
+            $data = $request->validated();
+            $stateUpdatedDTO = new StateDTO($data);
+            $stateUpdatedDTO2 = $this->stateInterface->updateState($id, $stateUpdatedDTO);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'State updated successfully.',
-            'data'    => $stateUpdatedDTO->toArray(),
-        ], 200);
+            return response()->json([
+                'message' => 'State updated successfully.',
+                'data'    => $stateUpdatedDTO2,
+
+            ], 200);
+        }
+        catch (Exception $exception)
+        {
+            return $this->handleException($exception);
+        }
     }
+
     public function show(Request $request, int $id)
     {
         try
         {
             $stateDTO = $this->stateInterface->getStateById($id);
             return response()->json([
-                'success' => true,
-                'message' => '',
+                'message' => 'State got successfully',
+                'data'=> $stateDTO,
+
+            ]);
+        }
+        catch (Exception $exception)
+        {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function destroy(Request $request, int $id)
+    {
+        try
+        {
+            $stateDTO = $this->stateInterface->deleteState($id);
+            return response()->json([
+                'message' => 'State deleted successfully',
                 'data'=> $stateDTO->toArray()
             ]);
         }
-        catch(Exception $e)
+        catch (Exception $exception)
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            $this->handleException($exception);
         }
     }
 }

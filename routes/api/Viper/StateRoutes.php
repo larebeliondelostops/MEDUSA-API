@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Viper\StateController;
 
-Route::prefix('/state')->group(function () {
+Route::prefix('/viper/state')->group(function () {
     Route::post('/create', [StateController::class, 'store']);
     Route::put('/update/{id}', [StateController::class, 'update']);
     Route::get('/list', [StateController::class, 'index']);

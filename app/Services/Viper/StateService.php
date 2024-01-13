@@ -14,19 +14,28 @@ class StateService implements StateInterface
         return new StateDTO($newState->toArray());
     }
 
-
     public function updateState(int $id, StateDTO $stateDTO) : StateDTO
     {
-        return new StateDTO([]);
+        $stateGot = State::findOrFail($id);
+        $dataNewState = $stateDTO->toArray(except:["id",]); // el id nunca se debe modifica, por eso se elimina por si lo intentan cambiar
+        $stateGot->fill($dataNewState);
+        $stateGot->save();
+        $stateGotDTO = new StateDTO($stateGot->toArray()+['id'=>$id]);
+        return $stateGotDTO;
     }
 
     public function deleteState(int $id) : StateDTO
     {
-        return new StateDTO([]);
+        $stateGot = State::findOrFail($id);
+        $stateGotDTO = new StateDTO($stateGot->toArray());
+        $stateGot->delete();
+        return $stateGotDTO;
     }
 
     public function getStateById(int $id) : StateDTO
     {
-        return new StateDTO([]);
+        $stateGot = State::findOrFail($id);
+        $stateGotDTO = new StateDTO($stateGot->toArray());
+        return $stateGotDTO;
     }
 }

@@ -38,4 +38,16 @@ class StateService implements StateInterface
         $stateGotDTO = new StateDTO($stateGot->toArray());
         return $stateGotDTO;
     }
+
+    public function getAllStates() : array
+    {
+        $statesGot = State::all();
+        $statesDTO = $statesGot->transform(
+            function (State $state)
+            {
+                return new StateDTO($state->toArray());
+            }
+        )->toArray();
+        return $statesDTO;
+    }
 }

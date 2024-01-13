@@ -26,12 +26,12 @@ class BaseController extends Controller
             {
                 case $this->databaseErros['unique_violation']:
                     return response()->json([
-                        'message' => 'A element with the same identifier already exists.'
+                        'message' => 'Un elemento con el mismo identificador ya existe.'
                     ], 409);
                     break;
                 default:
                     return response()->json([
-                        'message' => 'Error proccesing request.'
+                        'message' => 'Error procesando la petición.'
                     ], 500);
                 break;
             }
@@ -39,7 +39,7 @@ class BaseController extends Controller
         elseif ($exception instanceof PDOException)
         {
             return response()->json([
-                'message' => 'Failed to establish a connection with the database.'
+                'message' => 'No se pudo establecer una conexión con la base de datos.'
             ], 500);
         }
         elseif ($exception instanceof ValidationException)
@@ -51,19 +51,19 @@ class BaseController extends Controller
         elseif ($exception instanceof ModelNotFoundException)
         {
             return response()->json([
-                'message' => 'Resource not found.'
+                'message' => 'Recurso no encontrado.'
             ], 404);
         }
         elseif ($exception instanceof AuthorizationException)
         {
             return response()->json([
-                'message' => 'Unauthorized action.'
+                'message' => 'Acción no autorizada.'
             ], 403);
         }
         else
         {
             return response()->json([
-                'message' => 'An internal server error occurred.'
+                'message' => 'Se produjo un error interno del servidor.'
             ], 500);
         }
     }

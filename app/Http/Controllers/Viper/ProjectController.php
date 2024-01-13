@@ -43,7 +43,7 @@ class ProjectController extends BaseController
      */
     public function __construct(ProjectInterface $projectInterface)
     {
-        parent::__construct();
+        parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
         $this->projectInterface = $projectInterface;
     }
 
@@ -67,7 +67,7 @@ class ProjectController extends BaseController
             return response()->json([
                 'success' => true,
                 'message' => 'Project created successfully.',
-                'data'    => $projectDTO->toArray(),
+                'data'    => $projectDTO,
             ], 201);
         }
         catch (Exception $exception)
@@ -99,7 +99,7 @@ class ProjectController extends BaseController
             return response()->json([
                 'success' => true,
                 'message' => 'Project updated successfully.',
-                'data'    => $projectDTO->toArray(),
+                'data'    => $projectDTO,
             ], 200);
         }
         catch(Exception $exception)
@@ -145,7 +145,7 @@ class ProjectController extends BaseController
         try
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
-            return response()->json($projectDTO->toArray(), 200);
+            return response()->json($projectDTO, 200);
         }
         catch(Exception $exception) // Error general
         {
@@ -166,7 +166,7 @@ class ProjectController extends BaseController
         try
         {
             $projectDTO = $this->projectInterface->deleteProject($bpin);
-            return response()->json($projectDTO->toArray(), 200);
+            return response()->json($projectDTO, 200);
         }
         catch(Exception $exception) // Error al eliminar proyecto no existente
         {

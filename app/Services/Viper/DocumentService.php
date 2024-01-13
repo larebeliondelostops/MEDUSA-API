@@ -102,24 +102,21 @@ class DocumentService implements DocumentInterface
     public function deleteDocument(int $documentId)
     {
         // Obtener el documento por su ID
-        $document = Document::find($documentId);
+        $document = Document::findOrFail($documentId);
 
-        if ($document) {
-            // Obtener la ruta del archivo
-            $filePath = parse_url($document->url, PHP_URL_PATH);
+        // Obtener la ruta del archivo
+        $filePath = parse_url($document->url, PHP_URL_PATH);
 
-            // Verificar si el archivo existe en el sistema de archivos "spaces"
-            if (Storage::disk('spaces')->exists($filePath)) {
-                // Eliminar el archivo
-                Storage::disk('spaces')->delete($filePath);
-            }
-
-            // Eliminar el documento de la base de datos
-            $document->delete();
-
-            return ['message' => 'Documento eliminado correctamente'];
+        // Verificar si el archivo existe en el sistema de archivos "spaces"
+        if (Storage::disk('spaces')->exists($filePath)) {
+            // Eliminar el archivo
+            Storage::disk('spaces')->delete($filePath);
         }
-        throw new \Exception('Documento no encontrado', 404);
+
+        // Eliminar el documento de la base de datos
+        $document->delete();
+
+        return ['message' => 'Documento eliminado correctamente'];
     }
 
     /**
@@ -132,40 +129,37 @@ class DocumentService implements DocumentInterface
     public function updateDocument(int $documentId, string $newName)
     {
         // Obtener el documento por su ID
-        $document = Document::find($documentId);
+        $document = Document::findOrFail($documentId);
     
-        if ($document) {
-            // Obtener la ruta del archivo original
-            $originalFilePath = parse_url($document->url, PHP_URL_PATH);
-    
-            // Verificar si el archivo existe en el sistema de archivos "spaces"
-            if (Storage::disk('spaces')->exists($originalFilePath)) {
-                // Obtener la extensión del archivo
-                $extension = pathinfo($originalFilePath, PATHINFO_EXTENSION);
-    
-                // Construir el nuevo nombre con la extensión
-                $newFileName = $this->getUniqueFilename(dirname($originalFilePath), $newName) . '.' . $extension;
-    
-                // Construir la nueva ruta del archivo
-                $newFilePath = dirname($originalFilePath) . '/' . $newFileName;
-    
-                // Copiar el archivo con el nuevo nombre
-                if (Storage::disk('spaces')->copy($originalFilePath, $newFilePath)) {
-                    // Eliminar el archivo original
-                    Storage::disk('spaces')->delete($originalFilePath);
-    
-                    // Actualizar la URL y el nombre en la base de datos
-                    $document->name = $newFileName;
-                    $document->url = Storage::disk('spaces')->url($newFilePath);
-                    $document->save();
-    
-                    return ['message' => 'Nombre del documento actualizado correctamente'];
-                }
-                throw new \Exception('Error al copiar el archivo con el nuevo nombre');
+        // Obtener la ruta del archivo original
+        $originalFilePath = parse_url($document->url, PHP_URL_PATH);
+
+        // Verificar si el archivo existe en el sistema de archivos "spaces"
+        if (Storage::disk('spaces')->exists($originalFilePath)) {
+            // Obtener la extensión del archivo
+            $extension = pathinfo($originalFilePath, PATHINFO_EXTENSION);
+
+            // Construir el nuevo nombre con la extensión
+            $newFileName = $this->getUniqueFilename(dirname($originalFilePath), $newName) . '.' . $extension;
+
+            // Construir la nueva ruta del archivo
+            $newFilePath = dirname($originalFilePath) . '/' . $newFileName;
+
+            // Copiar el archivo con el nuevo nombre
+            if (Storage::disk('spaces')->copy($originalFilePath, $newFilePath)) {
+                // Eliminar el archivo original
+                Storage::disk('spaces')->delete($originalFilePath);
+
+                // Actualizar la URL y el nombre en la base de datos
+                $document->name = $newFileName;
+                $document->url = Storage::disk('spaces')->url($newFilePath);
+                $document->save();
+
+                return ['message' => 'Nombre del documento actualizado correctamente'];
             }
-            throw new \Exception('Documento no encontrado en el sistema de archivos', 404);
+            throw new \Exception('Error al copiar el archivo con el nuevo nombre');
         }
-        throw new \Exception('Documento no encontrado', 404);
+        throw new \Exception('Documento no encontrado en el sistema de archivos');
     }
         
     /**
@@ -242,7 +236,7 @@ class DocumentService implements DocumentInterface
         }
         
         // La carpeta no existe
-        throw new \Exception('Carpeta de spaces no encontrada', 404);
+        throw new \Exception('Carpeta de spaces no encontrada');
     }
 
     /**

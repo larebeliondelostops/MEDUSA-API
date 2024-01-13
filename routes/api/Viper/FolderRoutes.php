@@ -12,9 +12,11 @@ use App\Http\Controllers\Viper\FolderController;
 |
 */
 
-Route::post('folder/create', [FolderController::class, 'store']);
-Route::get('folder/all/{project_id}', [FolderController::class, 'index']);
-Route::get('folder/{folderId}', [FolderController::class, 'show']);
-Route::delete('folder/{folderId}', [FolderController::class, 'destroy']);
-Route::put('folder/{folderId}', [FolderController::class, 'update']);
-Route::post('/folders/store-multiple', [FolderController::class, 'storeMultiple']);
+Route::prefix('/viper/folder')->group(function () {
+    Route::post('create', [FolderController::class, 'store']);
+    Route::get('list/project/{project_id}', [FolderController::class, 'index']);
+    Route::get('get/{folderId}', [FolderController::class, 'show']);
+    Route::delete('delete/{folderId}', [FolderController::class, 'destroy']);
+    Route::put('update/{folderId}', [FolderController::class, 'update']);
+    Route::post('create-multiple', [FolderController::class, 'storeMultiple']);
+});

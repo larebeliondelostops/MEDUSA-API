@@ -47,21 +47,17 @@ class FolderService implements FolderInterface
     
         // Si se proporciona higherFolderId, establecer la relación
         if ($higherFolderId) {
-            $higherFolder = Folder::find($higherFolderId);
+            $higherFolder = Folder::findOrFail($higherFolderId);
     
-            if ($higherFolder) {
-                // Asegúrate de que la relación lowerFolders está cargada
-                $higherFolder->load('lowerFolders');
-    
-                // Crear la relación entre carpetas
-                $relationship = new FolderRelationship();
-                $relationship->higher_folder = $higherFolder->id;
-                $relationship->lower_folder = $folder->id;
-                $relationship->save();
-            } else {
-                // Manejar el caso donde no se encuentra la carpeta superior
-                throw new \Exception('Carpeta superior no encontrada', 404);
-            }
+            // Asegúrate de que la relación lowerFolders está cargada
+            $higherFolder->load('lowerFolders');
+
+            // Crear la relación entre carpetas
+            $relationship = new FolderRelationship();
+            $relationship->higher_folder = $higherFolder->id;
+            $relationship->lower_folder = $folder->id;
+            $relationship->save();
+
         }
         return $folder->toArray();
     }
@@ -76,17 +72,13 @@ class FolderService implements FolderInterface
     public function updateFolderName(int $folderId, string $newName)
     {
         // Buscar la carpeta por su ID
-        $folder = Folder::find($folderId);
+        $folder = Folder::findOrFail($folderId);
 
-        if ($folder) {
-            // Actualizar el nombre de la carpeta
-            $folder->name = $newName;
-            $folder->save();
+        // Actualizar el nombre de la carpeta
+        $folder->name = $newName;
+        $folder->save();
 
-            return new FolderDTO($folder->toArray());
-        } else {
-            throw new \Exception('Carpeta no encontrada', 404);
-        }
+        return new FolderDTO($folder->toArray());
     }
 
 
@@ -99,23 +91,17 @@ class FolderService implements FolderInterface
     public function getFolder(int $folderId)
     {
         // Buscar la carpeta por su ID
-        $folder = Folder::find($folderId);
+        $folder = Folder::findOrFail($folderId);
 
-        if ($folder) {
-            // Crear una colección que contendrá la estructura jerárquica de carpetas
-            $result = collect();
+        // Crear una colección que contendrá la estructura jerárquica de carpetas
+        $result = collect();
 
-            // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
-            $folderDictionary = collect([$folderId => $folder]);
+        // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
+        $folderDictionary = collect([$folderId => $folder]);
 
-            $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
+        $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
 
-            return $result->all();
-        } else {
-            throw new \Exception('Carpeta no encontrada', 404);
-        }
-
-        
+        return $result->all();      
     }
 
     /**
@@ -179,14 +165,11 @@ class FolderService implements FolderInterface
     public function deleteFolder(int $folderId)
     {
         // Buscar la carpeta por su ID
-        $folder = Folder::find($folderId);
+        $folder = Folder::findOrFail($folderId);
 
-        if ($folder) {
-            // Eliminar todas las subcarpetas y documentos asociados
-            $this->recursiveDelete($folder);
-            return ['message' => 'Carpeta y subcarpetas eliminadas correctamente'];
-        }
-        throw new \Exception('Carpeta no encontrada', 404);
+        // Eliminar todas las subcarpetas y documentos asociados
+        $this->recursiveDelete($folder);
+        return ['message' => 'Carpeta y subcarpetas eliminadas correctamente'];
     }
 
     /**
@@ -229,11 +212,7 @@ class FolderService implements FolderInterface
             'higher_folder_id' => $parentFolder['id'] ?? null,
         ];
     
-        $folderDTO = new FolderDTO(
-            $validatedData['name'],
-            $validatedData['stage_id'],
-            $validatedData['project_id']
-        );
+        $folderDTO = new FolderDTO($validatedData);
     
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
         $folderResponse = $this->createNewFolder($folderDTO, $validatedData['higher_folder_id']);

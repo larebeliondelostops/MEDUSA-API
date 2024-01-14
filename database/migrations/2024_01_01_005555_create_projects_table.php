@@ -23,9 +23,20 @@ class CreateProjectsTable extends Migration
             $table->decimal('requested_value', 15, 2);
             $table->decimal('executed_value', 15, 2);
             $table->float('physical_progress');
+            $table->float('financial_progress');
             $table->string('responsible_entity', 255);
-            $table->unsignedBigInteger('sector_id')->nullable(); // Opcional, dependiendo de si todos los proyectos deben tener un sector
-            $table->string('location', 255);
+            $table->unsignedBigInteger('sector_id');
+
+            $table->string('type_location');
+            $table->double('latitude_location', 10, 6);
+            $table->double('longitude_location', 10, 6);
+
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
+
+            $table->unsignedBigInteger('municipality_id');
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
+
             $table->integer('beneficiaries');
             $table->string('planner', 255);
             $table->date('execution_approval_date');

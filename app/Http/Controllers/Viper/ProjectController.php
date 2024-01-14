@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias de terceros
-use App\Http\Controllers\Controller;
+use App\DTOs\Viper\Project\ProjectRequestDTO;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\ProjectDTO;
 use App\Http\Request\Viper\ProjectRequest;
 use App\Interfaces\Viper\ProjectInterface;
 
@@ -25,9 +24,9 @@ use Illuminate\Http\Request;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.0
+ * @version    v1.0.2
  */
-class ProjectController extends Controller
+class ProjectController extends BaseController
 {
     // Número de proyectos por página para la paginación.
     private const DEFAULT_PROJECT_PER_PAGE = 8;
@@ -37,16 +36,17 @@ class ProjectController extends Controller
 
     /**
      * Constructor del controlador.
-     * 
+     *
      * Inyecta la interfaz ProjectInterface para interactuar con la lógica del negocio.
-     * 
+     *
      * @param ProjectInterface $projectInterface Interfaz para las operaciones de negocio de proyectos.
      */
     public function __construct(ProjectInterface $projectInterface)
-    {  
-       $this->projectInterface = $projectInterface; 
+    {
+        parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
+        $this->projectInterface = $projectInterface;
     }
-    
+
      /**
      * Crea un nuevo proyecto.
      *
@@ -57,46 +57,21 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto creado.
      */
     public function store(ProjectRequest $request)
-    {  
+    {
         try
         {
             $validatedData = $request->validated();
-            $projectDTO = new ProjectDTO($validatedData);
-        
+            $projectDTO = new ProjectRequestDTO($validatedData);
+
             $this->projectInterface->createNewProject($projectDTO);
             return response()->json([
-                'success' => true,
-                'message' => 'Project created successfully.',
-                'data'    => $projectDTO->toArray(),
+                'message' => 'Proyecto creado satisfactoriamente.',
+                'data'    => $projectDTO,
             ], 201);
         }
-        catch(QueryException $e) // Error al realizar la consulta 
+        catch (Exception $exception)
         {
-            $errCode = $e->getCode();
-            if ($errCode == 23505)
-                return response()->json([
-                    'success' => false,
-                    'message' => 'A project with the same identifier already exists.',
-                ], 409);
-            else
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Error proccesing request.',
-                ], 500);
-        }
-        catch(PDOException $e) // Error en la conexion con la DB
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to establish a connection with the database.',
-            ], 500);
-        }
-        catch(Exception $e) // Error general 
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 
@@ -112,26 +87,22 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto actualizado.
      */
     public function update(ProjectRequest $request, string $bpin)
-    { 
+    {
         try
         {
             $validatedData = $request->validated();
-            $projectDTO = new ProjectDTO($validatedData); 
-            
+            $projectDTO = new ProjectRequestDTO($validatedData);
+
             $this->projectInterface->updateProject($projectDTO, $bpin);
 
             return response()->json([
-                'success' => true,
-                'message' => 'Project updated successfully.',
-                'data'    => $projectDTO->toArray(),
-            ], 200);      
+                'message' => 'Proyecto actualizado satisfactoriamente',
+                'data'    => $projectDTO,
+            ], 200);
         }
-        catch(Exception $e)
+        catch(Exception $exception)
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 
@@ -150,15 +121,12 @@ class ProjectController extends Controller
         {
             $page = $request->input('page', 1);
             $name = $request->input('name', null);
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $name);
+            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $request);
             return response()->json($paginatedProjects, 200);
         }
-        catch(Exception $e) // Error general
+        catch(Exception $exception) // Error general
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 
@@ -172,17 +140,16 @@ class ProjectController extends Controller
      */
     public function show(Request $request, string $bpin)
     {
-        try  
+        try
         {
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
-            return response()->json($projectDTO->toArray(), 200);
-        }
-        catch(Exception $e) // Error general
-        {
             return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+                "data" => $projectDTO,
+            ], 200);
+        }
+        catch(Exception $exception) // Error general
+        {
+            return $this->handleException($exception);
         }
     }
 
@@ -196,24 +163,17 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, string $bpin)
     {
-        try  
+        try
         {
             $projectDTO = $this->projectInterface->deleteProject($bpin);
-            return response()->json($projectDTO->toArray(), 200);
-        }
-        catch(Exception $e) // Error al eliminar proyecto no existente  
-        {
             return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+                "message" => "Proyecto eliminado satisfactoriamente.",
+                "data" => $projectDTO
+            ], 200);
         }
-        catch(Exception $e) // Error general
+        catch(Exception $exception) // Error al eliminar proyecto no existente
         {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+            return $this->handleException($exception);
         }
     }
 }

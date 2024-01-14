@@ -2,7 +2,7 @@
 
 namespace App\Services\Viper;
 
-use App\DTOs\Viper\FolderDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
@@ -10,6 +10,17 @@ use App\Models\Viper\FolderRelationship;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
+/**
+ * Servicio para manejar operaciones relacionadas con las carpetas de documentos de los proyectos.
+ *
+ * Este servicio implementa la interfaz FolderInterface y es responsable
+ * de realizar operaciones como la creación, actualización, recuperación
+ * y eliminación de carpetas en los proyectos.
+ * @package    App\Service\Viper
+ * @author     Daniel Alférez <dan.alferez1@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
+ */
 class FolderService implements FolderInterface
 {
 
@@ -20,6 +31,13 @@ class FolderService implements FolderInterface
         $this->documentInterface = $documentInterface;
     }
 
+    /**
+     * Crea una nueva carpeta en el sistema Viper.
+     *
+     * @param FolderDTO $folderDTO Datos de la carpeta a crear.
+     * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
+     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
+     */
     public function createNewFolder(FolderDTO $folderDTO, ?int $higherFolderId = null)
     {
         // Crear la carpeta principal
@@ -42,13 +60,19 @@ class FolderService implements FolderInterface
                 $relationship->save();
             } else {
                 // Manejar el caso donde no se encuentra la carpeta superior
-                return ['error' => 'Carpeta superior no encontrada'];
+                throw new \Exception('Carpeta superior no encontrada', 404);
             }
         }
-    
-        return ['message' => 'Carpeta creada exitosamente', 'data' => $folder->toArray()];
+        return $folder->toArray();
     }
 
+    /**
+     * Actualiza el nombre de una carpeta específica en el sistema Viper.
+     *
+     * @param int $folderId Identificador único de la carpeta a actualizar.
+     * @param string $newName Nuevo nombre para la carpeta.
+     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
+     */
     public function updateFolderName(int $folderId, string $newName)
     {
         // Buscar la carpeta por su ID
@@ -59,13 +83,19 @@ class FolderService implements FolderInterface
             $folder->name = $newName;
             $folder->save();
 
-            return ['message' => 'Nombre de carpeta actualizado correctamente', 'data' => $folder->toArray()];
+            return new FolderDTO($folder->toArray());
+        } else {
+            throw new \Exception('Carpeta no encontrada', 404);
         }
-
-        return ['error' => 'Carpeta no encontrada'];
     }
 
-    
+
+    /**
+     * Obtiene la información detallada de una carpeta específica en el sistema Viper.
+     *
+     * @param int $folderId Identificador único de la carpeta.
+     * @return array Resultado de la operación que incluye la información de la carpeta o mensajes de error.
+     */
     public function getFolder(int $folderId)
     {
         // Buscar la carpeta por su ID
@@ -80,20 +110,24 @@ class FolderService implements FolderInterface
 
             $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
 
-            return [
-                'data' => $result->all(),
-            ];
+            return $result->all();
+        } else {
+            throw new \Exception('Carpeta no encontrada', 404);
         }
 
-        return ['error' => 'Carpeta no encontrada'];
+        
     }
 
-
+    /**
+     * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía.
+     *
+     * @param int $projectId Identificador (bpin) del proyecto
+     * @return array
+     */
     public function getAllFolders($projectId)
     {
-        $perPage = 20;
         // Obtener todas las carpetas para el proyecto específico
-        $folders = Folder::where('project_id', $projectId)->paginate($perPage);
+        $folders = Folder::where('project_id', $projectId)->get();
         // Crear una colección que contendrá la estructura jerárquica de carpetas
         $result = collect();
     
@@ -109,29 +143,18 @@ class FolderService implements FolderInterface
             }
         }
     
-        return [
-            'data' => $result->all(),
-            'pagination' => [
-                'current_page' => $folders->currentPage(),
-                'per_page' => $folders->perPage(),
-                'total' => $folders->total(),
-                'prev_page_url' => $folders->previousPageUrl(),
-                'next_page_url' => $folders->nextPageUrl(),
-            ],
-        ];
+        return $result->all();
     }
     
-
-    // Función recursiva para construir la jerarquía de carpetas
+    /**
+     * Función privada recursiva para construir la jerarquía de carpetas.
+     *
+     * @param Folder $folder
+     * @param Collection $folderDictionary
+     * @return array
+     */
     private function buildFolderHierarchy(Folder $folder, Collection $folderDictionary): array
     {
-        // Crear un nuevo FolderDTO
-        $folderDTO = new FolderDTO(
-            $folder->name,
-            $folder->stage_id,
-            $folder->project_id
-        );
-
         // Obtener las subcarpetas
         $subfolders = $folder->lowerFolders->map(
             fn($subfolder) => $this->buildFolderHierarchy($subfolder, $folderDictionary)
@@ -141,13 +164,18 @@ class FolderService implements FolderInterface
         $documents = $this->documentInterface->getDocumentsByFolder($folder->id);
 
         return [
-            'folder' => array_merge($folderDTO->toArray(), ['id' => $folder->id]),
+            'folder' => new FolderDTO($folder->toArray()),
             'subfolders' => $subfolders->all(),
             'documents' => $documents,
         ];
     }
 
-
+    /**
+     * Elimina una carpeta específica y todas sus subcarpetas en el sistema Viper.
+     *
+     * @param int $folderId Identificador único de la carpeta a eliminar.
+     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
+     */
     public function deleteFolder(int $folderId)
     {
         // Buscar la carpeta por su ID
@@ -156,13 +184,16 @@ class FolderService implements FolderInterface
         if ($folder) {
             // Eliminar todas las subcarpetas y documentos asociados
             $this->recursiveDelete($folder);
-
             return ['message' => 'Carpeta y subcarpetas eliminadas correctamente'];
         }
-
-        return ['error' => 'Carpeta no encontrada'];
+        throw new \Exception('Carpeta no encontrada', 404);
     }
 
+    /**
+     * Función privada recursiva para eliminar carpetas y documentos de forma recursiva.
+     *
+     * @param Folder $folder
+     */
     private function recursiveDelete(Folder $folder)
     {
         // Obtener todas las subcarpetas de la carpeta actual
@@ -178,5 +209,42 @@ class FolderService implements FolderInterface
 
         // Eliminar la carpeta actual
         $folder->delete();
+    }
+
+
+    /**
+     * Crea una jerarquía de carpetas en el sistema Viper, incluyendo subcarpetas según la estructura proporcionada.
+     *
+     * @param array $folderData Datos de la carpeta principal y sus subcarpetas.
+     * @param int $projectId Identificador del proyecto al que pertenecen las carpetas.
+     * @param array|null $parentFolder Datos de la carpeta superior (opcional) para establecer relaciones jerárquicas.
+     * @return void
+     */
+    public function createFolderHierarchy($folderData, $projectId, $parentFolder = null)
+    {
+        $validatedData = [
+            'name' => $folderData['name'],
+            'stage_id' => $folderData['stage_id'] ?? $parentFolder['stage_id'],
+            'project_id' => $projectId,
+            'higher_folder_id' => $parentFolder['id'] ?? null,
+        ];
+    
+        $folderDTO = new FolderDTO(
+            $validatedData['name'],
+            $validatedData['stage_id'],
+            $validatedData['project_id']
+        );
+    
+        // Usar el servicio para crear la carpeta y establecer la relación higherFolders
+        $folderResponse = $this->createNewFolder($folderDTO, $validatedData['higher_folder_id']);
+        
+        // Ajustar el acceso a la respuesta según la estructura real
+        $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;
+    
+        if (isset($folderData['subfolders']) && is_array($folderData['subfolders'])) {
+            foreach ($folderData['subfolders'] as $subfolderData) {
+                $this->createFolderHierarchy($subfolderData, $projectId, $folder);
+            }
+        }
     }
 }

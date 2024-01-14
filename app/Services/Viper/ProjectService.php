@@ -3,10 +3,18 @@
 namespace App\Services\Viper;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\ProjectDTO;
-use App\DTOs\Viper\ProjectSummaryDTO;
+use App\DTOs\Viper\Project\ProjectDataDTO;
+use App\DTOs\Viper\Project\ProjectRequestDTO;
+use App\DTOs\Viper\Project\ProjectSummaryDTO;
+
+use App\Interfaces\Viper\DepartmentInterface;
+use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
+use App\Utils\Viper\Filters\ProjectFilter;
+
+// Librerias de terceros
+use Illuminate\Http\Request;
 
 /**
  * Servicio para manejar operaciones relacionadas con proyectos.
@@ -21,15 +29,26 @@ use App\Models\Viper\Project;
  */
 class ProjectService implements ProjectInterface
 {
+    // Interface con todas las funcionalidades de la logica del negocio para departamento
+    private DepartmentInterface $departmentInterface;
+    // Interface con todas las funcionalidades de la logica del negocio para municipio
+    private MunicipalityInterface $municipalityInterface;
+
+    public function __construct(DepartmentInterface $departmentInterface, MunicipalityInterface $municipalityInterface)
+    {
+        $this->departmentInterface = $departmentInterface;
+        $this->municipalityInterface = $municipalityInterface;
+    }
+
      /**
      * Crea un nuevo proyecto.
      *
      * Toma un ProjectDTO, lo convierte a un modelo de Eloquent y lo guarda en la base de datos.
      *
-     * @param ProjectDTO $projectDTO DTO del proyecto a crear.
+     * @param ProjectRequestDTO $projectDTO DTO del proyecto a crear.
      */
-    public function createNewProject(ProjectDTO $projectDTO) : void 
-    {    
+    public function createNewProject(ProjectRequestDTO $projectDTO) : void
+    {
         $project = new Project();
         $project->fill($projectDTO->toArray());
         $project->save();
@@ -41,10 +60,10 @@ class ProjectService implements ProjectInterface
      * Busca un proyecto por su identificador 'bpin', y actualiza sus datos con los proporcionados
      * en el ProjectDTO.
      *
-     * @param ProjectDTO $projectDTO DTO del proyecto con datos actualizados.
+     * @param ProjectRequestDTO $projectDTO DTO del proyecto con datos actualizados.
      * @param string $bpin Identificador único del proyecto a actualizar.
      */
-    public function updateProject(ProjectDTO $projectDTO, string $bpin) : void
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : void
     {
         $project = Project::findOrFail($bpin);
         $data = $projectDTO->toArray();
@@ -59,22 +78,25 @@ class ProjectService implements ProjectInterface
      *
      * @param int $perPage Número de proyectos por página.
      * @param int $page Número de la página actual.
-     * @param string|null $name Nombre opcional para filtrar proyectos.
+     * @param Request $request Peticion que contiene los parametros de filtrado.
      * @return array Array que contiene los proyectos paginados y metadatos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, ?string $name): array
+    public function getAllProjectsPaginated(int $perPage, int $page, Request $request): array
     {
-        $query = Project::query();
+        $filter = new ProjectFilter();
+        $queryItems = $filter->transform($request);
 
-        if (!is_null($name))  
-        {
-            $query->where('name', 'LIKE', '%'.$name.'%');
+        $projectQuery = Project::query();
+        foreach($queryItems as $item) {
+            if(count($item) === 3) {
+                $projectQuery->orWhere($item[0], $item[1], ($item[1]=="like"?"%".$item[2]."%":$item[2]));
+            }
         }
-        
-        $paginatedProjects= $query->paginate(
+
+        $paginatedProjects= $projectQuery->paginate(
             $perPage,  // numero de paginas por paginado
             ['bpin', 'name', 'state'], // columnas de la tabla Proyectos que requiero
-            'page', 
+            'page', // nombre del parámetro de consulta usado para la paginación (page por defecto)
             $page // numero de la pagina solicitada
             );
 
@@ -107,12 +129,15 @@ class ProjectService implements ProjectInterface
      * Recupera un proyecto por su identificador 'bpin'.
      *
      * @param string $bpin Identificador único del proyecto.
-     * @return ProjectDTO DTO del proyecto encontrado.
+     * @return ProjectDataDTO DTO del proyecto encontrado.
      */
-    public function getProjectByBPIN(string $bpin) : ProjectDTO
+    public function getProjectByBPIN(string $bpin) : ProjectDataDTO
     {
-        $project = Project::find($bpin);
-        return new ProjectDTO($project->toArray());
+        $project = Project::findOrFail($bpin);
+        $projectDTO = new ProjectRequestDTO($project->toArray());
+        $departmentDTO = $this->departmentInterface->getDepartmentById($projectDTO->department_id);
+        $municipalityDTO = $this->municipalityInterface->getMunicipalityById($projectDTO->municipality_id);
+        return new ProjectDataDTO($project->toArray() + ['department'=>$departmentDTO, 'municipality'=>$municipalityDTO]);
     }
 
     /**
@@ -121,12 +146,12 @@ class ProjectService implements ProjectInterface
      * Busca un proyecto por su 'bpin', lo elimina y devuelve un DTO con sus datos.
      *
      * @param string $bpin Identificador único del proyecto a eliminar.
-     * @return ProjectDTO DTO del proyecto eliminado.
+     * @return ProjectDataDTO DTO del proyecto eliminado.
      */
-    public function deleteProject(string $bpin) : ProjectDTO
+    public function deleteProject(string $bpin) : ProjectDataDTO
     {
         $project = Project::findOrFail($bpin);
-        $projectDTO = new ProjectDTO($project->toArray());
+        $projectDTO = $this->getProjectByBPIN($bpin);
         $project->delete();
 
         return $projectDTO;

@@ -18,7 +18,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class ProjectRequest extends FormRequest
+class StateRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -38,28 +38,7 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'bpin' => 'required|string|max:255',
-            'name' => 'required|string|max:100',
-            'ocad' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'substate' => 'required|string|max:100',
-            'total_value' => 'required|numeric',
-            'requested_value' => 'required|numeric',
-            'responsible_entity' => 'required|string|max:255',
-            'sector' => 'required|string|max:255',
-            'type_location' => 'required|string',
-            'latitude_location' => 'required|numeric',
-            'longitude_location' => 'required|numeric',
-            'department_id' => 'required|integer',
-            'municipality_id' => 'required|integer',
-            'beneficiaries' => 'required|integer',
-            'planner' => 'required|string|max:255',
-            'execution_approval_date' => 'required|date',
-            'completion_date' => 'nullable|date|after_or_equal:execution_approval_date',
-            'start_date_execution_phase' => 'nullable|date',
-            'project_duration_in_months' => 'required|integer|min:0',
-            'reporting_frequency' => 'required|integer|min:1',
-            'general_objective' => 'required|string|max:1000',
+            'name' => 'required|string|max:32',
         ];
     }
 

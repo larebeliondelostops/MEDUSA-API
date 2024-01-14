@@ -4,56 +4,73 @@ namespace App\Http\Controllers\Viper;
 
 use App\Http\Controllers\Controller;
 
-
-use App\DTOs\Viper\SectorDTO;
+use App\Http\Request\Viper\SectorRequest;
 use App\Interfaces\Viper\SectorInterface;
+use App\DTOs\Viper\Sector\SectorDTO;
 
-
-use Illuminate\Database\QueryException;
-use PDOException;
 use Exception;
+use PDOException;
 use Illuminate\Http\Request;
-
-/**
- * Controlador para manejar operaciones relacionadas con sectores.
- *
- * Este controlador maneja las solicitudes HTTP relacionadas con sectores en el sistema Viper.
- *
- * @package App\Http\Controllers\Viper
- */
-class SectorController extends Controller
+class SectorController extends BaseController
 {
     private SectorInterface $sectorInterface;
 
-    /**
-     * Constructor del controlador.
-     *
-     * @param SectorInterface $sectorInterface Interfaz para el servicio de sectores.
-     */
     public function __construct(SectorInterface $sectorInterface)
     {
+        parent::__construct();
         $this->sectorInterface = $sectorInterface;
     }
 
-    /**
-     * Obtiene todos los sectores y retorna una respuesta JSON.
-     *
-     * @param Request $request Objeto de solicitud HTTP.
-     * @return \Illuminate\Http\JsonResponse Respuesta JSON con los sectores.
-     */
+    public function store(SectorRequest $request)
+    {
+        try {
+            $validatedData = $request->validated();
+            $sectorDTO = new SectorDTO($validatedData);
+            $sectorCreatedDTO = $this->sectorInterface->createNewSector($sectorDTO);
+            return response()->json([
+                'message' => 'Sector created successfully.',
+                'data'    => $sectorCreatedDTO
+            ], 201);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function update(SectorRequest $request, int $id)
+    {
+        try {
+            $validatedData = $request->validated();
+            $sectorDTO = new SectorDTO($validatedData);
+            $stateUpdatedDTO = $this->sectorInterface->updateSector($sectorDTO, $id);
+
+            return response()->json([
+                'message' => 'Sector updated successfully.',
+                'data'    => $stateUpdatedDTO,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
     public function index(Request $request)
     {
-        try
-        {
+        try {
             $sectors = $this->sectorInterface->getAllSectors();
-            return response()->json($sectors, 200);
-        }
-        catch(Exception $e)
-        {
             return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
-        }       
+                'data' => $sectors,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function destroy(Request $request, int $id)
+    {
+        try {
+            $sectorDTO = $this->sectorInterface->deleteSector($id);
+            return response()->json($sectorDTO->toArray(), 200);
+        } catch (Exception $e) {
+            $this->handleException($exception);
+        }
     }
 }

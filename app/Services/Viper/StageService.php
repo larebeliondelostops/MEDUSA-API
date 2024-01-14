@@ -64,16 +64,13 @@ class StageService implements StageInterface
     public function updateStage($stageId, StageDTO $stageDTO)
     {
         // Encuentra la etapa por su ID
-        $stage = Stage::find($stageId);
-        
-        if ($stage) {
-            // Actualiza los datos de la etapa
-            $stage->update([
-                'name' => $stageDTO->name,
-            ]);
-            return new StageDTO($stage->toArray()); 
-        }
-        throw new \Exception('Etapa no encontrada', 404);
+        $stage = Stage::findOrFail($stageId);
+        // Actualiza los datos de la etapa
+        $stage->update([
+            'name' => $stageDTO->name,
+        ]);
+        return new StageDTO($stage->toArray()); 
+
     }
 
     /**
@@ -85,13 +82,8 @@ class StageService implements StageInterface
     public function deleteStage($stageId)
     {
         // Encuentra la etapa por su ID y elimínala
-        $stage = Stage::find($stageId);
-
-        if ($stage) {
-            $stage->delete();
-            return; 
-        }
-        throw new \Exception('Etapa no encontrada', 404);
+        $stage = Stage::findOrFail($stageId);
+        $stage->delete();
     }
 
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -46,8 +46,6 @@ class CreateProjectsTable extends Migration
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
             $table->timestamps();
-
-            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -60,5 +58,4 @@ class CreateProjectsTable extends Migration
     {
         Schema::dropIfExists('projects');
     }
-}
-
+};

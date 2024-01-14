@@ -24,7 +24,7 @@ class SectorService implements SectorInterface
      * Crea un nuevo sector.
      *
      * @param SectorDTO $sectorDTO DTO que contiene la información del sector a crear.
-     * @return void
+     * @return SectorDTO
      */
     public function createNewSector(SectorDTO $sectorDTO): SectorDTO
     {

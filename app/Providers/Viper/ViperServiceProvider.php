@@ -15,6 +15,8 @@ use App\Interfaces\Viper\DocumentInterface;
 use App\Services\Viper\DocumentService;
 use App\Interfaces\Viper\StageInterface;
 use App\Services\Viper\StageService;
+use App\Interfaces\Viper\SectorInterface;
+use App\Services\Viper\SectorService;
 use App\Interfaces\Viper\SubstateInterface;
 use App\Services\Viper\SubstateService;
 
@@ -28,10 +30,10 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(FolderInterface::class, FolderService::class);
         $this->app->bind(DocumentInterface::class, DocumentService::class);
         $this->app->bind(SectorInterface::class, SectorService::class);
+
         $this->app->bind(StageInterface::class, StageService::class);
         $this->app->bind(DepartmentInterface::class, DepartmentService::class);
         $this->app->bind(MunicipalityInterface::class, MunicipalityService::class);
         $this->app->bind(StateInterface::class, StateService::class);
-        $this->app->bind(SubstateInterface::class, SubstateService::class);
     }
 }

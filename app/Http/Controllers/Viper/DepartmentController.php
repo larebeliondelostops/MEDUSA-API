@@ -8,6 +8,7 @@ use App\Interfaces\Viper\DepartmentInterface;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DepartmentController extends BaseController
 {
@@ -29,7 +30,7 @@ class DepartmentController extends BaseController
             return response()->json([
                 "message" => "Departamento creado satisfactoriamente.",
                 "data" => $departmentSaved
-            ]);
+            ], Response::HTTP_CREATED);
         }
         catch(Exception $exception)
         {
@@ -43,7 +44,7 @@ class DepartmentController extends BaseController
         {
             return response()->json([
                 "data"=> $this->departmentInterface->getAllDepartments(),
-            ]);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {
@@ -57,7 +58,7 @@ class DepartmentController extends BaseController
         {
             return response()->json([
                 "data" => $this->departmentInterface->getDepartmentById($id),
-            ]);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {
@@ -75,7 +76,7 @@ class DepartmentController extends BaseController
             return response()->json([
                 "message" => "Departamento actualizado satisfactoriamente",
                 "data" => $departmentUpdated,
-            ]);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {
@@ -91,7 +92,7 @@ class DepartmentController extends BaseController
             return response()->json([
                 "message" => "Departamento eliminado satisfactoriamente.",
                 "data"=> $departmentDeleted,
-            ]);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {

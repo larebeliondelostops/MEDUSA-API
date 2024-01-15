@@ -43,7 +43,7 @@ class DepartmentController extends BaseController
         try
         {
             return response()->json([
-                "data"=> $this->departmentInterface->getAllDepartmentsDetail()//getAllDepartments(),
+                "data"=> $this->departmentInterface->getAllDepartments(),
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)

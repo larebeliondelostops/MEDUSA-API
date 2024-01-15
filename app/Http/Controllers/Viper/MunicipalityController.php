@@ -44,7 +44,8 @@ class MunicipalityController extends BaseController
     {
         try
         {
-            $municipalitiesGotDTO = $this->municipalityInterface->getAllMunicipalities();
+            $queryFilterParams = $request->query();
+            $municipalitiesGotDTO = $this->municipalityInterface->getAllMunicipalities($queryFilterParams);
             return response()->json([
                 "data" => $municipalitiesGotDTO,
             ], Response::HTTP_OK);

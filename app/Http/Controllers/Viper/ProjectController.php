@@ -121,7 +121,8 @@ class ProjectController extends BaseController
         {
             $page = $request->input('page', 1);
             $name = $request->input('name', null);
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $request);
+            $queryFilterParam = $request->query();
+            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $queryFilterParam);
             return response()->json($paginatedProjects, 200);
         }
         catch(Exception $exception) // Error general

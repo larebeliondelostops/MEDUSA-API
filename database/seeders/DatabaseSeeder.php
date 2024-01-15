@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Tenancy;
+use Database\Seeders\Viper\DepartmentSeeder;
+use Database\Seeders\Viper\MunicipalitySeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -38,6 +40,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FiberLinesTableSeeder::class);
         $this->call(FiberPointsTableSeeder::class);
         $this->call(SlugsSeeder::class);
+        //viper
+        $this->call(DepartmentSeeder::class);
+        $this->call(MunicipalitySeeder::class);
 
         //Exclusivo Neiva
         $this->call(FiberSiesLinesSeeder::class);

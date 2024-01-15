@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Viper;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Interfaces\Viper\SelectsInterface;
 
 /**

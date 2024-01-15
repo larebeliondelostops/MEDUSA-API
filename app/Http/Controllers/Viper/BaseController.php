@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use PDOException;
@@ -27,12 +28,12 @@ class BaseController extends Controller
                 case $this->databaseErros['unique_violation']:
                     return response()->json([
                         'message' => 'Un elemento con el mismo identificador ya existe.'
-                    ], 409);
+                    ], Response::HTTP_CONFLICT);
                     break;
                 default:
                     return response()->json([
                         'message' => 'Error procesando la petición.'
-                    ], 500);
+                    ], Response::HTTP_INTERNAL_SERVER_ERROR);
                 break;
             }
         }
@@ -40,31 +41,31 @@ class BaseController extends Controller
         {
             return response()->json([
                 'message' => 'No se pudo establecer una conexión con la base de datos.'
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         elseif ($exception instanceof ValidationException)
         {
             return response()->json([
                 'message' => $exception->getMessage()
-            ], 422);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         elseif ($exception instanceof ModelNotFoundException)
         {
             return response()->json([
                 'message' => 'Recurso no encontrado.'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
         elseif ($exception instanceof AuthorizationException)
         {
             return response()->json([
                 'message' => 'Acción no autorizada.'
-            ], 403);
+            ], Response::HTTP_FORBIDDEN);
         }
         else
         {
             return response()->json([
                 'message' => 'Se produjo un error interno del servidor.'
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

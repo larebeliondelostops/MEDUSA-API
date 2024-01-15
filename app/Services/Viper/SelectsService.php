@@ -2,10 +2,11 @@
 
 namespace App\Services\Viper;
 
+use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\SelectsInterface;
 use App\Interfaces\Viper\StateInterface;
 use App\Interfaces\Viper\SubstateInterface;
-use App\Interfaces\Viper\SectorInterface; 
+use App\Interfaces\Viper\SectorInterface;
 use App\Interfaces\Viper\DepartmentInterface;
 use Illuminate\Support\Collection;
 
@@ -21,15 +22,17 @@ class SelectsService implements SelectsInterface
 {
     private StateInterface $stateInterface;
     private SubstateInterface $substateInterface;
-    private SectorInterface $sectorInterface; 
-    private DepartmentInterface $departmentInterface; 
+    private SectorInterface $sectorInterface;
+    private DepartmentInterface $departmentInterface;
+    private MunicipalityInterface $municipalityInterface;
 
-    public function __construct(StateInterface $stateInterface, SubstateInterface $substateInterface, SectorInterface $sectorInterface, DepartmentInterface $departmentInterface) // Añade $departmentInterface aquí
+    public function __construct(StateInterface $stateInterface, SubstateInterface $substateInterface, SectorInterface $sectorInterface, DepartmentInterface $departmentInterface, MunicipalityInterface $municipalityInterface) // Añade $departmentInterface aquí
     {
         $this->stateInterface = $stateInterface;
         $this->substateInterface = $substateInterface;
-        $this->sectorInterface = $sectorInterface; 
+        $this->sectorInterface = $sectorInterface;
         $this->departmentInterface = $departmentInterface;
+        $this->municipalityInterface = $municipalityInterface;
     }
 
     /**
@@ -60,17 +63,13 @@ class SelectsService implements SelectsInterface
             ];
         }
 
+        $result["departments"] = $this->departmentInterface->getAllDepartmentsDetail();
+
         // Obtener todos los sectores
         $sectors = $this->sectorInterface->getAllSectors();
 
         // Agregar los sectores al arreglo de resultados
         $result['sectors'] = $sectors;
-
-        // Obtener todos los departamentos
-        $departments = $this->departmentInterface->getAllDepartments();
-
-        // Agregar los departamentos al arreglo de resultados
-        $result['departments'] = $departments;
 
         return $result;
     }

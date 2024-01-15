@@ -81,10 +81,10 @@ class ProjectService implements ProjectInterface
      * @param Request $request Peticion que contiene los parametros de filtrado.
      * @return array Array que contiene los proyectos paginados y metadatos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, Request $request): array
+    public function getAllProjectsPaginated(int $perPage, int $page, array $queryParams = []): array
     {
         $filter = new ProjectFilter();
-        $queryItems = $filter->transform($request);
+        $queryItems = $filter->transform($queryParams);
 
         $projectQuery = Project::query();
         foreach($queryItems as $item) {

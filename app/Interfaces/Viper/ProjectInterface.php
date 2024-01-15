@@ -43,7 +43,7 @@ interface ProjectInterface {
      * @param string|null $name Filtro opcional por nombre del proyecto.
      * @return array Array de proyectos paginados y datos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, Request $request) : array;
+    public function getAllProjectsPaginated(int $perPage, int $page, array $queryParams = []) : array;
 
     /**
      * Recupera un proyecto específico por su identificador 'bpin'.

@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Viper\ScopeController;
 
-Route::post('/viper/scopes/create', [ScopeController::class, 'store']);
-Route::put('/viper/scopes/update/{id}', [ScopeController::class, 'update']);
-Route::get('/viper/scopes/list', [ScopeController::class, 'index']);
-Route::get('/viper/scopes/get/{id}', [ScopeController::class, 'show']);
-Route::delete('/viper/scopes/delete/{id}', [ScopeController::class, 'destroy']);
+Route::prefix('/viper/scope')->group(function () {
+    Route::post('/create', [ScopeController::class, 'store']);
+    Route::put('/update/{id}', [ScopeController::class, 'update']);
+    Route::get('/list', [ScopeController::class, 'index']);
+    Route::get('/get/{id}', [ScopeController::class, 'show']);
+    Route::delete('/delete/{id}', [ScopeController::class, 'destroy']);
+});

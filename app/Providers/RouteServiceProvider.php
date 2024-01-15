@@ -98,6 +98,8 @@ class RouteServiceProvider extends ServiceProvider
             // Viper Routes
             require base_path('routes/api/Viper/ProjectRoutes.php');
             require base_path('routes/api/Viper/StageRoutes.php');
+            require base_path('routes/api/Viper/ScopeRoutes.php');
+            require base_path('routes/api/Viper/SpecificObjective.php');
         });
     }
 

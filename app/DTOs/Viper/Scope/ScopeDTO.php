@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Viper;
+namespace App\DTOs\Viper\Scope;
 
 use App\DTOs\Viper\DTO;
 
@@ -22,7 +22,7 @@ class ScopeDTO extends DTO
      *
      * @var int
      */
-    public int $id;
+    public ?int $id = null;
 
     /**
      * Descripción del alcance.

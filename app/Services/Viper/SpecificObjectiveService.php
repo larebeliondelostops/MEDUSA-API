@@ -2,7 +2,7 @@
 
 namespace App\Services\Viper;
 
-use App\DTOs\Viper\SpecificObjectiveDTO;
+use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use App\Interfaces\Viper\SpecificObjectiveInterface;
 use App\Models\Viper\SpecificObjective;
 
@@ -13,6 +13,9 @@ use App\Models\Viper\SpecificObjective;
  * como la creación, actualización, recuperación y eliminación de objetivos específicos de alcances.
  *
  * @package App\Services\Viper
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright 2024 Ignicion S.A.S.
+ * @version v1.0.0
  */
 class SpecificObjectiveService implements SpecificObjectiveInterface
 {

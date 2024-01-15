@@ -11,7 +11,8 @@ use App\DTOs\Viper\SpecificObjectiveDTO;
  * creación, actualización, recuperación y eliminación.
  *
  * @package App\Interfaces\Viper
- * @author Tu Nombre <tu@email.com>
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright 2024 Ignicion S.A.S.
  * @version v1.0.0
  */
 interface SpecificObjectiveInterface
@@ -38,7 +39,7 @@ interface SpecificObjectiveInterface
      * @param int $scopeId Identificador único del alcance.
      * @return array Arreglo de objetivos específicos asociados al alcance.
      */
-    public function getAllSpecificObjectiveByScope(int $id): array;
+    public function getAllSpecificObjectiveByScope(int $scopeId): array;
 
     /**
      * Obtiene un objetivo específico por su identificador único.

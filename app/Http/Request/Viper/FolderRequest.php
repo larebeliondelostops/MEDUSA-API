@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Requests\Viper;
+namespace App\Http\Request\Viper;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
+
 /**
- * Request personalizado para la validación de objetivos específicos.
+ * Request personalizado para la validación de Carpetas.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de objetivos específicos,
- * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
- * llegue al controlador.
- *
- * @package    App\Http\Requests\Viper
- * @author     Tu Nombre <tu@email.com>
+ * @package    App\Http\Request\Viper
+ * @author     Daniel Alferez <dan.alferez1@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class SpecificObjectiveRequest extends FormRequest
+class FolderRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -37,8 +35,10 @@ class SpecificObjectiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|max:255',
-            'scope_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'stage_id' => 'required|integer',
+            'project_id' => 'required|string',
+            'higher_folder_id' => 'integer',
         ];
     }
 
@@ -53,8 +53,7 @@ class SpecificObjectiveRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Error in the required parameters.',
+            'message' => 'Error en los parametros requeridos.',
         ], 400));
     }
 }

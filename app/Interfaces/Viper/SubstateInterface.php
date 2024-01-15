@@ -16,7 +16,7 @@ use App\DTOs\Viper\Substate\SubstateDTO;
  */
 
 interface SubstateInterface {
-    
+
     /**
      * Obtener todos los subestados existentes.
      *
@@ -57,5 +57,7 @@ interface SubstateInterface {
      * @return \Illuminate\Support\Collection|SubstateDTO[] Colección de objetos SubstateDTO que representan los subestados.
      */
     public function getAllSubstatesByState(int $stateId);
+
+    public function getSubstateById(int $id): SubstateDTO;
 
 }

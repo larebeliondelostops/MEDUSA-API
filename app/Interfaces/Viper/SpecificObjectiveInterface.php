@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Viper;
 
-use App\DTOs\Viper\SpecificObjectiveDTO;
+use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 
 /**
  * Interfaz para el servicio de manejo de objetivos específicos de alcances en el sistema.
@@ -23,7 +23,7 @@ interface SpecificObjectiveInterface
      * @param SpecificObjectiveDTO $specificObjectiveDTO DTO que contiene la información del objetivo específico a crear.
      * @return void
      */
-    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): void;
+    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): SpecificObjectiveDTO;
 
     /**
      * Actualiza un objetivo específico existente.
@@ -31,7 +31,7 @@ interface SpecificObjectiveInterface
      * @param SpecificObjectiveDTO $specificObjectiveDTO DTO que contiene la información actualizada del objetivo específico.
      * @return void
      */
-    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO,int $id): void;
+    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO,int $id): SpecificObjectiveDTO;
 
     /**
      * Obtiene todos los objetivos específicos asociados a un alcance.

@@ -6,18 +6,19 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
+
 /**
- * Request personalizado para la validación de alcances (scopes).
+ * Request personalizado para la validación de proyectos.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de alcances,
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de proyectos,
  * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
  * llegue al controlador.
- *
- * @package    App\Http\Requests\Viper
- * @author     Tu Nombre <tu@email.com>
+ * @package    App\Http\Request\Viper
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class ScopeRequest extends FormRequest
+class MunicipalityRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -37,8 +38,11 @@ class ScopeRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string',
-            'project_id' => 'required|string|max:255',
+            'name' => 'required|string|max:100',
+            'type_location' => 'required|string|max:32',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'department_id' => 'required|integer',
         ];
     }
 

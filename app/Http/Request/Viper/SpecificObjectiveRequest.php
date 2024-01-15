@@ -7,9 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
- * Request personalizado para la validación de alcances (scopes).
+ * Request personalizado para la validación de objetivos específicos.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de alcances,
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de objetivos específicos,
  * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
  * llegue al controlador.
  *
@@ -17,7 +17,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  * @author     Tu Nombre <tu@email.com>
  * @version    v1.0.0
  */
-class ScopeRequest extends FormRequest
+class SpecificObjectiveRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -37,8 +37,8 @@ class ScopeRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string',
-            'project_id' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'scope_id' => 'required|integer',
         ];
     }
 

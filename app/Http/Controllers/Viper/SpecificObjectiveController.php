@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Viper\SpecificObjectiveRequest;
+use App\Http\Request\Viper\SpecificObjectiveRequest;
 use App\Interfaces\Viper\SpecificObjectiveInterface;
-use App\DTOs\Viper\SpecificObjectiveDTO;
+use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -17,7 +17,7 @@ use Exception;
  * @copyright 2024 Ignicion S.A.S.
  * @version v1.0.0
  */
-class SpecificObjectiveController extends Controller
+class SpecificObjectiveController extends BaseController
 {
     /**
      * @var SpecificObjectiveInterface
@@ -46,18 +46,15 @@ class SpecificObjectiveController extends Controller
             $validatedData = $request->validated();
             $specificObjectiveDTO = new SpecificObjectiveDTO($validatedData);
 
-            $this->specificObjectiveInterface->createNewSpecificObjective($specificObjectiveDTO);
+            $specificObjectiveCreateDTO = $this->specificObjectiveInterface->createNewSpecificObjective($specificObjectiveDTO);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Specific Objective created successfully.',
-                'data' => $specificObjectiveDTO->toArray(),
+                'data' => $specificObjectiveCreateDTO,
             ], 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -74,18 +71,15 @@ class SpecificObjectiveController extends Controller
             $validatedData = $request->validated();
             $specificObjectiveDTO = new SpecificObjectiveDTO($validatedData);
 
-            $this->specificObjectiveInterface->updateSpecificObjective($specificObjectiveDTO, $id);
+            $specificObjectiveUpdateDTO = $this->specificObjectiveInterface->updateSpecificObjective($specificObjectiveDTO, $id);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Specific Objective updated successfully.',
-                'data' => $specificObjectiveDTO->toArray(),
+                'data' => $specificObjectiveUpdateDTO,
             ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -101,11 +95,8 @@ class SpecificObjectiveController extends Controller
         try {
             $specificObjectives = $this->specificObjectiveInterface->getAllSpecificObjectiveByScope($scopeId);
             return response()->json($specificObjectives, 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -121,11 +112,8 @@ class SpecificObjectiveController extends Controller
         try {
             $specificObjectiveDTO = $this->specificObjectiveInterface->getSpecificObjective($id);
             return response()->json($specificObjectiveDTO->toArray(), 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -141,11 +129,8 @@ class SpecificObjectiveController extends Controller
         try {
             $specificObjectiveDTO = $this->specificObjectiveInterface->deleteSpecificObjective($id);
             return response()->json($specificObjectiveDTO->toArray(), 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 }

@@ -10,10 +10,9 @@ use App\Http\Request\Viper\ProjectRequest;
 use App\Interfaces\Viper\ProjectInterface;
 
 // Librerias para el manejo de excepciones
-use Illuminate\Database\QueryException;
-use PDOException;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador del módulo VIPER
@@ -67,7 +66,7 @@ class ProjectController extends BaseController
             return response()->json([
                 'message' => 'Proyecto creado satisfactoriamente.',
                 'data'    => $projectDTO,
-            ], 201);
+            ], Response::HTTP_CREATED);
         }
         catch (Exception $exception)
         {
@@ -98,7 +97,7 @@ class ProjectController extends BaseController
             return response()->json([
                 'message' => 'Proyecto actualizado satisfactoriamente',
                 'data'    => $projectDTO,
-            ], 200);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {
@@ -121,8 +120,9 @@ class ProjectController extends BaseController
         {
             $page = $request->input('page', 1);
             $name = $request->input('name', null);
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $request);
-            return response()->json($paginatedProjects, 200);
+            $queryFilterParam = $request->query();
+            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $queryFilterParam);
+            return response()->json($paginatedProjects, Response::HTTP_OK);
         }
         catch(Exception $exception) // Error general
         {
@@ -145,7 +145,7 @@ class ProjectController extends BaseController
             $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
             return response()->json([
                 "data" => $projectDTO,
-            ], 200);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception) // Error general
         {
@@ -169,7 +169,7 @@ class ProjectController extends BaseController
             return response()->json([
                 "message" => "Proyecto eliminado satisfactoriamente.",
                 "data" => $projectDTO
-            ], 200);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception) // Error al eliminar proyecto no existente
         {

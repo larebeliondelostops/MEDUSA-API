@@ -20,13 +20,14 @@ class ScopeService implements ScopeInterface
      * Crea un nuevo alcance (scope) en la base de datos.
      *
      * @param ScopeDTO $scopeDTO Datos del alcance a ser creado.
-     * @return void
+     * @return ScopeDTO
      */
-    public function createNewScope(ScopeDTO $scopeDTO): void
+    public function createNewScope(ScopeDTO $scopeDTO): ScopeDTO
     {
         $scope = new Scope();
         $scope->fill($scopeDTO->toArray());
         $scope->save();
+        return New ScopeDTO($scope->toArray());
     }
 
     /**
@@ -34,14 +35,15 @@ class ScopeService implements ScopeInterface
      *
      * @param ScopeDTO $scopeDTO Datos actualizados del alcance.
      * @param int $id Identificador único del alcance a ser actualizado.
-     * @return void
+     * @return ScopeDTO
      */
-    public function updateScope(ScopeDTO $scopeDTO, int $id): void
+    public function updateScope(ScopeDTO $scopeDTO, int $id): ScopeDTO
     {
         $scope = Scope::findOrFail($id);
         $data = $scopeDTO->toArray();
         $scope->fill($data);
         $scope->save();
+        return New ScopeDTO($scope->toArray());
     }
 
     /**

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Utils\Viper\Filters;
-use Illuminate\Http\Request;
 
 class Filter
 {
@@ -9,21 +8,23 @@ class Filter
     protected $columnMap = [];
     protected $operatorMap = [];
 
-    public function transform(Request $request)
+    public function transform(array $queryParams)
     {
         $eloQuery = [];
-        foreach($this->safeParam as $parm => $operators)
+        foreach ($this->safeParam as $param => $operators)
         {
-            $query = $request->query($parm);
-            if(!isset($query))
+            // Usa directamente el array asociativo en lugar del Request
+            if (!isset($queryParams[$param]))
                 continue;
 
-            $column = $this->columnMap[$parm] ?? $parm;
+            $queryValue = $queryParams[$param];
+            $column = $this->columnMap[$param] ?? $param;
 
-            foreach($operators as $operator)
-                if (isset($query[$operator]))
-                    $eloQuery[] = [$column, $this->operatorMap[$operator], $query[$operator]];
+            foreach ($operators as $operator)
+                if (isset($queryValue[$operator]))
+                    $eloQuery[] = [$column, $this->operatorMap[$operator], $queryValue[$operator]];
         }
+
         return $eloQuery;
     }
 }

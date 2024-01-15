@@ -25,15 +25,15 @@ class ProjectRequestDTO extends DTO
     public string $bpin;                     // Identificador único del proyecto
     public string $name;                     // Nombre del proyecto
     public string $ocad;                     // Código OCAD
-    public string $state;                    // Estado del proyecto
-    public string $substate;                 // Subestado del proyecto
+    public int $state_id;                    // Id Estado del proyecto
+    public int $substate_id;                 // Id Subestado del proyecto
     public float $total_value;               // Valor total del proyecto
     public float $requested_value;           // Valor solicitado del proyecto
     public float $executed_value = 0.0;      // Valor ejecutado del proyecto
     public float $physical_progress = 0.0;   // Avance físico del proyecto
     public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
-    public string $sector;                   // Sector del proyecto
+    public int $sector_id;                   // Sector del proyecto
     public string $type_location;            // Tipo de ubicación del proyecto
     public float $latitude_location;         // Latitud de la coordenada donde se ubica el proyecto
     public float $longitude_location;        // Longitud de la coordenada donde se ubica el proyecto

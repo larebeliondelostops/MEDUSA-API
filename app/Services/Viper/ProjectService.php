@@ -10,6 +10,9 @@ use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\Interfaces\Viper\DepartmentInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\ProjectInterface;
+use App\Interfaces\Viper\SectorInterface;
+use App\Interfaces\Viper\StateInterface;
+use App\Interfaces\Viper\SubstateInterface;
 use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
 
@@ -33,11 +36,24 @@ class ProjectService implements ProjectInterface
     private DepartmentInterface $departmentInterface;
     // Interface con todas las funcionalidades de la logica del negocio para municipio
     private MunicipalityInterface $municipalityInterface;
+    private SectorInterface $sectorInterface;
+    private StateInterface $stateInterface;
+    private SubstateInterface $substateInterface;
 
-    public function __construct(DepartmentInterface $departmentInterface, MunicipalityInterface $municipalityInterface)
+
+    public function __construct(
+        DepartmentInterface $departmentInterface,
+        MunicipalityInterface $municipalityInterface,
+        SectorInterface $sectorInterface,
+        StateInterface $stateInterface,
+        SubstateInterface $substateInterface
+    )
     {
         $this->departmentInterface = $departmentInterface;
         $this->municipalityInterface = $municipalityInterface;
+        $this->sectorInterface = $sectorInterface;
+        $this->stateInterface = $stateInterface;
+        $this->substateInterface = $substateInterface;
     }
 
      /**
@@ -81,10 +97,10 @@ class ProjectService implements ProjectInterface
      * @param Request $request Peticion que contiene los parametros de filtrado.
      * @return array Array que contiene los proyectos paginados y metadatos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, Request $request): array
+    public function getAllProjectsPaginated(int $perPage, int $page, array $queryParams = []): array
     {
         $filter = new ProjectFilter();
-        $queryItems = $filter->transform($request);
+        $queryItems = $filter->transform($queryParams);
 
         $projectQuery = Project::query();
         foreach($queryItems as $item) {
@@ -137,7 +153,14 @@ class ProjectService implements ProjectInterface
         $projectDTO = new ProjectRequestDTO($project->toArray());
         $departmentDTO = $this->departmentInterface->getDepartmentById($projectDTO->department_id);
         $municipalityDTO = $this->municipalityInterface->getMunicipalityById($projectDTO->municipality_id);
-        return new ProjectDataDTO($project->toArray() + ['department'=>$departmentDTO, 'municipality'=>$municipalityDTO]);
+        return new ProjectDataDTO(
+            $project->toArray() +
+            ['department'=>$departmentDTO,
+            'municipality'=>$municipalityDTO,
+            'sector' => $this->sectorInterface->getSectorById($project->sector_id)->toArray()["name"],
+            'state' => $this->stateInterface->getStateById($project->state_id)->toArray()["name"],
+            'substate' => $this->substateInterface->getSubstateById($project->substate_id)->toArray()['name'],
+            ]);
     }
 
     /**

@@ -19,13 +19,15 @@ use App\Interfaces\Viper\SectorInterface;
 use App\Services\Viper\SectorService;
 use App\Interfaces\Viper\SubstateInterface;
 use App\Services\Viper\SubstateService;
+use App\Interfaces\Viper\SelectsInterface;
+use App\Services\Viper\SelectsService;
 
 use App\Services\Viper\StateService;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\Viper\ScopeInterface;
 use App\Services\Viper\ScopeService;
-use App\Services\Viper\SpecificObjetiveInterface;
-use App\Services\Viper\SpecificObjetiveService;
+use App\Interfaces\Viper\SpecificObjectiveInterface;
+use App\Services\Viper\SpecificObjectiveService;
 
 
 class ViperServiceProvider extends ServiceProvider
@@ -35,12 +37,13 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(FolderInterface::class, FolderService::class);
         $this->app->bind(DocumentInterface::class, DocumentService::class);
         $this->app->bind(SectorInterface::class, SectorService::class);
-
+        $this->app->bind(SubstateInterface::class, SubstateService::class);
         $this->app->bind(ScopeInterface::class,ScopeService::class);
-        $this->app->bind(SpecificObjetiveInterface::class,SpecificObjetiveService::class);
+        $this->app->bind(SpecificObjectiveInterface::class,SpecificObjectiveService::class);
         $this->app->bind(StageInterface::class, StageService::class);
         $this->app->bind(DepartmentInterface::class, DepartmentService::class);
         $this->app->bind(MunicipalityInterface::class, MunicipalityService::class);
         $this->app->bind(StateInterface::class, StateService::class);
+        $this->app->bind(SelectsInterface::class, SelectsService::class);
     }
 }

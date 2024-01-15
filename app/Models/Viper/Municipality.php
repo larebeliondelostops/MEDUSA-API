@@ -11,6 +11,8 @@ class Municipality extends Model
 
     protected $table = "municipalities";
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         "name",
         "type_location",

@@ -69,7 +69,7 @@ class SubstateService implements SubstateInterface
         $substate->update([
             'name' => $substateDTO->name,
         ]);
-        return new SubstateDTO($substate->toArray()); 
+        return new SubstateDTO($substate->toArray());
 
     }
 
@@ -103,4 +103,9 @@ class SubstateService implements SubstateInterface
         return $substates;
     }
 
+    public function getSubstateById(int $id) : SubstateDTO
+    {
+        $substateFound = Substate::findOrFail($id);
+        return new SubstateDTO($substateFound->toArray());
+    }
 }

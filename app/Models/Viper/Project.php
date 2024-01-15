@@ -1,8 +1,6 @@
 <?php
 namespace App\Models\Viper;
 
-use App\Models\Department;
-use App\Models\Municipality;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,15 +17,15 @@ class Project extends Model
         'bpin',
         'name',
         'ocad',
-        'state',
-        'substate',
+        'state_id',
+        'substate_id',
         'total_value',
         'requested_value',
         'executed_value',
         'physical_progress',
         'financial_progress',
         'responsible_entity',
-        'sector',
+        'sector_id',
         'type_location',
         'latitude_location',
         'longitude_location',
@@ -52,6 +50,21 @@ class Project extends Model
     public function municipality()
     {
         return $this->belongsTo(Municipality::class, "municipality_id");
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class,"state_id");
+    }
+
+    public function substate()
+    {
+        return $this->belongsTo(Substate::class,"substate_id");
+    }
+
+    public function sector()
+    {
+        return $this->belongsTo(Sector::class,"sector_id");
     }
 
     public function folders()

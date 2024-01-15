@@ -1,14 +1,14 @@
 <?php
 
-namespace App\DTOs\Viper\Municipality;
+namespace App\DTOs\Viper\Department;
 use App\DTOs\Viper\DTO;
 
-class MunicipalityDTO extends DTO
+class DepartmentDetailDTO extends DTO
 {
-    public ?int $id=null;
+    public ?int $id = null;
     public string $name;
     public string $type_location;
     public float $latitude;
     public float $longitude;
-    public int $department_id;
+    public array $municipalities;
 }

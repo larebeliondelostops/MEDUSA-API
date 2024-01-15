@@ -79,4 +79,10 @@ class SectorService implements SectorInterface
 
         return $sectorDTO;
     }
+
+    public function getSectorById(int $id) : SectorDTO
+    {
+        $sectorFound = Sector::findOrFail($id);
+        return new SectorDTO($sectorFound->toArray());
+    }
 }

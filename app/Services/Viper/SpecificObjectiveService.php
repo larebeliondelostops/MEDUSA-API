@@ -23,13 +23,14 @@ class SpecificObjectiveService implements SpecificObjectiveInterface
      * Crea un nuevo objetivo específico.
      *
      * @param SpecificObjectiveDTO $specificObjectiveDTO DTO del objetivo específico a crear.
-     * @return void
+     * @return SpecificObjectiveDTO
      */
-    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): void
+    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): SpecificObjectiveDTO
     {
         $specificObjective = new SpecificObjective();
         $specificObjective->fill($specificObjectiveDTO->toArray());
         $specificObjective->save();
+        return New SpecificObjectiveDTO($specificObjective->toArray());
     }
 
     /**
@@ -39,12 +40,13 @@ class SpecificObjectiveService implements SpecificObjectiveInterface
      * @param int $id Identificador único del objetivo específico a actualizar.
      * @return void
      */
-    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO, int $id): void
+    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO, int $id): SpecificObjectiveDTO
     {
         $specificObjective = SpecificObjective::findOrFail($id);
         $data = $specificObjectiveDTO->toArray();
         $specificObjective->fill($data);
         $specificObjective->save();
+        return New SpecificObjectiveDTO($specificObjective->toArray());
     }
 
     /**

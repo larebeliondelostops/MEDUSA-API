@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Viper\ScopeRequest;
+use App\Http\Request\Viper\ScopeRequest;
 use App\Interfaces\Viper\ScopeInterface;
-use App\DTOs\Viper\ScopeDTO;
+use App\DTOs\Viper\Scope\ScopeDTO;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -17,7 +17,7 @@ use Exception;
  * @copyright 2024 Ignicion S.A.S.
  * @version v1.0.0
  */
-class ScopeController extends Controller
+class ScopeController extends BaseController
 {
     /**
      * @var ScopeInterface
@@ -46,18 +46,15 @@ class ScopeController extends Controller
             $validatedData = $request->validated();
             $scopeDTO = new ScopeDTO($validatedData);
 
-            $this->scopeInterface->createNewScope($scopeDTO);
+            $scopeCreatedDTO = $this->scopeInterface->createNewScope($scopeDTO);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Scope created successfully.',
-                'data'    => $scopeDTO->toArray(),
+                'data'    => $scopeCreatedDTO,
             ], 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -74,18 +71,17 @@ class ScopeController extends Controller
             $validatedData = $request->validated();
             $scopeDTO = new ScopeDTO($validatedData);
 
-            $this->scopeInterface->updateScope($scopeDTO, $id);
-
+            $scopeUpdateDTO = $this->scopeInterface->updateScope($scopeDTO, $id);
+            
+            $scopeDTO->id = $id;
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Scope updated successfully.',
-                'data' => $scopeDTO->toArray(),
+                'data' => $scopeUpdateDTO,
             ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -95,17 +91,13 @@ class ScopeController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request,$projectId)
     {
         try {
-            $projectId = $request->input('project_id', null);
             $scopes = $this->scopeInterface->getScopeByProject($projectId);
             return response()->json($scopes, 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -121,11 +113,8 @@ class ScopeController extends Controller
         try {
             $scopeDTO = $this->scopeInterface->getScope($id);
             return response()->json($scopeDTO->toArray(), 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -141,11 +130,8 @@ class ScopeController extends Controller
         try {
             $scopeDTO = $this->scopeInterface->deleteScope($id);
             return response()->json($scopeDTO->toArray(), 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An internal server error occurred.',
-            ], 500);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 }

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->float('physical_progress');
             $table->float('financial_progress');
             $table->string('responsible_entity', 255);
-            $table->string('sector', 255);
+            $table->unsignedBigInteger('sector_id');
 
             $table->string('type_location');
             $table->double('latitude_location', 10, 6);

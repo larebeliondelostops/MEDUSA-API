@@ -18,12 +18,13 @@ use App\Interfaces\Viper\FolderInterface;
  * @version    v1.0.0
  */
 
-class FolderController extends Controller
+class FolderController extends BaseController
 {
     private FolderInterface $folderInterface;
 
     public function __construct(FolderInterface $folderInterface)
     {
+        parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
         $this->folderInterface = $folderInterface;
     }
 
@@ -67,13 +68,8 @@ class FolderController extends Controller
                 'message' => 'Proyecto Creado Exitosamente.',
                 'data'    => $result,
             ], 201); 
-        } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -90,11 +86,8 @@ class FolderController extends Controller
             return response()->json([
                 'data' => $folder,
             ], 200); 
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -120,13 +113,8 @@ class FolderController extends Controller
                 'message' => 'Nombre de carpeta actualizado correctamente',
                 'data' => $result
             ], 200);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -141,11 +129,8 @@ class FolderController extends Controller
         try {
             $result = $this->folderInterface->deleteFolder($folderId);
             return response()->json($result);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -167,11 +152,8 @@ class FolderController extends Controller
             }
 
             return response()->json(['message' => 'Carpetas creadas exitosamente'], 200);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 

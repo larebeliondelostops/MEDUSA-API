@@ -19,12 +19,13 @@ use Storage;
  * @version    v1.0.0
  */
 
-class DocumentController extends Controller
+class DocumentController extends BaseController
 {
     private DocumentInterface $documentInterface;
 
     public function __construct(DocumentInterface $documentInterface)
     {
+        parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
         $this->documentInterface = $documentInterface;
     }
 
@@ -40,8 +41,8 @@ class DocumentController extends Controller
             $documents = $this->documentInterface->getAllDocuments();
     
             return response()->json(['data' => $documents]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -82,13 +83,8 @@ class DocumentController extends Controller
             }
 
             return response()->json(['data' => $results], 201);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -113,13 +109,8 @@ class DocumentController extends Controller
         
             // Retornar la respuesta según lo que devuelva el servicio.
             return response()->json($result, 200);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -135,11 +126,8 @@ class DocumentController extends Controller
             // Obtener la ruta del archivo antes de eliminarlo.
             $document = $this->documentInterface->deleteDocument($documentId);
             return  response()->json($document, 200);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 
@@ -153,11 +141,8 @@ class DocumentController extends Controller
         try {
             $documents = $this->documentInterface->listDocumentsInSpaces('test');
             return response()->json(['data' => $documents]);
-        } catch (\Exception $e) {
-            if ($e->getCode() === 404) {
-                return response()->json(['error' => $e->getMessage()], 404);
-            }
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
         }
     }
 }

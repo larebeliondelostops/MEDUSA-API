@@ -15,17 +15,18 @@ use \ReflectionClass;
  * @version    v1.0.0
  */
 
-class DTO 
+class DTO
 {
+
     /**
      * Constructor de la clase DTO.
      *
-     * Inicializa el objeto DTO con los valores proporcionados en un array. 
+     * Inicializa el objeto DTO con los valores proporcionados en un array.
      * Las claves del array deben coincidir con los nombres de las propiedades del objeto DTO.
      *
      * @param array $data Datos para inicializar el objeto DTO.
      */
-    public function __construct(array $data) {
+    public function __construct(array|null $data) {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
@@ -40,11 +41,12 @@ class DTO
      *
      * @return array Array asociativo que representa el objeto DTO.
      */
-    public function toArray()
+    public function toArray(array $except=[])
     {
         $array = [];
         $reflectionClass = new ReflectionClass($this);
         foreach ($reflectionClass->getProperties() as $property) {
+            if(in_array($property->getName(), $except)) continue;
             $property->setAccessible(true);
             $array[$property->getName()] = $property->getValue($this);
         }

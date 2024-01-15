@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
+use App\Http\Request\Viper\FolderRequest;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
@@ -50,15 +51,10 @@ class FolderController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FolderRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'stage_id' => 'required|integer',
-                'project_id' => 'required|string',
-                'higher_folder_id' => 'integer',
-            ]);
+            $validatedData = $request->validated();
 
             $folderDTO = new FolderDTO($validatedData);
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id

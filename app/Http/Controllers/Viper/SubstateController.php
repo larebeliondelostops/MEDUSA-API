@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
+use App\Http\Request\Viper\SubstateRequest;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\SubstateInterface;
@@ -52,14 +53,11 @@ class SubstateController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubstateRequest $request)
     {
         try {
             // Valida y procesa los datos del formulario
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'state_id' => 'required|integer',
-            ]);
+            $validatedData = $request->validated();
 
             // Crea un nuevo SubstateDTO con los datos del formulario
             $substateDTO = new SubstateDTO($validatedData);

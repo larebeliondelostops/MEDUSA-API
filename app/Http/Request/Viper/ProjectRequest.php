@@ -57,6 +57,10 @@ class ProjectRequest extends FormRequest
             'execution_approval_date' => 'required|date',
             'completion_date' => 'nullable|date|after_or_equal:execution_approval_date',
             'start_date_execution_phase' => 'nullable|date',
+
+            'unilateral_termination' => 'nullable|date|after_or_equal:completion_date',
+            'bilateral_termination' => 'nullable|date|after_or_equal:unilateral_termination',
+
             'project_duration_in_months' => 'required|integer|min:0',
             'reporting_frequency' => 'required|integer|min:1',
             'general_objective' => 'required|string|max:1000',

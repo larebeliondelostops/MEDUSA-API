@@ -49,6 +49,9 @@ return new class extends Migration
             $table->date('execution_approval_date');
             $table->date('completion_date')->nullable();
             $table->date('start_date_execution_phase')->nullable();
+            $table->date('unilateral_termination')->nullable();
+            $table->date('bilateral_termination')->nullable();
+
             $table->integer('project_duration_in_months');
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);

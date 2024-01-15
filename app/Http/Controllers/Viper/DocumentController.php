@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
+use App\Http\Request\Viper\DocumentRequest;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Viper\DocumentInterface;
 use App\DTOs\Viper\DocumentDTO;
@@ -52,15 +53,10 @@ class DocumentController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
     */
-    public function store(Request $request)
+    public function store(DocumentRequest $request)
     {
         try {
-            $validatedData = $request->validate([
-                'files.*' => 'required|file',
-                'project_id' => 'required|integer',
-                'folder_id' => 'required|string',
-                'responsible' => 'required|string',
-            ]);
+            $validatedData = $request->validated();
 
             $folderId = (int)$validatedData['folder_id'];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
+use App\Http\Request\Viper\StageRequest;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Stage\StageDTO;
 use App\Interfaces\Viper\StageInterface;
@@ -52,13 +53,11 @@ class StageController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StageRequest $request)
     {
         try {
             // Valida y procesa los datos del formulario
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $validatedData = $request->validated();
 
             // Crea un nuevo StageDTO con los datos del formulario
             $stageDTO = new StageDTO($validatedData);
@@ -84,13 +83,11 @@ class StageController extends BaseController
      * @param  int  $StageId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $stageId)
+    public function update(StageRequest $request, $stageId)
     {
         try {
             // Valida y procesa los datos del formulario
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $validatedData = $request->validated();
 
             // Crea un nuevo StageDTO con los datos actualizados
             $stageDTO = new StageDTO($validatedData);

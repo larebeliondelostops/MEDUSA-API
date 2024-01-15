@@ -111,7 +111,7 @@ class ProjectService implements ProjectInterface
 
         $paginatedProjects= $projectQuery->paginate(
             $perPage,  // numero de paginas por paginado
-            ['bpin', 'name', 'state'], // columnas de la tabla Proyectos que requiero
+            ['bpin', 'name', 'state_id'], // columnas de la tabla Proyectos que requiero
             'page', // nombre del parámetro de consulta usado para la paginación (page por defecto)
             $page // numero de la pagina solicitada
             );
@@ -120,7 +120,9 @@ class ProjectService implements ProjectInterface
                         ->transform(
                             function($project)
                             {
-                                return new ProjectSummaryDTO($project->toArray());
+                                return new ProjectSummaryDTO($project->toArray() +
+                                    ["state" => $this->stateInterface->getStateById($project->state_id)->toArray()['name']]
+                                );
                             }
                         )->toArray();
 

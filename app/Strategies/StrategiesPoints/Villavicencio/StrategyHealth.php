@@ -142,6 +142,7 @@ class StrategyHealth implements HealthInterface
             }
 
             return response()->json([
+                'titile' => 'Centros de Salud',
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [

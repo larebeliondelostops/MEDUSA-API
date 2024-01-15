@@ -62,6 +62,7 @@ class StrategyEvents
             }
             
             return response()->json([
+                'titile' => 'Eventos',
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [

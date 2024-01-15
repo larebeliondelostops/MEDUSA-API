@@ -138,6 +138,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
             }
 
             return response()->json([
+                'titile' => 'Puestos de votación',
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [

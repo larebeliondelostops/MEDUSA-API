@@ -20,4 +20,9 @@ class Substate extends Model
     {
         return $this->belongsTo(State::class,"state_id");
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

@@ -10,7 +10,7 @@ use App\DTOs\Viper\Sector\SectorDTO;
  * Define las operaciones necesarias para la gestión de sectores en el sistema.
  * Las operaciones incluyen la creación, actualización, obtención de todos los sectores existentes
  * y eliminación de un sector por su identificador único.
- * 
+ *
  * @package App\Interfaces\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
@@ -48,4 +48,6 @@ interface SectorInterface {
      * @return SectorDTO DTO del sector eliminado.
      */
     public function deleteSector(int $id): SectorDTO;
+
+    public function getSectorById(int $id) : SectorDTO;
 }

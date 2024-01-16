@@ -3,9 +3,11 @@
 namespace App\Services\Viper;
 use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Municipality\MunicipalityDTO;
 use App\Interfaces\Viper\DepartmentInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
 use App\Models\Viper\Department;
+use App\Models\Viper\Municipality;
 
 class DepartmentService implements DepartmentInterface
 {
@@ -35,17 +37,17 @@ class DepartmentService implements DepartmentInterface
         return $departmentsDTO;
     }
 
-    public function getAllDepartmentsDetail() : array
+    public function getAllDepartmentsDetail(): array
     {
-        $departmentsGot = Department::all();
-        $departmentsDTO = $departmentsGot->transform(
-            function (Department $department)
-            {
-                $municipalities = ["municipalities" => $this->municipalityInterface->getAllMunicipalities(["department_id" => ["eq"=>$department->id]])];
-                return new DepartmentDetailDTO($department->toArray() + $municipalities);
-            }
-        )->toArray();
-        return $departmentsDTO;
+        $departmentsGot = Department::with('municipalities')->get();
+
+        $departmentsDetailDTO = $departmentsGot->map(function (Department $department) {
+            $department->municipalities->transform(
+                fn(Municipality $municipality) => new MunicipalityDTO($municipality->toArray()));
+            return new DepartmentDetailDTO($department->toArray());
+        });
+
+        return $departmentsDetailDTO->toArray();
     }
 
     public function getDepartmentById(int $id) : DepartmentDTO

@@ -10,4 +10,5 @@ interface StateInterface
     public function updateState(int $id, StateDTO $stateDTO) : StateDTO;
     public function deleteState(int $id) : StateDTO;
     public function getAllStates() : array;
+    public function getAllStatesDetail() : array;
 }

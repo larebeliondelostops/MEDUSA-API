@@ -32,7 +32,7 @@ class BaseController extends Controller
                     break;
                 default:
                     return response()->json([
-                        'message' => 'Error procesando la petición.'.$exception->getMessage()
+                        'message' => 'Error procesando la petición.'
                     ], Response::HTTP_INTERNAL_SERVER_ERROR);
                 break;
             }
@@ -64,7 +64,7 @@ class BaseController extends Controller
         else
         {
             return response()->json([
-                'message' => 'Se produjo un error interno del servidor.'
+                'message' => 'Se produjo un error interno del servidor.',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

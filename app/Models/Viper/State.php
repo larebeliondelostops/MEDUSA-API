@@ -20,7 +20,7 @@ class State extends Model
         return $this->hasMany(Project::class);
     }
 
-    public function substate()
+    public function substates()
     {
         return $this->hasMany(Substate::class);
     }

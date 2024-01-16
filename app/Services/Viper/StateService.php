@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Services\Viper;
+use App\DTOs\Viper\State\StateDetailDTO;
 use App\DTOs\Viper\State\StateDTO;
+use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\StateInterface;
+use App\Interfaces\Viper\SubstateInterface;
 use App\Models\Viper\State;
+use App\Models\Viper\Substate;
 
 class StateService implements StateInterface
 {
@@ -17,7 +21,7 @@ class StateService implements StateInterface
     public function updateState(int $id, StateDTO $stateDTO) : StateDTO
     {
         $stateGot = State::findOrFail($id);
-        $dataNewState = $stateDTO->toArray(except:["id",]); // el id nunca se debe modifica, por eso se elimina por si lo intentan cambiar
+        $dataNewState = $stateDTO->toArray(except:["id",]); // el id nunca se debe modificar, por eso se elimina por si lo intentan cambiar
         $stateGot->fill($dataNewState);
         $stateGot->save();
         $stateGotDTO = new StateDTO($stateGot->toArray()+['id'=>$id]);
@@ -49,5 +53,21 @@ class StateService implements StateInterface
             }
         )->toArray();
         return $statesDTO;
+    }
+
+    public function getAllStatesDetail() : array
+    {
+        $statesDetail = State::with('substates')->get();
+        $statesDetailDTO = $statesDetail->map(
+            function (State $state) {
+                $state->substates->transform(
+                    fn(Substate $substate) => new SubstateDTO($substate->toArray())
+                );
+
+                return new StateDetailDTO($state->toArray());
+            }
+        );
+
+        return $statesDetailDTO->toArray();
     }
 }

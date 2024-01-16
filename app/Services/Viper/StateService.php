@@ -5,7 +5,6 @@ use App\DTOs\Viper\State\StateDetailDTO;
 use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\StateInterface;
-use App\Interfaces\Viper\SubstateInterface;
 use App\Models\Viper\State;
 use App\Models\Viper\Substate;
 

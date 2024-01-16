@@ -44,8 +44,8 @@ class ProjectDataDTO extends DTO
     public string $execution_approval_date;  // Fecha de aprobación de ejecución
     public ?string $completion_date;         // Fecha de finalización (puede ser nulo)
     public ?string $start_date_execution_phase; // Fecha de inicio de la fase de ejecución (puede ser nulo)
-    public ?string $unilateral_termination;
-    public ?string $bilateral_termination;
+    public ?string $unilateral_termination;  // Fecha de finalizacion unilateral
+    public ?string $bilateral_termination;   // Fecha de finalizacion bilateral
     public int $project_duration_in_months;  // Duración del proyecto en meses
     public int $reporting_frequency;         // Frecuencia de reportes
     public string $general_objective;        // Objetivo general del proyecto

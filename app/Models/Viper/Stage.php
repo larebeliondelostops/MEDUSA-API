@@ -17,6 +17,6 @@ class Stage extends Model
 
     public function files()
     {
-        return $this->hasMany(File::class, 'stage_id');
+        return $this->hasMany(Folder::class, 'stage_id');
     }
 }

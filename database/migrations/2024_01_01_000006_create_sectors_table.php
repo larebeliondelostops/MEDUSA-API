@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 class CreateSectorsTable extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    
+    /**
      * Run the migrations.
      *
      * @return void

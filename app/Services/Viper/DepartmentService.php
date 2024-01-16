@@ -5,19 +5,11 @@ use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDTO;
 use App\Interfaces\Viper\DepartmentInterface;
-use App\Interfaces\Viper\MunicipalityInterface;
 use App\Models\Viper\Department;
 use App\Models\Viper\Municipality;
 
 class DepartmentService implements DepartmentInterface
 {
-    private MunicipalityInterface $municipalityInterface;
-
-    public function __construct(MunicipalityInterface $municipalityInterface)
-    {
-        $this->municipalityInterface = $municipalityInterface;
-    }
-
     public function createNewDepartment(DepartmentDTO $departmentDTO) : DepartmentDTO
     {
         $newDepartment = new Department($departmentDTO->toArray());

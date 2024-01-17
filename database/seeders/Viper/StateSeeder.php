@@ -17,7 +17,7 @@ class StateSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('municipalities')->insert([
+        DB::connection('villavicencio')->table('states')->insert([
             [
                 "name" => "Formulación",
                 "created_at" => now(),

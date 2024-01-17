@@ -18,13 +18,23 @@ class StrategyIncidentsReports implements ReportsInterface
     {
         $this->request = $request;
 
-        $general = [
-            $this->cardsIncidents(),
-            $this->incidensByMonth(),
-            $this->incidentsByTypeLastTDays(),
-            $this->incidentsByWeekDay(),
-            $this->incidentsByHour()
-        ];
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $general = [
+                $this->cardsIncidents(),
+                $this->incidensByMonth(),
+                $this->incidentsByTypeLastTDays(),
+                $this->incidentsByWeekDay(),
+                $this->incidentsByHour()
+            ];
+        } else {
+            $general = [
+                //$this->cardsIncidents(),
+                $this->incidensByMonth(),
+                $this->incidentsByTypeLastTDays(),
+                $this->incidentsByWeekDay(),
+                $this->incidentsByHour()
+            ];
+        }
 
         $generalData = [];
 
@@ -237,13 +247,13 @@ class StrategyIncidentsReports implements ReportsInterface
             if ($this->indicator != null){
                 $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
                     ->where('indicator', $this->indicator)
-                    ->where('year', date('Y'))
+                    //->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
                     ->get();
             } else {
                 $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                    ->where('year', date('Y'))
+                    //->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
                     ->get();
@@ -262,7 +272,7 @@ class StrategyIncidentsReports implements ReportsInterface
         if (isset($this->request->start) && isset($this->request->end)) {
             $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
         } else {
-            $date = date('Y');
+            $date = 'Historico';
         }
 
         $data = [
@@ -278,19 +288,19 @@ class StrategyIncidentsReports implements ReportsInterface
 
     public function incidentsByTypeLastTDays()
     {
-        $hoy = Carbon::now();
-
-        $hace_30_dias = $hoy->subDays(30);
-
-        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
+        
 
         if (isset($this->request->start) && isset($this->request->end)) {
             $hoy =  Carbon::parse($this->request->end);
-            $hace_30_dias = Carbon::parse($this->request->start);
-            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+            $rango = Carbon::parse($this->request->start);
+            $date = $rango->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+            $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $rango->toDateString())->get();
+        } else {
+            $date = 'Historico';
+            $incidentes = Incident::with('Indicator')->get();
         }
 
-        $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $hace_30_dias->toDateString())->get();
+        
 
         $indicadores_usados = $incidentes->pluck('indicator');
 
@@ -308,7 +318,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => '# Incidentes por tipo últimos 30 días',
+            'title' => '# Incidentes por tipo',
             'date' =>  $date,
             'series' => $series,
             'labels' => $labels,
@@ -385,7 +395,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : '# Incidentes por día de la semana',
             'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -433,7 +443,7 @@ class StrategyIncidentsReports implements ReportsInterface
         $labels = [];
 
         foreach ($incidentes_por_tipo_incidente->groupBy('indicator') as $incidentes) {
-            $countByInterval = [0, 0, 0, 0, 0, 0, 0];
+            $countByInterval = [0, 0, 0, 0, 0, 0];
             foreach ($incidentes as $incidente) {
                 // Obtener la hora de creación de la instancia de Incident
                 $createdAt = strtotime($incidente->created_at);
@@ -464,7 +474,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
-            'labels' => ['00:00 - 04:00', '04:00 - 08:00', '08:00 - 12:00', '12:00 - 16:00', '16:00 - 20:00', '20:00 - 24:00'],
+            'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
             'type' => 'column'
         ];
 

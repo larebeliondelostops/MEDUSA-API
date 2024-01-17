@@ -26,7 +26,7 @@ class ProjectDataDTO extends DTO
     public string $name;                     // Nombre del proyecto
     public string $ocad;                     // Código OCAD
     public string $state;                    // Estado del proyecto
-    public string $substate;                 // Subestado del proyecto
+    public ?string $substate=null;                 // Subestado del proyecto
     public float $total_value;               // Valor total del proyecto
     public float $requested_value;           // Valor solicitado del proyecto
     public float $executed_value = 0.0;      // Valor ejecutado del proyecto
@@ -38,7 +38,7 @@ class ProjectDataDTO extends DTO
     public float $latitude_location;         // Latitud de la coordenada donde se ubica el proyecto
     public float $longitude_location;        // Longitud de la coordenada donde se ubica el proyecto
     public DepartmentDTO $department;     // Id del departamento al que pertenece el proyecto
-    public MunicipalityDTO $municipality; // Id del municipio donde pertenece el departamento
+    public ?MunicipalityDTO $municipality=null; // Id del municipio donde pertenece el departamento
     public int $beneficiaries;               // Número de beneficiarios del proyecto
     public string $planner;                  // Planificador del proyecto
     public string $execution_approval_date;  // Fecha de aprobación de ejecución

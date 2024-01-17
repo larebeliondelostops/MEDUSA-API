@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * Controlador del módulo VIPER
+ * Controlador para la gestión de proyectos del módulo VIPER
  *
  * Este controlador gestiona las operaciones relacionadas con los proyectos, incluyendo la creación,
  * actualización, recuperación y eliminación de proyectos.
@@ -62,10 +62,10 @@ class ProjectController extends BaseController
             $validatedData = $request->validated();
             $projectDTO = new ProjectRequestDTO($validatedData);
 
-            $this->projectInterface->createNewProject($projectDTO);
+            $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);
             return response()->json([
                 'message' => 'Proyecto creado satisfactoriamente.',
-                'data'    => $projectDTO,
+                'data'    => $projectSavedDTO,
             ], Response::HTTP_CREATED);
         }
         catch (Exception $exception)
@@ -92,11 +92,11 @@ class ProjectController extends BaseController
             $validatedData = $request->validated();
             $projectDTO = new ProjectRequestDTO($validatedData);
 
-            $this->projectInterface->updateProject($projectDTO, $bpin);
+            $projectUpdatedDTO = $this->projectInterface->updateProject($projectDTO, $bpin);
 
             return response()->json([
                 'message' => 'Proyecto actualizado satisfactoriamente',
-                'data'    => $projectDTO,
+                'data'    => $projectUpdatedDTO,
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)

@@ -16,7 +16,7 @@ use App\Utils\Viper\Filters\MunicipalityFilter;
  *
  * @package    App\Services\Viper
  * @copyright  2024 Ignicion S.A.S.
- * @author     Jorge Abella
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v1.0.2
  */
 class MunicipalityService implements MunicipalityInterface

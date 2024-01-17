@@ -8,9 +8,9 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 /**
- * Request personalizado para la validación de proyectos.
+ * Request personalizado para la validación de municipios.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de proyectos,
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de municipios,
  * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
  * llegue al controlador.
  * @package    App\Http\Request\Viper

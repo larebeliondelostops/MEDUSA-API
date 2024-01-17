@@ -36,7 +36,7 @@ class MunicipalityController extends BaseController
      */
     public function __construct(MunicipalityInterface $municipalityInterface)
     {
-        parent::__construct();
+        parent::__construct(); // Se llama al constructor padre para que se realice configuración del Base Controller para el manejo de excepciones.
         $this->municipalityInterface = $municipalityInterface;
     }
 

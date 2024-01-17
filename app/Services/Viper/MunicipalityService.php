@@ -6,8 +6,27 @@ use App\Interfaces\Viper\MunicipalityInterface;
 use App\Models\Viper\Municipality;
 use App\Utils\Viper\Filters\MunicipalityFilter;
 
+
+/**
+ * Servicio para la gestión de municipios en el módulo VIPER.
+ *
+ * Este servicio implementa la interfaz MunicipalityInterface, proporcionando la lógica de negocio
+ * para la gestión de municipios. Incluye operaciones para la creación, actualización, eliminación,
+ * y recuperación de municipios y sus detalles.
+ *
+ * @package    App\Services\Viper
+ * @copyright  2024 Ignicion S.A.S.
+ * @author     Jorge Abella
+ * @version    v1.0.2
+ */
 class MunicipalityService implements MunicipalityInterface
 {
+    /**
+     * Crea un nuevo municipio y lo guarda en la base de datos.
+     *
+     * @param MunicipalityDTO $municipalityDTO DTO con la información del municipio a crear.
+     * @return MunicipalityDTO DTO del municipio recién creado.
+     */
     public function createNewMunicipality(MunicipalityDTO $municipalityDTO) : MunicipalityDTO
     {
         $newMunicipality = new Municipality($municipalityDTO->toArray(except: ["id"]));
@@ -15,6 +34,12 @@ class MunicipalityService implements MunicipalityInterface
         return new MunicipalityDTO($newMunicipality->toArray());
     }
 
+    /**
+     * Obtiene todos los municipios disponibles, con posibilidad de aplicar filtros.
+     *
+     * @param array $queryFilterParams Parámetros opcionales para filtrar la consulta.
+     * @return array Array de MunicipalityDTO de todos los municipios.
+     */
     public function getAllMunicipalities(array $queryFilterParams = []) : array
     {
         $filter = new MunicipalityFilter();
@@ -36,6 +61,12 @@ class MunicipalityService implements MunicipalityInterface
         return $municipalitiesDTO;
     }
 
+    /**
+     * Recupera un municipio por su ID y retorna sus detalles.
+     *
+     * @param int $id ID del municipio a recuperar.
+     * @return MunicipalityDTO DTO del municipio solicitado.
+     */
     public function getMunicipalityById(int $id) : MunicipalityDTO
     {
         $municipalityGot = Municipality::findOrFail($id);
@@ -43,6 +74,13 @@ class MunicipalityService implements MunicipalityInterface
         return $municipalityDTO;
     }
 
+    /**
+     * Actualiza un municipio existente identificado por su ID.
+     *
+     * @param MunicipalityDTO $municipalityDTO DTO con la nueva información del municipio.
+     * @param int $id ID del municipio a actualizar.
+     * @return MunicipalityDTO DTO del municipio actualizado.
+     */
     public function updateMunicipality(MunicipalityDTO $municipalityDTO, int $id) : MunicipalityDTO
     {
         $municipalityGot = Municipality::findOrFail($id);
@@ -51,6 +89,12 @@ class MunicipalityService implements MunicipalityInterface
         return new MunicipalityDTO($municipalityGot->toArray());
     }
 
+    /**
+     * Elimina un municipio identificado por su ID y retorna los detalles del municipio eliminado.
+     *
+     * @param int $id ID del municipio a eliminar.
+     * @return MunicipalityDTO DTO del municipio eliminado.
+     */
     public function deleteMunicipality($id) : MunicipalityDTO
     {
         $municipalityGot = Municipality::findOrFail($id);

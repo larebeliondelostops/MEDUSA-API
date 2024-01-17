@@ -10,6 +10,7 @@ use App\Interfaces\Viper\StateInterface;
 // Librerias de terceros
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para la gestión de estados del módulo VIPER
@@ -58,7 +59,7 @@ class StateController extends BaseController
             return response()->json([
                 'message' => 'State created successfully',
                 'data' => $stateCreatedDTO
-            ], 201);
+            ], Response::HTTP_CREATED);
         }
         catch (Exception $exception)
         {
@@ -88,7 +89,7 @@ class StateController extends BaseController
                 'message' => 'State updated successfully.',
                 'data'    => $stateUpdatedDTO2,
 
-            ], 200);
+            ], Response::HTTP_OK);
         }
         catch (Exception $exception)
         {
@@ -113,7 +114,7 @@ class StateController extends BaseController
                 'message' => 'State got successfully',
                 'data'=> $stateDTO,
 
-            ]);
+            ], Response::HTTP_OK);
         }
         catch (Exception $exception)
         {
@@ -137,7 +138,7 @@ class StateController extends BaseController
             return response()->json([
                 'message' => 'State deleted successfully',
                 'data'=> $stateDTO->toArray()
-            ]);
+            ], Response::HTTP_OK);
         }
         catch (Exception $exception)
         {
@@ -158,7 +159,7 @@ class StateController extends BaseController
         {
             return response()->json([
                 "data" => $this->stateInterface->getAllStates(),
-            ]);
+            ], Response::HTTP_OK);
         }
         catch(Exception $exception)
         {

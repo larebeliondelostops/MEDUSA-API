@@ -20,12 +20,12 @@ use Illuminate\Http\Request;
  * Servicio para manejar operaciones relacionadas con proyectos.
  *
  * Este servicio implementa la interfaz ProjectInterface y es responsable
- * de realizar operaciones como la creación, actualización, recuperación
+ * de implementar las operaciones como la creación, actualización, recuperación
  * y eliminación de proyectos.
  * @package    App\Service\Viper
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
- * @version    v1.0.0
+ * @version    v1.0.2
  */
 class ProjectService implements ProjectInterface
 {
@@ -35,12 +35,14 @@ class ProjectService implements ProjectInterface
      * Toma un ProjectDTO, lo convierte a un modelo de Eloquent y lo guarda en la base de datos.
      *
      * @param ProjectRequestDTO $projectDTO DTO del proyecto a crear.
+     * @return ProjectRequestDTO DTO que contiene la información almacenada.
      */
-    public function createNewProject(ProjectRequestDTO $projectDTO) : void
+    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
         $project = new Project();
         $project->fill($projectDTO->toArray());
         $project->save();
+        return new ProjectRequestDTO($project->toArray());
     }
 
      /**
@@ -51,13 +53,15 @@ class ProjectService implements ProjectInterface
      *
      * @param ProjectRequestDTO $projectDTO DTO del proyecto con datos actualizados.
      * @param string $bpin Identificador único del proyecto a actualizar.
+     * @return ProjectRequestDTO DTO del proyecto con la data almacenada.
      */
-    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : void
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO
     {
         $project = Project::findOrFail($bpin);
         $data = $projectDTO->toArray();
         $project->fill($data);
         $project->save();
+        return new ProjectRequestDTO($project->toArray());
     }
 
     /**

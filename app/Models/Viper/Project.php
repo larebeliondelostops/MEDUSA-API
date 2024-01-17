@@ -13,6 +13,8 @@ class Project extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'bpin',
         'name',

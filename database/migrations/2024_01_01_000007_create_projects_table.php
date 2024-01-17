@@ -63,6 +63,7 @@ return new class extends Migration
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -4,7 +4,6 @@ namespace App\Interfaces\Viper;
 
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectDataDTO;
-use Illuminate\Http\Request;
 
 /**
  * Interfaz para el servicio de manejo de proyectos.

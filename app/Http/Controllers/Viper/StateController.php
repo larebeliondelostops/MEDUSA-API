@@ -35,8 +35,8 @@ class StateController extends BaseController
      */
     public function __construct(StateInterface $stateInterface)
     {
-        parent::__construct();
-        $this->stateInterface = $stateInterface;
+        parent::__construct(); // Se llama al constructor padre para que se realice configuración del Base Controller para el manejo de excepciones.
+        $this->stateInterface = $stateInterface; // inyeccion de dependecias
     }
 
     /**

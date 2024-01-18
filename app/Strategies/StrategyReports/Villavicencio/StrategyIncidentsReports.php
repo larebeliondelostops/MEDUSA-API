@@ -141,7 +141,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
             $series[] = [
                 'data' => $cardsIncidents[$i]->count,
-                'percent' => $porcentaje,
+                'percent' => round($porcentaje, 2),
                 'type' => $porcentaje > 0 ? 'red' : 'green'
             ];
         }

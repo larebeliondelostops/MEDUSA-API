@@ -17,7 +17,7 @@ class HealthTableSeeder extends Seeder
   public function run()
   {
 
-    DB::setDefaultConnection('dev');
+    DB::setDefaultConnection('villavicencio');
 
     $data = '        
     {

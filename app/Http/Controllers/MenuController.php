@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BarMenu;
-use App\Models\Menu;
 use Exception;
+use App\Models\Menu;
+use App\Models\BarMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -127,7 +127,7 @@ class MenuController extends Controller
 
             switch ($sub_domain)
             {
-                case 'dev':
+                case 'villavicencio':
                     $data = [
                         'mapCenter' => [
                             'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),

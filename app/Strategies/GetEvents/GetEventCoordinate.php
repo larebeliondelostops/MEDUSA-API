@@ -2,6 +2,7 @@
 
 namespace App\Strategies\GetEvents;
 
+use Carbon\Carbon;
 use App\Strategies\Interface\GetEventInterface;
 use App\Models\Event;
 use Carbon\Carbon;

@@ -90,6 +90,7 @@ class IncidentController extends Controller
             }
 
             return response()->json([
+                'title' => 'Incidentes reportados mediante la aplicación móvil',
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [
@@ -285,9 +286,6 @@ class IncidentController extends Controller
 
             return Incident::destroy($id);
 
-            return Response::json([
-                'status' => 'succes',
-            ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

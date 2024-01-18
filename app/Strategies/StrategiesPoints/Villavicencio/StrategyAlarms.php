@@ -123,6 +123,7 @@ class StrategyAlarms implements AlarmsInterface
             }
 
             return response()->json([
+                'titile' => 'Alarmas',
                 'data' => $transformedData,
                 'meta' => [
                     'pagination' => [

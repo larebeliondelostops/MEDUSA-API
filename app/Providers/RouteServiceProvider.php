@@ -104,6 +104,8 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api/Viper/MunicipalityRoutes.php');
             require base_path('routes/api/Viper/SectorRoutes.php');
             require base_path('routes/api/Viper/SelectsRoutes.php');
+            require base_path('routes/api/Viper/AlertRoutes.php');
+            require base_path('routes/api/Viper/IndicatorRoutes.php');
         });
     }
 

@@ -142,9 +142,9 @@ class StrategyHealth implements HealthInterface
             }
 
             return response()->json([
-                'titile' => 'Centros de Salud',
                 'data' => $transformedData,
                 'meta' => [
+                    'title' => 'Centros de Salud',
                     'pagination' => [
                         'total' => $health->total(),
                         'perPage' => $health->perPage(),
@@ -153,9 +153,9 @@ class StrategyHealth implements HealthInterface
                         'from' => $health->firstItem(),
                         'to' => $health->lastItem(),
                     ],
+                    'ableCreate' => false
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
                 'code' => '1001',

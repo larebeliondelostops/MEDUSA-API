@@ -3,16 +3,13 @@
 namespace App\Services\Viper;
 
 // Librerias del modulo viper
+use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Municipality\MunicipalityDTO;
 use App\DTOs\Viper\Project\ProjectDataDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
-
-use App\Interfaces\Viper\DepartmentInterface;
-use App\Interfaces\Viper\MunicipalityInterface;
+use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\ProjectInterface;
-use App\Interfaces\Viper\SectorInterface;
-use App\Interfaces\Viper\StateInterface;
-use App\Interfaces\Viper\SubstateInterface;
 use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
 
@@ -23,51 +20,29 @@ use Illuminate\Http\Request;
  * Servicio para manejar operaciones relacionadas con proyectos.
  *
  * Este servicio implementa la interfaz ProjectInterface y es responsable
- * de realizar operaciones como la creación, actualización, recuperación
+ * de implementar las operaciones como la creación, actualización, recuperación
  * y eliminación de proyectos.
  * @package    App\Service\Viper
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
- * @version    v1.0.0
+ * @version    v1.0.2
  */
 class ProjectService implements ProjectInterface
 {
-    // Interface con todas las funcionalidades de la logica del negocio para departamento
-    private DepartmentInterface $departmentInterface;
-    // Interface con todas las funcionalidades de la logica del negocio para municipio
-    private MunicipalityInterface $municipalityInterface;
-    private SectorInterface $sectorInterface;
-    private StateInterface $stateInterface;
-    private SubstateInterface $substateInterface;
-
-
-    public function __construct(
-        DepartmentInterface $departmentInterface,
-        MunicipalityInterface $municipalityInterface,
-        SectorInterface $sectorInterface,
-        StateInterface $stateInterface,
-        SubstateInterface $substateInterface
-    )
-    {
-        $this->departmentInterface = $departmentInterface;
-        $this->municipalityInterface = $municipalityInterface;
-        $this->sectorInterface = $sectorInterface;
-        $this->stateInterface = $stateInterface;
-        $this->substateInterface = $substateInterface;
-    }
-
      /**
      * Crea un nuevo proyecto.
      *
      * Toma un ProjectDTO, lo convierte a un modelo de Eloquent y lo guarda en la base de datos.
      *
      * @param ProjectRequestDTO $projectDTO DTO del proyecto a crear.
+     * @return ProjectRequestDTO DTO que contiene la información almacenada.
      */
-    public function createNewProject(ProjectRequestDTO $projectDTO) : void
+    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
         $project = new Project();
         $project->fill($projectDTO->toArray());
         $project->save();
+        return new ProjectRequestDTO($project->toArray());
     }
 
      /**
@@ -78,13 +53,15 @@ class ProjectService implements ProjectInterface
      *
      * @param ProjectRequestDTO $projectDTO DTO del proyecto con datos actualizados.
      * @param string $bpin Identificador único del proyecto a actualizar.
+     * @return ProjectRequestDTO DTO del proyecto con la data almacenada.
      */
-    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : void
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO
     {
         $project = Project::findOrFail($bpin);
         $data = $projectDTO->toArray();
         $project->fill($data);
         $project->save();
+        return new ProjectRequestDTO($project->toArray());
     }
 
     /**
@@ -102,7 +79,7 @@ class ProjectService implements ProjectInterface
         $filter = new ProjectFilter();
         $queryItems = $filter->transform($queryParams);
 
-        $projectQuery = Project::query();
+        $projectQuery = Project::with('state');
         foreach($queryItems as $item) {
             if(count($item) === 3) {
                 $projectQuery->orWhere($item[0], $item[1], ($item[1]=="like"?"%".$item[2]."%":$item[2]));
@@ -120,9 +97,9 @@ class ProjectService implements ProjectInterface
                         ->transform(
                             function($project)
                             {
-                                return new ProjectSummaryDTO($project->toArray() +
-                                    ["state" => $this->stateInterface->getStateById($project->state_id)->toArray()['name']]
-                                );
+                                $data = $project->toArray();
+                                $data['state'] = $data['state']['name'];
+                                return new ProjectSummaryDTO($data);
                             }
                         )->toArray();
 
@@ -151,18 +128,17 @@ class ProjectService implements ProjectInterface
      */
     public function getProjectByBPIN(string $bpin) : ProjectDataDTO
     {
-        $project = Project::findOrFail($bpin);
-        $projectDTO = new ProjectRequestDTO($project->toArray());
-        $departmentDTO = $this->departmentInterface->getDepartmentById($projectDTO->department_id);
-        $municipalityDTO = $this->municipalityInterface->getMunicipalityById($projectDTO->municipality_id);
-        return new ProjectDataDTO(
-            $project->toArray() +
-            ['department'=>$departmentDTO,
-            'municipality'=>$municipalityDTO,
-            'sector' => $this->sectorInterface->getSectorById($project->sector_id)->toArray()["name"],
-            'state' => $this->stateInterface->getStateById($project->state_id)->toArray()["name"],
-            'substate' => $this->substateInterface->getSubstateById($project->substate_id)->toArray()['name'],
-            ]);
+        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector'])
+                          ->findOrFail($bpin);
+        // return $project;
+        $data = $project->toArray();
+        $data['department'] = new DepartmentDTO($data['department']);
+        $data['state'] = $data['state']['name'];
+        $data['sector'] = $data['sector']['name'];
+        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
+        $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
+
+        return new ProjectDataDTO($data);
     }
 
     /**

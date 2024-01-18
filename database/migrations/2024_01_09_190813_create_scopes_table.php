@@ -7,23 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('scopes', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32);
+            $table->text('description');
+            $table->string('project_id', 255)->unique();
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        Schema::dropIfExists('scopes');
     }
 };

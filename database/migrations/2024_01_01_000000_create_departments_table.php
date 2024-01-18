@@ -7,6 +7,13 @@
     return new class extends Migration
     {
         /**
+         * Connection name.
+         *
+         * @return string
+         */
+        protected $connection = 'villavicencio';
+
+        /**
          * Run the migrations.
          *
          * @return void
@@ -20,6 +27,7 @@
                 $table->double('latitude', 10, 6);
                 $table->double('longitude', 10, 6);
                 $table->timestamps();
+                $table->softDeletes();
             });
         }
 

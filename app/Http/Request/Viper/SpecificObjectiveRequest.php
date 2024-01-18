@@ -6,19 +6,18 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
 /**
- * Request personalizado para la validación de estados.
+ * Request personalizado para la validación de objetivos específicos.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de estados,
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de objetivos específicos,
  * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
  * llegue al controlador.
- * @package    App\Http\Request\Viper
- * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @copyright  2024 Ignicion S.A.S.
+ *
+ * @package    App\Http\Requests\Viper
+ * @author     Tu Nombre <tu@email.com>
  * @version    v1.0.0
  */
-class StateRequest extends FormRequest
+class SpecificObjectiveRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -38,7 +37,8 @@ class StateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:32',
+            'description' => 'required|string|max:255',
+            'scope_id' => 'required|integer',
         ];
     }
 

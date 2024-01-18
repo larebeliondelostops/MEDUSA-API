@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+
+    /**
      * Run the migrations.
      *
      * @return void
@@ -21,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states');
 
-            $table->unsignedBigInteger('substate_id');
+            $table->unsignedBigInteger('substate_id')->nullable();
             $table->foreign('substate_id')->references('id')->on('substates');
 
             $table->decimal('total_value', 15, 2);
@@ -41,7 +48,7 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
-            $table->unsignedBigInteger('municipality_id');
+            $table->unsignedBigInteger('municipality_id')->nullable();
             $table->foreign('municipality_id')->references('id')->on('municipalities');
 
             $table->integer('beneficiaries');
@@ -49,10 +56,14 @@ return new class extends Migration
             $table->date('execution_approval_date');
             $table->date('completion_date')->nullable();
             $table->date('start_date_execution_phase')->nullable();
+            $table->date('unilateral_termination')->nullable();
+            $table->date('bilateral_termination')->nullable();
+
             $table->integer('project_duration_in_months');
             $table->integer('reporting_frequency');
             $table->string('general_objective', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

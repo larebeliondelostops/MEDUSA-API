@@ -27,6 +27,11 @@ use App\Services\Viper\AlertService;
 use App\Interfaces\Viper\IndicatorInterface;
 use App\Services\Viper\IndicatorService;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\Viper\ScopeInterface;
+use App\Services\Viper\ScopeService;
+use App\Interfaces\Viper\SpecificObjectiveInterface;
+use App\Services\Viper\SpecificObjectiveService;
+
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -36,6 +41,8 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(DocumentInterface::class, DocumentService::class);
         $this->app->bind(SectorInterface::class, SectorService::class);
         $this->app->bind(SubstateInterface::class, SubstateService::class);
+        $this->app->bind(ScopeInterface::class,ScopeService::class);
+        $this->app->bind(SpecificObjectiveInterface::class,SpecificObjectiveService::class);
         $this->app->bind(StageInterface::class, StageService::class);
         $this->app->bind(DepartmentInterface::class, DepartmentService::class);
         $this->app->bind(MunicipalityInterface::class, MunicipalityService::class);

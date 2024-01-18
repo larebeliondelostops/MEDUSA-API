@@ -81,7 +81,7 @@ class IncidentController extends Controller
             $transformedData = [];
             foreach ($incidents as $incident) {
                 $transformedData[] = [
-                    'Id' => $incident->id,
+                    'ID' => $incident->id,
                     'Nombre' => $incident->description,
                     'Indicador' => $incident->Indicator->Name,
                     'Direccion' => $incident->address,
@@ -90,9 +90,9 @@ class IncidentController extends Controller
             }
 
             return response()->json([
-                'title' => 'Incidentes reportados mediante la aplicación móvil',
                 'data' => $transformedData,
                 'meta' => [
+                    'title' => 'Incidentes App',
                     'pagination' => [
                         'total' => $incidents->total(),
                         'perPage' => $incidents->perPage(),
@@ -102,6 +102,7 @@ class IncidentController extends Controller
                         'to' => $incidents->lastItem(),
                     ],
                     'filterDate' => true,
+                    'ableCreate' => false
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

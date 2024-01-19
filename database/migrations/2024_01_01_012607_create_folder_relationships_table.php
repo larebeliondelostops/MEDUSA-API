@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Connection name.
      *
@@ -20,13 +21,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('specific_objectives', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->string('description', 255);
-            $table->integer('scope_id')->unsigned();
+        Schema::create('folder_relationships', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('higher_folder');
+            $table->unsignedBigInteger('lower_folder');
             $table->timestamps();
 
-            $table->foreign('scope_id')->references('id')->on('scopes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('higher_folder')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('lower_folder')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('specific_objectives');
+        Schema::dropIfExists('folder_relationships');
     }
 };

@@ -3,10 +3,11 @@ namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Folder extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'folders';
     protected $primaryKey = 'id';
@@ -15,7 +16,10 @@ class Folder extends Model
         'name',
         'stage_id',
         'project_id',
+        'higher_folder_id', 
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function stage()
     {
@@ -32,13 +36,14 @@ class Folder extends Model
         return $this->hasMany(Document::class, 'folder_id');
     }
 
-    public function higherFolders()
+    public function parentFolder()
     {
-        return $this->belongsToMany(Folder::class, 'folder_relationships', 'lower_folder', 'higher_folder');
+        return $this->belongsTo(Folder::class, 'higher_folder_id');
     }
 
-    public function lowerFolders()
+    public function subfolders()
     {
-        return $this->belongsToMany(Folder::class, 'folder_relationships', 'higher_folder', 'lower_folder');
+        return $this->hasMany(Folder::class, 'higher_folder_id');
     }
 }
+

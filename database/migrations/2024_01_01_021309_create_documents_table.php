@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('responsible', 100);
             $table->unsignedBigInteger('folder_id');
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\DocumentRequest;
-use App\Http\Controllers\Controller;
 use App\Interfaces\Viper\DocumentInterface;
-use App\DTOs\Viper\DocumentDTO;
-use Storage;
+use App\DTOs\Viper\Document\DocumentDTO;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las los documentos almacenados en spaces de Digital Ocean
@@ -35,11 +33,12 @@ class DocumentController extends BaseController
      *
      * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $queryFilterParam = $request->query();
             // Obtener la lista de documentos.
-            $documents = $this->documentInterface->getAllDocuments();
+            $documents = $this->documentInterface->getAllDocuments($queryFilterParam);
     
             return response()->json(['data' => $documents]);
         } catch (\Exception $exception) {
@@ -58,20 +57,13 @@ class DocumentController extends BaseController
         try {
             $validatedData = $request->validated();
 
-            $folderId = (int)$validatedData['folder_id'];
-
             $uploadedFiles = $request->file('files');
 
             $results = [];
 
             foreach ($uploadedFiles as $file) {
-                // Crear un DTO para cada archivo.
-                $documentDTO = new DocumentDTO(
-                    '',
-                    '',
-                    $validatedData['responsible'],
-                    $folderId
-                );
+
+                $documentDTO = new DocumentDTO($validatedData);
 
                 // Crear y almacenar cada documento.
                 $result = $this->documentInterface->createNewDocument($documentDTO, $file, $validatedData['project_id']);
@@ -111,7 +103,7 @@ class DocumentController extends BaseController
     }
 
     /**
-     * Eliminar el recurso especificado del almacenamiento.
+     * Eliminar logicamente el recurso especificado del almacenamiento.
      *
      * @param  int  $documentId
      * @return \Illuminate\Http\Response
@@ -121,6 +113,24 @@ class DocumentController extends BaseController
         try {
             // Obtener la ruta del archivo antes de eliminarlo.
             $document = $this->documentInterface->deleteDocument($documentId);
+            return  response()->json($document, 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
+     * Eliminar fisicamente el recurso especificado del almacenamiento.
+     *
+     * @param  int  $documentId
+     * @return \Illuminate\Http\Response
+    */
+    public function destroyForce($documentId)
+    {
+        try {
+            // Obtener la ruta del archivo antes de eliminarlo.
+            $document = $this->documentInterface->deleteForceDocument($documentId);
             return  response()->json($document, 200);
         } catch (\Exception $exception) {
             return $this->handleException($exception);

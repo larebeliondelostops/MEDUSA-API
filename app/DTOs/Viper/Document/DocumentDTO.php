@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Viper;
+namespace App\DTOs\Viper\Document;
 
 use App\DTOs\Viper\DTO;
 
@@ -24,10 +24,9 @@ class DocumentDTO extends DTO
      * @param string $responsible Responsable del documento.
      * @param int $folder_id Identificador de la carpeta a la que pertenece el documento.
      */
-    public function __construct(
-        public ?string $name = '',
-        public ?string $url = '',
-        public string $responsible,
-        public int $folder_id,
-    ){}
+    public ?int $id = null;
+     public ?string $name = '';
+    public ?string $url = '';
+    public string $responsible;
+    public int $folder_id;
 }

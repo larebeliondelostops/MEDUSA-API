@@ -2,6 +2,8 @@
 
 namespace App\Services\Viper;
 
+use App\DTOs\Viper\State\StateDTO;
+use App\DTOs\Viper\Substate\SubstateDetailDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\SubstateInterface;
 use App\Models\Viper\Substate;
@@ -30,7 +32,10 @@ class SubstateService implements SubstateInterface
     {
         $substates = Substate::all();
         $substateDTOs = $substates->transform(function ($substate) {
-            return new SubstateDTO($substate->toArray());
+            $substate->load('state');
+            $data = $substate->toArray();
+            $data['state'] = new StateDTO($data['state']);
+            return new SubstateDetailDTO($data);
         });
 
         return $substateDTOs;

@@ -21,8 +21,11 @@ use App\Interfaces\Viper\SubstateInterface;
 use App\Services\Viper\SubstateService;
 use App\Interfaces\Viper\SelectsInterface;
 use App\Services\Viper\SelectsService;
-
 use App\Services\Viper\StateService;
+use App\Interfaces\Viper\AlertInterface;
+use App\Services\Viper\AlertService;
+use App\Interfaces\Viper\IndicatorInterface;
+use App\Services\Viper\IndicatorService;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\Viper\ScopeInterface;
 use App\Services\Viper\ScopeService;
@@ -45,5 +48,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(MunicipalityInterface::class, MunicipalityService::class);
         $this->app->bind(StateInterface::class, StateService::class);
         $this->app->bind(SelectsInterface::class, SelectsService::class);
+        $this->app->bind(AlertInterface::class, AlertService::class);
+        $this->app->bind(IndicatorInterface::class, IndicatorService::class);
     }
 }

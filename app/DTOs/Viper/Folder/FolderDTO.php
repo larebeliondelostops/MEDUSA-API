@@ -19,9 +19,11 @@ class FolderDTO extends DTO
      * @param string $name Nombre de la carpeta.
      * @param int $stage_id Identificador de la etapa a la que pertenece la carpeta.
      * @param string $project_id Identificador del proyecto al que pertenece la carpeta.
+     * @param int|null $higher_folder_id Identificador de la carpeta padre (puede ser nulo).
      */
     public ?int $id = null;
     public string $name;
     public int $stage_id;
     public string $project_id;
+    public ?int $higher_folder_id = null;
 }

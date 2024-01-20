@@ -8,6 +8,7 @@ use Database\Seeders\Viper\MeasurementUnitSeeder;
 use Database\Seeders\Viper\MunicipalitySeeder;
 use Database\Seeders\Viper\StageSeeder;
 use Database\Seeders\Viper\StateSeeder;
+use Database\Seeders\Viper\SubstateSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MunicipalitySeeder::class);
         $this->call(StageSeeder::class);
         $this->call(StateSeeder::class);
+        $this->call(SubstateSeeder::class);
         $this->call(MeasurementUnitSeeder::class);
 
         //Exclusivo Neiva

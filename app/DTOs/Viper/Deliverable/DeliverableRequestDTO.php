@@ -12,4 +12,5 @@ class DeliverableRequestDTO extends DTO
     public float $value = 0.0;
     public int $product_id;
     public ?int $deliverable_id = null;
+    public ?int $folder_id = null;
 }

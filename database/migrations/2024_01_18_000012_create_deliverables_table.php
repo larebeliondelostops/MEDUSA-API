@@ -32,6 +32,9 @@ return new class extends Migration
             $table->integer('deliverable_id')->nullable();
             $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
 
+            $table->integer('folder_id');
+            $table->foreign('folder_id')->references('id')->on('folders');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -24,7 +24,7 @@ class DeliverableController extends BaseController
         {
             $data = $request->validated();
             $deliverableDTO = new DeliverableRequestDTO($data);
-            $deliverableCreatedDTO = $this->deliverableInterface->createNewDeliverable($deliverableDTO);
+            $deliverableCreatedDTO = $this->deliverableInterface->createNewDeliverable($deliverableDTO, $data['project_id']);
             return response()->json([
                 'message'  => 'Entregable creado satisfactoriamente.',
                 'data' => $deliverableCreatedDTO,

@@ -42,6 +42,7 @@ class DeliverableRequest extends FormRequest
                 'name' => 'required|string|max:256',
                 'product_id' => 'required|integer',
                 'deliverable_id' => 'nullable|integer',
+                'project_id' => 'required|integer'
             ];
         }
         else if ($this->isMethod('PUT'))

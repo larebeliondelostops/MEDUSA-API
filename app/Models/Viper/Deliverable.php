@@ -20,6 +20,7 @@ class Deliverable extends Model
         'value',
         'product_id',
         'deliverable_id',
+        'folder_id'
     ];
 
     protected static function boot()
@@ -39,6 +40,14 @@ class Deliverable extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
+    }
+
+   /**
+     * Get the folder associated with the deliverable.
+     */
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class, 'folder_id');
     }
 
     /**

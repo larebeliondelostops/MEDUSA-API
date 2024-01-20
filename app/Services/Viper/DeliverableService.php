@@ -3,12 +3,21 @@
 namespace App\Services\Viper;
 use App\DTOs\Viper\Deliverable\DeliverableDetailDTO;
 use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\DeliverableInterface;
+use App\Interfaces\Viper\FolderInterface;
 use App\Models\Viper\Deliverable;
 use Illuminate\Support\Collection;
 
 class DeliverableService implements DeliverableInterface
 {
+    private FolderInterface $folderInterface;
+
+    public function __construct(FolderInterface $folderInterface)
+    {
+        $this->folderInterface = $folderInterface;
+    }
+
     private function getAmountOfDeliverablesByProductId(int $product_id) : int
     {
         return Deliverable::where('product_id', $product_id)->count();
@@ -34,10 +43,27 @@ class DeliverableService implements DeliverableInterface
             return new DeliverableDetailDTO($deliverableData);
         });
     }
-
-    public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO) : DeliverableRequestDTO
+    public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO, int $projectId) : DeliverableRequestDTO
     {
-        $newDeliverable = new Deliverable($deliverableRequestDTO->toArray());
+        $newDeliverable = new Deliverable(
+            $deliverableRequestDTO->toArray()
+        );
+        $newDeliverable->load('parentDeliverable')->load('product');
+        $folder = $this->folderInterface->createNewFolder(
+            new FolderDTO(
+                [
+                    'name' => $deliverableRequestDTO->name,
+                    'stage_id' => 4,
+                    'project_id' => $projectId,
+                    'higher_folder_id' => (is_null($deliverableRequestDTO->deliverable_id)?
+                                            $newDeliverable->product->folder_id:
+                                            $newDeliverable->parentDeliverable->folder_id
+                                          ),
+                                            ])
+        );
+
+        $newDeliverable->folder_id = $folder['id'];
+
         if (is_null($deliverableRequestDTO->deliverable_id))
         {
             $newDeliverable->load('product');

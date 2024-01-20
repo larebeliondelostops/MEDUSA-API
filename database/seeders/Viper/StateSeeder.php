@@ -18,56 +18,56 @@ class StateSeeder extends Seeder
          * Marcadores para villavicencio
          */
         DB::connection('villavicencio')->table('states')->insert([
-            [
-                "name" => "Formulación",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "Presentado",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "En viabilidad",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "Viable",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "No viable",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "En ejecución",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "En ajustes",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "Aprobado",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "No aprobado",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                "name" => "Terminado",
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
+                [
+                    "name" => "Formulación",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "Presentado",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "En viabilidad",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "Viable",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "No viable",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "Aprobado",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "No aprobado",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "En ejecución",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "En ajustes",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
+                [
+                    "name" => "Terminado",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ],
         ]);
     }
 }

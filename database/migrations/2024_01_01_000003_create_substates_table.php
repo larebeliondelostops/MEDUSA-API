@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    
+    /**
      * Run the migrations.
      *
      * @return void
@@ -19,6 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,10 +3,11 @@ namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Document extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'documents';
     protected $primaryKey = 'id';
@@ -17,6 +18,8 @@ class Document extends Model
         'responsible',
         'folder_id',
     ];
+
+    protected $dates = ['deteled_at'];
 
     public function folder()
     {

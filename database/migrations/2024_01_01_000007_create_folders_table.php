@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    
+    /**
      * Run the migrations.
      *
      * @return void
@@ -18,10 +25,13 @@ return new class extends Migration
             $table->string('name', 255);
             $table->unsignedBigInteger('stage_id');
             $table->string('project_id', 255);
+            $table->unsignedBigInteger('higher_folder_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('higher_folder_id')->references('id')->on('folders')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

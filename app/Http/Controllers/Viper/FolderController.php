@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\FolderRequest;
-use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 
@@ -34,15 +33,20 @@ class FolderController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($project_id)
+    public function index(Request $request, $project_id)
     {
-        // Utilizar el servicio para obtener todas las carpetas filtradas por el ID del proyecto
-        $folders = $this->folderInterface->getAllFolders($project_id);
-    
-        // Retornar la respuesta JSON con las carpetas obtenidas
-        return response()->json([
-            'data' => $folders,
-        ], 200);
+        try {
+            $queryFilterParam = $request->query();
+            // Utilizar el servicio para obtener todas las carpetas filtradas por el ID del proyecto
+            $folders = $this->folderInterface->getAllFolders($project_id, $queryFilterParam);
+        
+            // Retornar la respuesta JSON con las carpetas obtenidas
+            return response()->json([
+                'data' => $folders,
+            ], 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
     }
 
     /**
@@ -58,10 +62,10 @@ class FolderController extends BaseController
 
             $folderDTO = new FolderDTO($validatedData);
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
-            $result = $this->folderInterface->createNewFolder($folderDTO, $validatedData['higher_folder_id'] ?? null);
+            $result = $this->folderInterface->createNewFolder($folderDTO);
             
             return response()->json([
-                'message' => 'Proyecto Creado Exitosamente.',
+                'message' => 'Carpeta Creado Exitosamente.',
                 'data'    => $result,
             ], 201); 
         } catch (\Exception $exception) {

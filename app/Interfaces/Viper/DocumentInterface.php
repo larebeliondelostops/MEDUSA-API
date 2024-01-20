@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Viper;
 
-use App\DTOs\Viper\DocumentDTO;
+use App\DTOs\Viper\Document\DocumentDTO;
 
 interface DocumentInterface
 {
@@ -20,7 +20,7 @@ interface DocumentInterface
      *
      * @return array Contiene los datos de todos los documentos en el sistema.
      */
-    public function getAllDocuments();
+    public function getAllDocuments(array $queryParams = []);
     
     /**
      * Lista las URLs de los documentos almacenados en el sistema de archivos "Spaces".
@@ -28,8 +28,8 @@ interface DocumentInterface
      * @param string $folderPath Ruta de la carpeta en "Spaces".
      * @return array Contiene las URLs de los documentos en la carpeta especificada.
      */
-    
      public function listDocumentsInSpaces(string $folderPath);
+
     /**
      * Actualiza el nombre de un documento en el sistema Viper.
      *
@@ -37,24 +37,40 @@ interface DocumentInterface
      * @param string $newName Nuevo nombre del documento.
      * @return array Contiene un mensaje indicando si el nombre del documento fue actualizado correctamente.
      */
-   
     public function updateDocument(int $documentId, string $newName);
+    
     /**
-     * Elimina un documento del sistema Viper.
+     * Elimina logciamente un documento del sistema Viper.
      *
      * @param int $documentId Identificador del documento a eliminar.
      * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
      */
-    
      public function deleteDocument(int $documentId);
+
     /**
-     * Elimina todos los documentos asociados a una carpeta en el sistema Viper.
+     * Elimina fisicamente un documento del sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a eliminar.
+     * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
+     */
+    public function deleteForceDocument(int $documentId);
+
+    /**
+     * Elimina logicamente todos los documentos asociados a una carpeta en el sistema Viper.
      *
      * @param int $folderId Identificador de la carpeta.
      * @return void
      */
-    
      public function deleteDocumentsByFolder(int $folderId);
+
+    /**
+     * Elimina fisicamente todos los documentos asociados a una carpeta en el sistema Viper.
+     *
+     * @param int $folderId Identificador de la carpeta.
+     * @return void
+     */
+     public function deleteForceDocumentsByFolder(int $folderId);
+
     /**
      * Obtiene documentos por carpeta en el sistema Viper.
      *

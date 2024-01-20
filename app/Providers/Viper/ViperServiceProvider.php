@@ -2,9 +2,11 @@
 
 namespace App\Providers\Viper;
 
+use App\Interfaces\Viper\DeliverableInterface;
 use App\Interfaces\Viper\DepartmentInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\StateInterface;
+use App\Services\Viper\DeliverableService;
 use App\Services\Viper\DepartmentService;
 use App\Services\Viper\MunicipalityService;
 use App\Interfaces\Viper\ProjectInterface;
@@ -50,5 +52,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(SelectsInterface::class, SelectsService::class);
         $this->app->bind(AlertInterface::class, AlertService::class);
         $this->app->bind(IndicatorInterface::class, IndicatorService::class);
+        $this->app->bind(DeliverableInterface::class, DeliverableService::class);
     }
 }

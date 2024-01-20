@@ -31,9 +31,9 @@ return new class extends Migration
             $table->unsignedBigInteger('substate_id')->nullable();
             $table->foreign('substate_id')->references('id')->on('substates');
 
-            $table->decimal('total_value', 15, 2);
-            $table->decimal('requested_value', 15, 2);
-            $table->decimal('executed_value', 15, 2);
+            $table->decimal('total_value', 21, 2);
+            $table->decimal('requested_value', 21, 2);
+            $table->decimal('executed_value', 21, 2);
             $table->float('physical_progress');
             $table->float('financial_progress');
             $table->string('responsible_entity', 255);

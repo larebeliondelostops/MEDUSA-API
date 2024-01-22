@@ -25,12 +25,16 @@ class IndicatorController extends BaseController
      */
     private IndicatorInterface $indicatorInterface;
 
+    /**
+     * @var MeasurementUnitInterface
+     */
     private MeasurementUnitInterface $measurementUnitInterface;
 
     /**
      * Constructor del controlador.
      *
      * @param IndicatorInterface $indicatorInterface
+     * @param MeasurementUnitInterface $measurementUnitInterface
      */
 
     public function __construct(IndicatorInterface $indicatorInterface, MeasurementUnitInterface $measurementUnitInterface)

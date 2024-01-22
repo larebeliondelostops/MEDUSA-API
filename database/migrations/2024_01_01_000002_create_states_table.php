@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32);
+            $table->string('name',64);
             $table->timestamps();
             $table->softDeletes();
         });

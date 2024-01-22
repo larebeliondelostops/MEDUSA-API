@@ -20,15 +20,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('stages', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('url', 255);
-            $table->string('responsible', 100);
-            $table->unsignedBigInteger('folder_id');
+            $table->string('name', 255);
             $table->timestamps();
-
-            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
         });
     }
 
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('stages');
     }
 };

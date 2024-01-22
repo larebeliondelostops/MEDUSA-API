@@ -23,14 +23,14 @@ interface FolderInterface {
      * @param FolderDTO $folderDTO Datos de la carpeta a crear.
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
      */
-    public function createNewFolder(FolderDTO $folderDTO, int $higherFolderId);
+    public function createNewFolder(FolderDTO $folderDTO);
 
     /**
      * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía.
      *
      * @param int $projectId Identificador (bpin) del proyecto
      */
-    public function getAllFolders(int $projectId);
+    public function getAllFolders(int $projectId, array $queryParams = []);
 
     /**
      * Obtiene la información detallada de una carpeta específica en el sistema Viper.

@@ -3,10 +3,11 @@ namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stage extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'stages';
     protected $primaryKey = 'id';
@@ -14,6 +15,7 @@ class Stage extends Model
     protected $fillable = [
         'name',
     ];
+    protected $dates = ['deteled_at'];
 
     public function files()
     {

@@ -38,7 +38,7 @@ class FolderRequest extends FormRequest
             'name' => 'required|string|max:255',
             'stage_id' => 'required|integer',
             'project_id' => 'required|string',
-            'higher_folder_id' => 'integer',
+            'higher_folder_id' => 'integer|nullable',
         ];
     }
 

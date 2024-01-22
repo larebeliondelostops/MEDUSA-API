@@ -3,10 +3,11 @@ namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Substate extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'substates';
     protected $primaryKey = 'id';
@@ -15,6 +16,8 @@ class Substate extends Model
         'name',
         'state_id',
     ];
+
+    protected $dates = ['deteled_at'];
 
     public function state()
     {

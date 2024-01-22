@@ -27,6 +27,7 @@
                 $table->double('latitude', 10, 6);
                 $table->double('longitude', 10, 6);
                 $table->timestamps();
+                $table->softDeletes();
             });
         }
 

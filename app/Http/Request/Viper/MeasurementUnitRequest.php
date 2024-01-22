@@ -8,14 +8,14 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 /**
- * Request personalizado para la validación de Carpetas.
+ * Request personalizado para la validación de unidades de medida.
  *
  * @package    App\Http\Request\Viper
  * @author     Daniel Alferez <dan.alferez1@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class FolderRequest extends FormRequest
+class MeasurementUnitRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -35,10 +35,7 @@ class FolderRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'stage_id' => 'required|integer',
-            'project_id' => 'required|string',
-            'higher_folder_id' => 'integer|nullable',
+            'name' => 'required|string|max:100',
         ];
     }
 

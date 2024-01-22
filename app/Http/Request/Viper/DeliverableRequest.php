@@ -8,14 +8,17 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 /**
- * Request personalizado para la validación de Carpetas.
+ * Request personalizado para la validación de entregables.
  *
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de entregables,
+ * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
+ * llegue al controlador.
  * @package    App\Http\Request\Viper
- * @author     Daniel Alferez <dan.alferez1@gmail.com>
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class FolderRequest extends FormRequest
+class DeliverableRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -34,12 +37,20 @@ class FolderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:255',
-            'stage_id' => 'required|integer',
-            'project_id' => 'required|string',
-            'higher_folder_id' => 'integer|nullable',
-        ];
+        if ($this->isMethod("POST")) {
+            return [
+                'name' => 'required|string|max:256',
+                'product_id' => 'required|integer',
+                'deliverable_id' => 'nullable|integer',
+            ];
+        }
+        else if ($this->isMethod('PUT'))
+        {
+            return [
+                'name' => 'required|string|max:256',
+            ];
+        }
+        return [];
     }
 
     /**
@@ -53,7 +64,8 @@ class FolderRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'message' => 'Error en los parametros requeridos.',
+            'success' => false,
+            'message' => 'Error in the required parameters.',
         ], 400));
     }
 }

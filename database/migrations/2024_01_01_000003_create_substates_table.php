@@ -12,7 +12,7 @@ return new class extends Migration
      * @return string
      */
     protected $connection = 'villavicencio';
-
+    
     /**
      * Run the migrations.
      *
@@ -20,17 +20,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('substates', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->string('name');
-            $table->unsignedBigInteger('specific_objective_id');
-            $table->unsignedBigInteger('folder_id');
-
-            $table->foreign('specific_objective_id')->references('id')->on('specific_objectives')->onDelete('cascade');
-            $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
-
+            $table->string('name', 32);
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -41,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('substates');
     }
 };

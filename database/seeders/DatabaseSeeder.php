@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Tenancy;
 use Database\Seeders\Viper\DepartmentSeeder;
+use Database\Seeders\Viper\MeasurementUnitSeeder;
 use Database\Seeders\Viper\MunicipalitySeeder;
+use Database\Seeders\Viper\StageSeeder;
 use Database\Seeders\Viper\StateSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,7 +46,9 @@ class DatabaseSeeder extends Seeder
         //viper
         $this->call(DepartmentSeeder::class);
         $this->call(MunicipalitySeeder::class);
+        $this->call(StageSeeder::class);
         $this->call(StateSeeder::class);
+        $this->call(MeasurementUnitSeeder::class);
 
         //Exclusivo Neiva
         $this->call(FiberSiesLinesSeeder::class);

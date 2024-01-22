@@ -2,11 +2,12 @@
 
 namespace App\Services\Viper;
 
-use App\DTOs\Viper\DocumentDTO;
+use App\DTOs\Viper\Document\DocumentDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Document;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
+use App\Models\Viper\Folder;
+use App\Utils\Viper\Filters\DocumentFilter;
 use App\Models\Viper\Project; 
 use Storage;
 
@@ -29,16 +30,13 @@ class DocumentService implements DocumentInterface
      * @param DocumentDTO $documentDTO Datos del documento a crear.
      * @param \Illuminate\Http\UploadedFile $file Archivo a cargar.
      * @param int $project_id Identificador del proyecto al que pertenece el documento.
-     * @return \Illuminate\Http\JsonResponse Contiene los datos del documento creado en caso de éxito.
+     * @return array Contiene los datos del documento creado en caso de éxito.
      */
     public function createNewDocument(DocumentDTO $documentDTO, \Illuminate\Http\UploadedFile $file, string $project_id)
     {
         // Verificar si el proyecto existe
-        $projectExists = Project::where('bpin', $project_id)->exists();
-
-        if (!$projectExists) {
-            throw new \Exception('El proyecto no existe.', 404);
-        }
+        Project::findOrFail($project_id);
+        Folder::findOrFail($documentDTO->folder_id);
 
         // Crear una nueva instancia de Document
         $document = new Document();
@@ -94,7 +92,7 @@ class DocumentService implements DocumentInterface
 
 
     /**
-     * Elimina un documento del sistema Viper.
+     * Elimina logicamente un documento del sistema Viper.
      *
      * @param int $documentId Identificador del documento a eliminar.
      * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
@@ -103,6 +101,24 @@ class DocumentService implements DocumentInterface
     {
         // Obtener el documento por su ID
         $document = Document::findOrFail($documentId);
+
+        // Eliminar el documento logicamente de la base de datos
+        $document->delete();
+
+        return ['message' => 'Documento eliminado correctamente'];
+    }
+
+
+    /**
+     * Elimina fisicamente un documento del sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a eliminar.
+     * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
+     */
+    public function deleteForceDocument(int $documentId)
+    {
+        // Obtener el documento por su ID
+        $document = Document::withTrashed()->findOrFail($documentId);
 
         // Obtener la ruta del archivo
         $filePath = parse_url($document->url, PHP_URL_PATH);
@@ -113,8 +129,8 @@ class DocumentService implements DocumentInterface
             Storage::disk('spaces')->delete($filePath);
         }
 
-        // Eliminar el documento de la base de datos
-        $document->delete();
+        // Eliminar el documento fisicamente de la base de datos
+        $document->forceDelete();
 
         return ['message' => 'Documento eliminado correctamente'];
     }
@@ -167,12 +183,81 @@ class DocumentService implements DocumentInterface
      *
      * @return array Contiene los datos de todos los documentos en el sistema.
      */
-    public function getAllDocuments()
+    public function getAllDocuments(array $queryParams = [])
     {
-        // Obtener todos los documentos de la base de datos
-        $documents = Document::all();
-        return $documents->toArray();
+        $filter = new DocumentFilter();
+        $queryItems = $filter->transform($queryParams);
+    
+        // Aplica los filtros a la consulta Eloquent solo si hay parámetros de consulta
+        if (!empty($queryItems)) {
+            $documentQuery = Document::query();
+            foreach ($queryItems as $item) {
+                if (count($item) === 3) {
+                    $column = $item[0];
+                    $operator = $item[1];
+                    $value = ($operator == 'ilike') ? '%' . $item[2] . '%' : $item[2];
+    
+                    $documentQuery->orWhere($column, $operator, $value);
+                }
+            }
+    
+            // Obtén todos los documentos con el filtro aplicado
+            $documents = $documentQuery->get();
+    
+            // Crear una colección para almacenar la información de los documentos y sus carpetas
+            $result = collect();
+    
+            foreach ($documents as $document) {
+                // Obtener la carpeta principal del documento
+                $folder = $document->folder;
+    
+                // Inicializar el array de IDs con el ID de la carpeta actual
+                $pathIds = [$folder->id];
+    
+                // Iterar hacia arriba en la jerarquía hasta llegar a la carpeta raíz
+                while ($folder->higher_folder_id) {
+                    // Obtener la carpeta superior
+                    $folder = Folder::findOrFail($folder->higher_folder_id);
+    
+                    // Agregar el ID de la carpeta superior al array
+                    array_unshift($pathIds, $folder->id);
+                }
+    
+                // Construir la estructura para almacenar en la colección
+                $result->push($this->getHierarchy(Folder::findOrFail($pathIds[0]), $pathIds, $document));
+            }
+    
+            return $result->all();
+        } else {
+            // Si no hay parámetros de consulta, obtener todos los documentos
+            $documents = Document::all();
+            return $documents->toArray();
+        }
     }
+    
+    private function getHierarchy(Folder $folder, array $pathIds, Document $document)
+    {
+        // Obtener las subcarpetas cuyo ID está en el array $pathIds
+        $subfolders = $folder->subfolders
+            ->filter(fn($subfolder) => in_array($subfolder->id, $pathIds))
+            ->map(fn($subfolder) => $this->getHierarchy($subfolder, $pathIds, $document));
+        
+
+        if ($folder->id == $document->folder_id) {
+            return [
+                'folder' => new FolderDTO($folder->toArray()),
+                'subfolders' => $subfolders->all(),
+                'documents' => new DocumentDTO($document->toArray()),
+            ];
+        } else {
+            return [
+                'folder' => new FolderDTO($folder->toArray()),
+                'subfolders' => $subfolders->all(),
+                'documents' => [],
+            ];
+        }
+    }
+    
 
     /**
      * Obtiene documentos por carpeta en el sistema Viper.
@@ -189,7 +274,7 @@ class DocumentService implements DocumentInterface
     }
 
     /**
-     * Elimina todos los documentos asociados a una carpeta en el sistema Viper.
+     * Elimina logicamente todos los documentos asociados a una carpeta en el sistema Viper.
      *
      * @param int $folderId Identificador de la carpeta.
      * @return void
@@ -200,17 +285,23 @@ class DocumentService implements DocumentInterface
         $documents = Document::where('folder_id', $folderId)->get();
 
         foreach ($documents as $document) {
-            // Obtener la ruta del archivo
-            $filePath = parse_url($document->url, PHP_URL_PATH);
-    
-            // Verificar si el archivo existe en el sistema de archivos "spaces"
-            if (Storage::disk('spaces')->exists($filePath)) {
-                // Eliminar el archivo
-                Storage::disk('spaces')->delete($filePath);
-            }
-    
-            // Eliminar el documento de la base de datos
-            $document->delete();
+            $this->deleteDocument($document->id);
+        }
+    }
+
+    /**
+     * Elimina fisicamente todos los documentos asociados a una carpeta en el sistema Viper.
+     *
+     * @param int $folderId Identificador de la carpeta.
+     * @return void
+     */
+    public function deleteForceDocumentsByFolder(int $folderId)
+    {
+        // Eliminar todos los documentos asociados a la carpeta
+        $documents = Document::where('folder_id', $folderId)->get();
+
+        foreach ($documents as $document) {
+            $this->deleteForceDocument($document->id);
         }
     }
 

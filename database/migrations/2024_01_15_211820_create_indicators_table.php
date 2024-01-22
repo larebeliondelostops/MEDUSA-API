@@ -25,14 +25,15 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('start_year_of_goal');
             $table->bigInteger('end_year_goal');
-            $table->string('unit');
             $table->bigInteger('target_value');
             $table->bigInteger('progress');
             $table->double('percentage_completed');
             $table->boolean('is_main');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('measurement_unit_id');
             
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('measurement_unit_id')->references('id')->on('measurement_units')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

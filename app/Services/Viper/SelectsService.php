@@ -41,22 +41,11 @@ class SelectsService implements SelectsInterface
      */
     public function getAllSelects()
     {
-        // Obtener todos los estados
-        $states = $this->stateInterface->getAllStates();
 
-        // Inicializar un arreglo para almacenar los resultados
         $result = [];
-
         $result['states'] = $this->stateInterface->getAllStatesDetail();
-
         $result["departments"] = $this->departmentInterface->getAllDepartmentsDetail();
-
-        // Obtener todos los sectores
-        $sectors = $this->sectorInterface->getAllSectors();
-
-        // Agregar los sectores al arreglo de resultados
-        $result['sectors'] = $sectors;
-
+        $result['sectors'] = $this->sectorInterface->getAllSectors();
         return $result;
     }
 }

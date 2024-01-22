@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    
+    /**
      * Run the migrations.
      *
      * @return void
@@ -17,6 +24,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

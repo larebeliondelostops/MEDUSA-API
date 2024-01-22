@@ -17,5 +17,6 @@ Route::prefix('/viper/document')->group(function () {
     Route::get('list', [DocumentController::class, 'index']);
     Route::get('list-spaces', [DocumentController::class, 'allSpaces']);
     Route::delete('delete/{documentId}', [DocumentController::class, 'destroy']);
+    Route::delete('delete-permanent/{documentId}', [DocumentController::class, 'destroyForce']);
     Route::put('update/{documentId}', [DocumentController::class, 'update']);
 });

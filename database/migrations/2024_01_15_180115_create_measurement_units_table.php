@@ -7,19 +7,23 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    
+    /**
+     * Run the migrations
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('scopes', function (Blueprint $table) {
+        Schema::create('measurement_units', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->string('project_id', 255)->unique();
+            $table->string('name', 100);
             $table->timestamps();
-
-            $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scopes');
+        Schema::dropIfExists('measurement_units');
     }
 };

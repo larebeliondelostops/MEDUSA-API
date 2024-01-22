@@ -6,8 +6,7 @@ use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
-use App\Models\Viper\FolderRelationship;
-use Illuminate\Support\Facades\DB;
+use App\Utils\Viper\Filters\FolderFilter;
 use Illuminate\Support\Collection;
 
 /**
@@ -38,7 +37,7 @@ class FolderService implements FolderInterface
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
      * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
      */
-    public function createNewFolder(FolderDTO $folderDTO, ?int $higherFolderId = null)
+    public function createNewFolder(FolderDTO $folderDTO)
     {
         // Crear la carpeta principal
         $folder = new Folder();
@@ -46,18 +45,10 @@ class FolderService implements FolderInterface
         $folder->save();
     
         // Si se proporciona higherFolderId, establecer la relación
-        if ($higherFolderId) {
-            $higherFolder = Folder::findOrFail($higherFolderId);
-    
-            // Asegúrate de que la relación lowerFolders está cargada
-            $higherFolder->load('lowerFolders');
-
-            // Crear la relación entre carpetas
-            $relationship = new FolderRelationship();
-            $relationship->higher_folder = $higherFolder->id;
-            $relationship->lower_folder = $folder->id;
-            $relationship->save();
-
+        if ($folderDTO->higher_folder_id) {
+            $higherFolder = Folder::findOrFail($folderDTO->higher_folder_id);
+            $folder->parentFolder()->associate($higherFolder);
+            $folder->save();
         }
         return $folder->toArray();
     }
@@ -67,7 +58,7 @@ class FolderService implements FolderInterface
      *
      * @param int $folderId Identificador único de la carpeta a actualizar.
      * @param string $newName Nuevo nombre para la carpeta.
-     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
+     * @return FolderDTO Resultado de la operación que puede incluir mensajes de éxito o error.
      */
     public function updateFolderName(int $folderId, string $newName)
     {
@@ -92,15 +83,15 @@ class FolderService implements FolderInterface
     {
         // Buscar la carpeta por su ID
         $folder = Folder::findOrFail($folderId);
-
+    
         // Crear una colección que contendrá la estructura jerárquica de carpetas
         $result = collect();
-
+    
         // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
         $folderDictionary = collect([$folderId => $folder]);
-
+    
         $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
-
+    
         return $result->all();      
     }
 
@@ -110,25 +101,37 @@ class FolderService implements FolderInterface
      * @param int $projectId Identificador (bpin) del proyecto
      * @return array
      */
-    public function getAllFolders($projectId)
+    public function getAllFolders($projectId, array $queryParams = [])
     {
-        // Obtener todas las carpetas para el proyecto específico
-        $folders = Folder::where('project_id', $projectId)->get();
-        // Crear una colección que contendrá la estructura jerárquica de carpetas
-        $result = collect();
-    
-        // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
-        $folderDictionary = $folders->keyBy('id');
-    
+        // Crea una instancia del filtro y transforma los parámetros
+        $filter = new FolderFilter();
+        $queryItems = $filter->transform($queryParams);
+
+        // Aplica los filtros a la consulta Eloquent
+        $folderQuery = Folder::query();
+        foreach($queryItems as $item) {
+            if(count($item) === 3) {
+                $folderQuery->orWhere($item[0], $item[1], ($item[1]=="ilike"?"%".$item[2]."%":$item[2]));
+            }
+        }
+
+        // Obtén todas las carpetas para el proyecto específico con el filtro aplicado
+        $folders = $folderQuery->where('project_id', $projectId)->get();
+
+         // Crear una colección que contendrá la estructura jerárquica de carpetas
+         $result = collect();
+
+         // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
+         $folderDictionary = $folders->keyBy('id');
+
         // Iterar sobre cada carpeta
         foreach ($folders as $folder) {
-            // Si la carpeta no tiene una carpeta superior, es decir, es la carpeta raíz
-            if (!$folder->higherFolders->count()) {
+            // Si la carpeta no tiene una carpeta superior, es decir, es la carpeta raíz o si tiene algun filtro
+            if (!$folder->higher_folder_id || $queryItems) {
                 // Agregar la carpeta raíz y sus subcarpetas a la colección
                 $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
             }
         }
-    
         return $result->all();
     }
     
@@ -142,13 +145,13 @@ class FolderService implements FolderInterface
     private function buildFolderHierarchy(Folder $folder, Collection $folderDictionary): array
     {
         // Obtener las subcarpetas
-        $subfolders = $folder->lowerFolders->map(
+        $subfolders = $folder->subfolders->map(
             fn($subfolder) => $this->buildFolderHierarchy($subfolder, $folderDictionary)
         );
-
+    
         // Obtener los documentos asociados a la carpeta
         $documents = $this->documentInterface->getDocumentsByFolder($folder->id);
-
+    
         return [
             'folder' => new FolderDTO($folder->toArray()),
             'subfolders' => $subfolders->all(),
@@ -180,18 +183,18 @@ class FolderService implements FolderInterface
     private function recursiveDelete(Folder $folder)
     {
         // Obtener todas las subcarpetas de la carpeta actual
-        $subfolders = $folder->lowerFolders;
-
+        $subfolders = $folder->subfolders;
+    
         // Eliminar documentos asociados a la carpeta actual
         $this->documentInterface->deleteDocumentsByFolder($folder->id);
-
+    
         // Recorrer las subcarpetas y eliminarlas recursivamente
         foreach ($subfolders as $subfolder) {
             $this->recursiveDelete($subfolder);
         }
-
-        // Eliminar la carpeta actual
-        $folder->delete();
+    
+        // Eliminar la carpeta actual (lógicamente)
+        $folder->delete(); 
     }
 
 
@@ -215,7 +218,7 @@ class FolderService implements FolderInterface
         $folderDTO = new FolderDTO($validatedData);
     
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
-        $folderResponse = $this->createNewFolder($folderDTO, $validatedData['higher_folder_id']);
+        $folderResponse = $this->createNewFolder($folderDTO);
         
         // Ajustar el acceso a la respuesta según la estructura real
         $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;

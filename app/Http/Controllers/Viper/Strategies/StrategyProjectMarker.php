@@ -24,8 +24,8 @@ class StrategyProjectMarker
                             [
                                 'type' => $project->location->type,
                                 'coordinates' => [
-                                        $project->location->latitude,
-                                        $project->location->longitude
+                                        (float)$project->location->latitude,
+                                        (float)$project->location->longitude
                                     ]
                             ]
                         )

@@ -4,11 +4,13 @@ namespace App\Services\Viper;
 
 // Librerias del modulo viper
 use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDTO;
-use App\DTOs\Viper\Project\ProjectDataDTO;
+use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
+use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
@@ -29,6 +31,13 @@ use Illuminate\Http\Request;
  */
 class ProjectService implements ProjectInterface
 {
+    private LocationInterface $locationInterface;
+
+    public function __construct(LocationInterface $locationInterface)
+    {
+        $this->locationInterface = $locationInterface;
+    }
+
      /**
      * Crea un nuevo proyecto.
      *
@@ -39,10 +48,20 @@ class ProjectService implements ProjectInterface
      */
     public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
-        $project = new Project();
-        $project->fill($projectDTO->toArray());
+        //primero se crea la ubicacion del proyecto para obtener su id
+        $locationProjectDTO = $this->locationInterface->createNewLocation($projectDTO->location);
+
+        //una vez almacenada la ubicacion se almacena el proyecto
+        $project = new Project(
+            $projectDTO->toArray() +
+            ['location_id' => $locationProjectDTO->id ] // id de la locacion para el proyecto
+        );
         $project->save();
-        return new ProjectRequestDTO($project->toArray());
+
+        return new ProjectRequestDTO(
+            $project->toArray() +
+            ['location'=> $locationProjectDTO]
+        );
     }
 
      /**
@@ -57,11 +76,17 @@ class ProjectService implements ProjectInterface
      */
     public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO
     {
-        $project = Project::findOrFail($bpin);
-        $data = $projectDTO->toArray();
-        $project->fill($data);
+        $project = Project::with('location')->findOrFail($bpin);
+        $locationProject = new LocationRequestDTO($project->location->toArray());
+        $locationUpdated = $this->locationInterface->updateLocationById($locationProject, $locationProject->id);
+        $project->fill($projectDTO->toArray());
         $project->save();
-        return new ProjectRequestDTO($project->toArray());
+        $dataUpdated = $project->toArray();
+        $dataUpdated['location'] = $locationUpdated;
+
+        return new ProjectRequestDTO(
+            $dataUpdated
+        );
     }
 
     /**
@@ -124,11 +149,11 @@ class ProjectService implements ProjectInterface
      * Recupera un proyecto por su identificador 'bpin'.
      *
      * @param string $bpin Identificador único del proyecto.
-     * @return ProjectDataDTO DTO del proyecto encontrado.
+     * @return ProjectDetailDTO DTO del proyecto encontrado.
      */
-    public function getProjectByBPIN(string $bpin) : ProjectDataDTO
+    public function getProjectByBPIN(string $bpin) : ProjectDetailDTO
     {
-        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector'])
+        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'location'])
                           ->findOrFail($bpin);
         // return $project;
         $data = $project->toArray();
@@ -137,8 +162,9 @@ class ProjectService implements ProjectInterface
         $data['sector'] = $data['sector']['name'];
         $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
         $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
+        $data['location'] = new LocationRequestDTO($data['location']);
 
-        return new ProjectDataDTO($data);
+        return new ProjectDetailDTO($data);
     }
 
     /**
@@ -147,14 +173,14 @@ class ProjectService implements ProjectInterface
      * Busca un proyecto por su 'bpin', lo elimina y devuelve un DTO con sus datos.
      *
      * @param string $bpin Identificador único del proyecto a eliminar.
-     * @return ProjectDataDTO DTO del proyecto eliminado.
+     * @return ProjectDetailDTO DTO del proyecto eliminado.
      */
-    public function deleteProject(string $bpin) : ProjectDataDTO
+    public function deleteProject(string $bpin) : ProjectDetailDTO
     {
         $project = Project::findOrFail($bpin);
         $projectDTO = $this->getProjectByBPIN($bpin);
         $project->delete();
-
+        $this->locationInterface->deleteLocation($projectDTO->location->id);
         return $projectDTO;
     }
 }

@@ -76,7 +76,7 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => 'Error En La Generación De La Solicitud'.$exception->getMessage()
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }

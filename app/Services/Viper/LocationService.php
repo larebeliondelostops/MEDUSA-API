@@ -8,13 +8,22 @@ use Ramsey\Uuid\Uuid;
 
 class LocationService implements LocationInterface
 {
-    public function createNewInterface(LocationRequestDTO $locationDTO) : LocationRequestDTO
+    public function createNewLocation(LocationRequestDTO $locationDTO) : LocationRequestDTO
     {
         $locationDTO->id = Uuid::uuid4()->toString();
         $location = new Location($locationDTO->toArray());
         $location->save();
         $locationSavedDTO = new LocationRequestDTO($location->toArray());
         return $locationSavedDTO;
+    }
+
+    public function updateLocationById(LocationRequestDTO $locationDTO, string $id) : LocationRequestDTO
+    {
+        $location = Location::findOrFail($id);
+        $location->fill($locationDTO->toArray(except:['id']));
+        $location->save();
+        $locationUpdatedDTO = new LocationRequestDTO($location->toArray());
+        return $locationUpdatedDTO;
     }
 
     public function getLocationById(string $id) : LocationRequestDTO

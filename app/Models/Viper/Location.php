@@ -11,8 +11,9 @@ class Location extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'locations';
-
     protected $dates = ['deleted_at'];
+    protected $keyType = 'string';
+
 
     protected $fillable = [
         'id',

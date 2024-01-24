@@ -4,6 +4,7 @@ namespace Database\Seeders\Viper;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class MunicipalitySeeder extends Seeder
 {
@@ -17,16 +18,37 @@ class MunicipalitySeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('municipalities')->insert([
+        $locations = [
+            "Villavicencio" =>   [
+                            "id" => Uuid::uuid4()->toString(),
+                            "type" => "Point",
+                            "latitude" => 3.2219886587045397,
+                            "longitude" => -74.0877486836099,
+                            "created_at" => now(),
+                            "updated_at" => now(),
+                        ],
+        ];
+
+        $municipalities = [
             [
                 "name" => "Villavicencio",
-                "type_location" => "Point",
-                "latitude" => 3.2219886587045397,
-                "longitude" => -74.0877486836099,
+                "location_id" => $locations["Villavicencio"]['id'],
                 "department_id" => 1,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
+        ];
+
+        //Primero se debe registrar la locacion
+        foreach ($locations as $location)
+        DB::connection('villavicencio')->table('locations')->insert([
+            $location
         ]);
+
+        foreach ($municipalities as $municipality)
+            DB::connection('villavicencio')->table('municipalities')->insert([
+                $municipality
+            ]);
+
     }
 }

@@ -24,6 +24,8 @@ class DepartmentSeeder extends Seeder
                             "type" => "Point",
                             "latitude" => 3.2719886587045397,
                             "longitude" => -73.0877486836099,
+                            "created_at" => now(),
+                            "updated_at" => now(),
                         ],
         ];
 

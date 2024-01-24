@@ -23,11 +23,13 @@ return new class extends Migration
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type_location');
-            $table->double('latitude', 10, 6);
-            $table->double('longitude', 10, 6);
+
+            $table->uuid('location_id');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('set null');
+
             $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });

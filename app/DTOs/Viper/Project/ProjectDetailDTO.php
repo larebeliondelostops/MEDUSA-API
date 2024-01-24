@@ -1,10 +1,10 @@
 <?php
 
 namespace App\DTOs\Viper\Project;
-use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\DTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Sector\SectorDTO;
 use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
@@ -39,8 +39,8 @@ class ProjectDetailDTO extends DTO
     public string $responsible_entity;       // Entidad responsable del proyecto
     public SectorDTO $sector;                   // Sector del proyecto
     public LocationRequestDTO $location;     // ubicacion del proyecto
-    public DepartmentDTO $department;     // Id del departamento al que pertenece el proyecto
-    public ?MunicipalityDTO $municipality=null; // Id del municipio donde pertenece el departamento
+    public DepartmentRequestDTO $department;     // Id del departamento al que pertenece el proyecto
+    public ?MunicipalityRequestDTO $municipality=null; // Id del municipio donde pertenece el departamento
     public int $beneficiaries;               // Número de beneficiarios del proyecto
     public string $planner;                  // Planificador del proyecto
     public string $execution_approval_date;  // Fecha de aprobación de ejecución

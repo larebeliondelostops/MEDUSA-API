@@ -3,9 +3,9 @@
 namespace App\Services\Viper;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
@@ -155,13 +155,15 @@ class ProjectService implements ProjectInterface
      */
     public function getProjectByBPIN(string $bpin) : ProjectDetailDTO
     {
-        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'location'])
+        $project = Project::with(['department', 'department.location', 'municipality', 'municipality.location', 'state', 'substate', 'sector', 'location'])
                           ->findOrFail($bpin);
         // return $project;
         $data = $project->toArray();
-        $data['department'] = new DepartmentDTO($data['department']);
+        $data['department']['location'] = new LocationRequestDTO($data['department']['location']);
+        $data['department'] = new DepartmentRequestDTO($data['department']);
         $data['sector'] = new SectorDTO($data['sector']);
-        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
+        $data['municipality']['location'] = new LocationRequestDTO($data['municipality']['location']);
+        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityRequestDTO($data['municipality']);
         $data['state'] =  new StateDTO($data['state']);
         $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
         $data['location'] = new LocationRequestDTO($data['location']);

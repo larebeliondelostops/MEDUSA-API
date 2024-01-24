@@ -5,6 +5,9 @@ use App\DTOs\Viper\Department\DepartmentDTO;
 use App\DTOs\Viper\DTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Sector\SectorDTO;
+use App\DTOs\Viper\State\StateDTO;
+use App\DTOs\Viper\Substate\SubstateDTO;
 
 /**
  * Clase base DTO (Data Transfer Object).
@@ -26,15 +29,15 @@ class ProjectDetailDTO extends DTO
     public string $bpin;                     // Identificador único del proyecto
     public string $name;                     // Nombre del proyecto
     public string $ocad;                     // Código OCAD
-    public string $state;                    // Estado del proyecto
-    public ?string $substate=null;                 // Subestado del proyecto
+    public StateDTO $state;                    // Estado del proyecto
+    public ?SubstateDTO $substate=null;                 // Subestado del proyecto
     public float $total_value;               // Valor total del proyecto
     public float $requested_value;           // Valor solicitado del proyecto
     public float $executed_value = 0.0;      // Valor ejecutado del proyecto
     public float $physical_progress = 0.0;   // Avance físico del proyecto
     public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
-    public string $sector;                   // Sector del proyecto
+    public SectorDTO $sector;                   // Sector del proyecto
     public LocationRequestDTO $location;     // ubicacion del proyecto
     public DepartmentDTO $department;     // Id del departamento al que pertenece el proyecto
     public ?MunicipalityDTO $municipality=null; // Id del municipio donde pertenece el departamento

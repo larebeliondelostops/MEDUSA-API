@@ -9,6 +9,8 @@ use App\DTOs\Viper\Municipality\MunicipalityDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
+use App\DTOs\Viper\Sector\SectorDTO;
+use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\ProjectInterface;
@@ -158,9 +160,9 @@ class ProjectService implements ProjectInterface
         // return $project;
         $data = $project->toArray();
         $data['department'] = new DepartmentDTO($data['department']);
-        $data['state'] = $data['state']['name'];
-        $data['sector'] = $data['sector']['name'];
+        $data['sector'] = new SectorDTO($data['sector']);
         $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
+        $data['state'] =  new StateDTO($data['state']);
         $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
         $data['location'] = new LocationRequestDTO($data['location']);
 

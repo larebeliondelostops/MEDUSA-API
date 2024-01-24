@@ -4,11 +4,10 @@ namespace App\Services\Viper;
 use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\Interfaces\Viper\DepartmentInterface;
 use App\Interfaces\Viper\LocationInterface;
 use App\Models\Viper\Department;
-use App\Models\Viper\Location;
 use App\Models\Viper\Municipality;
 
 /**
@@ -79,14 +78,19 @@ class DepartmentService implements DepartmentInterface
      */
     public function getAllDepartmentsDetail(): array
     {
-        $departmentsGot = Department::with('municipalities', 'location')->get();
+        $departmentsGot = Department::with('municipalities', 'municipalities.location', 'location')->get();
 
         $departmentsDetailDTO = $departmentsGot->map(
             function (Department $department)
             {
                 $data = $department->toArray();
                 $data['municipalities'] = $department->municipalities->map(
-                    fn(Municipality $municipality) => new MunicipalityDTO($municipality->toArray())
+                    function (Municipality $municipality)
+                    {
+                        $data = $municipality->toArray();
+                        $data['location'] = new LocationRequestDTO($data['location']);
+                        return new MunicipalityRequestDTO($data);
+                    }
                 )->toArray();
                 $data['location'] = new LocationRequestDTO($data['location']);
             return new DepartmentDetailDTO($data);

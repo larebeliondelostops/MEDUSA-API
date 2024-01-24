@@ -21,7 +21,7 @@ class StrategyProjectMarker
             {
                 return new ProjectMarkerDTO(
                     [
-                        'markerType' => 1,
+                        'markerType' => 100,
                         'id' => $project->location->id,
                         'geometry' => new GeometryDTO (
                             [

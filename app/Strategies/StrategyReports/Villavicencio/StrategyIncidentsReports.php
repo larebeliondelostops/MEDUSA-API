@@ -17,7 +17,7 @@ class StrategyIncidentsReports implements ReportsInterface
     public function getReportsData(Request $request)
     {
         $this->request = $request;
-
+        return $this->incidentsByTypeHeatMap();
         if (isset($this->request->start) && isset($this->request->end)) {
             $general = [
                 $this->cardsIncidents(),
@@ -48,6 +48,8 @@ class StrategyIncidentsReports implements ReportsInterface
             $data = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
+                $this->incidentsByHour(),
+                $this->incidentsByTypeHeatMap(),
                 $this->points()
             ];
             array_push($generalData, $data);
@@ -471,11 +473,133 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : 'Incidentes por intervalos de horas',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
             'type' => 'column'
+        ];
+
+        return $data;
+    }
+
+    public function incidentsHeatMap()
+    {
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                ->select('indicator', 'created_at', 'month')
+                ->get();
+        } else {
+            $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at', 'month')
+                ->get();
+        }
+
+        $data = $incidentes_por_tipo_incidente->sortBy('month')->groupBy('month')->toArray();
+        //dd($incidentes_por_tipo_incidente->sortBy('month')->groupBy('month')->toArray());
+
+        // Transformación de datos
+        $series = [];
+
+        // Definir el rango de días (1-31)
+        $rangoDias = range(1, 31);
+
+        foreach (Helper::MONTH_NUMBER_DB as $mes) {
+
+            $monthData = ['name' => Helper::mesNombre($mes), 'data' => []];
+
+            foreach ($rangoDias as $day) {
+                // Verificar si hay datos para el mes y día actual
+                $monthAndDayData = $data[$mes] ?? [];
+                $dayIncidents = array_filter($monthAndDayData, function ($incident) use ($day) {
+                    return (int)date('d', strtotime($incident['created_at'])) === $day;
+                });
+
+                $monthData['data'][] = ['x' => str_pad($day, 2, '0', STR_PAD_LEFT), 'y' => count($dayIncidents)];
+            }
+
+            $series[] = $monthData;
+        }
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
+        $data = [
+            'title' => 'Incidentes Mediante Mapa de Calor',
+            'date' =>  $date,
+            'series' => $series,
+            //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
+            'type' => 'heatmap'
+        ];
+
+        return $data;
+    }
+
+    public function incidentsByTypeHeatMap()
+    {
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
+                ->select('indicator', 'created_at', 'day')
+                ->where('indicator', $this->indicator)
+                ->get();
+        } else {
+            $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at', 'day')
+                ->where('indicator', $this->indicator)
+                ->get();
+        }
+
+        $data = $incidentes_por_tipo_incidente->toArray();
+
+        // Definir los rangos de horas específicos
+        $intervalLimits = [
+            ['start' => 0, 'end' => 4],
+            ['start' => 4, 'end' => 8],
+            ['start' => 8, 'end' => 12],
+            ['start' => 12, 'end' => 16],
+            ['start' => 16, 'end' => 20],
+            ['start' => 20, 'end' => 24],
+        ];
+
+        // Transformación de datos
+        $series = [];
+
+        // Iterar sobre todos los días de la semana
+        foreach (Helper::DAY_NUMBER as $diaSemana) {
+            $dayData = ['name' => Helper::diaNombre($diaSemana), 'data' => []];
+
+            // Iterar sobre los rangos de horas específicos
+            foreach ($intervalLimits as $interval) {
+                // Filtrar datos para el día de la semana y el rango de hora actual
+                $dayAndIntervalData = array_filter($data, function ($incident) use ($diaSemana, $interval) {
+                    $dayNumber = (int)$incident['day'];
+                    $hour = (int)date('G', strtotime($incident['created_at']));
+
+                    return $diaSemana == $dayNumber && $hour >= $interval['start'] && $hour < $interval['end'];
+                });
+
+                // Contar la cantidad de incidentes en el rango de horas
+                $incidentCount = count($dayAndIntervalData);
+
+                $dayData['data'][] = ['x' => "{$interval['start']}-{$interval['end']}", 'y' => $incidentCount];
+            }
+
+            $series[] = $dayData;
+        }
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
+        $data = [
+            'title' => Indicator::find($this->indicator)->Name . ' por día de la semana y rango de horas',
+            'date' =>  $date,
+            'series' => $series,
+            //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
+            'type' => 'heatmap'
         ];
 
         return $data;

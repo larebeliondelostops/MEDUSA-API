@@ -35,6 +35,8 @@ use App\Interfaces\Viper\SpecificObjectiveInterface;
 use App\Services\Viper\SpecificObjectiveService;
 use App\Interfaces\Viper\MeasurementUnitInterface;
 use App\Services\Viper\MeasurementUnitService;
+use App\Interfaces\Viper\ReportInterface;
+use App\Services\Viper\ReportService;
 
 
 class ViperServiceProvider extends ServiceProvider
@@ -56,5 +58,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(IndicatorInterface::class, IndicatorService::class);
         $this->app->bind(MeasurementUnitInterface::class, MeasurementUnitService::class);
         $this->app->bind(DeliverableInterface::class, DeliverableService::class);
+        $this->app->bind(ReportInterface::class, ReportService::class);
     }
 }

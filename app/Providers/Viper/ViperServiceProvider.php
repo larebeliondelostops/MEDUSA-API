@@ -4,12 +4,16 @@ namespace App\Providers\Viper;
 
 use App\Interfaces\Viper\DeliverableInterface;
 use App\Interfaces\Viper\DepartmentInterface;
+use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
+use App\Interfaces\Viper\ProjectMarkerInterface;
 use App\Interfaces\Viper\StateInterface;
 use App\Services\Viper\DeliverableService;
 use App\Services\Viper\DepartmentService;
+use App\Services\Viper\LocationService;
 use App\Services\Viper\MunicipalityService;
 use App\Interfaces\Viper\ProjectInterface;
+use App\Services\Viper\ProjectMarkerService;
 use App\Services\Viper\ProjectService;
 use App\Interfaces\Viper\FolderInterface;
 use App\Services\Viper\FolderService;
@@ -35,7 +39,8 @@ use App\Interfaces\Viper\SpecificObjectiveInterface;
 use App\Services\Viper\SpecificObjectiveService;
 use App\Interfaces\Viper\MeasurementUnitInterface;
 use App\Services\Viper\MeasurementUnitService;
-use App\Interfaces\Viper\ReportInterface;
+use App\Interfaces\Viper\ProductInterface;
+use App\Services\Viper\ProductService;use App\Interfaces\Viper\ReportInterface;
 use App\Services\Viper\ReportService;
 
 
@@ -58,6 +63,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(IndicatorInterface::class, IndicatorService::class);
         $this->app->bind(MeasurementUnitInterface::class, MeasurementUnitService::class);
         $this->app->bind(DeliverableInterface::class, DeliverableService::class);
+        $this->app->bind(LocationInterface::class, LocationService::class);
+        $this->app->bind(ProductInterface::class, ProductService::class);
+        $this->app->bind(ProjectMarkerInterface::class, ProjectMarkerService::class);
         $this->app->bind(ReportInterface::class, ReportService::class);
     }
 }

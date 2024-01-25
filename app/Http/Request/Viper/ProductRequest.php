@@ -8,17 +8,14 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 /**
- * Request personalizado para la validación de municipios.
+ * Request personalizado para la validación de productos.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de municipios,
- * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
- * llegue al controlador.
  * @package    App\Http\Request\Viper
- * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
+ * @author     Daniel Alferez <dan.alferez1@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class MunicipalityRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -38,9 +35,11 @@ class MunicipalityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
-            'location' => 'required|array',
-            'department_id' => 'required|integer',
+            'name' => 'required|string|max:191',
+            'number' => 'required|string|max:191',
+            'measurement_unit_id' => 'required|integer',
+            'folder_id' => 'required|integer',
+            'specific_objective_id' => 'required|integer',
         ];
     }
 
@@ -55,8 +54,7 @@ class MunicipalityRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Error in the required parameters.',
+            'message' => 'Error en los parametros requeridos.',
         ], 400));
     }
 }

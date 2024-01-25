@@ -2,13 +2,12 @@
 
 namespace App\DTOs\Viper\Municipality;
 use App\DTOs\Viper\DTO;
+use App\DTOs\Viper\Location\LocationRequestDTO;
 
-class MunicipalityDTO extends DTO
+class MunicipalityRequestDTO extends DTO
 {
     public ?int $id=null;
     public string $name;
-    public string $type_location;
-    public float $latitude;
-    public float $longitude;
+    public LocationRequestDTO $location;
     public int $department_id;
 }

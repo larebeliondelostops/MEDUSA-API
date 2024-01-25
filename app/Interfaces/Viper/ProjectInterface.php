@@ -2,8 +2,8 @@
 
 namespace App\Interfaces\Viper;
 
+use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
-use App\DTOs\Viper\Project\ProjectDataDTO;
 
 /**
  * Interfaz para el servicio de manejo de proyectos.
@@ -32,7 +32,7 @@ interface ProjectInterface {
      * @param string $bpin Identificador único del proyecto a actualizar.
      * @return ProjectRequestDTO DTO que contiene la información almacenada despues de la actualización
      */
-    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin):ProjectRequestDTO;
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO;
 
     /**
      * Obtiene una lista de proyectos paginada.
@@ -47,15 +47,15 @@ interface ProjectInterface {
      * Recupera un proyecto específico por su identificador 'bpin'.
      *
      * @param string $bpin Identificador único del proyecto.
-     * @return ProjectDataDTO DTO con la data del proyecto encontrado.
+     * @return ProjectDetailDTO DTO con la data del proyecto encontrado.
      */
-    public function getProjectByBPIN(string $bpin) : ProjectDataDTO;
+    public function getProjectByBPIN(string $bpin) : ProjectDetailDTO;
 
      /**
      * Elimina un proyecto y devuelve sus datos.
      *
      * @param string $bpin Identificador único del proyecto a eliminar.
-     * @return ProjectDataDTO DTO del proyecto eliminado.
+     * @return ProjectDetailDTO DTO del proyecto eliminado.
      */
-    public function deleteProject(string $bpin) : ProjectDataDTO;
+    public function deleteProject(string $bpin) : ProjectDetailDTO;
 }

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
+use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\Http\Request\Viper\DepartmentRequest;
 use App\Interfaces\Viper\DepartmentInterface;
 
@@ -54,7 +55,8 @@ class DepartmentController extends BaseController
         try
         {
             $data = $request->validated();
-            $newDepartmentDTO = new DepartmentDTO($data);
+            $data['location'] = new LocationRequestDTO($data['location']);
+            $newDepartmentDTO = new DepartmentRequestDTO($data);
             $departmentSaved = $this->departmentInterface->createNewDepartment($newDepartmentDTO);
             return response()->json([
                 "message" => "Departamento creado satisfactoriamente.",
@@ -127,7 +129,8 @@ class DepartmentController extends BaseController
         try
         {
             $data = $request->validated();
-            $departmentForUpdate = new DepartmentDTO($data);
+            $data['location'] = new LocationRequestDTO($data['location']);
+            $departmentForUpdate = new DepartmentRequestDTO($data);
             $departmentUpdated = $this->departmentInterface->updateDepartment($departmentForUpdate, $id);
             return response()->json([
                 "message" => "Departamento actualizado satisfactoriamente",

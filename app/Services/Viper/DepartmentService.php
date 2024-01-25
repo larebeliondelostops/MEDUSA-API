@@ -2,9 +2,11 @@
 
 namespace App\Services\Viper;
 use App\DTOs\Viper\Department\DepartmentDetailDTO;
-use App\DTOs\Viper\Department\DepartmentDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
+use App\DTOs\Viper\Location\LocationRequestDTO;
+use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\Interfaces\Viper\DepartmentInterface;
+use App\Interfaces\Viper\LocationInterface;
 use App\Models\Viper\Department;
 use App\Models\Viper\Municipality;
 
@@ -22,17 +24,30 @@ use App\Models\Viper\Municipality;
  */
 class DepartmentService implements DepartmentInterface
 {
+    private LocationInterface $locationInterface;
+
+    public function __construct(LocationInterface $locationInterface)
+    {
+        $this->locationInterface = $locationInterface;
+    }
+
     /**
      * Crea un nuevo departamento y lo guarda en la base de datos.
      *
-     * @param DepartmentDTO $departmentDTO DTO con la información del departamento a crear.
-     * @return DepartmentDTO DTO del departamento recién creado.
+     * @param DepartmentRequestDTO $departmentDTO DTO con la información del departamento a crear.
+     * @return DepartmentRequestDTO DTO del departamento recién creado.
      */
-    public function createNewDepartment(DepartmentDTO $departmentDTO) : DepartmentDTO
+    public function createNewDepartment(DepartmentRequestDTO $departmentDTO) : DepartmentRequestDTO
     {
-        $newDepartment = new Department($departmentDTO->toArray());
+        $locationSaved = $this->locationInterface->createNewLocation($departmentDTO->location);
+        $newDepartment = new Department(
+            $departmentDTO->toArray() +
+            ['location_id' => $locationSaved->id]
+        );
         $newDepartment->save();
-        return new DepartmentDTO($newDepartment->toArray());
+        return new DepartmentRequestDTO(
+            $newDepartment->toArray() +
+            ['location' => $locationSaved]);
     }
 
     /**
@@ -42,11 +57,15 @@ class DepartmentService implements DepartmentInterface
      */
     public function getAllDepartments() : array
     {
-        $departmentsGot = Department::all();
+        $departmentsGot = Department::with('location')->get();
         $departmentsDTO = $departmentsGot->transform(
             function (Department $department)
             {
-                return new DepartmentDTO($department->toArray());
+                $data = $department->toArray();
+                $data["location"] = new LocationRequestDTO($data["location"]);
+                return new DepartmentRequestDTO(
+                    $data
+                );
             }
         )->toArray();
         return $departmentsDTO;
@@ -59,13 +78,24 @@ class DepartmentService implements DepartmentInterface
      */
     public function getAllDepartmentsDetail(): array
     {
-        $departmentsGot = Department::with('municipalities')->get();
+        $departmentsGot = Department::with('municipalities', 'municipalities.location', 'location')->get();
 
-        $departmentsDetailDTO = $departmentsGot->map(function (Department $department) {
-            $department->municipalities->transform(
-                fn(Municipality $municipality) => new MunicipalityDTO($municipality->toArray()));
-            return new DepartmentDetailDTO($department->toArray());
-        });
+        $departmentsDetailDTO = $departmentsGot->map(
+            function (Department $department)
+            {
+                $data = $department->toArray();
+                $data['municipalities'] = $department->municipalities->map(
+                    function (Municipality $municipality)
+                    {
+                        $data = $municipality->toArray();
+                        $data['location'] = new LocationRequestDTO($data['location']);
+                        return new MunicipalityRequestDTO($data);
+                    }
+                )->toArray();
+                $data['location'] = new LocationRequestDTO($data['location']);
+            return new DepartmentDetailDTO($data);
+            }
+        );
 
         return $departmentsDetailDTO->toArray();
     }
@@ -74,40 +104,55 @@ class DepartmentService implements DepartmentInterface
      * Recupera un departamento por su ID y retorna sus detalles.
      *
      * @param int $id ID del departamento a recuperar.
-     * @return DepartmentDTO DTO del departamento solicitado.
+     * @return DepartmentRequestDTO DTO del departamento solicitado.
      */
-    public function getDepartmentById(int $id) : DepartmentDTO
+    public function getDepartmentById(int $id) : DepartmentRequestDTO
     {
-        $department = Department::findOrFail($id);
-        $departmentDTO = new DepartmentDTO($department->toArray());
+        $department = Department::with('location')->findOrFail($id);
+        $data = $department->toArray();
+        $data['location'] = new LocationRequestDTO($data['location']);
+        $departmentDTO = new DepartmentRequestDTO(
+            $data
+        );
         return $departmentDTO;
     }
 
     /**
      * Actualiza un departamento existente identificado por su ID.
      *
-     * @param DepartmentDTO $departmentDTO DTO con la nueva información del departamento.
+     * @param DepartmentRequestDTO $departmentDTO DTO con la nueva información del departamento.
      * @param int $id ID del departamento a actualizar.
-     * @return DepartmentDTO DTO del departamento actualizado.
+     * @return DepartmentRequestDTO DTO del departamento actualizado.
      */
-    public function updateDepartment(DepartmentDTO $departmentDTO, int $id) : DepartmentDTO
+    public function updateDepartment(DepartmentRequestDTO $departmentDTO, int $id) : DepartmentRequestDTO
     {
-        $department = Department::findOrFail($id);
+        $department = Department::with('location')->findOrFail($id);
         $department->fill($departmentDTO->toArray());
         $department->save();
-        return new DepartmentDTO($department->toArray());
+        $data = $department->toArray();
+        $data['location'] = $this->locationInterface->updateLocationById(
+            $departmentDTO->location,
+            $data['location']['id']
+        );
+        return new DepartmentRequestDTO(
+            $data
+        );
     }
 
     /**
      * Elimina un departamento identificado por su ID y retorna los detalles del departamento eliminado.
      *
      * @param int $id ID del departamento a eliminar.
-     * @return DepartmentDTO DTO del departamento eliminado.
+     * @return DepartmentRequestDTO DTO del departamento eliminado.
      */
-    public function deleteDepartment(int $id) : DepartmentDTO
+    public function deleteDepartment(int $id) : DepartmentRequestDTO
     {
-        $department = Department::findOrFail($id);
-        $departmentDeletedDTO = new DepartmentDTO($department->toArray());
+        $department = Department::with('location')->findOrFail($id);
+        $data = $department->toArray();
+        $data['location'] = $this->locationInterface->deleteLocation($data['location']['id']);
+        $departmentDeletedDTO = new DepartmentRequestDTO(
+            $data
+        );
         $department->delete();
         return $departmentDeletedDTO;
     }

@@ -12,18 +12,18 @@ return new class extends Migration
      * @return string
      */
     protected $connection = 'villavicencio';
+    
     /**
-     * Run the migrations.
+     * Run the migrations
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('measurement_units', function (Blueprint $table) {
             $table->id();
-            $table->string('name',32);
+            $table->string('name', 100);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        Schema::dropIfExists('measurement_units');
     }
 };

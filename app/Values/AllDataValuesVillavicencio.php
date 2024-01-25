@@ -2,6 +2,8 @@
 
 namespace App\Values;
 
+
+use App\Http\Controllers\Viper\Strategies\StrategyProjectMarker;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyAlarms;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
@@ -32,6 +34,8 @@ class AllDataValuesVillavicencio
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
         55 => StrategyEvents::class,
+        // viper Strategies
+        100 => StrategyProjectMarker::class,
     ];
 
     /**

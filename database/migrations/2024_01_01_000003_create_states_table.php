@@ -12,7 +12,6 @@ return new class extends Migration
      * @return string
      */
     protected $connection = 'villavicencio';
-    
     /**
      * Run the migrations.
      *
@@ -20,11 +19,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('substates', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 32);
-            $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->string('name',64);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('substates');
+        Schema::dropIfExists('states');
     }
 };

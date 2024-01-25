@@ -20,14 +20,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
+        Schema::create('substates', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type_location');
-            $table->double('latitude', 10, 6);
-            $table->double('longitude', 10, 6);
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->string('name', 64);
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -40,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('substates');
     }
 };

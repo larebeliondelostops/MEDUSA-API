@@ -32,7 +32,8 @@ class BaseController extends Controller
                     break;
                 default:
                     return response()->json([
-                        'message' => 'Error procesando la petición.'
+                        'message' => 'Error procesando la petición.',
+                        'details' => $exception->getMessage()
                     ], Response::HTTP_INTERNAL_SERVER_ERROR);
                 break;
             }
@@ -53,7 +54,7 @@ class BaseController extends Controller
         {
             $model = explode('\\', $exception->getModel());
             $modelPhrase = ucwords(implode('',preg_split('/(?=[A-Z])/', end($model))));
-            
+
             return response()->json([
                 'message' => \App::make($exception->getModel())->modelNotFoundMessage ?? $modelPhrase . ' no encontrado'
             ], Response::HTTP_NOT_FOUND);

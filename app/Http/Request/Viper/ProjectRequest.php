@@ -47,9 +47,7 @@ class ProjectRequest extends FormRequest
             'requested_value' => 'required|numeric',
             'responsible_entity' => 'required|string|max:255',
             'sector_id' => 'required|integer',
-            'type_location' => 'required|string',
-            'latitude_location' => 'required|numeric',
-            'longitude_location' => 'required|numeric',
+            'location' => 'required|array',
             'department_id' => 'required|integer',
             'municipality_id' => 'nullable|integer',
             'beneficiaries' => 'required|integer',
@@ -79,7 +77,7 @@ class ProjectRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Error in the required parameters.',
+            'message' => 'Error in the required parameters.'.$validator->err,
         ], 400));
     }
 }

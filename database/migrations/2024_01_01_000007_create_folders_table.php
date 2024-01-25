@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->unsignedBigInteger('stage_id');
             $table->string('project_id', 255);
+            $table->string('responsible', 100)->nullable(); // Asignar en el futuro el id del interventor/supervisor los cuales van a poder subir documentos o crear subcarpetas en la carpeta seleccionada para cada uno
             $table->unsignedBigInteger('higher_folder_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

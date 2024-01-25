@@ -24,6 +24,7 @@ class FolderDTO extends DTO
     public ?int $id = null;
     public string $name;
     public int $stage_id;
+    public ?string $responsible = null;
     public string $project_id;
     public ?int $higher_folder_id = null;
 }

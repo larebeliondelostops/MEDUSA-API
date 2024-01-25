@@ -17,7 +17,7 @@ class StrategyIncidentsReports implements ReportsInterface
     public function getReportsData(Request $request)
     {
         $this->request = $request;
-        return $this->incidentsByTypeHeatMap();
+
         if (isset($this->request->start) && isset($this->request->end)) {
             $general = [
                 $this->cardsIncidents(),

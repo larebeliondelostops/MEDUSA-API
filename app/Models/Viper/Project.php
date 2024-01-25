@@ -29,17 +29,16 @@ class Project extends Model
         'financial_progress',
         'responsible_entity',
         'sector_id',
-        'type_location',
-        'latitude_location',
-        'longitude_location',
+        'location_id',
         'department_id',
         'municipality_id',
-        'location',
         'beneficiaries',
         'planner',
         'execution_approval_date',
         'completion_date',
         'start_date_execution_phase',
+        'unilateral_termination',
+        'bilateral_termination',
         'project_duration_in_months',
         'reporting_frequency',
         'general_objective',
@@ -73,5 +72,10 @@ class Project extends Model
     public function folders()
     {
         return $this->hasMany(Folder::class, 'project_id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

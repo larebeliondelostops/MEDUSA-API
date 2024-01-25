@@ -16,14 +16,17 @@ class Municipality extends Model
 
     protected $fillable = [
         "name",
-        "type_location",
-        "latitude",
-        "longitude",
+        "location_id",
         "department_id",
     ];
 
     public function department()
     {
         return $this->belongsTo(Department::class,"department_id");
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

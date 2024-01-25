@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Connection name.
      *
      * @return string
      */
     protected $connection = 'villavicencio';
-
+    
     /**
      * Run the migrations.
      *
@@ -20,16 +21,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
+        Schema::create('folder_relationships', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type_location');
-            $table->double('latitude', 10, 6);
-            $table->double('longitude', 10, 6);
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->unsignedBigInteger('higher_folder');
+            $table->unsignedBigInteger('lower_folder');
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('higher_folder')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('lower_folder')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -40,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('folder_relationships');
     }
 };

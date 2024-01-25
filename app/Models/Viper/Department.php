@@ -13,13 +13,16 @@ class Department extends Model
     protected $dates = ["deleted_at"];
     protected $fillable = [
         "name",
-        "type_location",
-        "latitude",
-        "longitude",
+        'location_id',
     ] ;
 
-    function municipalities()
+    public function municipalities()
     {
         return $this->hasMany(Municipality::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
     }
 }

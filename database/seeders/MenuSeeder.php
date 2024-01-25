@@ -47,10 +47,10 @@ class MenuSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'Gobierno',
-                'path' => 'markers/government',
+                'name' => 'Viper',
+                'path' => 'viper',
                 'icon' => 'assured_workload',
-                'slug' => 'government',
+                'slug' => 'viper',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

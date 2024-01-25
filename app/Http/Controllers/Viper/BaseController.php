@@ -54,7 +54,7 @@ class BaseController extends Controller
         {
             $model = explode('\\', $exception->getModel());
             $modelPhrase = ucwords(implode('',preg_split('/(?=[A-Z])/', end($model))));
-            
+
             return response()->json([
                 'message' => \App::make($exception->getModel())->modelNotFoundMessage ?? $modelPhrase . ' no encontrado'
             ], Response::HTTP_NOT_FOUND);

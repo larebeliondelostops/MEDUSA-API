@@ -6,6 +6,7 @@ use App\Models\Tenancy;
 use Database\Seeders\Viper\DepartmentSeeder;
 use Database\Seeders\Viper\MeasurementUnitSeeder;
 use Database\Seeders\Viper\MunicipalitySeeder;
+use Database\Seeders\Viper\SectorSeeder;
 use Database\Seeders\Viper\StageSeeder;
 use Database\Seeders\Viper\StateSeeder;
 use Database\Seeders\Viper\SubstateSeeder;
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StateSeeder::class);
         $this->call(SubstateSeeder::class);
         $this->call(MeasurementUnitSeeder::class);
+        $this->call(SectorSeeder::class);
 
         //Exclusivo Neiva
         $this->call(FiberSiesLinesSeeder::class);

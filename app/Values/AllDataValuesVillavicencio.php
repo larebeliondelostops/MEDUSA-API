@@ -4,6 +4,7 @@ namespace App\Values;
 
 
 use App\Http\Controllers\Viper\Strategies\StrategyProjectMarker;
+use App\Http\Controllers\IncidentController;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyAlarms;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;

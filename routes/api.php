@@ -31,31 +31,48 @@ Route::get('/', function () {
     return response()->json($data, 200);
 });
 
-Route::get('/heatmap', function () {
-    $data = CriminalActs::select('coordinates')->get();
+// Route::get('/heatmap', function () {
+//     $data = CriminalActs::select('coordinates')->get();
 
-    $features = [];
-    foreach ($data as $row) {
-        $coordinates = json_decode($row->coordinates);
-        $feature = [
-            "type" => "Feature",
-            "geometry" => [
-                "type" => "Point",
-                "coordinates" => [
-                    $coordinates->lat,
-                    $coordinates->lng
-                ]
-            ]
-        ];
-        $features[] = $feature;
-    }
+//     $features = [];
+//     foreach ($data as $row) {
+//         $coordinates = json_decode($row->coordinates);
+//         $feature = [
+//             "type" => "Feature",
+//             "geometry" => [
+//                 "type" => "Point",
+//                 "coordinates" => [
+//                     $coordinates->lat,
+//                     $coordinates->lng
+//                 ]
+//             ]
+//         ];
+//         $features[] = $feature;
+//     }
 
-    $geojson = [
-        "type" => "FeatureCollection",
-        "features" => $features
-    ];
+//     $geojson = [
+//         "type" => "FeatureCollection",
+//         "features" => $features
+//     ];
+//     return response()->json($geojson, 200);
+// });
 
-    return response()->json($geojson, 200);
+Route::get('/correlacionador', function (Request $request) {
+    // Obtén el valor de la variable 'query' de la petición
+        $query = $request->input('query');
+
+        // Verifica si se proporcionó un valor para 'query'
+        if (!$query) {
+            return response()->json(['error' => 'La variable "query" es requerida.'], 400);
+        }
+
+        // Llama al endpoint externo con la variable 'query'
+        $response = Http::get('https://probabilistico.medusaapi.online/correlacionador', [
+            'query' => $query,
+        ]);
+
+        // Devuelve la respuesta del endpoint externo
+        return $response->json();
 });
 
 
@@ -107,20 +124,4 @@ Route::get('/ver-video4', function () {
     $videoPath = 'videos/trafico_4.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
     $filePath = Storage::disk('public')->path($videoPath);
     return response()->file($filePath);
-});
-
-Route::get('/correlacionador', function () {
-    $query = request('query');
-    $page = request('page', 1);
-
-    // Construye la URL de la API con los parámetros.
-    $apiUrl = "https://probabilistico.medusaapi.online/correlacionador?query=$query&page=$page";
-
-    // Realiza una solicitud HTTP GET a la API.
-    $response = Http::get($apiUrl);
-
-    // Decodifica la respuesta JSON.
-    $data = $response->json();
-
-    return $data;
 });

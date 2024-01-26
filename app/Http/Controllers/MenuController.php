@@ -136,6 +136,15 @@ class MenuController extends Controller
                         'mapRequest' => ['incidents', 'indicators']
                     ];
                     break;
+                case 'dev':
+                    $data = [
+                        'mapCenter' => [
+                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
+                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
+                        ],
+                        'mapRequest' => ['incidents', 'indicators']
+                    ];
+                    break;
                 case 'neiva':
                     $data = [
                         'mapCenter' =>  [

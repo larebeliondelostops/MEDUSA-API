@@ -30,8 +30,10 @@ return new class extends Migration
             $table->integer('capacity');
             $table->string('place');
             $table->string('authorizingEntity');
+            $table->string('day');
+            $table->string('month');
+            $table->string('year');
             $table->timestamps();
-
             $table->index('uuid');
             $table->foreign('idEventType')->references('id')->on('eventsType');
         });

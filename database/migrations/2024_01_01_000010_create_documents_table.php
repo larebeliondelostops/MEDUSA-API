@@ -24,7 +24,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('url', 255);
-            $table->string('responsible', 100);
+            $table->string('responsible', 100)->nullable();
             $table->unsignedBigInteger('folder_id');
             $table->timestamps();
             $table->softDeletes();

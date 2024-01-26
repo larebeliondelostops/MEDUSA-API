@@ -13,5 +13,6 @@ class ReportsContext
     const VALUE = [
         //'neiva' => AllDataValuesNeiva::class,
         'villavicencio' => ReportsValuesVillavicencio::class,
+        'dev' => ReportsValuesVillavicencio::class,
     ];
 }

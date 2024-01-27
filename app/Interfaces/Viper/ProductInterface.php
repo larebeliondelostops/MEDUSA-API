@@ -40,7 +40,7 @@ interface ProductInterface {
      * @return \App\DTOs\Viper\Product\ProductDTO Objeto ProductDTO que representa el producto actualizado.
      * @throws \Exception Se arroja si el producto no se encuentra.
      */
-    public function updateProduct($productId, string $newName);
+    public function updateProduct($productId, ProductDTO $productDTO);
 
     /**
      * Eliminar un producto existente.
@@ -57,5 +57,13 @@ interface ProductInterface {
      * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
      */
     public function getProduct($productId);
+
+    /**
+     * Obtiene todos los productos existentes por alcance.
+     *
+     * @param int $scope_id Identificador único del alcance.
+     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     */
+    public function getAllProductsByScope(int $scopeId);
 
 }

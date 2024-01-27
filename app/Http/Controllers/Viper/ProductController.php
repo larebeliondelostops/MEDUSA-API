@@ -48,6 +48,24 @@ class ProductController extends BaseController
     }
 
     /**
+     * Mostrar una lista de productos por alcance.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByScope($scopeId)
+    {
+        try {
+            $products = $this->productInterface->getAllProductsByScope($scopeId);
+
+            return response()->json([
+                'data' => $products,
+            ], Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
      * Almacenar una nuevo producto.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -83,16 +101,16 @@ class ProductController extends BaseController
      * @param  int  $productId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $productId)
+    public function update(ProductRequest $request, $productId)
     {
         try {
             // Valida y procesa los datos del formulario
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $validatedData = $request->validated();
+
+            $productDTO = new ProductDTO($validatedData);
 
             // Llama al servicio para actualizar el producto
-            $updatedProduct = $this->productInterface->updateProduct($productId, $validatedData['name']);
+            $updatedProduct = $this->productInterface->updateProduct($productId, $productDTO);
 
             // Retorna la respuesta JSON con el producto actualizado
             return response()->json([

@@ -65,11 +65,11 @@ class BaseController extends Controller
                 'message' => 'Acción no autorizada.'
             ], Response::HTTP_FORBIDDEN);
         }
-        else
-        {
+        else {
             return response()->json([
-                'message' => 'Se produjo un error interno del servidor.',
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                'message' => $exception->getMessage() ?? 'Se produjo un error interno del servidor.',
+            ], ($exception->getCode() === 0) ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode());
         }
+        
     }
 }

@@ -41,6 +41,12 @@ use App\Interfaces\Viper\MeasurementUnitInterface;
 use App\Services\Viper\MeasurementUnitService;
 use App\Interfaces\Viper\ProductInterface;
 use App\Services\Viper\ProductService;
+use App\Interfaces\Viper\MilestoneClassInterface;
+use App\Services\Viper\MilestoneClassService;
+use App\Interfaces\Viper\MilestoneInterface;
+use App\Services\Viper\MilestoneService;
+use App\Interfaces\Viper\MilestoneSubclassInterface;
+use App\Services\Viper\MilestoneSubclassService;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -64,5 +70,8 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(LocationInterface::class, LocationService::class);
         $this->app->bind(ProductInterface::class, ProductService::class);
         $this->app->bind(ProjectMarkerInterface::class, ProjectMarkerService::class);
+        $this->app->bind(MilestoneClassInterface::class, MilestoneClassService::class);
+        $this->app->bind(MilestoneInterface::class, MilestoneService::class);
+        $this->app->bind(MilestoneSubclassInterface::class, MilestoneSubclassService::class);
     }
 }

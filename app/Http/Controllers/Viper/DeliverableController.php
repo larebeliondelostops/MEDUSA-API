@@ -22,13 +22,23 @@ class DeliverableController extends BaseController
     {
         try
         {
-            $data = $request->validated();
-            $deliverableDTO = new DeliverableRequestDTO($data);
-            $deliverableCreatedDTO = $this->deliverableInterface->createNewDeliverable($deliverableDTO, $data['project_id']);
+            return response()->json($request->validated());
+        }
+        catch(Exception $exception)
+        {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function multipleStore(DeliverableRequest $request)
+    {
+        try
+        {
+            $deliverables = $request->validated()['deliverables']; // obtiene los deliverables validados
+            $result = $this->deliverableInterface->createMultipleDeliverables($deliverables);
             return response()->json([
-                'message'  => 'Entregable creado satisfactoriamente.',
-                'data' => $deliverableCreatedDTO,
-            ], Response::HTTP_CREATED);
+                'data' => $result
+            ]);
         }
         catch(Exception $exception)
         {

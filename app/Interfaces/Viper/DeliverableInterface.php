@@ -6,6 +6,7 @@ use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
 interface DeliverableInterface
 {
     public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO, int $projectId) : DeliverableRequestDTO;
+    public function createMultipleDeliverables(array $deliverables) : array;
     public function getAllDeliverables() : array;
     public function getDeliverablesByProductId(int $productId) : array;
     public function updateDeliverable(string $newName, int $deliverableId) : DeliverableRequestDTO;

@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('deliverables', function (Blueprint $table) {
             $table->id();
-            $table->string('number',64);
+            $table->integer('number');
             $table->string('name', 256);
             $table->integer('activity_quantity');
             $table->decimal('value', 21, 2);

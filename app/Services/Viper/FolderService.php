@@ -6,6 +6,7 @@ use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
+use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\FolderFilter;
 use Illuminate\Support\Collection;
 
@@ -39,6 +40,7 @@ class FolderService implements FolderInterface
      */
     public function createNewFolder(FolderDTO $folderDTO)
     {
+        Project::findOrFail($folderDTO->project_id);
         // Crear la carpeta principal
         $folder = new Folder();
         $folder->fill($folderDTO->toArray());

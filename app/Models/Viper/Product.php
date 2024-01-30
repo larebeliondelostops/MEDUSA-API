@@ -67,7 +67,7 @@ class Product extends Model
      */
     public function specificObjective()
     {
-        return $this->belongsTo(SpecificObjective::class, "specific_object_id");
+        return $this->belongsTo(SpecificObjective::class, "specific_objective_id");
     }
 
     /**

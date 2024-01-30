@@ -22,8 +22,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
+            $table->unsignedBigInteger('number');
             $table->string('name');
+            $table->unsignedBigInteger('amount');
             $table->unsignedBigInteger('specific_objective_id');
             $table->unsignedBigInteger('folder_id');
             $table->unsignedBigInteger('measurement_unit_id');

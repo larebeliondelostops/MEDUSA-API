@@ -140,9 +140,10 @@ class MenuController extends Controller
                     $data = [
                         'mapCenter' => [
                             'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
+                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD')),
                         ],
-                        'mapRequest' => ['incidents', 'indicators']
+                        'mapRequest' => ['incidents', 'indicators'],
+                        'zoom' => 3
                     ];
                     break;
                 case 'neiva':

@@ -33,12 +33,12 @@ class DocumentController extends BaseController
      *
      * @return \Illuminate\Http\Response
     */
-    public function index(Request $request)
+    public function index(Request $request, int $projectId)
     {
         try {
             $queryFilterParam = $request->query();
             // Obtener la lista de documentos.
-            $documents = $this->documentInterface->getAllDocuments($queryFilterParam);
+            $documents = $this->documentInterface->getAllDocuments($queryFilterParam, $projectId);
     
             return response()->json(['data' => $documents]);
         } catch (\Exception $exception) {
@@ -147,6 +147,127 @@ class DocumentController extends BaseController
         try {
             $documents = $this->documentInterface->listDocumentsInSpaces('test');
             return response()->json(['data' => $documents]);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Obtiene los documentos eliminados por carpeta lógicamente del sistema Viper.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeletedDocumentsByFolder(int $folderId){
+        try {
+            $documents = $this->documentInterface->getDeletedDocumentsByFolder($folderId);
+            return response()->json(['data' => $documents]);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
+     * Obtiene los documentos por carpeta del sistema Viper.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByFolder($folderId)
+    {
+        try {
+            // Obtener la lista de documentos.
+            $documents = $this->documentInterface->getDocumentsByFolder($folderId);
+    
+            return response()->json(['data' => $documents]);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    
+    /**
+     * Obtiene los documentos pro proyect eliminados lógicamente del sistema Viper.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeletedDocumentsByProject(int $projectId){
+        try {
+            $documents = $this->documentInterface->getDeletedDocumentsByProject($projectId);
+            return response()->json(['data' => $documents]);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
+     * Elimina lógicamente varios documentos del sistema Viper.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroySeveral(Request $request)
+    {
+        try {
+            // Obtener los identificadores de documentos desde la solicitud
+            $documentIds = $request->input('document_ids', []);
+
+            // Verificar si se proporcionaron identificadores de documentos
+            if (empty($documentIds)) {
+                return response()->json(['message' => 'No se proporcionaron identificadores de documentos.'], 400);
+            }
+
+            // Eliminar lógicamente los documentos
+            $result = $this->documentInterface->deleteMultipleDocuments($documentIds);
+
+            return response()->json($result, 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Elimina físicamente varios documentos del sistema Viper.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyForceSeveral(Request $request)
+    {
+        try {
+            // Obtener los identificadores de documentos desde la solicitud
+            $documentIds = $request->input('document_ids', []);
+
+            // Verificar si se proporcionaron identificadores de documentos
+            if (empty($documentIds)) {
+                return response()->json(['message' => 'No se proporcionaron identificadores de documentos.'], 400);
+            }
+
+            // Eliminar físicamente los documentos
+            $result = $this->documentInterface->deleteForceMultipleDocuments($documentIds);
+
+            return response()->json($result, 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Recupera lógicamente un documento eliminado por carpeta en el sistema Viper.
+     *
+     * @param DocumentRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreDocument(Request $request, int $documentId)
+    {
+        try {
+            $folderId = $request->input('folder_id');
+
+            // Recupera lógicamente el documento y lo asigna a la nueva carpeta
+            $restoredDocument = $this->documentInterface->restoreDocument($documentId, $folderId);
+
+            return response()->json($restoredDocument, 200);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }

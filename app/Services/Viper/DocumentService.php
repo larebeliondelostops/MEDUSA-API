@@ -92,7 +92,7 @@ class DocumentService implements DocumentInterface
 
 
     /**
-     * Elimina logicamente un documento del sistema Viper.
+     * Elimina lógicamente un documento del sistema Viper y lo mueve a la carpeta de documentos eliminados en DigitalOcean Spaces.
      *
      * @param int $documentId Identificador del documento a eliminar.
      * @return array Contiene un mensaje indicando si el documento fue eliminado correctamente.
@@ -102,12 +102,30 @@ class DocumentService implements DocumentInterface
         // Obtener el documento por su ID
         $document = Document::findOrFail($documentId);
 
-        // Eliminar el documento logicamente de la base de datos
+        $folder = Folder::findOrFail($document->folder_id);
+
+        Project::findOrFail($folder->project_id);
+
+        // Construir la ruta de la carpeta de documentos eliminados
+        $deletedFolderPath = "test/{$folder->project_id}/deleted";
+
+        $originalFilePath = parse_url($document->url, PHP_URL_PATH);
+    
+        // Mover el archivo a la carpeta de documentos eliminados
+        Storage::disk('spaces')->move($originalFilePath, $deletedFolderPath . '/' . $document->name);
+    
+        // Actualizar la URL del documento
+        $document->url = Storage::disk('spaces')->url($deletedFolderPath . '/' . $document->name);
+
+        // Guardar el documento actualizado en la base de datos
+        $document->save();
+    
+        // Eliminar el documento lógicamente de la base de datos
         $document->delete();
-
-        return ['message' => 'Documento eliminado correctamente'];
+    
+        return ['message' => 'Documento movido a la carpeta de documentos eliminados en DigitalOcean Spaces y eliminado lógicamente correctamente'];
     }
-
+    
 
     /**
      * Elimina fisicamente un documento del sistema Viper.
@@ -132,7 +150,7 @@ class DocumentService implements DocumentInterface
         // Eliminar el documento fisicamente de la base de datos
         $document->forceDelete();
 
-        return ['message' => 'Documento eliminado correctamente'];
+        return ['message' => 'Documento definitivamente eliminado de forma correcta'];
     }
 
     /**
@@ -183,7 +201,7 @@ class DocumentService implements DocumentInterface
      *
      * @return array Contiene los datos de todos los documentos en el sistema.
      */
-    public function getAllDocuments(array $queryParams = [])
+    public function getAllDocuments(array $queryParams = [], int $projectId)
     {
         $filter = new DocumentFilter();
         $queryItems = $filter->transform($queryParams);
@@ -202,7 +220,10 @@ class DocumentService implements DocumentInterface
             }
     
             // Obtén todos los documentos con el filtro aplicado
-            $documents = $documentQuery->get();
+            $documents = $documentQuery->whereHas('folder', function ($query) use ($projectId) {
+                    $query->where('project_id', $projectId);
+                })
+                ->get();
     
             // Crear una colección para almacenar la información de los documentos y sus carpetas
             $result = collect();
@@ -270,7 +291,12 @@ class DocumentService implements DocumentInterface
         // Implementa la lógica para obtener documentos por carpeta
         $documents = Document::where('folder_id', $folderId)->get();
 
-        return $documents->toArray();
+        $documentDTOs = [];
+        foreach ($documents as $document) {
+            $documentDTOs[] = new DocumentDTO($document->toArray());
+        }
+
+        return $documents;
     }
 
     /**
@@ -354,4 +380,141 @@ class DocumentService implements DocumentInterface
 
         return $files;
     }
+
+    /**
+     * Obtiene los documentos por carpeta eliminados lógicamente del sistema Viper.
+     *
+     * @return array Contiene los datos de los documentos eliminados.
+     */
+    public function getDeletedDocumentsByFolder(int $folderId)
+    {
+        // Obtén todos los documentos eliminados lógicamente por carpeta
+        $deletedDocuments = Document::onlyTrashed()
+            ->where('folder_id', $folderId)
+            ->get();
+    
+        // Cargar la información de la carpeta asociada a los documentos, incluyendo las carpetas eliminadas lógicamente
+        $deletedDocuments->load(['folder' => function ($query) {
+            $query->withTrashed();
+        }]);
+                
+        $documentDTOs = [];
+        foreach ($deletedDocuments as $document) {
+            $documentDTO = new DocumentDTO($document->toArray());
+            $documentDTO->folder = new FolderDTO($document->folder->toArray());
+            $documentDTOs[] = $documentDTO;
+        }
+    
+        return $documentDTOs;
+    }
+    
+    
+
+
+    /**
+     * Obtiene los documentos eliminados por proyecto lógicamente por proyecto del sistema Viper.
+     *
+     * @param int $projectId Identificador del proyecto.
+     * @return array Contiene los datos de los documentos eliminados.
+     */
+    public function getDeletedDocumentsByProject(int $projectId)
+    {
+        $deletedDocuments = Document::onlyTrashed()
+        ->whereHas('folder', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId)->withTrashed();
+        })
+        ->get();
+
+        $deletedDocuments->load(['folder' => function ($query) {
+            $query->withTrashed();
+        }]);
+
+        // Transforma los resultados utilizando el DTO
+        $documentDTOs = [];
+        foreach ($deletedDocuments as $document) {
+            $documentDTO = new DocumentDTO($document->toArray());
+            $documentDTO->folder = new FolderDTO($document->folder->toArray());
+            $documentDTOs[] = $documentDTO;
+        }
+
+        return $documentDTOs;
+    }
+
+
+    /**
+     * Elimina lógicamente varios documentos del sistema Viper.
+     *
+     * @param array $documentIds Array de IDs de documentos a eliminar.
+     * @return array Contiene un mensaje indicando si los documentos fueron eliminados correctamente.
+     */
+    public function deleteMultipleDocuments(array $documentIds)
+    {
+
+        foreach ($documentIds as $documentId) {
+            // Eliminar cada documento logicamente de la base de datos
+            $this->deleteDocument($documentId);
+        }
+
+        return ['message' => 'Documentos eliminados correctamente'];
+    }
+
+    /**
+     * Elimina definitivamente varios documentos del sistema Viper.
+     *
+     * @param array $documentIds Array de IDs de documentos a eliminar definitivamente.
+     * @return array Contiene un mensaje indicando si los documentos fueron eliminados definitivamente correctamente.
+     */
+    public function deleteForceMultipleDocuments(array $documentIds)
+    {
+        foreach ($documentIds as $documentId) {
+            // Eliminar cada documento logicamente de la base de datos
+            $this->deleteForceDocument($documentId);
+        }
+
+        return ['message' => 'Documentos eliminados definitivamente correctamente'];
+    }
+
+    /**
+     * Recupera lógicamente un documento eliminado por carpeta en el sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a recuperar.
+     * @param int $newFolderId Identificador de la nueva carpeta donde se guardará el documento.
+     * @return array Contiene los datos del documento recuperado.
+     */
+    public function restoreDocument(int $documentId, int $folderId)
+    {
+        // Obtén el documento eliminado lógicamente por su ID
+        $deletedDocument = Document::onlyTrashed()
+            ->where('id', $documentId)
+            ->firstOrFail();
+
+        // Obtén la carpeta nueva por su ID
+        $newFolder = Folder::findOrFail($folderId);
+
+        // Restaurar el documento lógicamente y asignar la nueva carpeta
+        $deletedDocument->restore();
+        $deletedDocument->folder_id = $newFolder->id;
+
+        // Construir la ruta de la nueva carpeta basada en la jerarquía de carpetas
+        $folderPath = "test/{$newFolder->project_id}/{$newFolder->id}";
+
+
+        $originalFilePath = parse_url($deletedDocument->url, PHP_URL_PATH);
+
+        // Mover el archivo a la carpeta de documentos eliminados
+        Storage::disk('spaces')->move($originalFilePath, $folderPath . '/' . $deletedDocument->name);
+
+        // Actualizar la URL del documento
+        $deletedDocument->url = Storage::disk('spaces')->url($folderPath . '/' . $deletedDocument->name);
+
+        $deletedDocument->save();
+
+        // Crear un DTO para el documento restaurado
+        $restoredDocumentDTO = new DocumentDTO($deletedDocument->toArray());
+
+        return $restoredDocumentDTO;
+    }
+
+
+    
 }

@@ -62,4 +62,11 @@ interface FolderInterface {
      * @param array|null $parentFolder Datos de la carpeta superior (opcional) para establecer relaciones jerárquicas.
      */
     public function createFolderHierarchy($folderData, $projectId, $parentFolder = null);
+
+    /**
+     * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía para un select.
+     *
+     * @param int $projectId Identificador (bpin) del proyecto
+     */
+    public function getAllFoldersSelect(int $projectId);
 }

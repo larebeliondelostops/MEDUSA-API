@@ -7,6 +7,7 @@ use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
 use App\Models\Viper\Project;
+use App\Models\Viper\Stage;
 use App\Utils\Viper\Filters\FolderFilter;
 use Illuminate\Support\Collection;
 
@@ -36,23 +37,36 @@ class FolderService implements FolderInterface
      *
      * @param FolderDTO $folderDTO Datos de la carpeta a crear.
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
-     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
-     */
+     * @return FolderDTO Resultado de la operación que puede incluir mensajes de éxito o error.
+    */
+
     public function createNewFolder(FolderDTO $folderDTO)
     {
-        Project::findOrFail($folderDTO->project_id);
+        
         // Crear la carpeta principal
         $folder = new Folder();
         $folder->fill($folderDTO->toArray());
-        $folder->save();
-    
+         
         // Si se proporciona higherFolderId, establecer la relación
         if ($folderDTO->higher_folder_id) {
             $higherFolder = Folder::findOrFail($folderDTO->higher_folder_id);
             $folder->parentFolder()->associate($higherFolder);
-            $folder->save();
+            $folder->stage_id = $higherFolder->stage_id;
+            $folder->project_id = $higherFolder->project_id;
+        }else{
+            if (empty($folderDTO->project_id) || empty($folderDTO->stage_id)) {
+                throw new \Exception('No se ha definido proyecto ni etapa para la carpeta');
+            }else {
+                Project::findOrFail($folderDTO->project_id);
+                Stage::findOrFail($folderDTO->stage_id);
+            }
         }
-        return $folder->toArray();
+
+        $folder->save();
+
+        $folderDTO = new FolderDTO($folder->toArray());
+        return $folderDTO;
+
     }
 
     /**

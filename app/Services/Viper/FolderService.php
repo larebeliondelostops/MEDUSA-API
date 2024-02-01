@@ -36,23 +36,35 @@ class FolderService implements FolderInterface
      *
      * @param FolderDTO $folderDTO Datos de la carpeta a crear.
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
-     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
+     * @return FolderDTO Resultado de la operación que puede incluir mensajes de éxito o error.
      */
     public function createNewFolder(FolderDTO $folderDTO)
     {
-        Project::findOrFail($folderDTO->project_id);
+
         // Crear la carpeta principal
         $folder = new Folder();
         $folder->fill($folderDTO->toArray());
-        $folder->save();
-    
+
+        if (empty($folderDTO->project_id) || empty($folderDTO->stage_id)) {
+            $folder_parent = Folder::findOrFail($folderDTO->higher_folder_id);
+            $folder->stage_id = $folder_parent->stage_id;
+            $folder->project_id = $folder_parent->project_id;
+        }else {
+            Project::findOrFail($folderDTO->project_id);
+        }
+
         // Si se proporciona higherFolderId, establecer la relación
         if ($folderDTO->higher_folder_id) {
             $higherFolder = Folder::findOrFail($folderDTO->higher_folder_id);
             $folder->parentFolder()->associate($higherFolder);
-            $folder->save();
         }
-        return $folder->toArray();
+
+        $folder->save();
+
+
+        $folderDTO = new FolderDTO($folder->toArray());
+        return $folderDTO;
+
     }
 
     /**
@@ -85,16 +97,16 @@ class FolderService implements FolderInterface
     {
         // Buscar la carpeta por su ID
         $folder = Folder::findOrFail($folderId);
-    
+
         // Crear una colección que contendrá la estructura jerárquica de carpetas
         $result = collect();
-    
+
         // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
         $folderDictionary = collect([$folderId => $folder]);
-    
+
         $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
-    
-        return $result->all();      
+
+        return $result->all();
     }
 
     /**
@@ -136,7 +148,7 @@ class FolderService implements FolderInterface
         }
         return $result->all();
     }
-    
+
     /**
      * Función privada recursiva para construir la jerarquía de carpetas.
      *
@@ -150,10 +162,10 @@ class FolderService implements FolderInterface
         $subfolders = $folder->subfolders->map(
             fn($subfolder) => $this->buildFolderHierarchy($subfolder, $folderDictionary)
         );
-    
+
         // Obtener los documentos asociados a la carpeta
         $documents = $this->documentInterface->getDocumentsByFolder($folder->id);
-    
+
         return [
             'folder' => new FolderDTO($folder->toArray()),
             'subfolders' => $subfolders->all(),
@@ -186,17 +198,17 @@ class FolderService implements FolderInterface
     {
         // Obtener todas las subcarpetas de la carpeta actual
         $subfolders = $folder->subfolders;
-    
+
         // Eliminar documentos asociados a la carpeta actual
         $this->documentInterface->deleteDocumentsByFolder($folder->id);
-    
+
         // Recorrer las subcarpetas y eliminarlas recursivamente
         foreach ($subfolders as $subfolder) {
             $this->recursiveDelete($subfolder);
         }
-    
+
         // Eliminar la carpeta actual (lógicamente)
-        $folder->delete(); 
+        $folder->delete();
     }
 
 
@@ -216,15 +228,15 @@ class FolderService implements FolderInterface
             'project_id' => $projectId,
             'higher_folder_id' => $parentFolder['id'] ?? null,
         ];
-    
+
         $folderDTO = new FolderDTO($validatedData);
-    
+
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
         $folderResponse = $this->createNewFolder($folderDTO);
-        
+
         // Ajustar el acceso a la respuesta según la estructura real
         $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;
-    
+
         if (isset($folderData['subfolders']) && is_array($folderData['subfolders'])) {
             foreach ($folderData['subfolders'] as $subfolderData) {
                 $this->createFolderHierarchy($subfolderData, $projectId, $folder);

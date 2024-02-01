@@ -26,18 +26,18 @@ class DeliverableRequest extends FormRequest
         "POST"=> [
             "create" => [
                 'name' => 'required|string|max:256',
+                'number' => 'required|integer',
                 'product_id' => 'required|integer',
                 'deliverable_id' => 'nullable|integer',
-                'project_id' => 'required|integer'
             ],
             "create-multiple" => [
                 'deliverables' => 'required|array',
             ],
             "create-multiple-config" => [
                 'name' => 'required|string|max:256',
+                'number' => 'required|integer',
                 'product_id' => 'required|integer',
                 'deliverables' => 'nullable|array|present',
-                'project_id' => 'required|integer',
             ]
         ],
         "PUT" => [

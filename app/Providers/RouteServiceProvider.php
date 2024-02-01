@@ -111,6 +111,8 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api/Viper/MeasurementUnitRoutes.php');
             require base_path('routes/api/Viper/DeliverableRoutes.php');
             require base_path('routes/api/Viper/ProductRoutes.php');
+            require base_path('routes/api/Viper/ActivityRoutes.php');
+            require base_path('routes/api/Viper/PrecedenceRoutes.php');
         });
     }
 

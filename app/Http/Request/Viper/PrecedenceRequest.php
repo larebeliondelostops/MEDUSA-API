@@ -6,19 +6,10 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
-/**
- * Request personalizado para la validación de Carpetas.
- *
- * @package    App\Http\Request\Viper
- * @author     Daniel Alferez <dan.alferez1@gmail.com>
- * @copyright  2024 Ignicion S.A.S.
- * @version    v1.0.0
- */
-class FolderRequest extends FormRequest
+class PrecedenceRequest extends FormRequest
 {
     /**
-     * Determina si el usuario está autorizado para hacer esta solicitud.
+     * Determina si el usuario está autorizado para realizar esta solicitud.
      *
      * @return bool
      */
@@ -28,20 +19,20 @@ class FolderRequest extends FormRequest
     }
 
     /**
-     * Reglas de validación que se aplicarán a la solicitud.
+     * Obtiene las reglas de validación que se aplican a la solicitud.
      *
-     * @return array Reglas de validación.
+     * @return array
      */
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'stage_id' => 'nullable|integer',
-            'project_id' => 'nullable|string',
-            'higher_folder_id' => 'integer|nullable',
+            'type' => 'required|string',
+            'delay_time' => 'required|string',
+            'higher_id' => 'required|integer|exists:App\Models\Viper\Activity,id',
+            'lower_id' => 'required|integer|exists:App\Models\Viper\Activity,id',
         ];
     }
-
+    
     /**
      * Maneja el comportamiento en caso de validación fallida.
      *

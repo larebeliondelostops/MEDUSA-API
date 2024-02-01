@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Viper;
 use App\Http\Request\Viper\ProductRequest;
 use App\DTOs\Viper\Product\ProductDTO;
 use App\Interfaces\Viper\ProductInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**

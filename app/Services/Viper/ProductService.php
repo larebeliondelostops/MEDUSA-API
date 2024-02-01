@@ -157,7 +157,6 @@ class ProductService implements ProductInterface
         // Guarda el producto en la base de datos
         $product->save();
 
-        // Puedes retornar el DTO del producto recién creado si es necesario
         return new ProductDTO($product->toArray());
     }
     /**

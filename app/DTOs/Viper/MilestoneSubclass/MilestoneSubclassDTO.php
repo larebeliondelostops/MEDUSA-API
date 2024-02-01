@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Viper\DTOs;
+namespace App\DTOs\Viper\MilestoneSubclass;
+
+use App\DTOs\Viper\DTO;
 
 /**
  * DTO (Data Transfer Object) para la entidad MilestoneSubclass.
  *
  * Este DTO contiene la estructura de datos para representar una subclase de hito en el sistema Viper.
  *
- * @package App\Viper\DTOs
+ * @package App\DTOs\Viper\MilestoneSubclass
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright 2024 Ignicion S.A.S.
+ * @version v1.0.0
  */
-class MilestoneSubclassDTO
+class MilestoneSubclassDTO extends DTO
 {
     /**
-     * Identificador único de la subclase de hito.
+     * Identificador único de hito.
      *
-     * @var int
+     * @var int|null
      */
-    public int $id;
+    public ?int $id = null;
 
     /**
      * Nombre de la subclase de hito.
@@ -30,5 +35,5 @@ class MilestoneSubclassDTO
      *
      * @var int
      */
-    public int $milestone_classes_id;
+    public int $milestone_class_id;
 }

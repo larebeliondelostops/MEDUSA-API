@@ -7,10 +7,25 @@ use App\Interfaces\Viper\MilestoneSubclassInterface;
 use App\Models\Viper\MilestoneSubclass;
 use Exception;
 
+/**
+ * Servicio para la gestión de subclases de hitos en el sistema Viper.
+ *
+ * Este servicio implementa la interfaz MilestoneSubclassInterface y proporciona
+ * métodos para la creación, actualización, obtención y eliminación de subclases de hitos.
+ *
+ * @package App\Services\Viper
+ * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0 */
 class MilestoneSubclassService implements MilestoneSubclassInterface
 {
 
-
+    /**
+     * Crea una nueva subclase de hitos.
+     *
+     * @param  MilestoneSubclassDTO  $milestoneSubclassDTO
+     * @return MilestoneSubclassDTO
+     */
     public function createNewMilestoneSubclass(MilestoneSubclassDTO $milestoneSubclassDTO): MilestoneSubclassDTO
     {
         $milestoneSubclass = new MilestoneSubclass($milestoneSubclassDTO->toArray());
@@ -19,6 +34,13 @@ class MilestoneSubclassService implements MilestoneSubclassInterface
         return new MilestoneSubclassDTO($milestoneSubclass->toArray());
     }
 
+    /**
+     * Actualiza una subclase de hitos existente.
+     *
+     * @param  MilestoneSubclassDTO  $milestoneSubclassDTO
+     * @param  int  $id
+     * @return MilestoneSubclassDTO
+     */
     public function updateMilestoneSubclass(MilestoneSubclassDTO $milestoneSubclassDTO, int $id): MilestoneSubclassDTO
     {
         $milestoneSubclass = MilestoneSubclass::findOrFail($id);
@@ -28,6 +50,12 @@ class MilestoneSubclassService implements MilestoneSubclassInterface
         return new MilestoneSubclassDTO($milestoneSubclass->toArray());
     }
 
+    /**
+     * Obtiene todas las subclases de hitos asociadas a una clase de hitos específica.
+     *
+     * @param  int  $milestoneClassId
+     * @return array de MilestoneSubclassDTO
+     */
     public function getAllMilestoneSubclassesByMilestoneClass(int $milestoneClassId): array
     {
         $milestoneSubclasses = MilestoneSubclass::where('milestone_class_id', $milestoneClassId)->get();
@@ -39,6 +67,29 @@ class MilestoneSubclassService implements MilestoneSubclassInterface
         return $milestoneSubclassDTOs;
     }
 
+    /**
+     * Obtiene todas las subclases de hitos.
+     *
+     * @return array de MilestoneSubclassDTO
+     */
+    public function getAllMilestoneSubclasses(): array
+    {
+        $milestoneSubclasses = MilestoneSubclass::all();
+        $milestoneSubclassDTOs = [];
+
+        foreach ($milestoneSubclasses as $milestoneSubclass) {
+            $milestoneSubclassDTOs[] = new MilestoneSubclassDTO($milestoneSubclass->toArray());
+        }
+
+        return $milestoneSubclassDTOs;
+    }
+
+    /**
+     * Obtiene una subclase de hitos por su ID.
+     *
+     * @param  int  $id
+     * @return MilestoneSubclassDTO
+     */
     public function getMilestoneSubclass(int $id): MilestoneSubclassDTO
     {
         $milestoneSubclass = MilestoneSubclass::findOrFail($id);
@@ -46,6 +97,12 @@ class MilestoneSubclassService implements MilestoneSubclassInterface
         return new MilestoneSubclassDTO($milestoneSubclass->toArray());
     }
 
+    /**
+     * Elimina una subclase de hitos por su ID.
+     *
+     * @param  int  $id
+     * @return MilestoneSubclassDTO
+     */
     public function deleteMilestoneSubclass(int $id): MilestoneSubclassDTO
     {
         $milestoneSubclass = MilestoneSubclass::findOrFail($id);

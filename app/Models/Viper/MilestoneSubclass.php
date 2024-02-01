@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Viper\Models;
+namespace App\Models\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,7 @@ class MilestoneSubclass extends Model
 
     protected $fillable = [
         'name',
-        'milestone_classes_id',
+        'milestone_class_id',
     ];
 
     /**

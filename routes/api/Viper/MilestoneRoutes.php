@@ -7,6 +7,6 @@ Route::prefix('/viper/milestone')->group(function () {
     Route::post('/create', [MilestoneController::class, 'store']);
     Route::put('/update/{id}', [MilestoneController::class, 'update']);
     Route::get('/list/{projectId}', [MilestoneController::class, 'index']);
-    Route::get('/show/{id}', [MilestoneController::class, 'show']);
+    Route::get('/detail/{id}', [MilestoneController::class, 'show']);
     Route::delete('/delete/{id}', [MilestoneController::class, 'destroy']);
 });

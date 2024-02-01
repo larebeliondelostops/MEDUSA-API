@@ -9,16 +9,42 @@ use App\DTOs\Viper\Milestone\MilestoneDTO;
 use Exception;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador para gestionar las operaciones CRUD de los hitos en el sistema Viper.
+ *
+ * Este controlador maneja las solicitudes HTTP relacionadas con los hitos, permitiendo la creación,
+ * actualización, obtención, listado y eliminación de estas entidades.
+ *
+ * @package App\Http\Controllers\Viper
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0 */
 class MilestoneController extends BaseController
 {
+    /**
+     * Instancia de la interfaz MilestoneInterface para interactuar con el servicio de hitos.
+     *
+     * @var MilestoneInterface
+     */
     private MilestoneInterface $milestoneInterface;
+
+    /**
+     * Constructor de la clase MilestoneController.
+     *
+     * @param MilestoneInterface $milestoneInterface
+     */
     public function __construct(MilestoneInterface $milestoneInterface)
     {
         parent::__construct();
         $this->milestoneInterface = $milestoneInterface;
     }
 
-
+    /**
+     * Almacena un nuevo hito en el sistema.
+     *
+     * @param MilestoneRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(MilestoneRequest $request)
     {
         try {
@@ -35,6 +61,13 @@ class MilestoneController extends BaseController
         }
     }
 
+    /**
+     * Actualiza un hito existente en el sistema.
+     *
+     * @param MilestoneRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(MilestoneRequest $request, int $id)
     {
         try {
@@ -51,6 +84,12 @@ class MilestoneController extends BaseController
         }
     }
 
+    /**
+     * Obtiene todos los hitos asociados a un proyecto específico en el sistema.
+     *
+     * @param int $projectId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(int $projectId)
     {
         try {
@@ -63,18 +102,31 @@ class MilestoneController extends BaseController
         }
     }
 
+    /**
+     * Obtiene un hito específico por su ID.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(int $id)
     {
         try {
-            $milestones = $this->milestoneInterface->getMilestone($id);
+            $milestone = $this->milestoneInterface->getMilestone($id);
             return response()->json([
-                'data' => $milestones,
+                'data' => $milestone,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
     }
 
+    /**
+     * Elimina un hito específico por su ID.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request, int $id)
     {
         try {

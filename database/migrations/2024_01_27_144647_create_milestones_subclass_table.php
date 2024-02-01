@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'villavicencio';
+    /**
      * Run the migrations.
      *
      * @return void
@@ -16,9 +22,9 @@ return new class extends Migration
         Schema::create('milestone_subclasses', function (Blueprint $table) {
             $table->id();
             $table->string('name',255);
-            $table->unsignedBigInteger('milestone_classes_id');
+            $table->unsignedBigInteger('milestone_class_id');
 
-            $table->foreign('milestone_classes_id')->references('id')->on('milestone_classes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('milestone_class_id')->references('id')->on('milestone_classes')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

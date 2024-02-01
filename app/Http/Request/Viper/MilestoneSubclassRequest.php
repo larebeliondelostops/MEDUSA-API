@@ -36,10 +36,8 @@ class MilestoneSubclassRequest extends FormRequest
     public function rules()
     {
         return [
-            'milestone_classes_id' => 'required|exists:milestone_classes,id',
-            'milestone_subclasses_id' => 'required|exists:milestone_subclasses,id',
-            'date' => 'required|date',
-            'project_id' => 'required|exists:projects,id|string|max:255',
+            'name' => 'required|string|max:255',
+            'milestone_class_id' => 'required|exists:milestone_classes,id',
         ];
     }
 

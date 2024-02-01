@@ -9,16 +9,42 @@ use App\DTOs\Viper\MilestoneClass\MilestoneClassDTO;
 use Exception;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador para gestionar las operaciones CRUD de las clases de hitos en el sistema Viper.
+ *
+ * Este controlador maneja las solicitudes HTTP relacionadas con las clases de hitos, permitiendo la creación,
+ * actualización, obtención, listado y eliminación de estas entidades.
+ *
+ * @package App\Http\Controllers\Viper
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0 */
 class MilestoneClassController extends BaseController
 {
+    /**
+     * Instancia de la interfaz MilestoneClassInterface para interactuar con el servicio de clases de hitos.
+     *
+     * @var MilestoneClassInterface
+     */
     private MilestoneClassInterface $milestoneClassInterface;
+
+    /**
+     * Constructor de la clase MilestoneClassController.
+     *
+     * @param MilestoneClassInterface $milestoneClassInterface
+     */
     public function __construct(MilestoneClassInterface $milestoneClassInterface)
     {
         parent::__construct();
         $this->milestoneClassInterface = $milestoneClassInterface;
     }
 
-
+    /**
+     * Almacena una nueva clase de hitos en el sistema.
+     *
+     * @param MilestoneClassRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(MilestoneClassRequest $request)
     {
         try {
@@ -35,6 +61,13 @@ class MilestoneClassController extends BaseController
         }
     }
 
+    /**
+     * Actualiza una clase de hitos existente en el sistema.
+     *
+     * @param MilestoneClassRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(MilestoneClassRequest $request, int $id)
     {
         try {
@@ -51,6 +84,11 @@ class MilestoneClassController extends BaseController
         }
     }
 
+    /**
+     * Obtiene todas las clases de hitos en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -63,18 +101,31 @@ class MilestoneClassController extends BaseController
         }
     }
 
+    /**
+     * Obtiene una clase de hitos específica por su ID.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(int $id)
     {
         try {
-            $milestoneClasses = $this->milestoneClassInterface->getMilestoneClass($id);
+            $milestoneClass = $this->milestoneClassInterface->getMilestoneClass($id);
             return response()->json([
-                'data' => $milestoneClasses,
+                'data' => $milestoneClass,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
     }
 
+    /**
+     * Elimina una clase de hitos específica por su ID.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request, int $id)
     {
         try {

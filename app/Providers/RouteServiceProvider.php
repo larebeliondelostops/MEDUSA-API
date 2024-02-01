@@ -44,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         if (app()->runningInConsole()) {
-            $subdomain = env('APP_ENV', 'local') == 'local' ? 'dev' : 'dev'; // Usar 'local' por defecto si no está definido en .env
+            $subdomain = env('APP_ENV', 'local') == 'local' ? 'villavicencio' : 'villavicencio'; // Usar 'local' por defecto si no está definido en .env
             $http = env('APP_ENV') == 'local' ? 'http://' : 'https://'; // Usar 'http://' en entorno local y 'https://' en producción
             $dominio = env('APP_ENV') == 'local' ? '.localhost' : '.medusaapi.online'; // Usar 'localhost' en entorno local y 'medusaapi.online' en producción
 
@@ -60,6 +60,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->namespace($this->namespace)->group(base_path('routes/web.php'));
         });
     }
+
 
     protected function loadTenantRoutes()
     {

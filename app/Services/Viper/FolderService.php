@@ -3,6 +3,7 @@
 namespace App\Services\Viper;
 
 use App\DTOs\Viper\Folder\FolderDTO;
+use App\DTOs\Viper\Folder\FolderSelectDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
@@ -244,5 +245,54 @@ class FolderService implements FolderInterface
                 $this->createFolderHierarchy($subfolderData, $projectId, $folder);
             }
         }
+    }
+
+
+    /**
+     * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía solo nombre y id.
+     *
+     * @param int $projectId Identificador (bpin) del proyecto
+     * @return array
+     */
+    public function getAllFoldersSelect($projectId)
+    {
+        // Obtén todas las carpetas para el proyecto específico con el filtro aplicado
+        $folders = Folder::where('project_id', $projectId)->get();
+
+         // Crear una colección que contendrá la estructura jerárquica de carpetas
+         $result = collect();
+
+         // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
+         $folderDictionary = $folders->keyBy('id');
+
+        // Iterar sobre cada carpeta
+        foreach ($folders as $folder) {
+            // Si la carpeta no tiene una carpeta superior, es decir, es la carpeta raíz o si tiene algun filtro
+            if (!$folder->higher_folder_id) {
+                // Agregar la carpeta raíz y sus subcarpetas a la colección
+                $result->push($this->buildFolderHierarchySelect($folder, $folderDictionary));
+            }
+        }
+        return $result->all();
+    }
+
+    /**
+     * Función privada recursiva para construir la jerarquía de carpetas para el select.
+     *
+     * @param Folder $folder
+     * @param Collection $folderDictionary
+     * @return array
+     */
+    private function buildFolderHierarchySelect(Folder $folder, Collection $folderDictionary): array
+    {
+        // Obtener las subcarpetas
+        $subfolders = $folder->subfolders->map(
+            fn($subfolder) => $this->buildFolderHierarchySelect($subfolder, $folderDictionary)
+        );
+    
+        return [
+            'folder' => new FolderSelectDTO($folder->toArray()),
+            'subfolders' => $subfolders->all(),
+        ];
     }
 }

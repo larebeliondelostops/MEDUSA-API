@@ -157,4 +157,25 @@ class FolderController extends BaseController
         }
     }
 
+
+    /**
+     * Mostrar una lista de carpetas para un select.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexSelect(Request $request, $project_id)
+    {
+        try {
+            // Utilizar el servicio para obtener todas las carpetas filtradas por el ID del proyecto
+            $folders = $this->folderInterface->getAllFoldersSelect($project_id);
+        
+            // Retornar la respuesta JSON con las carpetas obtenidas
+            return response()->json([
+                'data' => $folders,
+            ], 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
 }

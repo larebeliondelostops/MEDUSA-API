@@ -91,6 +91,26 @@ class ProjectService implements ProjectInterface
         );
     }
 
+        /**
+     * Obtiene una lista de todos los proyectos.
+     *
+     * @return array Array con todos los proyectos.
+     */
+    public function getAllProjects() : array
+    {
+        $projectsGot = Project::with('state')->get();
+        $projectsGot->transform(
+            function (Project $project)
+            {
+                $data = $project->toArray();
+                $data['state'] = $data['state']['name'];
+                return new ProjectSummaryDTO($data);
+            }
+        );
+        return $projectsGot->toArray();
+    }
+
+
     /**
      * Obtiene una lista paginada de proyectos.
      *

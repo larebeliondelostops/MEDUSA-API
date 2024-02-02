@@ -7,27 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
+        Schema::create('marker_type', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('path')->nullable();
-            $table->string('icon');
-            $table->string('slug');
-            $table->float('order')->default(0);
-            $table->boolean('enabled')->default(true);
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -39,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::dropIfExists('marker_type');
     }
 };

@@ -7,27 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('marker', function (Blueprint $table) {
+        /* Schema::create('crud_actions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('marker_type')->constrained('marker_type');
-            $table->string('name');
-            $table->string('icon');
-            $table->string('color');
+            $table->string('action');
             $table->timestamps();
-        });
+        }); */
     }
 
     /**
@@ -37,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marker');
+        /* Schema::dropIfExists('crud_actions'); */
     }
 };

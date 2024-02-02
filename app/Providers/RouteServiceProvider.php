@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Multitenancy\Models\Tenant;
 use Illuminate\Support\Facades\Request as FacadeRequest;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Multitenancy\TenantFinder\TenantFinder;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -39,96 +38,33 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        $this->configureRateLimiting();
 
-        if (app()->runningInConsole()) {
-            $subdomain = env('APP_ENV', 'local') == 'local' ? 'dev' : 'dev'; // Usar 'local' por defecto si no está definido en .env
-            $http = env('APP_ENV') == 'local' ? 'http://' : 'https://'; // Usar 'http://' en entorno local y 'https://' en producción
-            $dominio = env('APP_ENV') == 'local' ? '.localhost' : '.medusaapi.online'; // Usar 'localhost' en entorno local y 'medusaapi.online' en producción
-
-            $request = FacadeRequest::create($http . $subdomain . $dominio);
-            app()->instance('request', $request);
-        }
-
-        $this->routes(function () {
-            Route::middleware(['api'])->namespace($this->namespace)->group(function () {
-                $this->loadTenantRoutes();
-            });
-
-            Route::middleware('web')->namespace($this->namespace)->group(base_path('routes/web.php'));
-        });
-    }
 
     protected function loadTenantRoutes()
     {
-        if (Schema::hasTable('tenants')) {
-            // Obtenemos el subdominio actual
-            $subdomain = $this->getSubdomainFromRequest(); // Obtener el subdominio
-
-            // Aquí puedes lógica para determinar la conexión de base de datos basada en el subdominio
-            $databaseConnection = $this->getDatabaseConnectionForSubdomain($subdomain);
-
-            // Establecemos la conexión de base de datos
-            DB::setDefaultConnection($databaseConnection);
-        }
-
         Route::prefix('api/v1')->group(function () {
             require base_path('routes/api.php');
             require base_path('routes/api/user.php');
             require base_path('routes/api/roles.php');
-            //require base_path('routes/api/health.php');
-            //require base_path('routes/api/entities.php');
             require base_path('routes/api/events.php');
             require base_path('routes/api/eventsType.php');
             require base_path('routes/api/reports.php');
-            //require base_path('routes/api/alarms.php');
-           // require base_path('routes/api/cameras.php');
-            //require base_path('routes/api/cai.php');
-            //require base_path('routes/api/pollingPlace.php');
             require base_path('routes/api/incidents.php');
             require base_path('routes/api/menu.php');
             require base_path('routes/api/allData.php');
             require base_path('routes/api/forms.php');
             require base_path('routes/api/CRUD.php');
-            // ... otras rutas
         });
     }
 
-    protected function getDatabaseConnectionForSubdomain($subdomain)
+    public function boot()
     {
-        /** @var TenantFinder $tenantFinder */
-        $tenantFinder = app(TenantFinder::class);
+        $this->configureRateLimiting();
 
-        $tenant = $tenantFinder->getTenantModel()::where('domain', $subdomain)->first();
-
-        if ($tenant) {
-            $tenant->makeCurrent();
-            return $tenant->domain; // Devuelve el esquema del inquilino si existe
-        } else {
-            throw new Exception("Este subdominio no está registrado en nuestro sistema");
-        }
-    }
-
-    protected function getSubdomainFromRequest()
-    {
-        $host = request()->getHost(); // Obtener el host completo de la solicitud
-
-        $parsedUrl = parse_url($host);
-
-        // Si el host se divide en partes y tiene al menos tres partes (sub.subdominio.dominio)
-        if (isset($parsedUrl['path'])) {
-
-            $parts = explode('.', $parsedUrl['path']);
-            if (count($parts) >= 2) {
-                // El subdominio es la primera parte del host
-                return $parts[0];
-            }
-        }
-
-        // Si no hay subdominio (solo dominio), devuelve null o lo que necesites
-        return null;
+        $this->routes(function () {
+            $this->mapApiRoutes();
+            $this->mapWebRoutes();
+        });
     }
 
     /**
@@ -141,5 +77,31 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    protected function mapWebRoutes()
+    {
+        foreach ($this->centralDomains() as $domain) {
+            Route::middleware('web')
+                ->domain($domain)
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+        }
+    }
+
+    protected function mapApiRoutes()
+    {
+        foreach ($this->centralDomains() as $domain) {
+            Route::prefix('api')
+                ->domain($domain)
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/api.php'));
+        }
+    }
+
+    protected function centralDomains(): array
+    {
+        return config('tenancy.central_domains');
     }
 }

@@ -7,23 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'neiva';
-
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('marker_type', function (Blueprint $table) {
-            $table->id();
+        Schema::create('slugs', function (Blueprint $table) {
+            $table->id('slugs');
+            $table->integer('id');
             $table->string('name');
-            $table->string('description');
             $table->timestamps();
         });
     }
@@ -35,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marker_type');
+        Schema::dropIfExists('slugs');
     }
 };

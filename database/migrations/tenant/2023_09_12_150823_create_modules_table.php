@@ -7,24 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'neiva';
-
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        /* Schema::create('crud_actions', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('action');
+            $table->string('name');
+            $table->string('description');
             $table->timestamps();
-        }); */
+        });
     }
 
     /**
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        /* Schema::dropIfExists('crud_actions'); */
+        Schema::dropIfExists('modules');
     }
 };

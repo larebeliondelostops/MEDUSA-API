@@ -234,7 +234,7 @@ class FolderService implements FolderInterface
         $folderDTO = new FolderDTO($validatedData);
 
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
-        $folderResponse = $this->createNewFolder($folderDTO);
+        $folderResponse = $this->createNewFolder($folderDTO)->toArray();
 
         // Ajustar el acceso a la respuesta según la estructura real
         $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;

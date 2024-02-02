@@ -42,6 +42,7 @@ class DeliverableRequest extends FormRequest
         ],
         "PUT" => [
             "update" => [
+                'number' => 'required|integer',
                 'name' => 'required|string|max:256',
             ]
         ]
@@ -66,8 +67,15 @@ class DeliverableRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->lastSlugPath = Arr::last(explode('/', $this->path()));
+        $path = $this->path();
+        if ($this->method() == 'PUT') {
+            $segments = explode('/', $path);
+            array_pop($segments);
+            $path = implode('/', $segments);
+        }
+        $this->lastSlugPath = Arr::last(explode('/', $path));
     }
+
 
 
     /**

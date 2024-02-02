@@ -35,6 +35,14 @@ interface ProjectInterface {
     public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO;
 
     /**
+     * Obtiene una lista de todos los proyectos.
+     *
+     * @return array Array con todos los proyectos.
+     */
+    public function getAllProjects() : array;
+
+
+    /**
      * Obtiene una lista de proyectos paginada.
      *
      * @param int $perPage Número de proyectos por página.

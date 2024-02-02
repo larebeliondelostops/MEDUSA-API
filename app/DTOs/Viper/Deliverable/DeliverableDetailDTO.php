@@ -13,6 +13,6 @@ class DeliverableDetailDTO extends DTO
     public int $product_id;
     public int $folder_id;
     public ?int $deliverable_id = null;
-    public array $child_deliverables = [];
+    public array $deliverables = [];
 
 }

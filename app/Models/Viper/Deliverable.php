@@ -28,6 +28,12 @@ class Deliverable extends Model
         parent::boot();
 
         static::deleting(function ($deliverable) {
+            // Elimina la carpeta asociada al deliverable
+            if ($deliverable->folder) {
+                $deliverable->folder->delete();
+            }
+
+            // Elimina los hijos
             foreach ($deliverable->childDeliverables as $child) {
                 $child->delete(); // Esto respetará el soft delete
             }

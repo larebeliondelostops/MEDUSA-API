@@ -209,15 +209,11 @@ class DocumentService implements DocumentInterface
         // Aplica los filtros a la consulta Eloquent solo si hay parámetros de consulta
         if (!empty($queryItems)) {
             $documentQuery = Document::query();
-            foreach ($queryItems as $item) {
-                if (count($item) === 3) {
-                    $column = $item[0];
-                    $operator = $item[1];
-                    $value = ($operator == 'ilike') ? '%' . $item[2] . '%' : $item[2];
-    
-                    $documentQuery->orWhere($column, $operator, $value);
-                }
+
+            if (isset($queryParams['name'])){
+                $documentQuery->where($queryItems[0][0], $queryItems[0][1],  '%' . $queryItems[0][2] . '%');
             }
+            
     
             // Obtén todos los documentos con el filtro aplicado
             $documents = $documentQuery->whereHas('folder', function ($query) use ($projectId) {
@@ -231,21 +227,43 @@ class DocumentService implements DocumentInterface
             foreach ($documents as $document) {
                 // Obtener la carpeta principal del documento
                 $folder = $document->folder;
-    
+                $accepted = true;
                 // Inicializar el array de IDs con el ID de la carpeta actual
                 $pathIds = [$folder->id];
     
-                // Iterar hacia arriba en la jerarquía hasta llegar a la carpeta raíz
-                while ($folder->higher_folder_id) {
-                    // Obtener la carpeta superior
-                    $folder = Folder::findOrFail($folder->higher_folder_id);
+                if(isset($queryParams['folder_id'])) {
+                    if ((int)$queryParams['folder_id']['eq'] != $folder->id) {
+                        do  {
+                            // Obtener la carpeta superior
+                            try {
+                                $folder = Folder::findOrFail($folder->higher_folder_id);
+                            } catch (\Exception $e) {
+                                break;
+                            }   
+        
+                            // Agregar el ID de la carpeta superior al array
+                            array_unshift($pathIds, $folder->id);
     
-                    // Agregar el ID de la carpeta superior al array
-                    array_unshift($pathIds, $folder->id);
+                        } while((int)$queryParams['folder_id']['eq'] !== $folder->id);
+    
+                        if ((int)$queryParams['folder_id']['eq'] !== $pathIds[0]) {
+                            $accepted = false;
+                        }    
+                    }
+                }else{
+                    // Iterar hacia arriba en la jerarquía hasta llegar a la carpeta raíz
+                    while ($folder->higher_folder_id) {
+                        // Obtener la carpeta superior
+                        $folder = Folder::findOrFail($folder->higher_folder_id);
+    
+                        // Agregar el ID de la carpeta superior al array
+                        array_unshift($pathIds, $folder->id);
+                    }
                 }
-    
-                // Construir la estructura para almacenar en la colección
-                $result->push($this->getHierarchy(Folder::findOrFail($pathIds[0]), $pathIds, $document));
+
+                if ($accepted) {
+                    $result->push($this->getHierarchy(Folder::findOrFail($pathIds[0]), $pathIds, $document));
+                }
             }
     
             return $result->all();

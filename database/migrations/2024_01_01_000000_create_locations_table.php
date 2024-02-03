@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Connection name.
      *
      * @return string
      */
     protected $connection = 'villavicencio';
-
     /**
      * Run the migrations.
      *
@@ -20,15 +20,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('type_location');
-            $table->double('latitude', 10, 6);
-            $table->double('longitude', 10, 6);
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
+        Schema::create('coordinates', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type', 32);
+            $table->double('latitude', 10, 8);
+            $table->double('longitude', 11, 8);
             $table->timestamps();
+
             $table->softDeletes();
         });
     }
@@ -40,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('coordinates');
     }
 };

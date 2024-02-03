@@ -14,6 +14,7 @@ use App\Http\Controllers\Viper\ProductController;
 
 Route::prefix('/viper/product')->group(function () {
     Route::get('/list', [ProductController::class, 'index']);
+    Route::get('/list/scope/{scope}', [ProductController::class, 'indexByScope']);
     Route::get('/get/{ProductId}', [ProductController::class, 'show']);
     Route::post('/create', [ProductController::class, 'store']);
     Route::put('/update/{ProductId}', [ProductController::class, 'update']);

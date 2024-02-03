@@ -54,7 +54,7 @@ class BaseController extends Controller
         {
             $model = explode('\\', $exception->getModel());
             $modelPhrase = ucwords(implode('',preg_split('/(?=[A-Z])/', end($model))));
-            
+
             return response()->json([
                 'message' => \App::make($exception->getModel())->modelNotFoundMessage ?? $modelPhrase . ' no encontrado'
             ], Response::HTTP_NOT_FOUND);
@@ -65,11 +65,11 @@ class BaseController extends Controller
                 'message' => 'Acción no autorizada.'
             ], Response::HTTP_FORBIDDEN);
         }
-        else
-        {
+        else {
             return response()->json([
-                'message' => 'Se produjo un error interno del servidor.',
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                'message' => $exception->getMessage() ?? 'Se produjo un error interno del servidor.',
+            ], ($exception->getCode() === 0) ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode());
         }
+        
     }
 }

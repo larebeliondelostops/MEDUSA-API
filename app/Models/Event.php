@@ -14,7 +14,7 @@ class Event extends Model
     protected $table= 'events';
 
     protected $fillable = [
-        'idEventType',
+        'id_event_type',
         'name',
         'startDate',
         'endDate',
@@ -26,7 +26,7 @@ class Event extends Model
 
     public function eventType()
     {
-        return $this->belongsTo(EventType::class, 'idEventType');
+        return $this->belongsTo(EventType::class, 'id_event_type');
     }
 
     public function eventCoordinate()

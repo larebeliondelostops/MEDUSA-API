@@ -36,9 +36,10 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:191',
-            'number' => 'required|string|max:191',
+            'number' => 'integer|nullable',
+            'amount' => 'required|integer',
             'measurement_unit_id' => 'required|integer',
-            'folder_id' => 'required|integer',
+            'folder_id' => 'integer|nullable',
             'specific_objective_id' => 'required|integer',
         ];
     }

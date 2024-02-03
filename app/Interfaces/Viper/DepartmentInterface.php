@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Interfaces\Viper;
-use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
 
 /**
  * Interfaz para la gestión de departamentos en el módulo VIPER.
@@ -19,22 +19,22 @@ interface DepartmentInterface
     /**
      * Crea un nuevo departamento.
      *
-     * @param DepartmentDTO $departmentDTO DTO con la información del departamento a crear.
-     * @return DepartmentDTO DTO del departamento recién creado.
+     * @param DepartmentRequestDTO $departmentDTO DTO con la información del departamento a crear.
+     * @return DepartmentRequestDTO DTO del departamento recién creado.
      */
-    public function createNewDepartment(DepartmentDTO $departmentDTO): DepartmentDTO;
+    public function createNewDepartment(DepartmentRequestDTO $departmentDTO): DepartmentRequestDTO;
 
      /**
      * Obtiene todos los departamentos disponibles.
      *
-     * @return array Arreglo de DepartmentDTO de todos los departamentos.
+     * @return array Arreglo de DepartmentRequestDTO de todos los departamentos.
      */
     public function getAllDepartments(): array;
 
     /**
      * Obtiene un listado detallado de todos los departamentos.
      *
-     * @return array Arreglo de DepartmentDTO con detalles de todos los departamentos.
+     * @return array Arreglo de DepartmentRequestDTO con detalles de todos los departamentos.
      */
     public function getAllDepartmentsDetail() : array;
 
@@ -42,24 +42,24 @@ interface DepartmentInterface
      * Obtiene un departamento por su ID.
      *
      * @param int $id Identificador del departamento.
-     * @return DepartmentDTO DTO del departamento solicitado.
+     * @return DepartmentRequestDTO DTO del departamento solicitado.
      */
-    public function getDepartmentById(int $id) : DepartmentDTO;
+    public function getDepartmentById(int $id) : DepartmentRequestDTO;
 
     /**
      * Actualiza un departamento existente.
      *
-     * @param DepartmentDTO $departmentDTO DTO con la nueva información del departamento.
+     * @param DepartmentRequestDTO $departmentRequestDTO DTO con la nueva información del departamento.
      * @param int $id ID del departamento a actualizar.
-     * @return DepartmentDTO DTO del departamento actualizado.
+     * @return DepartmentRequestDTO DTO del departamento actualizado.
      */
-    public function updateDepartment(DepartmentDTO $departmentDTO, int $id) : DepartmentDTO;
+    public function updateDepartment(DepartmentRequestDTO $departmentDTO, int $id) : DepartmentRequestDTO;
 
     /**
      * Elimina un departamento.
      *
      * @param int $id ID del departamento a eliminar.
-     * @return DepartmentDTO DTO del departamento eliminado.
+     * @return DepartmentRequestDTO DTO del departamento eliminado.
      */
-    public function deleteDepartment(int $id) : DepartmentDTO;
+    public function deleteDepartment(int $id) : DepartmentRequestDTO;
 }

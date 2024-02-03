@@ -34,6 +34,15 @@ class DTO
         }
     }
 
+    public function fill(array|null $data)
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
+
     /**
      * Convierte el objeto DTO a un array.
      *

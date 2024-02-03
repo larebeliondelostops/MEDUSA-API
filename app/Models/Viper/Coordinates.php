@@ -21,4 +21,9 @@ class Coordinates extends Model
         'latitude',
         'longitude'
     ];
+
+    public function project()
+    {
+        return $this->hasOne(Project::class);
+    }
 }

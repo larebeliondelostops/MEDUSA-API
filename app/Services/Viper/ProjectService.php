@@ -6,11 +6,14 @@ namespace App\Services\Viper;
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Department\DepartmentDTO;
+use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDTO;
+use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
+use App\DTOs\Viper\Sector\SectorDTO;
+use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\ProjectInterface;
@@ -80,7 +83,7 @@ class ProjectService implements ProjectInterface
     {
         $project = Project::with('coordinates')->findOrFail($bpin);
         $coordinatesProject = new CoordinatesRequestDTO($project->coordinates->toArray());
-        $coordinatesUpdated = $this->coordinatesInterface->updateLocationById($coordinatesProject, $coordinatesProject->id);
+        $coordinatesUpdated = $this->coordinatesInterface->updateCoordinatesById($coordinatesProject, $coordinatesProject->id);
         $project->fill($projectDTO->toArray());
         $project->save();
         $dataUpdated = $project->toArray();
@@ -90,6 +93,26 @@ class ProjectService implements ProjectInterface
             $dataUpdated
         );
     }
+
+        /**
+     * Obtiene una lista de todos los proyectos.
+     *
+     * @return array Array con todos los proyectos.
+     */
+    public function getAllProjects() : array
+    {
+        $projectsGot = Project::with('state')->get();
+        $projectsGot->transform(
+            function (Project $project)
+            {
+                $data = $project->toArray();
+                $data['state'] = $data['state']['name'];
+                return new ProjectSummaryDTO($data);
+            }
+        );
+        return $projectsGot->toArray();
+    }
+
 
     /**
      * Obtiene una lista paginada de proyectos.
@@ -159,10 +182,12 @@ class ProjectService implements ProjectInterface
                           ->findOrFail($bpin);
         // return $project;
         $data = $project->toArray();
-        $data['department'] = new DepartmentDTO($data['department']);
-        $data['state'] = $data['state']['name'];
-        $data['sector'] = $data['sector']['name'];
-        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
+        $data['department']['location'] = new CoordinatesRequestDTO($data['department']['location']);
+        $data['department'] = new DepartmentRequestDTO($data['department']);
+        $data['sector'] = new SectorDTO($data['sector']);
+        $data['municipality']['location'] = new CoordinatesRequestDTO($data['municipality']['location']);
+        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityRequestDTO($data['municipality']);
+        $data['state'] =  new StateDTO($data['state']);
         $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
         $data['coordinates'] = new CoordinatesRequestDTO($data['coordinates']);
 

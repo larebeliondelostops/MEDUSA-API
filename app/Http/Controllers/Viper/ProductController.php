@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Viper;
 use App\Http\Request\Viper\ProductRequest;
 use App\DTOs\Viper\Product\ProductDTO;
 use App\Interfaces\Viper\ProductInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
@@ -38,6 +37,24 @@ class ProductController extends BaseController
     {
         try {
             $products = $this->productInterface->getAllProducts();
+
+            return response()->json([
+                'data' => $products,
+            ], Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Mostrar una lista de productos por alcance.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByScope($scopeId)
+    {
+        try {
+            $products = $this->productInterface->getAllProductsByScope($scopeId);
 
             return response()->json([
                 'data' => $products,
@@ -83,16 +100,16 @@ class ProductController extends BaseController
      * @param  int  $productId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $productId)
+    public function update(ProductRequest $request, $productId)
     {
         try {
             // Valida y procesa los datos del formulario
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $validatedData = $request->validated();
+
+            $productDTO = new ProductDTO($validatedData);
 
             // Llama al servicio para actualizar el producto
-            $updatedProduct = $this->productInterface->updateProduct($productId, $validatedData['name']);
+            $updatedProduct = $this->productInterface->updateProduct($productId, $productDTO);
 
             // Retorna la respuesta JSON con el producto actualizado
             return response()->json([

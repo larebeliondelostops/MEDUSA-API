@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('deliverables', function (Blueprint $table) {
             $table->id();
-            $table->string('number',64);
+            $table->integer('number');
             $table->string('name', 256);
             $table->integer('activity_quantity');
             $table->decimal('value', 21, 2);
@@ -31,6 +31,9 @@ return new class extends Migration
 
             $table->integer('deliverable_id')->nullable();
             $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
+
+            $table->integer('folder_id');
+            $table->foreign('folder_id')->references('id')->on('folders');
 
             $table->timestamps();
             $table->softDeletes();

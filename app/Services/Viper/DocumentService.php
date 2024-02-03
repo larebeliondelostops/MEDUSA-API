@@ -268,7 +268,7 @@ class DocumentService implements DocumentInterface
             return [
                 'folder' => new FolderDTO($folder->toArray()),
                 'subfolders' => $subfolders->all(),
-                'documents' => new DocumentDTO($document->toArray()),
+                'documents' => [new DocumentDTO($document->toArray())],
             ];
         } else {
             return [

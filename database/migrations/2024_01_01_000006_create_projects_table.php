@@ -41,8 +41,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
 
-            $table->uuid('location_id');
-            $table->foreign('location_id')->references('id')->on('locations');
+            $table->uuid('coordinates_id');
+            $table->foreign('coordinates_id')->references('id')->on('coordinates');
 
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');

@@ -2,8 +2,8 @@
 
 namespace App\DTOs\Viper\Project;
 
+use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\DTO;
-use App\DTOs\Viper\Location\LocationRequestDTO;
 
 
 /**
@@ -35,7 +35,7 @@ class ProjectRequestDTO extends DTO
     public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
     public int $sector_id;                   // Sector del proyecto
-    public LocationRequestDTO $location; // Ubicacion del proyecto
+    public CoordinatesRequestDTO $coordinates; // Ubicacion del proyecto
     public int $department_id;               // Id del departamento al que pertenece el proyecto
     public ?int $municipality_id=null;             // Id del municipio donde pertenece el departamento
     public int $beneficiaries;               // Número de beneficiarios del proyecto

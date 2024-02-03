@@ -27,6 +27,7 @@ use App\Interfaces\Viper\SelectsInterface;
 use App\Services\Viper\SelectsService;
 use App\Services\Viper\StateService;
 use App\Interfaces\Viper\AlertInterface;
+use App\Interfaces\Viper\CoordinatesInterface;
 use App\Services\Viper\AlertService;
 use App\Interfaces\Viper\IndicatorInterface;
 use App\Services\Viper\IndicatorService;
@@ -38,6 +39,7 @@ use App\Services\Viper\SpecificObjectiveService;
 use App\Interfaces\Viper\MeasurementUnitInterface;
 use App\Services\Viper\MeasurementUnitService;
 use App\Interfaces\Viper\ProductInterface;
+use App\Services\Viper\CoordinatesService;
 use App\Services\Viper\ProductService;
 
 class ViperServiceProvider extends ServiceProvider
@@ -59,10 +61,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(IndicatorInterface::class, IndicatorService::class);
         $this->app->bind(MeasurementUnitInterface::class, MeasurementUnitService::class);
         $this->app->bind(DeliverableInterface::class, DeliverableService::class);
-<<<<<<< HEAD
-        $this->app->bind(LocationInterface::class, LocationService::class);
-=======
+        $this->app->bind(CoordinatesInterface::class, CoordinatesService::class);
         $this->app->bind(ProductInterface::class, ProductService::class);
->>>>>>> ac3819f81f1644c4ee32bd4dec93a3bc995e1d4e
     }
 }

@@ -29,7 +29,7 @@ class Project extends Model
         'financial_progress',
         'responsible_entity',
         'sector_id',
-        'location_id',
+        'coordinates_id',
         'department_id',
         'municipality_id',
         'beneficiaries',
@@ -74,8 +74,8 @@ class Project extends Model
         return $this->hasMany(Folder::class, 'project_id');
     }
 
-    public function location()
+    public function coordinates()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->belongsTo(Coordinates::class, 'location_id');
     }
 }

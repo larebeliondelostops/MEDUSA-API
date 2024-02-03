@@ -20,7 +20,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('coordinates', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type', 32);
             $table->double('latitude', 10, 8);
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('coordinates');
     }
 };

@@ -3,6 +3,8 @@
 namespace App\Services\Viper;
 
 // Librerias del modulo viper
+
+use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Department\DepartmentDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDTO;
@@ -10,7 +12,7 @@ use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
-use App\Interfaces\Viper\LocationInterface;
+use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
@@ -31,11 +33,11 @@ use Illuminate\Http\Request;
  */
 class ProjectService implements ProjectInterface
 {
-    private LocationInterface $locationInterface;
+    private CoordinatesInterface $coordinatesInterface;
 
-    public function __construct(LocationInterface $locationInterface)
+    public function __construct(CoordinatesInterface $coordinatesInterface)
     {
-        $this->locationInterface = $locationInterface;
+        $this->coordinatesInterface = $coordinatesInterface;
     }
 
      /**
@@ -49,18 +51,18 @@ class ProjectService implements ProjectInterface
     public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
         //primero se crea la ubicacion del proyecto para obtener su id
-        $locationProjectDTO = $this->locationInterface->createNewLocation($projectDTO->location);
+        $coordinatesProjectDTO = $this->coordinatesInterface->createNewCoordinates($projectDTO->coordinates);
 
         //una vez almacenada la ubicacion se almacena el proyecto
         $project = new Project(
             $projectDTO->toArray() +
-            ['location_id' => $locationProjectDTO->id ] // id de la locacion para el proyecto
+            ['coordinates_id' => $coordinatesProjectDTO->id ] // id de la locacion para el proyecto
         );
         $project->save();
 
         return new ProjectRequestDTO(
             $project->toArray() +
-            ['location'=> $locationProjectDTO]
+            ['coordinates'=> $coordinatesProjectDTO]
         );
     }
 
@@ -76,13 +78,13 @@ class ProjectService implements ProjectInterface
      */
     public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO
     {
-        $project = Project::with('location')->findOrFail($bpin);
-        $locationProject = new LocationRequestDTO($project->location->toArray());
-        $locationUpdated = $this->locationInterface->updateLocationById($locationProject, $locationProject->id);
+        $project = Project::with('coordinates')->findOrFail($bpin);
+        $coordinatesProject = new CoordinatesRequestDTO($project->coordinates->toArray());
+        $coordinatesUpdated = $this->coordinatesInterface->updateLocationById($coordinatesProject, $coordinatesProject->id);
         $project->fill($projectDTO->toArray());
         $project->save();
         $dataUpdated = $project->toArray();
-        $dataUpdated['location'] = $locationUpdated;
+        $dataUpdated['coordinates'] = $coordinatesUpdated;
 
         return new ProjectRequestDTO(
             $dataUpdated
@@ -153,7 +155,7 @@ class ProjectService implements ProjectInterface
      */
     public function getProjectByBPIN(string $bpin) : ProjectDetailDTO
     {
-        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'location'])
+        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'coordinates'])
                           ->findOrFail($bpin);
         // return $project;
         $data = $project->toArray();
@@ -162,7 +164,7 @@ class ProjectService implements ProjectInterface
         $data['sector'] = $data['sector']['name'];
         $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityDTO($data['municipality']);
         $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
-        $data['location'] = new LocationRequestDTO($data['location']);
+        $data['coordinates'] = new CoordinatesRequestDTO($data['coordinates']);
 
         return new ProjectDetailDTO($data);
     }
@@ -180,7 +182,7 @@ class ProjectService implements ProjectInterface
         $project = Project::findOrFail($bpin);
         $projectDTO = $this->getProjectByBPIN($bpin);
         $project->delete();
-        $this->locationInterface->deleteLocation($projectDTO->location->id);
+        $this->coordinatesInterface->deleteCoordinates($projectDTO->location->id);
         return $projectDTO;
     }
 }

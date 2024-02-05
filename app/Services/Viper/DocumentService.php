@@ -270,7 +270,11 @@ class DocumentService implements DocumentInterface
         } else {
             // Si no hay parámetros de consulta, obtener todos los documentos
             $documents = Document::all();
-            return $documents->toArray();
+            $documentDTOs = $documents->transform(function ($document) {
+                return (new DocumentDTO($document->toArray()))->toArray(['deleted_at']);
+            });
+
+            return $documentDTOs;
         }
     }
     
@@ -286,7 +290,7 @@ class DocumentService implements DocumentInterface
             return [
                 'folder' => new FolderDTO($folder->toArray()),
                 'subfolders' => $subfolders->all(),
-                'documents' => [new DocumentDTO($document->toArray())],
+                'documents' => [(new DocumentDTO($document->toArray()))->toArray(['deleted_at'])],
             ];
         } else {
             return [
@@ -311,10 +315,10 @@ class DocumentService implements DocumentInterface
 
         $documentDTOs = [];
         foreach ($documents as $document) {
-            $documentDTOs[] = new DocumentDTO($document->toArray());
+            $documentDTOs[] = (new DocumentDTO($document->toArray()))->toArray(['deleted_at']);
         }
 
-        return $documents;
+        return $documentDTOs;
     }
 
     /**

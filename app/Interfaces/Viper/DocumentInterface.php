@@ -20,7 +20,7 @@ interface DocumentInterface
      *
      * @return array Contiene los datos de todos los documentos en el sistema.
      */
-    public function getAllDocuments(array $queryParams = []);
+    public function getAllDocuments(array $queryParams = [], int $projectId);
     
     /**
      * Lista las URLs de los documentos almacenados en el sistema de archivos "Spaces".
@@ -78,4 +78,44 @@ interface DocumentInterface
      * @return array Contiene los datos de documentos en la carpeta especificada.
      */
     public function getDocumentsByFolder(int $folderId);
+
+    /**
+     * Obtiene los documentos por carpeta eliminados lógicamente del sistema Viper.
+     *
+     * @return array Contiene los datos de los documentos eliminados.
+     */
+    public function getDeletedDocumentsByFolder(int $folderId);
+
+    /**
+     * Obtiene los documentos por proyecto eliminados lógicamente del sistema Viper.
+     *
+     * @return array Contiene los datos de los documentos eliminados.
+     */
+    public function getDeletedDocumentsByProject(int $projectId);
+
+        /**
+     * Elimina lógicamente varios documentos del sistema Viper.
+     *
+     * @param array $documentIds Array de IDs de documentos a eliminar.
+     * @return array Contiene un mensaje indicando si los documentos fueron eliminados correctamente.
+     */
+    public function deleteMultipleDocuments(array $documentIds);
+
+    /**
+     * Elimina definitivamente varios documentos del sistema Viper.
+     *
+     * @param array $documentIds Array de IDs de documentos a eliminar definitivamente.
+     * @return array Contiene un mensaje indicando si los documentos fueron eliminados definitivamente correctamente.
+     */
+    public function deleteForceMultipleDocuments(array $documentIds);
+
+        /**
+     * Recupera lógicamente un documento eliminado por carpeta en el sistema Viper.
+     *
+     * @param int $documentId Identificador del documento a recuperar.
+     * @param int $newFolderId Identificador de la nueva carpeta donde se guardará el documento.
+     * @return array Contiene los datos del documento recuperado.
+     */
+    public function restoreDocument(int $documentId, int $folderId);
+
 }

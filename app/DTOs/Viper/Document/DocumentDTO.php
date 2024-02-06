@@ -29,4 +29,5 @@ class DocumentDTO extends DTO
     public ?string $url = '';
     public string $responsible;
     public int $folder_id;
+    public ?string $deleted_at = null;
 }

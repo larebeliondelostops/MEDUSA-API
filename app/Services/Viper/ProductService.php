@@ -52,7 +52,6 @@ class ProductService implements ProductInterface
             $data['specific_objective'] = new SpecificObjectiveDTO($data['specific_objective']);
             return new ProductDetailDTO($data);
         });
-
         return $productDTOs;
     }
 
@@ -137,7 +136,7 @@ class ProductService implements ProductInterface
 
         // Obtener la carpeta con project_id igual a $project y nombre 'Expediente Contrato de Interventoría'
         $folder = Folder::where('project_id', $project)
-                ->where('name', 'Expediente Contrato de Interventoría')
+                ->where('name', 'Ejecución de interventoría')
                 ->first();
 
         if ($folder->id) {
@@ -198,7 +197,7 @@ class ProductService implements ProductInterface
             $newSpecificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
             $oldScopeId = SpecificObjective::findOrFail($oldSpecificObjectiveId)->scope_id;
 
-            if ($newSpecificObjective->scope_id !== $oldScopeId) {
+            if ($newSpecificObjective->scope_id != $oldScopeId) {
                 throw new \Exception('El nuevo specificObjective no pertenece al mismo scope', 422);
             }
         }

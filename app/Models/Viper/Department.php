@@ -13,7 +13,7 @@ class Department extends Model
     protected $dates = ["deleted_at"];
     protected $fillable = [
         "name",
-        'location_id',
+        'coordinates_id',
     ] ;
 
     public function municipalities()
@@ -21,8 +21,13 @@ class Department extends Model
         return $this->hasMany(Municipality::class);
     }
 
+    public function coordinates()
+    {
+        return $this->belongsTo(Coordinates::class, 'coordinates_id');
+    }
+
     public function location()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->hasOne(Location::class);
     }
 }

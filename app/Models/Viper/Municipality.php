@@ -16,7 +16,7 @@ class Municipality extends Model
 
     protected $fillable = [
         "name",
-        "location_id",
+        "coordinates_id",
         "department_id",
     ];
 
@@ -25,8 +25,13 @@ class Municipality extends Model
         return $this->belongsTo(Department::class,"department_id");
     }
 
+    public function coordinates()
+    {
+        return $this->belongsTo(Coordinates::class, 'coordinates_id');
+    }
+
     public function location()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->hasOne(Location::class);
     }
 }

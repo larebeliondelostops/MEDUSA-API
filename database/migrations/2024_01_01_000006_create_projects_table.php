@@ -41,14 +41,8 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
 
-            $table->uuid('coordinates_id');
-            $table->foreign('coordinates_id')->references('id')->on('coordinates');
-
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
-
-            $table->unsignedBigInteger('municipality_id')->nullable();
-            $table->foreign('municipality_id')->references('id')->on('municipalities');
+            $table->integer('location_id');
+            $table->foreign('location_id')->references('id')->on('locations');
 
             $table->integer('beneficiaries');
             $table->string('planner', 255);

@@ -9,6 +9,7 @@ use App\Interfaces\Viper\ProjectMarkerInterface;
 use App\Interfaces\Viper\StateInterface;
 use App\Services\Viper\DeliverableService;
 use App\Services\Viper\DepartmentService;
+use App\Services\Viper\LocationService;
 use App\Services\Viper\MunicipalityService;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Services\Viper\ProjectMarkerService;
@@ -42,6 +43,7 @@ use App\Interfaces\Viper\ProductInterface;
 use App\Services\Viper\CoordinatesService;
 use App\Services\Viper\ProductService;
 use App\Interfaces\Viper\ActivityInterface;
+use App\Interfaces\Viper\LocationInterface;
 use App\Services\Viper\ActivityService;
 use App\Interfaces\Viper\PrecedenceInterface;
 use App\Services\Viper\PrecedenceService;
@@ -70,5 +72,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectMarkerInterface::class, ProjectMarkerService::class);
         $this->app->bind(ActivityInterface::class, ActivityService::class);
         $this->app->bind(PrecedenceInterface::class, PrecedenceService::class);
+        $this->app->bind(LocationInterface::class, LocationService::class);
     }
 }

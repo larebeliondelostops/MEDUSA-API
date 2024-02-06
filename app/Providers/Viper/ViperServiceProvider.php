@@ -45,6 +45,8 @@ use App\Interfaces\Viper\ActivityInterface;
 use App\Services\Viper\ActivityService;
 use App\Interfaces\Viper\PrecedenceInterface;
 use App\Services\Viper\PrecedenceService;
+use App\Interfaces\Viper\ProofInterface;
+use App\Services\Viper\ProofService;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -70,5 +72,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectMarkerInterface::class, ProjectMarkerService::class);
         $this->app->bind(ActivityInterface::class, ActivityService::class);
         $this->app->bind(PrecedenceInterface::class, PrecedenceService::class);
+        $this->app->bind(ProofInterface::class, ProofService::class);
     }
 }

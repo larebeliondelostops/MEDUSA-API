@@ -20,4 +20,6 @@ Route::prefix('/viper/folder')->group(function () {
     Route::delete('delete/{folderId}', [FolderController::class, 'destroy']);
     Route::put('update/{folderId}', [FolderController::class, 'update']);
     Route::post('create-multiple', [FolderController::class, 'storeMultiple']);
+    Route::post('create-contract', [FolderController::class, 'storeContract']);
+    Route::delete('delete/project/{projectId}', [FolderController::class, 'destroyByProject']); 
 });

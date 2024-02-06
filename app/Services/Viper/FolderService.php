@@ -180,7 +180,6 @@ class FolderService implements FolderInterface
      * Elimina una carpeta específica y todas sus subcarpetas en el sistema Viper.
      *
      * @param int $folderId Identificador único de la carpeta a eliminar.
-     * @return array Resultado de la operación que puede incluir mensajes de éxito o error.
      */
     public function deleteFolder(int $folderId)
     {
@@ -189,7 +188,6 @@ class FolderService implements FolderInterface
 
         // Eliminar todas las subcarpetas y documentos asociados
         $this->recursiveDelete($folder);
-        return ['message' => 'Carpeta y subcarpetas eliminadas correctamente'];
     }
 
     /**
@@ -295,4 +293,56 @@ class FolderService implements FolderInterface
             'subfolders' => $subfolders->all(),
         ];
     }
+
+
+    /**
+     * Crea una jerarquía de carpetas en el sistema Viper para un contrato.
+     *
+     * @param string $contractName Nombre del tipo de contrato.
+     * @param int $projectId Identificador del proyecto al que pertenecen las carpetas.
+     */
+    public function createFolderContract(string $contractName, int $projectId)
+    {
+        $foldersName = ['Ajustes de', 'Precontractual de', 'Contractual de', 'Ejecución de', 'Cierre de'];
+
+        $parentFolder = Folder::where('project_id', $projectId)
+        ->where('name', 'Contratos del proyecto')
+        ->first();
+
+        $folderParentData = [
+            'name' => $contractName,
+            'higher_folder_id' => $parentFolder->id,
+        ];
+
+        $folderDTO = new FolderDTO($folderParentData);
+        $contractFolderParent = $this->createNewFolder($folderDTO);
+
+
+        foreach ($foldersName as $folderName){
+            $validatedData = [
+                'name' => $folderName . ' ' . strtolower($contractName),
+                'higher_folder_id' => $contractFolderParent->id,
+            ];
+    
+            $folderDTO = new FolderDTO($validatedData);
+            $this->createNewFolder($folderDTO);
+        }
+    }
+
+    /**
+     * Elimina todas las carpetas y subcarpetas asociadas a un proyecto en el sistema Viper.
+     *
+     * @param int $projectId Identificador único del proyecto.
+     */
+    public function deleteAllFoldersByProjectId($projectId)
+    {
+        // Obtener todas las carpetas asociadas al proyecto
+        $folders = Folder::where('project_id', $projectId)->get();
+
+        // Iterar sobre cada carpeta y eliminarlas recursivamente
+        foreach ($folders as $folder) {
+            $this->recursiveDelete($folder);
+        }
+    }
+
 }

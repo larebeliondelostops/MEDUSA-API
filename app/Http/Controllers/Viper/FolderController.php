@@ -128,7 +128,7 @@ class FolderController extends BaseController
     {
         try {
             $result = $this->folderInterface->deleteFolder($folderId);
-            return response()->json($result);
+            return response()->json(['message' => 'Carpeta y subcarpetas eliminadas correctamente'], 200);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
@@ -159,6 +159,28 @@ class FolderController extends BaseController
 
 
     /**
+     * Almacenar varias carpetas con jerarquía asignadas a un contrato.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeContract(Request $request)
+    {
+        try {
+            $jsonData = $request->json()->all();
+            $projectId = $jsonData['project_id'];
+            $contractName = $jsonData['contract_name'];
+
+            $this->folderInterface->createFolderContract($contractName, $projectId);
+
+            return response()->json(['message' => 'Carpetas creadas exitosamente'], 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
      * Mostrar una lista de carpetas para un select.
      *
      * @return \Illuminate\Http\Response
@@ -173,6 +195,25 @@ class FolderController extends BaseController
             return response()->json([
                 'data' => $folders,
             ], 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
+     * Eliminar las carpetas asociadas a un proyecto especifico.
+     *
+     * @param  int  $projectId bpin del proyecto a borrar las carpetas
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByProject($projectId){
+        try {
+            // Utilizar el servicio para obtener todas las carpetas filtradas por el ID del proyecto
+            $folders = $this->folderInterface->deleteAllFoldersByProjectId($projectId);
+        
+            // Retornar la respuesta JSON con las carpetas obtenidas
+            return response()->json(['message' => 'Todas las carpetas y subcarpetas del proyecto fueron eliminadas correctamente'], 200);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }

@@ -136,7 +136,7 @@ class ProductService implements ProductInterface
 
         // Obtener la carpeta con project_id igual a $project y nombre 'Expediente Contrato de Interventoría'
         $folder = Folder::where('project_id', $project)
-                ->where('name', 'Expediente Contrato de Interventoría')
+                ->where('name', 'Ejecución de interventoría')
                 ->first();
 
         if ($folder->id) {

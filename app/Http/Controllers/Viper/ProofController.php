@@ -111,6 +111,24 @@ class ProofController extends BaseController
     }
 
     /**
+     * Obtiene todas las pruebas asociadas a un project específico.
+     *
+     * @param int $productId Identificador único del project.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de pruebas asociadas al project.
+     */
+    public function view(int $projectId)
+    {
+        try {
+            $proofs = $this->proofInterface->getAllProofsByProyect($projectId);
+            return response()->json([
+                'data' => $proofs,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
      * Obtiene una prueba específica por su identificador.
      *
      * @param int $id Identificador único de la prueba.

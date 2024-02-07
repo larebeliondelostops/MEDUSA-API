@@ -5,6 +5,8 @@ namespace App\Services\Viper;
 use App\DTOs\Viper\Proof\ProofDTO;
 use App\Interfaces\Viper\ProofInterface;
 use App\Models\Viper\Proof;
+use App\Models\Viper\Project;
+use App\DTOs\Viper\Product\ProductDTO;
 use Exception;
 use Storage;
 
@@ -98,6 +100,31 @@ class ProofService implements ProofInterface
         $proofDTOs = $proofs->map(function ($proof) {
             return new ProofDTO($proof->toArray());
         })->all();
+
+        return $proofDTOs;
+    }
+
+    /**
+     * Obtiene todas las pruebas asociadas a un proyecto específico.
+     *
+     * @param int $productId El identificador del proyecto.
+     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al proyecto.
+     */
+    public function getAllProofsByProyect(int $projectId): array
+    {
+        $project = Project::with('scope.specificObjectives.products')->find($projectId);
+
+        $productDTOs = $project->scope->specificObjectives->flatMap(function ($specificObjective) {
+            return $specificObjective->products->map(function ($product) {
+                return new ProductDTO($product->toArray());
+            });
+        });
+
+        $proofDTOs = [];
+
+        foreach ($productDTOs as $productDTO) {
+            $proofDTOs[] = $this->getAllProofsByProduct($productDTO->id);
+        }
 
         return $proofDTOs;
     }

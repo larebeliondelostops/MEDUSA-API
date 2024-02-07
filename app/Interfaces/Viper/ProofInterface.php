@@ -44,6 +44,13 @@ interface ProofInterface {
     public function getAllProofsByProduct(int $productId): array;
 
     /**
+     * Obtiene todas las pruebas asociadas a un pryecto específico.
+     *
+     * @param int $proyectId El identificador del proyecto.
+     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al proyecto.
+     */
+    public function getAllProofsByProyect(int $projectId): array;
+    /**
      * Obtiene una prueba específica por su identificador.
      *
      * @param int $id El identificador único de la prueba.

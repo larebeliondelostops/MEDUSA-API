@@ -134,7 +134,7 @@ class MenuController extends Controller
                             'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
                         ],
                         'mapRequest' => ['incidents', 'indicators'],
-                        'zoom' => 3
+                        'mapZoom' => 14
                     ];
                     break;
                 case 'neiva':
@@ -143,7 +143,8 @@ class MenuController extends Controller
                             'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
                             'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
                         ],
-                        'mapRequest' => []
+                        'mapRequest' => [],
+                        'mapZoom' => 14
                     ];
                     break;
                 case 'ditra':
@@ -153,7 +154,7 @@ class MenuController extends Controller
                             'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
                         ],
                         'mapRequest' => ['incidents', 'indicators'],
-                        'zoom' => 3
+                        'mapZoom' => 6
                     ];
                     break;
             }

@@ -5,8 +5,8 @@ use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
+use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\DepartmentInterface;
-use App\Interfaces\Viper\LocationInterface;
 use App\Models\Viper\Department;
 use App\Models\Viper\Municipality;
 
@@ -20,15 +20,15 @@ use App\Models\Viper\Municipality;
  * @package    App\Services\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v1.0.3
  */
 class DepartmentService implements DepartmentInterface
 {
-    private LocationInterface $locationInterface;
+    private CoordinatesInterface $coordinatesInterface;
 
-    public function __construct(LocationInterface $locationInterface)
+    public function __construct(CoordinatesInterface $coordinatesInterface)
     {
-        $this->locationInterface = $locationInterface;
+        $this->coordinatesInterface = $coordinatesInterface;
     }
 
     /**
@@ -37,17 +37,19 @@ class DepartmentService implements DepartmentInterface
      * @param DepartmentRequestDTO $departmentDTO DTO con la información del departamento a crear.
      * @return DepartmentRequestDTO DTO del departamento recién creado.
      */
-    public function createNewDepartment(DepartmentRequestDTO $departmentDTO) : DepartmentRequestDTO
+    public function createNewDepartment(DepartmentRequestDTO $departmentRequestDTO) : DepartmentRequestDTO
     {
-        $locationSaved = $this->locationInterface->createNewLocation($departmentDTO->location);
+        $departmentRequestDTO->coordinate = $this->coordinatesInterface
+                                            ->createNewCoordinates($departmentRequestDTO->coordinate);
         $newDepartment = new Department(
-            $departmentDTO->toArray() +
-            ['location_id' => $locationSaved->id]
+            $departmentRequestDTO->toArray() +
+            ['coordinate_id' => $departmentRequestDTO->coordinate->id]
         );
         $newDepartment->save();
+        $newDepartment->load('coordinate');
         return new DepartmentRequestDTO(
-            $newDepartment->toArray() +
-            ['location' => $locationSaved]);
+            $newDepartment->toArray()
+        );
     }
 
     /**
@@ -57,18 +59,11 @@ class DepartmentService implements DepartmentInterface
      */
     public function getAllDepartments() : array
     {
-        $departmentsGot = Department::with('location')->get();
+        $departmentsGot = Department::with('coordinate')->get();
         $departmentsDTO = $departmentsGot->transform(
-            function (Department $department)
-            {
-                $data = $department->toArray();
-                $data["location"] = new LocationRequestDTO($data["location"]);
-                return new DepartmentRequestDTO(
-                    $data
-                );
-            }
-        )->toArray();
-        return $departmentsDTO;
+            fn (Department $department) => new DepartmentRequestDTO($department->toArray())
+        );
+        return $departmentsDTO->toArray();
     }
 
     /**
@@ -108,11 +103,9 @@ class DepartmentService implements DepartmentInterface
      */
     public function getDepartmentById(int $id) : DepartmentRequestDTO
     {
-        $department = Department::with('location')->findOrFail($id);
-        $data = $department->toArray();
-        $data['location'] = new LocationRequestDTO($data['location']);
+        $department = Department::with('coordinate')->findOrFail($id);
         $departmentDTO = new DepartmentRequestDTO(
-            $data
+            $department->toArray()
         );
         return $departmentDTO;
     }
@@ -126,17 +119,16 @@ class DepartmentService implements DepartmentInterface
      */
     public function updateDepartment(DepartmentRequestDTO $departmentDTO, int $id) : DepartmentRequestDTO
     {
-        $department = Department::with('location')->findOrFail($id);
+        $department = Department::with('coordinate')->findOrFail($id);
+        $departmentDTO->coordinate = $this->coordinatesInterface->updateCoordinatesById(
+            $departmentDTO->coordinate,
+            $department->coordinate->id
+        );
         $department->fill($departmentDTO->toArray());
         $department->save();
-        $data = $department->toArray();
-        $data['location'] = $this->locationInterface->updateLocationById(
-            $departmentDTO->location,
-            $data['location']['id']
-        );
-        return new DepartmentRequestDTO(
-            $data
-        );
+        $department->load('coordinate');
+        $departmentDTO->fill($department->toArray());
+        return $departmentDTO;
     }
 
     /**
@@ -147,9 +139,8 @@ class DepartmentService implements DepartmentInterface
      */
     public function deleteDepartment(int $id) : DepartmentRequestDTO
     {
-        $department = Department::with('location')->findOrFail($id);
+        $department = Department::with('coordinate')->findOrFail($id);
         $data = $department->toArray();
-        $data['location'] = $this->locationInterface->deleteLocation($data['location']['id']);
         $departmentDeletedDTO = new DepartmentRequestDTO(
             $data
         );

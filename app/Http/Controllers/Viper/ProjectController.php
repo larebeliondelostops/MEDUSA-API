@@ -62,7 +62,6 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-            $validatedData['coordinates'] = new CoordinatesRequestDTO($validatedData['coordinates']);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);

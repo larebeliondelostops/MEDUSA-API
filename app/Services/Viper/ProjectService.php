@@ -16,6 +16,7 @@ use App\DTOs\Viper\Sector\SectorDTO;
 use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\CoordinatesInterface;
+use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
@@ -36,11 +37,11 @@ use Illuminate\Http\Request;
  */
 class ProjectService implements ProjectInterface
 {
-    private CoordinatesInterface $coordinatesInterface;
+    private LocationInterface $locationInterface;
 
-    public function __construct(CoordinatesInterface $coordinatesInterface)
+    public function __construct(LocationInterface $locationInterface)
     {
-        $this->coordinatesInterface = $coordinatesInterface;
+        $this->locationInterface = $locationInterface;
     }
 
      /**
@@ -54,12 +55,14 @@ class ProjectService implements ProjectInterface
     public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
         //primero se crea la ubicacion del proyecto para obtener su id
-        $coordinatesProjectDTO = $this->coordinatesInterface->createNewCoordinates($projectDTO->coordinates);
+        foreach($projectDTO->locations as &$location)
+            $location  = $this->locationInterface->createNewLocation($location);
+
 
         //una vez almacenada la ubicacion se almacena el proyecto
         $project = new Project(
             $projectDTO->toArray() +
-            ['coordinates_id' => $coordinatesProjectDTO->id ] // id de la locacion para el proyecto
+            ['coordinates_id' => $ProjectDTO->coordinate->id ] // id de la locacion para el proyecto
         );
         $project->save();
 

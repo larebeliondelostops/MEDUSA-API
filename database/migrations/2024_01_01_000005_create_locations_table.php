@@ -23,6 +23,9 @@ return new class extends Migration
             $table->id();
             $table->string('name', 64);
 
+            $table->string('project_bpin');
+            $table->foreign('project_bpin')->references('bpin')->on('projects');
+
             $table->uuid('coordinate_id');
             $table->foreign('coordinate_id')->references('id')->on('coordinates');
 

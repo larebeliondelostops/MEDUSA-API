@@ -10,6 +10,6 @@ class MunicipalityRequestDTO extends DTO
 {
     public ?int $id=null;
     public string $name;
-    public CoordinatesRequestDTO $coordinates;
+    public CoordinatesRequestDTO $coordinate;
     public int $department_id;
 }

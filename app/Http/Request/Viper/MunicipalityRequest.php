@@ -39,8 +39,11 @@ class MunicipalityRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'location' => 'required|array',
             'department_id' => 'required|integer',
+            'coordinate' => 'required|array',
+            'coordinate.type'=> 'required|string|max:32',
+            'coordinate.latitude'=> 'required|numeric',
+            'coordinate.longitude'=> 'required|numeric',
         ];
     }
 

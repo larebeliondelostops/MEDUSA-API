@@ -55,9 +55,9 @@ class MunicipalityController extends BaseController
         try
         {
             $data = $request->validated();
-            $data['location'] = new LocationRequestDTO($data['location']);
-            $municipalityDTO = new MunicipalityRequestDTO($data);
-            $newMunicipality = $this->municipalityInterface->createNewMunicipality($municipalityDTO);
+            $newMunicipality = $this->municipalityInterface->createNewMunicipality(
+                new MunicipalityRequestDTO($data)
+            );
             return response()->json([
                 "message" => "Municipio creado satisfactoriamente.",
                 "data" => $newMunicipality,
@@ -132,9 +132,10 @@ class MunicipalityController extends BaseController
         try
         {
             $dataUpdate = $request->validated();
-            $dataUpdate['location'] = new LocationRequestDTO($dataUpdate['location']);
-            $municipalityUpdate = new MunicipalityRequestDTO($dataUpdate);
-            $municipalityUpdated = $this->municipalityInterface->updateMunicipality($municipalityUpdate, $id);
+            $municipalityUpdated = $this->municipalityInterface->updateMunicipality(
+                new MunicipalityRequestDTO($dataUpdate),
+                $id
+            );
             return response()->json([
                 "message" => "Municipio actualizado satisfactoriamente.",
                 "data" => $municipalityUpdated,

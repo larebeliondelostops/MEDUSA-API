@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return string
      */
-    protected $connection = 'villavicencio';
+    protected $connection = 'ditra';
 
     /**
      * Run the migrations.
@@ -20,11 +20,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Indicators', function (Blueprint $table) {
+        Schema::create('cameras', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->string('Description');
+            $table->uuid('uuid')->unique();
+            $table->string('name');
+            $table->string('address');
+            $table->text('url');
+            $table->json('pointCoordinates');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 
@@ -35,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Indicators');
+        Schema::dropIfExists('cameras');
     }
 };

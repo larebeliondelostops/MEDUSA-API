@@ -16,6 +16,8 @@ use App\Strategies\StrategyPolygons\Villavicencio\StrategyEvents;
 
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
 
+use App\Strategies\StrategiesPoints\Ditra\StrategyIncidents;
+
 
 class AllDataValuesVillavicencio
 {
@@ -29,7 +31,8 @@ class AllDataValuesVillavicencio
         3 => StrategyHealth::class,
         4 => StrategyPollingPlace::class,
         5 => StrategyFiberPoints::class,
-        8 => IncidentController::class,
+        6 => StrategyIncidents::class,
+        8 => StrategyIncidents::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
         55 => StrategyEvents::class,

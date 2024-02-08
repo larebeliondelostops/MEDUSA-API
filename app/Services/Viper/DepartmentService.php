@@ -126,7 +126,7 @@ class DepartmentService implements DepartmentInterface
         );
         $department->fill($departmentDTO->toArray());
         $department->save();
-        $department->load('coordinate');
+        unset($department['coordinate']); // eliminamos los datos desactualizados
         $departmentDTO->fill($department->toArray());
         return $departmentDTO;
     }

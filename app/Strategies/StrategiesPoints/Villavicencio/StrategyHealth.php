@@ -153,9 +153,16 @@ class StrategyHealth implements HealthInterface
                         'from' => $health->firstItem(),
                         'to' => $health->lastItem(),
                     ],
-                    'ableCreate' => false
+                    'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
                 'code' => '1001',

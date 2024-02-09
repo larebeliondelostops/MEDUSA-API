@@ -84,6 +84,61 @@ class MenuBarSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            // Viper
+            [
+                'id' => 100,
+                'marker' => 100,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        /**
+         * Marcadores para ditra
+         */
+        DB::connection('ditra')->table('bar_menu')->insert([
+            [
+                'id' => 1,
+                'marker' => 8,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'marker' => 53,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'marker' => 51,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 4,
+                'marker' => 52,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 5,
+                'marker' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 6,
+                'marker' => 50,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 7,
+                'marker' => 54,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
         /**

@@ -70,6 +70,8 @@ WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y libzip-dev zip && docker-php-ext-install zip
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 USER root
 RUN echo 'ignicion ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER $user

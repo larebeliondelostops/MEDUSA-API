@@ -47,10 +47,10 @@ class MenuSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'Gobierno',
-                'path' => 'markers/government',
+                'name' => 'Viper',
+                'path' => 'viper',
                 'icon' => 'assured_workload',
-                'slug' => 'government',
+                'slug' => 'viper',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -72,6 +72,30 @@ class MenuSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+        ]);
+
+        /**
+         * Marcadores para ditra
+         */
+        DB::connection('ditra')->table('menu')->insert([
+            [
+                'id' => 1,
+                'name' => 'Mapa',
+                'path' => 'map',
+                'icon' => 'public',
+                'slug' => 'map',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'name' => 'Reportes',
+                'path' => 'reports',
+                'icon' => 'query_stats',
+                'slug' => 'report',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
 
         /**

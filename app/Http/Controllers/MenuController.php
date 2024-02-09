@@ -123,7 +123,7 @@ class MenuController extends Controller
     {
         try{
 
-            $sub_domain = config("database.default");
+            $sub_domain = tenant('id');
 
             switch ($sub_domain)
             {
@@ -133,7 +133,8 @@ class MenuController extends Controller
                             'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
                             'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
                         ],
-                        'mapRequest' => ['incidents', 'indicators']
+                        'mapRequest' => ['incidents', 'indicators'],
+                        'mapZoom' => 14
                     ];
                     break;
                 case 'neiva':
@@ -142,7 +143,18 @@ class MenuController extends Controller
                             'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
                             'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
                         ],
-                        'mapRequest' => []
+                        'mapRequest' => [],
+                        'mapZoom' => 14
+                    ];
+                    break;
+                case 'ditra':
+                    $data = [
+                        'mapCenter' => [
+                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
+                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
+                        ],
+                        'mapRequest' => ['incidents', 'indicators'],
+                        'mapZoom' => 6
                     ];
                     break;
             }

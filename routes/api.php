@@ -7,6 +7,7 @@ use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ImportKMZController;
+use App\Http\Controllers\NotificationAppController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,31 +32,48 @@ Route::get('/', function () {
     return response()->json($data, 200);
 });
 
-Route::get('/heatmap', function () {
-    $data = CriminalActs::select('coordinates')->get();
+// Route::get('/heatmap', function () {
+//     $data = CriminalActs::select('coordinates')->get();
 
-    $features = [];
-    foreach ($data as $row) {
-        $coordinates = json_decode($row->coordinates);
-        $feature = [
-            "type" => "Feature",
-            "geometry" => [
-                "type" => "Point",
-                "coordinates" => [
-                    $coordinates->lat,
-                    $coordinates->lng
-                ]
-            ]
-        ];
-        $features[] = $feature;
-    }
+//     $features = [];
+//     foreach ($data as $row) {
+//         $coordinates = json_decode($row->coordinates);
+//         $feature = [
+//             "type" => "Feature",
+//             "geometry" => [
+//                 "type" => "Point",
+//                 "coordinates" => [
+//                     $coordinates->lat,
+//                     $coordinates->lng
+//                 ]
+//             ]
+//         ];
+//         $features[] = $feature;
+//     }
 
-    $geojson = [
-        "type" => "FeatureCollection",
-        "features" => $features
-    ];
+//     $geojson = [
+//         "type" => "FeatureCollection",
+//         "features" => $features
+//     ];
+//     return response()->json($geojson, 200);
+// });
 
-    return response()->json($geojson, 200);
+Route::get('/correlacionador', function (Request $request) {
+    // Obtén el valor de la variable 'query' de la petición
+        $query = $request->input('query');
+
+        // Verifica si se proporcionó un valor para 'query'
+        if (!$query) {
+            return response()->json(['error' => 'La variable "query" es requerida.'], 400);
+        }
+
+        // Llama al endpoint externo con la variable 'query'
+        $response = Http::get('https://probabilistico.medusaapi.online/correlacionador', [
+            'query' => $query,
+        ]);
+
+        // Devuelve la respuesta del endpoint externo
+        return $response->json();
 });
 
 
@@ -109,18 +127,7 @@ Route::get('/ver-video4', function () {
     return response()->file($filePath);
 });
 
-Route::get('/correlacionador', function () {
-    $query = request('query');
-    $page = request('page', 1);
-
-    // Construye la URL de la API con los parámetros.
-    $apiUrl = "https://probabilistico.medusaapi.online/correlacionador?query=$query&page=$page";
-
-    // Realiza una solicitud HTTP GET a la API.
-    $response = Http::get($apiUrl);
-
-    // Decodifica la respuesta JSON.
-    $data = $response->json();
-
-    return $data;
-});
+Route::post('/notify/{deviceToken}/{message}', [NotificationAppController::class, 'sendNotification']);
+Route::post('/notify/add-device', [NotificationAppController::class, 'addDevice']);
+Route::post('/notify/update-notification-status', [NotificationAppController::class, 'updateNotificationStatus']);
+Route::get('/notify/device-info/{username}', [NotificationAppController::class, 'getDeviceInfo']);

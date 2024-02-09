@@ -51,7 +51,6 @@ class AllDataController extends Controller
      */
     public function __construct()
     {
-        $this->value = AllDataContext::VALUE[config("database.default")];
     }
 
     /**
@@ -62,6 +61,9 @@ class AllDataController extends Controller
     public function allPoints()
     {
         try {
+
+            $this->getSubDomain();
+
             $this->pointsMarkers = Marker::whereIn('marker_type', [1,4])->pluck('id')->toArray();
 
             foreach ($this->pointsMarkers as $key) {
@@ -76,7 +78,7 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => 'Error En La Generación De La Solicitud',
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -84,8 +86,10 @@ class AllDataController extends Controller
     public function allLines()
     {
         try {
+            $this->getSubDomain();
+            
             $this->LinesMarkers = Marker::whereIn('marker_type', [2,4])->pluck('id')->toArray();
-
+            
             foreach ($this->LinesMarkers as $key) {
                 $data = $this->value::STRATEGY_LINES[$key]::all();
                 $data = json_decode($data->content(), true);
@@ -111,6 +115,8 @@ class AllDataController extends Controller
     public function allPolygons()
     {
         try {
+            $this->getSubDomain();
+
             $this->polygonsMarkers = Marker::where('marker_type', 3)->pluck('id')->toArray();
 
             foreach ($this->polygonsMarkers as $key) {
@@ -135,6 +141,8 @@ class AllDataController extends Controller
     public function getInfoPoint()
     {
         try {
+            $this->getSubDomain();
+
             $uuid = request()->input('id');
             $markerType = request()->input('markerType');
 
@@ -149,8 +157,13 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => 'Error En La Generación De La Solicitud'.$exception->getMessage()
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public function getSubDomain()
+    {
+        $this->value = AllDataContext::VALUE[tenant('id')];
     }
 }

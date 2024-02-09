@@ -24,7 +24,6 @@ class CRUDController extends Controller
      */
     public function __construct()
     {
-        $this->value = AllDataContext::VALUE[config("database.default")];
     }
 
     /**
@@ -35,6 +34,7 @@ class CRUDController extends Controller
     public function all($slug)
     {
         try {
+            $this->getSubDomain();
 
             $this->slugs = Slug::where('name', $slug)->first();
 
@@ -59,6 +59,9 @@ class CRUDController extends Controller
     public function allTable(Request $request, $slug)
     {
         try {
+
+            $this->getSubDomain();
+
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
@@ -79,6 +82,9 @@ class CRUDController extends Controller
     public function get($slug, $id)
     {
         try {
+
+            $this->getSubDomain();
+
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
@@ -99,6 +105,9 @@ class CRUDController extends Controller
     public function store(Request $request, $slug)
     {
         try {
+
+            $this->getSubDomain();
+
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
@@ -119,6 +128,9 @@ class CRUDController extends Controller
     public function update(Request $request, $slug, $id)
     {
         try {
+
+            $this->getSubDomain();
+
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
@@ -139,6 +151,9 @@ class CRUDController extends Controller
     public function destroy($slug, $id)
     {
         try {
+
+            $this->getSubDomain();
+
             $this->slugs = Slug::where('name', $slug)->first();
 
             $strategy = $this->value::STRATEGY[$this->slugs->id];
@@ -154,5 +169,10 @@ class CRUDController extends Controller
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public function getSubDomain()
+    {
+        $this->value = AllDataContext::VALUE[tenant('id')];
     }
 }

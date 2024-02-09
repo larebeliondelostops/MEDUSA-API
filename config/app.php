@@ -178,6 +178,11 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /**
+         * Multi-Tenancy
+         */
+        App\Providers\TenancyServiceProvider::class,
+
+        /**
          * Spatie
          */
         Spatie\Permission\PermissionServiceProvider::class,
@@ -187,6 +192,13 @@ return [
          * Autenticación por JWT
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+
+        /**
+         * Viper Providers
+         */
+
+        App\Providers\Viper\ViperServiceProvider::class,
     ],
 
     /*

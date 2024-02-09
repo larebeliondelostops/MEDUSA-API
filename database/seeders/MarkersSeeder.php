@@ -118,6 +118,17 @@ class MarkersSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            // viper
+            [
+                'id' => 100,
+                'marker_type' => 1,
+                'name' => 'Proyectos',
+                'icon' => 'location_on',
+                'color' => 'blue',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
         ]);
 
         /**

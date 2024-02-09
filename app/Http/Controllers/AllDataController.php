@@ -78,7 +78,7 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => 'Error En La Generación De La Solicitud',
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -157,7 +157,7 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => 'Error En La Generación De La Solicitud'.$exception->getMessage()
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }

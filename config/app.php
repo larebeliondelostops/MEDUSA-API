@@ -192,6 +192,13 @@ return [
          * Autenticación por JWT
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+
+        /**
+         * Viper Providers
+         */
+
+        App\Providers\Viper\ViperServiceProvider::class,
     ],
 
     /*

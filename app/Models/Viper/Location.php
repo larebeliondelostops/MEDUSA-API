@@ -13,6 +13,7 @@ class Location extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'name',
+        'project_bpin',
         'coordinate_id',
         'department_id',
         'municipality_id'
@@ -38,6 +39,11 @@ class Location extends Model
                     $location->coordinate->delete();
             }
         );
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_bpin');
     }
 
     public function coordinate()

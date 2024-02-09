@@ -5,9 +5,7 @@ namespace App\Services\Viper;
 // Librerias del modulo viper
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
-use App\DTOs\Viper\Department\DepartmentDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
-use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
@@ -15,7 +13,6 @@ use App\DTOs\Viper\Project\ProjectSummaryDTO;
 use App\DTOs\Viper\Sector\SectorDTO;
 use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
-use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;

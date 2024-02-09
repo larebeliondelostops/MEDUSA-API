@@ -41,9 +41,6 @@ return new class extends Migration
             $table->unsignedBigInteger('sector_id');
             $table->foreign('sector_id')->references('id')->on('sectors');
 
-            $table->integer('location_id');
-            $table->foreign('location_id')->references('id')->on('locations');
-
             $table->integer('beneficiaries');
             $table->string('planner', 255);
             $table->date('execution_approval_date');

@@ -25,6 +25,7 @@ class LocationRequest extends FormRequest
         "POST"=> [
             "create" => [
                 'name' => 'required|string|max:64',
+                'project_bpin' => 'required|string|max:255',
                 'coordinate' => 'required|array',
                 'department_id' => 'required|integer',
                 'municipality_id' => 'required|integer',
@@ -33,6 +34,7 @@ class LocationRequest extends FormRequest
         "PUT" => [
             "update" => [
                 'name' => 'required|string|max:64',
+                'project_bpin' => 'required|string|max:255',
                 'coordinate' => 'required|array',
                 'department_id' => 'required|integer',
                 'municipality_id' => 'required|integer',

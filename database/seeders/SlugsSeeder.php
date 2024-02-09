@@ -65,6 +65,48 @@ class SlugsSeeder extends Seeder
         ]);
 
         /**
+         * Marcadores para ditra
+         */
+        DB::connection('ditra')->table('slugs')->insert([
+            [
+                'id' => 1,
+                'name' => 'alarm',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+              'id' => 2,
+              'name' => 'cai',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 3,
+              'name' => 'entity',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 4,
+              'name' => 'pollingPlace',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 50,
+              'name' => 'camera',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 54,
+              'name' => 'movementUnity',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+        ]);
+
+        /**
          * Marcadores para neiva
          */
         DB::connection('neiva')->table('slugs')->insert([

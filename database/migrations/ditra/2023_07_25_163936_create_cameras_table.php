@@ -7,23 +7,29 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * Connection name.
+     *
+     * @return string
+     */
+    protected $connection = 'ditra';
+
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('cameras', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone_number', 20)->nullable();
-            $table->string('address')->nullable();
-            $table->string('avatar')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('address');
+            $table->text('url');
+            $table->json('pointCoordinates');
             $table->timestamps();
+
+            $table->index('uuid');
         });
     }
 
@@ -34,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cameras');
     }
 };

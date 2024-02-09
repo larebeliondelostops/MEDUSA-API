@@ -178,6 +178,11 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /**
+         * Multi-Tenancy
+         */
+        App\Providers\TenancyServiceProvider::class,
+
+        /**
          * Spatie
          */
         Spatie\Permission\PermissionServiceProvider::class,

@@ -14,6 +14,6 @@ class AllDataContext
     const VALUE = [
         'neiva' => AllDataValuesNeiva::class,
         'villavicencio' => AllDataValuesVillavicencio::class,
-        'dev' => AllDataValuesVillavicencio::class,
+        'ditra' => AllDataValuesVillavicencio::class
     ];
 }

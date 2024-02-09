@@ -1273,7 +1273,7 @@ class DataDitraTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $dataItem) {
-            DB::table('data_ditra')->insert([
+            DB::connection('ditra')->table('data_ditra')->insert([
                 'year' => $dataItem['ANIO '],
                 'occurrence_date' => $dataItem['FECHA_OCURRENCIA'],
                 'month' => $dataItem['MES '],

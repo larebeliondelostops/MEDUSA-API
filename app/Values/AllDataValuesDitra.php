@@ -2,7 +2,10 @@
 
 namespace App\Values;
 
+use App\Strategies\StrategiesPoints\Ditra\StrategyTolls;
 use App\Strategies\StrategiesPoints\Ditra\StrategyIncidents;
+use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
 
 class AllDataValuesDitra
 {
@@ -11,7 +14,10 @@ class AllDataValuesDitra
      *
      */
     const STRATEGY = [
-        8 => StrategyIncidents::class,
+        1 => StrategyIncidents::class,
+        2 => StrategyTolls::class,
+        50 => StrategyCameras::class,
+        54 => StrategyMovementUnitis::class,
     ];
 
     /**

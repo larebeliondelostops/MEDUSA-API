@@ -31,8 +31,15 @@ class StrategyIncidents implements PointsInterface
 
                 return $incident;
             });
+
             $datosDataDitra = StrategyDataDitra::all();
-            $incidents = $incidents->merge($datosDataDitra);
+
+            if (!isset($incidents)) {
+                $incidents = $incidents->merge($datosDataDitra);
+            } else {
+                $incidents = $datosDataDitra;
+            }
+
             return Response::json($incidents, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

@@ -7,6 +7,7 @@ use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ImportKMZController;
+use App\Http\Controllers\NotificationAppController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -125,3 +126,8 @@ Route::get('/ver-video4', function () {
     $filePath = Storage::disk('public')->path($videoPath);
     return response()->file($filePath);
 });
+
+Route::post('/notify/{deviceToken}/{message}', [NotificationAppController::class, 'sendNotification']);
+Route::post('/notify/add-device', [NotificationAppController::class, 'addDevice']);
+Route::post('/notify/update-notification-status', [NotificationAppController::class, 'updateNotificationStatus']);
+Route::get('/notify/device-info/{username}', [NotificationAppController::class, 'getDeviceInfo']);

@@ -23,6 +23,7 @@ return new class extends Migration
         Schema::create('data_ditra', function (Blueprint $table) {
             $table->id();
             $table->integer('year')->nullable();
+            $table->string('uuid')->nullable();
             $table->dateTime('occurrence_date')->nullable();
             $table->string('month')->nullable();
             $table->string('day')->nullable();

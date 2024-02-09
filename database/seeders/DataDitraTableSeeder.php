@@ -273,7 +273,7 @@ class DataDitraTableSeeder extends Seeder
                     "LICENCIA": "NO",
                     "TIPO": "VOLCAMIENTO LATERAL",
                     "HIPOTESIS": "PERDIDA DEL CONTROL DEL VEHICULO",
-                    "POSIBLE_OCURRENCIA ": "NO REGISTRA"
+                    "POSIBLE_OCURRENCIA ": null
                 },
                 {
                     "ANIO ": 2023,
@@ -315,7 +315,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "04:00:00",
                     "RANGO_HORA": "03:00 a 05:59",
                     "SECCIONAL": "DEVAL",
-                    "COORDENADAS": " 4.084260, -76.197099",
+                    "COORDENADAS": "4.084260, -76.197099",
                     "ADSCRITO": "DEQUI",
                     "IDENTIFICACION": 1116241209,
                     "GRADO": "PT",
@@ -443,7 +443,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "05:45:00",
                     "RANGO_HORA": "03:00 a 05:59",
                     "SECCIONAL": "DECAU",
-                    "COORDENADAS": " 3.012264, -76.484005",
+                    "COORDENADAS": "3.012264, -76.484005",
                     "ADSCRITO": "DECAU",
                     "IDENTIFICACION": 1007616046,
                     "GRADO": "PT",
@@ -1083,7 +1083,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "23:09:00",
                     "RANGO_HORA": "21:00 a 23:59",
                     "SECCIONAL": "DEANT",
-                    "COORDENADAS": " 6165587, -75.545110",
+                    "COORDENADAS": "6165587, -75.545110",
                     "ADSCRITO": "DEANT",
                     "IDENTIFICACION": 1054986335,
                     "GRADO": "PT",
@@ -1115,7 +1115,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "23:09:00",
                     "RANGO_HORA": "21:00 a 23:59",
                     "SECCIONAL": "DEANT",
-                    "COORDENADAS": " 6.165587, -75.545110",
+                    "COORDENADAS": "6.165587, -75.545110",
                     "ADSCRITO": "DEANT",
                     "IDENTIFICACION": 1035910012,
                     "GRADO": "SI",
@@ -1273,8 +1273,10 @@ class DataDitraTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $dataItem) {
+            $uuid = Str::uuid();
             DB::connection('ditra')->table('data_ditra')->insert([
                 'year' => $dataItem['ANIO '],
+                'uuid' => $uuid,
                 'occurrence_date' => $dataItem['FECHA_OCURRENCIA'],
                 'month' => $dataItem['MES '],
                 'day' => $dataItem['DIA'],

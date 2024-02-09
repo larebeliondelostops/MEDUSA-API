@@ -34,7 +34,6 @@ class AllDataValuesVillavicencio
         4 => StrategyPollingPlace::class,
         5 => StrategyFiberPoints::class,
         6 => StrategyIncidents::class,
-        8 => StrategyIncidents::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
         55 => StrategyEvents::class,

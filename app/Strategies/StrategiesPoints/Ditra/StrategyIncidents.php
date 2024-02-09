@@ -6,7 +6,9 @@ use Exception;
 use App\Models\Incident;
 use App\Strategies\Interface\PointsInterface;
 use Illuminate\Support\Facades\Log;
+use App\Models\DataDitra;
 use Illuminate\Support\Facades\Response;
+use Psy\CodeCleaner\IssetPass;
 
 class StrategyIncidents implements PointsInterface
 {
@@ -19,7 +21,6 @@ class StrategyIncidents implements PointsInterface
     {
         try {
             $incidents = Incident::all();
-
             $incidents = $incidents->map(function ($item) {
 
                 $incident = [
@@ -30,7 +31,8 @@ class StrategyIncidents implements PointsInterface
 
                 return $incident;
             });
-
+            $datosDataDitra = StrategyDataDitra::all();
+            $incidents = $incidents->merge($datosDataDitra);
             return Response::json($incidents, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -42,17 +44,21 @@ class StrategyIncidents implements PointsInterface
         }
     }
 
+
+
     public static function getInfoPoint($uuid)
     {
         try {
-            $incidents = Incident::where('uuid', $uuid)->first();
-
-            $incidents = [
-                'title' => $incidents->name,
-                'properties' => []
-            ];
-
-            return Response::json($incidents, 200, [], JSON_PRETTY_PRINT);
+            $data = Incident::where('uuid', $uuid)->first();
+            if (isset($data)) {
+                $data = [
+                    'title' => $data->name,
+                    'properties' => []
+                ];
+            }else{
+                $data = StrategyDataDitra::getInfoPoint($uuid);
+            }
+            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

@@ -71,5 +71,6 @@ class DatabaseSeeder extends Seeder
 
         //data_ditra
         $this->call(DataDitraTableSeeder::class);
+        $this->call(ToolboothTableSeeder::class);
     }
 }

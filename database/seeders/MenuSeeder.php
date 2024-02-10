@@ -75,6 +75,30 @@ class MenuSeeder extends Seeder
         ]);
 
         /**
+         * Marcadores para ditra
+         */
+        DB::connection('ditra')->table('menu')->insert([
+            [
+                'id' => 1,
+                'name' => 'Mapa',
+                'path' => 'map',
+                'icon' => 'public',
+                'slug' => 'map',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'name' => 'Reportes',
+                'path' => 'reports',
+                'icon' => 'query_stats',
+                'slug' => 'report',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        ]);
+
+        /**
          * Marcadores para neiva
          */
         DB::connection('neiva')->table('menu')->insert([

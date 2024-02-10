@@ -6,6 +6,7 @@ use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\DTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
+use App\DTOs\Viper\Project\ProjectSummaryDTO;
 
 /**
  * Clase base DTO (Data Transfer Object).
@@ -23,6 +24,7 @@ class LocationDetailDTO extends DTO
 {
     public int $id; // id con la que fue almacenada la locacion
     public string $name; // nombre de la locación
+    public ProjectSummaryDTO $project; // bpin del proyecto al que pertenece la locación
     public CoordinatesRequestDTO $coordinate; // coordenadas de la locación
     public DepartmentRequestDTO $department; // departamento de la locación
     public MunicipalityRequestDTO $municipality; // municipio de la locación

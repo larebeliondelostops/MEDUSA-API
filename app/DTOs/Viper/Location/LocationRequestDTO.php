@@ -21,7 +21,7 @@ class LocationRequestDTO extends DTO
 {
     public ?int $id = null; // id de la locacion
     public string $name; // nombre de la locación
-    public string $project_bpin; // bpin del proyecto al que pertenece la locaci
+    public ?string $project_bpin = null; // bpin del proyecto al que pertenece la locación
     public CoordinatesRequestDTO $coordinate; // coordenadas de la lacacion
     public int $department_id; // llave foránea del departamento al que pertenece
     public int $municipality_id; // llave foránea al municipio al que pertenece

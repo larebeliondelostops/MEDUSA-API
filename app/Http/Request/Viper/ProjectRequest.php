@@ -50,13 +50,15 @@ class ProjectRequest extends FormRequest
 
             'locations' => 'required|array', // array con las locaciones del proyecto
             'locations.*.name' =>'required|string|max:64',
-            'locations.*.coordinates' => 'required|array',
-            'locations.*.coordinates.type' => 'required|string:max:32',
-            'locations.*.coordinates.latitude' => 'required|numeric',
-            'locations.*.coordinates.longitude' => 'required|numeric',
 
-            'department_id' => 'required|integer',
-            'municipality_id' => 'nullable|integer',
+            'locations.*.coordinate' => 'required|array',
+            'locations.*.coordinate.type' => 'required|string|max:32',
+            'locations.*.coordinate.latitude' => 'required|numeric',
+            'locations.*.coordinate.longitude' => 'required|numeric',
+
+            'locations.*.department_id' => 'required|numeric',
+            'locations.*.municipality_id' => 'required|numeric',
+
             'beneficiaries' => 'required|integer',
             'planner' => 'required|string|max:255',
             'execution_approval_date' => 'required|date',
@@ -84,7 +86,7 @@ class ProjectRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Error in the required parameters.'.$validator->err,
+            'message' => 'Error in the required parameters.',
         ], 400));
     }
 }

@@ -26,7 +26,12 @@ class LocationRequest extends FormRequest
             "create" => [
                 'name' => 'required|string|max:64',
                 'project_bpin' => 'required|string|max:255',
+
                 'coordinate' => 'required|array',
+                'coordinate.type'=> 'required|string|max:32',
+                'coordinate.latitude'=> 'required|numeric',
+                'coordinate.longitude'=> 'required|numeric',
+
                 'department_id' => 'required|integer',
                 'municipality_id' => 'required|integer',
             ],
@@ -35,7 +40,12 @@ class LocationRequest extends FormRequest
             "update" => [
                 'name' => 'required|string|max:64',
                 'project_bpin' => 'required|string|max:255',
+
                 'coordinate' => 'required|array',
+                'coordinate.type'=> 'required|string|max:32',
+                'coordinate.latitude'=> 'required|numeric',
+                'coordinate.longitude'=> 'required|numeric',
+
                 'department_id' => 'required|integer',
                 'municipality_id' => 'required|integer',
             ]

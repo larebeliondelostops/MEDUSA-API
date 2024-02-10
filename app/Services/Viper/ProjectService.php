@@ -6,6 +6,7 @@ namespace App\Services\Viper;
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
+use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
@@ -51,22 +52,29 @@ class ProjectService implements ProjectInterface
      */
     public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
     {
-        //primero se crea la ubicacion del proyecto para obtener su id
-        foreach($projectDTO->locations as &$location)
-            $location  = $this->locationInterface->createNewLocation($location);
 
-
-        //una vez almacenada la ubicacion se almacena el proyecto
+        /**
+         * Se almacena el proyecto para poder relacionarlo
+         * con sus locaciones una vez registrado
+         */
         $project = new Project(
-            $projectDTO->toArray() +
-            ['coordinates_id' => $ProjectDTO->coordinate->id ] // id de la locacion para el proyecto
+            $projectDTO->toArray()
         );
         $project->save();
 
-        return new ProjectRequestDTO(
-            $project->toArray() +
-            ['coordinates'=> $coordinatesProjectDTO]
-        );
+        /**
+         * Se registran todas las locaciones y se relacionan
+         * con el proyecto ya registrado
+         */
+        foreach($projectDTO->locations as &$location)
+        {
+            $location['project_bpin'] = $projectDTO->bpin;
+            $location  = $this->locationInterface->createNewLocation(
+                new LocationRequestDTO($location)
+            );
+        }
+
+        return $projectDTO;
     }
 
      /**

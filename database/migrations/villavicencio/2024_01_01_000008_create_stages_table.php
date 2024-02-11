@@ -4,15 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSectorsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    
     /**
      * Run the migrations.
      *
@@ -20,10 +13,11 @@ class CreateSectorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sectors', function (Blueprint $table) {
+        Schema::create('stages', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +28,6 @@ class CreateSectorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sectors');
+        Schema::dropIfExists('stages');
     }
-}
+};

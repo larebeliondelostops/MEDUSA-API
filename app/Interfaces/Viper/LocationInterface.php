@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Interfaces\Viper;
+
+use App\DTOs\Viper\Location\LocationDetailDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 
 interface LocationInterface
 {
-    public function createNewLocation(LocationRequestDTO $locationtDTO) : LocationRequestDTO;
-    public function updateLocationById(LocationRequestDTO $locationDTO, string $id ) : LocationRequestDTO;
-    public function getLocationById(string $id) : LocationRequestDTO;
-    public function deleteLocation(string $id) : LocationRequestDTO;
-
+    public function createNewLocation(LocationRequestDTO $locationRequestDTO) : LocationDetailDTO;
+    public function updateLocationById(LocationRequestDTO $locationRequestDTO, int $locationId) : LocationDetailDTO;
+    public function getLocationById(int $id) : LocationDetailDTO;
+    public function deleteLocationById(int $id) : LocationDetailDTO;
 }

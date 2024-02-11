@@ -1,43 +1,59 @@
 <?php
 
 namespace App\Services\Viper;
+
+use App\DTOs\Viper\Location\LocationDetailDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
+use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\LocationInterface;
 use App\Models\Viper\Location;
-use Ramsey\Uuid\Uuid;
 
 class LocationService implements LocationInterface
 {
-    public function createNewLocation(LocationRequestDTO $locationDTO) : LocationRequestDTO
+    private CoordinatesInterface $coordiantesinterface;
+
+    public function __construct( CoordinatesInterface $coordinatesInterface )
     {
-        $locationDTO->id = Uuid::uuid4()->toString();
-        $location = new Location($locationDTO->toArray());
+        $this->coordiantesinterface = $coordinatesInterface;
+    }
+
+    public function createNewLocation(LocationRequestDTO $locationRequestDTO ) : LocationDetailDTO
+    {
+        $locationRequestDTO->coordinate = $this->coordiantesinterface
+                                        ->createNewCoordinates($locationRequestDTO->coordinate);
+        $location = new Location(
+            $locationRequestDTO->toArray() +
+            ['coordinate_id' => $locationRequestDTO->coordinate->id]
+        );
         $location->save();
-        $locationSavedDTO = new LocationRequestDTO($location->toArray());
-        return $locationSavedDTO;
+        $location->load('coordinate', 'department', 'municipality');
+        return new LocationDetailDTO($location->toArray());
     }
 
-    public function updateLocationById(LocationRequestDTO $locationDTO, string $id) : LocationRequestDTO
+    public function updateLocationById(LocationRequestDTO $locationRequestDTO, int $locationId) : LocationDetailDTO
     {
-        $location = Location::findOrFail($id);
-        $location->fill($locationDTO->toArray(except:['id']));
-        $location->save();
-        $locationUpdatedDTO = new LocationRequestDTO($location->toArray());
-        return $locationUpdatedDTO;
+        $locationGot = Location::with('coordinate',)->findOrFail($locationId);
+        $this->coordiantesinterface->updateCoordinatesById(
+            $locationRequestDTO->coordinate,
+            $locationGot->coordinate->id
+        );
+        $locationGot->fill($locationRequestDTO->toArray());
+        $locationGot->save();
+        $locationGot->load('coordinate', 'department', 'municipality');
+        return new LocationDetailDTO($locationGot->toArray());
     }
 
-    public function getLocationById(string $id) : LocationRequestDTO
+    public function getLocationById(int $id) : LocationDetailDTO
     {
-        $location = Location::findOrFail($id);
-        $locationGotDTO = new LocationRequestDTO($location->toArray());
-        return $locationGotDTO;
+        $location = Location::with('department', 'municipality', 'coordinate')->findOrFail($id);
+        return new LocationDetailDTO($location->toArray());
     }
 
-    public function deleteLocation(string $id) : LocationRequestDTO
+    public function deleteLocationById(int $id) : LocationDetailDTO
     {
-        $location = Location::findOrFail($id);
-        $locationDeletedDTO = new LocationRequestDTO($location->toArray());
-        $location->delete();
-        return $locationDeletedDTO;
+        $locationForDeleted = Location::with('department', 'municipality', 'coordinate')->findOrFail($id);
+        $locationDeleted = new LocationDetailDTO($locationForDeleted->toArray());
+        $locationForDeleted->delete();
+        return $locationDeleted;
     }
 }

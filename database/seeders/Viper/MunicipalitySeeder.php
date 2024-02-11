@@ -18,7 +18,7 @@ class MunicipalitySeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        $locations = [
+        $coordinates = [
             "Villavicencio" =>   [
                             "id" => Uuid::uuid4()->toString(),
                             "type" => "Point",
@@ -32,7 +32,7 @@ class MunicipalitySeeder extends Seeder
         $municipalities = [
             [
                 "name" => "Villavicencio",
-                "location_id" => $locations["Villavicencio"]['id'],
+                "coordinate_id" => $coordinates["Villavicencio"]['id'],
                 "department_id" => 1,
                 "created_at" => now(),
                 "updated_at" => now(),
@@ -40,13 +40,13 @@ class MunicipalitySeeder extends Seeder
         ];
 
         //Primero se debe registrar la locacion
-        foreach ($locations as $location)
-        DB::connection('villavicencio')->table('locations')->insert([
-            $location
+        foreach ($coordinates as $coordinate)
+        DB::table('coordinates')->insert([
+            $coordinate
         ]);
 
         foreach ($municipalities as $municipality)
-            DB::connection('villavicencio')->table('municipalities')->insert([
+            DB::table('municipalities')->insert([
                 $municipality
             ]);
 

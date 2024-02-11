@@ -7,13 +7,6 @@
     return new class extends Migration
     {
         /**
-         * Connection name.
-         *
-         * @return string
-         */
-        protected $connection = 'villavicencio';
-
-        /**
          * Run the migrations.
          *
          * @return void
@@ -24,8 +17,8 @@
                 $table->id();
                 $table->string('name');
 
-                $table->uuid('location_id');
-                $table->foreign('location_id')->references('id')->on('locations');
+                $table->uuid('coordinate_id');
+                $table->foreign('coordinate_id')->references('id')->on('coordinates');
 
                 $table->timestamps();
                 $table->softDeletes();

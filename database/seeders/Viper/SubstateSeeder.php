@@ -17,7 +17,7 @@ class SubstateSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('substates')->insert([
+        DB::table('substates')->insert([
             [
                 'name' => 'Formulación',
                 'state_id' => 1, // Relacionado con "Formulación"

@@ -93,7 +93,6 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-            $validatedData['coordinates'] = new CoordinatesRequestDTO($validatedData['coordinates']);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectUpdatedDTO = $this->projectInterface->updateProject($projectDTO, $bpin);

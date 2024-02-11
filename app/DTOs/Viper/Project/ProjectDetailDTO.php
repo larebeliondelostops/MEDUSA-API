@@ -39,7 +39,7 @@ class ProjectDetailDTO extends DTO
     public float $financial_progress = 0.0;  // Avance financiero del proyecto
     public string $responsible_entity;       // Entidad responsable del proyecto
     public string $sector;                   // Sector del proyecto
-    public CoordinatesRequestDTO $location;     // ubicacion del proyecto
+    public array $locations;     // ubicacion del proyecto
     public DepartmentRequestDTO $department;     // Id del departamento al que pertenece el proyecto
     public ?MunicipalityRequestDTO $municipality=null; // Id del municipio donde pertenece el departamento
     public int $beneficiaries;               // Número de beneficiarios del proyecto

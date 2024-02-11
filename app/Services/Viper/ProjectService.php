@@ -4,16 +4,10 @@ namespace App\Services\Viper;
 
 // Librerias del modulo viper
 
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
-use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
-use App\DTOs\Viper\Sector\SectorDTO;
-use App\DTOs\Viper\State\StateDTO;
-use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\ProjectInterface;
 use App\Models\Viper\Project;
@@ -50,7 +44,7 @@ class ProjectService implements ProjectInterface
      * @param ProjectRequestDTO $projectDTO DTO del proyecto a crear.
      * @return ProjectRequestDTO DTO que contiene la información almacenada.
      */
-    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO
+    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectDetailDTO
     {
 
         /**
@@ -74,7 +68,7 @@ class ProjectService implements ProjectInterface
             );
         }
 
-        return $projectDTO;
+        return $this->getProjectByBPIN($projectDTO->bpin);
     }
 
      /**
@@ -87,19 +81,33 @@ class ProjectService implements ProjectInterface
      * @param string $bpin Identificador único del proyecto a actualizar.
      * @return ProjectRequestDTO DTO del proyecto con la data almacenada.
      */
-    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectDetailDTO
     {
-        $project = Project::with('coordinates')->findOrFail($bpin);
-        $coordinatesProject = new CoordinatesRequestDTO($project->coordinates->toArray());
-        $coordinatesUpdated = $this->coordinatesInterface->updateCoordinatesById($coordinatesProject, $coordinatesProject->id);
+        //actualizamos los datos del proyecto
+        $project = Project::findOrFail($bpin);
         $project->fill($projectDTO->toArray());
         $project->save();
-        $dataUpdated = $project->toArray();
-        $dataUpdated['coordinates'] = $coordinatesUpdated;
 
-        return new ProjectRequestDTO(
-            $dataUpdated
-        );
+        foreach($projectDTO->locations as &$location)
+        {
+            if (array_key_exists('id', $location))
+            {
+                $location['project_bpin'] = $bpin;
+                $this->locationInterface->updateLocationById(
+                    new LocationRequestDTO($location),
+                    $location['id']
+                );
+            }
+            else // sino tiene id es porque es una locacion nueva
+            {
+                $location['project_bpin'] = $bpin;
+                $location  = $this->locationInterface->createNewLocation(
+                    new LocationRequestDTO($location)
+                );
+            }
+        }
+
+        return $this->getProjectByBPIN($bpin);
     }
 
         /**
@@ -144,7 +152,7 @@ class ProjectService implements ProjectInterface
             }
         }
 
-        $paginatedProjects= $projectQuery->paginate(
+        $paginatedProjects = $projectQuery->paginate(
             $perPage,  // numero de paginas por paginado
             ['bpin', 'name', 'state_id'], // columnas de la tabla Proyectos que requiero
             'page', // nombre del parámetro de consulta usado para la paginación (page por defecto)
@@ -186,18 +194,13 @@ class ProjectService implements ProjectInterface
      */
     public function getProjectByBPIN(string $bpin) : ProjectDetailDTO
     {
-        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'coordinates'])
+        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
                           ->findOrFail($bpin);
-        // return $project;
+
         $data = $project->toArray();
-        $data['department']['location'] = new CoordinatesRequestDTO($data['department']['location']);
-        $data['department'] = new DepartmentRequestDTO($data['department']);
-        $data['sector'] = new SectorDTO($data['sector']);
-        $data['municipality']['location'] = new CoordinatesRequestDTO($data['municipality']['location']);
-        $data['municipality'] = is_null($data['municipality']) ? null : new MunicipalityRequestDTO($data['municipality']);
-        $data['state'] =  new StateDTO($data['state']);
-        $data['substate'] = is_null($data['substate']) ? null : new SubstateDTO($data['substate']);
-        $data['coordinates'] = new CoordinatesRequestDTO($data['coordinates']);
+        foreach($data['locations'] as &$location)
+            $location = new LocationRequestDTO($location);
+
 
         return new ProjectDetailDTO($data);
     }
@@ -215,7 +218,6 @@ class ProjectService implements ProjectInterface
         $project = Project::findOrFail($bpin);
         $projectDTO = $this->getProjectByBPIN($bpin);
         $project->delete();
-        $this->coordinatesInterface->deleteCoordinates($projectDTO->location->id);
         return $projectDTO;
     }
 }

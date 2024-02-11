@@ -58,8 +58,8 @@ class ProjectRequest extends FormRequest
                     'locations.*.coordinate.latitude' => 'required|numeric',
                     'locations.*.coordinate.longitude' => 'required|numeric',
 
-                'locations.*.department_id' => 'required|numeric',
-                'locations.*.municipality_id' => 'required|numeric',
+                'locations.*.department_id' => 'required|integer',
+                'locations.*.municipality_id' => 'required|integer',
 
             'beneficiaries' => 'required|integer',
             'planner' => 'required|string|max:255',
@@ -74,20 +74,10 @@ class ProjectRequest extends FormRequest
             'reporting_frequency' => 'required|integer|min:1',
             'general_objective' => 'required|string|max:1000',
         ];
+        if ($this->method()=='PUT')
+            $rules['locations.*.id'] = 'sometimes|integer';
 
-        switch($this->method())
-        {
-            case 'POST':
-                return $rules;
-            case 'PUT':
-                array_push(
-                    $rules,
-                    [
-                        'location.*.id' => 'required|integer',
-                    ]
-                );
-                return $rules;
-        }
+        return $rules;
     }
 
     /**

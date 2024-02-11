@@ -2,7 +2,6 @@
 
 namespace App\Services\Viper;
 
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Location\LocationDetailDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\Interfaces\Viper\CoordinatesInterface;

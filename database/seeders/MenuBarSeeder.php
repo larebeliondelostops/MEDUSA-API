@@ -99,13 +99,13 @@ class MenuBarSeeder extends Seeder
         DB::connection('ditra')->table('bar_menu')->insert([
             [
                 'id' => 1,
-                'marker' => 8,
+                'marker' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'marker' => 53,
+                'marker' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -123,7 +123,7 @@ class MenuBarSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'marker' => 6,
+                'marker' => 53,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

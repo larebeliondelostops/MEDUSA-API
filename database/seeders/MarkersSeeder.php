@@ -136,11 +136,20 @@ class MarkersSeeder extends Seeder
          */
         DB::connection('ditra')->table('marker')->insert([
             [
-                'id' => 8,
+                'id' => 1,
                 'marker_type' => 1,
                 'name' => 'Incidentes',
                 'icon' => 'local_police',
                 'color' => 'green',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'marker_type' => 1,
+                'name' => 'Peajes',
+                'icon' => 'traffic',
+                'color' => 'red',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -168,15 +177,6 @@ class MarkersSeeder extends Seeder
                 'name' => 'Mapa de Calor',
                 'icon' => 'local_fire_department',
                 'color' => 'lightgreen',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 6,
-                'marker_type' => 1,
-                'name' => 'Peajes',
-                'icon' => 'traffic',
-                'color' => 'red',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -6,13 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
-    /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
     /**
      * Run the migrations.
      *

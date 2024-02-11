@@ -37,7 +37,7 @@ class ProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'bpin' => 'required|string|max:255',
             'name' => 'required|string|max:100',
             'ocad' => 'required|string|max:100',
@@ -47,17 +47,19 @@ class ProjectRequest extends FormRequest
             'requested_value' => 'required|numeric',
             'responsible_entity' => 'required|string|max:255',
             'sector_id' => 'required|integer',
+            'department_id' => 'required|integer',
+            'municipality_id' => 'required|integer',
 
-            'locations' => 'required|array', // array con las locaciones del proyecto
-            'locations.*.name' =>'required|string|max:64',
+                'locations' => 'required|array', // array con las locaciones del proyecto
+                'locations.*.name' =>'required|string|max:64',
 
-            'locations.*.coordinate' => 'required|array',
-            'locations.*.coordinate.type' => 'required|string|max:32',
-            'locations.*.coordinate.latitude' => 'required|numeric',
-            'locations.*.coordinate.longitude' => 'required|numeric',
+                    'locations.*.coordinate' => 'required|array',
+                    'locations.*.coordinate.type' => 'required|string|max:32',
+                    'locations.*.coordinate.latitude' => 'required|numeric',
+                    'locations.*.coordinate.longitude' => 'required|numeric',
 
-            'locations.*.department_id' => 'required|numeric',
-            'locations.*.municipality_id' => 'required|numeric',
+                'locations.*.department_id' => 'required|numeric',
+                'locations.*.municipality_id' => 'required|numeric',
 
             'beneficiaries' => 'required|integer',
             'planner' => 'required|string|max:255',
@@ -72,6 +74,20 @@ class ProjectRequest extends FormRequest
             'reporting_frequency' => 'required|integer|min:1',
             'general_objective' => 'required|string|max:1000',
         ];
+
+        switch($this->method())
+        {
+            case 'POST':
+                return $rules;
+            case 'PUT':
+                array_push(
+                    $rules,
+                    [
+                        'location.*.id' => 'required|integer',
+                    ]
+                );
+                return $rules;
+        }
     }
 
     /**

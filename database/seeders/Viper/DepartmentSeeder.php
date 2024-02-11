@@ -40,12 +40,12 @@ class DepartmentSeeder extends Seeder
 
         //Primero se debe registrar la locacion
         foreach ($coordinates as $coordinate)
-        DB::connection('villavicencio')->table('coordinates')->insert([
+        DB::table('coordinates')->insert([
             $coordinate
         ]);
 
         foreach ($deparments as $deparment)
-            DB::connection('villavicencio')->table('departments')->insert([
+            DB::table('departments')->insert([
                 $deparment
             ]);
     }

@@ -62,7 +62,7 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-
+            // return response()->json(['data'=>$validatedData]);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);

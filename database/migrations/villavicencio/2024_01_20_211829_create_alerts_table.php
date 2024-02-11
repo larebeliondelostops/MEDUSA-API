@@ -7,13 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    
-    /**
      * Run the migrations.
      *
      * @return void
@@ -27,7 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->date('date');
             $table->unsignedBigInteger('indicator_id');
-            
+
             $table->foreign('indicator_id')->references('id')->on('indicators')->onDelete('cascade');
             $table->timestamps();
         });

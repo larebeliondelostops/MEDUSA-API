@@ -41,12 +41,12 @@ class MunicipalitySeeder extends Seeder
 
         //Primero se debe registrar la locacion
         foreach ($coordinates as $coordinate)
-        DB::connection('villavicencio')->table('coordinates')->insert([
+        DB::table('coordinates')->insert([
             $coordinate
         ]);
 
         foreach ($municipalities as $municipality)
-            DB::connection('villavicencio')->table('municipalities')->insert([
+            DB::table('municipalities')->insert([
                 $municipality
             ]);
 

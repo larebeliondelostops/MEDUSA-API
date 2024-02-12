@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-class ToolboothTableSeeder extends Seeder
+class TollboothTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -1272,7 +1272,7 @@ class ToolboothTableSeeder extends Seeder
 
         foreach ($dataArray['array'] as $dataItem) {
             $uuid = Str::uuid();
-            DB::connection('ditra')->table('data_ditra')->insert([
+            DB::connection('ditra')->table('tollbooth')->insert([
                 'uuid' => $uuid,
                 'id_peaje' => $dataItem['IdPea'],
                 'name' => $dataItem['Nombre'],
@@ -1283,7 +1283,7 @@ class ToolboothTableSeeder extends Seeder
                 'pr' => $dataItem['Pr'],
                 'department' => $dataItem['Departamento'],
                 'municipality' => $dataItem['Municipio'],
-                'coordinates' => $dataItem['Longitud'] . ',' . $dataItem['Latitud'],
+                'coordinates' => $dataItem['Latitud'] . ',' . $dataItem['Longitud'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

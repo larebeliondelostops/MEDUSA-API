@@ -3,36 +3,40 @@
 namespace App\Strategies\StrategiesPoints\Ditra;
 
 use Exception;
-use App\Models\Toolbooth;
+use App\Models\Tollbooth;
 use App\Strategies\Interface\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use App\Models\DataDitra;
 use Illuminate\Support\Facades\Response;
 use Psy\CodeCleaner\IssetPass;
 
-class StrategyToolbooth implements PointsInterface
+class StrategyTollbooth implements PointsInterface
 {
      /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public static function all()
     {
         try {
-            $toolbooth = Toolbooth::all();
-            $toolbooth = $toolbooth->map(function ($item) {
+            $tollbooth = Tollbooth::all();
+            $tollbooth = $tollbooth->map(function ($item) {
 
-                $toolbooth = [
-                    'markerType' => 5,
+                $tollbooth = [
+                    'markerType' => 2,
                     'id' => $item->uuid,
-                    'geometry' => json_decode($item->position),
+                    'geometry' => [
+                        'type' => "Point",
+                        'coordinates' => $item->coordinates
+                    ]
                 ];
 
-                return $toolbooth;
+                return $tollbooth;
             });
 
-            return Response::json($toolbooth, 200, [], JSON_PRETTY_PRINT);
+            return Response::json($tollbooth, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -48,7 +52,7 @@ class StrategyToolbooth implements PointsInterface
     public static function getInfoPoint($uuid)
     {
         try {
-            $data = toolbooth::where('uuid', $uuid)->first();
+            $data = tollbooth::where('uuid', $uuid)->first();
 
             $data = [
                 'title' => $data->name,

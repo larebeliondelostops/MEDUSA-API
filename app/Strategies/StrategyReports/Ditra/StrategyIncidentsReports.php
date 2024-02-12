@@ -151,7 +151,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $labels = $cardsIncidents
             ->map(function ($incident) {
-                return $incident->Indicator->Name;
+                return $incident->Indicator->name;
             });
 
         $data = [
@@ -192,6 +192,7 @@ class StrategyIncidentsReports implements ReportsInterface
             }
         }
 
+        
         $series = $tabsIncidents
             ->map(function ($incident) {
                 return $incident->count;
@@ -199,7 +200,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
         $labels = $tabsIncidents
             ->map(function ($incident) {
-                return $incident->Indicator->Name;
+                return $incident->Indicator->name;
             });
 
         $key = $tabsIncidents
@@ -279,7 +280,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por mes' : '# Incidentes por mes',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -313,10 +314,10 @@ class StrategyIncidentsReports implements ReportsInterface
         foreach (Indicator::all() as $indicador) {
             if ($indicadores_usados->contains($indicador->id)) {
                 $series[] = $incidentes->where('indicator', $indicador->id)->count();
-                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->Name;
+                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->name;
             } else {
                 $series[] = 0;
-                $labels[] = $indicador->Name;
+                $labels[] = $indicador->name;
             }
         }
 
@@ -385,7 +386,7 @@ class StrategyIncidentsReports implements ReportsInterface
             }
 
             $series[] = [
-                'name'  => $incidente_por_tipo_incidente->Indicator->Name,
+                'name'  => $incidente_por_tipo_incidente->Indicator->name,
                 'data' => $data
             ];
 
@@ -398,7 +399,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : '# Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por día de la semana' : '# Incidentes por día de la semana',
             'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -462,7 +463,7 @@ class StrategyIncidentsReports implements ReportsInterface
             }
 
             $series[] = [
-                'name' => $incidentes->first()->Indicator->Name,
+                'name' => $incidentes->first()->Indicator->name,
                 'data' => $countByInterval
             ];
         }
@@ -474,7 +475,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -596,7 +597,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => Indicator::find($this->indicator)->Name . ' por día de la semana y rango de horas',
+            'title' => Indicator::find($this->indicator)->name . ' por día de la semana y rango de horas',
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -614,8 +615,8 @@ class StrategyIncidentsReports implements ReportsInterface
             $coordenadas = explode(', ', $incident->position);
 
             // Convierte los valores en números
-            $latitud = (float)$coordenadas[0];
-            $longitud = (float)$coordenadas[1];
+            $latitud = (float)$coordenadas[1];
+            $longitud = (float)$coordenadas[0];
 
             return [$longitud , $latitud];
         });

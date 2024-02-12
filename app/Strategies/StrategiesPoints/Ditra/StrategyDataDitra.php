@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Ditra;
 
 use Exception;
-use App\Models\DataDitra;
+use App\Models\Ditra\DataDitra;
 use App\Strategies\Interface\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

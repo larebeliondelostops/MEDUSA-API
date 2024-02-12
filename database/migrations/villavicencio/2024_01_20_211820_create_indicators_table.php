@@ -7,13 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    
-    /**
      * Run the migrations.
      *
      * @return void
@@ -31,7 +24,7 @@ return new class extends Migration
             $table->double('percentage_completed');
             $table->boolean('is_main');
             $table->unsignedBigInteger('product_id');
-            
+
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });

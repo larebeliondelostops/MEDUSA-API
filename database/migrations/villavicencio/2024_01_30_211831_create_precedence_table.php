@@ -7,13 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    
-    /**
      * Run the migrations.
      *
      * @return void
@@ -26,7 +19,7 @@ return new class extends Migration
             $table->string('delay_time');
             $table->unsignedBigInteger('higher_id');
             $table->unsignedBigInteger('lower_id');
-            
+
             $table->foreign('higher_id')->references('id')->on('activities')->onDelete('cascade');
             $table->foreign('lower_id')->references('id')->on('activities')->onDelete('cascade');
             $table->timestamps();

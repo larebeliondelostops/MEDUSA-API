@@ -13,15 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table)
+        {
             $table->id();
-            $table->string('name');
+            $table->string('name', 64);
+
+            $table->string('project_bpin');
+            $table->foreign('project_bpin')->references('bpin')->on('projects');
 
             $table->uuid('coordinate_id');
             $table->foreign('coordinate_id')->references('id')->on('coordinates');
 
             $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnDelete();
+            $table->foreign('department_id')->references('id')->on('departments');
+
+            $table->unsignedBigInteger('municipality_id')->nullable();
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
 
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('locations');
     }
 };

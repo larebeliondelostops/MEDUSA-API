@@ -7,23 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-    
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('stages', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
+        Schema::create('coordinates', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type', 32);
+            $table->double('latitude', 10, 8);
+            $table->double('longitude', 11, 8);
             $table->timestamps();
+
             $table->softDeletes();
         });
     }
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stages');
+        Schema::dropIfExists('coordinates');
     }
 };

@@ -24,12 +24,18 @@ class StrategyTollbooth implements PointsInterface
             $tollbooth = Tollbooth::all();
             $tollbooth = $tollbooth->map(function ($item) {
 
+                $coordenadas = explode(',', $item->coordinates);
+
+                // Convierte los valores en números
+                $latitud = (float)$coordenadas[1];
+                $longitud = (float)$coordenadas[0];
+
                 $tollbooth = [
                     'markerType' => 2,
                     'id' => $item->uuid,
                     'geometry' => [
                         'type' => "Point",
-                        'coordinates' => $item->coordinates
+                        'coordinates' => [$longitud, $latitud]
                     ]
                 ];
 

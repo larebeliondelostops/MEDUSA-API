@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Ditra;
 
 use Exception;
-use App\Models\DataDitra;
+use App\Models\Ditra\DataDitra;
 use App\Strategies\Interface\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -22,12 +22,16 @@ class StrategyDataDitra implements PointsInterface
 
             $dataDitra = $dataDitra->map(function ($item) {
 
+                $coordinates = explode(', ', $item->coordinates);
+
+                $coordinates = array_map('floatval', $coordinates);
+
                 $dataDitra = [
-                    'markerType' => 5,
+                    'markerType' => 1,
                     'id' => $item->uuid,
                     'geometry' => [
                         'type' => "Point",
-                        'coordinates' => [$item->coordinates]
+                        'coordinates' => $coordinates
                     ]
                 ];
 
@@ -49,10 +53,7 @@ class StrategyDataDitra implements PointsInterface
     {
         try {
             $dataDitra = dataDitra::where('uuid', $uuid)->first();
-/*atributos:        'year', 'uuid', 'occurrence_date', 'month', 'day', 'hour', 'hour_range', 'sectional', 'coordinates',
-        'assigned', 'identification', 'grade', 'names', 'last_names', 'age', 'age_range', 'gender',
-        'marital_status', 'intoxication', 'responsibility', 'plate', 'vehicle_class', 'model', 'cc',
-        'service_class', 'insurance', 'inspection', 'license', 'type', 'hypothesis', 'possible_occurrence'*/
+
             $dataDitra = [
                 'title' => $dataDitra->type,
                 'properties' => [

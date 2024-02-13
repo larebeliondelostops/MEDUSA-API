@@ -2,6 +2,7 @@
 
 namespace App\Contexts;
 
+use App\Values\ReportsValuesDitra;
 use App\Values\ReportsValuesVillavicencio;
 
 class ReportsContext
@@ -12,6 +13,7 @@ class ReportsContext
      */
     const VALUE = [
         //'neiva' => AllDataValuesNeiva::class,
-        'villavicencio' => ReportsValuesVillavicencio::class
+        'villavicencio' => ReportsValuesVillavicencio::class,
+        'ditra' => ReportsValuesDitra::class,
     ];
 }

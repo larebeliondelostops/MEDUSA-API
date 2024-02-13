@@ -23,7 +23,7 @@ interface ProjectInterface {
      * @param ProjectRequestDTO $projectDTO DTO que contiene la información del proyecto a crear.
      * @return ProjectRequestDTO DTO que contiene la información del proyecto creado.
      */
-    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectRequestDTO;
+    public function createNewProject(ProjectRequestDTO $projectDTO) : ProjectDetailDTO;
 
     /**
      * Actualiza un proyecto existente.
@@ -32,7 +32,7 @@ interface ProjectInterface {
      * @param string $bpin Identificador único del proyecto a actualizar.
      * @return ProjectRequestDTO DTO que contiene la información almacenada despues de la actualización
      */
-    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectRequestDTO;
+    public function updateProject(ProjectRequestDTO $projectDTO, string $bpin) : ProjectDetailDTO;
 
     /**
      * Obtiene una lista de todos los proyectos.

@@ -7,26 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Connection name.
-     *
-     * @return string
-     */
-    protected $connection = 'villavicencio';
-
-    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('substates', function (Blueprint $table) {
+        Schema::create('indicators', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 64);
-            $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->string('name');
+            $table->string('description');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -37,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('substates');
+        Schema::dropIfExists('indicators');
     }
 };

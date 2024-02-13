@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Ditra;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,4 +17,9 @@ class DataDitra extends Model
         'marital_status', 'intoxication', 'responsibility', 'plate', 'vehicle_class', 'model', 'cc',
         'service_class', 'insurance', 'inspection', 'license', 'type', 'hypothesis', 'possible_occurrence'
     ];
+
+    public function Indicator()
+    {
+        return $this->belongsTo(Indicator::class, 'indicator');
+    }
 }

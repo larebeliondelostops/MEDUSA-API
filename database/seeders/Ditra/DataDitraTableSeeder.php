@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Ditra;
 
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -283,7 +283,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "03:45:00",
                     "RANGO_HORA": "03:00 a 05:59",
                     "SECCIONAL": "DEVAL",
-                    "COORDENADAS": "3.528482,-76.277329",
+                    "COORDENADAS": "3.528482, -76.277329",
                     "ADSCRITO": "DEVAL",
                     "IDENTIFICACION": 1112968535,
                     "GRADO": "PT",
@@ -987,7 +987,7 @@ class DataDitraTableSeeder extends Seeder
                     "HORA": "19:50:00",
                     "RANGO_HORA": "18:00 a 20:59",
                     "SECCIONAL": "MEBAR",
-                    "COORDENADAS": "1.086817,-77.595260",
+                    "COORDENADAS": "1.086817, -77.595260",
                     "ADSCRITO": "MESAN",
                     "IDENTIFICACION": 72284498,
                     "GRADO": "PT",
@@ -1274,7 +1274,7 @@ class DataDitraTableSeeder extends Seeder
 
         foreach ($dataArray['array'] as $dataItem) {
             $uuid = Str::uuid();
-            DB::connection('ditra')->table('data_ditra')->insert([
+            DB::table('data_ditra')->insert([
                 'year' => $dataItem['ANIO '],
                 'uuid' => $uuid,
                 'occurrence_date' => $dataItem['FECHA_OCURRENCIA'],

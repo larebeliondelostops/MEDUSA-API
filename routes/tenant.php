@@ -55,4 +55,8 @@ Route::middleware([
     require base_path('routes/api/Viper/ActivityRoutes.php');
     require base_path('routes/api/Viper/PrecedenceRoutes.php');
     require base_path('routes/api/Viper/LocationRoutes.php');
+
+    // Notification Route
+    require base_path('routes/api/notification.php');
+    
 });

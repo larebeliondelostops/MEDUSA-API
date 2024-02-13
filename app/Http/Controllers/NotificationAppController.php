@@ -125,6 +125,10 @@ class NotificationAppController extends Controller
         foreach ($activeDevices as $deviceToken) {
             $notificationData = [
                 'to' => $deviceToken,
+                'notification' => [
+                    'title' => 'Nueva notificación',
+                    'body' => $message,
+                ],
                 'data' => [
                     'notifee' => [
                         'title' => 'Nueva notificación',

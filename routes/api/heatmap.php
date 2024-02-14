@@ -31,8 +31,8 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
                 "geometry" => [
                     "type" => "Point",
                     'coordinates' => [
-                        isset($coordinates[0]) ? floatval($coordinates[0]) : 0,
-                        isset($coordinates[1]) ? floatval($coordinates[1]) : 0
+                        isset($coordinates[0]) && $coordinates[0] !== '' ? floatval($coordinates[0]) : null,
+                        isset($coordinates[1]) && $coordinates[1] !== '' ? floatval($coordinates[1]) : null
                     ]
                 ]
             ];

@@ -58,5 +58,8 @@ Route::middleware([
 
     // Notification Route
     require base_path('routes/api/notification.php');
+
+    // Heatmap Route
+    require base_path('routes/api/heatmap.php');
     
 });

@@ -33,12 +33,12 @@ class StrategyNAProbabilistic implements ProbabilisticInterface
         ];
 
         $ProbabilisticData = [
-            // "types" => [
-            //     [
-            //         "name" => "N/A",
-            //         "key" => 0
-            //     ]
-            // ],
+            "types" => [
+                [
+                    "name" => "N/A",
+                    "key" => 0
+                ]
+            ],
             "data" => []
 
         ];

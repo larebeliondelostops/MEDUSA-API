@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ditra\Indicator;
 use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilistic;
 use App\Values\ProbabilisticValuesDitra;
+use Illuminate\Support\Facades\Response;
 
 class ProbabilisticController extends Controller
 {
@@ -42,18 +43,26 @@ class ProbabilisticController extends Controller
 
     public function getTaps()
     {
-        $Indicartor = Indicator::all();
+        $tabs = [
+            [
+                'name' => 'N/A',
+                'key' => 1
+            ],
+            [
+                'name' => 'Choque',
+                'key' => 2
+            ],
+            [
+                'name' => 'Choque objeto fijo',
+                'key' => 3
+            ],
+            [
+                'name' => 'Volcamiento',
+                'key' => 4
+            ]
+        ];
 
-        $tabs = [];
-
-        foreach ($Indicartor as $key => $value) {
-            $tabs[] = [
-                'name' => $value->name,
-                'key' => $value->id
-            ];
-        }
-
-        return $tabs;
+        return Response::json($tabs, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function type(Request $request)

@@ -33,12 +33,12 @@ class StrategyVolcamientoProbabilistic implements ProbabilisticInterface
         ];
 
         $ProbabilisticData = [
-            // "types" => [
-            //     [
-            //         "name" => "N/A",
-            //         "key" => 0
-            //     ]
-            // ],
+            "types" => [
+                [
+                    "name" => "Volcamiento",
+                    "key" => 0
+                ]
+            ],
             "data" => []
 
         ];

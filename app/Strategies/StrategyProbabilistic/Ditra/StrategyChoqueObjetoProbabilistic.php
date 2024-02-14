@@ -33,12 +33,12 @@ class StrategyChoqueObjetoProbabilistic implements ProbabilisticInterface
         ];
 
         $ProbabilisticData = [
-            // "types" => [
-            //     [
-            //         "name" => "N/A",
-            //         "key" => 0
-            //     ]
-            // ],
+            "types" => [
+                [
+                    "name" => "Choque objeto",
+                    "key" => 0
+                ]
+            ],
             "data" => []
 
         ];

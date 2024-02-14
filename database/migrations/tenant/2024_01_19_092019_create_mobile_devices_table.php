@@ -18,6 +18,8 @@ return new class extends Migration
             //nombre de usuario
             $table->string('username')->unique();
             $table->string('device_token')->unique();
+            $table->string('position');
+            $table->boolean('is_active_position')->default(true);
             //boleano para saber si el dispositivo quiere o no recibir notificaciones
             $table->boolean('is_active')->default(true);
             $table->timestamps();

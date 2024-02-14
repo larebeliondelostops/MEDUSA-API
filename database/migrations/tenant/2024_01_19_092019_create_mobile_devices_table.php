@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('mobile_devices', function (Blueprint $table) {
             $table->id();
             //nombre de usuario
-            $table->string('username')->unique();
+            //id user
+            $table->bigInteger('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->string('device_token')->unique();
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->boolean('is_active_position')->default(true);
             //boleano para saber si el dispositivo quiere o no recibir notificaciones
             $table->boolean('is_active')->default(true);

@@ -5,31 +5,77 @@ namespace App\Http\Controllers;
 use App\Http\Request\MobileDeviceRequest;
 use Illuminate\Support\Facades\Http;
 use App\Models\MobileDevice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotificationAppController extends Controller
 {
+
+    public function addDevice(MobileDeviceRequest $request)
+    {
+        $deviceToken = $request->device_token;
+        $username = $request->username;
+        
+        // Verificar si el usuario ya existe en la tabla
+        $user = User::where('username', $username)->first();
+        $mobileDevice = $user->mobileDevice;
+
+
+        if(isset($mobileDevice)){
+            $mobileDevice->update(['device_token' => $deviceToken]);
+
+            return response()->json([
+                'status' => 'Éxito',
+                'message' => 'Token actualizado correctamente.',
+                'device_info' => [
+                    'id_user' => $user->id,
+                ],
+            ]);
+
+        }else{
+
+            MobileDevice::create([
+                'id_user' => $user->id,
+                'device_token' => $deviceToken,
+                'is_active' => true, // Puedes establecer el valor por defecto según tus necesidades
+                'position' => null,
+                'is_active_position' => false,
+            ]);
+
+            return response()->json([
+                'status' => 'Éxito',
+                'message' => 'Dispositivo agregado correctamente.',
+                'device_info' => [
+                    'id_user' => $user->id,
+                ],
+            ]);
+        }
+    }
+    
     public function getDeviceInfo($username)
     {
-        // Buscar el dispositivo por el nombre de usuario
-        $device = MobileDevice::where('username', $username)->first();
+        $user = user::where('username', $username)->first();
+        $mobileDevice = $user->mobileDevice;
 
-        if (!$device) {
+        if(isset($mobileDevice)){
+            return response()->json([
+                'status' => 'Éxito',
+                'message' => 'Información del dispositivo obtenida correctamente.',
+                'device_info' => [
+                    'id_user' => $mobileDevice->id_user,
+                    'device_token' => $mobileDevice->device_token,
+                    'is_active' => $mobileDevice->is_active,
+                    'position' => $mobileDevice->position,
+                    'is_active_position' => $mobileDevice->is_active_position,
+                ],
+            ]);
+        }else{
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Usuario no encontrado.',
             ], 404);
         }
 
-        // Devolver la información del dispositivo
-        return response()->json([
-            'status' => 'Éxito',
-            'message' => 'Información del dispositivo obtenida correctamente.',
-            'device_info' => [
-                'device_token' => $device->device_token,
-                'is_active' => $device->is_active,
-            ],
-        ]);
     }
 
     public function updateNotificationStatus(Request $request)
@@ -38,71 +84,25 @@ class NotificationAppController extends Controller
         $isActive = $request->is_active;
         $username = $request->username;
         
+        $user = User::where('username', $username)->first();
+        $mobileDevice = $user->mobileDevice;
 
-        // Buscar el dispositivo por el nombre de usuario
-        $device = MobileDevice::where('username', $username)->first();
+        if(isset($mobileDevice)){
+            $mobileDevice->update(['is_active' => $isActive]);
 
-        if (!$device) {
+            return response()->json([
+                'status' => 'Éxito',
+                'message' => 'Estado de notificación actualizado correctamente.',
+                'is_active' => $isActive,
+            ]);
+        }else{
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Usuario no encontrado.',
             ], 404);
         }
-
-        // Actualizar el estado is_active según el valor del toggle switch
-        $device->update([
-            'is_active' => $isActive,
-        ]);
-
-        return response()->json([
-            'status' => 'Éxito',
-            'message' => 'Estado de notificación actualizado correctamente.',
-            'is_active' => $isActive,
-        ]);
     }
-
-    public function addDevice(MobileDeviceRequest $request)
-    {
-        $deviceToken = $request->device_token;
-        $username = $request->username;
-        
-        // Verificar si el usuario ya existe en la tabla
-        $existingDevice = MobileDevice::where('username', $username)->first();
-        
-        if (!$existingDevice) {
-            // El usuario no existe, se crea una nueva tupla
-            MobileDevice::create([
-                'username' => $username,
-                'device_token' => $deviceToken,
-                'is_active' => true, // Puedes establecer el valor por defecto según tus necesidades
-            ]);
-
-            return response()->json([
-                'status' => 'Dispositivo agregado',
-                'message' => 'Usuario no existente, se creó una nueva tupla.',
-            ]);
-        }
-
-        // El usuario ya existe, verificar el device_token
-        if ($existingDevice->device_token !== $deviceToken) {
-            
-            // El device_token es diferente, actualizarlo
-            $existingDevice->update([
-                'device_token' => $deviceToken,
-            ]);
-
-            return response()->json([
-                'status' => 'Dispositivo actualizado',
-                'message' => 'Usuario existente, se actualizó el device_token.',
-            ]);
-        }
-
-        // El device_token es el mismo, no se hace nada
-        return response()->json([
-            'status' => 'Sin cambios',
-            'message' => 'Usuario existente y device_token coincidente.',
-        ]);
-    }
+    
     public function sendNotification(Request $request)
     {
         $message = $request->input('message');
@@ -164,4 +164,49 @@ class NotificationAppController extends Controller
             'responses' => $responses,
         ]);
     }
+
+    public function updatePosition(Request $request)
+    {
+        $position = $request->input('position');
+        $id = $request->input('id_user');
+
+        $user = User::find($id);
+        $mobileDevice = $user->mobileDevice;
+
+        if(isset($mobileDevice)){
+            $mobileDevice->update(['position' => $position]);
+
+            return response()->json([
+                'status' => 'Éxito',
+                'message' => 'Posición actualizada correctamente.',
+                'position' => $position,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Usuario no encontrado.',
+            ], 404);
+        }
+    }
+
+    //funcion para enviar todas las posiciones cuando is_active_position es true
+
+    public function AllPosition()
+    {
+        $activeDevices = MobileDevice::where('is_active_position', true)->get()->pluck('position');
+
+        if ($activeDevices->isEmpty()) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'No hay dispositivos activos para enviar posiciones.',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'Éxito',
+            'message' => 'Posiciones enviadas correctamente.',
+            'positions' => $activeDevices,
+        ]);
+    }
+    
 }

@@ -19,7 +19,10 @@ use App\Models\Ditra\Incident;
 Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
 
     Route::get('/heatmap', function () {
-        $data = DataDitra::select('coordinates')->get();
+        $data = DataDitra::whereNotNull('coordinates')
+        ->where(function ($query) {
+            $query->whereRaw('length(coordinates) > 0');
+        })->get();
         $features = [];
     
         foreach ($data as $row) {

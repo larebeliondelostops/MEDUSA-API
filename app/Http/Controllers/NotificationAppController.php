@@ -239,11 +239,21 @@ class NotificationAppController extends Controller
     public function AllPosition()
     {
         try {
-            $activeDevices = MobileDevice::/* where('is_active_position', true)-> */orderBy('id')->get()->pluck('position');
+            $activeDevices = MobileDevice::where('is_active_position', true)->orderBy('id')->get()/* ->pluck('position', 'id') */;
+
+            $arrayOfArrays = $activeDevices->map(function ($item) {
+
+                $coordenadas = explode(', ', $item->position);
+
+                $latitud = (float)$coordenadas[1];
+                $longitud = (float)$coordenadas[0]; 
+
+                return ['id' => $item->id, 'position' => [$latitud, $longitud]];
+            })->toArray();
 
             $positions = [];
 
-            $positions = ['positions' => $activeDevices];
+            $positions = $arrayOfArrays;
 
             return Response::json($positions, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -274,12 +284,13 @@ class NotificationAppController extends Controller
                     'markerType' => 54,
                     'id' => $movil->id,
                     'title' => $movil->user->name,
+                    'unitType' => 3,
                     'geometry' => [
                         'type' => "Point",
                         'coordinates' => [$latitud, $longitud]
                     ],
                     'properties' => [
-                        'Estado' => $movil->is_active_position ? 'Transmitiendo' : 'No Transmite'
+                        'active' => $movil->is_active_position
                     ]
                 ];
             }

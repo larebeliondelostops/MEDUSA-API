@@ -1,0 +1,49 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Tenancy;
+use Database\Seeders\Viper\DepartmentSeeder;
+use Database\Seeders\Viper\MeasurementUnitSeeder;
+use Database\Seeders\Viper\MunicipalitySeeder;
+use Database\Seeders\Viper\SectorSeeder;
+use Database\Seeders\Viper\StageSeeder;
+use Database\Seeders\Viper\StateSeeder;
+use Database\Seeders\Viper\SubstateSeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        #$this->call(AlarmsTableSeeder::class);
+        #$this->call(CaiTableSeeder::class);
+        #$this->call(CamerasTableSeeder::class);
+        #$this->call(PollingPlaceTableSeeder::class);
+        #$this->call(HealthTableSeeder::class);
+        $this->call(IndicatorSeeder::class);
+        //$this->call(TenancySeeder::class);
+        $this->call(MarkerTypeSeeder::class); // tenant
+        $this->call(MarkersSeeder::class); // tenant
+        $this->call(MenuBarSeeder::class); // tenant
+        $this->call(MenuSeeder::class); // tenant
+        //$this->call(SubMenuSeeder::class); // tenant
+        $this->call(SelectTypeSeeder::class); // tenant
+        //$this->call(ModulesSeeder::class); // tenant
+        $this->call(FieldsSeeder::class); // tenant
+        //$this->call(FormUsersSeeder::class);
+        //$this->call(FormAlarmsSeeder::class);
+        //$this->call(FormPollingPlacesSeeder::class);
+        //$this->call(AmbientSeeder::class);
+        //$this->call(FormAmbientSeeder::class);
+        //$this->call(FiberLinesTableSeeder::class);
+        //$this->call(FiberPointsTableSeeder::class);
+        $this->call(SlugsSeeder::class);
+    }
+}

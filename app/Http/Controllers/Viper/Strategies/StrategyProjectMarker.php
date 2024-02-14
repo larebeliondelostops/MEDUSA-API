@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Viper\Strategies;
 
+use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\ProjectMarker\GeometryDTO;
-use App\DTOs\Viper\ProjectMarker\ProjectMarkerDTO;
+use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;
 use App\Models\Viper\Location;
 use App\Models\Viper\Project;
 use Illuminate\Http\Request;
@@ -15,31 +16,30 @@ class StrategyProjectMarker
 {
     public static function all()
     {
-        $projectsGot = Project::with('location')->get();
-        if ($projectsGot->isEmpty()) return response()->json([]);
-
-        $projectsGot->transform(
-            function ($project)
+        $projectMarkets = [];
+        $projectsGot = Project::with('locations.coordinate')->get();
+        foreach($projectsGot as $project)
+        {
+            foreach($project['locations']['coordinate'] as $coordinates)
             {
-                return new ProjectMarkerDTO(
+                $coordinatesDTO = new CoordinatesRequestDTO($coordinates);
+                $projectMarket = new ProjectMarkerPointDTO(
                     [
-                        'markerType' => 100,
-                        'id' => $project->location->id,
-                        'geometry' => new GeometryDTO (
-                            [
-                                'type' => $project->location->type,
+                        'id' => $coordinatesDTO->id,
+                        'geometry' => [
+                                'type' => $coordinatesDTO->type,
                                 'coordinates' => [
-                                    (float)$project->location->latitude,
-                                    (float)$project->location->longitude
+                                    (float)$coordinatesDTO->latitude,
+                                    (float)$coordinatesDTO->longitude
                                 ]
-                            ]
-                        )
+                        ]
                     ]
                 );
+                $projectMarkets[] = $projectMarket;
             }
-        );
+        }
 
-        return response()->json($projectsGot->toArray());
+        return $projectMarkets;
     }
 
     public static function getInfoPoint($uuid)
@@ -52,7 +52,13 @@ class StrategyProjectMarker
                     'bpin' => $location->project->bpin,
                     'sector' => $location->project->sector->name,
                     'estado' => $location->project->state->name,
-                    'subestado' => $location->project->substate->name
+                    'subestado' => $location->project->substate->name,
+                    'entidad ejecutora' => $location->responsible_entity,
+                    'valor requerido' => $location->reqyested_valued,
+                    'valor ejecutado' => $location->executed_value,
+                    'fecha de aprobación' => $location->execution_approval_date,
+                    'fecha de finalización' => $location->completion_date,
+                    'fecha de ejecución' => $location->start_date_execution_phase
                 ]
             ];
 

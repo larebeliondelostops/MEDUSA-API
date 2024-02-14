@@ -20,5 +20,7 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
     Route::post('/notify/add-device', [NotificationAppController::class, 'addDevice']);
     Route::post('/notify/update-notification-status', [NotificationAppController::class, 'updateNotificationStatus']);
     Route::get('/notify/device-info/{username}', [NotificationAppController::class, 'getDeviceInfo']);
+    Route::post('/notify/update-position', [NotificationAppController::class, 'updatePosition']);
+    Route::get('/notify/all-position', [NotificationAppController::class, 'AllPosition']);
 });
 

@@ -43,6 +43,6 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     //endpoints temporales para modelo probabilistico no georeferenciado
 
     Route::get('modeloprobabilistico/tabs', [ProbabilisticController::class, 'getTaps']);
-    Route::get('modeloprobabilistico/type', [ProbabilisticController::class, 'type']);
+    Route::post('modeloprobabilistico/type', [ProbabilisticController::class, 'type']);
 
 });

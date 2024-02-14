@@ -21,21 +21,29 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
     Route::get('/heatmap', function () {
         $data = DataDitra::select('coordinates')->get();
         $features = [];
+    
         foreach ($data as $row) {
+            // Suponiendo que las coordenadas están en formato "latitud,longitud"
+            $coordinates = explode(',', $row->coordinates);
+            
             $feature = [
                 "type" => "Feature",
                 "geometry" => [
                     "type" => "Point",
-                    'coordinates' => $row->coordinates
+                    'coordinates' => [
+                        isset($coordinates[0]) ? floatval($coordinates[0]) : 0,
+                        isset($coordinates[1]) ? floatval($coordinates[1]) : 0
+                    ]
                 ]
             ];
             $features[] = $feature;
         }
-
+    
         $geojson = [
             "type" => "FeatureCollection",
             "features" => $features
         ];
+    
         return response()->json($geojson, 200);
     });
 });

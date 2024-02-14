@@ -44,6 +44,9 @@ return new class extends Migration
             $table->string('inspection')->nullable();
             $table->string('license')->nullable();
             $table->string('type')->nullable();
+            //campo relacionado con el id de la tabla indicator
+            $table->bigInteger('indicator');
+            $table->foreign('indicator')->references('id')->on('indicators');
             $table->text('hypothesis')->nullable();
             $table->text('possible_occurrence')->nullable();
             $table->timestamps();

@@ -5,7 +5,7 @@ namespace Database\Seeders\villavicencio;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CRUDActionsSeeder extends Seeder
+class FormAlarmsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,22 +17,25 @@ class CRUDActionsSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::table('menu')->insert([
+        DB::table('forms')->insert([
             [
-                'id' => 1,
-                'name' => 'CREAR',
+                //'id' => 1,
+                'module' => 6,
+                'field' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 2,
-                'name' => 'ACTUALIZAR',
+                //'id' => 2,
+                'module' => 6,
+                'field' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 3,
-                'name' => 'BORRAR',
+                //'id' => 3,
+                'module' => 6,
+                'field' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -29,12 +29,12 @@ class DatabaseSeeder extends Seeder
         $this->call(ModulesSeeder::class); // tenant
         $this->call(FieldsSeeder::class); // tenant
         $this->call(FormUsersSeeder::class);
-        $this->call(FormAlarmsSeeder::class);
-        $this->call(FormPollingPlacesSeeder::class);
-        $this->call(AmbientSeeder::class); // creo que no es necesario, no tiene data de villavicencio
-        $this->call(FormAmbientSeeder::class); // creo que no es necesario, no tiene data de villavicencio
-        $this->call(FiberLinesTableSeeder::class);
-        $this->call(FiberPointsTableSeeder::class);
+        //$this->call(FormAlarmsSeeder::class);
+        //$this->call(FormPollingPlacesSeeder::class);
+        //$this->call(AmbientSeeder::class);
+        //$this->call(FormAmbientSeeder::class);
+        //$this->call(FiberLinesTableSeeder::class);
+        //$this->call(FiberPointsTableSeeder::class);
         $this->call(SlugsSeeder::class);
     }
 }

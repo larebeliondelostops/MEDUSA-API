@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Viper\Strategies;
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
-use App\DTOs\Viper\ProjectMarker\GeometryDTO;
 use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;
 use App\Models\Viper\Location;
 use App\Models\Viper\Project;
@@ -17,12 +16,13 @@ class StrategyProjectMarker
     public static function all()
     {
         $projectMarkets = [];
-        $projectsGot = Project::with('locations.coordinate')->get();
+        $projectsGot = Project::with('locations', 'locations.coordinate')->get();
+
         foreach($projectsGot as $project)
         {
-            foreach($project['locations']['coordinate'] as $coordinates)
+            foreach($project->locations as $location)
             {
-                $coordinatesDTO = new CoordinatesRequestDTO($coordinates);
+                $coordinatesDTO = new CoordinatesRequestDTO($location->coordinate->toArray());
                 $projectMarket = new ProjectMarkerPointDTO(
                     [
                         'id' => $coordinatesDTO->id,
@@ -35,11 +35,11 @@ class StrategyProjectMarker
                         ]
                     ]
                 );
-                $projectMarkets[] = $projectMarket;
+                array_push($projectMarkets, $projectMarket);
             }
         }
 
-        return $projectMarkets;
+        return response()->json($projectMarkets);
     }
 
     public static function getInfoPoint($uuid)

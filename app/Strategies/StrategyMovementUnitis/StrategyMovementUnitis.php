@@ -3,7 +3,6 @@
 namespace App\Strategies\StrategyMovementUnitis;
 
 use Exception;
-use App\Models\MobileDevice;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -19,29 +18,12 @@ class StrategyMovementUnitis implements MovementUnitisInterface
     public static function all()
     {
         try{
-            $moviles = MobileDevice::where('is_active_position', true)->orderBy('id')->get();
-            
-            $transformedData = [];
+            /* $rutaArchivo = public_path('js/GeoJson/movement-entities.json');
+            $contenidoArchivo = File::get($rutaArchivo);
+            $contenido = json_decode($contenidoArchivo, true);
 
-            foreach ($moviles as $movil) {
-
-                $coordenadas = explode(', ', $movil->position);
-
-                $latitud = (float)$coordenadas[1];
-                $longitud = (float)$coordenadas[0];
-
-                $transformedData[] = [
-                    'markerType' => 54,
-                    'id' => $movil->id,
-                    'geometry' => [
-                        'type' => "Point",
-                        'coordinates' => [$latitud, $longitud]
-                    ],
-                ];
-            }
-
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
-
+            return Response::json($contenido['features'], 200, [], JSON_PRETTY_PRINT); */
+            return Response::json([], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

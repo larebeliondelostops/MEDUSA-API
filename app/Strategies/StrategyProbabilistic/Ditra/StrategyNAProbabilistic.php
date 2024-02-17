@@ -24,7 +24,7 @@ class StrategyNAProbabilistic implements ProbabilisticInterface
         $SeriesNAHora = $this->getDataByHourDay($NA);
 
         $days = [
-            "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+            "Dom", "Lun", "Mar", "Mier", "Juev", "Vier", "Sab"
         ];
 
         $hours = [

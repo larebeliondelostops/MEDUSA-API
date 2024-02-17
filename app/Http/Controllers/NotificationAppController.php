@@ -16,7 +16,6 @@ class NotificationAppController extends Controller
     public function addDevice(MobileDeviceRequest $request)
     {
         try {
-            Log::info('etro');
             $deviceToken = $request->device_token;
             $username = $request->username;
             
@@ -64,7 +63,7 @@ class NotificationAppController extends Controller
     public function getDeviceInfo($username)
     {
         try {
-            $user = user::where('username', $username)->first();
+            $user = user::where('email', $username)->first();
             $mobileDevice = $user->mobileDevice;
 
             if(isset($mobileDevice)){
@@ -102,7 +101,7 @@ class NotificationAppController extends Controller
             $isActive = $request->is_active;
             $username = $request->username;
             
-            $user = User::where('username', $username)->first();
+            $user = User::where('email', $username)->first();
             $mobileDevice = $user->mobileDevice;
 
             if(isset($mobileDevice)){
@@ -203,7 +202,6 @@ class NotificationAppController extends Controller
     public function updatePosition(Request $request)
     {
         try {
-            Log::info('entro a position');
             $position = $request->input('position');
             $id = $request->input('id_user');
 
@@ -234,12 +232,44 @@ class NotificationAppController extends Controller
         }
     }
 
+    public function updateStatusTransfer(Request $request)
+    {
+        try {
+            $is_active_position = $request->input('is_active_position');
+            $id = $request->input('id_user');
+
+            $user = User::find($id);
+            $mobileDevice = $user->mobileDevice;
+
+            if(isset($mobileDevice)){
+                $mobileDevice->update(['is_active_position' => $is_active_position]);
+
+                return response()->json([
+                    'status' => 'Éxito',
+                    'message' => 'Posición actualizada correctamente.',
+                ]);
+            }else{
+                return response()->json([
+                    'status' => 'Error',
+                    'message' => 'Usuario no encontrado.',
+                ], 404);
+            }
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        } 
+    }
+
     //funcion para enviar todas las posiciones cuando is_active_position es true
 
     public function AllPosition()
     {
         try {
-            $activeDevices = MobileDevice::where('is_active_position', true)->orderBy('id')->get()/* ->pluck('position', 'id') */;
+            $activeDevices = MobileDevice::where('is_active_position', true)->whereNotNull('position')->orderBy('id')->get()/* ->pluck('position', 'id') */;
 
             $arrayOfArrays = $activeDevices->map(function ($item) {
 
@@ -269,7 +299,7 @@ class NotificationAppController extends Controller
     public function allUnits()
     {
         try {
-            $moviles = MobileDevice::/* where('is_active_position', true)-> */orderBy('id')->get();
+            $moviles = MobileDevice::where('is_active_position', true)->whereNotNull('position')->orderBy('id')->get();
             
             $transformedData = [];
 
@@ -277,22 +307,22 @@ class NotificationAppController extends Controller
 
                 $coordenadas = explode(', ', $movil->position);
 
-                $latitud = (float)$coordenadas[1];
-                $longitud = (float)$coordenadas[0];
+                    $latitud = (float)$coordenadas[1];
+                    $longitud = (float)$coordenadas[0];
 
-                $transformedData[] = [
-                    'markerType' => 54,
-                    'id' => $movil->id,
-                    'title' => $movil->user->name,
-                    'unitType' => 3,
-                    'geometry' => [
-                        'type' => "Point",
-                        'coordinates' => [$latitud, $longitud]
-                    ],
-                    'properties' => [
-                        'active' => $movil->is_active_position
-                    ]
-                ];
+                    $transformedData[] = [
+                        'markerType' => 54,
+                        'id' => $movil->id,
+                        'title' => $movil->user->name,
+                        'unitType' => 3,
+                        'geometry' => [
+                            'type' => "Point",
+                            'coordinates' => [$latitud, $longitud]
+                        ],
+                        'properties' => [
+                            'active' => $movil->is_active_position
+                        ]
+                    ];
             }
 
             return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);

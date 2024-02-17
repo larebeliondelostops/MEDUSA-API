@@ -24,7 +24,7 @@ class StrategyChoqueProbabilistic implements ProbabilisticInterface
         $SeriesChoqueHora = $this->getDataByHourDay($Choque);
 
         $days = [
-            "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+            "Dom", "Lun", "Mar", "Mier", "Juev", "Vier", "Sab"
         ];
 
         $hours = [

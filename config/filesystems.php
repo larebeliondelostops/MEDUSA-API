@@ -78,6 +78,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('ditra') => storage_path('ditra/app/public'),
+        public_path('villavicencio') => storage_path('villavicencio/app/public'),
     ],
 
 ];

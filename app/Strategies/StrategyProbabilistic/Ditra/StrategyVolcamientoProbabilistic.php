@@ -24,7 +24,7 @@ class StrategyVolcamientoProbabilistic implements ProbabilisticInterface
         $SeriesVolcamientoHora = $this->getDataByHourDay($Volcamiento);
 
         $days = [
-            "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"
+            "Dom", "Lun", "Mar", "Mier", "Juev", "Vier", "Sab"
         ];
 
         $hours = [

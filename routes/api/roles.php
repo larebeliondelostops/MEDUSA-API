@@ -27,4 +27,5 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
      */
     Route::post('roles/savePermiso', [RolController::class, 'savePermiso']);
     Route::post('roles/assignPermissions', [RolController::class, 'assignPermissions']);
+    Route::post('roles/assignPermissionsToUser', [RolController::class, 'assignPermissionsToUser']);
 });

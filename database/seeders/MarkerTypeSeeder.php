@@ -57,47 +57,6 @@ class MarkerTypeSeeder extends Seeder
         ]);
 
         /**
-         * Marcadores para ditra
-         */
-        DB::connection('ditra')->table('marker_type')->insert([
-            [
-                'id' => 1,
-                'name' => 'Point',
-                'description' => 'Todos los marcadores de tipo punto',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Polyline',
-                'description' => 'Todos los marcadores de tipo linea',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'Polygon',
-                'description' => 'Todos los marcadores de tipo poligono',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 4,
-                'name' => 'Point And Polyline',
-                'description' => 'Todos los marcadores de tipo punto y linea',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 5,
-                'name' => 'Special',
-                'description' => 'Todos los marcadores de tipo especial',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-        /**
          * Marcadores para neiva
          */
         DB::connection('neiva')->table('marker_type')->insert([

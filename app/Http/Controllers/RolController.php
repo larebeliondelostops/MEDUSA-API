@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Request\RolesPermisos\SaveRolRequest;
 use App\Http\Request\RolesPermisos\savePermisoRequest;
 use App\Http\Request\RolesPermisos\AssignPermissionsRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -172,6 +173,40 @@ class RolController extends Controller
             // Asigna los permisos al rol
             $permissions = Permission::whereIn('name', $permissionNames)->get();
             $role->syncPermissions($permissions);
+
+            return Response::json([
+                'code' => '200',
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
+     * Método para el asignado de permisos para determinado usuario
+     *
+     * @access public
+     * @param Request $request
+     * @return Illuminate\Support\Facades\Response
+     */
+    public function assignPermissionsToUser(Request $request)
+    {
+        try {
+
+            $user = Auth::user();
+
+            $permissions_id = $request->input('permissions');
+
+            $permissions = Permission::whereIn('id', $permissions_id)->get();
+
+            $user->givePermissionTo($permissions);
 
             return Response::json([
                 'code' => '200',

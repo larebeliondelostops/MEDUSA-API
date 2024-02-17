@@ -123,7 +123,6 @@ class IncidentController extends Controller
      */
     public function store(IncidentRequest $request)
     {
-        Log::info($request->all());
         $user = $request->user(); // Obtener el usuario actual
 
         // Aplicar límite de tasa por usuario
@@ -158,17 +157,14 @@ class IncidentController extends Controller
                 ], 400, [], JSON_PRETTY_PRINT);
             }
 
-            $photoFile = $request->file('image');
-            $extension = $photoFile->getClientOriginalExtension();
-            $filename = Uuid::uuid4()->toString() . '.' . $extension;
-            $photoPath = $photoFile->storeAs('photos', $filename, 'public');
+            $photo = Storage::disk('public')->put('', $request->file('image'));
 
             $incident = new Incident();
             $incident->uuid = Uuid::uuid4()->toString();
             $incident->indicator = $request->IndicatorId;
             $incident->address = $request->address;
             $incident->description = $request->description;
-            $incident->image = $photoPath;
+            $incident->image = $photo;
             $incident->position = $request->pointCoordinates;
             $incident->day = Carbon::now()->dayOfWeek;
             $incident->month = date('m');
@@ -214,7 +210,7 @@ class IncidentController extends Controller
                     'date' => $incident->created_at,
                     'address' => $incident->address,
                     'description' => $incident->description,
-                    'image' => $incident->image,
+                    'image' => tenant('id') . '/' . $incident->image,
                     'position' => $incident->position,
                 ]
             ], 200, [], JSON_PRETTY_PRINT);

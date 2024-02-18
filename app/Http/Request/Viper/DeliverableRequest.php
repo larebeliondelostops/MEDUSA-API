@@ -30,10 +30,10 @@ class DeliverableRequest extends FormRequest
                 'product_id' => 'required|integer',
                 'deliverable_id' => 'nullable|integer',
             ],
-            "create-multiple" => [
+            "createMultiple" => [
                 'deliverables' => 'required|array',
             ],
-            "create-multiple-config" => [
+            "createMultipleConfig" => [
                 'name' => 'required|string|max:256',
                 'number' => 'required|integer',
                 'product_id' => 'required|integer',
@@ -107,7 +107,7 @@ class DeliverableRequest extends FormRequest
             {
                 $validator = \Illuminate\Support\Facades\Validator::make(
                     $deliverable,
-                    self::$rules['POST']['create-multiple-config']
+                    self::$rules['POST']['createMultipleConfig']
                 );
 
                 $validator->validate();

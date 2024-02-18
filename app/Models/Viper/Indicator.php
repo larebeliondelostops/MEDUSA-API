@@ -34,7 +34,7 @@ class Indicator extends Model
      *
      * @var string
      */
-    protected $table = 'indicators';
+    protected $table = 'indicators_viper';
 
     /**
      * Clave primaria de la tabla.

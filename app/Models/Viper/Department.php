@@ -13,16 +13,34 @@ class Department extends Model
     protected $dates = ["deleted_at"];
     protected $fillable = [
         "name",
-        'location_id',
+        'coordinate_id',
     ] ;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Cuando se elimine un departamento es importante eliminar su coordenada.
+         */
+        //borrado de coordenada
+        static::deleting(
+            function (Department $department)
+            {
+                // eliminamos la coordenada
+                if ($department->coordinate)
+                    $department->coordinate->delete();
+            }
+        );
+    }
 
     public function municipalities()
     {
         return $this->hasMany(Municipality::class);
     }
 
-    public function location()
+    public function coordinate()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->belongsTo(Coordinates::class, 'coordinate_id');
     }
 }

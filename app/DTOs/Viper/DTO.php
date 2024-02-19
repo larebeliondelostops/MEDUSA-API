@@ -17,6 +17,7 @@ use \ReflectionClass;
 
 class DTO
 {
+    private ReflectionClass $reflectionClass;
 
     /**
      * Constructor de la clase DTO.
@@ -27,18 +28,36 @@ class DTO
      * @param array $data Datos para inicializar el objeto DTO.
      */
     public function __construct(array|null $data) {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
-            }
-        }
+        /*
+        *   Se genera una reflexion de la clase para obtener
+        *   sin necesidad de inicializar variables datos de las
+        *   propiedades de la clase DTO
+        */
+        $this->reflectionClass = new ReflectionClass($this);
+        $this->fill($data);
     }
 
     public function fill(array|null $data)
     {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
+        foreach ($data as $key => $value)
+        {
+            if (property_exists($this, $key))
+            {
+                $className = $this->reflectionClass->getProperty($key)->getType()->getName();
+
+                /**
+                 * Si estoy recibiendo un array, pero la propiedad de mi clase no es un array
+                 * verifico si el tipo de propiedad es una clase y trato de instanciarla a partir
+                 * de la data proporcionada en el array, en dado caso que no php se encarga de
+                 * arrojar error por instanciar la propiedad al momento de crear el objeto
+                 */
+                if (gettype($value) == 'array' && $className != 'array')
+                {
+                    if (class_exists($className))
+                        $this->{$key} = new $className($value);
+                }
+                else
+                    $this->{$key} = $value;
             }
         }
     }
@@ -53,8 +72,7 @@ class DTO
     public function toArray(array $except=[])
     {
         $array = [];
-        $reflectionClass = new ReflectionClass($this);
-        foreach ($reflectionClass->getProperties() as $property) {
+        foreach ($this->reflectionClass->getProperties() as $property) {
             if(in_array($property->getName(), $except)) continue;
             $property->setAccessible(true);
             $array[$property->getName()] = $property->getValue($this);

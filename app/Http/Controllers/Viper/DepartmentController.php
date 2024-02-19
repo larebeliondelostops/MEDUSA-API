@@ -55,9 +55,9 @@ class DepartmentController extends BaseController
         try
         {
             $data = $request->validated();
-            $data['location'] = new LocationRequestDTO($data['location']);
-            $newDepartmentDTO = new DepartmentRequestDTO($data);
-            $departmentSaved = $this->departmentInterface->createNewDepartment($newDepartmentDTO);
+            $departmentSaved = $this->departmentInterface->createNewDepartment(
+                new DepartmentRequestDTO($data)
+            );
             return response()->json([
                 "message" => "Departamento creado satisfactoriamente.",
                 "data" => $departmentSaved
@@ -81,8 +81,9 @@ class DepartmentController extends BaseController
     {
         try
         {
+            $departmens = $this->departmentInterface->getAllDepartments();
             return response()->json([
-                "data"=> $this->departmentInterface->getAllDepartments(),
+                "data"=> $departmens,
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)
@@ -104,8 +105,9 @@ class DepartmentController extends BaseController
     {
         try
         {
+            $department = $this->departmentInterface->getDepartmentById($id);
             return response()->json([
-                "data" => $this->departmentInterface->getDepartmentById($id),
+                "data" => $department,
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)
@@ -129,7 +131,6 @@ class DepartmentController extends BaseController
         try
         {
             $data = $request->validated();
-            $data['location'] = new LocationRequestDTO($data['location']);
             $departmentForUpdate = new DepartmentRequestDTO($data);
             $departmentUpdated = $this->departmentInterface->updateDepartment($departmentForUpdate, $id);
             return response()->json([

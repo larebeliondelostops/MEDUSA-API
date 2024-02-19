@@ -531,7 +531,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'heatmap'
+            'type' => 'matrix'
         ];
 
         return $data;
@@ -599,7 +599,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'heatmap'
+            'type' => 'matrix'
         ];
 
         return $data;

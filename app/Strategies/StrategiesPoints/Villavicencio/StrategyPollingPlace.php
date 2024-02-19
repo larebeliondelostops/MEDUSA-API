@@ -150,7 +150,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                         'from' => $pollingPlaces->firstItem(),
                         'to' => $pollingPlaces->lastItem(),
                     ],
-                    'ableCreate' => false
+                    'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Villavicencio;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,9 +17,7 @@ class HealthTableSeeder extends Seeder
   public function run()
   {
 
-    DB::setDefaultConnection('villavicencio');
-
-    $data = '        
+    $data = '
     {
         "array": [
           {

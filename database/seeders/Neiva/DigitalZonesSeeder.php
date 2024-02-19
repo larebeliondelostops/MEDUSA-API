@@ -16,9 +16,7 @@ class DigitalZonesSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
-
-        $data = '        
+        $data = '
         {
             "array": [
                 {

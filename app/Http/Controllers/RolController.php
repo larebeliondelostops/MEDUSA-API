@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Request\RolesPermisos\SaveRolRequest;
 use App\Http\Request\RolesPermisos\savePermisoRequest;
 use App\Http\Request\RolesPermisos\AssignPermissionsRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -223,7 +224,7 @@ class RolController extends Controller
         }
     }
 
-    public function assignRol(Request $request)
+    public function assignRolToUser(Request $request)
     {
         try {
             // Validacion
@@ -249,6 +250,29 @@ class RolController extends Controller
             }
 
             $user = JWTAuth::parseToken()->authenticate();
+
+            $user->assignRole($request->role_id);
+
+            return Response::json([
+                'code' => '200',
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa'
+            ], 201, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function assignRol(Request $request)
+    {
+        try {
+
+            $user = User::find($request->user_id);
 
             $user->assignRole($request->role_id);
 

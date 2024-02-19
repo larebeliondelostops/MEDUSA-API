@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Villavicencio;
 
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

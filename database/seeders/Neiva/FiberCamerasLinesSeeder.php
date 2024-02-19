@@ -16,7 +16,6 @@ class FiberCamerasLinesSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
 
         $data = '        
         {

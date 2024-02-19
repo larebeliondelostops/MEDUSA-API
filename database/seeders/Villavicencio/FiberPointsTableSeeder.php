@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Villavicencio;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +15,6 @@ class FiberPointsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('villavicencio');
 
         $data = '
         {

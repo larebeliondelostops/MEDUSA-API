@@ -21,6 +21,7 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
     Route::get('roles/getRoles', [RolController::class, 'getRoles']); // Listar todos los roles
     Route::post('roles/saveRol', [RolController::class, 'saveRol']); // Guardar un rol
     Route::post('roles/assignRol', [RolController::class, 'assignRol']); // Asigna un rol
+    Route::post('roles/assignRolToUser', [RolController::class, 'assignRolToUser']); // Asigna un rol a un usuario por token
 
     /**
      * Manejo de permisos

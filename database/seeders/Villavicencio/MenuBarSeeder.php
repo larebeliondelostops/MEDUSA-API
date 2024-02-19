@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Villavicencio;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class FormPollingPlacesSeeder extends Seeder
+class MenuBarSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,73 +17,80 @@ class FormPollingPlacesSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('forms')->insert([
+        DB::table('bar_menu')->insert([
             [
-                'module' => 7,
-                'field' => 1,
+                'id' => 1,
+                'marker' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 4,
+                'id' => 2,
+                'marker' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 6,
+                'id' => 3,
+                'marker' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 7,
+                'id' => 4,
+                'marker' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 8,
+                'id' => 5,
+                'marker' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 9,
+                'id' => 6,
+                'marker' => 50,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'module' => 7,
-                'field' => 10,
+                'id' => 7,
+                'marker' => 51,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 8,
+                'marker' => 52,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 9,
+                'marker' => 53,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 10,
+                'marker' => 54,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 11,
+                'marker' => 55,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            // Viper
+            [
+                'id' => 100,
+                'marker' => 100,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
-
-        /**
-         * Marcadores para neiva
-         */
-        /* DB::connection('neiva')->table('forms')->insert([
-            [
-                'module' => 6,
-                'field' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'module' => 6,
-                'field' => 4,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'module' => 6,
-                'field' => 6,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]); */
     }
 }

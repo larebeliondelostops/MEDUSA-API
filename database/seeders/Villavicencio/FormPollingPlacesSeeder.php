@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Villavicencio;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class FormUsersSeeder extends Seeder
+class FormPollingPlacesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,66 +17,49 @@ class FormUsersSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('forms')->insert([
+        DB::table('forms')->insert([
             [
-                //'id' => 1,
-                'module' => 1,
+                'module' => 7,
                 'field' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                //'id' => 2,
-                'module' => 1,
-                'field' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                //'id' => 3,
-                'module' => 1,
-                'field' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                //'id' => 4,
-                'module' => 1,
+                'module' => 7,
                 'field' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                //'id' => 5,
-                'module' => 1,
-                'field' => 5,
+                'module' => 7,
+                'field' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'module' => 7,
+                'field' => 7,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'module' => 7,
+                'field' => 8,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'module' => 7,
+                'field' => 9,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'module' => 7,
+                'field' => 10,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
-
-        /**
-         * Marcadores para neiva
-         */
-        /* DB::connection('neiva')->table('menu')->insert([
-            [
-                'id' => 1,
-                'name' => 'CREAR',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'ACTUALIZAR',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'BORRAR',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]); */
     }
 }

@@ -16,7 +16,6 @@ class BusStopsSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
 
         $data = '        
         {
@@ -10610,6 +10609,6 @@ class BusStopsSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-        } 
+        }
     }
 }

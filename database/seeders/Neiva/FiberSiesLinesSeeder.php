@@ -17,7 +17,6 @@ class FiberSiesLinesSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
 
         $data = '        
         {

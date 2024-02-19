@@ -58,4 +58,5 @@ Route::middleware([
     require base_path('routes/api/Viper/MilestoneRoutes.php');
     require base_path('routes/api/Viper/MilestoneClassRoutes.php');
     require base_path('routes/api/Viper/MilestoneSubclassRoutes.php');
+    require base_path('routes/api/Viper/ProofRoutes.php');
 });

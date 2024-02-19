@@ -44,7 +44,7 @@ class ProductService implements ProductInterface
     public function getAllProducts()
     {
         $products = Product::with('measurementUnit', 'specificObjective', 'folder')->get();
-        
+
         $productDTOs = $products->transform(function ($product) {
             $data = $product->toArray();
             $data['folder'] = new FolderDTO($data['folder']);
@@ -52,7 +52,6 @@ class ProductService implements ProductInterface
             $data['specific_objective'] = new SpecificObjectiveDTO($data['specific_objective']);
             return new ProductDetailDTO($data);
         });
-        
         return $productDTOs;
     }
 
@@ -107,16 +106,16 @@ class ProductService implements ProductInterface
         // Crea una nueva instancia del modelo Product y guarda los datos
         $product = new Product();
         $product->fill($productDTO->toArray());
-    
+
         // Obtiene el specificObjective correspondiente al specific_objective_id proporcionado
         $specificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
         $scope_id = $specificObjective->scope_id;
 
         $project = Scope::findOrFail($scope_id)->project_id;
-    
+
         // Obtener todos los objetivos específicos de un scope_id
         $objSpecificObjects = SpecificObjective::where('scope_id', $scope_id)->get();
-           
+
         // Obtener todos los productos de los objetivos específicos asociados al scope_id
         $productsObjSpecifics = Product::whereIn('specific_objective_id', $objSpecificObjects->pluck('id'))->get();
         $product_number = $productsObjSpecifics->max('number') + 1;
@@ -134,10 +133,10 @@ class ProductService implements ProductInterface
             // Calcula el próximo número disponible para el nuevo producto
             $product->number = $product_number;
         }
-        
+
         // Obtener la carpeta con project_id igual a $project y nombre 'Expediente Contrato de Interventoría'
         $folder = Folder::where('project_id', $project)
-                ->where('name', 'Expediente Contrato de Interventoría')
+                ->where('name', 'Ejecución de interventoría')
                 ->first();
 
         if ($folder->id) {
@@ -146,19 +145,19 @@ class ProductService implements ProductInterface
                 "stage_id" => 4,
                 "project_id" => $project,
                 "higher_folder_id" => $folder->id
-            ]);                
+            ]);
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
             $result = $this->folderInterface->createNewFolder($folderDTO);
-            $product->folder_id = $result['id'];
+            $product->folder_id = $result->id;
         } else {
             throw new \Exception('No se pudo asignar una carpeta al producto', 422);
         }
-        
+
         // Guarda el producto en la base de datos
         $product->save();
-        
+
         return new ProductDTO($product->toArray());
-    } 
+    }
     /**
      * Actualiza los datos de un producto existente.
      *
@@ -181,7 +180,7 @@ class ProductService implements ProductInterface
 
         // Obtener todos los objetivos específicos de un scope_id
         $objSpecificObjects = SpecificObjective::where('scope_id', $scope_id)->get();
-           
+
         // Obtener todos los productos de los objetivos específicos asociados al scope_id
         $productsObjSpecifics = Product::whereIn('specific_objective_id', $objSpecificObjects->pluck('id'))->get();
 
@@ -198,7 +197,7 @@ class ProductService implements ProductInterface
             $newSpecificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
             $oldScopeId = SpecificObjective::findOrFail($oldSpecificObjectiveId)->scope_id;
 
-            if ($newSpecificObjective->scope_id !== $oldScopeId) {
+            if ($newSpecificObjective->scope_id != $oldScopeId) {
                 throw new \Exception('El nuevo specificObjective no pertenece al mismo scope', 422);
             }
         }

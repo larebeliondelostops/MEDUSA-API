@@ -17,9 +17,14 @@ class StageSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('stages')->insert([
+        DB::table('stages')->insert([
             [
-                'name' => 'Formulación / Presentación',
+                'name' => 'Formulación',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Presentación',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -39,12 +44,12 @@ class StageSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Operación',
+                'name' => 'Cierre',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Cierre',
+                'name' => 'Operación',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

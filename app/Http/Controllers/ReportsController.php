@@ -35,12 +35,18 @@ class ReportsController extends Controller
      */
     public function __construct()
     {
-        $this->value = ReportsContext::VALUE[config("database.default")];
+    }
+
+    public function getSubDomain()
+    {
+        $this->value = ReportsContext::VALUE[tenant('id')];
     }
 
     public function index(Request $request, string $method, $slug)
     {
         try {
+
+            $this->getSubDomain();
 
             $this->slugs = Slug::where('name', $slug)->first();
 

@@ -2,140 +2,146 @@
 
 namespace App\Services\Viper;
 use App\DTOs\Viper\Deliverable\DeliverableDetailDTO;
+use App\DTOs\Viper\Deliverable\DeliverableDetailFolderDTO;
 use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
+use App\DTOs\Viper\Folder\FolderDTO;
 use App\Interfaces\Viper\DeliverableInterface;
+use App\Interfaces\Viper\FolderInterface;
+use App\Interfaces\Viper\ProductInterface;
 use App\Models\Viper\Deliverable;
-use Illuminate\Support\Collection;
 
 class DeliverableService implements DeliverableInterface
 {
-    private function getAmountOfDeliverablesByProductId(int $product_id) : int
+    private FolderInterface $folderInterface;
+    private ProductInterface $productInterface;
+
+    public function __construct(
+        FolderInterface $folderInterface,
+        ProductInterface $productInterface,
+        )
     {
-        return Deliverable::where('product_id', $product_id)->count();
+        $this->folderInterface = $folderInterface;
+        $this->productInterface = $productInterface;
     }
 
-    private function getAmountOfDeliverablesByDeliverableId(int $deliverable_id) : int
+    public function createNewDeliverable(DeliverableRequestDTO $deliverableDTO) : DeliverableRequestDTO
     {
-        return Deliverable::where('deliverable_id', $deliverable_id)->count();
+        $folderDTO = $this->folderInterface->createNewFolder(
+            new FolderDTO(
+                [
+                    'name' => $deliverableDTO->number .'. '.$deliverableDTO->name,
+                    'higher_folder_id' => (
+                        is_null($deliverableDTO->folder_id) ?
+                        ($this->productInterface->getProduct($deliverableDTO->product_id))->folder_id :
+                        $deliverableDTO->folder_id
+                    ),
+                ]
+            )
+        );
+        $deliverableDTO->folder_id = $folderDTO->id;
+        $deliverable = new Deliverable($deliverableDTO->toArray());
+        $deliverable->save();
+        return new DeliverableRequestDTO($deliverable->toArray());
     }
 
-    private function loadChildDeliverablesRecursively(Collection $deliverables) : Collection
+    private function adjustDataAndSave(array &$deliverables, array &$result, ?int $fatherDeliverableId = null ) : void
     {
-        return $deliverables->map(function (Deliverable $deliverable) {
-            $deliverableData = $deliverable->toArray();
-            $deliverableData['child_deliverables'] = [];
-
-            if ($deliverable->childDeliverables->isNotEmpty()) {
-                // Convertir cada childDeliverable a DTO y luego a un array
-                $childDTOs = $this->loadChildDeliverablesRecursively($deliverable->childDeliverables);
-                $deliverableData['child_deliverables'] = $childDTOs->toArray();
-            }
-
-            return new DeliverableDetailDTO($deliverableData);
-        });
-    }
-
-    public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO) : DeliverableRequestDTO
-    {
-        $newDeliverable = new Deliverable($deliverableRequestDTO->toArray());
-        if (is_null($deliverableRequestDTO->deliverable_id))
+        foreach($deliverables as $deliverable)
         {
-            $newDeliverable->load('product');
-            $newDeliverable->number =
-                        ''.$newDeliverable->product->number.
-                        '.'.$this->getAmountOfDeliverablesByProductId($newDeliverable->product_id)+1;
+            $deliverableDTO = new DeliverableRequestDTO($deliverable);
+            $deliverableDTO->deliverable_id = $fatherDeliverableId;
+            $deliverableDTO = $this->createNewDeliverable($deliverableDTO);
+            if (count($deliverable['deliverables']) > 0)
+                $this->adjustDataAndSave($deliverable['deliverables'], $result, $deliverableDTO->id);
+
+            array_push($result, $deliverableDTO); // se agrega el dato almacenado al array de resultado
         }
-        else
-        {
-            $newDeliverable->load('parentDeliverable');
-            $newDeliverable->number =
-                        ''.$newDeliverable->parentDeliverable->number.
-                        '.'.$this->getAmountOfDeliverablesByDeliverableId($newDeliverable->deliverable_id)+1;
-        }
-        $newDeliverable->save();
-        return new DeliverableRequestDTO($newDeliverable->toArray());
+    }
+
+    public function createMultipleDeliverables(array $deliverablesDTO) : array
+    {
+        $result = [];
+        $this->adjustDataAndSave($deliverablesDTO, $result);
+        return  $result;
     }
 
     public function getAllDeliverables() : array
     {
-        $parentDeliverables = Deliverable::with('childDeliverables')->where("deliverable_id", null)->get();
-        return $this->loadChildDeliverablesRecursively($parentDeliverables)->toArray();
-    }
-
-    public function getDeliverablesByProductId(int $productId) : array
-    {
-        $parentDeliverables = Deliverable::with('childDeliverables')
-            ->where("deliverable_id", null)
-            ->where("product_id", $productId)
-            ->orderBy('number')
-            ->get();
-        return $this->loadChildDeliverablesRecursively($parentDeliverables)->toArray();
-    }
-
-    public function updateDeliverable(string $newName, int $deliverableId) : DeliverableRequestDTO
-    {
-        $deliverableGot = Deliverable::findOrFail($deliverableId);
-        $deliverableGot->name = $newName;
-        $deliverableGot->save();
-        return new DeliverableRequestDTO($deliverableGot->toArray());
-    }
-
-    private function getAllDeliverablesByDeliverableId(int $deliverableId) : array
-    {
-        $parentDeliverables = Deliverable::with('childDeliverables')
-            ->where("deliverable_id", $deliverableId)
-            ->get();
-        return $this->loadChildDeliverablesRecursively($parentDeliverables)->toArray();
-    }
-
-    private function loadNewNumberDeliverables(array $deliverables, string $numberDeleted, string $numberFather)
-    {
-        $index = 0;
-        $deliverablesUpdated = array_map(
-            function (DeliverableDetailDTO $deliverable) use ($numberDeleted, &$index, $numberFather)
-            {
-                $index++;
-                if ($numberDeleted > $deliverable->number) return $deliverable;
-                else
-                {
-                    $deliverable->number = $numberFather . '.' . $index ;
-
-                    if (count($deliverable->child_deliverables)>0) $deliverable->child_deliverables = $this->loadNewNumberDeliverables($deliverable->child_deliverables, 0, $deliverable->number);
-                    // Actualizamos la informacion de la db
-                    $deliverableUpdate = Deliverable::findOrFAil($deliverable->id);
-                    $deliverableUpdate->number = $deliverable->number;
-                    $deliverableUpdate->save();
-
-                    return $deliverable;
-                }
-            },
-            $deliverables
+        $deliverables = Deliverable::all();
+        $deliverables->transform(
+            fn(Deliverable $deliverable) => new DeliverableRequestDTO($deliverable->toArray())
         );
-        return $deliverablesUpdated;
+        return $deliverables->toArray();
     }
 
-    public function deleteDeliverable(int $deliverableId) //: DeliverableRequestDTO
+    private function getAndAjustData(array &$result, int &$productId, ?int $fatherDeliverableId = null) : void
     {
-        $deliverableGot = Deliverable::findOrFail($deliverableId);
-        $deliverableDeletedDTO = new DeliverableRequestDTO($deliverableGot->toArray());
-        $deliverableGot->delete();
+        $deliverables = Deliverable::where('product_id', $productId) // busca los entregables con productId $number
+                        ->Where('deliverable_id', $fatherDeliverableId) // y que tenga de padre a $father
+                        ->get() // realiza la consulta
+                        ->toArray(); // la convierte a un array
 
-        $deliverablesSiblings = (is_null($deliverableDeletedDTO->deliverable_id) ?
-                                $this->getDeliverablesByProductId($deliverableDeletedDTO->product_id):
-                                $this->getAllDeliverablesByDeliverableId($deliverableDeletedDTO->deliverable_id));
+        foreach($deliverables as $deliverable)
+        {
+            $deliverable = new DeliverableDetailDTO($deliverable);
+            array_push(
+                $result,
+                $deliverable
+            );
+            $this->getAndAjustData($deliverable->deliverables, $productId, $deliverable->id);
+        }
+    }
 
-        //divido el number en partes para obtener el number del padre
-        $sections = explode('.', $deliverableDeletedDTO->number);
-        //elimino el ultimo numero de number
-        array_pop($sections);
-        //sections para obtener el number del father del elemento a eliminar
-        $numberFather = implode('.', $sections);
+    public function getDeliverablesByScopeId(int $scopeId) : array
+    {
+        $result = []; // array para guardar los deliverables
+        $products = $this->productInterface->getAllProductsByScope($scopeId);
+        foreach ($products as $product)
+            $this->getAndAjustData($result, $product->id);
 
-        // actualizo todos los numbers que se ven afectados por eliminar el entregable
-        $this->loadNewNumberDeliverables($deliverablesSiblings,
-                                                $deliverableDeletedDTO->number,
-                                                $numberFather);
+        return $result;
+    }
 
-        return $deliverableDeletedDTO;
+    public function updateDeliverable(DeliverableDetailFolderDTO $deliverableUpdateDTO, int $deliverableId) : DeliverableDetailFolderDTO
+    {
+        $delivarableForUpdate = Deliverable::findOrFail($deliverableId);
+        $delivarableForUpdate->fill([
+            'number' => $deliverableUpdateDTO->number,
+            'name' => $deliverableUpdateDTO->name
+        ]);
+        $delivarableForUpdate->save(); // Se actualiza la data del entregable
+
+        $deliverableUpdateDTO->fill($delivarableForUpdate->toArray()); // se llena el objeto con los datos actualizados
+
+        $deliverableUpdateDTO->folder = $this->folderInterface->updateFolderName(
+            $delivarableForUpdate->folder_id,
+            $delivarableForUpdate->number.'. '.$delivarableForUpdate->name);
+
+        return $deliverableUpdateDTO;
+    }
+
+    public function getDeliverablesChildren(array &$result, int $fatherDeliverableId)
+    {
+        $deliverables = Deliverable::with('folder')->where('deliverable_id', $fatherDeliverableId)->get();
+        foreach($deliverables as $deliverable)
+        {
+            $data = $deliverable->toArray();
+            $data['folder'] = new FolderDTO($data['folder']);
+            array_push($result, new DeliverableDetailFolderDTO($data));
+            $this->getDeliverablesChildren($result, $data['id']);
+        }
+    }
+
+    public function deleteDeliverable(int $deliverableId) : array
+    {
+        $dataForDelete = [];
+        $deliverableForDelete = Deliverable::with('folder')->findOrFail($deliverableId); // si no existe arroja error
+        $data = $deliverableForDelete->toArray();
+        $data['folder'] = new FolderDTO($data['folder']);
+        array_push($dataForDelete, new DeliverableDetailFolderDTO($data)); // guardamos la data que se va eliminar
+
+        $this->getDeliverablesChildren($dataForDelete, $deliverableId); // agregamos la data de los hijos que se van a borrar
+        $deliverableForDelete->delete(); // se encarga de borrado logico y de las carpetas recursivamente(hijos y carpetas hijos)
+        return $dataForDelete;
     }
 }

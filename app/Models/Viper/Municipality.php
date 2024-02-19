@@ -16,17 +16,36 @@ class Municipality extends Model
 
     protected $fillable = [
         "name",
-        "location_id",
+        "coordinate_id",
         "department_id",
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+                /**
+         * Cuando se elimine un departamento es importante eliminar su coordenada.
+         */
+        //borrado de coordenada
+        static::deleting(
+            function (Municipality $municipality)
+            {
+                if ($municipality->coordinate)
+                {
+                    $municipality->coordinate->delete();
+                }
+            }
+        );
+    }
 
     public function department()
     {
         return $this->belongsTo(Department::class,"department_id");
     }
 
-    public function location()
+    public function coordinate()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->belongsTo(Coordinates::class, 'coordinate_id');
     }
 }

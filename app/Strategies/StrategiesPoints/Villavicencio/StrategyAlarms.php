@@ -134,7 +134,7 @@ class StrategyAlarms implements AlarmsInterface
                         'from' => $alarms->firstItem(),
                         'to' => $alarms->lastItem(),
                     ],
-                    'ableCreate' => false
+                    'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

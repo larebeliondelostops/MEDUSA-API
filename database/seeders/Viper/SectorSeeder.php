@@ -17,7 +17,7 @@ class SectorSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('sectors')->insert([
+        DB::table('sectors')->insert([
             [
                 'name' => 'Ambiente y Desarrollo Rural',
                 'created_at' => now(),

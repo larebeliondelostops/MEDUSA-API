@@ -47,6 +47,14 @@ use App\Interfaces\Viper\LocationInterface;
 use App\Services\Viper\ActivityService;
 use App\Interfaces\Viper\PrecedenceInterface;
 use App\Services\Viper\PrecedenceService;
+use App\Interfaces\Viper\MilestoneClassInterface;
+use App\Services\Viper\MilestoneClassService;
+use App\Interfaces\Viper\MilestoneInterface;
+use App\Services\Viper\MilestoneService;
+use App\Interfaces\Viper\MilestoneSubclassInterface;
+use App\Services\Viper\MilestoneSubclassService;
+use App\Interfaces\Viper\ProofInterface;
+use App\Services\Viper\ProofService;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -73,5 +81,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ActivityInterface::class, ActivityService::class);
         $this->app->bind(PrecedenceInterface::class, PrecedenceService::class);
         $this->app->bind(LocationInterface::class, LocationService::class);
+        $this->app->bind(MilestoneClassInterface::class, MilestoneClassService::class);
+        $this->app->bind(MilestoneInterface::class, MilestoneService::class);
+        $this->app->bind(MilestoneSubclassInterface::class, MilestoneSubclassService::class);
+        $this->app->bind(ProofInterface::class, ProofService::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Ditra;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\Ditra\MenuSeeder;

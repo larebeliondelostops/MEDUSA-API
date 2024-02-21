@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Indicators', function (Blueprint $table) {
+        Schema::create('traffic_lights', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->string('Description');
+            $table->uuid('uuid')->unique();
+            $table->string('name')->nullable();
+            $table->string('coordinates')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Indicators');
+        Schema::dropIfExists('traffic_lights');
     }
 };

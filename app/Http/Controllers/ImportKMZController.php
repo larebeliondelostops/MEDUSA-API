@@ -98,7 +98,7 @@ class ImportKMZController extends Controller
     public function importPoints(Request $request)
     {
         $uploadedFile = $request->file('kmz_file');
-
+        //dd($uploadedFile);
         $zip = new \ZipArchive();
         if ($zip->open($uploadedFile) === true) {
             // Resto del código de descompresión
@@ -120,13 +120,14 @@ class ImportKMZController extends Controller
         $contador = 0;
         $geometry = [];
 
-        foreach ($kml->Document->Folder->Folder->Placemark as $placemark) {
+        foreach ($kml->Document->Folder->Placemark as $placemark) {
             if (isset($placemark->Point)) {
                 $name = (string) $placemark->name[0];
                 $coordinates = (string) $placemark->Point->coordinates[0];
 
                 list($longitude, $latitude) = explode(',', $coordinates);
-
+                $coordinates = "$latitude, $longitude";
+                
                 $feature = [
                     "type" => "Feature",
                     "geometry" => [
@@ -144,7 +145,7 @@ class ImportKMZController extends Controller
 
                 $entry = [
                     "name" => $name,
-                    "pointCoordinates" => $pointCoordinates,
+                    "coordinates" => $coordinates,
                 ];
 
                 $features[] = $entry;

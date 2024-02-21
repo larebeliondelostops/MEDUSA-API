@@ -7,22 +7,22 @@ use Carbon\Carbon;
 use App\Strategies\Interface\Ditra\ProbabilisticInterface;
 use App\Models\Ditra\DataDitra;
 
-class StrategyChoqueProbabilistic implements ProbabilisticInterface
+class StrategySalidaCalzadaProbabilistic implements ProbabilisticInterface
 {
     public function getProbabilisticData()
     {
-
+        
         $timeInterval = 1;
 
-        $Choque =  $this->Choque();
+        $SalidaCalzada =  $this->SalidaCalzada();
         $allData = $this->allData();
-        $probabilidadActualChoque = ($Choque->count() > 0) ? ($Choque->count() / $allData->count()) * 100 : 0;
-        $probabilidadFuturaChoque = $this->calculatePoissonProbability($probabilidadActualChoque, $timeInterval);
+        $probabilidadActualSalidaCalzada = ($SalidaCalzada->count() > 0) ? ($SalidaCalzada->count() / $allData->count()) * 100 : 0;
+        $probabilidadFuturaSalidaCalzada = $this->calculatePoissonProbability($probabilidadActualSalidaCalzada, $timeInterval);
 
         $ProbabilisticData = [
             "types" => [
                 [
-                    "name" => "Choque",
+                    "name" => "Salida Calzada",
                     "key" => 0
                 ]
             ],
@@ -30,18 +30,18 @@ class StrategyChoqueProbabilistic implements ProbabilisticInterface
 
         ];
 
-        $dataChoque = [
-            "probability" => [$probabilidadActualChoque, $probabilidadFuturaChoque],
+        $dataSalidaCalzada = [
+            "probability" => [$probabilidadActualSalidaCalzada, $probabilidadFuturaSalidaCalzada],
             // "graphs" => [
             //     [
-            //         "title" => "Cantidad de incidentes choque por dia de la semana",
-            //         "series" => $SeriesChoqueDia,
+            //         "title" => "Cantidad de incidentes volcamiento por dia de la semana",
+            //         "series" => $SeriesVolcamientoDia,
             //         "labels" => $days,
             //         "type" => "area"
             //     ],
             //     [
-            //         "title" => "Cantidad de incidentes choque por hora del dia",
-            //         "series" => $SeriesChoqueHora,
+            //         "title" => "Cantidad de incidentes volcamiento por hora del dia",
+            //         "series" => $SeriesVolcamientoHora,
             //         "labels" => $hours,
             //         "type" => "area"
             //     ],
@@ -49,39 +49,39 @@ class StrategyChoqueProbabilistic implements ProbabilisticInterface
             // ]
         ];
 
-        array_push($ProbabilisticData['data'], $dataChoque);
+        array_push($ProbabilisticData['data'], $dataSalidaCalzada);
         array_push($ProbabilisticData['data'], $this->StatisticsByIndicator()->original);
 
 
         return $ProbabilisticData;
     }
 
-    public function Choque()
+    public function SalidaCalzada()
     {
-        $Choque = DataDitra::where('type', 'CHOQUE')->get();
+        $SalidaCalzada = DataDitra::where('type', 'SALIDA DE CALZADA')->get();
         
-        return $Choque;
+        return $SalidaCalzada;
     }
 
     public function allData()
     {
-        $Choque =  DataDitra::all();
+        $SalidaCalzada =  DataDitra::all();
 
-        return $Choque;
+        return $SalidaCalzada;
     }
 
-    public function StatisticsByIndicator()
+        public function StatisticsByIndicator()
     {
 
         // Obtener la hora con más ocurrencias de accidentes históricamente por indicador y cuadrícula
-        $horaMasOcurrencias = DataDitra::where('indicator', '=', 2)
+        $horaMasOcurrencias = DataDitra::where('indicator', '=', 6)
             ->groupBy('hour')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('hour')
             ->first();
 
         // Obtener el día de la semana con más ocurrencias de accidentes históricamente por indicador y cuadrícula
-        $diaSemanaMasOcurrencias = DataDitra::where('indicator', '=', 2)
+        $diaSemanaMasOcurrencias = DataDitra::where('indicator', '=', 6)
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
@@ -91,7 +91,7 @@ class StrategyChoqueProbabilistic implements ProbabilisticInterface
         $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
         // Obtener cantidad de accidentes por día de la semana
-        $accidentesPorDiaSemana = DataDitra::where('indicator', '=', 2)
+        $accidentesPorDiaSemana = DataDitra::where('indicator', '=', 6)
             ->selectRaw('day, COUNT(*) as count')
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')

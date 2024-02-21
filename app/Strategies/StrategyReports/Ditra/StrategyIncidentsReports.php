@@ -235,14 +235,14 @@ class StrategyIncidentsReports implements ReportsInterface
                 $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
                     ->selectRaw('month, COUNT(*) as count')
                     ->where('indicator', $this->indicator)
-                    ->where('year', date('Y'))
+                    //->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
                     ->get();
             } else {
                 $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
                     ->selectRaw('month, COUNT(*) as count')
-                    ->where('year', date('Y'))
+                    //->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
                     ->get();
@@ -298,7 +298,7 @@ class StrategyIncidentsReports implements ReportsInterface
             $hoy =  Carbon::parse($this->request->end);
             $rango = Carbon::parse($this->request->start);
             $date = $rango->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
-            $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $rango->toDateString())->get();
+            $incidentes = Incident::with('Indicator')->whereBetween('created_at', [$this->request->start, $this->request->end])->get();
         } else {
             $date = 'Historico';
             $incidentes = Incident::with('Indicator')->get();

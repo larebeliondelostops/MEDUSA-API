@@ -5,7 +5,7 @@ namespace App\Values;
 use App\Strategies\StrategiesPoints\Ditra\StrategyIncidents;
 use App\Strategies\StrategiesPoints\Ditra\StrategyTollbooth;
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
-use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
+use App\Strategies\StrategiesPoints\Ditra\StrategyCameras;
 
 class AllDataValuesDitra
 {

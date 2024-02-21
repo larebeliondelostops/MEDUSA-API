@@ -64,7 +64,7 @@ class AllDataController extends Controller
 
             $this->getSubDomain();
 
-            $this->pointsMarkers = Marker::whereIn('marker_type', [1,4])->pluck('id')->toArray();
+            $this->pointsMarkers = Marker::whereIn('marker_type', [1,4] )->pluck('id')->toArray();
 
             foreach ($this->pointsMarkers as $key) {
                 $data = $this->value::STRATEGY[$key]::all();

@@ -21,7 +21,9 @@ use Database\Seeders\Villavicencio\HealthTableSeeder;
 use Database\Seeders\Villavicencio\FiberLinesTableSeeder;
 use Database\Seeders\Villavicencio\FiberPointsTableSeeder;
 use Database\Seeders\Villavicencio\FormPollingPlacesSeeder;
+use Database\Seeders\Villavicencio\IpatsTableSeeder;
 use Database\Seeders\Villavicencio\PollingPlaceTableSeeder;
+use Database\Seeders\Villavicencio\TrafficLightsTableSeeder;
 
 class VillavicencioSeeder extends Seeder
 {
@@ -29,24 +31,26 @@ class VillavicencioSeeder extends Seeder
     {
         $this->call([
             AlarmsTableSeeder::class,
-            CRUDActionsSeeder::class,
+            //CRUDActionsSeeder::class,
             FiberLinesTableSeeder::class,
             FiberPointsTableSeeder::class,
+            SelectTypeSeeder::class,
             FieldsSeeder::class,
+            ModulesSeeder::class,
             FormAlarmsSeeder::class,
             FormPollingPlacesSeeder::class,
             FormUsersSeeder::class,
             HealthTableSeeder::class,
             IndicatorSeeder::class,
-            MarkersSeeder::class,
             MarkerTypeSeeder::class,
+            MarkersSeeder::class,
             MenuBarSeeder::class,
-            MenuSeeder::class,
-            ModulesSeeder::class,
+            MenuSeeder::class,         
             PollingPlaceTableSeeder::class,
-            SelectTypeSeeder::class,
             SlugsSeeder::class,
             SubMenuSeeder::class,
+            IpatsTableSeeder::class,
+            TrafficLightsTableSeeder::class,
         ]);
     }
 }

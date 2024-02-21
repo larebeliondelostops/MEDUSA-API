@@ -61,5 +61,8 @@ Route::middleware([
 
     // Heatmap Route
     require base_path('routes/api/heatmap.php');
+
+    // Import KMZ Route
+    require base_path('routes/api/kmz.php');
     
 });

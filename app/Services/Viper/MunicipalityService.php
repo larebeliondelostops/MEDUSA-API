@@ -72,7 +72,7 @@ class MunicipalityService implements MunicipalityInterface
         }
 
         $municipalitiesDTO = $municipalityQuery->get()->transform(
-            fn (Municipality $municipality) => new MunicipalityDetailDTO($municipality->toArray())
+            fn (Municipality $municipality) => new MunicipalityRequestDTO($municipality->toArray())
         );
         return $municipalitiesDTO->toArray();
     }

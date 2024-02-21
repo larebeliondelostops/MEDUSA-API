@@ -73,7 +73,7 @@ class DepartmentService implements DepartmentInterface
      */
     public function getAllDepartmentsDetail(): array
     {
-        $departmentsGot = Department::with('municipalities', 'municipalities.location', 'location')->get();
+        $departmentsGot = Department::with('municipalities', 'municipalities.coordinate', 'coordinate')->get();
 
         $departmentsDetailDTO = $departmentsGot->map(
             function (Department $department)
@@ -83,11 +83,9 @@ class DepartmentService implements DepartmentInterface
                     function (Municipality $municipality)
                     {
                         $data = $municipality->toArray();
-                        $data['location'] = new LocationRequestDTO($data['location']);
                         return new MunicipalityRequestDTO($data);
                     }
                 )->toArray();
-                $data['location'] = new LocationRequestDTO($data['location']);
             return new DepartmentDetailDTO($data);
             }
         );

@@ -145,8 +145,8 @@ class AuthController extends Controller
                 'accessToken' => $token,
                 'refreshToken' => $refresh_token,
                 'name' => $user->name,
-                /* 'email' => $user->email,
-                'phoneNumber' => $user->phone_number,
+                'email' => $user->email,
+                /*'phoneNumber' => $user->phone_number,
                 'adress' => $user->adress, */
                 'avatar' => $user->avatar == NULL ? '/storage/avatar/default.jpg' : '/storage/avatar/' . $user->avatar,
                 'roleName' => $user->getRoleNames()[0] ?? null,

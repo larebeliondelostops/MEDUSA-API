@@ -24,7 +24,7 @@ class StrategyIncidents implements PointsInterface
             $incidents = $incidents->map(function ($item) {
 
                 $incident = [
-                    'markerType' => 5,
+                    'markerType' => 1,
                     'id' => $item->uuid,
                     'geometry' => json_decode($item->position),
                 ];

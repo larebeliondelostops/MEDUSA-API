@@ -609,7 +609,7 @@ class StrategyIncidentsReports implements ReportsInterface
 
     public function points()
     {
-        $incidents = Incident::where('indicator', $this->indicator)->get();
+        $incidents = Incident::where('indicator', $this->indicator)->whereNotNull('position')->get();
 
         $incidents = $incidents->map(function ($incident) {
             $coordenadas = explode(', ', $incident->position);

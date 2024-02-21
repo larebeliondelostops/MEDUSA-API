@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('indicators', function (Blueprint $table) {
+        Schema::create('indicators_viper', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->bigInteger('start_year_of_goal');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('indicators');
+        Schema::dropIfExists('indicators_viper');
     }
 };

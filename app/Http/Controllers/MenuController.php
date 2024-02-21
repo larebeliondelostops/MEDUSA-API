@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Menu;
 use App\Models\BarMenu;
+use App\Models\Marker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 /**
@@ -22,25 +24,19 @@ use Illuminate\Support\Facades\Response;
 class MenuController extends Controller
 {
     /**
-     * Slugs para generar las peticiones de las respectivas ciudades
-     */
-    CONST MARKERS_VILLAVICENCIO = [
-        'alarm', 'cai', 'healt', 'pollingPlace', 'OpticalFiber', 'camera', 'event'
-    ];
-
-    CONST MARKERS_NEIVA = [
-        'SIESOpticalFiber', 'cameraOpticalFiber', 'deportiveScenary', 'mobility', 'healt', 'EPNceiba', 'citizenSecurity',
-        'digitalZone', 'educationalHeadquarters', 'camera'
-    ];
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function commandBar()
     {
-        $data_menu = BarMenu::with('Marker')->where('bar_menu.enabled', true)->orderby('bar_menu.id')->get();
+        $user = Auth::user();
+
+        $permisos = $user->getAllPermissions()->pluck('name')->toArray();
+
+        $markers_permisos = Marker::whereIn('name', $permisos)->get()->pluck('id')->toArray();
+
+        $data_menu = BarMenu::with('Marker')->whereIn('bar_menu.marker', $markers_permisos)->where('bar_menu.enabled', true)->orderBy('bar_menu.id')->get();
 
         // Crear un nuevo arreglo en la estructura deseada
         $menu = [];

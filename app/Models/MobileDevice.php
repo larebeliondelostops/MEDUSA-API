@@ -16,7 +16,12 @@ class MobileDevice extends Model
 
     protected $keyType = 'string';
     public $incrementing = true; // Indica que el campo 'id' es autoincremental
-    protected $fillable = ['username', 'device_token', 'is_active'];
+    protected $fillable = ['id_user', 'device_token', 'is_active', 'position', 'is_active_position'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
     
 
 }

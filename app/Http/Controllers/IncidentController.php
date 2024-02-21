@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use App\Models\Incident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
-use App\Http\Request\Incidents\IncidentRequest;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\RateLimiter;
+use App\Http\Request\Incidents\IncidentRequest;
 
 /**
  * Controlador Incidentes.
@@ -131,7 +132,7 @@ class IncidentController extends Controller
             $limitKey = "store_limit_$userId";
 
             // Intentos máximos: 3
-            $rateLimit = 3;
+            $rateLimit = 30;
             $decaySeconds= 60;
 
             if (RateLimiter::tooManyAttempts($limitKey, $rateLimit, $decaySeconds)) {
@@ -178,7 +179,7 @@ class IncidentController extends Controller
             }
             return Response::json([
                 'status' => 'succes',
-                'data' => $incident
+                'data' => $incident,
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

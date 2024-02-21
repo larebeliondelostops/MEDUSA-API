@@ -32,31 +32,31 @@ Route::get('/', function () {
     return response()->json($data, 200);
 });
 
-// Route::get('/heatmap', function () {
-//     $data = CriminalActs::select('coordinates')->get();
+Route::get('/heatmap', function () {
+    $data = CriminalActs::select('coordinates')->get();
 
-//     $features = [];
-//     foreach ($data as $row) {
-//         $coordinates = json_decode($row->coordinates);
-//         $feature = [
-//             "type" => "Feature",
-//             "geometry" => [
-//                 "type" => "Point",
-//                 "coordinates" => [
-//                     $coordinates->lat,
-//                     $coordinates->lng
-//                 ]
-//             ]
-//         ];
-//         $features[] = $feature;
-//     }
+    $features = [];
+    foreach ($data as $row) {
+        $coordinates = json_decode($row->coordinates);
+        $feature = [
+            "type" => "Feature",
+            "geometry" => [
+                "type" => "Point",
+                "coordinates" => [
+                    $coordinates->lat,
+                    $coordinates->lng
+                ]
+            ]
+        ];
+        $features[] = $feature;
+    }
 
-//     $geojson = [
-//         "type" => "FeatureCollection",
-//         "features" => $features
-//     ];
-//     return response()->json($geojson, 200);
-// });
+    $geojson = [
+        "type" => "FeatureCollection",
+        "features" => $features
+    ];
+    return response()->json($geojson, 200);
+});
 
 Route::get('/correlacionador', function (Request $request) {
     // Obtén el valor de la variable 'query' de la petición
@@ -98,29 +98,6 @@ Route::middleware('jwt.verify')->group(function () {
     });
 });
 
-Route::get('/ver-video1', function () {
-    $videoPath = 'videos/trafico_1.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
-    $filePath = Storage::disk('public')->path($videoPath);
-    return response()->file($filePath);
-});
-
-Route::get('/ver-video2', function () {
-    $videoPath = 'videos/trafico_2.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
-    $filePath = Storage::disk('public')->path($videoPath);
-    return response()->file($filePath);
-});
-
-Route::get('/ver-video3', function () {
-    $videoPath = 'videos/trafico_3.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
-    $filePath = Storage::disk('public')->path($videoPath);
-    return response()->file($filePath);
-});
-
-Route::get('/ver-video4', function () {
-    $videoPath = 'videos/trafico_4.mp4'; // Ruta relativa del video dentro de la carpeta "public/storage"
-    $filePath = Storage::disk('public')->path($videoPath);
-    return response()->file($filePath);
-});
 
 Route::post('/notify/{deviceToken}/{message}', [NotificationAppController::class, 'sendNotification']);
 Route::post('/notify/add-device', [NotificationAppController::class, 'addDevice']);

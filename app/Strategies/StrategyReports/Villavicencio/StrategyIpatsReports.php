@@ -29,7 +29,7 @@ class StrategyIpatsReports implements ReportsInterface
 
         $data = [
             'tabs' => $this->tabsIncidents(),
-            'reportsData' => $data
+            'reportsData' => [$data]
         ];
 
         return response()->json($data);
@@ -50,9 +50,9 @@ class StrategyIpatsReports implements ReportsInterface
 
         $data = [
             'title' => 'Tabs',
-            'series' => $incidents->count(),
-            'labels' => "General",
-            'key' => 0,
+            'series' => [$incidents->count()],
+            'labels' => ["General"],
+            'key' => [0],
             'type' => 'tabs'
         ];
 
@@ -193,7 +193,7 @@ class StrategyIpatsReports implements ReportsInterface
         }
 
         $data = [
-            'title' => '# Incidentes Mediante Mapa de Calor',
+            'title' => '# Incidentes por recurrencia',
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],

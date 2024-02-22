@@ -17,4 +17,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/docker-compose
+docker-compose/nginx/apihelpdesk.conf

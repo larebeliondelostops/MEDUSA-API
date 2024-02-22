@@ -32,9 +32,18 @@ class MenuController extends Controller
     {
         $user = Auth::user();
 
-        $permisos = $user->getAllPermissions()->pluck('name')->toArray();
+        $permisos = $user->getAllPermissions()->pluck('name');
 
-        $markers_permisos = Marker::whereIn('name', $permisos)->get()->pluck('id')->toArray();
+        $permisos = $permisos->filter(function ($item) {
+            return strpos($item, 'commandbar-') === 0;
+        });
+
+        $permisos = $permisos->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $markers_permisos = Marker::whereIn('name', $permisos->toArray())->get()->pluck('id')->toArray();
 
         $data_menu = BarMenu::with('Marker')->whereIn('bar_menu.marker', $markers_permisos)->where('bar_menu.enabled', true)->orderBy('bar_menu.id')->get();
 

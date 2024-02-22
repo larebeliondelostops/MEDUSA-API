@@ -37,6 +37,41 @@ class Ipats extends Model
 	 * The attributes that should be hidden for arrays.
 	 * @var array
 	 */
-	protected $hidden = []; 
+	protected $hidden = [];
 
+	public function getMonth()
+	{
+		// Obtener la fecha en formato 'YYYY-MM-DD' del atributo date_ipat
+		$date = $this->date_ipat;
+
+		// Extraer el mes de la fecha
+		$month = date('m', strtotime($date));
+
+		// Asignar el mes al atributo month
+		$this->month = $month;
+	}
+
+	public function getDay()
+	{
+		// Obtener la fecha en formato 'YYYY-MM-DD' del atributo date_ipat
+		$date = $this->date_ipat;
+
+		// Extraer el mes de la fecha
+		$day = date('d', strtotime($date));
+
+		// Asignar el mes al atributo day
+		$this->day = $day;
+	}
+
+	public function getDayOfWeek()
+	{
+		// Obtener la fecha en formato 'YYYY-MM-DD' del atributo date_ipat
+		$date = $this->date_ipat;
+
+		// Extraer el día de la semana en formato numérico (0 para domingo, 1 para lunes, etc.)
+		$dayOfWeek = date('w', strtotime($date));
+
+		// Asignar el día de la semana al atributo dayOfWeek
+		$this->dayOfWeek = $dayOfWeek;
+	}
 }

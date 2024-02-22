@@ -27,8 +27,8 @@ class Menu extends Model
         'id' => 'string',
     ];
 
-    public function SubMenu()
+    public function SubMenu($names = [])
     {
-        return $this->hasMany(SubMenu::class, 'menu', 'id')->where('enabled', true)->orderBy('sub_menu', 'asc');
+        return $this->hasMany(SubMenu::class, 'menu', 'id')->whereIn('name', $names)->where('enabled', true)->orderBy('sub_menu', 'asc');
     }
 }

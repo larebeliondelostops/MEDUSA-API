@@ -14,23 +14,10 @@ class StrategyNAProbabilistic implements ProbabilisticInterface
 
         $timeInterval = 1;
 
-        //Alarmas
-
         $NA =  $this->NA();
         $allData = $this->allData();
         $probabilidadActualNA = ($NA->count() > 0) ? ($NA->count() / $allData->count()) * 100 : 0;
         $probabilidadFuturaNA = $this->calculatePoissonProbability($probabilidadActualNA, $timeInterval);
-        $SeriesNADia = $this->getDataByWeekDay($NA);
-        $SeriesNAHora = $this->getDataByHourDay($NA);
-
-        $days = [
-            "Dom", "Lun", "Mar", "Mier", "Juev", "Vier", "Sab"
-        ];
-
-        $hours = [
-            "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", 
-            "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
-        ];
 
         $ProbabilisticData = [
             "types" => [
@@ -45,24 +32,10 @@ class StrategyNAProbabilistic implements ProbabilisticInterface
 
         $dataNA = [
             "probability" => [$probabilidadActualNA, $probabilidadFuturaNA],
-            "graphs" => [
-                [
-                    "title" => "Cantidad de incidentes N/A por dia de la semana",
-                    "series" => $SeriesNADia,
-                    "labels" => $days,
-                    "type" => "area"
-                ],
-                [
-                    "title" => "Cantidad de incidentes N/A por hora del dia",
-                    "series" => $SeriesNAHora,
-                    "labels" => $hours,
-                    "type" => "area"
-                ],
-
-            ]
         ];
 
         array_push($ProbabilisticData['data'], $dataNA);
+        array_push($ProbabilisticData['data'], $this->StatisticsByIndicator()->original);
 
 
         return $ProbabilisticData;
@@ -82,31 +55,49 @@ class StrategyNAProbabilistic implements ProbabilisticInterface
         return $NA;
     }
 
-    public function getDataByWeekDay($data)
-    {
-        $ocurrencias = [0, 0, 0, 0, 0, 0, 0];
-
-        foreach ($data as $item) {
-            $fechacarbon = Carbon::parse($item->occurrence_date);
-            $diaSemana = $fechacarbon->isoWeekday() - 1;
-            $ocurrencias[$diaSemana]++;
-        }
-
-        return $ocurrencias;
-    }
-
-    public function getDataByHourDay($data)
+    public function StatisticsByIndicator()
     {
 
-        $ocurrencias = array_fill(0, 24, 0);
+        // Obtener la hora con más ocurrencias de accidentes históricamente por indicador y cuadrícula
+        $horaMasOcurrencias = DataDitra::where('indicator', '=', 1)
+            ->groupBy('hour')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('hour')
+            ->first();
 
-        foreach ($data as $item) {
-            $fechacarbon = Carbon::parse($item->occurrence_date);
-            $hora = $fechacarbon->hour;
-            $ocurrencias[$hora]++;
+        // Obtener el día de la semana con más ocurrencias de accidentes históricamente por indicador y cuadrícula
+        $diaSemanaMasOcurrencias = DataDitra::where('indicator', '=', 1)
+            ->groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('day')
+            ->first();
+
+        // Definir todos los días de la semana
+        $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
+
+        // Obtener cantidad de accidentes por día de la semana
+        $accidentesPorDiaSemana = DataDitra::where('indicator', '=', 1)
+            ->selectRaw('day, COUNT(*) as count')
+            ->groupBy('day')
+            ->orderByRaw('COUNT(*) DESC')
+            ->get();
+
+        // Crear una colección para almacenar los resultados
+        $porcentajePorDiaSemana = collect();
+
+        // Iterar sobre todos los días de la semana
+        foreach ($diasSemana as $dia) {
+            $accidentes = $accidentesPorDiaSemana->firstWhere('day', $dia);
+
+            $porcentaje = [
+                'day' => $dia,
+                'percentage' => $accidentes ? ($accidentes->count / $accidentesPorDiaSemana->sum('count')) * 100 : 0,
+            ];
+
+            $porcentajePorDiaSemana->push($porcentaje);
         }
 
-        return $ocurrencias;
+        return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
     }
 
     private function calculatePoissonProbability($mean, $k)

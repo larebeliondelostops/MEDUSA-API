@@ -22,8 +22,9 @@ class StrategyIpatsReports implements ReportsInterface
 
         $data = [
             $this->incidensByMonth(),
-            $this->incidentsByWeekDay(),
             $this->incidentsHeatMap(),
+            $this->incidentsByWeekDay(),
+            $this->incidentsTopAgents(),
             $this->points()
         ];
 
@@ -38,9 +39,9 @@ class StrategyIpatsReports implements ReportsInterface
     public function getIncidents()
     {
         if (isset($this->request->start) && isset($this->request->end)) {
-            $this->incidents = Incident::select('injured', 'victims', 'coordinates', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
+            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
         } else {
-            $this->incidents = Incident::select('injured', 'victims', 'coordinates', 'date_ipat')->get();
+            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->get();
         }
     }
 
@@ -198,6 +199,51 @@ class StrategyIpatsReports implements ReportsInterface
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
             'type' => 'matrix'
+        ];
+
+        return $data;
+    }
+
+    public function incidentsTopAgents()
+    {
+        $incidents = $this->incidents;
+
+        $incidents = $incidents->groupBy('id_agent')->toArray();
+
+        $data = [];
+
+        foreach ($incidents as $key => $incident) {
+
+            $data[] = [
+                'id_agent' => $key,
+                'cantidad_atendida' => count($incident)
+            ];
+        }
+
+        $agentes_incidentes = collect($data)->sortByDesc('cantidad_atendida')->take(10)->values()->toArray();
+
+        $series = [];
+        $labels = [];
+
+        foreach ($agentes_incidentes as $agentes_incidente) {
+            $series[] = $agentes_incidente['cantidad_atendida'];
+            $labels[] = $agentes_incidente['id_agent'];
+        }
+
+        if (isset($this->request->start) && isset($this->request->end)) {
+            $hoy =  Carbon::parse($this->request->end);
+            $rango = Carbon::parse($this->request->start);
+            $date = $rango->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
+        } else {
+            $date = 'Historico';
+        }
+
+        $data = [
+            'title' => 'Top 10 Agentes con más incidentes atendidos',
+            'date' =>  $date,
+            'series' => $series,
+            'labels' => $labels,
+            'type' => 'bar'
         ];
 
         return $data;

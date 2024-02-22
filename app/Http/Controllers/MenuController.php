@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Response;
 class MenuController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Función para armar la estructura del command bar a partir de permisos
      *
      * @return \Illuminate\Http\Response
      */
@@ -69,17 +69,40 @@ class MenuController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Función para armar la estructura del menu a partir de permisos
+     * y así enviar al front-end el menu que el usuario puede ver
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function menuBar()
     {
-        $menu = Menu::with('SubMenu:menu,icon,name,slug,path,identifier as id')->where('menu.enabled', true)->orderby('menu.id')->get();
+        $user = Auth::user();
 
-        $menu = $menu->map(function ($item) {
+        $permisos = $user->getAllPermissions()->pluck('name');
+
+        $menu_permisions = $permisos->filter(function ($item) {
+            return strpos($item, 'menu-') === 0;
+        });
+
+        $menu_permisions = $menu_permisions->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $sub_menu_permisions = $permisos->filter(function ($item) {
+            return strpos($item, 'submenu-') === 0;
+        });
+
+        $sub_menu_permisions = $sub_menu_permisions->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $menu = Menu::where('menu.enabled', true)->whereIn('name', $menu_permisions)->orderby('menu.id')->get();
+
+        $menu = $menu->map(function ($item) use ($sub_menu_permisions) {
             // Realiza aquí la organización o transformación personalizada que necesitas
+
             $organizedItem = [
                 'id' => $item->id,
                 'name' => $item->name,
@@ -88,8 +111,7 @@ class MenuController extends Controller
                 'slug' => $item->slug,
             ];
 
-            // Agrega la relación 'submenu' con el nombre deseado
-            $organizedItem['submenu'] = $item->SubMenu;
+            $organizedItem['submenu'] = $item->SubMenu($sub_menu_permisions)->get();
 
             return $organizedItem;
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Viper;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\IndicatorRequest;
 use App\Interfaces\Viper\IndicatorInterface;
+use App\Interfaces\Viper\MeasurementUnitInterface;
 use App\DTOs\Viper\Indicator\IndicatorDTO;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,14 +26,22 @@ class IndicatorController extends BaseController
     private IndicatorInterface $indicatorInterface;
 
     /**
+     * @var MeasurementUnitInterface
+     */
+    private MeasurementUnitInterface $measurementUnitInterface;
+
+    /**
      * Constructor del controlador.
      *
      * @param IndicatorInterface $indicatorInterface
+     * @param MeasurementUnitInterface $measurementUnitInterface
      */
-    public function __construct(IndicatorInterface $indicatorInterface)
+
+    public function __construct(IndicatorInterface $indicatorInterface, MeasurementUnitInterface $measurementUnitInterface)
     {
         parent::__construct();
         $this->indicatorInterface = $indicatorInterface;
+        $this->measurementUnitInterface = $measurementUnitInterface;
     }
 
     /**
@@ -90,6 +99,13 @@ class IndicatorController extends BaseController
     {
         try {
             $indicators = $this->indicatorInterface->getAllIndicatorsByProduct($productId);
+            foreach ($indicators as &$indicator) {
+                $measurementUnit = $this->measurementUnitInterface->getMeasurementUnit($indicator->measurement_unit_id);
+    
+                $indicator->measurement_unit = $measurementUnit->name;
+
+                unset($indicator->measurement_unit_id);
+            }
             return response()->json([
                 'data' => $indicators,
             ], 200);
@@ -107,9 +123,16 @@ class IndicatorController extends BaseController
     public function show(int $id)
     {
         try {
-            $indicators = $this->indicatorInterface->getIndicator($id);
+            $indicator = $this->indicatorInterface->getIndicator($id);
+
+            $measurementUnit = $this->measurementUnitInterface->getMeasurementUnit($indicator->measurement_unit_id);
+
+            $indicator->measurement_unit = $measurementUnit->name;
+
+            unset($indicator->measurement_unit_id);
+
             return response()->json([
-                'data' => $indicators,
+                'data' => $indicator,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

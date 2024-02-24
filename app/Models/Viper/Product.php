@@ -80,8 +80,8 @@ class Product extends Model
         return $this->belongsTo(Folder::class, "folder_id");
     }
 
-
-
-    
-
+    public function deliverables()
+    {
+        return $this->hasMany(Deliverable::class, 'product_id');
+    }
 }

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias de terceros
-
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 
 // Librerias del modulo viper
@@ -62,7 +60,6 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-            // return response()->json(['data'=>$validatedData]);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);

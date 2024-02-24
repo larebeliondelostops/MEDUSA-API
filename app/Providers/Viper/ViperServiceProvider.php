@@ -6,6 +6,7 @@ use App\Interfaces\Viper\DeliverableInterface;
 use App\Interfaces\Viper\DepartmentInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\ProjectMarkerInterface;
+use App\Interfaces\Viper\ScheduleInterface;
 use App\Interfaces\Viper\StateInterface;
 use App\Services\Viper\DeliverableService;
 use App\Services\Viper\DepartmentService;
@@ -19,6 +20,7 @@ use App\Services\Viper\FolderService;
 use App\Interfaces\Viper\DocumentInterface;
 use App\Services\Viper\DocumentService;
 use App\Interfaces\Viper\StageInterface;
+use App\Services\Viper\ScheduleService;
 use App\Services\Viper\StageService;
 use App\Interfaces\Viper\SectorInterface;
 use App\Services\Viper\SectorService;
@@ -85,5 +87,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(MilestoneInterface::class, MilestoneService::class);
         $this->app->bind(MilestoneSubclassInterface::class, MilestoneSubclassService::class);
         $this->app->bind(ProofInterface::class, ProofService::class);
+        $this->app->bind(ScheduleInterface::class, ScheduleService::class);
     }
 }

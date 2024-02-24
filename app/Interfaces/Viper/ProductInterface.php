@@ -66,4 +66,13 @@ interface ProductInterface {
      */
     public function getAllProductsByScope(int $scopeId);
 
+
+    /**
+     * Obtiene todos los productos existentes por ovjetivo especifico.
+     *
+     * @param int $scope_id Identificador único del alcance.
+     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     */
+    public function getAllProductsBySpecificObjective(int $specificObjectiveId);
+
 }

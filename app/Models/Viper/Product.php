@@ -81,7 +81,14 @@ class Product extends Model
     }
 
 
-
-    
+    /**
+     * Relación uno a muchos con la tabla 'indicators-viper'.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function indicators()
+    {
+        return $this->hasMany(Indicator::class, 'product_id');
+    }
 
 }

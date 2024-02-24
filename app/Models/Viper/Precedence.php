@@ -10,13 +10,6 @@ class Precedence extends Model
     use HasFactory;
 
     /**
-     * El nombre de la conexión para el modelo.
-     *
-     * @var string|null
-     */
-    protected $connection = 'villavicencio';
-
-    /**
      * Los atributos que se pueden asignar en masa.
      *
      * @var array

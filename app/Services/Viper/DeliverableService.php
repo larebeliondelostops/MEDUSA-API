@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Viper;
+use App\DTOs\Viper\Activity\ActivityDTO;
 use App\DTOs\Viper\Deliverable\DeliverableDetailDTO;
 use App\DTOs\Viper\Deliverable\DeliverableDetailFolderDTO;
 use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
@@ -44,6 +45,42 @@ class DeliverableService implements DeliverableInterface
         return new DeliverableRequestDTO($deliverable->toArray());
     }
 
+    /**
+     * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el incremento
+     * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
+     */
+    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    {
+        if(!is_null($deliverableId))
+        {
+            $deliverable = Deliverable::findOrFail($deliverableId);
+            $deliverable->activity_quantity += 1;
+            $deliverable->value += $activityDTO->total_value;
+            $deliverable->save();
+            $this->updateIncrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+        }
+        else
+            return;
+    }
+
+      /**
+     * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el decremento
+     * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
+     */
+    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    {
+        if(!is_null($deliverableId))
+        {
+            $deliverable = Deliverable::findOrFail($deliverableId);
+            $deliverable->activity_quantity -= 1;
+            $deliverable->value -= $activityDTO->total_value;
+            $deliverable->save();
+            $this->updateDecrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+        }
+        else
+            return;
+    }
+
     private function adjustDataAndSave(array &$deliverables, array &$result, ?int $fatherDeliverableId = null ) : void
     {
         foreach($deliverables as $deliverable)
@@ -76,13 +113,17 @@ class DeliverableService implements DeliverableInterface
 
     private function getAndAjustData(array &$result, int &$productId, ?int $fatherDeliverableId = null) : void
     {
-        $deliverables = Deliverable::where('product_id', $productId) // busca los entregables con productId $number
+        $deliverables = Deliverable::with('activities')->where('product_id', $productId) // busca los entregables con productId $number
                         ->Where('deliverable_id', $fatherDeliverableId) // y que tenga de padre a $father
                         ->get() // realiza la consulta
                         ->toArray(); // la convierte a un array
 
         foreach($deliverables as $deliverable)
         {
+            $deliverable['activities'] = array_map(
+                fn ($activities) => new ActivityDTO($activities),
+                $deliverable['activities']
+            );
             $deliverable = new DeliverableDetailDTO($deliverable);
             array_push(
                 $result,
@@ -92,13 +133,10 @@ class DeliverableService implements DeliverableInterface
         }
     }
 
-    public function getDeliverablesByScopeId(int $scopeId) : array
+    public function getDeliverablesByProductId(int $productId) : array
     {
         $result = []; // array para guardar los deliverables
-        $products = $this->productInterface->getAllProductsByScope($scopeId);
-        foreach ($products as $product)
-            $this->getAndAjustData($result, $product->id);
-
+        $this->getAndAjustData($result, $productId);
         return $result;
     }
 

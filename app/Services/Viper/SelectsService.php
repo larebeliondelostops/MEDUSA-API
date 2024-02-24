@@ -44,7 +44,8 @@ class SelectsService implements SelectsInterface
 
         $result = [];
         $result['states'] = $this->stateInterface->getAllStatesDetail();
-        $result["departments"] = $this->departmentInterface->getAllDepartmentsDetail();
+        $result["departments"] = $this->departmentInterface->getAllDepartments();
+        $result["municipality"] = $this->municipalityInterface->getAllMunicipalities();
         $result['sectors'] = $this->sectorInterface->getAllSectors();
         return $result;
     }

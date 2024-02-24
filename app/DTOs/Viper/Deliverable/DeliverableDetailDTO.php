@@ -14,5 +14,5 @@ class DeliverableDetailDTO extends DTO
     public int $folder_id;
     public ?int $deliverable_id = null;
     public array $deliverables = [];
-
+    public array $activities = [];
 }

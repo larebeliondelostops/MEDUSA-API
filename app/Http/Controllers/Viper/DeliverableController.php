@@ -72,7 +72,7 @@ class DeliverableController extends BaseController
         try
         {
             return response()->json([
-                "data" => $this->deliverableInterface->getDeliverablesByScopeId($scopeId),
+                "data" => $this->deliverableInterface->getDeliverablesByProductId($scopeId),
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)

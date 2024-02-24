@@ -45,7 +45,11 @@ class DeliverableService implements DeliverableInterface
         return new DeliverableRequestDTO($deliverable->toArray());
     }
 
-    public function updateDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    /**
+     * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el incremento
+     * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
+     */
+    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
     {
         if(!is_null($deliverableId))
         {
@@ -53,7 +57,25 @@ class DeliverableService implements DeliverableInterface
             $deliverable->activity_quantity += 1;
             $deliverable->value += $activityDTO->total_value;
             $deliverable->save();
-            $this->updateDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+            $this->updateIncrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+        }
+        else
+            return;
+    }
+
+      /**
+     * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el decremento
+     * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
+     */
+    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    {
+        if(!is_null($deliverableId))
+        {
+            $deliverable = Deliverable::findOrFail($deliverableId);
+            $deliverable->activity_quantity -= 1;
+            $deliverable->value -= $activityDTO->total_value;
+            $deliverable->save();
+            $this->updateDecrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
         }
         else
             return;

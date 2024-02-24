@@ -80,7 +80,7 @@ class ActivityService implements ActivityInterface
         }
 
         $activity->save();
-        $this->deliverableInterface->updateDataWithChildrenActivities($deliverable->id, $activityDTO);
+        $this->deliverableInterface->updateIncrementDataWithChildrenActivities($deliverable->id, $activityDTO);
 
         return new ActivityDTO($activity->toArray());
     }
@@ -89,6 +89,9 @@ class ActivityService implements ActivityInterface
     {
         // Encontrar la actividad por su ID
         $activity = Activity::findOrFail($activityId);
+
+        $oldActivityDataDTO = new ActivityDTO($activity->toArray());
+        $this->deliverableInterface->updateDecrementDataWithChildrenActivities($oldActivityDataDTO->deliverable_id, $oldActivityDataDTO);
 
         // Guardar la descripción actual de la actividad
         $oldDescription = $activity->description;
@@ -107,6 +110,7 @@ class ActivityService implements ActivityInterface
         // Actualizar los datos de la actividad
         $activity->fill($activityDTO->toArray([is_null($activityDTO->number) ? 'number' : '', 'folder_id']));
         $activity->save();
+        $this->deliverableInterface->updateIncrementDataWithChildrenActivities($activityDTO->deliverable_id, $activityDTO);
 
         // Verificar si la descripción ha cambiado
         if ($oldDescription !== $activity->description || $oldNumber !== $activity->number) {
@@ -130,6 +134,7 @@ class ActivityService implements ActivityInterface
     {
         // Encontrar la actividad por su ID
         $activity = Activity::findOrFail($activityId);
+        $activityDataDeletedDTO = new ActivityDTO($activity->toArray());
 
         Folder::findOrFail($activity->folder_id);
 
@@ -138,6 +143,7 @@ class ActivityService implements ActivityInterface
         // Eliminar la actividad
         $activity->delete();
 
+        $this->deliverableInterface->updateDecrementDataWithChildrenActivities($activityDataDeletedDTO->deliverable_id, $activityDataDeletedDTO);
     }
 
     public function getActivity($activityId)

@@ -8,7 +8,8 @@ use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
 
 interface DeliverableInterface
 {
-    public function updateDataWithChildrenActivities(int $deliverableId, ActivityDTO $activityDTO);
+    public function updateIncrementDataWithChildrenActivities(int $deliverableId, ActivityDTO $activityDTO);
+    public function updateDecrementDataWithChildrenActivities(int $deliverableId, ActivityDTO $activityDTO);
     public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO) : DeliverableRequestDTO;
     public function createMultipleDeliverables(array $deliverables) : array;
     public function getAllDeliverables() : array;

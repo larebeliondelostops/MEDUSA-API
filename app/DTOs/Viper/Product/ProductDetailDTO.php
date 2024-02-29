@@ -4,6 +4,7 @@ namespace App\DTOs\Viper\Product;
 
 use App\DTOs\Viper\DTO;
 use App\DTOs\Viper\Folder\FolderDTO;
+use App\DTOs\Viper\Indicator\IndicatorDTO;
 use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
 use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 
@@ -23,4 +24,5 @@ class ProductDetailDTO extends DTO
     public FolderDTO $folder;
     public SpecificObjectiveDTO $specific_objective;
     public MeasurementUnitDTO $measurement_unit;
+    public array $indicators;
 }

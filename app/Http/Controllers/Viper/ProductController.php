@@ -64,6 +64,25 @@ class ProductController extends BaseController
         }
     }
 
+
+    /**
+     * Mostrar una lista de productos por alcance.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexBySpecificObjective($specificObjectiveId)
+    {
+        try {
+            $products = $this->productInterface->getAllProductsBySpecificObjective($specificObjectiveId);
+
+            return response()->json([
+                'data' => $products,
+            ], Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
     /**
      * Almacenar una nuevo producto.
      *

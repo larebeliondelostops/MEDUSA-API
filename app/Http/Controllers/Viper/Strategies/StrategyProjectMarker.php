@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Viper\Strategies;
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;
+use App\Models\Viper\Coordinates;
 use App\Models\Viper\Location;
 use App\Models\Viper\Project;
 use Illuminate\Http\Request;
@@ -44,21 +45,23 @@ class StrategyProjectMarker
 
     public static function getInfoPoint($uuid)
     {
-        $location = Location::with('project', 'project.state', 'project.state', 'project.substate')->findOrFail($uuid);
+
+        $coordinate = Coordinates::with('location', 'location.project', )->findOrFail($uuid);
+
         try {
             $projectInfo = [
-                'title' => $location->project->name,
+                'title' => $coordinate->location->project->name,
                 'properties' => [
-                    'bpin' => $location->project->bpin,
-                    'sector' => $location->project->sector->name,
-                    'estado' => $location->project->state->name,
-                    'subestado' => $location->project->substate->name,
-                    'entidad ejecutora' => $location->responsible_entity,
-                    'valor requerido' => $location->reqyested_valued,
-                    'valor ejecutado' => $location->executed_value,
-                    'fecha de aprobación' => $location->execution_approval_date,
-                    'fecha de finalización' => $location->completion_date,
-                    'fecha de ejecución' => $location->start_date_execution_phase
+                    'bpin' => $coordinate->location->project->bpin,
+                    'sector' => $coordinate->location->project->sector->name,
+                    'estado' => $coordinate->location->project->state->name,
+                    'subestado' => $coordinate->location->project->substate->name,
+                    'entidad ejecutora' => $coordinate->location->project->responsible_entity,
+                    'valor requerido' => $coordinate->location->project->requested_valued,
+                    'valor ejecutado' => $coordinate->location->project->executed_value,
+                    'fecha de aprobación' => $coordinate->location->project->execution_approval_date,
+                    'fecha de finalización' => $coordinate->location->project->completion_date,
+                    'fecha de ejecución' => $coordinate->location->project->start_date_execution_phase
                 ]
             ];
 

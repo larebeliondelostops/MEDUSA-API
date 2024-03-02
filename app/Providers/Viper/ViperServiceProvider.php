@@ -57,6 +57,8 @@ use App\Interfaces\Viper\MilestoneSubclassInterface;
 use App\Services\Viper\MilestoneSubclassService;
 use App\Interfaces\Viper\ProofInterface;
 use App\Services\Viper\ProofService;
+use App\Interfaces\Viper\ReportInterface;
+use App\Services\Viper\ReportService;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -88,5 +90,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(MilestoneSubclassInterface::class, MilestoneSubclassService::class);
         $this->app->bind(ProofInterface::class, ProofService::class);
         $this->app->bind(ScheduleInterface::class, ScheduleService::class);
+        $this->app->bind(ReportInterface::class, ReportService::class);
     }
 }

@@ -36,8 +36,8 @@ class ProofService implements ProofInterface
 
         $project_id = $proof->getProjectBpin();
 
-        $folderPath = "test/{$project_id}";
-
+        $folderPath = "test/{$project_id}/report_{$proof->report_id}";
+    
         $filename = $this->getUniqueFilename($folderPath, $originalFilename);
 
         $filePath = Storage::disk('spaces')->putFileAs($folderPath, $file, $filename);
@@ -93,38 +93,13 @@ class ProofService implements ProofInterface
      * @param int $productId El identificador del producto.
      * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al producto.
      */
-    public function getAllProofsByProduct(int $productId): array
+    public function getAllProofsByReport(int $reportId): array
     {
-        $proofs = Proof::where('product_id', $productId)->get();
+        $proofs = Proof::where('report_id', $reportId)->get();
 
         $proofDTOs = $proofs->map(function ($proof) {
             return new ProofDTO($proof->toArray());
         })->all();
-
-        return $proofDTOs;
-    }
-
-    /**
-     * Obtiene todas las pruebas asociadas a un proyecto específico.
-     *
-     * @param int $productId El identificador del proyecto.
-     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al proyecto.
-     */
-    public function getAllProofsByProyect(int $projectId): array
-    {
-        $project = Project::with('scope.specificObjectives.products')->find($projectId);
-
-        $productDTOs = $project->scope->specificObjectives->flatMap(function ($specificObjective) {
-            return $specificObjective->products->map(function ($product) {
-                return new ProductDTO($product->toArray());
-            });
-        });
-
-        $proofDTOs = [];
-
-        foreach ($productDTOs as $productDTO) {
-            $proofDTOs[] = $this->getAllProofsByProduct($productDTO->id);
-        }
 
         return $proofDTOs;
     }

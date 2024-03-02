@@ -36,20 +36,13 @@ interface ProofInterface {
     public function updateProof(int $id, string $newName): ProofDTO;
     
     /**
-     * Obtiene todas las pruebas asociadas a un producto específico.
+     * Obtiene todas las pruebas asociadas a un reporte específico.
      *
-     * @param int $productId El identificador del producto.
-     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al producto.
+     * @param int $reportId El identificador del report.
+     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al reporte.
      */
-    public function getAllProofsByProduct(int $productId): array;
+    public function getAllProofsByReport(int $reportId): array;
 
-    /**
-     * Obtiene todas las pruebas asociadas a un pryecto específico.
-     *
-     * @param int $proyectId El identificador del proyecto.
-     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al proyecto.
-     */
-    public function getAllProofsByProyect(int $projectId): array;
     /**
      * Obtiene una prueba específica por su identificador.
      *

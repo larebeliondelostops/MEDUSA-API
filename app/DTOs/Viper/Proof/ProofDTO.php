@@ -45,9 +45,9 @@ class ProofDTO extends DTO
     public string $responsible;
 
     /**
-     * Identificador de la actividad asociada a la prueba.
+     * Identificador del reporte asociada a la prueba.
      *
      * @var int
      */
-    public int $product_id;
+    public int $report_id;
 }

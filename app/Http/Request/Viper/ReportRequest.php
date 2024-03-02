@@ -6,9 +6,9 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 /**
- * Request personalizado para la validación de datos de Pruebas.
+ * Request personalizado para la validación de datos de Reportes.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de Pruebas,
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de Reportes,
  * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud llegue al controlador.
  *
  * @package App\Http\Requests\Viper
@@ -16,7 +16,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class ProofRequest extends FormRequest
+class ReportRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para realizar esta solicitud.
@@ -36,9 +36,11 @@ class ProofRequest extends FormRequest
     public function rules()
     {
         return [
-            'files.*' => 'required|file',
-            'responsible' => 'required|string|max:255',
-            'report_id' => 'required|exists:reports,id|integer',
+            'name' => 'required|string|max:100',
+            'description' => 'required|string',
+            'responsible' => 'required|string|max:100',
+            'date' => 'required|date',
+            'product_id' => 'required|exists:products,id|integer',
         ];
     }
 

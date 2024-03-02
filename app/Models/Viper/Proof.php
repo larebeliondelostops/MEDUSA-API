@@ -13,7 +13,7 @@ use App\Models\Viper\Project;
  * @property string $name Nombre de la prueba.
  * @property string $url URL de la prueba.
  * @property string $responsible Responsable de la prueba.
- * @property int $activity_id Identificador de la actividad asociada a la prueba.
+ * @property int $report_id Identificador del producto asociada a la prueba.
  *
  * @package App\Models\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
@@ -47,17 +47,17 @@ class Proof extends Model
         'name', 
         'url', 
         'responsible',
-        'product_id',
+        'report_id',
     ];
 
     /**
-     * Obtiene la Producto asociada a la prueba.
+     * Obtiene el Reporte asociada a la prueba.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function product()
+    public function report()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Report::class);
     }
 
     /**
@@ -68,8 +68,11 @@ class Proof extends Model
     public function getProjectBpin()
     {
         return Project::whereHas('scope', function ($query) {
-            $query->whereHas('specificObjectives.products', function ($query) {
-                $query->where('id', $this->product->id);
+            $query->whereHas('specificObjectives', function ($query) {
+                $query->whereHas('products.reports',function($query)
+                {
+                    $query->where('id', $this->report->id);
+                });          
             });
         })->value('bpin');
     }

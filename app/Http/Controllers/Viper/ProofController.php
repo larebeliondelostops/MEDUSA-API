@@ -93,33 +93,15 @@ class ProofController extends BaseController
     }
 
     /**
-     * Obtiene todas las pruebas asociadas a un producto específico.
+     * Obtiene todas las pruebas asociadas a un reporte específico.
      *
-     * @param int $productId Identificador único del producto.
-     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de pruebas asociadas al producto.
+     * @param int $REPORTId Identificador único del reporte.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de pruebas asociadas al reporte.
      */
-    public function index(int $productId)
+    public function index(int $reportId)
     {
         try {
-            $proofs = $this->proofInterface->getAllProofsByProduct($productId);
-            return response()->json([
-                'data' => $proofs,
-            ], 200);
-        } catch (Exception $exception) {
-            return $this->handleException($exception);
-        }
-    }
-
-    /**
-     * Obtiene todas las pruebas asociadas a un project específico.
-     *
-     * @param int $productId Identificador único del project.
-     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de pruebas asociadas al project.
-     */
-    public function view(int $projectId)
-    {
-        try {
-            $proofs = $this->proofInterface->getAllProofsByProyect($projectId);
+            $proofs = $this->proofInterface->getAllProofsByReport($reportId);
             return response()->json([
                 'data' => $proofs,
             ], 200);

@@ -67,7 +67,7 @@ class ScopeService implements ScopeInterface
      */
     public function getScope(string $id): ScopeDTO
     {
-        $scope = Scope::find($id);
+        $scope = Scope::findOrFail($id);
 
         return new ScopeDTO($scope->toArray());
     }

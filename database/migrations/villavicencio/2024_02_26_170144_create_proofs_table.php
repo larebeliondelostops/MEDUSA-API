@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name',255);
             $table->string('url',255);
             $table->string('responsible',255);
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('report_id');
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

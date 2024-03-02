@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Viper;
+namespace Database\Seeders\modules\viper;
 
 use Illuminate\Database\Seeder;
 

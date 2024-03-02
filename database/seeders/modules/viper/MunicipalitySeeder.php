@@ -1,12 +1,12 @@
 <?php
 
-namespace Database\Seeders\Viper;
+namespace Database\Seeders\modules\viper;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
-class DepartmentSeeder extends Seeder
+class MunicipalitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,20 +19,21 @@ class DepartmentSeeder extends Seeder
          * Marcadores para villavicencio
          */
         $coordinates = [
-            "Meta" =>   [
+            "Villavicencio" =>   [
                             "id" => Uuid::uuid4()->toString(),
                             "type" => "Point",
-                            "latitude" => 3.2719886587045397,
-                            "longitude" => -73.0877486836099,
+                            "latitude" => 3.2219886587045397,
+                            "longitude" => -74.0877486836099,
                             "created_at" => now(),
                             "updated_at" => now(),
                         ],
         ];
 
-        $deparments = [
+        $municipalities = [
             [
-                "name" => "Meta",
-                "coordinate_id" => $coordinates["Meta"]["id"],
+                "name" => "Villavicencio",
+                "coordinate_id" => $coordinates["Villavicencio"]['id'],
+                "department_id" => 1,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -44,9 +45,10 @@ class DepartmentSeeder extends Seeder
             $coordinate
         ]);
 
-        foreach ($deparments as $deparment)
-            DB::table('departments')->insert([
-                $deparment
+        foreach ($municipalities as $municipality)
+            DB::table('municipalities')->insert([
+                $municipality
             ]);
+
     }
 }

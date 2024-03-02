@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
  * Este controlador proporciona métodos para almacenar, actualizar, recuperar y eliminar Reportes.
  *
  * @package App\Http\Controllers\Viper
+ * @package App\Http\Controllers\Viper
+ * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright 2024 Ignicion S.A.S.
+ * @version v1.0.0
  */
 class ReportController extends BaseController
 {

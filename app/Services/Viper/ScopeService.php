@@ -54,7 +54,7 @@ class ScopeService implements ScopeInterface
      */
     public function getScopeByProject(string $projectBpin): ScopeDTO
     {
-        $scope = Scope::where('project_id', $projectBpin)->first();
+        $scope = Scope::where('project_id', $projectBpin)->firstOrFail();
 
         return new ScopeDTO($scope->toArray());
     }

@@ -29,7 +29,7 @@ class Project extends Model
         'financial_progress',
         'responsible_entity',
         'sector_id',
-        'location_id',
+        'coordinates_id',
         'department_id',
         'municipality_id',
         'beneficiaries',
@@ -43,6 +43,26 @@ class Project extends Model
         'reporting_frequency',
         'general_objective',
     ];
+
+    /**
+     * Cuando se elimine un proyecto es importante eliminar sus locaciones.
+     * Es importante tener en cuenta que solo se debe borrar sus locaciones
+     * es un dato propio del proyecto pero, datos como departamento o
+     * municipio no es propio de proyecto, sino es mas general.
+     */
+    //borrado de coordenada
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($project) {
+            // las locaciones asociadas al proyecto
+            if ($project->locations) {
+                foreach($project->locations as $location)
+                    $location->delete();
+            }
+        });
+    }
 
     public function department()
     {
@@ -74,8 +94,12 @@ class Project extends Model
         return $this->hasMany(Folder::class, 'project_id');
     }
 
-    public function location()
+    public function locations()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->hasMany(Location::class, 'project_bpin');
+    }
+    public function scope()
+    {
+        return $this->hasOne(Scope::class, 'project_id');
     }
 }

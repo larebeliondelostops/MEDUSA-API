@@ -138,8 +138,10 @@ class StrategyPollingPlace implements PollingPlaceInterface
             }
 
             return response()->json([
+                
                 'data' => $transformedData,
                 'meta' => [
+                    'title' => 'Puestos de votación',
                     'pagination' => [
                         'total' => $pollingPlaces->total(),
                         'perPage' => $pollingPlaces->perPage(),
@@ -148,6 +150,7 @@ class StrategyPollingPlace implements PollingPlaceInterface
                         'from' => $pollingPlaces->firstItem(),
                         'to' => $pollingPlaces->lastItem(),
                     ],
+                    'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

@@ -2,30 +2,29 @@
 
 namespace App\Models\Viper;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Modelo Eloquent para la tabla 'reports'.
+ * Modelo Eloquent para la tabla 'Reports'.
  *
- * @property int $id Identificador único del informe (serial).
- * @property string $name Nombre del informe.
- * @property string $description Descripción del informe.
- * @property string $date Fecha del informe.
- * @property int $project_id Clave foránea que relaciona el informe con un proyecto.
- * @property int $document_id Clave foránea que relaciona el informe con un documento.
+ * @property int $id Identificador único del reporte (serial).
+ * @property string $name Nombre del reporte.
+ * @property string|null $description Descripción del reporte.
+ * @property string|null $responsible Persona responsable del reporte.
+ * @property string $date Fecha del reporte.
+ * @property int $product_id ID del producto asociado al reporte.
  *
  * @package App\Models\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
- * @copyright 2024 Ignicion S.A.S.
- * @version v1.0.0
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
  */
 class Report extends Model
 {
-    use HasFactory;
-
     /**
-     * Nombre de la tabla en la base de datos.
+     * El nombre de la tabla asociada con el modelo.
      *
      * @var string
      */
@@ -44,26 +43,30 @@ class Report extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'date', 'project_id', 'document_id'
+        'name',
+        'description',
+        'responsible',
+        'date',
+        'product_id',
     ];
 
     /**
-     * Relación muchos a uno con la tabla 'projects'.
+     * Obtener el producto asociado con el reporte.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function project()
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(Project::class, 'project_id', 'bpin');
+        return $this->belongsTo(Product::class);
     }
 
     /**
-     * Relación uno a uno con la tabla 'documents'.
+     * Obtener las pruebas asociadas con el reporte.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function document()
+    public function proofs(): HasMany
     {
-        return $this->hasOne(Document::class, 'id', 'document_id');
+        return $this->hasMany(Proof::class);
     }
 }

@@ -19,10 +19,10 @@ class Document extends Model
         'folder_id',
     ];
 
-    protected $dates = ['deteled_at'];
+    protected $dates = ['deleted_at']; 
 
     public function folder()
     {
-        return $this->belongsTo(Folder::class, 'folder_id');
+        return $this->belongsTo(Folder::class, "folder_id");
     }
 }

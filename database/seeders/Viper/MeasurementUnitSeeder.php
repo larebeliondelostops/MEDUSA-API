@@ -17,9 +17,9 @@ class MeasurementUnitSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::connection('villavicencio')->table('measurement_units')->insert([
+        DB::table('measurement_units')->insert([
             [
-                'name' => '# de Suervisiones',
+                'name' => '# de Supervisiones',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

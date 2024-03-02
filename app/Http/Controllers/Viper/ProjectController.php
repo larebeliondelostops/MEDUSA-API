@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias de terceros
-use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 
 // Librerias del modulo viper
@@ -61,7 +60,6 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-            $validatedData['location'] = new LocationRequestDTO($validatedData['location']);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);
@@ -92,7 +90,6 @@ class ProjectController extends BaseController
         try
         {
             $validatedData = $request->validated();
-            $validatedData['location'] = new LocationRequestDTO($validatedData['location']);
             $projectDTO = new ProjectRequestDTO($validatedData);
 
             $projectUpdatedDTO = $this->projectInterface->updateProject($projectDTO, $bpin);

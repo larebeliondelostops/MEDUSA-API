@@ -3,12 +3,10 @@
 namespace App\DTOs\Viper\Report;
 
 use App\DTOs\Viper\DTO;
-
 /**
- * Data Transfer Object (DTO) para representar un reporte (Report) de un proyecto.
+ * DTO (Data Transfer Object) para la entidad Report.
  *
- * Este DTO encapsula la estructura de datos de un alcance y se utiliza para transferir
- * información relacionada con reportes entre diferentes capas de la aplicación.
+ * Este DTO contiene la estructura de datos para representar un reporte en el sistema Viper.
  *
  * @package App\DTOs\Viper\Report
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
@@ -18,7 +16,7 @@ use App\DTOs\Viper\DTO;
 class ReportDTO extends DTO
 {
     /**
-     * Identificador único del reporte.
+     * Identificador único de la reporte.
      *
      * @var int|null
      */
@@ -39,6 +37,13 @@ class ReportDTO extends DTO
     public string $description;
 
     /**
+     * Persona responsable del reporte.
+     *
+     * @var string
+     */
+    public string $responsible;
+
+    /**
      * Fecha del reporte.
      *
      * @var string
@@ -46,16 +51,9 @@ class ReportDTO extends DTO
     public string $date;
 
     /**
-     * Identificador del proyecto asociado al reporte.
+     * ID del producto asociado al reporte.
      *
      * @var int
      */
-    public int $project_id;
-
-    /**
-     * Identificador del documento asociado al reporte.
-     *
-     * @var int
-     */
-    public int $document_id;
+    public int $product_id;
 }

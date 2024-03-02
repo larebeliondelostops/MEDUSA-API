@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\ReportRequest;
 use App\Interfaces\Viper\ReportInterface;
 use App\DTOs\Viper\Report\ReportDTO;
-use Illuminate\Http\Request;
 use Exception;
-
+use Illuminate\Http\Request;
 
 /**
- * Controlador para la gestión de Ámbitos (Reports) en la aplicación Viper.
+ * Controlador para manejar las operaciones relacionadas con los Reportes en el sistema Viper.
  *
+ * Este controlador proporciona métodos para almacenar, actualizar, recuperar y eliminar Reportes.
+ *
+ * @package App\Http\Controllers\Viper
  * @package App\Http\Controllers\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright 2024 Ignicion S.A.S.
@@ -21,8 +23,16 @@ use Exception;
 class ReportController extends BaseController
 {
 
+    /**
+     * @var ReportInterface Instancia de la interfaz ProofInterface.
+     */
     private ReportInterface $reportInterface;
 
+    /**
+     * Constructor del controlador ReportController.
+     *
+     * @param ReportInterface $reportInterface Instancia de ReportInterface para la inyección de dependencias.
+     */
     public function __construct(ReportInterface $reportInterface)
     {
         parent::__construct();
@@ -30,10 +40,10 @@ class ReportController extends BaseController
     }
 
     /**
-     * Almacena un nuevo informe.
+     * Almacena un nuevo reporte en el sistema.
      *
-     * @param  ReportRequest  $request  La instancia del formulario de solicitud.
-     * @return \Illuminate\Http\JsonResponse
+     * @param ReportRequest $request La solicitud HTTP que contiene los datos del reporte.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el resultado de la operación.
      */
     public function store(ReportRequest $request)
     {
@@ -45,37 +55,31 @@ class ReportController extends BaseController
             $reportCreatedDTO = $this->reportInterface->createNewReport($reportDTO);
 
             return response()->json([
-                'success' => true,
-                'message' => 'Report created successfully.',
-                'data'    => $reportCreatedDTO,
+                'message' => 'Report Class created successfully.',
+                'data'    => $reportCreatedDTO
             ], 201);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
     }
 
     /**
-     * Actualiza un informe existente.
+     * Actualiza un reporte existente en el sistema.
      *
-     * @param  ReportRequest  $request  La instancia del formulario de solicitud.
-     * @param  int  $id  El identificador del informe que se va a actualizar.
+     * @param ReportRequest $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(ReportRequest $request, int $id)
     {
         try {
             $validatedData = $request->validated();
-
             $reportDTO = new ReportDTO($validatedData);
+            $stateUpdatedDTO = $this->reportInterface->updateReport($reportDTO, $id);
 
-            $reportUpdateDTO = $this->reportInterface->updateReport($reportDTO, $id);
-            
-            $reportDTO->id = $id;
-            
             return response()->json([
-                'success' => true,
                 'message' => 'Report updated successfully.',
-                'data' => $reportUpdateDTO,
+                'data'    => $stateUpdatedDTO,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -83,17 +87,15 @@ class ReportController extends BaseController
     }
 
     /**
-     * Obtiene todos los informes asociados a un proyecto.
+     * Obtiene todas los reportes asociadas a un reporte específico.
      *
-     * @param  Request  $request  La instancia de la solicitud HTTP.
-     * @param  int  $projectId  El identificador del proyecto.
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $productId Identificador único del producto.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de reportes asociadas al reporte.
      */
-    public function index(Request $request, $projectId)
+    public function index(int $productId)
     {
         try {
-            $reports = $this->reportInterface->getAllReportByProject($projectId);
-
+            $reports = $this->reportInterface->getAllReportsByProduct($productId);
             return response()->json([
                 'data' => $reports,
             ], 200);
@@ -103,19 +105,36 @@ class ReportController extends BaseController
     }
 
     /**
-     * Obtiene un informe específico por su ID.
+     * Obtiene todas los reportes asociadas a un reporte con sus pruebas.
      *
-     * @param  Request  $request  La instancia de la solicitud HTTP.
-     * @param  int  $id  El identificador del informe.
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $productId Identificador único del producto.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de reportes asociadas al reporte.
      */
-    public function show(Request $request, int $id)
+    public function view(int $productId)
     {
         try {
-            $alert = $this->reportInterface->getReport($id);
-
+            $reportDTO = $this->reportInterface->getAllReportsByProductWithProof($productId);
             return response()->json([
-                'data' => $alert,
+                'data' => $reportDTO,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+
+    /**
+     * Obtiene un reporte específica por su identificador.
+     *
+     * @param int $id Identificador único de la reporte.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con los detalles de la reporte.
+     */
+    public function show(int $id)
+    {
+        try {
+            $reportDTO = $this->reportInterface->getReport($id);
+            return response()->json([
+                'data' => $reportDTO,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -123,22 +142,20 @@ class ReportController extends BaseController
     }
 
     /**
-     * Elimina un informe específico por su ID.
+     * Elimina un reporte específica por su identificador.
      *
-     * @param  Request  $request  La instancia de la solicitud HTTP.
-     * @param  int  $id  El identificador del informe que se va a eliminar.
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $id Identificador único del reporte a eliminar.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el resultado de la operación.
      */
-    public function destroy(Request $request, int $id)
+    public function destroy($id)
     {
         try {
             $reportDTO = $this->reportInterface->deleteReport($id);
-
             return response()->json([
                 'message' => 'Report deleted successfully',
                 'data'=> $reportDTO->toArray()
             ],200);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
     }

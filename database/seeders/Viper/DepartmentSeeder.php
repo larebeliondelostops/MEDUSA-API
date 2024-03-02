@@ -18,7 +18,7 @@ class DepartmentSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        $locations = [
+        $coordinates = [
             "Meta" =>   [
                             "id" => Uuid::uuid4()->toString(),
                             "type" => "Point",
@@ -32,20 +32,20 @@ class DepartmentSeeder extends Seeder
         $deparments = [
             [
                 "name" => "Meta",
-                "location_id" => $locations["Meta"]["id"],
+                "coordinate_id" => $coordinates["Meta"]["id"],
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
         ];
 
         //Primero se debe registrar la locacion
-        foreach ($locations as $location)
-        DB::connection('villavicencio')->table('locations')->insert([
-            $location
+        foreach ($coordinates as $coordinate)
+        DB::table('coordinates')->insert([
+            $coordinate
         ]);
 
         foreach ($deparments as $deparment)
-            DB::connection('villavicencio')->table('departments')->insert([
+            DB::table('departments')->insert([
                 $deparment
             ]);
     }

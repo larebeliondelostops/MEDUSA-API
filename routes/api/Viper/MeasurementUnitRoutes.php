@@ -12,7 +12,7 @@ use App\Http\Controllers\Viper\MeasurementUnitController;
 |
 */
 
-Route::prefix('/viper/measurement-unit')->group(function () {
+Route::prefix('/viper/measurementUnit')->group(function () {
     Route::get('/list', [MeasurementUnitController::class, 'index']);
     Route::get('/get/{MeasurementUnitId}', [MeasurementUnitController::class, 'show']);
     Route::post('/create', [MeasurementUnitController::class, 'store']);

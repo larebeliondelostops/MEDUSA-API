@@ -5,23 +5,21 @@ namespace App\Http\Request\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
 /**
- * Request personalizado para la validación de Reportes (reports).
+ * Request personalizado para la validación de datos de Reportes.
  *
- * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de alcances,
- * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
- * llegue al controlador.
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de Reportes,
+ * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud llegue al controlador.
  *
- * @package    App\Http\Requests\Viper
- * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
- * @copyright 2024 Ignicion S.A.S.
- * @version v1.0.0
+ * @package App\Http\Requests\Viper
+ * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
  */
 class ReportRequest extends FormRequest
 {
     /**
-     * Determina si el usuario está autorizado para hacer esta solicitud.
+     * Determina si el usuario está autorizado para realizar esta solicitud.
      *
      * @return bool
      */
@@ -31,18 +29,18 @@ class ReportRequest extends FormRequest
     }
 
     /**
-     * Reglas de validación que se aplicarán a la solicitud.
+     * Reglas de validación que se aplican a la solicitud.
      *
-     * @return array Reglas de validación.
+     * @return array
      */
     public function rules()
     {
         return [
             'name' => 'required|string|max:100',
             'description' => 'required|string',
+            'responsible' => 'required|string|max:100',
             'date' => 'required|date',
-            'project_id' => 'required|string|max:255|exists:projects,bpin',
-            'document_id' => 'required|integer|exists:documents,id',
+            'product_id' => 'required|exists:products,id|integer',
         ];
     }
 
@@ -57,8 +55,8 @@ class ReportRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Error in the required parameters.',
+            'message' => 'Error en los parametros requeridos.',
+            'details' => $validator->errors()
         ], 400));
     }
 }

@@ -18,8 +18,9 @@ class ProductDTO extends DTO
      */
     public ?int $id = null;
     public string $name;
-    public string $number;
-    public int $folder_id;
+    public ?int $number = null;
+    public int $amount;
+    public ?int $folder_id = null;
     public int $specific_objective_id;
     public int $measurement_unit_id;
 }

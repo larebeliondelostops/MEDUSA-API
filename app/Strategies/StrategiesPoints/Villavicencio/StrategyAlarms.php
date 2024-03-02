@@ -125,6 +125,7 @@ class StrategyAlarms implements AlarmsInterface
             return response()->json([
                 'data' => $transformedData,
                 'meta' => [
+                    'title' => 'Alarmas',
                     'pagination' => [
                         'total' => $alarms->total(),
                         'perPage' => $alarms->perPage(),
@@ -133,6 +134,7 @@ class StrategyAlarms implements AlarmsInterface
                         'from' => $alarms->firstItem(),
                         'to' => $alarms->lastItem(),
                     ],
+                    'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

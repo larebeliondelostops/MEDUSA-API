@@ -67,7 +67,7 @@ class Product extends Model
      */
     public function specificObjective()
     {
-        return $this->belongsTo(SpecificObjective::class, "specific_object_id");
+        return $this->belongsTo(SpecificObjective::class, "specific_objective_id");
     }
 
     /**
@@ -80,8 +80,23 @@ class Product extends Model
         return $this->belongsTo(Folder::class, "folder_id");
     }
 
+    /**
+     * Relación uno a muchos con la tabla 'indicators-viper'.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function indicators()
+    {
+        return $this->hasMany(Indicator::class, 'product_id');
+    }
 
+    public function deliverables()
+    {
+        return $this->hasMany(Deliverable::class, 'product_id');
+    }
 
-    
-
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'product_id');
+    }
 }

@@ -45,13 +45,6 @@ class IndicatorDTO extends DTO
     public int $end_year_goal;
 
     /**
-     * Unidad de medida del indicador.
-     *
-     * @var string
-     */
-    public string $unit;
-
-    /**
      * Valor objetivo del indicador.
      *
      * @var int
@@ -85,4 +78,11 @@ class IndicatorDTO extends DTO
      * @var int
      */
     public int $product_id;
+
+    /**
+     * Identificador del unidad de medida asociado al indicador.
+     *
+     * @var int
+     */
+    public int $measurement_unit_id;
 }

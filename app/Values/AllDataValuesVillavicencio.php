@@ -4,6 +4,7 @@ namespace App\Values;
 
 
 use App\Http\Controllers\Viper\Strategies\StrategyProjectMarker;
+use App\Http\Controllers\IncidentController;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyAlarms;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
@@ -16,6 +17,8 @@ use App\Strategies\StrategyLines\Villavicencio\StrategyFiberLines;
 use App\Strategies\StrategyPolygons\Villavicencio\StrategyEvents;
 
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
+
+use App\Strategies\StrategiesPoints\Ditra\StrategyIncidents;
 
 
 class AllDataValuesVillavicencio
@@ -30,7 +33,7 @@ class AllDataValuesVillavicencio
         3 => StrategyHealth::class,
         4 => StrategyPollingPlace::class,
         5 => StrategyFiberPoints::class,
-        8 => IncidentController::class,
+        6 => StrategyIncidents::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
         55 => StrategyEvents::class,

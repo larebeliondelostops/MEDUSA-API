@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Strategies\GetEvents\GetEventCoordinate;
+use Carbon\Carbon;
 
 class StrategyEvents
 {
@@ -63,6 +64,7 @@ class StrategyEvents
             return response()->json([
                 'data' => $transformedData,
                 'meta' => [
+                    'title' => 'Eventos',
                     'pagination' => [
                         'total' => $events->total(),
                         'perPage' => $events->perPage(),
@@ -127,7 +129,9 @@ class StrategyEvents
             $event->capacity = $request->capacity;
             $event->place = $request->address;
             $event->authorizingEntity = $request->authorizingEntity;
-
+            $event->day = Carbon::now()->dayOfWeek;
+            $event->month = date('m');
+            $event->year = date('Y');
             $event->save();
 
             $pointCoordinate = $this->asingCoordinateEvent($request, $event->id);

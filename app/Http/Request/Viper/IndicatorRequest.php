@@ -39,12 +39,12 @@ class IndicatorRequest extends FormRequest
             'name' => 'required|string|max:255',
             'start_year_of_goal' => 'required|integer',
             'end_year_goal' => 'required|integer',
-            'unit' => 'required|string|max:255',
             'target_value' => 'required|integer',
             'progress' => 'required|integer',
             'percentage_completed' => 'required|numeric',
             'is_main' => 'required|boolean',
-            'product_id' => 'required|integer',
+            'product_id' => 'required|integer|exists:products,id',
+            'measurement_unit_id' => 'required|integer|exists:measurement_units,id',
         ];
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Request\Viper;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Arr;
 
 
 /**
@@ -20,6 +22,34 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  */
 class DeliverableRequest extends FormRequest
 {
+    private static array $rules = [
+        "POST"=> [
+            "create" => [
+                'name' => 'required|string|max:256',
+                'number' => 'required|integer',
+                'product_id' => 'required|integer',
+                'deliverable_id' => 'nullable|integer',
+            ],
+            "createMultiple" => [
+                'deliverables' => 'required|array',
+            ],
+            "createMultipleConfig" => [
+                'name' => 'required|string|max:256',
+                'number' => 'required|integer',
+                'product_id' => 'required|integer',
+                'deliverables' => 'nullable|array|present',
+            ]
+        ],
+        "PUT" => [
+            "update" => [
+                'number' => 'required|integer',
+                'name' => 'required|string|max:256',
+            ]
+        ]
+    ];
+
+    public string $lastSlugPath;
+
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
      *
@@ -31,27 +61,68 @@ class DeliverableRequest extends FormRequest
     }
 
     /**
+     * Prepara la instancia antes de la validación.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $path = $this->path();
+        if ($this->method() == 'PUT') {
+            $segments = explode('/', $path);
+            array_pop($segments);
+            $path = implode('/', $segments);
+        }
+        $this->lastSlugPath = Arr::last(explode('/', $path));
+    }
+
+
+
+    /**
      * Reglas de validación que se aplicarán a la solicitud.
      *
      * @return array Reglas de validación.
      */
     public function rules()
     {
-        if ($this->isMethod("POST")) {
-            return [
-                'name' => 'required|string|max:256',
-                'product_id' => 'required|integer',
-                'deliverable_id' => 'nullable|integer',
-            ];
-        }
-        else if ($this->isMethod('PUT'))
-        {
-            return [
-                'name' => 'required|string|max:256',
-            ];
-        }
-        return [];
+        return self::$rules[$this->method()][$this->lastSlugPath];
     }
+
+    public function withValidator(Validator $validator)
+    {
+        if ($this->isMethod('POST') && $this->lastSlugPath == 'create-multiple')
+        {
+            $data = $this->all();
+            if (!array_key_exists('deliverables', $data)) $this->failedValidation($validator);
+            $this->validateDeliverables( // valida la informacion contenida en el array
+                $data['deliverables'], // array no vacio con datos
+            );
+        }
+    }
+
+    protected function validateDeliverables(array $deliverables)
+    {
+        foreach ($deliverables as $deliverable) {
+            try
+            {
+                $validator = \Illuminate\Support\Facades\Validator::make(
+                    $deliverable,
+                    self::$rules['POST']['createMultipleConfig']
+                );
+
+                $validator->validate();
+
+                if (count($deliverable['deliverables'])>0)
+                    $this->validateDeliverables($deliverable['deliverables']);
+            }
+            catch(\Illuminate\Validation\ValidationException $exception)
+            {
+                $this->failedValidation($validator);
+            }
+        }
+    }
+
+
 
     /**
      * Maneja el comportamiento en caso de validación fallida.
@@ -65,7 +136,7 @@ class DeliverableRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Error in the required parameters.',
+            'message' => 'Error in the required parameters.'
         ], 400));
     }
 }

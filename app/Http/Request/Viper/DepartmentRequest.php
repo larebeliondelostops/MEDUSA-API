@@ -39,7 +39,10 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'location'=> 'required|array',
+            'coordinate'=> 'required|array',
+            'coordinate.type'=> 'required|string|max:32',
+            'coordinate.latitude'=> 'required|numeric',
+            'coordinate.longitude'=> 'required|numeric',
         ];
     }
 

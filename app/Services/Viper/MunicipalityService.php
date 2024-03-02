@@ -6,6 +6,7 @@ use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDetailDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
+use App\Interfaces\Viper\CoordinatesInterface;
 use App\Interfaces\Viper\LocationInterface;
 use App\Interfaces\Viper\MunicipalityInterface;
 use App\Models\Viper\Municipality;
@@ -26,11 +27,11 @@ use App\Utils\Viper\Filters\MunicipalityFilter;
  */
 class MunicipalityService implements MunicipalityInterface
 {
-    private LocationInterface $locationInterface;
+    private CoordinatesInterface $coordinatesInterface;
 
-    public function __construct(LocationInterface $locationInterface)
+    public function __construct(CoordinatesInterface $coordinatesInterface)
     {
-        $this->locationInterface = $locationInterface;
+        $this->coordinatesInterface = $coordinatesInterface;
     }
 
     /**
@@ -41,15 +42,14 @@ class MunicipalityService implements MunicipalityInterface
      */
     public function createNewMunicipality(MunicipalityRequestDTO $municipalityDTO) : MunicipalityRequestDTO
     {
-        $location = $this->locationInterface->createNewLocation($municipalityDTO->location);
+        $municipalityDTO->coordinate = $this->coordinatesInterface->createNewCoordinates($municipalityDTO->coordinate);
         $newMunicipality = new Municipality(
             $municipalityDTO->toArray() +
-            ['location_id' => $location->id]
+            ['coordinate_id' => $municipalityDTO->coordinate->id]
         );
         $newMunicipality->save();
         return new MunicipalityRequestDTO(
-            $newMunicipality->toArray() +
-            ['location' => $location]
+            $newMunicipality->toArray()
         );
     }
 
@@ -64,7 +64,7 @@ class MunicipalityService implements MunicipalityInterface
         $filter = new MunicipalityFilter();
         $queryItems = $filter->transform($queryFilterParams);
 
-        $municipalityQuery = Municipality::with('location', 'department', 'department.location');
+        $municipalityQuery = Municipality::with('coordinate', 'department', 'department.coordinate');
         foreach($queryItems as $item) {
             if(count($item) === 3) {
                 $municipalityQuery->orWhere($item[0], $item[1], $item[2]);
@@ -72,16 +72,9 @@ class MunicipalityService implements MunicipalityInterface
         }
 
         $municipalitiesDTO = $municipalityQuery->get()->transform(
-            function (Municipality $municipality)
-            {
-                $data = $municipality->toArray();
-                $data['department']['location'] = new LocationRequestDTO($data['department']['location']);
-                $data['department'] = new DepartmentRequestDTO($data['department']);
-                $data['location'] = new LocationRequestDTO($data['location']);
-                return new MunicipalityDetailDTO($data);
-            }
-        )->toArray();
-        return $municipalitiesDTO;
+            fn (Municipality $municipality) => new MunicipalityRequestDTO($municipality->toArray())
+        );
+        return $municipalitiesDTO->toArray();
     }
 
     /**
@@ -92,11 +85,8 @@ class MunicipalityService implements MunicipalityInterface
      */
     public function getMunicipalityById(int $id) : MunicipalityDetailDTO
     {
-        $municipalityGot = Municipality::with('location', 'department', 'department.location')->findOrFail($id);
+        $municipalityGot = Municipality::with('coordinate', 'department', 'department.coordinate')->findOrFail($id);
         $data = $municipalityGot->toArray();
-        $data['location'] = new LocationRequestDTO($data['location']);
-        $data['department']['location'] = new LocationRequestDTO($data['department']['location']);
-        $data['department'] = new DepartmentRequestDTO($data['department']);
         $municipalityDTO = new MunicipalityDetailDTO($data);
         return $municipalityDTO;
     }
@@ -110,16 +100,16 @@ class MunicipalityService implements MunicipalityInterface
      */
     public function updateMunicipality(MunicipalityRequestDTO $municipalityDTO, int $id) : MunicipalityRequestDTO
     {
-        $municipalityGot = Municipality::with('location')->findOrFail($id);
-        // se actualizan los datos de la localizacion del municipio
-        $locationUpdated = $this->locationInterface->updateLocationById($municipalityDTO->location, $municipalityGot->location->id);
+        $municipalityGot = Municipality::with('coordinate')->findOrFail($id);
+        // se actualizan los datos de la coordenada del municipio
+        $municipalityDTO->coordinate = $this->coordinatesInterface->updateCoordinatesById($municipalityDTO->coordinate, $municipalityGot->coordinate->id);
+        // actualizamos los datos del departamento
         $municipalityGot->fill($municipalityDTO->toArray());
         $municipalityGot->save();
-        $data = $municipalityGot->toArray();
-        $data['location'] = $locationUpdated;
-        return new MunicipalityRequestDTO(
-            $data
-        );
+        unset($municipalityGot['coordinate']); // eliminamos los datos desactualizados
+        $municipalityDTO->fill($municipalityGot->toArray());
+
+        return $municipalityDTO;
     }
 
     /**
@@ -130,14 +120,8 @@ class MunicipalityService implements MunicipalityInterface
      */
     public function deleteMunicipality($id) : MunicipalityDetailDTO
     {
-        $municipalityGot = Municipality::with('location', 'department', 'department.location')->findOrFail($id);
-        $locationDTO = $this->locationInterface->deleteLocation($municipalityGot->location->id);
-
-        $data = $municipalityGot->toArray();
-        $data['location'] = new LocationRequestDTO($data['location']);
-        $data['department']['location'] = new LocationRequestDTO($data['department']['location']);
-        $data['department'] = new DepartmentRequestDTO($data['department']);
-        $municipalityDelete = new MunicipalityDetailDTO($data);
+        $municipalityGot = Municipality::with('coordinate', 'department', 'department.coordinate')->findOrFail($id);
+        $municipalityDelete = new MunicipalityDetailDTO($municipalityGot->toArray());
         $municipalityGot->delete();
         return $municipalityDelete;
     }

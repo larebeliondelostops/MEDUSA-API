@@ -9,8 +9,9 @@ use App\DTOs\Viper\Report\ReportDTO;
  *
  * Esta interfaz define los métodos necesarios para crear, actualizar, recuperar y eliminar reportes en el sistema.
  *
- * @package App\Interfaces\Viper
+ * @package App\Http\Controllers\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright 2024 Ignicion S.A.S.
  * @version v1.0.0
  */
 interface ReportInterface

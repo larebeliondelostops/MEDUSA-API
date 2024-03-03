@@ -16,7 +16,9 @@ use Storage;
  * Este servicio proporciona métodos para crear, actualizar, recuperar y eliminar pruebas.
  *
  * @package App\Services\Viper
- * @author [Tu Nombre]
+ * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0 
  */
 class ProofService implements ProofInterface
 {

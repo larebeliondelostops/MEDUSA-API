@@ -33,7 +33,7 @@ class DeliverableService implements DeliverableInterface
                     'name' => $deliverableDTO->number .'. '.$deliverableDTO->name,
                     'higher_folder_id' => (
                         is_null($deliverableDTO->folder_id) ?
-                        ($this->productInterface->getProduct($deliverableDTO->product_id))->folder_id :
+                        ($this->productInterface->getProduct($deliverableDTO->product_id))->folder->id :
                         $deliverableDTO->folder_id
                     ),
                 ]

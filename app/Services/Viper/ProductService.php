@@ -88,8 +88,8 @@ class ProductService implements ProductInterface
      */
     public function getProduct($productId)
     {
-        $product = Product::findOrFail($productId);
-        $productDTO =new ProductDTO($product->toArray());
+        $product = Product::with('measurementUnit', 'specificObjective', 'folder')->findOrFail($productId);
+        $productDTO = new ProductDetailDTO($product->toArray());
 
         return $productDTO;
     }

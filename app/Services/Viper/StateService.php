@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Services\Viper;
-use App\DTOs\Viper\State\StateDetailDTO;
-use App\DTOs\Viper\State\StateDTO;
-use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Viper\StateInterface;
 use App\Models\Viper\State;
 use App\Models\Viper\Substate;
+use Illuminate\Support\Collection;
+
 
 /**
  * Servicio para la gestión de estados en el módulo VIPER.
@@ -18,102 +17,101 @@ use App\Models\Viper\Substate;
  * @package    App\Services\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 class StateService implements StateInterface
 {
+    const KEYS_TO_EXCLUDE = ['created_at', 'updated_at', 'deleted_at'];
+
      /**
      * Crea un nuevo estado y lo guarda en la base de datos.
      *
-     * @param StateDTO $stateDTO DTO con la información del estado a crear.
-     * @return StateDTO DTO del estado recién creado.
+     * @param Collection $state Data con la información del estado a crear.
+     * @return Collection Data del estado recién creado.
      */
-    public function createNewState(StateDTO $stateDTO) : StateDTO
+    public function createNewState(Collection $state) : Collection
     {
-        $newState = new State($stateDTO->toArray());
+        $newState = new State($state->toArray());
         $newState->save();
-        return new StateDTO($newState->toArray());
+        return collect($newState)->except(self::KEYS_TO_EXCLUDE);
     }
 
      /**
      * Actualiza un estado existente identificado por su ID.
      *
      * @param int $id ID del estado a actualizar.
-     * @param StateDTO $stateDTO DTO con la nueva información del estado.
-     * @return StateDTO DTO del estado actualizado.
+     * @param Collection $state Data con la nueva información del estado.
+     * @return Collection Data del estado actualizado.
      */
-    public function updateState(int $id, StateDTO $stateDTO) : StateDTO
+    public function updateState(int $id, Collection $state) : Collection
     {
         $stateGot = State::findOrFail($id);
-        $dataNewState = $stateDTO->toArray(except:["id",]); // el id nunca se debe modificar, por eso se elimina por si lo intentan cambiar
+        $dataNewState = $state->toArray(); // el id nunca se debe modificar, por eso se elimina por si lo intentan cambiar
         $stateGot->fill($dataNewState);
         $stateGot->save();
-        $stateGotDTO = new StateDTO($stateGot->toArray()+['id'=>$id]);
-        return $stateGotDTO;
+        return collect($stateGot)->except(self::KEYS_TO_EXCLUDE);
     }
 
     /**
      * Elimina un estado identificado por su ID y retorna los detalles del estado eliminado.
      *
      * @param int $id ID del estado a eliminar.
-     * @return StateDTO DTO del estado eliminado.
+     * @return Collection Data del estado eliminado.
      */
-    public function deleteState(int $id) : StateDTO
+    public function deleteState(int $id) : Collection
     {
         $stateGot = State::findOrFail($id);
-        $stateGotDTO = new StateDTO($stateGot->toArray());
         $stateGot->delete();
-        return $stateGotDTO;
+        return collect($stateGot)->except(self::KEYS_TO_EXCLUDE);
     }
 
     /**
      * Obtiene un estado por su ID y retorna sus detalles.
      *
      * @param int $id ID del estado a recuperar.
-     * @return StateDTO DTO del estado solicitado.
+     * @return Collection Data del estado solicitado.
      */
-    public function getStateById(int $id) : StateDTO
+    public function getStateById(int $id) : Collection
     {
         $stateGot = State::findOrFail($id);
-        $stateGotDTO = new StateDTO($stateGot->toArray());
-        return $stateGotDTO;
+        return collect($stateGot)->except(self::KEYS_TO_EXCLUDE);
     }
 
     /**
-     * Recupera y retorna todos los estados disponibles en forma de array de DTOs.
+     * Recupera y retorna todos los estados disponibles en forma de array.
      *
-     * @return array Array de DTOs de todos los estados.
+     * @return Collection Array de s de todos los estados.
      */
-    public function getAllStates() : array
+    public function getAllStates() : Collection
     {
         $statesGot = State::all();
-        $statesDTO = $statesGot->transform(
+        $states = $statesGot->transform(
             function (State $state)
             {
-                return new StateDTO($state->toArray());
+                return collect($state)->except(self::KEYS_TO_EXCLUDE);
             }
-        )->toArray();
-        return $statesDTO;
+        );
+        return $states;
     }
 
     /**
      * Recupera y retorna un listado detallado de todos los estados, incluyendo sus subestados.
      *
-     * @return array Array de DTOs con detalles de todos los estados y sus subestados.
+     * @return Collection Collection de s con detalles de todos los estados y sus subestados.
      */
-    public function getAllStatesDetail() : array
+    public function getAllStatesDetail() : Collection
     {
         $statesDetail = State::with('substates')->get();
-        $statesDetailDTO = $statesDetail->map(
+        $statesDetail = $statesDetail->map(
             function (State $state) {
                 $state->substates->transform(
-                    fn(Substate $substate) => new SubstateDTO($substate->toArray())
+                    fn(Substate $substate) => collect($substate)->except(self::KEYS_TO_EXCLUDE)
                 );
 
-                return new StateDetailDTO($state->toArray());
+                return collect($state)->except(self::KEYS_TO_EXCLUDE);
             }
         );
 
-        return $statesDetailDTO->toArray();
+        return $statesDetail;
     }
 }

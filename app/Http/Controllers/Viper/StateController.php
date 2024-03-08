@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Viper;
 
 // Librerias del Modulo Viper
-use App\DTOs\Viper\State\StateDTO;
 use App\Http\Request\Viper\StateRequest;
 use App\Interfaces\Viper\StateInterface;
 
@@ -21,7 +20,7 @@ use Illuminate\Http\Response;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 class StateController extends BaseController
 {
@@ -53,12 +52,10 @@ class StateController extends BaseController
     {
         try
         {
-            $data = $request->validated();
-            $newStateDTO = new StateDTO($data);
-            $stateCreatedDTO = $this->stateInterface->createNewState($newStateDTO);
+            $stateCreated = $this->stateInterface->createNewState(collect($request->validated()));
             return response()->json([
                 'message' => 'State created successfully',
-                'data' => $stateCreatedDTO
+                'data' => $stateCreated
             ], Response::HTTP_CREATED);
         }
         catch (Exception $exception)
@@ -81,13 +78,11 @@ class StateController extends BaseController
     {
         try
         {
-            $data = $request->validated();
-            $stateUpdatedDTO = new StateDTO($data);
-            $stateUpdatedDTO2 = $this->stateInterface->updateState($id, $stateUpdatedDTO);
+            $stateUpdated = $this->stateInterface->updateState($id, collect($request->validated()));
 
             return response()->json([
                 'message' => 'State updated successfully.',
-                'data'    => $stateUpdatedDTO2,
+                'data'    => $stateUpdated,
 
             ], Response::HTTP_OK);
         }
@@ -109,10 +104,10 @@ class StateController extends BaseController
     {
         try
         {
-            $stateDTO = $this->stateInterface->getStateById($id);
+            $state = $this->stateInterface->getStateById($id);
             return response()->json([
                 'message' => 'State got successfully',
-                'data'=> $stateDTO,
+                'data'=> $state,
 
             ], Response::HTTP_OK);
         }
@@ -134,15 +129,15 @@ class StateController extends BaseController
     {
         try
         {
-            $stateDTO = $this->stateInterface->deleteState($id);
+            $state = $this->stateInterface->deleteState($id);
             return response()->json([
                 'message' => 'State deleted successfully',
-                'data'=> $stateDTO->toArray()
+                'data'=> $state
             ], Response::HTTP_OK);
         }
         catch (Exception $exception)
         {
-            $this->handleException($exception);
+            return $this->handleException($exception);
         }
     }
 

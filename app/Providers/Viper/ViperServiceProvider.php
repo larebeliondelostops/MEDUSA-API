@@ -8,6 +8,7 @@ use App\Interfaces\Viper\MunicipalityInterface;
 use App\Interfaces\Viper\ProjectMarkerInterface;
 use App\Interfaces\Viper\ScheduleInterface;
 use App\Interfaces\Viper\StateInterface;
+use App\Interfaces\Viper\TrackingMatrixInterface;
 use App\Services\Viper\DeliverableService;
 use App\Services\Viper\DepartmentService;
 use App\Services\Viper\LocationService;
@@ -34,6 +35,7 @@ use App\Interfaces\Viper\CoordinatesInterface;
 use App\Services\Viper\AlertService;
 use App\Interfaces\Viper\IndicatorInterface;
 use App\Services\Viper\IndicatorService;
+use App\Services\Viper\TrackingMatrixService;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\Viper\ScopeInterface;
 use App\Services\Viper\ScopeService;
@@ -91,5 +93,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProofInterface::class, ProofService::class);
         $this->app->bind(ScheduleInterface::class, ScheduleService::class);
         $this->app->bind(ReportInterface::class, ReportService::class);
+        $this->app->bind(TrackingMatrixInterface::class, TrackingMatrixService::class);
     }
 }

@@ -61,4 +61,5 @@ Route::middleware([
     require base_path('routes/api/Viper/ProofRoutes.php');
     require base_path('routes/api/Viper/ScheduleRoutes.php');
     require base_path('routes/api/Viper/ReportRoutes.php');
+    require base_path('routes/api/Viper/TrackingMatrixRoutes.php');
 });

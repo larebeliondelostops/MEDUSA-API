@@ -244,42 +244,42 @@ class ProductService implements ProductInterface
 
     }
   
-/**
- * Obtiene el objetivo específico y sus productos asociados con indicadores por alcance.
- *
- * @param int $specificObjectiveId Identificador único del objetivo específico.
- * @return array ['specific_objective' => SpecificObjectiveDTO, 'products' => Collection|ProductDetailDTO[]]
- */
-public function getAllProductsBySpecificObjective($specificObjectiveId)
-{
-    // Obtener el objetivo específico
-    $specificObjective = SpecificObjective::findOrFail($specificObjectiveId);
-    $specificObjectiveDTO = new SpecificObjectiveDTO($specificObjective->toArray());
+    /**
+     * Obtiene el objetivo específico y sus productos asociados con indicadores por alcance.
+     *
+     * @param int $specificObjectiveId Identificador único del objetivo específico.
+     * @return array ['specific_objective' => SpecificObjectiveDTO, 'products' => Collection|ProductDetailDTO[]]
+     */
+    public function getAllProductsBySpecificObjective($specificObjectiveId)
+    {
+        // Obtener el objetivo específico
+        $specificObjective = SpecificObjective::findOrFail($specificObjectiveId);
+        $specificObjectiveDTO = new SpecificObjectiveDTO($specificObjective->toArray());
 
-    // Obtener los productos asociados al objetivo específico con indicadores cargados
-    $products = Product::with(['measurementUnit', 'indicators'])
-        ->where('specific_objective_id', $specificObjectiveId)
-        ->get();
+        // Obtener los productos asociados al objetivo específico con indicadores cargados
+        $products = Product::with(['measurementUnit', 'indicators', 'specificObjective', 'folder'])
+            ->where('specific_objective_id', $specificObjectiveId)
+            ->get();
 
-    // Transformar productos a objetos DTO
-    $productDTOs = $products->transform(function ($product) {
-        $data = $product->toArray();
-        $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
+        // Transformar productos a objetos DTO
+        $productDTOs = $products->transform(function ($product) {
+            $data = $product->toArray();
+            $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
 
-        // Transformar los indicadores en DTO
-        $data['indicators'] = $product->indicators->transform(function ($indicator) {
-            return new IndicatorDTO($indicator->toArray());
+            // Transformar los indicadores en DTO
+            $data['indicators'] = $product->indicators->transform(function ($indicator) {
+                return new IndicatorDTO($indicator->toArray());
+            })->toArray();
+
+            return new ProductDetailDTO($data);
         })->toArray();
 
-        return new ProductDetailDTO($data);
-    });
-
-    // Devolver un array con el objetivo específico y los productos asociados
-    return [
-        'specific_objective' => $specificObjectiveDTO,
-        'products' => $productDTOs,
-    ];
-}
+        // Devolver un array con el objetivo específico y los productos asociados
+        return [
+            'specific_objective' => $specificObjectiveDTO,
+            'products' => $productDTOs,
+        ];
+    }
 
     /**
      * Obtiene todos los productos existentes por alcance con un minimo de datos.

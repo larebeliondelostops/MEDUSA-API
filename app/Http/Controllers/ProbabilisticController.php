@@ -70,18 +70,26 @@ class ProbabilisticController extends Controller
 
     public function getTaps()
     {
-        $indicators = Indicator::all();
+        // $indicators = Indicator::all();
 
-        $dataIndicators = [];
+        // $dataIndicators = [];
 
-        foreach ($indicators as $indicator) {
-            $dataIndicators[] = [
-                "name" => $indicator->name,
-                "key" => $indicator->id,
-            ];
-        }
+        // foreach ($indicators as $indicator) {
+        //     $dataIndicators[] = [
+        //         "name" => $indicator->name,
+        //         "key" => $indicator->id,
+        //     ];
+        // }
 
-        return response()->json($dataIndicators, 200, [], JSON_NUMERIC_CHECK);
+        // return response()->json($dataIndicators, 200, [], JSON_NUMERIC_CHECK);
+        $tabs = [
+            [
+                'name' => 'Accidentes',
+                'key' => 1
+            ]
+        ];
+
+        return Response::json($tabs, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function type(Request $request)

@@ -305,9 +305,9 @@ class IncidentController extends Controller
                 $data = [
                     'identifier' => $incident->uuid,
                     'incident' => $incident->indicator,
-                    'date' => $incident->getDate(),
+                    'date' => $incident->created_at,
                     'position' => $incident->position,
-                    'title' => $incident->Indicator->Name
+                    'title' => $incident->Indicator->name
                 ];
 
                 return $data;

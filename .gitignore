@@ -10,11 +10,11 @@
 .env
 .env.backup
 .phpunit.result.cache
-docker-compose.override.yml
+/docker-compose.yml
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-docker-compose/nginx/apihelpdesk.conf
+docker-compose/nginx/*

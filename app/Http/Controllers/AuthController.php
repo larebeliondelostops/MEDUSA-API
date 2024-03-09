@@ -150,6 +150,7 @@ class AuthController extends Controller
                 'adress' => $user->adress, */
                 //'avatar' => $user->avatar == NULL ? '/storage/avatar/default.jpg' : tenant('id') . '/avatar/' . $user->avatar,
                 'roleName' => $user->getRoleNames()[0] ?? null,
+                'id' => $user->id
             ];
 
             $this->data = $success;

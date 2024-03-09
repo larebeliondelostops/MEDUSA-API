@@ -19,8 +19,8 @@ class StrategyProbabilistic implements ProbabilisticInterface
         foreach ($indicators as $indicator) {
             $dataIndicators[] = [
                 "id" => $indicator->id,
-                "name" => $indicator->Name,
-                "description" => $indicator->Description,
+                "name" => $indicator->name,
+                "description" => $indicator->description,
             ];
         }
 

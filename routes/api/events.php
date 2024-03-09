@@ -36,13 +36,18 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
 
     //endpoints temporales para modelo probabilistico georeferenciado
 
-    Route::get('modeloprobabilistico/ProbabilisticGrid', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaGeneral']);
-    Route::get('modeloprobabilistico/Indicators', [ProbabilisticController::class, 'GetIndicators']); 
+    Route::post('modeloprobabilistico/ProbabilisticGrid', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaGeneral']);
+    Route::post('modeloprobabilistico/Indicators', [ProbabilisticController::class, 'GetIndicators']); 
     Route::get('modeloprobabilistico/ProbabilisticGrid/{id}', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaPorIndicador']);
+    Route::post('modeloprobabilistico/GridInformation', [ProbabilisticController::class, 'obtenerEstadisticasPorCuadricula']);
     
     //endpoints temporales para modelo probabilistico no georeferenciado
 
     Route::get('modeloprobabilistico/tabs', [ProbabilisticController::class, 'getTaps']);
     Route::post('modeloprobabilistico/type', [ProbabilisticController::class, 'type']);
+
+    //endpoints temporales para modelo probabilisito de movilidad IPATS
+    // Route::get('modeloprobabilistico/ProbabilisticGridIpats', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaGeneralMovilidad']);
+    // Route::get('modeloprobabilistico/ProbabilisticGridIpats/{id}', [ProbabilisticController::class, 'obtenerEstadisticasPorCuadricula']);
 
 });

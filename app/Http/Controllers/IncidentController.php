@@ -201,7 +201,7 @@ class IncidentController extends Controller
     {
         try {
 
-            $incident = Incident::where('uuid', $incident)->first();
+            $incident = Incident::with('Indicator')->where('uuid', $incident)->first();
 
             return Response::json([
                 'status' => 'succes',
@@ -213,6 +213,7 @@ class IncidentController extends Controller
                     'description' => $incident->description,
                     'image' => tenant('id') . '/' . $incident->image,
                     'position' => $incident->position,
+                    'titile' => $incident->Indicator->Name
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -298,12 +299,24 @@ class IncidentController extends Controller
     {
         try {
 
-            $incidents = Incident::select('uuid as identifier', 'indicator as incident', 'created_at as date', 'position as position')->where('reviewed', false)->get();
+            $incidents = Incident::with('Indicator')->where('reviewed', false)->get();
+            
+            $incidents = $incidents->map(function ($incident) {
+                $data = [
+                    'identifier' => $incident->uuid,
+                    'incident' => $incident->indicator,
+                    'date' => $incident->created_at,
+                    'position' => $incident->position,
+                    'title' => $incident->Indicator->name
+                ];
+
+                return $data;
+            });
 
             return Response::json([
                 'status' => 'succes',
                 'data' => $incidents
-            ], 201, [], JSON_PRETTY_PRINT);
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

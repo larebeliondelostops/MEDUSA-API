@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\NotificationAppController;
 use App\Models\Ditra\DataDitra;
 use App\Models\Ditra\Incident;
+use App\Models\CriminalActs;
+use App\Models\Ipats;
+
+use App\Http\Controllers\HeatmapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,26 +19,25 @@ use App\Models\Ditra\Incident;
 |
 */
 
-Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
 
-    Route::get('/heatmap', function () {
-        $data = DataDitra::whereNotNull('coordinates')
-        ->where(function ($query) {
-            $query->whereRaw('length(coordinates) > 0');
-        })->get();
-        $features = [];
+
+Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
+
+    Route::get('/heatmap', [HeatmapController::class, 'index']);
+
+    /* Route::get('/heatmap', function () {
+        $data = CriminalActs::select('coordinates')->get();
     
+        $features = [];
         foreach ($data as $row) {
-            // Suponiendo que las coordenadas están en formato "latitud,longitud"
-            $coordinates = explode(',', $row->coordinates);
-            
+            $coordinates = json_decode($row->coordinates);
             $feature = [
                 "type" => "Feature",
                 "geometry" => [
                     "type" => "Point",
-                    'coordinates' => [
-                        isset($coordinates[0]) && $coordinates[0] !== '' ? floatval($coordinates[0]) : null,
-                        isset($coordinates[1]) && $coordinates[1] !== '' ? floatval($coordinates[1]) : null
+                    "coordinates" => [
+                        $coordinates->lat,
+                        $coordinates->lng
                     ]
                 ]
             ];
@@ -46,8 +48,39 @@ Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(funct
             "type" => "FeatureCollection",
             "features" => $features
         ];
-    
         return response()->json($geojson, 200);
-    });
+    }); */
+
+    //villavicencio
+
+    /* Route::get('/heatmap', function () {
+        
+        $data = Ipats::select('coordinates')->get();
+
+        $features = [];
+        foreach ($data as $row) {
+            $coordenadas = explode(', ', $row->coordinates);
+    
+            $latitud = (float)$coordenadas[1];
+            $longitud = (float)$coordenadas[0];
+    
+            $feature = [
+                "type" => "Feature",
+                "geometry" => [
+                    "type" => "Point",
+                    "coordinates" => [
+                        $longitud, $latitud
+                    ]
+                ]
+            ];
+            $features[] = $feature;
+        }
+    
+        $geojson = [
+            "type" => "FeatureCollection",
+            "features" => $features
+        ];
+        return response()->json($geojson, 200);
+    }); */
 });
 

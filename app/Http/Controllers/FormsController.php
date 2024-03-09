@@ -7,6 +7,7 @@ use Exception;
 use App\Models\Form;
 use App\Models\Field;
 use App\Models\Module;
+use App\Models\Slug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -28,20 +29,27 @@ class FormsController extends Controller
      */
     private $module;
 
-    /**
-     * Método para devolver el formulario para registro de usuarios
-     *
-     * @access public
-     */
-    public function user()
+    public function getForm($slug)
     {
-        $userData = Form::with('Fields')->where('module', 1)->orderby('field')->get();
-
-        $fields = $userData->map(function ($data) {
-            return $data->fields;
-        });
-
         try{
+            $slug = Slug::where('name', $slug)->first();
+
+            if (!isset($slug->id)) {
+                throw new Exception('El slug no existe');
+            }
+
+            $module = Module::where('slug', $slug->id)->first()->id;
+
+            if ($slug->id == 55) {
+                return $this->event($module);
+            }
+
+            $userData = Form::with('Fields')->where('module', $module)->orderby('field')->get();
+
+            $fields = $userData->map(function ($data) {
+                return $data->fields;
+            });
+
             return Response::json([
                 'status'=> 'succes',
                 'message' => 'Solicitud exitosa',
@@ -50,7 +58,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
@@ -62,175 +69,21 @@ class FormsController extends Controller
      *
      * @access public
      */
-    public function alarm()
+    public function event($module)
     {
-        $alarm_data = Form::with('Fields')->where('module', 6)->orderby('field')->get();
-
-        $fields = $alarm_data->map(function ($data) {
-            return $data->fields;
-        });
-
         try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
+            $event_data = Form::with('Fields')->where('module', $module)->orderby('field')->get();
 
-    public function ambient()
-    {
-        $alarm_data = Form::with('Fields')->where('module', 4)->orderby('field')->get();
-
-        $fields = $alarm_data->map(function ($data) {
-            return $data->fields;
-        });
-
-        try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    public function pollingPlace()
-    {
-        $alarm_data = Form::with('Fields')->where('module', 7)->orderby('field')->get();
-
-        $fields = $alarm_data->map(function ($data) {
-            return $data->fields;
-        });
-
-        try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    public function event()
-    {
-        $event_data = Form::with('Fields')->where('module', 2)->orderby('field')->get();
-
-        $fields = $event_data->map(function ($data) {
-            if ($data->fields->type == 4) {
-                if ($data->fields->key == 'eventType') {
-                    $eventType = EventType::select('id as value', 'eventName as label')->get();
-                    $data->fields->options = $eventType;
+            $fields = $event_data->map(function ($data) {
+                if ($data->fields->type == 4) {
+                    if ($data->fields->key == 'eventType') {
+                        $eventType = EventType::select('id as value', 'eventName as label')->get();
+                        $data->fields->options = $eventType;
+                    }
                 }
-            }
-            return $data->fields;
-        });
+                return $data->fields;
+            });
 
-        try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    public function health()
-    {
-        $health_data = Form::with('Fields')->where('module', 3)->orderby('field')->get();
-
-        $fields = $health_data->map(function ($data) {
-            return $data->fields;
-        });
-
-        try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    /**
-     * Método para devolver el formulario para registro de settings
-     *
-     * @access public
-     */
-    public function settings()
-    {
-        $settings = Form::with('Fields')->where('module', 8)->orderby('field')->get();
-
-        $fields = $settings->map(function ($data) {
-            return $data->fields;
-        });
-
-        try{
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    /**
-     * Método para devolver el formulario para registro de settings
-     *
-     * @access public
-     */
-    public function settings()
-    {
-        $settings = Form::with('Fields')->where('module', 8)->orderby('field')->get();
-
-        $fields = $settings->map(function ($data) {
-            return $data->fields;
-        });
-
-        try{
             return Response::json([
                 'status'=> 'succes',
                 'message' => 'Solicitud exitosa',
@@ -253,9 +106,9 @@ class FormsController extends Controller
      */
     public function modules()
     {
-        $modules = Module::select('id as ID', 'name')->orderby('id')->get();
-
         try{
+            $modules = Module::select('id as ID', 'name')->orderby('id')->get();
+
             return Response::json([
                 'status'=> 'succes',
                 'message' => 'Solicitud exitosa',
@@ -264,7 +117,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
@@ -278,9 +130,9 @@ class FormsController extends Controller
      */
     public function fields()
     {
-        $fields = Field::orderby('id')->get();
-
         try{
+            $fields = Field::orderby('id')->get();
+
             return Response::json([
                 'status'=> 'succes',
                 'message' => 'Solicitud exitosa',
@@ -289,7 +141,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
@@ -329,7 +180,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
@@ -367,7 +217,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);

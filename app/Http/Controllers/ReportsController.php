@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Response;
 
 class ReportsController extends Controller
 {
-        /**
+    /**
      * Variable para almacenar el contexto de la data
      */
     private $value;

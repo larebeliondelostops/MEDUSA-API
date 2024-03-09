@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -9,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 class Event extends Model
 {
 
-    use HasFactory;
+    use HasFactory, HasPoints;
 
     protected $table= 'events';
 
@@ -22,6 +23,8 @@ class Event extends Model
         'place',
         'authorizingEntity',
     ];
+
+    private $slug = 'event';
 
 
     public function eventType()

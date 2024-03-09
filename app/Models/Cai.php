@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cai extends Model
 {
+    use HasFactory, HasPoints;
+
     protected $table = 'cai';
-    
-    use HasFactory;
+
+    private $slug = 'cai';
 
     protected $guarded = [];
 }

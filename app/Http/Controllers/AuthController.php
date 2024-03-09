@@ -123,7 +123,7 @@ class AuthController extends Controller
 
         try {
             // this authenticates the user details with the database and generates a token
-            if (! $token = JWTAuth::attempt($input)) {
+            if (! $token = JWTAuth::claims(['tenant_id' => tenant('id')])->attempt($input)) {
 
                 $this->data = [];
                 $this->message = 'La contraseña es incorrecta';

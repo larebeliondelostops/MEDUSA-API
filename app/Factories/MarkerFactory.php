@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Factories;
+
+use App\Models\Marker;
+use App\Interfaces\Markers\LinesInterface;
+use App\Interfaces\Markers\PointsInterface;
+use App\Interfaces\Markers\PolygonsInterface;
+
+class MarkerFactory
+{
+    public function getStrategyPoints($slug_id) : PointsInterface
+    {
+        $markerClass = Marker::where('marker_type', 1)->where('slug', $slug_id)->firstOrFail();
+
+        return app($markerClass->namespace);
+    }
+
+    public function getStrategyLines($slug_id) : LinesInterface
+    {
+        $markerClass = Marker::where('marker_type', 4)->where('slug', $slug_id)->firstOrFail();
+
+        return app($markerClass->namespace);
+    }
+
+    public function getStrategyPolygons($slug_id) : PolygonsInterface
+    {
+        $markerClass = Marker::where('marker_type', 5)->where('slug', $slug_id)->firstOrFail();
+
+        return app($markerClass->namespace);
+    }
+}

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormsController;
-use App\Http\Controllers\ModulesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +14,6 @@ use App\Http\Controllers\ModulesController;
 */
 
 Route::middleware([/* 'jwt.verify' */])->group(function() {
-    /**
-     * Rutas para el manejo de modulos
-     */
-    Route::get('forms/module/all', [ModulesController::class, 'all']);
-    Route::post('forms/module/store', [ModulesController::class, 'store']);
-    Route::put('forms/module/update/{id}', [ModulesController::class, 'update']);
-    Route::delete('forms/module/delete/{id}', [ModulesController::class, 'destroy']);
 
     /**
      * Exposición de data para hacer un CRUD
@@ -32,13 +24,7 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
     /**
      * Manejo de formularios
      */
-    Route::get('forms/user', [FormsController::class, 'user']);
-    Route::get('forms/alarm', [FormsController::class, 'alarm']);
-    Route::get('forms/ambient', [FormsController::class, 'ambient']);
-    Route::get('forms/pollingPlace', [FormsController::class, 'pollingPlace']);
-    Route::get('forms/event', [FormsController::class, 'event']);
-    Route::get('forms/health', [FormsController::class, 'health']);
-    Route::get('forms/settings', [FormsController::class, 'settings']);
+    Route::get('forms/{slug}', [FormsController::class, 'getForm']);
 
     /**
      * Creación de formularios

@@ -61,7 +61,7 @@ class StrategyIpats implements PointsInterface
                     'id_ipat' => $ipats->id_ipat,
                     'Lesionados' => $ipats->injured,
                     'Víctimas' => $ipats->victims,
-                    'Georeferencia' => $ipats->coordinates,
+                    //'Georeferencia' => $ipats->coordinates,
                     'Fecha de IPAT' => $ipats->date_ipat,
                 ]
             ];

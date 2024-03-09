@@ -161,6 +161,10 @@ class StrategyIpatsReports implements ReportsInterface
     {
         $incidents = $this->incidents;
 
+        $incidents->each(function ($incident) {
+            $incident->getDay();
+        });
+
         $data = $incidents->sortBy('month')->groupBy('month')->toArray();
 
         // Transformación de datos

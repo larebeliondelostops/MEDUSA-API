@@ -157,8 +157,8 @@ class MenuController extends Controller
                 case 'villavicencio':
                     $data = [
                         'mapCenter' => [
-                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
+                            'lat' => 4.132543365663997,
+                            'lng' => -73.62534265307882
                         ],
                         'mapRequest' => ['incidents', 'indicators'],
                         'mapZoom' => 14
@@ -177,8 +177,8 @@ class MenuController extends Controller
                 case 'ditra':
                     $data = [
                         'mapCenter' => [
-                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
+                            'lat' => 4.132543365663997,
+                            'lng' => -73.62534265307882
                         ],
                         'mapRequest' => ['incidents', 'indicators'],
                         'mapZoom' => 6

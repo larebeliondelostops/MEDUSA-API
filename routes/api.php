@@ -32,31 +32,6 @@ Route::get('/', function () {
     return response()->json($data, 200);
 });
 
-Route::get('/heatmap', function () {
-    $data = CriminalActs::select('coordinates')->get();
-
-    $features = [];
-    foreach ($data as $row) {
-        $coordinates = json_decode($row->coordinates);
-        $feature = [
-            "type" => "Feature",
-            "geometry" => [
-                "type" => "Point",
-                "coordinates" => [
-                    $coordinates->lat,
-                    $coordinates->lng
-                ]
-            ]
-        ];
-        $features[] = $feature;
-    }
-
-    $geojson = [
-        "type" => "FeatureCollection",
-        "features" => $features
-    ];
-    return response()->json($geojson, 200);
-});
 
 Route::get('/correlacionador', function (Request $request) {
     // Obtén el valor de la variable 'query' de la petición

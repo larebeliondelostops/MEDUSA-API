@@ -148,7 +148,7 @@ class AuthController extends Controller
                 'email' => $user->email,
                 /*'phoneNumber' => $user->phone_number,
                 'adress' => $user->adress, */
-                'avatar' => $user->avatar == NULL ? '/storage/avatar/default.jpg' : '/storage/avatar/' . $user->avatar,
+                //'avatar' => $user->avatar == NULL ? '/storage/avatar/default.jpg' : tenant('id') . '/avatar/' . $user->avatar,
                 'roleName' => $user->getRoleNames()[0] ?? null,
             ];
 

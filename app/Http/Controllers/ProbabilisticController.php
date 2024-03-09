@@ -4,41 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ditra\Indicator;
-use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilistic;
+use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilisticCrimes;
 use App\Values\ProbabilisticValuesDitra;
+use App\Values\ProbabilisticValuesVillavicencio;
 use Illuminate\Support\Facades\Response;
 
 class ProbabilisticController extends Controller
 {
 
-    public function GetIndicators()
+    public function GetIndicators(Request $request)
     {
 
-        $Probabilistic = new StrategyProbabilistic();
+        try {
+            $key = $request->key;
 
-        $dataIndicators = $Probabilistic->GetIndicators();
+            $strategy = ProbabilisticValuesVillavicencio::STRATEGY[$key];
 
-        return $dataIndicators;
+            return (new $strategy)->GetIndicators();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+        // $Probabilistic = new StrategyProbabilisticCrimes();
+
+        // $dataIndicators = $Probabilistic->GetIndicators();
+
+        // return $dataIndicators;
     }
 
     public function obtenerCuadriculaProbabilisticaPorIndicador($id)
     {
-
-        $Probabilistic = new StrategyProbabilistic();
+        $Probabilistic = new StrategyProbabilisticCrimes();
 
         $data = $Probabilistic->obtenerCuadriculaProbabilisticaPorIndicador($id);
 
         return $data;
     }
 
-    public function obtenerCuadriculaProbabilisticaGeneral()
+    public function obtenerCuadriculaProbabilisticaGeneral(Request $request)
     {
+        try {
+            $key = $request->key;
 
-        $Probabilistic = new StrategyProbabilistic();
+            $strategy = ProbabilisticValuesVillavicencio::STRATEGY[$key];
 
-        $data = $Probabilistic->obtenerCuadriculaProbabilisticaGeneral();
+            return (new $strategy)->obtenerCuadriculaProbabilisticaGeneral();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+        // $Probabilistic = new StrategyProbabilisticCrimes();
 
-        return $data;
+        // $data = $Probabilistic->obtenerCuadriculaProbabilisticaGeneral();
+
+        // return $data;
     }
 
     public function getTaps()
@@ -73,5 +100,39 @@ class ProbabilisticController extends Controller
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    // public function obtenerCuadriculaProbabilisticaGeneralMovilidad()
+    // {
+    //     $Probabilistic = new StrategyProbabilistic();
+
+    //     $data = $Probabilistic->obtenerCuadriculaProbabilisticaGeneralMovilidad();
+
+    //     return $data;
+    // }
+
+    public function obtenerEstadisticasPorCuadricula(Request $request)
+    {
+
+        try {
+            $key = $request->key;
+
+            $strategy = ProbabilisticValuesVillavicencio::STRATEGY[$key];
+
+            return (new $strategy)->getProbabilisticData($request);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+
+        // $Probabilistic = new StrategyProbabilisticCrimes();
+
+        // $data = $Probabilistic->getProbabilisticData($gridId);
+
+        // return $data;
     }
 }

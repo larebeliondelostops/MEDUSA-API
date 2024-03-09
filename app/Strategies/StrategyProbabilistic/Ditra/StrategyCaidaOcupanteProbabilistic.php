@@ -65,7 +65,7 @@ class StrategyCaidaOcupanteProbabilistic implements ProbabilisticInterface
 
     public function allData()
     {
-        $CaidaOcupante =  DataDitra::::all();
+        $CaidaOcupante =  DataDitra::all();
 
         return $CaidaOcupante;
     }

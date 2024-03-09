@@ -2,81 +2,55 @@
 
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
-use App\Http\Request\Health\HealthRequest;
-use App\Models\Health;
-use App\Strategies\Interface\Villavicencio\HealthInterface;
 use Exception;
+use Ramsey\Uuid\Uuid;
+use App\Models\Health;
+use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use \Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
+use App\Interfaces\Markers\PointsInterface;
 
-class StrategyHealth implements HealthInterface
+class StrategyHealth implements PointsInterface
 {
-    /**
-     * Metodo para obtener todos los centros de salud
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
+
+    public function __construct(
+        private Health $model
+    ) {}
+
+    public function getModel() : Health
     {
-        try {
-            $healths = Health::all();
-            
-            $transformedData = [];
-            foreach ($healths as $health) {
-
-                $transformedData[] = [
-                    'markerType' => 3,
-                    'id' => $health->uuid,
-                    'geometry' => json_decode($health->position),
-                ];
-            }
-
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $health = Health::where('uuid', $uuid)->first();
+        return $this->model->allPoints();
+    }
 
-            $health = [
-                'title' => $health->name,
-                'properties' => [
-                    'Direccion' => $health->address,
-                    'Pacientes en Emergencia' => $health->emergencyPatients ?? null,
-                    'Camas de Emergencia Disponibles' => $health->emergencyBedsAvailable ?? null,
-                    'Quirófanos Disponibles' => $health->availableOperatingRooms ?? null,
-                    'Unidad de Cuidados Intensivos Disponible' => $health->intensiveCareUnitAvailable ?? null,
-                    'Camas de Primer Nive' => $health->firstLevelBeds ?? null,
-                    'Camas de Segundo Nivel' => $health->secondLevelBeds ?? null,
-                    'Camas de Tercer Nivel' => $health->thirdLevelBeds ?? null,
-                    'Banco de Sangre' => $health->bloodBank ?? null,
-                    'Médicos en Turno' => $health->doctorsInTheShift ?? null,
-                    'Enfermeras en Turno' => $health->nursesInTheShift ?? null,
-                    'IPS Afiliada' => $health->affiliatedIps ?? null,
-                    'Número de Emergencias al Día' => $health->numberOfEmergenciesDay ?? null
-                ]
-            ];
+    public function getInfoPoint($id)
+    {
+        $health = $this->model->where('uuid', $id)->first();
 
-            return Response::json($health, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $health = [
+            'title' => $health->name,
+            'properties' => [
+                'Direccion' => $health->address,
+                'Pacientes en Emergencia' => $health->emergencyPatients ?? null,
+                'Camas de Emergencia Disponibles' => $health->emergencyBedsAvailable ?? null,
+                'Quirófanos Disponibles' => $health->availableOperatingRooms ?? null,
+                'Unidad de Cuidados Intensivos Disponible' => $health->intensiveCareUnitAvailable ?? null,
+                'Camas de Primer Nive' => $health->firstLevelBeds ?? null,
+                'Camas de Segundo Nivel' => $health->secondLevelBeds ?? null,
+                'Camas de Tercer Nivel' => $health->thirdLevelBeds ?? null,
+                'Banco de Sangre' => $health->bloodBank ?? null,
+                'Médicos en Turno' => $health->doctorsInTheShift ?? null,
+                'Enfermeras en Turno' => $health->nursesInTheShift ?? null,
+                'IPS Afiliada' => $health->affiliatedIps ?? null,
+                'Número de Emergencias al Día' => $health->numberOfEmergenciesDay ?? null
+            ]
+        ];
+
+        return $health;
     }
 
     public function getOne($id)
@@ -156,7 +130,6 @@ class StrategyHealth implements HealthInterface
                     'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',

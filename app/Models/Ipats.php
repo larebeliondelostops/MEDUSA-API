@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ipats extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPoints;
 
-        /**
+    /**
 	 * Defines the table associated with the model.
 	 * @var string
 	 */
@@ -38,6 +39,8 @@ class Ipats extends Model
 	 * @var array
 	 */
 	protected $hidden = [];
+
+	private $slug = 'ipat';
 
 	public function getMonth()
 	{

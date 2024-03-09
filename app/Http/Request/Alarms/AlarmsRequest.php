@@ -2,8 +2,10 @@
 
 namespace App\Http\Request\Alarms;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AlarmsRequest extends FormRequest
 {
@@ -34,7 +36,7 @@ class AlarmsRequest extends FormRequest
         return [
             'name' => 'required',
             'address' => 'required',
-            'position' => 'required',
+            'position' => 'required|integer|size:2',
         ];
     }
 
@@ -47,6 +49,8 @@ class AlarmsRequest extends FormRequest
     {
         return [
             'required' => 'El campo :attribute es requerido',
+            'integer' => 'El campo :attribute debe ser un número entero',
+            'size' => 'El campo :attribute debe tener :size elementos',
         ];
     }
 
@@ -70,8 +74,16 @@ class AlarmsRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator): void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use App\Interfaces\Cruds\CrudInterface;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use App\Services\Markers\MarkersService;
+use App\Interfaces\Markers\MarkersInterface;
+use App\Services\Cruds\CrudService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,9 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(\Illuminate\Database\Migrations\Migrator::class, function ($app) {
-            return $app['migrator'];
-        });
+        $this->app->bind(MarkersInterface::class, MarkersService::class);
+        $this->app->bind(CrudInterface::class, CrudService::class);
     }
 
     /**

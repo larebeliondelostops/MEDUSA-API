@@ -30,10 +30,11 @@ Route::middleware([
     require base_path('routes/api/reports.php');
     require base_path('routes/api/incidents.php');
     require base_path('routes/api/menu.php');
-    require base_path('routes/api/allData.php');
+    require base_path('routes/api/markers.php');
     require base_path('routes/api/forms.php');
-    require base_path('routes/api/CRUD.php');
+    require base_path('routes/api/cruds.php');
     require base_path('routes/api/videoCameras.php');
+    require base_path('routes/api/modules.php');
 
     // Viper Routes
     require base_path('routes/api/Viper/DocumentRoutes.php');

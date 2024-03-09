@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('slugs', function (Blueprint $table) {
             $table->id('slugs');
-            $table->integer('id');
+            $table->integer('id')->unique();
             $table->string('name');
             $table->timestamps();
         });

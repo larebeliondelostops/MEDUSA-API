@@ -2,77 +2,48 @@
 
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
-use App\Clases\SaveGeoJson;
-use App\Http\Request\pollingPlace\pollingPlaceRequest;
-use App\Models\PollingPlace;
-use App\Strategies\Interface\Villavicencio\PollingPlaceInterface;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use App\Clases\SaveGeoJson;
+use App\Models\PollingPlace;
+use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use \Illuminate\Http\Request;
+use App\Interfaces\Markers\PointsInterface;
+use App\Http\Request\pollingPlace\pollingPlaceRequest;
 
-
-class StrategyPollingPlace implements PollingPlaceInterface
+class StrategyPollingPlace implements PointsInterface
 {
-    /**
-     * Metodo para obtener todos los centros de Entidades
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
+    public function __construct(
+        private PollingPlace $model
+    ) {}
+
+    public function getModel() : PollingPlace
     {
-        try {
-            $pollingPlace = PollingPlace::all();
-
-            $transformedData = [];
-            foreach ($pollingPlace as $pollingPlace) {
-                $coordinates = json_decode($pollingPlace->pointCoordinates, true);
-                $geometry = $coordinates['features'][0]['geometry'];
-
-                $transformedData[] = [
-                    'markerType' => 4,
-                    'id' => $pollingPlace->uuid,
-                    'geometry' => $geometry,
-                ];
-            }
-
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $pollingPlace = PollingPlace::where('uuid', $uuid)->first();
+        return $this->model->allPoints();
+    }
 
-            $pollingPlace = [
-                'title' => $pollingPlace->name,
-                'properties' => [
-                    'Direccion' => $pollingPlace->address,
-                    'Potencial de mujeres' => $pollingPlace->potencialWomen,
-                    'Potencial de hombres' => $pollingPlace->potencialMen,
-                    'Total Votos' => $pollingPlace->totalVotes,
-                    'Mesas' => $pollingPlace->tables,
-                ]
-            ];
+    public function getInfoPoint($id)
+    {
+        $pollingPlace = $this->model->where('uuid', $id)->first();
 
-            return Response::json($pollingPlace, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $pollingPlace = [
+            'title' => $pollingPlace->name,
+            'properties' => [
+                'Direccion' => $pollingPlace->address,
+                'Potencial de mujeres' => $pollingPlace->potencialWomen,
+                'Potencial de hombres' => $pollingPlace->potencialMen,
+                'Total Votos' => $pollingPlace->totalVotes,
+                'Mesas' => $pollingPlace->tables,
+            ]
+        ];
+
+        return $pollingPlace;
     }
 
     public function getOne($id)

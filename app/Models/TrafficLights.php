@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TrafficLights extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPoints;
 
         /**
 	 * Defines the table associated with the model.
@@ -33,9 +34,11 @@ class TrafficLights extends Model
 	 */
 	protected $guarded = [];
 
+	private $slug = 'trafficLight';
+
 	/**
 	 * The attributes that should be hidden for arrays.
 	 * @var array
 	 */
-	protected $hidden = []; 
+	protected $hidden = [];
 }

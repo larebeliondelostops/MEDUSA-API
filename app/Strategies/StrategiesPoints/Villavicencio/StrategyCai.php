@@ -2,72 +2,42 @@
 
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
-use App\Http\Request\cai\CaiRequest;
-use App\Models\Cai;
-use App\Strategies\Interface\Villavicencio\CaiInterface;
-
 use Exception;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+use App\Models\Cai;
 use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Request\cai\CaiRequest;
+use Illuminate\Support\Facades\Response;
+use App\Interfaces\Markers\PointsInterface;
 
-
-class StrategyCai implements CaiInterface
+class StrategyCai implements PointsInterface
 {
-    /**
-     * Metodo para obtener todos los centros de Entidades
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
+    public function __construct(
+        private Cai $model
+    ) {}
+
+    public function getModel() : Cai
     {
-        try {
-            $cai = Cai::all();
-
-            $transformedData = [];
-            foreach ($cai as $cai) {
-                $coordinates = json_decode($cai->pointCoordinates, true);
-                $geometry = $coordinates['features'][0]['geometry'];
-
-                $transformedData[] = [
-                    'markerType' => 2,
-                    'id' => $cai->uuid,
-                    'geometry' => $geometry,
-                ];
-            }
-
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $cai = Cai::where('uuid', $uuid)->first();
+        return $this->model->allPoints();
+    }
 
-            $cai = [
-                'title' => $cai->name,
-                'properties' => [
-                    'Direccion' => $cai->address,
-                ]
-            ];
+    public function getInfoPoint($id)
+    {
+        $cai = $this->model->where('uuid', $id)->first();
 
-            return Response::json($cai, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $cai = [
+            'title' => $cai->name,
+            'properties' => [
+                'Direccion' => $cai->address,
+            ]
+        ];
+
+        return $cai;
     }
 
 
@@ -117,11 +87,8 @@ class StrategyCai implements CaiInterface
             foreach ($cais as $cai) {
                 $transformedData[] = [
                     'ID' => $cai->id,
-                    //'uuid' => $cai->uuid,
                     'Nombre' => $cai->name,
                     'Direccion' => $cai->address,
-                    //'created_at' => $cai->created_at,
-                    //'updated_at' => $cai->updated_at,
                 ];
             }
 

@@ -3,6 +3,7 @@
 namespace App\Interfaces\Viper;
 
 use App\DTOs\Viper\Scope\ScopeDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para el servicio de manejo de alcances en el sistema.
@@ -20,10 +21,10 @@ interface ScopeInterface
     /**
      * Crea un nuevo alcance.
      *
-     * @param ScopeDTO $scopeDTO DTO que contiene la información del alcance a crear.
+     * @param Scope $scope que contiene la información del alcance a crear.
      * @return void
      */
-    public function createNewScope(ScopeDTO $scopeDTO): ScopeDTO;
+    public function createNewScope(Collection $scope): Collection;
 
     /**
      * Actualiza un alcance existente.

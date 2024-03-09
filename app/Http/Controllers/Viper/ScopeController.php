@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\ScopeRequest;
 use App\Interfaces\Viper\ScopeInterface;
 use App\DTOs\Viper\Scope\ScopeDTO;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -44,9 +45,8 @@ class ScopeController extends BaseController
     {
         try {
             $validatedData = $request->validated();
-            $scopeDTO = new ScopeDTO($validatedData);
 
-            $scopeCreatedDTO = $this->scopeInterface->createNewScope($scopeDTO);
+            $scopeCreatedDTO = $this->scopeInterface->createNewScope($validatedData);
 
             return response()->json([
                 'success' => true,

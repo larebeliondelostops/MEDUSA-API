@@ -3,6 +3,7 @@
 namespace App\Services\Viper;
 
 use App\DTOs\Viper\Scope\ScopeDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Viper\ScopeInterface;
 use App\Models\Viper\Scope;
 
@@ -19,13 +20,12 @@ class ScopeService implements ScopeInterface
     /**
      * Crea un nuevo alcance (scope) en la base de datos.
      *
-     * @param ScopeDTO $scopeDTO Datos del alcance a ser creado.
-     * @return ScopeDTO
+     * @param Collection $scopeDTO Datos del alcance a ser creado.
+     * @return Collection
      */
-    public function createNewScope(ScopeDTO $scopeDTO): ScopeDTO
+    public function createNewScope(Collection $scope): Collection
     {
-        $scope = new Scope();
-        $scope->fill($scopeDTO->toArray());
+        $scope = new Scope($scope->toArray);
         $scope->save();
         return New ScopeDTO($scope->toArray());
     }

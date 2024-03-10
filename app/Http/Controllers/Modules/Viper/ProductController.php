@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Modules\Viper;
 
-use App\Http\Request\Viper\ProductRequest;
-use App\DTOs\Viper\Product\ProductDTO;
+use App\Http\Request\Modules\Viper\ProductRequest;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use Illuminate\Http\Response;
 
@@ -92,14 +91,7 @@ class ProductController extends BaseController
     public function store(ProductRequest $request)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
-
-            // Crea un nuevo ProductDTO con los datos del formulario
-            $productDTO = new ProductDTO($validatedData);
-
-            // Llama al servicio para almacenar la nuevo producto
-            $newProduct = $this->productInterface->storeProduct($productDTO);
+            $newProduct = $this->productInterface->storeProduct(collect($request->validated()));
 
             // Retorna la respuesta JSON con el nuevo producto creada
             return response()->json([
@@ -122,13 +114,8 @@ class ProductController extends BaseController
     public function update(ProductRequest $request, $productId)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
-
-            $productDTO = new ProductDTO($validatedData);
-
             // Llama al servicio para actualizar el producto
-            $updatedProduct = $this->productInterface->updateProduct($productId, $productDTO);
+            $updatedProduct = $this->productInterface->updateProduct($productId, $request->validated());
 
             // Retorna la respuesta JSON con el producto actualizado
             return response()->json([

@@ -2,13 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Folder\FolderDTO;
-use App\DTOs\Viper\Indicator\IndicatorDTO;
-use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
-use App\DTOs\Viper\Product\ProductDetailDTO;
 use App\DTOs\Viper\Product\ProductDTO;
-use App\DTOs\Viper\Product\ProductSummaryDTO;
-use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Models\Modules\Viper\Folder;
@@ -41,20 +35,12 @@ class ProductService implements ProductInterface
     /**
      * Obtiene todos los productos existentes .
      *
-     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     * @return Collection Colección de objetos ProductData que representan los productos.
      */
     public function getAllProducts()
     {
         $products = Product::with('measurementUnit', 'specificObjective', 'folder')->get();
-
-        $productDTOs = $products->transform(function ($product) {
-            $data = $product->toArray();
-            $data['folder'] = new FolderDTO($data['folder']);
-            $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
-            $data['specific_objective'] = new SpecificObjectiveDTO($data['specific_objective']);
-            return new ProductDetailDTO($data);
-        });
-        return $productDTOs;
+        return collect($products);
     }
 
 
@@ -62,7 +48,7 @@ class ProductService implements ProductInterface
      * Obtiene todos los productos existentes por alcance.
      *
      * @param int $scope_id Identificador único del alcance.
-     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     * @return Collection Colección de objetos ProductData que representan los productos.
      */
     public function getAllProductsByScope($scopeId)
     {
@@ -72,42 +58,36 @@ class ProductService implements ProductInterface
             })
             ->get();
 
-        $productDTOs = $products->transform(function ($product) {
-            $data = $product->toArray();
-            return new ProductDetailDTO($data);
-        });
-
-        return $productDTOs;
+        return collect($products);
     }
 
 
     /**
      * Obtiene el producto existente.
      *
-     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     * @return Collection Colección de objetos ProductData que representan los productos.
      */
-    public function getProduct($productId)
+    public function getProduct(int $productId)
     {
         $product = Product::with('measurementUnit', 'specificObjective', 'folder')->findOrFail($productId);
-        $productDTO = new ProductDetailDTO($product->toArray());
 
-        return $productDTO;
+        return collect($product);
     }
 
     /**
      * Almacena un nuevo producto en el base de datos.
      *
-     * @param ProductDTO $productDTO Objeto ProductDTO que contiene los datos del nuevo producto.
-     * @return ProductDTO Objeto ProductDTO que representa el producto recién creada.
+     * @param Collection $productData Objeto ProductData que contiene los datos del nuevo producto.
+     * @return Collection Collection que representa el producto recién creada.
      */
-    public function storeProduct(ProductDTO $productDTO)
+    public function storeProduct(Collection $productData)
     {
         // Crea una nueva instancia del modelo Product y guarda los datos
         $product = new Product();
-        $product->fill($productDTO->toArray());
+        $product->fill($productData->toArray());
 
         // Obtiene el specificObjective correspondiente al specific_objective_id proporcionado
-        $specificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
+        $specificObjective = SpecificObjective::findOrFail($productData['specific_objective_id']);
         $scope_id = $specificObjective->scope_id;
 
         $project = Scope::findOrFail($scope_id)->project_id;
@@ -120,13 +100,13 @@ class ProductService implements ProductInterface
         $product_number = $productsObjSpecifics->max('number') + 1;
 
         // Verifica si el número ya existe en los productos asociados a los objetivos específicos
-        if ($productDTO->number) {
-            if ($productsObjSpecifics->where('number', $productDTO->number)->count() > 0) {
+        if ($productData['number']) {
+            if ($productsObjSpecifics->where('number', $productData['number'])->count() > 0) {
                 // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees
                 throw new \Exception('Número ya existe en los productos asociados a los objetivos específicos', 422);
             }else{
                 // Calcula el próximo número disponible para el nuevo producto
-                $product->number = $productDTO->number;
+                $product->number = $productData['number'];
             }
         }else{
             // Calcula el próximo número disponible para el nuevo producto
@@ -139,15 +119,15 @@ class ProductService implements ProductInterface
                 ->first();
 
         if ($folder->id) {
-            $folderDTO = new FolderDTO([
-                "name" =>  $product_number . '. ' . $productDTO->name,
+            $folderData = [
+                "name" =>  $product_number . '. ' . $productData->name,
                 "stage_id" => 4,
                 "project_id" => $project,
                 "higher_folder_id" => $folder->id
-            ]);
+            ];
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
-            $result = $this->folderInterface->createNewFolder($folderDTO);
-            $product->folder_id = $result->id;
+            $result = $this->folderInterface->createNewFolder(collect($folderData));
+            $product->folder_id = $result['id'];
         } else {
             throw new \Exception('No se pudo asignar una carpeta al producto', 422);
         }
@@ -155,17 +135,17 @@ class ProductService implements ProductInterface
         // Guarda el producto en la base de datos
         $product->save();
 
-        return new ProductDTO($product->toArray());
+        return collect($product);
     }
     /**
      * Actualiza los datos de un producto existente.
      *
      * @param int $productId ID del producto que se va a actualizar.
-     * @param ProductDTO $productDTO Objeto ProductDTO que contiene los nuevos datos del producto.
-     * @return ProductDTO Objeto ProductDTO que representa el producto actualizado.
+     * @param Collection $productData Objeto ProductData que contiene los nuevos datos del producto.
+     * @return collection Objeto ProductData que representa el producto actualizado.
      * @throws \Exception Se arroja si el producto no se encuentra o si el nuevo specificObjective no pertenece al mismo scope.
      */
-    public function updateProduct($productId, ProductDTO $productDTO)
+    public function updateProduct($productId, Collection $productData)
     {
         // Encuentra el producto por su ID
         $product = Product::findOrFail($productId);
@@ -174,7 +154,7 @@ class ProductService implements ProductInterface
         $oldName = $product->name;
         $oldNumber = $product->number;
 
-        $specificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
+        $specificObjective = SpecificObjective::findOrFail($productData['specific_objective_id']);
         $scope_id = $specificObjective->scope_id;
 
         // Obtener todos los objetivos específicos de un scope_id
@@ -183,7 +163,7 @@ class ProductService implements ProductInterface
         // Obtener todos los productos de los objetivos específicos asociados al scope_id
         $productsObjSpecifics = Product::whereIn('specific_objective_id', $objSpecificObjects->pluck('id'))->get();
 
-        if ($productsObjSpecifics->where('number', $productDTO->number)->count() > 0 && $oldNumber != $productDTO->number) {
+        if ($productsObjSpecifics->where('number', $productData['number'])->count() > 0 && $oldNumber != $productData['number']) {
             // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees
             throw new \Exception('Número ya existe en los productos asociados a los objetivos específicos', 422);
         }
@@ -191,9 +171,9 @@ class ProductService implements ProductInterface
         $oldSpecificObjectiveId = $product->specific_objective_id;
 
         // Verifica si se está cambiando el specificObjective
-        if ($productDTO->specific_objective_id && $oldSpecificObjectiveId !== $productDTO->specific_objective_id) {
+        if ($productData['specific_objective_id'] && $oldSpecificObjectiveId !== $productData['specific_objective_id']) {
             // Verifica si el nuevo specificObjective pertenece al mismo scope
-            $newSpecificObjective = SpecificObjective::findOrFail($productDTO->specific_objective_id);
+            $newSpecificObjective = SpecificObjective::findOrFail($productData['specific_objective_id']);
             $oldScopeId = SpecificObjective::findOrFail($oldSpecificObjectiveId)->scope_id;
 
             if ($newSpecificObjective->scope_id != $oldScopeId) {
@@ -202,7 +182,7 @@ class ProductService implements ProductInterface
         }
 
         // Actualiza los datos del producto
-        $product->fill($productDTO->toArray([is_null($productDTO->number) ? 'number' : '', 'folder_id']));
+        $product->fill(collect($productData)->except([is_null($productData['number']) ? 'number' : '', 'folder_id'])->toArray());
         $product->save();
 
         // Verifica si el nombre o el número ha cambiado
@@ -219,7 +199,7 @@ class ProductService implements ProductInterface
             }
         }
 
-        return new ProductDTO($product->toArray());
+        return collect($product);
     }
 
 
@@ -229,7 +209,7 @@ class ProductService implements ProductInterface
      * @param int $productId ID del producto que se va a eliminar.
      * @throws \Exception Se arroja si el producto no se encuentra.
      */
-    public function deleteProduct($productId)
+    public function deleteProduct(int $productId)
     {
          // Encuentra el producto por su ID
         $product = Product::findOrFail($productId);
@@ -248,36 +228,23 @@ class ProductService implements ProductInterface
  * Obtiene el objetivo específico y sus productos asociados con indicadores por alcance.
  *
  * @param int $specificObjectiveId Identificador único del objetivo específico.
- * @return array ['specific_objective' => SpecificObjectiveDTO, 'products' => Collection|ProductDetailDTO[]]
+ * @return array ['specific_objective' => SpecificObjectiveData, 'products' => Collection|ProductDetailData[]]
  */
-public function getAllProductsBySpecificObjective($specificObjectiveId)
+public function getAllProductsBySpecificObjective(int $specificObjectiveId)
 {
     // Obtener el objetivo específico
     $specificObjective = SpecificObjective::findOrFail($specificObjectiveId);
-    $specificObjectiveDTO = new SpecificObjectiveDTO($specificObjective->toArray());
+    $specificObjectiveData = collect($specificObjective->toArray());
 
     // Obtener los productos asociados al objetivo específico con indicadores cargados
     $products = Product::with(['measurementUnit', 'indicators'])
         ->where('specific_objective_id', $specificObjectiveId)
         ->get();
 
-    // Transformar productos a objetos DTO
-    $productDTOs = $products->transform(function ($product) {
-        $data = $product->toArray();
-        $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
-
-        // Transformar los indicadores en DTO
-        $data['indicators'] = $product->indicators->transform(function ($indicator) {
-            return new IndicatorDTO($indicator->toArray());
-        })->toArray();
-
-        return new ProductDetailDTO($data);
-    });
-
     // Devolver un array con el objetivo específico y los productos asociados
     return [
-        'specific_objective' => $specificObjectiveDTO,
-        'products' => $productDTOs,
+        'specific_objective' => $specificObjectiveData,
+        'products' => $products->toArray(),
     ];
 }
 
@@ -285,7 +252,7 @@ public function getAllProductsBySpecificObjective($specificObjectiveId)
      * Obtiene todos los productos existentes por alcance con un minimo de datos.
      *
      * @param int $scope_id Identificador único del alcance.
-     * @return ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     * @return array array de objetos ProductData que representan los productos.
      */
     public function getAllProductsSummaryByScope(int $scopeId) : array
     {
@@ -293,9 +260,6 @@ public function getAllProductsBySpecificObjective($specificObjectiveId)
             $query->where('scope_id', $scopeId);
         })->get();
 
-        $productsDTO = $products->map(
-            fn (Product $product) => new ProductSummaryDTO($product->toArray())
-        );
-        return $productsDTO->toArray();
+        return $products->toArray();
     }
 }

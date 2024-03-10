@@ -8,6 +8,7 @@ use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Interfaces\Modules\Viper\SectorInterface;
 use App\Interfaces\Modules\Viper\DepartmentInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Servicio para obtener información sobre los estados con sus subestados, sectores y departamentos para la creación de un proyecto.
@@ -39,10 +40,10 @@ class SelectsService implements SelectsInterface
      *
      * @return array Arreglo que representa los estados, sectores y departamentos agrupados por clave.
      */
-    public function getAllSelects()
+    public function getAllSelects() : Collection
     {
 
-        $result = [];
+        $result = collect();
         $result['states'] = $this->stateInterface->getAllStatesDetail();
         $result["departments"] = $this->departmentInterface->getAllDepartments();
         $result["municipality"] = $this->municipalityInterface->getAllMunicipalities();

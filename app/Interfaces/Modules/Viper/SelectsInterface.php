@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
+use Illuminate\Support\Collection;
 
 /**
  * Interface SelectsInterface
@@ -19,7 +20,7 @@ interface SelectsInterface {
      * Obtener datos disponibles en los diferentes selects para la creación de un proyecto.
      *
      */
-    public function getAllSelects();
+    public function getAllSelects() : Collection;
 
 
 }

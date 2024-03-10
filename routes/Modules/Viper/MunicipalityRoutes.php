@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\MunicipalityController;
+use App\Http\Controllers\Modules\Viper\MunicipalityController;
 
 Route::prefix('/viper/municipality')->group(function () {
     Route::post('/create', [MunicipalityController::class, 'store']);

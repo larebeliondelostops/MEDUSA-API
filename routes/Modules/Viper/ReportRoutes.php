@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ReportController;
+use App\Http\Controllers\Modules\Viper\ReportController;
 
 Route::prefix('/viper/report')->group(function () {
     Route::post('/create', [ReportController::class, 'store']);

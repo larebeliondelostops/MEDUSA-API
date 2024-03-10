@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\MeasurementUnitRequest;
 use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
-use App\Interfaces\Viper\MeasurementUnitInterface;
+use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las unidades de medida de un proyecto

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\MilestoneClassController;
+use App\Http\Controllers\Modules\Viper\MilestoneClassController;
 
 Route::prefix('/viper/milestoneClass')->group(function () {
     Route::post('/create', [MilestoneClassController::class, 'store']);

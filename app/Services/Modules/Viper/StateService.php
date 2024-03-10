@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Viper;
-use App\Interfaces\Viper\StateInterface;
-use App\Models\Viper\State;
-use App\Models\Viper\Substate;
+namespace App\Services\Modules\Viper;
+use App\Interfaces\Modules\Viper\StateInterface;
+use App\Models\Modules\Viper\State;
+use App\Models\Modules\Viper\Substate;
 use Illuminate\Support\Collection;
 
 
@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  * para la gestión de estados. Incluye operaciones para la creación, actualización, eliminación,
  * y recuperación de estados y sus detalles.
  *
- * @package    App\Services\Viper
+ * @package    App\Services\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v2.0.0

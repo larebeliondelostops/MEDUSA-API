@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Indicator\IndicatorDTO;
-use App\Interfaces\Viper\IndicatorInterface;
-use App\Models\Viper\Indicator;
+use App\Interfaces\Modules\Viper\IndicatorInterface;
+use App\Models\Modules\Viper\Indicator;
 use Exception;
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  * Implementa la interfaz IndicatorInterface para definir las operaciones necesarias
  * para la gestión de indicadores.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0

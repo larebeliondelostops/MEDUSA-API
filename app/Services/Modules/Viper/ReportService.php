@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Report\ReportDTO;
 use App\DTOs\Viper\Report\ReportWithProofDTO;
-use App\Interfaces\Viper\ReportInterface;
-use App\Models\Viper\Report;
+use App\Interfaces\Modules\Viper\ReportInterface;
+use App\Models\Modules\Viper\Report;
 use Exception;
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  *
  * Esta clase implementa la interfaz ReportInterface y ofrece métodos para crear, actualizar, recuperar y eliminar informes.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0  

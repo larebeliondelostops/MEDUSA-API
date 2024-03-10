@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias del Modulo Viper
 use App\Http\Request\Viper\StateRequest;
-use App\Interfaces\Viper\StateInterface;
+use App\Interfaces\Modules\Viper\StateInterface;
 
 // Librerias de terceros
 use Exception;

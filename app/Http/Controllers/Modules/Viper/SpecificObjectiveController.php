@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\SpecificObjectiveRequest;
-use App\Interfaces\Viper\SpecificObjectiveInterface;
+use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use Illuminate\Http\Request;
 use Exception;

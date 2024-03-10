@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
-use App\Interfaces\Viper\CoordinatesInterface;
-use App\Interfaces\Viper\DepartmentInterface;
-use App\Models\Viper\Department;
+use App\Interfaces\Modules\Viper\CoordinatesInterface;
+use App\Interfaces\Modules\Viper\DepartmentInterface;
+use App\Models\Modules\Viper\Department;
 use App\Models\Viper\Municipality;
 
 /**
@@ -17,7 +17,7 @@ use App\Models\Viper\Municipality;
  * para la gestión de departamentos. Incluye operaciones para la creación, actualización, eliminación,
  * y recuperación de departamentos y sus detalles.
  *
- * @package    App\Services\Viper
+ * @package    App\Services\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v1.0.3

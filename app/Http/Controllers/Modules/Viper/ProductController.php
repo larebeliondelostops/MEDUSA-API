@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\ProductRequest;
 use App\DTOs\Viper\Product\ProductDTO;
-use App\Interfaces\Viper\ProductInterface;
+use App\Interfaces\Modules\Viper\ProductInterface;
 use Illuminate\Http\Response;
 
 /**

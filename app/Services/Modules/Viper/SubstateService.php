@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\State\StateDTO;
 use App\DTOs\Viper\Substate\SubstateDetailDTO;
 use App\DTOs\Viper\Substate\SubstateDTO;
-use App\Interfaces\Viper\SubstateInterface;
-use App\Models\Viper\Substate;
+use App\Interfaces\Modules\Viper\SubstateInterface;
+use App\Models\Modules\Viper\Substate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 

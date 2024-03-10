@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Viper\ScheduleController;
+use App\Http\Controllers\Modules\Viper\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/viper/schedule')->group(function () {

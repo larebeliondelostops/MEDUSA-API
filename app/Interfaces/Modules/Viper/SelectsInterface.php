@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\Viper;
+namespace App\Interfaces\Modules\Viper;
 
 /**
  * Interface SelectsInterface

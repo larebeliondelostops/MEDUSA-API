@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Activity\ActivityDTO;
 use App\DTOs\Viper\Folder\FolderDTO;
-use App\Interfaces\Viper\ActivityInterface;
-use App\Interfaces\Viper\DeliverableInterface;
-use App\Interfaces\Viper\FolderInterface;
-use App\Models\Viper\Activity;
-use App\Models\Viper\Deliverable;
-use App\Models\Viper\Folder;
+use App\Interfaces\Modules\Viper\ActivityInterface;
+use App\Interfaces\Modules\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\FolderInterface;
+use App\Models\Modules\Viper\Activity;
+use App\Models\Modules\Viper\Deliverable;
+use App\Models\Modules\Viper\Folder;
 use Illuminate\Support\Collection;
 
 class ActivityService implements ActivityInterface

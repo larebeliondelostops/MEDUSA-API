@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\IndicatorRequest;
-use App\Interfaces\Viper\IndicatorInterface;
-use App\Interfaces\Viper\MeasurementUnitInterface;
+use App\Interfaces\Modules\Viper\IndicatorInterface;
+use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 use App\DTOs\Viper\Indicator\IndicatorDTO;
 use Exception;
 use Illuminate\Http\Request;

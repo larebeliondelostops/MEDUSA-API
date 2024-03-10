@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
-use App\Interfaces\Viper\ScheduleInterface;
+namespace App\Http\Controllers\Modules\Viper;
+use App\Interfaces\Modules\Viper\ScheduleInterface;
 use Exception;
 use Illuminate\Http\Response;
 

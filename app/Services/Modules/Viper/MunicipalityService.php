@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 use App\DTOs\Viper\Department\DepartmentDetailDTO;
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Municipality\MunicipalityDetailDTO;
 use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
-use App\Interfaces\Viper\CoordinatesInterface;
-use App\Interfaces\Viper\LocationInterface;
-use App\Interfaces\Viper\MunicipalityInterface;
-use App\Models\Viper\Municipality;
+use App\Interfaces\Modules\Viper\CoordinatesInterface;
+use App\Interfaces\Modules\Viper\LocationInterface;
+use App\Interfaces\Modules\Viper\MunicipalityInterface;
+use App\Models\Modules\Viper\Municipality;
 use App\Utils\Viper\Filters\MunicipalityFilter;
 
 
@@ -20,7 +20,7 @@ use App\Utils\Viper\Filters\MunicipalityFilter;
  * para la gestión de municipios. Incluye operaciones para la creación, actualización, eliminación,
  * y recuperación de municipios y sus detalles.
  *
- * @package    App\Services\Viper
+ * @package    App\Services\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @version    v1.0.2

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Database\QueryException;

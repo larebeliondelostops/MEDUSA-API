@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\Http\Request\Viper\LocationRequest;
-use App\Interfaces\Viper\LocationInterface;
+use App\Interfaces\Modules\Viper\LocationInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

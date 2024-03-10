@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Viper\Strategies;
+namespace App\Http\Controllers\Modules\Viper\Strategies;
 
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;

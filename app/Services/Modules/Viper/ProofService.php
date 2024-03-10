@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Proof\ProofDTO;
-use App\Interfaces\Viper\ProofInterface;
-use App\Models\Viper\Proof;
-use App\Models\Viper\Project;
+use App\Interfaces\Modules\Viper\ProofInterface;
+use App\Models\Modules\Viper\Proof;
+use App\Models\Modules\Viper\Project;
 use App\DTOs\Viper\Product\ProductDTO;
 use Exception;
 use Storage;
@@ -15,7 +15,7 @@ use Storage;
  *
  * Este servicio proporciona métodos para crear, actualizar, recuperar y eliminar pruebas.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0 

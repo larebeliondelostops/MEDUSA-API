@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\StageRequest;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Stage\StageDTO;
-use App\Interfaces\Viper\StageInterface;
+use App\Interfaces\Modules\Viper\StageInterface;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las etapas de un proyecto

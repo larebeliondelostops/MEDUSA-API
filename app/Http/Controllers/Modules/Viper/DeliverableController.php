@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 use App\DTOs\Viper\Deliverable\DeliverableDetailFolderDTO;
 use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
 use App\Http\Request\Viper\DeliverableRequest;
-use App\Interfaces\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\DeliverableInterface;
 
 use Exception;
 use Illuminate\Http\Request;

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Document\DocumentDTO;
 use App\DTOs\Viper\Folder\FolderDTO;
-use App\Interfaces\Viper\DocumentInterface;
-use App\Models\Viper\Document;
-use App\Models\Viper\Folder;
+use App\Interfaces\Modules\Viper\DocumentInterface;
+use App\Models\Modules\Viper\Document;
+use App\Models\Modules\Viper\Folder;
 use App\Utils\Viper\Filters\DocumentFilter;
-use App\Models\Viper\Project; 
+use App\Models\Modules\Viper\Project; 
 use Storage;
 
 /**

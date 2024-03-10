@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 // Librerias del modulo viper
 
@@ -8,9 +8,9 @@ use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 use App\DTOs\Viper\Project\ProjectSummaryDTO;
-use App\Interfaces\Viper\LocationInterface;
-use App\Interfaces\Viper\ProjectInterface;
-use App\Models\Viper\Project;
+use App\Interfaces\Modules\Viper\LocationInterface;
+use App\Interfaces\Modules\Viper\ProjectInterface;
+use App\Models\Modules\Viper\Project;
 use App\Utils\Viper\Filters\ProjectFilter;
 
 // Librerias de terceros

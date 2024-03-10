@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\MilestoneClass\MilestoneClassDTO;
-use App\Interfaces\Viper\MilestoneClassInterface;
-use App\Models\Viper\MilestoneClass;
+use App\Interfaces\Modules\Viper\MilestoneClassInterface;
+use App\Models\Modules\Viper\MilestoneClass;
 use Exception;
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  * Este servicio implementa la interfaz MilestoneClassInterface y proporciona lógica de negocio
  * para la creación, actualización, obtención y eliminación de clases de hitos.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0

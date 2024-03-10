@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias de terceros
 use App\DTOs\Viper\Project\ProjectRequestDTO;
 
 // Librerias del modulo viper
 use App\Http\Request\Viper\ProjectRequest;
-use App\Interfaces\Viper\ProjectInterface;
+use App\Interfaces\Modules\Viper\ProjectInterface;
 
 // Librerias para el manejo de excepciones
 use Exception;

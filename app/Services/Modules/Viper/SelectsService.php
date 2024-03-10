@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
-use App\Interfaces\Viper\MunicipalityInterface;
-use App\Interfaces\Viper\SelectsInterface;
-use App\Interfaces\Viper\StateInterface;
-use App\Interfaces\Viper\SubstateInterface;
-use App\Interfaces\Viper\SectorInterface;
-use App\Interfaces\Viper\DepartmentInterface;
+use App\Interfaces\Modules\Viper\MunicipalityInterface;
+use App\Interfaces\Modules\Viper\SelectsInterface;
+use App\Interfaces\Modules\Viper\StateInterface;
+use App\Interfaces\Modules\Viper\SubstateInterface;
+use App\Interfaces\Modules\Viper\SectorInterface;
+use App\Interfaces\Modules\Viper\DepartmentInterface;
 
 /**
  * Servicio para obtener información sobre los estados con sus subestados, sectores y departamentos para la creación de un proyecto.

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\MilestoneSubclass\MilestoneSubclassDTO;
-use App\Interfaces\Viper\MilestoneSubclassInterface;
-use App\Models\Viper\MilestoneSubclass;
+use App\Interfaces\Modules\Viper\MilestoneSubclassInterface;
+use App\Models\Modules\Viper\MilestoneSubclass;
 use Exception;
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  * Este servicio implementa la interfaz MilestoneSubclassInterface y proporciona
  * métodos para la creación, actualización, obtención y eliminación de subclases de hitos.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0 */

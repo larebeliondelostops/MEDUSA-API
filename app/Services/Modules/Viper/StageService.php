@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Stage\StageDTO;
-use App\Interfaces\Viper\StageInterface;
-use App\Models\Viper\Stage;
-use App\Models\Viper\StageRelationship;
+use App\Interfaces\Modules\Viper\StageInterface;
+use App\Models\Modules\Viper\Stage;
+use App\Models\Modules\Viper\StageRelationship;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Precedence\PrecedenceDTO;
-use App\Interfaces\Viper\PrecedenceInterface;
-use App\Models\Viper\Precedence;
+use App\Interfaces\Modules\Viper\PrecedenceInterface;
+use App\Models\Modules\Viper\Precedence;
 
 class PrecedenceService implements PrecedenceInterface
 {

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\SelectsController;
+use App\Http\Controllers\Modules\Viper\SelectsController;
 
 /*
 |--------------------------------------------------------------------------

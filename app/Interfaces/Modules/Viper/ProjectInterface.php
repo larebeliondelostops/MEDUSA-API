@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\Viper;
+namespace App\Interfaces\Modules\Viper;
 
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;

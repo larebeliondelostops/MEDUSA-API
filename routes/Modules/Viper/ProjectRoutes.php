@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ProjectController;
+use App\Http\Controllers\Modules\Viper\ProjectController;
 
 Route::prefix("/viper/project")->group(function () {
     Route::post('/create', [ProjectController::class, 'store']);

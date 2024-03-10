@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Viper\DeliverableController;
+use App\Http\Controllers\Modules\Viper\DeliverableController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/viper/deliverable")->group(function () {

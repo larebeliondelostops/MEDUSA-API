@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\PrecedenceRequest;
 use App\DTOs\Viper\Precedence\PrecedenceDTO;
-use App\Interfaces\Viper\PrecedenceInterface;
+use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

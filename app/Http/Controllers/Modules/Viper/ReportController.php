@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\ReportRequest;
-use App\Interfaces\Viper\ReportInterface;
+use App\Interfaces\Modules\Viper\ReportInterface;
 use App\DTOs\Viper\Report\ReportDTO;
 use Exception;
 use Illuminate\Http\Request;

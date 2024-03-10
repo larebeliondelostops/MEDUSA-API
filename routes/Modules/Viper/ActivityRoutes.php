@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ActivityController;
+use App\Http\Controllers\Modules\Viper\ActivityController;
 
 /*
 |--------------------------------------------------------------------------

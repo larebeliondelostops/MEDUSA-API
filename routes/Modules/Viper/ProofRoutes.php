@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ProofController;
+use App\Http\Controllers\Modules\Viper\ProofController;
 
 Route::prefix('/viper/proof')->group(function () {
     Route::post('/create', [ProofController::class, 'store']);

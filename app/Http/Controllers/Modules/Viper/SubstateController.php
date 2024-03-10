@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\SubstateRequest;
 use App\Http\Controllers\Controller;
 use App\DTOs\Viper\Substate\SubstateDTO;
-use App\Interfaces\Viper\SubstateInterface;
+use App\Interfaces\Modules\Viper\SubstateInterface;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las subestados de un proyecto

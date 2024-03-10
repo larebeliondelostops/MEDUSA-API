@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias del modulo viper
 use App\DTOs\Viper\Department\DepartmentRequestDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\Http\Request\Viper\DepartmentRequest;
-use App\Interfaces\Viper\DepartmentInterface;
+use App\Interfaces\Modules\Viper\DepartmentInterface;
 
 // Librerias de terceros
 use Exception;

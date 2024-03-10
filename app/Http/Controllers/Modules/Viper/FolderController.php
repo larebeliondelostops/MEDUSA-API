@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\FolderRequest;
 use App\DTOs\Viper\Folder\FolderDTO;
-use App\Interfaces\Viper\FolderInterface;
+use App\Interfaces\Modules\Viper\FolderInterface;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las carperta

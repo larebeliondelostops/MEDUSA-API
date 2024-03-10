@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Milestone\MilestoneDTO;
-use App\Interfaces\Viper\MilestoneInterface;
-use App\Models\Viper\Milestone;
+use App\Interfaces\Modules\Viper\MilestoneInterface;
+use App\Models\Modules\Viper\Milestone;
 use Exception;
 
 /**

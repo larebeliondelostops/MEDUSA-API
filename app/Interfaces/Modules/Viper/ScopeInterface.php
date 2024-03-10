@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Interfaces\Viper;
+namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Scope\ScopeDTO;
 use Illuminate\Support\Collection;
 
 /**
@@ -29,10 +28,10 @@ interface ScopeInterface
     /**
      * Actualiza un alcance existente.
      *
-     * @param ScopeDTO $scopeDTO DTO que contiene la información actualizada del alcance.
+     * @param Scope $scope Collection que contiene la información actualizada del alcance.
      * @return void
      */
-    public function updateScope(ScopeDTO $scopeDTO,int $id): ScopeDTO;
+    public function updateScope(Collection $scope,int $id): Collection;
 
     /**
      * Obtiene el alcance asociados a un proyecto.
@@ -40,21 +39,21 @@ interface ScopeInterface
      * @param string $projectBpin Identificador único del proyecto.
      * @return array Arreglo del alcance asociado al proyecto.
      */
-    public function getScopeByProject(string $projectBpin): ScopeDTO;
+    public function getScopeByProject(string $projectBpin): Collection;
 
     /**
      * Obtiene un alcance por su identificador único.
      *
      * @param string $scopeId Identificador único del alcance.
-     * @return ScopeDTO DTO del alcance encontrado.
+     * @return Scope Collection del alcance encontrado.
      */
-    public function getScope(string $id): ScopeDTO;
+    public function getScope(string $id): Collection;
 
     /**
      * Elimina un alcance por su identificador único.
      *
      * @param int $id Identificador único del alcance a eliminar.
-     * @return ScopeDTO DTO del alcance eliminado.
+     * @return Collection Collection del alcance eliminado.
      */
-    public function deleteScope(int $id): ScopeDTO;
+    public function deleteScope(int $id): Collection;
 }

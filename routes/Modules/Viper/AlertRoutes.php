@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\AlertController;
+use App\Http\Controllers\Modules\Viper\AlertController;
 
 Route::prefix('/viper/alert')->group(function () {
     Route::post('/create', [AlertController::class, 'store']);

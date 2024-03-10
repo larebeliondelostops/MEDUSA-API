@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\MeasurementUnitController;
+use App\Http\Controllers\Modules\Viper\MeasurementUnitController;
 
 /*
 |--------------------------------------------------------------------------

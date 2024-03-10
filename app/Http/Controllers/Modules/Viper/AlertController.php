@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\AlertRequest;
-use App\Interfaces\Viper\AlertInterface;
+use App\Interfaces\Modules\Viper\AlertInterface;
 use App\DTOs\Viper\Alert\AlertDTO;
 use Exception;
 use Illuminate\Http\Request;

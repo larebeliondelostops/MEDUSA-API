@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\ActivityRequest;
 use App\DTOs\Viper\Activity\ActivityDTO;
-use App\Interfaces\Viper\ActivityInterface;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
+use App\Interfaces\Modules\Viper\ActivityInterface;
+use Illuminate\Http\Response; 
 /**
  * Controlador que maneja todo lo relacionado con las actividades de un proyecto en Viper.
  *

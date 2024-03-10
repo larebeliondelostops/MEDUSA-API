@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\SectorRequest;
-use App\Interfaces\Viper\SectorInterface;
+use App\Interfaces\Modules\Viper\SectorInterface;
 use App\DTOs\Viper\Sector\SectorDTO;
 use Exception;
 use Illuminate\Http\Request;

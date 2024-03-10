@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ScopeController;
+use App\Http\Controllers\Modules\Viper\ScopeController;
 
 Route::prefix('/viper/scope')->group(function () {
     Route::post('/create', [ScopeController::class, 'store']);

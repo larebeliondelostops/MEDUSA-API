@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Request\Viper;
+namespace App\Http\Request\Modules\Viper;
 
 use Dotenv\Exception\ValidationException;
 use Illuminate\Contracts\Validation\Validator;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Location\LocationDetailDTO;
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\Interfaces\Viper\CoordinatesInterface;
-use App\Interfaces\Viper\LocationInterface;
-use App\Models\Viper\Location;
+use App\Interfaces\Modules\Viper\CoordinatesInterface;
+use App\Interfaces\Modules\Viper\LocationInterface;
+use App\Models\Modules\Viper\Location;
 
 class LocationService implements LocationInterface
 {

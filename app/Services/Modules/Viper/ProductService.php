@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Folder\FolderDTO;
 use App\DTOs\Viper\Indicator\IndicatorDTO;
@@ -9,12 +9,12 @@ use App\DTOs\Viper\Product\ProductDetailDTO;
 use App\DTOs\Viper\Product\ProductDTO;
 use App\DTOs\Viper\Product\ProductSummaryDTO;
 use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
-use App\Interfaces\Viper\FolderInterface;
-use App\Interfaces\Viper\ProductInterface;
-use App\Models\Viper\Folder;
-use App\Models\Viper\Product;
-use App\Models\Viper\Scope;
-use App\Models\Viper\SpecificObjective;
+use App\Interfaces\Modules\Viper\FolderInterface;
+use App\Interfaces\Modules\Viper\ProductInterface;
+use App\Models\Modules\Viper\Folder;
+use App\Models\Modules\Viper\Product;
+use App\Models\Modules\Viper\Scope;
+use App\Models\Modules\Viper\SpecificObjective;
 use Illuminate\Support\Collection;
 
 /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\DocumentRequest;
-use App\Interfaces\Viper\DocumentInterface;
+use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\DTOs\Viper\Document\DocumentDTO;
 
 /**

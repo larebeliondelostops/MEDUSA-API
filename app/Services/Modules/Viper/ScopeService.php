@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Scope\ScopeDTO;
 use Illuminate\Support\Collection;
-use App\Interfaces\Viper\ScopeInterface;
-use App\Models\Viper\Scope;
+use App\Interfaces\Modules\Viper\ScopeInterface;
+use App\Models\Modules\Viper\Scope;
 
 /**
  * Servicio para la gestión de alcances (scopes) en la aplicación Viper.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright 2024 Ignicion S.A.S.
  * @version v1.0.0

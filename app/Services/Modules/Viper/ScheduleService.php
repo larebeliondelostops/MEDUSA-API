@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 use App\DTOs\Viper\EDT\EDTDTO;
 use App\DTOs\Viper\Product\ProductSummaryDTO;
 use App\DTOs\Viper\Product\ProductSummaryWithDeliverablesDTO;
-use App\Interfaces\Viper\DeliverableInterface;
-use App\Interfaces\Viper\ProductInterface;
-use App\Interfaces\Viper\ProjectInterface;
-use App\Interfaces\Viper\ScheduleInterface;
-use App\Interfaces\Viper\ScopeInterface;
+use App\Interfaces\Modules\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\ProductInterface;
+use App\Interfaces\Modules\Viper\ProjectInterface;
+use App\Interfaces\Modules\Viper\ScheduleInterface;
+use App\Interfaces\Modules\Viper\ScopeInterface;
 
 /**
  * Servicio Cronograma.

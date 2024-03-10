@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\ScopeRequest;
-use App\Interfaces\Viper\ScopeInterface;
+use App\Interfaces\Modules\Viper\ScopeInterface;
 use App\DTOs\Viper\Scope\ScopeDTO;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;

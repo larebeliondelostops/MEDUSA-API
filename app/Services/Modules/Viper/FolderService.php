@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Folder\FolderDTO;
 use App\DTOs\Viper\Folder\FolderSelectDTO;
-use App\Interfaces\Viper\FolderInterface;
-use App\Interfaces\Viper\DocumentInterface;
+use App\Interfaces\Modules\Viper\FolderInterface;
+use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\Models\Viper\Folder;
 use App\Models\Viper\Project;
 use App\Models\Viper\Stage;

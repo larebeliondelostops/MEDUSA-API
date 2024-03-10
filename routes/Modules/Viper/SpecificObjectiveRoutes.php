@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\SpecificObjectiveController;
+use App\Http\Controllers\Modules\Viper\SpecificObjectiveController;
 
 Route::prefix('/viper/specificObjective')->group(function () {
     Route::post('/create', [SpecificObjectiveController::class, 'store']);

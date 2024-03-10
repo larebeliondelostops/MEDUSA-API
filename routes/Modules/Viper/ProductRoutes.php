@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\ProductController;
+use App\Http\Controllers\Modules\Viper\ProductController;
 
 /*
 |--------------------------------------------------------------------------

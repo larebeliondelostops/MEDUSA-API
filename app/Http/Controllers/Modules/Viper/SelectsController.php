@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
-use App\Interfaces\Viper\SelectsInterface;
+use App\Interfaces\Modules\Viper\SelectsInterface;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con los selects para la creación de un proyecto

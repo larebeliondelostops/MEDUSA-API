@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Alert\AlertDTO;
-use App\Interfaces\Viper\AlertInterface;
-use App\Models\Viper\Alert;
+use App\Interfaces\Modules\Viper\AlertInterface;
+use App\Models\Modules\Viper\Alert;
 use Exception;
 
 /**

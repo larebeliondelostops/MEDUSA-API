@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Viper;
+namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

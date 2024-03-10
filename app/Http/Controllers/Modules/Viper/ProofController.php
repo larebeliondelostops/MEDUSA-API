@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\ProofRequest;
-use App\Interfaces\Viper\ProofInterface;
+use App\Interfaces\Modules\Viper\ProofInterface;
 use App\DTOs\Viper\Proof\ProofDTO;
 use Exception;
 use Illuminate\Http\Request;

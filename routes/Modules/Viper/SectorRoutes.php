@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Viper\SectorController;
+use App\Http\Controllers\Modules\Viper\SectorController;
 
 Route::prefix('/viper/sector')->group(function () {
     Route::post('/create', [SectorController::class, 'store']);

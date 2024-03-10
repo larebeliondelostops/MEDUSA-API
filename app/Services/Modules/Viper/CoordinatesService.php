@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
-use App\Interfaces\Viper\CoordinatesInterface;
-use App\Models\Viper\Coordinates;
+use App\Interfaces\Modules\Viper\CoordinatesInterface;
+use App\Models\Modules\Viper\Coordinates;
 use Ramsey\Uuid\Uuid;
 
 class CoordinatesService implements CoordinatesInterface

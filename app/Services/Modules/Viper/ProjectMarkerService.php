@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\DTOs\Viper\ProjectMarker\GeometryDTO;
 use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;
-use App\Interfaces\Viper\ProjectMarkerInterface;
-use App\Models\Viper\Project;
+use App\Interfaces\Modules\Viper\ProjectMarkerInterface;
+use App\Models\Modules\Viper\Project;
 
 
 class ProjectMarkerService implements ProjectMarkerInterface

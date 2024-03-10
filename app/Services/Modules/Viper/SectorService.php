@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\Sector\SectorDTO;
-use App\Interfaces\Viper\SectorInterface;
-use App\Models\Viper\Sector;
+use App\Interfaces\Modules\Viper\SectorInterface;
+use App\Models\Modules\Viper\Sector;
 use Exception;
 
 /**
@@ -13,7 +13,7 @@ use Exception;
  * Implementa la interfaz SectorInterface para definir las operaciones necesarias
  * para la gestión de sectores.
  *
- * @package App\Services\Viper
+ * @package App\Services\Modules\Viper
  * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0

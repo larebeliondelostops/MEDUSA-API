@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Viper;
+namespace App\Services\Modules\Viper;
 
 use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
-use App\Interfaces\Viper\MeasurementUnitInterface;
-use App\Models\Viper\MeasurementUnit;
+use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
+use App\Models\Modules\Viper\MeasurementUnit;
 use Illuminate\Support\Collection;
 
 /**

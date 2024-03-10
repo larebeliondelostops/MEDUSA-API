@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Viper;
+namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Viper\MilestoneRequest;
-use App\Interfaces\Viper\MilestoneInterface;
+use App\Interfaces\Modules\Viper\MilestoneInterface;
 use App\DTOs\Viper\Milestone\MilestoneDTO;
 use Exception;
 use Illuminate\Http\Request;

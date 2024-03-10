@@ -1,47 +1,42 @@
 <?php
 
-namespace App\Models\Viper;
+namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Municipality extends Model
+class Department extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = "municipalities";
-    protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
-
+    protected $table = "departments";
+    protected $dates = ["deleted_at"];
     protected $fillable = [
         "name",
-        "coordinate_id",
-        "department_id",
-    ];
+        'coordinate_id',
+    ] ;
 
     protected static function boot()
     {
         parent::boot();
 
-                /**
+        /**
          * Cuando se elimine un departamento es importante eliminar su coordenada.
          */
         //borrado de coordenada
         static::deleting(
-            function (Municipality $municipality)
+            function (Department $department)
             {
-                if ($municipality->coordinate)
-                {
-                    $municipality->coordinate->delete();
-                }
+                // eliminamos la coordenada
+                if ($department->coordinate)
+                    $department->coordinate->delete();
             }
         );
     }
 
-    public function department()
+    public function municipalities()
     {
-        return $this->belongsTo(Department::class,"department_id");
+        return $this->hasMany(Municipality::class);
     }
 
     public function coordinate()

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Viper\LocationController;
+use App\Http\Controllers\Modules\Viper\LocationController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/viper/location")->group(function () {

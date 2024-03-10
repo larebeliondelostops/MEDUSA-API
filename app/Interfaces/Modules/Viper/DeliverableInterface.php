@@ -2,18 +2,16 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Activity\ActivityDTO;
-use App\DTOs\Viper\Deliverable\DeliverableDetailFolderDTO;
-use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
+use Illuminate\Support\Collection;
 
 interface DeliverableInterface
 {
-    public function updateIncrementDataWithChildrenActivities(int $deliverableId, ActivityDTO $activityDTO);
-    public function updateDecrementDataWithChildrenActivities(int $deliverableId, ActivityDTO $activityDTO);
-    public function createNewDeliverable(DeliverableRequestDTO $deliverableRequestDTO) : DeliverableRequestDTO;
-    public function createMultipleDeliverables(array $deliverables) : array;
-    public function getAllDeliverables() : array;
-    public function getDeliverablesByProductId(int $productId) : array;
-    public function updateDeliverable(DeliverableDetailFolderDTO $deliverableDTO, int $deliverableId) : DeliverableDetailFolderDTO;
-    public function deleteDeliverable(int $deliverableId) : array;
+    public function updateIncrementDataWithChildrenActivities(int $deliverableId, Collection $activityData) : Collection;
+    public function updateDecrementDataWithChildrenActivities(int $deliverableId, Collection $activityData) : Collection;
+    public function createNewDeliverable(Collection $deliverableRequestData) : Collection;
+    public function createMultipleDeliverables(Collection $deliverables) : Collection;
+    public function getAllDeliverables() : Collection;
+    public function getDeliverablesByProductId(int $productId) : Collection;
+    public function updateDeliverable(Collection $deliverableData, int $deliverableId) : Collection;
+    public function deleteDeliverable(int $deliverableId) : Collection;
 }

@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Modules\Viper;
-use App\DTOs\Viper\Deliverable\DeliverableDetailFolderDTO;
-use App\DTOs\Viper\Deliverable\DeliverableRequestDTO;
-use App\Http\Request\Viper\DeliverableRequest;
+use App\Http\Request\Modules\Viper\DeliverableRequest;
 use App\Interfaces\Modules\Viper\DeliverableInterface;
 
 use Exception;
@@ -23,9 +21,8 @@ class DeliverableController extends BaseController
     {
         try
         {
-            $data = $request->validated();
             $result = $this->deliverableInterface->createNewDeliverable(
-                new DeliverableRequestDTO($data)
+                collect($request->validated())
             );
             return response()->json([
                 'data' => $result
@@ -42,7 +39,7 @@ class DeliverableController extends BaseController
         try
         {
             $deliverables = $request->validated()['deliverables']; // obtiene los deliverables validados
-            $result = $this->deliverableInterface->createMultipleDeliverables($deliverables);
+            $result = $this->deliverableInterface->createMultipleDeliverables(collect($deliverables));
             return response()->json([
                 'data' => $result
             ], Response::HTTP_CREATED);
@@ -85,9 +82,8 @@ class DeliverableController extends BaseController
     {
         try
         {
-            $data = $request->validated();
             $result = $this->deliverableInterface->updateDeliverable(
-                new DeliverableDetailFolderDTO($data),
+                collect($request->validated()),
                 $deliverableId
             );
             return response()->json([

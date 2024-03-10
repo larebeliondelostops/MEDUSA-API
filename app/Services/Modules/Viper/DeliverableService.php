@@ -10,6 +10,7 @@ use App\Interfaces\Modules\Viper\DeliverableInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Models\Modules\Viper\Deliverable;
+use Illuminate\Support\Collection;
 
 class DeliverableService implements DeliverableInterface
 {
@@ -25,10 +26,10 @@ class DeliverableService implements DeliverableInterface
         $this->productInterface = $productInterface;
     }
 
-    public function createNewDeliverable(DeliverableRequestDTO $deliverableDTO) : DeliverableRequestDTO
+    public function createNewDeliverable(Collection $deliverableDTO) : Collection
     {
         $folderDTO = $this->folderInterface->createNewFolder(
-            new FolderDTO(
+            collect(
                 [
                     'name' => $deliverableDTO->number .'. '.$deliverableDTO->name,
                     'higher_folder_id' => (
@@ -40,22 +41,22 @@ class DeliverableService implements DeliverableInterface
             )
         );
         $deliverableDTO->folder_id = $folderDTO->id;
-        $deliverable = new Deliverable($deliverableDTO->toArray());
+        $deliverable = collect($deliverableDTO->toArray());
         $deliverable->save();
-        return new DeliverableRequestDTO($deliverable->toArray());
+        return $deliverable;
     }
 
     /**
      * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el incremento
      * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
      */
-    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, Collection $activityDTO)
     {
         if(!is_null($deliverableId))
         {
             $deliverable = Deliverable::findOrFail($deliverableId);
             $deliverable->activity_quantity += 1;
-            $deliverable->value += $activityDTO->total_value;
+            $deliverable->value += $activityDTO['total_value'];
             $deliverable->save();
             $this->updateIncrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
         }
@@ -67,13 +68,13 @@ class DeliverableService implements DeliverableInterface
      * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el decremento
      * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
      */
-    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, ActivityDTO $activityDTO)
+    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, Collection $activityDTO)
     {
         if(!is_null($deliverableId))
         {
             $deliverable = Deliverable::findOrFail($deliverableId);
             $deliverable->activity_quantity -= 1;
-            $deliverable->value -= $activityDTO->total_value;
+            $deliverable->value -= $activityDTO['total_value'];
             $deliverable->save();
             $this->updateDecrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
         }
@@ -85,7 +86,7 @@ class DeliverableService implements DeliverableInterface
     {
         foreach($deliverables as $deliverable)
         {
-            $deliverableDTO = new DeliverableRequestDTO($deliverable);
+            $deliverableDTO = collect($deliverable);
             $deliverableDTO->deliverable_id = $fatherDeliverableId;
             $deliverableDTO = $this->createNewDeliverable($deliverableDTO);
             if (count($deliverable['deliverables']) > 0)
@@ -105,9 +106,6 @@ class DeliverableService implements DeliverableInterface
     public function getAllDeliverables() : array
     {
         $deliverables = Deliverable::all();
-        $deliverables->transform(
-            fn(Deliverable $deliverable) => new DeliverableRequestDTO($deliverable->toArray())
-        );
         return $deliverables->toArray();
     }
 
@@ -120,11 +118,6 @@ class DeliverableService implements DeliverableInterface
 
         foreach($deliverables as $deliverable)
         {
-            $deliverable['activities'] = array_map(
-                fn ($activities) => new ActivityDTO($activities),
-                $deliverable['activities']
-            );
-            $deliverable = new DeliverableDetailDTO($deliverable);
             array_push(
                 $result,
                 $deliverable
@@ -140,7 +133,7 @@ class DeliverableService implements DeliverableInterface
         return $result;
     }
 
-    public function updateDeliverable(DeliverableDetailFolderDTO $deliverableUpdateDTO, int $deliverableId) : DeliverableDetailFolderDTO
+    public function updateDeliverable(Collection $deliverableUpdateDTO, int $deliverableId) : Collection
     {
         $delivarableForUpdate = Deliverable::findOrFail($deliverableId);
         $delivarableForUpdate->fill([
@@ -163,10 +156,7 @@ class DeliverableService implements DeliverableInterface
         $deliverables = Deliverable::with('folder')->where('deliverable_id', $fatherDeliverableId)->get();
         foreach($deliverables as $deliverable)
         {
-            $data = $deliverable->toArray();
-            $data['folder'] = new FolderDTO($data['folder']);
-            array_push($result, new DeliverableDetailFolderDTO($data));
-            $this->getDeliverablesChildren($result, $data['id']);
+            $this->getDeliverablesChildren($result, $deliverable->id);
         }
     }
 
@@ -174,10 +164,6 @@ class DeliverableService implements DeliverableInterface
     {
         $dataForDelete = [];
         $deliverableForDelete = Deliverable::with('folder')->findOrFail($deliverableId); // si no existe arroja error
-        $data = $deliverableForDelete->toArray();
-        $data['folder'] = new FolderDTO($data['folder']);
-        array_push($dataForDelete, new DeliverableDetailFolderDTO($data)); // guardamos la data que se va eliminar
-
         $this->getDeliverablesChildren($dataForDelete, $deliverableId); // agregamos la data de los hijos que se van a borrar
         $deliverableForDelete->delete(); // se encarga de borrado logico y de las carpetas recursivamente(hijos y carpetas hijos)
         return $dataForDelete;

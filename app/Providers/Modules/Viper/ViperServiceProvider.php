@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Viper;
+namespace App\Providers\Modules\Viper;
 
 use App\Interfaces\Viper\DeliverableInterface;
 use App\Interfaces\Viper\DepartmentInterface;

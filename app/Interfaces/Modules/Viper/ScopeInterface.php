@@ -20,7 +20,7 @@ interface ScopeInterface
     /**
      * Crea un nuevo alcance.
      *
-     * @param Scope $scope que contiene la información del alcance a crear.
+     * @param Collection $scope Collection que contiene la información del alcance a crear.
      * @return void
      */
     public function createNewScope(Collection $scope): Collection;
@@ -28,7 +28,8 @@ interface ScopeInterface
     /**
      * Actualiza un alcance existente.
      *
-     * @param Scope $scope Collection que contiene la información actualizada del alcance.
+     * @param Collection $scope Collection que contiene la información actualizada del alcance.
+     * @param int $id Identificador del alcance a actualizar.
      * @return void
      */
     public function updateScope(Collection $scope,int $id): Collection;
@@ -37,7 +38,7 @@ interface ScopeInterface
      * Obtiene el alcance asociados a un proyecto.
      *
      * @param string $projectBpin Identificador único del proyecto.
-     * @return array Arreglo del alcance asociado al proyecto.
+     * @return Collection Collection del alcance asociado al proyecto.
      */
     public function getScopeByProject(string $projectBpin): Collection;
 
@@ -45,7 +46,7 @@ interface ScopeInterface
      * Obtiene un alcance por su identificador único.
      *
      * @param string $scopeId Identificador único del alcance.
-     * @return Scope Collection del alcance encontrado.
+     * @return Collection Collection del alcance encontrado.
      */
     public function getScope(string $id): Collection;
 

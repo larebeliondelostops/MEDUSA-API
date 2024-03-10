@@ -1,43 +1,40 @@
 <?php
 
 namespace App\Services\Modules\Viper;
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
 use App\Models\Modules\Viper\Coordinates;
+use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
 
 class CoordinatesService implements CoordinatesInterface
 {
-    public function createNewCoordinates(CoordinatesRequestDTO $coordinatesDTO) : CoordinatesRequestDTO
+    public function createNewCoordinates(Collection $coordinatesData) : Collection
     {
-        $coordinatesDTO->id = Uuid::uuid4()->toString();
-        $coordinates = new Coordinates($coordinatesDTO->toArray());
+        $coordinatesData['id'] = Uuid::uuid4()->toString();
+        $coordinates = new Coordinates($coordinatesData->toArray());
         $coordinates->save();
-        $coordinatesSavedDTO = new CoordinatesRequestDTO($coordinates->toArray());
-        return $coordinatesSavedDTO;
+        return collect($coordinates);
     }
 
-    public function updateCoordinatesById(CoordinatesRequestDTO $coordinatesDTO, string $id) : CoordinatesRequestDTO
+    public function updateCoordinatesById(Collection $coordinatesDTO, string $id) : Collection
     {
         $coordinates = Coordinates::findOrFail($id);
-        $coordinates->fill($coordinatesDTO->toArray(except:['id']));
+        $coordinates->fill($coordinatesDTO->toArray());
         $coordinates->save();
-        $coordinatesUpdatedDTO = new CoordinatesRequestDTO($coordinates->toArray());
-        return $coordinatesUpdatedDTO;
+        return collect($coordinates);
     }
 
-    public function getCoordinatesById(string $id) : CoordinatesRequestDTO
+    public function getCoordinatesById(string $id) : Collection
     {
         $coordinates = Coordinates::findOrFail($id);
-        $coordinatesGotDTO = new CoordinatesRequestDTO($coordinates->toArray());
-        return $coordinatesGotDTO;
+        return collect($coordinates);
     }
 
-    public function deleteCoordinates(string $id) : CoordinatesRequestDTO
+    public function deleteCoordinates(string $id) : Collection
     {
         $coordinates = Coordinates::findOrFail($id);
-        $coordinatesDeletedDTO = new CoordinatesRequestDTO($coordinates->toArray());
+        $coordinatesDeleted = collect($coordinates);
         $coordinates->delete();
-        return $coordinatesDeletedDTO;
+        return $coordinatesDeleted;
     }
 }

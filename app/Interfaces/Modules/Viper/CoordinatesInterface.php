@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
+use Illuminate\Support\Collection;
 
 interface CoordinatesInterface
 {
-    public function createNewCoordinates(CoordinatesRequestDTO $coordinatestDTO) : CoordinatesRequestDTO;
-    public function updateCoordinatesById(CoordinatesRequestDTO $coordinatesDTO, string $id ) : CoordinatesRequestDTO;
-    public function getCoordinatesById(string $id) : CoordinatesRequestDTO;
-    public function deleteCoordinates(string $id) : CoordinatesRequestDTO;
+    public function createNewCoordinates(Collection $coordinatestDTO) : Collection;
+    public function updateCoordinatesById(Collection $coordinatesDTO, string $id ) : Collection;
+    public function getCoordinatesById(string $id) : Collection;
+    public function deleteCoordinates(string $id) : Collection;
 
 }

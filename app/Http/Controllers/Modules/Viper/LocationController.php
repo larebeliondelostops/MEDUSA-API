@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\Http\Request\Viper\LocationRequest;
+use App\Http\Request\Modules\Viper\LocationRequest;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,9 +22,8 @@ class LocationController extends BaseController
     {
         try
         {
-            $data = $request->validated();
             $locationSaved = $this->locationInterface->createNewLocation(
-                new LocationRequestDTO($data)
+                collect($request->validated())
             );
             return response()->json([
                 $locationSaved->toArray()
@@ -42,7 +41,7 @@ class LocationController extends BaseController
         {
             $data = $request->validated();
             $locationUpdated = $this->locationInterface->updateLocationById(
-                new LocationRequestDTO($data),
+                collect($data),
                 $locationId
             );
             return response()->json([

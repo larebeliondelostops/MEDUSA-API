@@ -7,6 +7,7 @@ use App\DTOs\Viper\Location\LocationRequestDTO;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Models\Modules\Viper\Location;
+use Illuminate\Support\Collection;
 
 class LocationService implements LocationInterface
 {
@@ -17,42 +18,40 @@ class LocationService implements LocationInterface
         $this->coordiantesinterface = $coordinatesInterface;
     }
 
-    public function createNewLocation(LocationRequestDTO $locationRequestDTO ) : LocationDetailDTO
+    public function createNewLocation(Collection $locationRequestDTO ) : Collection
     {
-        $locationRequestDTO->coordinate = $this->coordiantesinterface
-                                        ->createNewCoordinates($locationRequestDTO->coordinate);
+        $locationRequestDTO['coordinate'] = $this->coordiantesinterface
+                                        ->createNewCoordinates(collect($locationRequestDTO['coordinate']));
         $location = new Location(
             $locationRequestDTO->toArray() +
-            ['coordinate_id' => $locationRequestDTO->coordinate->id]
+            ['coordinate_id' => $locationRequestDTO['coordinate']['id']]
         );
         $location->save();
-        $location->load('coordinate', 'department', 'municipality');
-        return new LocationDetailDTO($location->toArray());
+        return $this->getLocationById($location->id);
     }
 
-    public function updateLocationById(LocationRequestDTO $locationRequestDTO, int $locationId) : LocationDetailDTO
+    public function updateLocationById(Collection $locationRequestDTO, int $locationId) : Collection
     {
         $locationGot = Location::with('coordinate',)->findOrFail($locationId);
         $this->coordiantesinterface->updateCoordinatesById(
-            $locationRequestDTO->coordinate,
+            collect($locationRequestDTO['coordinate']),
             $locationGot->coordinate->id
         );
         $locationGot->fill($locationRequestDTO->toArray());
         $locationGot->save();
-        $locationGot->load('coordinate', 'department', 'municipality');
-        return new LocationDetailDTO($locationGot->toArray());
+        return $this->getLocationById($locationGot->id);
     }
 
-    public function getLocationById(int $id) : LocationDetailDTO
+    public function getLocationById(int $id) : Collection
     {
         $location = Location::with('department', 'municipality', 'coordinate')->findOrFail($id);
-        return new LocationDetailDTO($location->toArray());
+        return collect($location->toArray());
     }
 
-    public function deleteLocationById(int $id) : LocationDetailDTO
+    public function deleteLocationById(int $id) : Collection
     {
         $locationForDeleted = Location::with('department', 'municipality', 'coordinate')->findOrFail($id);
-        $locationDeleted = new LocationDetailDTO($locationForDeleted->toArray());
+        $locationDeleted = collect($locationForDeleted->toArray());
         $locationForDeleted->delete();
         return $locationDeleted;
     }

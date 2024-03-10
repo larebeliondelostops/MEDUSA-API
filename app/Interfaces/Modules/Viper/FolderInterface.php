@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Folder\FolderDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interface FolderInterface
@@ -20,10 +20,10 @@ interface FolderInterface {
     /**
      * Crea una nueva carpeta en el sistema Viper.
      *
-     * @param FolderDTO $folderDTO Datos de la carpeta a crear.
+     * @param Collection $folderData Datos de la carpeta a crear.
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
      */
-    public function createNewFolder(FolderDTO $folderDTO);
+    public function createNewFolder(Collection $folderData);
 
     /**
      * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía.

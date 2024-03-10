@@ -2,16 +2,15 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Folder\FolderDTO;
-use App\DTOs\Viper\Folder\FolderSelectDTO;
+// Librerias propias
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\DocumentInterface;
-use App\Models\Viper\Folder;
-use App\Models\Viper\Project;
-use App\Models\Viper\Stage;
-use App\Utils\Viper\Filters\FolderFilter;
+use App\Models\Modules\Viper\Folder;
+use App\Models\Modules\Viper\Project;
+use App\Models\Modules\Viper\Stage;
+use App\Utils\Filters\Modules\Viper\FolderFilter;
+// Librerias de terceros
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Servicio para manejar operaciones relacionadas con las carpetas de documentos de los proyectos.
@@ -37,37 +36,35 @@ class FolderService implements FolderInterface
     /**
      * Crea una nueva carpeta en el sistema Viper.
      *
-     * @param FolderDTO $folderDTO Datos de la carpeta a crear.
+     * @param Collection $folderData Datos de la carpeta a crear.
      * @param int $higherFolderId Identificador de la carpeta padre (si tiene)
-     * @return FolderDTO Resultado de la operación que puede incluir mensajes de éxito o error.
+     * @return Collection Resultado de la operación que puede incluir mensajes de éxito o error.
     */
 
-    public function createNewFolder(FolderDTO $folderDTO)
+    public function createNewFolder(Collection $folderData)
     {
-
         // Crear la carpeta principal
         $folder = new Folder();
-        $folder->fill($folderDTO->toArray());
+        $folder->fill($folderData->toArray());
 
         // Si se proporciona higherFolderId, establecer la relación
-        if ($folderDTO->higher_folder_id) {
-            $higherFolder = Folder::findOrFail($folderDTO->higher_folder_id);
+        if ($folderData['higher_folder_id']) {
+            $higherFolder = Folder::findOrFail($folderData['higher_folder_id']);
             $folder->parentFolder()->associate($higherFolder);
             $folder->stage_id = $higherFolder->stage_id;
             $folder->project_id = $higherFolder->project_id;
         }else{
-            if (empty($folderDTO->project_id) || empty($folderDTO->stage_id)) {
+            if (empty($folderData['project_id']) || empty($folderData['stage_id'])) {
                 throw new \Exception('No se ha definido proyecto ni etapa para la carpeta');
             }else {
-                Project::findOrFail($folderDTO->project_id);
-                Stage::findOrFail($folderDTO->stage_id);
+                Project::findOrFail($folderData['project_id']);
+                Stage::findOrFail($folderData['stage_id']);
             }
         }
 
         $folder->save();
 
-        $folderDTO = new FolderDTO($folder->toArray());
-        return $folderDTO;
+        return collect($folderData);
 
     }
 
@@ -76,7 +73,7 @@ class FolderService implements FolderInterface
      *
      * @param int $folderId Identificador único de la carpeta a actualizar.
      * @param string $newName Nuevo nombre para la carpeta.
-     * @return FolderDTO Resultado de la operación que puede incluir mensajes de éxito o error.
+     * @return Collection Resultado de la operación que puede incluir mensajes de éxito o error.
      */
     public function updateFolderName(int $folderId, string $newName)
     {
@@ -87,7 +84,7 @@ class FolderService implements FolderInterface
         $folder->name = $newName;
         $folder->save();
 
-        return new FolderDTO($folder->toArray());
+        return collect($folder);
     }
 
 
@@ -181,7 +178,7 @@ class FolderService implements FolderInterface
         $documents = $this->documentInterface->getDocumentsByFolder($folder->id);
 
         return [
-            'folder' => new FolderDTO($folder->toArray()),
+            'folder' => $folder->toArray(),
             'subfolders' => $subfolders->all(),
             'documents' => $documents,
         ];
@@ -241,10 +238,10 @@ class FolderService implements FolderInterface
             'higher_folder_id' => $parentFolder['id'] ?? null,
         ];
 
-        $folderDTO = new FolderDTO($validatedData);
+        $folderData = collect($validatedData);
 
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
-        $folderResponse = $this->createNewFolder($folderDTO)->toArray();
+        $folderResponse = $this->createNewFolder($folderData)->toArray();
 
         // Ajustar el acceso a la respuesta según la estructura real
         $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;
@@ -300,7 +297,7 @@ class FolderService implements FolderInterface
         );
     
         return [
-            'folder' => new FolderSelectDTO($folder->toArray()),
+            'folder' => collect($folder)->only(['id', 'name']),
             'subfolders' => $subfolders->all(),
         ];
     }
@@ -325,8 +322,8 @@ class FolderService implements FolderInterface
             'higher_folder_id' => $parentFolder->id,
         ];
 
-        $folderDTO = new FolderDTO($folderParentData);
-        $contractFolderParent = $this->createNewFolder($folderDTO);
+        $folderData = collect($folderParentData);
+        $contractFolderParent = $this->createNewFolder($folderData);
 
 
         foreach ($foldersName as $folderName){
@@ -335,8 +332,8 @@ class FolderService implements FolderInterface
                 'higher_folder_id' => $contractFolderParent->id,
             ];
     
-            $folderDTO = new FolderDTO($validatedData);
-            $this->createNewFolder($folderDTO);
+            $folderData = collect($validatedData);
+            $this->createNewFolder($folderData);
         }
     }
 

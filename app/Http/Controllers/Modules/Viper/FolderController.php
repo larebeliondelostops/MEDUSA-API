@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
-use App\Http\Request\Viper\FolderRequest;
-use App\DTOs\Viper\Folder\FolderDTO;
+use App\Http\Request\Modules\Viper\FolderRequest;
 use App\Interfaces\Modules\Viper\FolderInterface;
 
 /**
@@ -58,11 +57,8 @@ class FolderController extends BaseController
     public function store(FolderRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
-            $folderDTO = new FolderDTO($validatedData);
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
-            $result = $this->folderInterface->createNewFolder($folderDTO);
+            $result = $this->folderInterface->createNewFolder(collect($request->validated()));
             
             return response()->json([
                 'message' => 'Carpeta Creado Exitosamente.',

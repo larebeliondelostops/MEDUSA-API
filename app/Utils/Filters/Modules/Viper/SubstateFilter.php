@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\Viper\Filters;
+namespace App\Utils\Filters\Modules\Viper;
 
 class SubstateFilter extends Filter
 {

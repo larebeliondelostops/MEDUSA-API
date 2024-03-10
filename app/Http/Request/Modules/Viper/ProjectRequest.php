@@ -47,6 +47,9 @@ class ProjectRequest extends FormRequest
             'requested_value' => 'required|numeric',
             'responsible_entity' => 'required|string|max:255',
             'sector_id' => 'required|integer',
+            "executed_value" => 'required|numeric',
+            "physical_progress" => 'required|numeric',
+            "financial_progress" => 'required|numeric',
             'department_id' => 'required|integer',
             'municipality_id' => 'required|integer',
 

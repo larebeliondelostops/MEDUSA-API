@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias de terceros
-use App\DTOs\Viper\Project\ProjectRequestDTO;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 // Librerias del modulo viper
-use App\Http\Request\Viper\ProjectRequest;
+use App\Http\Request\Modules\Viper\ProjectRequest;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 
 // Librerias para el manejo de excepciones
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * Controlador para la gestión de proyectos del módulo VIPER
@@ -59,10 +58,7 @@ class ProjectController extends BaseController
     {
         try
         {
-            $validatedData = $request->validated();
-            $projectDTO = new ProjectRequestDTO($validatedData);
-
-            $projectSavedDTO = $this->projectInterface->createNewProject($projectDTO);
+            $projectSavedDTO = $this->projectInterface->createNewProject(collect($request->validated()));
             return response()->json([
                 'message' => 'Proyecto creado satisfactoriamente.',
                 'data'    => $projectSavedDTO,
@@ -89,10 +85,7 @@ class ProjectController extends BaseController
     {
         try
         {
-            $validatedData = $request->validated();
-            $projectDTO = new ProjectRequestDTO($validatedData);
-
-            $projectUpdatedDTO = $this->projectInterface->updateProject($projectDTO, $bpin);
+            $projectUpdatedDTO = $this->projectInterface->updateProject(collect($request->validated()), $bpin);
 
             return response()->json([
                 'message' => 'Proyecto actualizado satisfactoriamente',

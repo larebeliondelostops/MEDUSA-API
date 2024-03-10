@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
+use Illuminate\Support\Collection;
 
 /**
  * Interface Cronograma.
@@ -25,5 +26,5 @@ interface ScheduleInterface
      * @param string BPIN del proyecto al que se le generara el Diagrama EDT
      * @return array Diagrama EDT del proyecto
      */
-    public function generateProjectEDT(string $projectBpin) : array;
+    public function generateProjectEDT(string $projectBpin) : Collection;
 }

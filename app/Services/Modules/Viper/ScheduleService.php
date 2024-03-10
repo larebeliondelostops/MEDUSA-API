@@ -9,6 +9,7 @@ use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Interfaces\Modules\Viper\ScheduleInterface;
 use App\Interfaces\Modules\Viper\ScopeInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Servicio Cronograma.
@@ -41,7 +42,7 @@ class ScheduleService implements ScheduleInterface
         $this->deliverableInterface = $deliverableInterface;
     }
 
-    public function generateProjectEDT($projectBpin) : array
+    public function generateProjectEDT($projectBpin) : Collection
     {
         $EDT = [];
         $projectDTO = $this->projectInterface->getProjectByBPIN($projectBpin);
@@ -58,8 +59,8 @@ class ScheduleService implements ScheduleInterface
             )
         ]);
 
-        return [
+        return collect([
             "EDT" => $EDT->toArray()
-        ];
+        ]);
     }
 }

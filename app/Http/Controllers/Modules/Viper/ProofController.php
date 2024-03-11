@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\ProofRequest;
+use App\Http\Request\Modules\Viper\ProofRequest;
 use App\Interfaces\Modules\Viper\ProofInterface;
-use App\DTOs\Viper\Proof\ProofDTO;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para manejar las operaciones relacionadas con las pruebas en el sistema Viper.
@@ -44,22 +44,18 @@ class ProofController extends BaseController
     public function store(ProofRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
-            $proofDTO = new ProofDTO($validatedData);
-
             $uploadedFiles = $request->file('files');
 
-            $proofDTOs = [];
+            $proofs = [];
 
             foreach ($uploadedFiles as $file) {
-                $proofDTOs[] = $this->proofInterface->createNewProof($proofDTO, $file);
+                $proofs[] = $this->proofInterface->createNewProof(collect($request->validated()), $file);
             }
 
             return response()->json([
                 'message' => 'Proofs created successfully.',
-                'data' => $proofDTOs
-            ], 201);
+                'data' => $proofs
+            ], Response::HTTP_CREATED);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
@@ -81,12 +77,12 @@ class ProofController extends BaseController
 
             $newName = $request->input('new_name');
 
-            $stateUpdatedDTO = $this->proofInterface->updateProof($id, $newName);
+            $stateUpdated = $this->proofInterface->updateProof($id, $newName);
 
             return response()->json([
                 'message' => 'Proof name updated successfully.',
-                'data'    => $stateUpdatedDTO,
-            ], 200);
+                'data'    => $stateUpdated,
+            ], Response::HTTP_OK);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
@@ -104,7 +100,7 @@ class ProofController extends BaseController
             $proofs = $this->proofInterface->getAllProofsByReport($reportId);
             return response()->json([
                 'data' => $proofs,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -119,10 +115,10 @@ class ProofController extends BaseController
     public function show(int $id)
     {
         try {
-            $proofDTO = $this->proofInterface->getProof($id);
+            $proof = $this->proofInterface->getProof($id);
             return response()->json([
-                'data' => $proofDTO,
-            ], 200);
+                'data' => $proof,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -137,11 +133,11 @@ class ProofController extends BaseController
     public function destroy($id)
     {
         try {
-            $proofDTO = $this->proofInterface->deleteProof($id);
+            $proof = $this->proofInterface->deleteProof($id);
             return response()->json([
                 'message' => 'Proof deleted successfully',
-                'data'=> $proofDTO->toArray()
-            ],200);
+                'data'=> $proof->toArray()
+            ],Response::HTTP_OK);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }

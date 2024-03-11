@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\MilestoneSubclassRequest;
+use App\Http\Request\Modules\Viper\MilestoneSubclassRequest;
 use App\Interfaces\Modules\Viper\MilestoneSubclassInterface;
-use App\DTOs\Viper\MilestoneSubclass\MilestoneSubclassDTO;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para gestionar las operaciones CRUD de las subcategorías de hitos en el sistema Viper.
@@ -48,14 +48,12 @@ class MilestoneSubclassController extends BaseController
     public function store(MilestoneSubclassRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $milestoneSubclassDTO = new MilestoneSubclassDTO($validatedData);
-            $milestoneSubclassCreatedDTO = $this->milestoneSubclassInterface->createNewMilestoneSubclass($milestoneSubclassDTO);
+            $milestoneSubclassCreated = $this->milestoneSubclassInterface->createNewMilestoneSubclass(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Milestone Subclass created successfully.',
-                'data'    => $milestoneSubclassCreatedDTO
-            ], 201);
+                'data'    => $milestoneSubclassCreated
+            ], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -71,14 +69,12 @@ class MilestoneSubclassController extends BaseController
     public function update(MilestoneSubclassRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $milestoneSubclassDTO = new MilestoneSubclassDTO($validatedData);
-            $stateUpdatedDTO = $this->milestoneSubclassInterface->updateMilestoneSubclass($milestoneSubclassDTO, $id);
+            $stateUpdated = $this->milestoneSubclassInterface->updateMilestoneSubclass(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Milestone Subclass updated successfully.',
-                'data'    => $stateUpdatedDTO,
-            ], 200);
+                'data'    => $stateUpdated,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -96,7 +92,7 @@ class MilestoneSubclassController extends BaseController
             $milestoneSubclasses = $this->milestoneSubclassInterface->getAllMilestoneSubclassesByMilestoneClass($milestoneClassId);
             return response()->json([
                 'data' => $milestoneSubclasses,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -113,7 +109,7 @@ class MilestoneSubclassController extends BaseController
             $milestoneSubclasses = $this->milestoneSubclassInterface->getAllMilestoneSubclasses();
             return response()->json([
                 'data' => $milestoneSubclasses,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -131,7 +127,7 @@ class MilestoneSubclassController extends BaseController
             $milestoneSubclass = $this->milestoneSubclassInterface->getMilestoneSubclass($id);
             return response()->json([
                 'data' => $milestoneSubclass,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -147,11 +143,11 @@ class MilestoneSubclassController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $milestoneSubclassDTO = $this->milestoneSubclassInterface->deleteMilestoneSubclass($id);
+            $milestoneSubclass = $this->milestoneSubclassInterface->deleteMilestoneSubclass($id);
             return response()->json([
                 'message' => 'Milestone Subclass deleted successfully',
-                'data'=> $milestoneSubclassDTO->toArray()
-            ],200);
+                'data'=> $milestoneSubclass->toArray()
+            ],Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\ReportRequest;
+use App\Http\Request\Modules\Viper\ReportRequest;
 use App\Interfaces\Modules\Viper\ReportInterface;
-use App\DTOs\Viper\Report\ReportDTO;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para manejar las operaciones relacionadas con los Reportes en el sistema Viper.
@@ -48,16 +48,12 @@ class ReportController extends BaseController
     public function store(ReportRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
-            $reportDTO = new ReportDTO($validatedData);
-
-            $reportCreatedDTO = $this->reportInterface->createNewReport($reportDTO);
+            $reportCreated = $this->reportInterface->createNewReport(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Report Class created successfully.',
-                'data'    => $reportCreatedDTO
-            ], 201);
+                'data'    => $reportCreated
+            ], Response::HTTP_CREATED);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
@@ -73,14 +69,12 @@ class ReportController extends BaseController
     public function update(ReportRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $reportDTO = new ReportDTO($validatedData);
-            $stateUpdatedDTO = $this->reportInterface->updateReport($reportDTO, $id);
+            $stateUpdated = $this->reportInterface->updateReport(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Report updated successfully.',
-                'data'    => $stateUpdatedDTO,
-            ], 200);
+                'data'    => $stateUpdated,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -98,7 +92,7 @@ class ReportController extends BaseController
             $reports = $this->reportInterface->getAllReportsByProduct($productId);
             return response()->json([
                 'data' => $reports,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -113,10 +107,10 @@ class ReportController extends BaseController
     public function view(int $productId)
     {
         try {
-            $reportDTO = $this->reportInterface->getAllReportsByProductWithProof($productId);
+            $report = $this->reportInterface->getAllReportsByProductWithProof($productId);
             return response()->json([
-                'data' => $reportDTO,
-            ], 200);
+                'data' => $report,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -132,10 +126,10 @@ class ReportController extends BaseController
     public function show(int $id)
     {
         try {
-            $reportDTO = $this->reportInterface->getReport($id);
+            $report = $this->reportInterface->getReport($id);
             return response()->json([
-                'data' => $reportDTO,
-            ], 200);
+                'data' => $report,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -150,11 +144,11 @@ class ReportController extends BaseController
     public function destroy($id)
     {
         try {
-            $reportDTO = $this->reportInterface->deleteReport($id);
+            $report = $this->reportInterface->deleteReport($id);
             return response()->json([
                 'message' => 'Report deleted successfully',
-                'data'=> $reportDTO->toArray()
-            ],200);
+                'data'=> $report->toArray()
+            ], Response::HTTP_OK);
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }

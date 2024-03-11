@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Scope\ScopeDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para el servicio de manejo de alcances en el sistema.
@@ -20,40 +20,41 @@ interface ScopeInterface
     /**
      * Crea un nuevo alcance.
      *
-     * @param ScopeDTO $scopeDTO DTO que contiene la información del alcance a crear.
-     * @return void
+     * @param Collection $scope Collection que contiene la información del alcance a crear.
+     * @return Collection Collection del alcance creado
      */
-    public function createNewScope(ScopeDTO $scopeDTO): ScopeDTO;
+    public function createNewScope(Collection $scope): Collection;
 
     /**
      * Actualiza un alcance existente.
      *
-     * @param ScopeDTO $scopeDTO DTO que contiene la información actualizada del alcance.
-     * @return void
+     * @param Collection $scope Collection que contiene la información actualizada del alcance.
+     * @param int $id Identificador del alcance a actualizar.
+     * @return Collection Collection del alcance actualizado.
      */
-    public function updateScope(ScopeDTO $scopeDTO,int $id): ScopeDTO;
+    public function updateScope(Collection $scope,int $id): Collection;
 
     /**
      * Obtiene el alcance asociados a un proyecto.
      *
      * @param string $projectBpin Identificador único del proyecto.
-     * @return array Arreglo del alcance asociado al proyecto.
+     * @return Collection Collection del alcance asociado al proyecto.
      */
-    public function getScopeByProject(string $projectBpin): ScopeDTO;
+    public function getScopeByProject(string $projectBpin): Collection;
 
     /**
      * Obtiene un alcance por su identificador único.
      *
-     * @param string $scopeId Identificador único del alcance.
-     * @return ScopeDTO DTO del alcance encontrado.
+     * @param int $id Identificador único del alcance.
+     * @return Collection Collection del alcance encontrado.
      */
-    public function getScope(string $id): ScopeDTO;
+    public function getScope(int $id): Collection;
 
     /**
      * Elimina un alcance por su identificador único.
      *
      * @param int $id Identificador único del alcance a eliminar.
-     * @return ScopeDTO DTO del alcance eliminado.
+     * @return Collection Collection del alcance eliminado.
      */
-    public function deleteScope(int $id): ScopeDTO;
+    public function deleteScope(int $id): Collection;
 }

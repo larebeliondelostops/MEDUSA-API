@@ -2,8 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Report\ReportDTO;
-use App\DTOs\Viper\Report\ReportWithProofDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ReportInterface;
 use App\Models\Modules\Viper\Report;
 use Exception;
@@ -23,95 +22,95 @@ class ReportService implements ReportInterface
     /**
      * Crea un nuevo informe.
      *
-     * @param  ReportDTO  $reportDTO Los datos del informe a crear.
-     * @return ReportDTO El DTO que representa el informe creado.
-     * @throws Exception Si ocurre un error durante el proceso.
+     * @param  Collection  $report Los datos del informe a crear.
+     * @return Collection Datos que representa el informe creado.
      */
-    public function createNewReport(ReportDTO $reportDTO): ReportDTO
+    public function createNewReport(Collection $report): Collection
     {
-        $report = new Report();
-        $report->fill($reportDTO->toArray());
-        $report->save();
+        $newReport = new Report($report->toArray());
+        $newReport->save();
         
-        return new ReportDTO($report->toArray());
+        return collect($newReport);
     }
 
     /**
      * Actualiza un informe existente.
      *
-     * @param  ReportDTO  $reportDTO Los nuevos datos del informe.
+     * @param  Collection  $report Los nuevos datos del informe.
      * @param  int  $id El ID del informe a actualizar.
-     * @return ReportDTO El DTO que representa el informe actualizado.
-     * @throws Exception Si el informe no se encuentra o hay un error durante el proceso.
+     * @return Collection  Datos que representa el informe actualizado.
      */
-    public function updateReport(ReportDTO $reportDTO, int $id): ReportDTO
+    public function updateReport(Collection $report, int $id): Collection
     {
-        $report = Report::findOrFail($id);
-        $report->fill($reportDTO->toArray());
-        $report->save();
+        $reportUpdate = Report::findOrFail($id);
+        $reportUpdate->fill($report->toArray());
+        $reportUpdate->save();
 
-        return new ReportDTO($report->toArray());
+        return collect($reportUpdate);
     }
     
     /**
      * Obtiene todos los informes asociados a un producto.
      *
      * @param  int  $productId El ID del producto.
-     * @return array Un arreglo de objetos ReportDTO representando los informes asociados al producto.
+     * @return Collection Datos que representando los informes asociados al producto.
      */
-    public function getAllReportsByProduct(int $productId): array
+    public function getAllReportsByProduct(int $productId): Collection
     {
-        $reports = Report::where('product_id', $productId)->get();
-        $reportDTOs = $reports->map(function ($report) {
-            return new ReportDTO($report->toArray());
-        })->all();
+        $reportGot = Report::where('product_id', $productId)->get();
+        $reports = $reportGot->transform(
+            function (Report $report)
+            {
+                return collect($report);
+            }
+        );
     
-        return $reportDTOs;
+        return $reports;
     }
 
     /**
      * Obtiene todos los informes asociados a un producto con sus pruebas.
      *
      * @param  int  $productId El ID del producto.
-     * @return array Un arreglo de objetos ReportWithProofDTO representando los informes asociados al producto, incluyendo pruebas.
+     * @return  Collection Daots que representando los informes asociados al producto, incluyendo pruebas.
      */
-    public function getAllReportsByProductWithProof(int $productId): array
+    public function getAllReportsByProductWithProof(int $productId): Collection
     {
-        $reports = Report::with('proofs')->where('product_id', $productId)->get();
-        $reportDTOs = $reports->map(function ($report) {
-            return new ReportWithProofDTO($report->toArray());
-        })->all();
+        $reportGot = Report::with('proofs')->where('product_id', $productId)->get();
+        $reports = $reportGot->transform(
+            function (Report $report)
+            {
+                return collect($report);
+            }
+        );
 
-        return $reportDTOs;
+        return $reports;
     }
 
     /**
      * Obtiene un informe por su ID.
      *
      * @param  int  $id El ID del informe.
-     * @return ReportDTO El DTO que representa el informe encontrado.
-     * @throws Exception Si el informe no se encuentra.
+     * @return Collection Datos que representa el informe encontrado.
      */
-    public function getReport(int $id): ReportDTO
+    public function getReport(int $id): Collection
     {
         $report = Report::findOrFail($id);
         
-        return new ReportDTO($report->toArray());
+        return collect($report);
     }
 
     /**
      * Elimina un informe por su ID.
      *
      * @param  int  $id El ID del informe a eliminar.
-     * @return ReportDTO El DTO que representa el informe eliminado.
-     * @throws Exception Si el informe no se encuentra o hay un error durante el proceso.
+     * @return Collection Datos que representa el informe eliminado.
      */
-    public function deleteReport(int $id): ReportDTO
+    public function deleteReport(int $id): Collection
     {
         $report = Report::findOrFail($id);
-        $reportDTO = new ReportDTO($report->toArray());
         $report->delete();
 
-        return $reportDTO;
+        return collect($report);
     }
 }

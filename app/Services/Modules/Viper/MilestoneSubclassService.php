@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\MilestoneSubclass\MilestoneSubclassDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\MilestoneSubclassInterface;
 use App\Models\Modules\Viper\MilestoneSubclass;
 use Exception;
@@ -23,92 +23,95 @@ class MilestoneSubclassService implements MilestoneSubclassInterface
     /**
      * Crea una nueva subclase de hitos.
      *
-     * @param  MilestoneSubclassDTO  $milestoneSubclassDTO
-     * @return MilestoneSubclassDTO
+     * @param  Collection  $milestoneSubclass Datos de la subclase de hito a ser creado.
+     * @return Collection Datos de la subclase de hito recién creado.
      */
-    public function createNewMilestoneSubclass(MilestoneSubclassDTO $milestoneSubclassDTO): MilestoneSubclassDTO
+    public function createNewMilestoneSubclass(Collection $milestoneSubclass): Collection
     {
-        $milestoneSubclass = new MilestoneSubclass($milestoneSubclassDTO->toArray());
-        $milestoneSubclass->save();
+        $newMilestoneSubclass = new MilestoneSubclass($milestoneSubclass->toArray());
+        $newMilestoneSubclass->save();
         
-        return new MilestoneSubclassDTO($milestoneSubclass->toArray());
+        return collect($newMilestoneSubclass);
     }
 
     /**
      * Actualiza una subclase de hitos existente.
      *
-     * @param  MilestoneSubclassDTO  $milestoneSubclassDTO
-     * @param  int  $id
-     * @return MilestoneSubclassDTO
+     * @param  Collection  $milestoneSubclass Datos actualizados de la subclase de hito.
+     * @param  int  $id Identificador único de la subclase de hito a ser acutalizado.
+     * @return Collection Datos de la subclase de hito actualizado.
      */
-    public function updateMilestoneSubclass(MilestoneSubclassDTO $milestoneSubclassDTO, int $id): MilestoneSubclassDTO
+    public function updateMilestoneSubclass(Collection $milestoneSubclass, int $id): Collection
     {
-        $milestoneSubclass = MilestoneSubclass::findOrFail($id);
-        $milestoneSubclass->fill($milestoneSubclassDTO->toArray());
-        $milestoneSubclass->save();
+        $milestoneSubclassUpdate = MilestoneSubclass::findOrFail($id);
+        $milestoneSubclassUpdate->fill($milestoneSubclass->toArray());
+        $milestoneSubclassUpdate->save();
         
-        return new MilestoneSubclassDTO($milestoneSubclass->toArray());
+        return collect($milestoneSubclassUpdate);
     }
 
     /**
      * Obtiene todas las subclases de hitos asociadas a una clase de hitos específica.
      *
-     * @param  int  $milestoneClassId
-     * @return array de MilestoneSubclassDTO
+     * @param  int  $milestoneClassId Identificador únido de clase de hito.
+     * @return Collection Collection de Collections de los subclase de hitos solicitados.
      */
-    public function getAllMilestoneSubclassesByMilestoneClass(int $milestoneClassId): array
+    public function getAllMilestoneSubclassesByMilestoneClass(int $milestoneClassId): Collection
     {
-        $milestoneSubclasses = MilestoneSubclass::where('milestone_class_id', $milestoneClassId)->get();
+        $milestoneSubclassGot = MilestoneSubclass::where('milestone_class_id', $milestoneClassId)->get();
+        $milestoneSubclasses = $milestoneSubclassGot->transform(
+            function (MilestoneSubclass $milestoneSubclass)
+            {
+                return collect($milestoneSubclass);
+            }
+        );
     
-        $milestoneSubclassDTOs = $milestoneSubclasses->map(function ($milestoneSubclass) {
-            return new MilestoneSubclassDTO($milestoneSubclass->toArray());
-        })->all();
-    
-        return $milestoneSubclassDTOs;
+        return collect($milestoneSubclasses);
     }
 
     /**
      * Obtiene todas las subclases de hitos.
      *
-     * @return array de MilestoneSubclassDTO
+     * @return Collection Collection de Collection con todos las subclases de hitos.
      */
-    public function getAllMilestoneSubclasses(): array
+    public function getAllMilestoneSubclasses(): Collection
     {
-        $milestoneSubclasses = MilestoneSubclass::all();
-        $milestoneSubclassDTOs = [];
+        $milestoneSubclassGot = MilestoneSubclass::all();
+        $milestoneSubclases = $milestoneSubclassGot->transform(
+            function (MilestoneSubclass $milestoneSubclass)
+            {
+                return collect($milestoneSubclass);
+            }
+        );
 
-        foreach ($milestoneSubclasses as $milestoneSubclass) {
-            $milestoneSubclassDTOs[] = new MilestoneSubclassDTO($milestoneSubclass->toArray());
-        }
 
-        return $milestoneSubclassDTOs;
+        return $milestoneSubclases;
     }
 
     /**
      * Obtiene una subclase de hitos por su ID.
      *
-     * @param  int  $id
-     * @return MilestoneSubclassDTO
+     * @param  int  $id Identificador único de la subclase de hito
+     * @return Collection Daots de la subclase de hito
      */
-    public function getMilestoneSubclass(int $id): MilestoneSubclassDTO
+    public function getMilestoneSubclass(int $id): Collection
     {
         $milestoneSubclass = MilestoneSubclass::findOrFail($id);
         
-        return new MilestoneSubclassDTO($milestoneSubclass->toArray());
+        return collect($milestoneSubclass);
     }
 
     /**
      * Elimina una subclase de hitos por su ID.
      *
-     * @param  int  $id
-     * @return MilestoneSubclassDTO
+     * @param  int  $id Identificador único de la subclase de hito a ser eliminado
+     * @return Collection Datos de la subclase de hito eliminada.
      */
-    public function deleteMilestoneSubclass(int $id): MilestoneSubclassDTO
+    public function deleteMilestoneSubclass(int $id): Collection
     {
         $milestoneSubclass = MilestoneSubclass::findOrFail($id);
-        $milestoneSubclassDTO = new MilestoneSubclassDTO($milestoneSubclass->toArray());
         $milestoneSubclass->delete();
 
-        return $milestoneSubclassDTO;
+        return collect($milestoneSubclass);
     }
 }

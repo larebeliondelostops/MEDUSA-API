@@ -16,6 +16,7 @@ class State extends Model
         'name',
     ];
     protected $dates = ['deteled_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function project()
     {

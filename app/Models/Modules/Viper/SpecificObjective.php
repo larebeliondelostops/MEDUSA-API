@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
- * @property \App\Models\Viper\Scope $scope
+ * @property \App\Models\Modules\Viper\Scope $scope
  *
  * @package App\Models\Viper
  * 
@@ -40,6 +40,7 @@ class SpecificObjective extends Model
      * @var string
      */
     protected $primaryKey = 'id';
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
      * Los atributos que son ocultado en masa.

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias del Modulo Viper
-use App\Http\Request\Viper\StateRequest;
+use App\Http\Request\Modules\Viper\StateRequest;
 use App\Interfaces\Modules\Viper\StateInterface;
 
 // Librerias de terceros

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Modules\Viper\Strategies;
 
-use App\DTOs\Viper\Coordinates\CoordinatesRequestDTO;
-use App\DTOs\Viper\ProjectMarker\ProjectMarkerPointDTO;
-use App\Models\Viper\Coordinates;
-use App\Models\Viper\Location;
-use App\Models\Viper\Project;
+use App\Models\Modules\Viper\Coordinates;
+use App\Models\Modules\Viper\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -23,19 +20,18 @@ class StrategyProjectMarker
         {
             foreach($project->locations as $location)
             {
-                $coordinatesDTO = new CoordinatesRequestDTO($location->coordinate->toArray());
-                $projectMarket = new ProjectMarkerPointDTO(
-                    [
-                        'id' => $coordinatesDTO->id,
-                        'geometry' => [
-                                'type' => $coordinatesDTO->type,
-                                'coordinates' => [
-                                    (float)$coordinatesDTO->latitude,
-                                    (float)$coordinatesDTO->longitude
-                                ]
-                        ]
+                $coordinates = $location->coordinate;
+                $projectMarket = [
+                    'markerType' => 100,
+                    'id' => $coordinates->id,
+                    'geometry' => [
+                            'type' => $coordinates->type,
+                            'coordinates' => [
+                                (float)$coordinates->latitude,
+                                (float)$coordinates->longitude
+                            ]
                     ]
-                );
+                            ];
                 array_push($projectMarkets, $projectMarket);
             }
         }

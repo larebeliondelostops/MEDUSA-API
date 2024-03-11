@@ -57,30 +57,67 @@ class HeatmapController extends Controller
 
     public function general()
     {
-        $data = CriminalActs::select('coordinates')->get();
-    
-        $features = [];
-        foreach ($data as $row) {
-            $coordinates = json_decode($row->coordinates);
-            $feature = [
-                "type" => "Feature",
-                "geometry" => [
-                    "type" => "Point",
-                    "coordinates" => [
-                        $coordinates->lat,
-                        $coordinates->lng
-                    ]
-                ]
-            ];
-            $features[] = $feature;
-        }
-    
-        $geojson = [
-            "type" => "FeatureCollection",
-            "features" => $features
-        ];
+        $sub_domain = tenant('id');
 
-        return $geojson;
+        switch ($sub_domain)
+        {
+            case 'villavicencio':
+                    $data = CriminalActs::select('coordinates')->get();
+                    $features = [];
+                    foreach ($data as $row) {
+                        $coordinates = json_decode($row->coordinates);
+                        $feature = [
+                            "type" => "Feature",
+                            "geometry" => [
+                                "type" => "Point",
+                                "coordinates" => [
+                                    $coordinates->lat,
+                                    $coordinates->lng
+                                ]
+                            ]
+                        ];
+                        $features[] = $feature;
+                    }
+                
+                    $geojson = [
+                        "type" => "FeatureCollection",
+                        "features" => $features
+                    ];
+
+                    return $geojson;     
+                break;
+            case 'ditra':
+                $data = DataDitra::whereNotNull('coordinates')
+                ->where(function ($query) {
+                    $query->whereRaw('length(coordinates) > 0');
+                })->get();
+                $features = [];
+            
+                foreach ($data as $row) {
+                    // Suponiendo que las coordenadas están en formato "latitud,longitud"
+                    $coordinates = explode(',', $row->coordinates);
+                    
+                    $feature = [
+                        "type" => "Feature",
+                        "geometry" => [
+                            "type" => "Point",
+                            'coordinates' => [
+                                isset($coordinates[0]) && $coordinates[0] !== '' ? floatval($coordinates[0]) : null,
+                                isset($coordinates[1]) && $coordinates[1] !== '' ? floatval($coordinates[1]) : null
+                            ]
+                        ]
+                    ];
+                    $features[] = $feature;
+                }
+            
+                $geojson = [
+                    "type" => "FeatureCollection",
+                    "features" => $features
+                ];
+
+                    return $geojson;     
+                break;
+        }
     }
 
     public function especific()

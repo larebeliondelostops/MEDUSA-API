@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\IndicatorRequest;
+use App\Http\Request\Modules\Viper\IndicatorRequest;
 use App\Interfaces\Modules\Viper\IndicatorInterface;
 use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
-use App\DTOs\Viper\Indicator\IndicatorDTO;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -53,13 +52,11 @@ class IndicatorController extends BaseController
     public function store(IndicatorRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $indicatorDTO = new IndicatorDTO($validatedData);
-            $indicatorCreatedDTO = $this->indicatorInterface->createNewIndicator($indicatorDTO);
+            $indicatorCreated = $this->indicatorInterface->createNewIndicator(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Indicator created successfully.',
-                'data'    => $indicatorCreatedDTO
+                'data'    => $indicatorCreated
             ], 201);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -76,13 +73,11 @@ class IndicatorController extends BaseController
     public function update(IndicatorRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $indicatorDTO = new IndicatorDTO($validatedData);
-            $stateUpdatedDTO = $this->indicatorInterface->updateIndicator($indicatorDTO, $id);
+            $indicatorUpdate = $this->indicatorInterface->updateIndicator(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Indicator updated successfully.',
-                'data'    => $stateUpdatedDTO,
+                'data'    => $indicatorUpdate,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -99,15 +94,13 @@ class IndicatorController extends BaseController
     {
         try {
             $indicators = $this->indicatorInterface->getAllIndicatorsByProduct($productId);
-            foreach ($indicators as &$indicator) {
-                $measurementUnit = $this->measurementUnitInterface->getMeasurementUnit($indicator->measurement_unit_id);
-    
-                $indicator->measurement_unit = $measurementUnit->name;
-
-                unset($indicator->measurement_unit_id);
-            }
+            $modifiedIndicators = $indicators->map(function ($item) {
+                unset($item['measurement_unit_id']);
+                $item['measurement_unit'] = $item['measurement_unit']['name'];
+                return $item;
+            });            
             return response()->json([
-                'data' => $indicators,
+                'data' => $modifiedIndicators,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -125,12 +118,9 @@ class IndicatorController extends BaseController
         try {
             $indicator = $this->indicatorInterface->getIndicator($id);
 
-            $measurementUnit = $this->measurementUnitInterface->getMeasurementUnit($indicator->measurement_unit_id);
-
-            $indicator->measurement_unit = $measurementUnit->name;
-
-            unset($indicator->measurement_unit_id);
-
+            unset($indicator['measurement_unit_id']);
+            $indicator['measurement_unit'] = $indicator['measurement_unit']['name'];
+            
             return response()->json([
                 'data' => $indicator,
             ], 200);
@@ -149,10 +139,10 @@ class IndicatorController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $indicatorDTO = $this->indicatorInterface->deleteIndicator($id);
+            $indicator = $this->indicatorInterface->deleteIndicator($id);
             return response()->json([
                 'message' => 'Indicator deleted successfully',
-                'data'=> $indicatorDTO->toArray()
+                'data'=> $indicator->toArray()
             ],200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

@@ -2,13 +2,12 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para el servicio de manejo de objetivos específicos de alcances en el sistema.
  *
- * Define operaciones necesarias para la gestión de objetivos específicos de alcances, como
- * creación, actualización, recuperación y eliminación.
+ * Define operaciones necesarias para la gestión de objetivos específicos de alcances, como creación, actualización, recuperación y eliminación.
  *
  * @package App\Interfaces\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
@@ -20,40 +19,41 @@ interface SpecificObjectiveInterface
     /**
      * Crea un nuevo objetivo específico.
      *
-     * @param SpecificObjectiveDTO $specificObjectiveDTO DTO que contiene la información del objetivo específico a crear.
-     * @return void
+     * @param Collection $specificObjective Collection que contiene la información del objetivo específico a crear.
+     * @return Collection Collection del objetivo especifico creado.
      */
-    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): SpecificObjectiveDTO;
+    public function createNewSpecificObjective(Collection $specificObjective): Collection;
 
     /**
      * Actualiza un objetivo específico existente.
      *
-     * @param SpecificObjectiveDTO $specificObjectiveDTO DTO que contiene la información actualizada del objetivo específico.
-     * @return void
+     * @param Collection $specificObjective Collection que contiene la información actualizada del objetivo específico.
+     * @param int $id Identificador único del objetivo específico a actualizar.
+     * @return Collection Collection del objetivo específico actualizado.
      */
-    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO,int $id): SpecificObjectiveDTO;
+    public function updateSpecificObjective(Collection $specificObjective,int $id): Collection;
 
     /**
      * Obtiene todos los objetivos específicos asociados a un alcance.
      *
      * @param int $scopeId Identificador único del alcance.
-     * @return array Arreglo de objetivos específicos asociados al alcance.
+     * @return Collection Collection de Collections asociados al objetivos especificos.
      */
-    public function getAllSpecificObjectiveByScope(int $scopeId): array;
+    public function getAllSpecificObjectiveByScope(int $scopeId): Collection;
 
     /**
      * Obtiene un objetivo específico por su identificador único.
      *
-     * @param int $specificObjectiveId Identificador único del objetivo específico.
-     * @return SpecificObjectiveDTO DTO del objetivo específico encontrado.
+     * @param int $id Identificador único del objetivo específico.
+     * @return Collection Collection del objetivo específico encontrado.
      */
-    public function getSpecificObjective(int $id): SpecificObjectiveDTO;
+    public function getSpecificObjective(int $id): Collection;
 
     /**
      * Elimina un objetivo específico por su identificador único.
      *
      * @param int $id Identificador único del objetivo específico a eliminar.
-     * @return SpecificObjectiveDTO DTO del objetivo específico eliminado.
+     * @return Collection Collection del objetivo específico eliminado.
      */
-    public function deleteSpecificObjective(int $id): SpecificObjectiveDTO;
+    public function deleteSpecificObjective(int $id): Collection;
 }

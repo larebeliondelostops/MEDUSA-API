@@ -2,11 +2,9 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Proof\ProofDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ProofInterface;
 use App\Models\Modules\Viper\Proof;
-use App\Models\Modules\Viper\Project;
-use App\DTOs\Viper\Product\ProductDTO;
 use Exception;
 use Storage;
 
@@ -25,20 +23,20 @@ class ProofService implements ProofInterface
     /**
      * Crea una nueva prueba.
      *
-     * @param ProofDTO $proofDTO Los datos de la prueba a crear.
+     * @param Collection $proof Los datos de la prueba a crear.
      * @param \Illuminate\Http\UploadedFile $file El archivo de la prueba a subir.
-     * @return ProofDTO La prueba creada.
+     * @return Collection Datos de la prueba creada.
      * @throws Exception Si hay un error durante el proceso.
      */
-    public function createNewProof(ProofDTO $proofDTO, \Illuminate\Http\UploadedFile $file): ProofDTO
+    public function createNewProof(Collection $proof, \Illuminate\Http\UploadedFile $file): Collection
     {
         $originalFilename = $file->getClientOriginalName();
 
-        $proof = new Proof($proofDTO->toArray());
+        $newProof = new Proof($proof->toArray());
 
-        $project_id = $proof->getProjectBpin();
+        $project_id = $newProof->getProjectBpin();
 
-        $folderPath = "test/{$project_id}/report_{$proof->report_id}";
+        $folderPath = "test/{$project_id}/report_{$newProof->report_id}";
     
         $filename = $this->getUniqueFilename($folderPath, $originalFilename);
 
@@ -46,12 +44,12 @@ class ProofService implements ProofInterface
 
         $url = Storage::disk('spaces')->url($filePath);
 
-        $proof->name = $filename;
-        $proof->url = $url;
+        $newProof->name = $filename;
+        $newProof->url = $url;
 
-        $proof->save();
+        $newProof->save();
 
-        return new ProofDTO($proof->toArray());
+        return collect($newProof);
     }
 
     /**
@@ -59,10 +57,10 @@ class ProofService implements ProofInterface
      *
      * @param int $id El identificador de la prueba a actualizar.
      * @param string $newName El nuevo nombre para la prueba.
-     * @return ProofDTO La prueba actualizada.
+     * @return Collection La prueba actualizada.
      * @throws Exception Si hay un error durante el proceso.
      */
-    public function updateProof(int $id, string $newName): ProofDTO
+    public function updateProof(int $id, string $newName): Collection
     {
         $proof = Proof::findOrFail($id);
 
@@ -82,7 +80,7 @@ class ProofService implements ProofInterface
                 $proof->url = Storage::disk('spaces')->url($newFilePath);
                 $proof->save();
 
-                return new ProofDTO($proof->toArray());
+                return collect($proof);
             }
             throw new Exception('Error al copiar el archivo con el nuevo nombre');
         }
@@ -93,41 +91,41 @@ class ProofService implements ProofInterface
      * Obtiene todas las pruebas asociadas a un producto específico.
      *
      * @param int $productId El identificador del producto.
-     * @return array Un arreglo de objetos ProofDTO representando las pruebas asociadas al producto.
+     * @return Collection Collection de Collections representando las pruebas asociadas al producto.
      */
-    public function getAllProofsByReport(int $reportId): array
+    public function getAllProofsByReport(int $reportId): Collection
     {
         $proofs = Proof::where('report_id', $reportId)->get();
 
-        $proofDTOs = $proofs->map(function ($proof) {
-            return new ProofDTO($proof->toArray());
+        $proofGot = $proofs->map(function ($proof) {
+            return collect($proof);
         })->all();
 
-        return $proofDTOs;
+        return collect($proofGot);
     }
 
     /**
      * Obtiene una prueba específica por su identificador.
      *
      * @param int $id El identificador único de la prueba.
-     * @return ProofDTO La prueba encontrada.
+     * @return Collection La prueba encontrada.
      * @throws Exception Si la prueba no existe.
      */
-    public function getProof(int $id): ProofDTO
+    public function getProof(int $id): Collection
     {
         $proof = Proof::findOrFail($id);
 
-        return new ProofDTO($proof->toArray());
+        return collect($proof);
     }
 
     /**
      * Elimina una prueba específica por su identificador.
      *
      * @param int $proofId El identificador único de la prueba a eliminar.
-     * @return ProofDTO La prueba eliminada.
+     * @return Collection La prueba eliminada.
      * @throws Exception Si la prueba no existe o hay un error durante el proceso.
      */
-    public function deleteProof(int $proofId): ProofDTO
+    public function deleteProof(int $proofId): Collection
     {
         $proof = Proof::findOrFail($proofId);
 
@@ -136,10 +134,9 @@ class ProofService implements ProofInterface
         if (Storage::disk('spaces')->exists($filePath)) {
             Storage::disk('spaces')->delete($filePath);
         }
-        $proofDTO = new ProofDTO($proof->toArray());
         $proof->delete();
 
-        return $proofDTO;
+        return collect($proof);
     }
 
     /**

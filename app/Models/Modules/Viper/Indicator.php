@@ -44,6 +44,17 @@ class Indicator extends Model
     protected $primaryKey = 'id';
 
     /**
+     * Los atributos que son ocultado en masa.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
+
+    /**
      * Los atributos que son asignables en masa.
      *
      * @var array

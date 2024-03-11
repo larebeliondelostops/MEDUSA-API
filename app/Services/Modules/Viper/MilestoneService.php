@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Milestone\MilestoneDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\MilestoneInterface;
 use App\Models\Modules\Viper\Milestone;
 use Exception;
@@ -17,79 +17,77 @@ class MilestoneService implements MilestoneInterface
     /**
      * Crea un nuevo hito.
      *
-     * @param MilestoneDTO $milestoneDTO Datos del hito a crear.
-     * @return MilestoneDTO Hitos creado.
-     * @throws Exception Si hay algún error durante la creación.
+     * @param Collection $milestone Datos del hito a crear.
+     * @return Collection Datos del hito recién creado.
      */
-    public function createNewMilestone(MilestoneDTO $milestoneDTO): MilestoneDTO
+    public function createNewMilestone(Collection $milestone): Collection
     {
-        $milestone = new Milestone($milestoneDTO->toArray());
-        $milestone->save();
+        $newMilestone = new Milestone($milestone->toArray());
+        $newMilestone->save();
         
-        return new MilestoneDTO($milestone->toArray());
+        return collect($newMilestone);
     }
 
     /**
      * Actualiza la información de un hito existente.
      *
-     * @param MilestoneDTO $milestoneDTO Datos actualizados del hito.
+     * @param Collection $milestone Datos actualizados del hito.
      * @param int $id Identificador del hito a actualizar.
-     * @return MilestoneDTO Hitos actualizado.
-     * @throws Exception Si el hito no existe o hay algún error durante la actualización.
+     * @return Collection Datos del hito actualizado.
      */
-    public function updateMilestone(MilestoneDTO $milestoneDTO, int $id): MilestoneDTO
+    public function updateMilestone(Collection $milestone, int $id): Collection
     {
-        $milestone = Milestone::findOrFail($id);
-        $milestone->fill($milestoneDTO->toArray());
-        $milestone->save();
+        $milestoneUpdate = Milestone::findOrFail($id);
+        $milestoneUpdate->fill($milestone->toArray());
+        $milestoneUpdate->save();
         
-        return new MilestoneDTO($milestone->toArray());
+        return collect($milestoneUpdate);
     }
 
     /**
      * Obtiene todos los hitos asociados a un proyecto.
      *
      * @param int $projectId Identificador del proyecto.
-     * @return array Listado de hitos del proyecto.
+     * @return Collection Listado de hitos del proyecto.
      */
-    public function getAllMilestonesByProject(int $projectId): array
+    public function getAllMilestonesByProject(int $projectId): Collection
     {
-        $milestones = Milestone::where('project_id', $projectId)->get();
+        $milestoneGot = Milestone::where('project_id', $projectId)->get();
     
-        $milestoneDTOs = $milestones->map(function ($milestone) {
-            return new MilestoneDTO($milestone->toArray());
-        })->all();
+        $milestones = $milestoneGot->transform(
+            function (Milestone $milestone)
+            {
+                return collect($milestone);
+            }
+        );
     
-        return $milestoneDTOs;
+        return $milestones;
     }
 
     /**
      * Obtiene la información de un hito específico.
      *
      * @param int $id Identificador del hito.
-     * @return MilestoneDTO Información del hito.
-     * @throws Exception Si el hito no existe.
+     * @return Collection Información del hito.
      */
-    public function getMilestone(int $id): MilestoneDTO
+    public function getMilestone(int $id): Collection
     {
         $milestone = Milestone::findOrFail($id);
         
-        return new MilestoneDTO($milestone->toArray());
+        return collect($milestone);
     }
 
     /**
      * Elimina un hito específico.
      *
      * @param int $id Identificador del hito a eliminar.
-     * @return MilestoneDTO Información del hito eliminado.
-     * @throws Exception Si el hito no existe o hay algún error durante la eliminación.
+     * @return Collection Información del hito eliminado.
      */
-    public function deleteMilestone(int $id): MilestoneDTO
+    public function deleteMilestone(int $id): Collection
     {
         $milestone = Milestone::findOrFail($id);
-        $milestoneDTO = new MilestoneDTO($milestone->toArray());
         $milestone->delete();
 
-        return $milestoneDTO;
+        return collect($milestone);
     }
 }

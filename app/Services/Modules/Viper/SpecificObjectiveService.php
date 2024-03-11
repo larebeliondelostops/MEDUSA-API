@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\Models\Modules\Viper\SpecificObjective;
 
@@ -22,69 +22,74 @@ class SpecificObjectiveService implements SpecificObjectiveInterface
     /**
      * Crea un nuevo objetivo específico.
      *
-     * @param SpecificObjectiveDTO $specificObjectiveDTO DTO del objetivo específico a crear.
-     * @return SpecificObjectiveDTO
+     * @param Collection $specificObjective Datos del objetivo específico a crear.
+     * @return Collection Datos del objetivo específico creado.
      */
-    public function createNewSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO): SpecificObjectiveDTO
+    public function createNewSpecificObjective(Collection $specificObjective): Collection
     {
-        $specificObjective = new SpecificObjective();
-        $specificObjective->fill($specificObjectiveDTO->toArray());
-        $specificObjective->save();
-        return New SpecificObjectiveDTO($specificObjective->toArray());
+        $newSpecificObjective = new SpecificObjective();
+        $newSpecificObjective->fill($specificObjective->toArray());
+        $newSpecificObjective->save();
+        return collect($newSpecificObjective);
     }
 
     /**
      * Actualiza un objetivo específico existente.
      *
-     * @param SpecificObjectiveDTO $specificObjectiveDTO DTO con la información actualizada del objetivo específico.
+     * @param Collection $specificObjective Datos con la información actualizada del objetivo específico.
      * @param int $id Identificador único del objetivo específico a actualizar.
-     * @return void
+     * @return Collection Datos del objetivo específico actualizado.
      */
-    public function updateSpecificObjective(SpecificObjectiveDTO $specificObjectiveDTO, int $id): SpecificObjectiveDTO
+    public function updateSpecificObjective(Collection $specificObjective, int $id): Collection
     {
-        $specificObjective = SpecificObjective::findOrFail($id);
-        $data = $specificObjectiveDTO->toArray();
-        $specificObjective->fill($data);
-        $specificObjective->save();
-        return New SpecificObjectiveDTO($specificObjective->toArray());
+        $specificObjectiveUpdate = SpecificObjective::findOrFail($id);
+        $data = $specificObjective->toArray();
+        $specificObjectiveUpdate->fill($data);
+        $specificObjectiveUpdate->save();
+        return collect($specificObjectiveUpdate);
     }
 
     /**
      * Obtiene todos los objetivos específicos asociados a un alcance.
      *
      * @param int $scopeId Identificador único del alcance.
-     * @return array Arreglo de objetivos específicos asociados al alcance.
+     * @return Collection Collection de objetivos específicos asociados al alcance.
      */
-    public function getAllSpecificObjectiveByScope(int $id): array
+    public function getAllSpecificObjectiveByScope(int $scopeId): Collection
     {
-        $specificObjectives = SpecificObjective::where('scope_id', $id)->get()->toArray();
+        $specificObjectiveGot = SpecificObjective::where('scope_id', $scopeId)->get();
+        $specificObjectives = $specificObjectiveGot->transform(
+            function (SpecificObjective $specificObjective)
+            {
+                return collect($specificObjective);
+            }
+        );
         return $specificObjectives;
     }
 
     /**
      * Obtiene un objetivo específico por su identificador único.
      *
-     * @param int $specificObjectiveId Identificador único del objetivo específico.
-     * @return SpecificObjectiveDTO DTO del objetivo específico encontrado.
+     * @param int $id Identificador único del objetivo específico.
+     * @return Collection Datos del objetivo específico encontrado.
      */
-    public function getSpecificObjective(int $id): SpecificObjectiveDTO
+    public function getSpecificObjective(int $id): Collection
     {
         $specificObjective = SpecificObjective::findOrFail($id);
-        return new SpecificObjectiveDTO($specificObjective->toArray());
+        return collect($specificObjective);
     }
 
     /**
      * Elimina un objetivo específico por su identificador único.
      *
      * @param int $id Identificador único del objetivo específico a eliminar.
-     * @return SpecificObjectiveDTO DTO del objetivo específico eliminado.
+     * @return Collection Datos del objetivo específico eliminado.
      */
-    public function deleteSpecificObjective(int $id): SpecificObjectiveDTO
+    public function deleteSpecificObjective(int $id): Collection
     {
         $specificObjective = SpecificObjective::findOrFail($id);
-        $specificObjectiveDTO = new SpecificObjectiveDTO($specificObjective->toArray());
         $specificObjective->delete();
 
-        return $specificObjectiveDTO;
+        return collect($specificObjective);
     }
 }

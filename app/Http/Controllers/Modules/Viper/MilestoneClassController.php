@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\MilestoneClassRequest;
+use App\Http\Request\Modules\Viper\MilestoneClassRequest;
 use App\Interfaces\Modules\Viper\MilestoneClassInterface;
-use App\DTOs\Viper\MilestoneClass\MilestoneClassDTO;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para gestionar las operaciones CRUD de las clases de hitos en el sistema Viper.
@@ -48,13 +48,11 @@ class MilestoneClassController extends BaseController
     public function store(MilestoneClassRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $milestoneClassDTO = new MilestoneClassDTO($validatedData);
-            $milestoneClassCreatedDTO = $this->milestoneClassInterface->createNewMilestoneClass($milestoneClassDTO);
+            $milestoneClassCreated = $this->milestoneClassInterface->createNewMilestoneClass(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Milestone Class created successfully.',
-                'data'    => $milestoneClassCreatedDTO
+                'data'    => $milestoneClassCreated
             ], 201);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -71,13 +69,11 @@ class MilestoneClassController extends BaseController
     public function update(MilestoneClassRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $milestoneClassDTO = new MilestoneClassDTO($validatedData);
-            $stateUpdatedDTO = $this->milestoneClassInterface->updateMilestoneClass($milestoneClassDTO, $id);
+            $stateUpdated = $this->milestoneClassInterface->updateMilestoneClass(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Milestone Class updated successfully.',
-                'data'    => $stateUpdatedDTO,
+                'data'    => $stateUpdated,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -129,10 +125,10 @@ class MilestoneClassController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $milestoneClassDTO = $this->milestoneClassInterface->deleteMilestoneClass($id);
+            $milestoneClass = $this->milestoneClassInterface->deleteMilestoneClass($id);
             return response()->json([
                 'message' => 'Milestone Class deleted successfully',
-                'data'=> $milestoneClassDTO->toArray()
+                'data'=> $milestoneClass
             ],200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Indicator\IndicatorDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para gestionar operaciones relacionadas con los indicadores en el sistema Viper.
@@ -17,41 +17,41 @@ interface IndicatorInterface {
     /**
      * Crea un nuevo indicador.
      *
-     * @param IndicatorDTO $indicatorDTO La información del indicador a ser creado.
-     * @return IndicatorDTO El indicador creado.
+     * @param Collection $indicator Collection con la información del indicador a ser creado.
+     * @return Collection Collection del indicador creado.
      */
-    public function createNewIndicator(IndicatorDTO $indicatorDTO): IndicatorDTO;
+    public function createNewIndicator(Collection $indicator): Collection;
 
     /**
      * Actualiza un indicador existente.
      *
-     * @param IndicatorDTO $indicatorDTO La información del indicador a ser actualizado.
+     * @param Collection $indicator Collection que contiene la información del indicador a ser actualizado.
      * @param int $id El identificador único del indicador a ser actualizado.
-     * @return IndicatorDTO El indicador actualizado.
+     * @return Collection Collection del indicador actualizado.
      */
-    public function updateIndicator(IndicatorDTO $indicatorDTO, int $id): IndicatorDTO;
+    public function updateIndicator(Collection $indicator, int $id): Collection;
 
     /**
      * Obtiene todos los indicadores asociados a un producto específico.
      *
      * @param int $productId El identificador único del producto.
-     * @return array Un array de objetos IndicatorDTO.
+     * @return Collection Collection de Collections asociados al indicador.
      */
-    public function getAllIndicatorsByProduct(int $productId): array;
+    public function getAllIndicatorsByProduct(int $productId): Collection;
 
     /**
      * Obtiene los detalles de un indicador específico.
      *
      * @param int $id El identificador único del indicador.
-     * @return IndicatorDTO La información del indicador.
+     * @return Collection Collection de la información del indicador.
      */
-    public function getIndicator(int $id): IndicatorDTO;
+    public function getIndicator(int $id): Collection;
 
     /**
      * Elimina un indicador específico.
      *
      * @param int $id El identificador único del indicador a ser eliminado.
-     * @return IndicatorDTO El indicador eliminado.
+     * @return Collection Collection del indicador eliminado.
      */
-    public function deleteIndicator(int $id): IndicatorDTO;
+    public function deleteIndicator(int $id): Collection;
 }

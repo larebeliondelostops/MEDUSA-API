@@ -1,16 +1,11 @@
 <?php
 
 namespace App\Services\Modules\Viper;
-use App\DTOs\Viper\Department\DepartmentDetailDTO;
-use App\DTOs\Viper\Department\DepartmentRequestDTO;
-use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityDetailDTO;
-use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
-use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Models\Modules\Viper\Municipality;
-use App\Utils\Viper\Filters\MunicipalityFilter;
+use App\Utils\Filters\Modules\Viper\MunicipalityFilter;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -23,7 +18,7 @@ use App\Utils\Viper\Filters\MunicipalityFilter;
  * @package    App\Services\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 class MunicipalityService implements MunicipalityInterface
 {
@@ -37,29 +32,27 @@ class MunicipalityService implements MunicipalityInterface
     /**
      * Crea un nuevo municipio y lo guarda en la base de datos.
      *
-     * @param MunicipalityRequestDTO $municipalityDTO DTO con la información del municipio a crear.
-     * @return MunicipalityRequestDTO DTO del municipio recién creado.
+     * @param Collection $municipalityData Data con la información del municipio a crear.
+     * @return Collection Data del municipio recién creado.
      */
-    public function createNewMunicipality(MunicipalityRequestDTO $municipalityDTO) : MunicipalityRequestDTO
+    public function createNewMunicipality(Collection $municipalityData) : Collection
     {
-        $municipalityDTO->coordinate = $this->coordinatesInterface->createNewCoordinates($municipalityDTO->coordinate);
+        $municipalityData['coordinate'] = $this->coordinatesInterface->createNewCoordinates(collect($municipalityData['coordinate']));
         $newMunicipality = new Municipality(
-            $municipalityDTO->toArray() +
-            ['coordinate_id' => $municipalityDTO->coordinate->id]
+            $municipalityData->toArray() +
+            ['coordinate_id' => $municipalityData['coordinate']['id']]
         );
         $newMunicipality->save();
-        return new MunicipalityRequestDTO(
-            $newMunicipality->toArray()
-        );
+        return collect($newMunicipality);
     }
 
     /**
      * Obtiene todos los municipios disponibles, con posibilidad de aplicar filtros.
      *
      * @param array $queryFilterParams Parámetros opcionales para filtrar la consulta.
-     * @return array Array de MunicipalityRequestDTO de todos los municipios.
+     * @return array Array de MunicipalityRequestData de todos los municipios.
      */
-    public function getAllMunicipalities(array $queryFilterParams = []) : array
+    public function getAllMunicipalities(array $queryFilterParams = []) : Collection
     {
         $filter = new MunicipalityFilter();
         $queryItems = $filter->transform($queryFilterParams);
@@ -71,58 +64,51 @@ class MunicipalityService implements MunicipalityInterface
             }
         }
 
-        $municipalitiesDTO = $municipalityQuery->get()->transform(
-            fn (Municipality $municipality) => new MunicipalityRequestDTO($municipality->toArray())
-        );
-        return $municipalitiesDTO->toArray();
+        $municipalitiesData = $municipalityQuery->get();
+        return $municipalitiesData;
     }
 
     /**
      * Recupera un municipio por su ID y retorna sus detalles.
      *
      * @param int $id ID del municipio a recuperar.
-     * @return MunicipalityRequestDTO DTO del municipio solicitado.
+     * @return Collection Data del municipio solicitado.
      */
-    public function getMunicipalityById(int $id) : MunicipalityDetailDTO
+    public function getMunicipalityById(int $id) : Collection
     {
         $municipalityGot = Municipality::with('coordinate', 'department', 'department.coordinate')->findOrFail($id);
-        $data = $municipalityGot->toArray();
-        $municipalityDTO = new MunicipalityDetailDTO($data);
-        return $municipalityDTO;
+        return collect($municipalityGot);
     }
 
     /**
      * Actualiza un municipio existente identificado por su ID.
      *
-     * @param MunicipalityRequestDTO $municipalityDTO DTO con la nueva información del municipio.
+     * @param Collection $municipalityData Data con la nueva información del municipio.
      * @param int $id ID del municipio a actualizar.
-     * @return MunicipalityRequestDTO DTO del municipio actualizado.
+     * @return Collection Data del municipio actualizado.
      */
-    public function updateMunicipality(MunicipalityRequestDTO $municipalityDTO, int $id) : MunicipalityRequestDTO
+    public function updateMunicipality(Collection $municipalityData, int $id) : Collection
     {
         $municipalityGot = Municipality::with('coordinate')->findOrFail($id);
         // se actualizan los datos de la coordenada del municipio
-        $municipalityDTO->coordinate = $this->coordinatesInterface->updateCoordinatesById($municipalityDTO->coordinate, $municipalityGot->coordinate->id);
+        $municipalityData['coordinate'] = $this->coordinatesInterface->updateCoordinatesById(collect($municipalityData['coordinate']), $municipalityGot->coordinate->id);
         // actualizamos los datos del departamento
-        $municipalityGot->fill($municipalityDTO->toArray());
+        $municipalityGot->fill($municipalityData->toArray());
         $municipalityGot->save();
-        unset($municipalityGot['coordinate']); // eliminamos los datos desactualizados
-        $municipalityDTO->fill($municipalityGot->toArray());
 
-        return $municipalityDTO;
+        return collect($municipalityGot);
     }
 
     /**
      * Elimina un municipio identificado por su ID y retorna los detalles del municipio eliminado.
      *
      * @param int $id ID del municipio a eliminar.
-     * @return MunicipalityRequestDTO DTO del municipio eliminado.
+     * @return Collection Data del municipio eliminado.
      */
-    public function deleteMunicipality($id) : MunicipalityDetailDTO
+    public function deleteMunicipality($id) : Collection
     {
         $municipalityGot = Municipality::with('coordinate', 'department', 'department.coordinate')->findOrFail($id);
-        $municipalityDelete = new MunicipalityDetailDTO($municipalityGot->toArray());
         $municipalityGot->delete();
-        return $municipalityDelete;
+        return collect($municipalityGot);
     }
 }

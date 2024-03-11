@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias del modulo viper
-use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
-use App\Http\Request\Viper\MunicipalityRequest;
+use App\Http\Request\Modules\Viper\MunicipalityRequest;
 use App\Interfaces\Modules\Viper\MunicipalityInterface;
 
 // Librerias de terceros
@@ -22,7 +20,7 @@ use Illuminate\Http\Response;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 class MunicipalityController extends BaseController
 {
@@ -54,9 +52,8 @@ class MunicipalityController extends BaseController
     {
         try
         {
-            $data = $request->validated();
             $newMunicipality = $this->municipalityInterface->createNewMunicipality(
-                new MunicipalityRequestDTO($data)
+                collect($request->validated())
             );
             return response()->json([
                 "message" => "Municipio creado satisfactoriamente.",
@@ -131,9 +128,8 @@ class MunicipalityController extends BaseController
     {
         try
         {
-            $dataUpdate = $request->validated();
             $municipalityUpdated = $this->municipalityInterface->updateMunicipality(
-                new MunicipalityRequestDTO($dataUpdate),
+                collect($request->validated()),
                 $id
             );
             return response()->json([

@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
-use App\DTOs\Viper\Municipality\MunicipalityDetailDTO;
-use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para la gestión de municipios en el módulo VIPER.
@@ -13,17 +12,17 @@ use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
  * @package    App\Interfaces\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 interface MunicipalityInterface
 {
     /**
      * Crea un nuevo municipio.
      *
-     * @param MunicipalityRequestDTO $municipalityDTO DTO con la información del municipio a crear.
-     * @return MunicipalityRequestDTO DTO del municipio recién creado.
+     * @param Collection $municipalityData Data con la información del municipio a crear.
+     * @return Collection Data del municipio recién creado.
      */
-    public function createNewMunicipality(MunicipalityRequestDTO $municipality): MunicipalityRequestDTO;
+    public function createNewMunicipality(Collection $municipality): Collection;
 
     /**
      * Obtiene todos los municipios disponibles.
@@ -31,33 +30,33 @@ interface MunicipalityInterface
      * Puede recibir parámetros de filtro para la consulta.
      *
      * @param array $queryFilterParams Parámetros opcionales para filtrar la consulta.
-     * @return array Arreglo de MunicipalityRequestDTO de todos los municipios.
+     * @return Collection Arreglo de MunicipalityRequestData de todos los municipios.
      */
-    public function getAllMunicipalities(array $queryFilterParams = []) : array;
+    public function getAllMunicipalities(array $queryFilterParams = []) : Collection;
 
     /**
      * Obtiene un municipio por su ID.
      *
      * @param int $id Identificador del municipio.
-     * @return MunicipalityRequestDTO DTO del municipio solicitado.
+     * @return Collection Data del municipio solicitado.
      */
-    public function getMunicipalityById(int $id) : MunicipalityDetailDTO;
+    public function getMunicipalityById(int $id) : Collection;
 
     /**
      * Actualiza un municipio existente.
      *
-     * @param MunicipalityRequestDTO $municipalityDTO DTO con la nueva información del municipio.
+     * @param Collection $municipalityData Data con la nueva información del municipio.
      * @param int $id ID del municipio a actualizar.
-     * @return MunicipalityRequestDTO DTO del municipio actualizado.
+     * @return Collection Data del municipio actualizado.
      */
-    public function updateMunicipality(MunicipalityRequestDTO $municipalityDTO, int $id): MunicipalityRequestDTO;
+    public function updateMunicipality(Collection $municipalityData, int $id): Collection;
 
     /**
      * Elimina un municipio.
      *
      * @param int $id ID del municipio a eliminar.
-     * @return MunicipalityDetailDTO DTO del municipio eliminado.
+     * @return Collection Data del municipio eliminado.
      */
-    public function deleteMunicipality(int $id) : MunicipalityDetailDTO;
+    public function deleteMunicipality(int $id) : Collection;
 
 }

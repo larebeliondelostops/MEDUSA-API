@@ -30,25 +30,28 @@ class VillavicencioSeeder extends Seeder
     public function run()
     {
         $this->call([
-            AlarmsTableSeeder::class,
-            //CRUDActionsSeeder::class,
-            FiberLinesTableSeeder::class,
-            FiberPointsTableSeeder::class,
+            //system
             SelectTypeSeeder::class,
             FieldsSeeder::class,
+            SlugsSeeder::class,
             ModulesSeeder::class,
             FormAlarmsSeeder::class,
             FormPollingPlacesSeeder::class,
             FormUsersSeeder::class,
-            HealthTableSeeder::class,
             IndicatorSeeder::class,
             MarkerTypeSeeder::class,
             MarkersSeeder::class,
             MenuBarSeeder::class,
-            MenuSeeder::class,         
-            PollingPlaceTableSeeder::class,
-            SlugsSeeder::class,
+            MenuSeeder::class,   
             SubMenuSeeder::class,
+             //CRUDActionsSeeder::class,
+
+            //Data
+            AlarmsTableSeeder::class,
+            FiberLinesTableSeeder::class,
+            FiberPointsTableSeeder::class,
+            HealthTableSeeder::class,
+            PollingPlaceTableSeeder::class,
             IpatsTableSeeder::class,
             TrafficLightsTableSeeder::class,
         ]);

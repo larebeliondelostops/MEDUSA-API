@@ -16,32 +16,26 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->bigInteger('idEventType')->unsigned();
+            $table->bigInteger('event_type_id')->unsigned();
             $table->string('name');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->integer('capacity');
             $table->string('place');
-            $table->string('authorizingEntity');
+            $table->string('authorizing_entity');
             $table->string('day');
             $table->string('month');
             $table->string('year');
             $table->timestamps();
             $table->index('uuid');
-            $table->foreign('idEventType')->references('id')->on('eventsType');
+            $table->foreign('event_type_id')->references('id')->on('events_type');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            // Eliminar la clave foránea 'idEventType'
-            $table->dropForeign(['idEventType']);
+            $table->dropForeign(['event_type_id']);
         });
 
         Schema::dropIfExists('events');

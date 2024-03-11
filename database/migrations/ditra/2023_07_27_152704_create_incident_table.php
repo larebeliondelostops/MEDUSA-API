@@ -19,12 +19,13 @@ return new class extends Migration
             $table->bigInteger('indicator');
             $table->foreign('indicator')->references('id')->on('indicators');
             $table->string('address')->nullable();
-            $table->text('description');
-            $table->string('position');
-            $table->string('day');
-            $table->string('month');
-            $table->string('year');
-            $table->string('image');
+            $table->text('description')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('day')->nullable();
+            $table->string('month')->nullable();
+            $table->string('year')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('reviewed')->default(false);
             $table->timestamps();
 

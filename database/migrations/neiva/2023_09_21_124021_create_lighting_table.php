@@ -16,27 +16,29 @@ return new class extends Migration
 
     public function up()
     {
-        Schema::create('lighting', function (Blueprint $table) {
+        Schema::create('lightings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->string('farola')->nullable();
+            $table->string('name')->nullable();
+            $table->string('street_light')->nullable();
             $table->string('sticker')->nullable();
-            $table->string('potencia')->nullable();
-            $table->string('tecnologia') ->nullable();
-            $table->string('cuadrante')->nullable();
-            $table->string('departamento')->nullable();
-            $table->string('municipio')->nullable();
-            $table->string('w')->nullable();
-            $table->string('h')->nullable();
-            $table->string('soporte')->nullable();
-            $table->string('transformador')->nullable();
-            $table->string('imagen')->nullable();
-            $table->json('position');
+            $table->string('power')->nullable();
+            $table->string('technology')->nullable();
+            $table->string('quadrant')->nullable();
+            $table->string('department')->nullable();
+            $table->string('municipality')->nullable();
+            $table->string('width')->nullable();
+            $table->string('height')->nullable();
+            $table->string('support')->nullable();
+            $table->string('transformer')->nullable();
+            $table->string('image')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
-
+        
             $table->index('uuid');
         });
+        
     }
 
     /**

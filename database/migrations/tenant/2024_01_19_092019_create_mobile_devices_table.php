@@ -20,7 +20,8 @@ return new class extends Migration
             $table->bigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
             $table->string('device_token')->unique();
-            $table->string('position')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->boolean('is_active_position')->default(true);
             //boleano para saber si el dispositivo quiere o no recibir notificaciones
             $table->boolean('is_active')->default(true);

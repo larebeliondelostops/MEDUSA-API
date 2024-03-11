@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
+use Illuminate\Support\Collection;
 
-use App\DTOs\Viper\Substate\SubstateDTO;
 
 /**
  * Interface SubstateInterface
@@ -20,27 +20,27 @@ interface SubstateInterface {
     /**
      * Obtener todos los subestados existentes.
      *
-     * @return \Illuminate\Support\Collection|SubstateDTO[] Colección de objetos SubstateDTO que representan los subestados.
+     * @return \Illuminate\Support\Collection Colección de objetos SubstateData que representan los subestados.
      */
-    public function getAllSubstates();
+    public function getAllSubstates() : Collection;
 
     /**
      * Almacenar un nuevo subestado en el sistema.
      *
-     * @param  \App\DTOs\Viper\Substate\SubstateDTO  $substateDTO Objeto SubstateDTO que contiene los datos de la nueva subestado.
-     * @return \App\DTOs\Viper\Substate\SubstateDTO Objeto SubstateDTO que representa la subestado recién creada.
+     * @param  \Illuminate\Support\Collection  $substateData Objeto SubstateData que contiene los datos de la nueva subestado.
+     * @return \Illuminate\Support\Collection Objeto SubstateData que representa la subestado recién creada.
      */
-    public function storeSubstate(SubstateDTO $substateDTO);
+    public function storeSubstate(Collection $substateData) : Collection;
 
     /**
      * Actualizar los datos de un subestado existente.
      *
      * @param  int  $substateId ID de la subestado que se va a actualizar.
-     * @param  \App\DTOs\Viper\Substate\SubstateDTO  $substateDTO Objeto SubstateDTO que contiene los nuevos datos de la subestado.
-     * @return \App\DTOs\Viper\Substate\SubstateDTO Objeto SubstateDTO que representa la subestado actualizada.
+     * @param  \Illuminate\Support\Collection  $substateData Objeto SubstateData que contiene los nuevos datos de la subestado.
+     * @return \Illuminate\Support\Collection Objeto SubstateData que representa la subestado actualizada.
      * @throws \Exception Se arroja si la subestado no se encuentra.
      */
-    public function updateSubstate($substateId, SubstateDTO $substateDTO);
+    public function updateSubstate(int $substateId, Collection $substateData) : Collection;
 
     /**
      * Eliminar un subestado existente.
@@ -49,15 +49,15 @@ interface SubstateInterface {
      * @return void
      * @throws \Exception Se arroja si el subestado no se encuentra.
      */
-    public function deleteSubstate($substateId);
+    public function deleteSubstate(int $substateId);
 
     /**
      * Obtener todos los subestados existentes por estado.
      *
-     * @return \Illuminate\Support\Collection|SubstateDTO[] Colección de objetos SubstateDTO que representan los subestados.
+     * @return \Illuminate\Support\Collection Colección de objetos SubstateData que representan los subestados.
      */
-    public function getAllSubstatesByState(int $stateId);
+    public function getAllSubstatesByState(int $stateId) : Collection;
 
-    public function getSubstateById(int $id): SubstateDTO;
+    public function getSubstateById(int $id): Collection;
 
 }

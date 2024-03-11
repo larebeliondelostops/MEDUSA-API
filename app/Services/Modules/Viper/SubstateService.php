@@ -2,12 +2,8 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\State\StateDTO;
-use App\DTOs\Viper\Substate\SubstateDetailDTO;
-use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Models\Modules\Viper\Substate;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
 /**
@@ -26,28 +22,21 @@ class SubstateService implements SubstateInterface
     /**
      * Obtiene todas los subestados existentes.
      *
-     * @return Collection|SubstateDTO[] Colección de objetos SubstateDTO que representan los subestados.
+     * @return Collection Colección de objetos SubstateDTO que representan los subestados.
      */
-    public function getAllSubstates()
+    public function getAllSubstates() : Collection
     {
-        $substates = Substate::all();
-        $substateDTOs = $substates->transform(function ($substate) {
-            $substate->load('state');
-            $data = $substate->toArray();
-            $data['state'] = new StateDTO($data['state']);
-            return new SubstateDetailDTO($data);
-        });
-
-        return $substateDTOs;
+        $substates = Substate::with(['state'])->get();
+        return collect($substates);
     }
 
     /**
      * Almacena un nuevo subestado en la base de datos.
      *
-     * @param SubstateDTO $substateDTO Objeto SubstateDTO que contiene los datos de la nuevo subestado.
-     * @return SubstateDTO Objeto SubstateDTO que representa el subestado recién creada.
+     * @param Collection $substateDTO Objeto SubstateDTO que contiene los datos de la nuevo subestado.
+     * @return Collection Objeto SubstateDTO que representa el subestado recién creada.
      */
-    public function storeSubstate(SubstateDTO $substateDTO)
+    public function storeSubstate(Collection $substateDTO) : Collection
     {
         // Crea una nueva instancia del modelo Substate y guarda los datos
 
@@ -55,26 +44,26 @@ class SubstateService implements SubstateInterface
         $substate->fill($substateDTO->toArray());
         $substate->save();
 
-        return new SubstateDTO($substate->toArray());
+        return collect($substate);
     }
 
     /**
      * Actualiza los datos de un subestado existente.
      *
      * @param int $substateId ID del subestado que se va a actualizar.
-     * @param SubstateDTO $substateDTO Objeto SubstateDTO que contiene los nuevos datos del subestado.
-     * @return SubstateDTO Objeto SubstateDTO que representa el subestado actualizada.
+     * @param Collection $substateDTO Objeto SubstateDTO que contiene los nuevos datos del subestado.
+     * @return Collection Objeto SubstateDTO que representa el subestado actualizada.
      * @throws \Exception Se arroja si el subestado no se encuentra.
      */
-    public function updateSubstate($substateId, SubstateDTO $substateDTO)
+    public function updateSubstate(int $substateId, Collection $substateDTO) : Collection
     {
         // Encuentra el subestado por su ID
         $substate = Substate::findOrFail($substateId);
         // Actualiza los datos del subestado
         $substate->update([
-            'name' => $substateDTO->name,
+            'name' => $substateDTO['name'],
         ]);
-        return new SubstateDTO($substate->toArray());
+        return collect($substate);
 
     }
 
@@ -84,7 +73,7 @@ class SubstateService implements SubstateInterface
      * @param int $substateId ID del subestado que se va a eliminar.
      * @throws \Exception Se arroja si el subestado no se encuentra.
      */
-    public function deleteSubstate($substateId)
+    public function deleteSubstate(int $substateId)
     {
         // Encuentra el subestado por su ID y lo elimina
         $substate = Substate::findOrFail($substateId);
@@ -96,21 +85,17 @@ class SubstateService implements SubstateInterface
      * Obtener todos los subestados existentes por estado.
      *
      * @param int $stateId ID del estado con el que se va a realizar la consulta de subestados.
-     * @return \Illuminate\Support\Collection|SubstateDTO[] Colección de objetos SubstateDTO que representan los subestados.
+     * @return \Illuminate\Support\Collection Colección de objetos SubstateDTO que representan los subestados.
      */
-    public function getAllSubstatesByState($stateId)
+    public function getAllSubstatesByState(int $stateId) : Collection
     {
         $substates = Substate::where('state_id', $stateId)->get();
-        $substates = $substates->transform(function ($substate) {
-            return (new SubstateDTO($substate->toArray()))->toArray(['state_id']);
-        });
-
-        return $substates;
+        return collect($substates)->except(['state_id']);
     }
 
-    public function getSubstateById(int $id) : SubstateDTO
+    public function getSubstateById(int $id) : Collection
     {
         $substateFound = Substate::findOrFail($id);
-        return new SubstateDTO($substateFound->toArray());
+        return collect($substateFound);
     }
 }

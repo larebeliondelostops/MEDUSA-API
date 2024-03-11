@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use Illuminate\Http\Request;
-use App\Http\Request\Viper\SubstateRequest;
-use App\Http\Controllers\Controller;
+use App\Http\Request\Modules\Viper\SubstateRequest;
 use App\DTOs\Viper\Substate\SubstateDTO;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 
@@ -56,14 +55,8 @@ class SubstateController extends BaseController
     public function store(SubstateRequest $request)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
-
-            // Crea un nuevo SubstateDTO con los datos del formulario
-            $substateDTO = new SubstateDTO($validatedData);
-
             // Llama al servicio para almacenar la nueva etapa
-            $newSubstate = $this->substateInterface->storeSubstate($substateDTO);
+            $newSubstate = $this->substateInterface->storeSubstate(collect($request->validated()));
 
             // Retorna la respuesta JSON con la nueva etapa creada
             return response()->json([
@@ -91,11 +84,8 @@ class SubstateController extends BaseController
                 'name' => 'required|string|max:255',
             ]);
 
-            // Crea un nuevo SubstateDTO con los datos actualizados
-            $substateDTO = new SubstateDTO($validatedData);
-
             // Llama al servicio para actualizar la etapa
-            $updatedSubstate = $this->substateInterface->updateSubstate($substateId, $substateDTO);
+            $updatedSubstate = $this->substateInterface->updateSubstate($substateId, collect($validatedData));
 
             // Retorna la respuesta JSON con la etapa actualizada
             return response()->json([
@@ -139,7 +129,7 @@ class SubstateController extends BaseController
             $substates = $this->substateInterface->getAllSubstatesByState($sateId);
 
             return response()->json([
-                'data' => $substates->toArray(['state_id']),
+                'data' => $substates,
             ], 200);
         } catch (\Exception $exception) {
             return $this->handleException($exception);

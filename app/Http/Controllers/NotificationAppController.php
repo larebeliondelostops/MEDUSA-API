@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use App\Http\Request\MobileDeviceRequest;
+use Exception;
 
 class NotificationAppController extends Controller
 {
@@ -18,7 +19,7 @@ class NotificationAppController extends Controller
         try {
             $deviceToken = $request->device_token;
             $username = $request->username;
-            
+
             // Verificar si el usuario ya existe en la tabla
             $user = User::where('email', $username)->first();
             $mobileDevice = $user->mobileDevice;
@@ -285,6 +286,11 @@ class NotificationAppController extends Controller
 
             $positions = $arrayOfArrays;
 
+            if (tenant('id') == 'ditra')
+            {
+                $positions = array_merge($positions, MovementEntitiesController::avlPosition());
+            }
+
             return Response::json($positions, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -323,6 +329,11 @@ class NotificationAppController extends Controller
                             'active' => $movil->is_active_position
                         ]
                     ];
+            }
+
+            if (tenant('id') == 'ditra')
+            {
+                $transformedData = array_merge($transformedData, MovementEntitiesController::avlUnits());
             }
 
             return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);

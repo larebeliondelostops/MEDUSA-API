@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         MultiSchemaMigrate::class,
         OneSchemaMigrate::class,
+        Commands\MovementUnits::class,
     ];
 
     /**

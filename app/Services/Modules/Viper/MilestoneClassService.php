@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\MilestoneClass\MilestoneClassDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\MilestoneClassInterface;
 use App\Models\Modules\Viper\MilestoneClass;
 use Exception;
@@ -23,77 +23,76 @@ class MilestoneClassService implements MilestoneClassInterface
     /**
      * Crea una nueva clase de hito.
      *
-     * @param  MilestoneClassDTO  $milestoneClassDTO
-     * @return MilestoneClassDTO
+     * @param  Collection  $milestoneClass Datos de la clase de hito a se creada.
+     * @return Collection Datos de la clase de hito recién creada.
      */
-    public function createNewMilestoneClass(MilestoneClassDTO $milestoneClassDTO): MilestoneClassDTO
+    public function createNewMilestoneClass(Collection $milestoneClass): Collection
     {
-        $milestoneClass = new MilestoneClass($milestoneClassDTO->toArray());
-        $milestoneClass->save();
+        $newMilestoneClass = new MilestoneClass($milestoneClass->toArray());
+        $newMilestoneClass->save();
 
-        return new MilestoneClassDTO($milestoneClass->toArray());
+        return collect($newMilestoneClass);
     }
 
     /**
      * Actualiza una clase de hito existente.
      *
-     * @param  MilestoneClassDTO  $milestoneClassDTO
-     * @param  int  $id
-     * @return MilestoneClassDTO
+     * @param  Collection  $milestoneClass Datos actualizados de la clase de hito.
+     * @param  int  $id Identificador único de la clase de hito a ser actualizado.
+     * @return Collection Daots de la clase de hito actualizado.
      */
-    public function updateMilestoneClass(MilestoneClassDTO $milestoneClassDTO, int $id): MilestoneClassDTO
+    public function updateMilestoneClass(Collection $milestoneClass, int $id): Collection
     {
         
-        $milestoneClass = MilestoneClass::findOrFail($id);
-        $milestoneClass->fill($milestoneClassDTO->toArray());
-        $milestoneClass->save();
+        $milestoneClassUpdate = MilestoneClass::findOrFail($id);
+        $milestoneClassUpdate->fill($milestoneClass->toArray());
+        $milestoneClassUpdate->save();
 
-        return new MilestoneClassDTO($milestoneClass->toArray());
+        return collect($milestoneClassUpdate);
     }
 
     /**
      * Obtiene todas las clases de hitos.
      *
-     * @return array de MilestoneClassDTO
+     * @return Collection Collection de Collections con todas las clases de hitos.
      */
-    public function getAllMilestoneClasses(): array
+    public function getAllMilestoneClasses(): Collection
     {
-        $milestoneClasses = MilestoneClass::all();
-        $milestoneClassDTOs = [];
-
-        foreach ($milestoneClasses as $milestoneClass) {
-            $milestoneClassDTOs[] = new MilestoneClassDTO($milestoneClass->toArray());
-        }
-
-        return $milestoneClassDTOs;
+        $milestoneClassGot = MilestoneClass::all();
+        $milestoneClasses = $milestoneClassGot->transform(
+            function (MilestoneClass $milestoneClass)
+            {
+                return collect($milestoneClass);
+            }
+        );
+        return $milestoneClasses;
     }
 
     /**
      * Obtiene una clase de hito específica por su ID.
      *
-     * @param  int  $id
-     * @return MilestoneClassDTO
+     * @param  int  $id Identificador único de la clase de hito.
+     * @return Collection Daots de la clase de hito.
      */
-    public function getMilestoneClass(int $id): MilestoneClassDTO
+    public function getMilestoneClass(int $id): Collection
     {
 
         $milestoneClass = MilestoneClass::findOrFail($id);
 
-        return new MilestoneClassDTO($milestoneClass->toArray());
+        return collect($milestoneClass);
     }
 
     /**
      * Elimina una clase de hito por su ID.
      *
-     * @param  int  $id
-     * @return MilestoneClassDTO
+     * @param  int  $id Identificador único de la clase de hito a ser eliminado.
+     * @return Collection
      */
-    public function deleteMilestoneClass(int $id): MilestoneClassDTO
+    public function deleteMilestoneClass(int $id): Collection
     {
         $milestoneClass = MilestoneClass::findOrFail($id);
-        $milestoneClassDTO = new MilestoneClassDTO($milestoneClass->toArray());
         $milestoneClass->delete();
 
-        return $milestoneClassDTO;
+        return collect($milestoneClass);
     }
 }

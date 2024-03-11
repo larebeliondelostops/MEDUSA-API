@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Sector\SectorDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para el servicio de manejo de sectores.
@@ -20,34 +20,40 @@ interface SectorInterface {
     /**
      * Crea un nuevo sector.
      *
-     * @param SectorDTO $sectorDTO DTO que contiene la información del sector a crear.
-     * @return SectotDTO
+     * @param Collection $sector Collection que contiene la información del sector a crear.
+     * @return Collection Collection del sector creado
      */
-    public function createNewSector(SectorDTO $sectorDTO) :SectorDTO;
+    public function createNewSector(Collection $sector) :Collection;
 
     /**
      * Actualiza un sector existente.
      *
-     * @param SectorDTO $sectorDTO DTO que contiene la información actualizada del sector.
+     * @param Collection $sector Collection que contiene la información actualizada del sector.
      * @param int $id Identificador único del sector a actualizar.
-     * @return void
+     * @return Collection Collection del sector actualizado.
      */
-    public function updateSector(SectorDTO $sectorDTO, int $id): void;
+    public function updateSector(Collection $sector, int $id): Collection;
 
     /**
      * Obtiene todos los sectores existentes.
      *
-     * @return array Un array de objetos SectorDTO representando todos los sectores.
+     * @return Collection Collection de Collections que representando todos los sectores.
      */
-    public function getAllSectors(): array;
+    public function getAllSectors(): Collection;
 
     /**
      * Elimina un sector por su identificador único.
      *
      * @param int $id Identificador único del sector a eliminar.
-     * @return SectorDTO DTO del sector eliminado.
+     * @return Collection Collection del sector eliminado.
      */
-    public function deleteSector(int $id): SectorDTO;
+    public function deleteSector(int $id): Collection;
 
-    public function getSectorById(int $id) : SectorDTO;
+    /**
+     * Obtiene un alcance por su identificador único.
+     *
+     * @param int $Id Identificador único del alcance.
+     * @return Collection Collection del alcance encontrado.
+     */
+    public function getSectorById(int $id) : Collection;
 }

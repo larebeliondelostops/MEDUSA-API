@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\SectorRequest;
+use App\Http\Request\Modules\Viper\SectorRequest;
 use App\Interfaces\Modules\Viper\SectorInterface;
-use App\DTOs\Viper\Sector\SectorDTO;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para la gestión de sectores en la aplicación Viper.
@@ -46,14 +46,12 @@ class SectorController extends BaseController
     public function store(SectorRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $sectorDTO = new SectorDTO($validatedData);
-            $sectorCreatedDTO = $this->sectorInterface->createNewSector($sectorDTO);
+            $sectorCreated = $this->sectorInterface->createNewSector(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Sector created successfully.',
-                'data'    => $sectorCreatedDTO
-            ], 201);
+                'data'    => $sectorCreated
+            ], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -69,14 +67,12 @@ class SectorController extends BaseController
     public function update(SectorRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $sectorDTO = new SectorDTO($validatedData);
-            $stateUpdatedDTO = $this->sectorInterface->updateSector($sectorDTO, $id);
+            $stateUpdated = $this->sectorInterface->updateSector(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Sector updated successfully.',
-                'data'    => $stateUpdatedDTO,
-            ], 200);
+                'data'    => $stateUpdated,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -94,7 +90,7 @@ class SectorController extends BaseController
             $sectors = $this->sectorInterface->getAllSectors();
             return response()->json([
                 'data' => $sectors,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -110,8 +106,11 @@ class SectorController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $sectorDTO = $this->sectorInterface->deleteSector($id);
-            return response()->json($sectorDTO->toArray(), 200);
+            $sector = $this->sectorInterface->deleteSector($id);
+            return response()->json([
+                'message' => 'Sector deleted successfully',
+                "data" => $sector
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }

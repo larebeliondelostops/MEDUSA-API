@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\SpecificObjectiveRequest;
+use App\Http\Request\Modules\Viper\SpecificObjectiveRequest;
 use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
-use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para la gestión de Objetivos Específicos en la aplicación Viper.
@@ -31,6 +31,8 @@ class SpecificObjectiveController extends BaseController
      */
     public function __construct(SpecificObjectiveInterface $specificObjectiveInterface)
     {
+        parent::__construct();
+
         $this->specificObjectiveInterface = $specificObjectiveInterface;
     }
 
@@ -43,16 +45,12 @@ class SpecificObjectiveController extends BaseController
     public function store(SpecificObjectiveRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $specificObjectiveDTO = new SpecificObjectiveDTO($validatedData);
-
-            $specificObjectiveCreateDTO = $this->specificObjectiveInterface->createNewSpecificObjective($specificObjectiveDTO);
+            $specificObjectiveCreate = $this->specificObjectiveInterface->createNewSpecificObjective(collect($request->validated()));
 
             return response()->json([
-                'success' => true,
                 'message' => 'Specific Objective created successfully.',
-                'data' => $specificObjectiveCreateDTO,
-            ], 201);
+                'data' => $specificObjectiveCreate,
+            ], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -68,16 +66,12 @@ class SpecificObjectiveController extends BaseController
     public function update(SpecificObjectiveRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $specificObjectiveDTO = new SpecificObjectiveDTO($validatedData);
-
-            $specificObjectiveUpdateDTO = $this->specificObjectiveInterface->updateSpecificObjective($specificObjectiveDTO, $id);
+            $specificObjectiveUpdate = $this->specificObjectiveInterface->updateSpecificObjective(collect( $request->validated()), $id);
 
             return response()->json([
-                'success' => true,
                 'message' => 'Specific Objective updated successfully.',
-                'data' => $specificObjectiveUpdateDTO,
-            ], 200);
+                'data' => $specificObjectiveUpdate,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -94,7 +88,9 @@ class SpecificObjectiveController extends BaseController
     {
         try {
             $specificObjectives = $this->specificObjectiveInterface->getAllSpecificObjectiveByScope($scopeId);
-            return response()->json($specificObjectives, 200);
+            return response()->json([
+                "data" => $specificObjectives
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -110,8 +106,10 @@ class SpecificObjectiveController extends BaseController
     public function show(Request $request, int $id)
     {
         try {
-            $specificObjectiveDTO = $this->specificObjectiveInterface->getSpecificObjective($id);
-            return response()->json($specificObjectiveDTO->toArray(), 200);
+            $specificObjective = $this->specificObjectiveInterface->getSpecificObjective($id);
+            return response()->json([
+                "data" => $specificObjective
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -127,8 +125,11 @@ class SpecificObjectiveController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $specificObjectiveDTO = $this->specificObjectiveInterface->deleteSpecificObjective($id);
-            return response()->json($specificObjectiveDTO->toArray(), 200);
+            $specificObjective = $this->specificObjectiveInterface->deleteSpecificObjective($id);
+            return response()->json([
+                'message' => 'Specific Objetive deleted successfully',
+                "data" => $specificObjective
+            ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }

@@ -20,8 +20,29 @@ class MilestoneClass extends Model
 {
     use HasFactory;
 
+    /**
+     * Nombre de la tabla en la base de datos.
+     *
+     * @var string
+     */
     protected $table = 'milestone_classes';
 
+    /**
+     * Los atributos que son ocultado en masa.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
+
+    /**
+     * Los atributos que son asignables en masa.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
     ];

@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Indicator\IndicatorDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\IndicatorInterface;
 use App\Models\Modules\Viper\Indicator;
 use Exception;
@@ -24,78 +24,76 @@ class IndicatorService implements IndicatorInterface
     /**
      * Crea un nuevo indicador en el sistema.
      *
-     * @param IndicatorDTO $indicatorDTO Datos del indicador a crear.
-     * @return IndicatorDTO Datos del nuevo indicador creado.
+     * @param Collection $indicator Datos del indicador a crear.
+     * @return Collection Datos del nuevo indicador creado.
      */
-    public function createNewIndicator(IndicatorDTO $indicatorDTO): IndicatorDTO
+    public function createNewIndicator(Collection $indicator): Collection
     {
-        $indicator = new Indicator($indicatorDTO->toArray());
-        $indicator->save();
+        $newIndicator = new Indicator($indicator->toArray());
+        $newIndicator->save();
 
-        return new IndicatorDTO($indicator->toArray());
+        return collect($indicator);
     }
 
     /**
      * Actualiza un indicador existente en el sistema.
      *
-     * @param IndicatorDTO $indicatorDTO Datos actualizados del indicador.
+     * @param Collection $indicator Datos actualizados del indicador.
      * @param int $id Identificador del indicador a actualizar.
-     * @return IndicatorDTO Datos del indicador actualizado.
-     * @throws Exception Si el indicador no se encuentra.
+     * @return Collection Datos del indicador actualizado.
      */
-    public function updateIndicator(IndicatorDTO $indicatorDTO, int $id): IndicatorDTO
+    public function updateIndicator(Collection $indicator, int $id): Collection
     {
-        $indicator = Indicator::findOrFail($id);
-        $indicator->fill($indicatorDTO->toArray());
-        $indicator->save();
+        $indicatorUpdate = Indicator::findOrFail($id);
+        $indicatorUpdate->fill($indicator->toArray());
+        $indicatorUpdate->save();
 
-        return new IndicatorDTO($indicator->toArray());
+        return collect($indicatorUpdate);
     }
 
     /**
      * Obtiene todos los indicadores asociados a un producto específico.
      *
      * @param int $productId Identificador del producto.
-     * @return array Colección de IndicatorDTO representando los indicadores asociados al producto.
+     * @return Collection Colección de Indicatores representando los indicadores asociados al producto.
      */
-    public function getAllIndicatorsByProduct(int $productId): array
+    public function getAllIndicatorsByProduct(int $productId): Collection
     {
-        $indicators = Indicator::where('product_id', $productId)->get();
+        $indicatorGot = Indicator::with('measurementUnit')->where('product_id', $productId)->get();
     
-        $indicatorDTOs = $indicators->map(function ($indicator) {
-            return new IndicatorDTO($indicator->toArray());
-        })->all();
-    
-        return $indicatorDTOs;
+        $indicators = $indicatorGot->transform(
+            function (Indicator $indicator)
+            {
+                return collect($indicator);
+            }
+        );
+        return $indicators;
     }
 
     /**
      * Obtiene los datos de un indicador específico por su identificador.
      *
      * @param int $id Identificador del indicador.
-     * @return IndicatorDTO Datos del indicador solicitado.
-     * @throws Exception Si el indicador no se encuentra.
+     * @return Collection Datos del indicador solicitado.
      */
-    public function getIndicator(int $id): IndicatorDTO
+    public function getIndicator(int $id): Collection
     {
-        $indicator = Indicator::findOrFail($id);
+        $indicator = Indicator::with('measurementUnit')->findOrFail($id);
 
-        return new IndicatorDTO($indicator->toArray());
+        return collect($indicator);
     }
 
     /**
      * Elimina un indicador específico por su identificador.
      *
      * @param int $id Identificador del indicador a eliminar.
-     * @return IndicatorDTO Datos del indicador eliminado.
-     * @throws Exception Si el indicador no se encuentra.
+     * @return Collection Datos del indicador eliminado.
      */
-    public function deleteIndicator(int $id): IndicatorDTO
+    public function deleteIndicator(int $id): Collection
     {
         $indicator = Indicator::findOrFail($id);
-        $indicatorDTO = new IndicatorDTO($indicator->toArray());
         $indicator->delete();
 
-        return $indicatorDTO;
+        return collect($indicator);
     }
 }

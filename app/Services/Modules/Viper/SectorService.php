@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Sector\SectorDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\SectorInterface;
 use App\Models\Modules\Viper\Sector;
 use Exception;
@@ -23,66 +23,67 @@ class SectorService implements SectorInterface
     /**
      * Crea un nuevo sector.
      *
-     * @param SectorDTO $sectorDTO DTO que contiene la información del sector a crear.
-     * @return SectorDTO
+     * @param Collection $sector Datos que contiene la información del sector a crear.
+     * @return Collection Datos del sector recién creado.
      */
-    public function createNewSector(SectorDTO $sectorDTO): SectorDTO
+    public function createNewSector(Collection $sector): Collection
     {
-        $sector = new Sector($sectorDTO->toArray());
-        $sector->save();
-        return new SectorDTO($sector->toArray());
+        $newSector = new Sector($sector->toArray());
+        $newSector->save();
+        return collect($newSector);
     }
 
     /**
      * Actualiza un sector existente.
      *
-     * @param SectorDTO $sectorDTO DTO que contiene la información actualizada del sector.
+     * @param Collection $sector Datos que contiene la información actualizada del sector.
      * @param int $id Identificador único del sector a actualizar.
-     * @return void
+     * @return Collection Datos del sector actualizado.
      */
-    public function updateSector(SectorDTO $sectorDTO, int $id): void
+    public function updateSector(Collection $sector, int $id): Collection
     {
-        $sector = Sector::findOrFail($id);
-        $sector->fill($sectorDTO->toArray());
-        $sector->save();
+        $sectorUpdate = Sector::findOrFail($id);
+        $sectorUpdate->fill($sector->toArray());
+        $sectorUpdate->save();
+        return collect($sectorUpdate);
     }
 
     /**
      * Obtiene todos los sectores existentes.
      *
-     * @return array Un array de objetos SectorDTO representando todos los sectores.
+     * @return Collection Collection de Collection representando todos los sectores.
      */
-    public function getAllSectors(): array
+    public function getAllSectors(): Collection
     {
-        $sectors = Sector::all();
-        $sectorDTOs = [];
+        $sectorGot = Sector::all();
+        $sectors = $sectorGot->transform(
+            function(Sector $sector)
+            {
+                return collect($sector);
+            }
+        );
 
-        foreach ($sectors as $sector) {
-            $sectorDTOs[] = new SectorDTO($sector->toArray());
-        }
-
-        return $sectorDTOs;
+        return $sectors;
     }
 
     /**
      * Elimina un sector por su identificador único.
      *
      * @param int $id Identificador único del sector a eliminar.
-     * @return SectorDTO DTO del sector eliminado.
+     * @return Collection Datos del sector eliminado.
      * @throws Exception Si el sector no existe.
      */
-    public function deleteSector(int $id): SectorDTO
+    public function deleteSector(int $id): Collection
     {
         $sector = Sector::findOrFail($id);
-        $sectorDTO = new SectorDTO($sector->toArray());
         $sector->delete();
 
-        return $sectorDTO;
+        return collect($sector);
     }
 
-    public function getSectorById(int $id) : SectorDTO
+    public function getSectorById(int $id) : Collection
     {
         $sectorFound = Sector::findOrFail($id);
-        return new SectorDTO($sectorFound->toArray());
+        return collect($sectorFound);
     }
 }

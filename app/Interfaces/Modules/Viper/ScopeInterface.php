@@ -21,7 +21,7 @@ interface ScopeInterface
      * Crea un nuevo alcance.
      *
      * @param Collection $scope Collection que contiene la información del alcance a crear.
-     * @return void
+     * @return Collection Collection del alcance creado
      */
     public function createNewScope(Collection $scope): Collection;
 
@@ -30,7 +30,7 @@ interface ScopeInterface
      *
      * @param Collection $scope Collection que contiene la información actualizada del alcance.
      * @param int $id Identificador del alcance a actualizar.
-     * @return void
+     * @return Collection Collection del alcance actualizado.
      */
     public function updateScope(Collection $scope,int $id): Collection;
 
@@ -45,10 +45,10 @@ interface ScopeInterface
     /**
      * Obtiene un alcance por su identificador único.
      *
-     * @param string $scopeId Identificador único del alcance.
+     * @param int $id Identificador único del alcance.
      * @return Collection Collection del alcance encontrado.
      */
-    public function getScope(string $id): Collection;
+    public function getScope(int $id): Collection;
 
     /**
      * Elimina un alcance por su identificador único.

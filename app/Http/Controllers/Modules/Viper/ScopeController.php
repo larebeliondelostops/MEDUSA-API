@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\ScopeRequest;
+use App\Http\Request\Modules\Viper\ScopeRequest;
 use App\Interfaces\Modules\Viper\ScopeInterface;
-use App\DTOs\Viper\Scope\ScopeDTO;
-use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Response;
 
 /**
  * Controlador para la gestión de Ámbitos (Scopes) en la aplicación Viper.
@@ -32,6 +31,8 @@ class ScopeController extends BaseController
      */
     public function __construct(ScopeInterface $scopeInterface)
     {
+        parent::__construct();
+
         $this->scopeInterface = $scopeInterface;
     }
 
@@ -44,15 +45,12 @@ class ScopeController extends BaseController
     public function store(ScopeRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
-            $scopeCreatedDTO = $this->scopeInterface->createNewScope($validatedData);
+            $scopeCreated = $this->scopeInterface->createNewScope(collect($request->validated()));
 
             return response()->json([
-                'success' => true,
                 'message' => 'Scope created successfully.',
-                'data'    => $scopeCreatedDTO,
-            ], 201);
+                'data'    => $scopeCreated,
+            ], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -68,18 +66,12 @@ class ScopeController extends BaseController
     public function update(ScopeRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $scopeDTO = new ScopeDTO($validatedData);
-
-            $scopeUpdateDTO = $this->scopeInterface->updateScope($scopeDTO, $id);
-            
-            $scopeDTO->id = $id;
+            $scopeUpdate = $this->scopeInterface->updateScope(collect($request->validated()), $id);
             
             return response()->json([
-                'success' => true,
                 'message' => 'Scope updated successfully.',
-                'data' => $scopeUpdateDTO,
-            ], 200);
+                'data' => $scopeUpdate,
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -95,7 +87,9 @@ class ScopeController extends BaseController
     {
         try {
             $scopes = $this->scopeInterface->getScopeByProject($projectId);
-            return response()->json($scopes, 200);
+            return response()->json([
+                "data" => $scopes
+            ],Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -111,8 +105,10 @@ class ScopeController extends BaseController
     public function show(Request $request, int $id)
     {
         try {
-            $scopeDTO = $this->scopeInterface->getScope($id);
-            return response()->json($scopeDTO->toArray(), 200);
+            $scope = $this->scopeInterface->getScope($id);
+            return response()->json([
+                "data" => $scope
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -128,8 +124,11 @@ class ScopeController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $scopeDTO = $this->scopeInterface->deleteScope($id);
-            return response()->json($scopeDTO->toArray(), 200);
+            $scope = $this->scopeInterface->deleteScope($id);
+            return response()->json([
+                'message' => 'Scope deleted successfully',
+                "data" => $scope
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }

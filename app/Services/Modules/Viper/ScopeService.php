@@ -2,7 +2,6 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Scope\ScopeDTO;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ScopeInterface;
 use App\Models\Modules\Viper\Scope;
@@ -10,80 +9,79 @@ use App\Models\Modules\Viper\Scope;
 /**
  * Servicio para la gestión de alcances (scopes) en la aplicación Viper.
  *
+ * Este servicio implementa la interfaz ScopeInterface, proporcionando la lógica de negocio para la gestión del alcance. Incluye operaciones para la creación, actualización, eliminación, y recuperación de estados y sus detalles.
+ * 
  * @package App\Services\Modules\Viper
  * @author Jhon Orjuela <jhonfanor.06.2000@gmail.com>
  * @copyright 2024 Ignicion S.A.S.
- * @version v1.0.0
+ * @version v2.0.0
  */
 class ScopeService implements ScopeInterface
 {
     /**
      * Crea un nuevo alcance (scope) en la base de datos.
      *
-     * @param Collection $scopeDTO Datos del alcance a ser creado.
-     * @return Collection
+     * @param Collection $scope Datos del alcance a ser creado.
+     * @return Collection Datos del alcance recién creado.
      */
     public function createNewScope(Collection $scope): Collection
     {
-        $scope = new Scope($scope->toArray);
-        $scope->save();
-        return New ScopeDTO($scope->toArray());
+        $newScope = new Scope($scope->toArray());
+        $newScope->save();
+        return collect($newScope);
     }
 
     /**
      * Actualiza un alcance existente en la base de datos.
      *
-     * @param ScopeDTO $scopeDTO Datos actualizados del alcance.
+     * @param Collection $scope Datos actualizados del alcance.
      * @param int $id Identificador único del alcance a ser actualizado.
-     * @return ScopeDTO
+     * @return Collection Datos del estado actualizado.
      */
-    public function updateScope(ScopeDTO $scopeDTO, int $id): ScopeDTO
+    public function updateScope(Collection $scope, int $id): Collection
     {
-        $scope = Scope::findOrFail($id);
-        $data = $scopeDTO->toArray();
-        $scope->fill($data);
-        $scope->save();
-        return New ScopeDTO($scope->toArray());
+        $scopeUpdate = Scope::findOrFail($id);
+        $scopeUpdate->fill($scope->toArray());
+        $scopeUpdate->save();
+        return collect($scopeUpdate);
     }
 
     /**
      * Obtiene un alcance por proyecto.
      *
      * @param string $projectBpin Identificador del proyecto asociado al alcance.
-     * @return ScopeDTO
+     * @return Collection Collection de Collections de los alcances solicitados.
      */
-    public function getScopeByProject(string $projectBpin): ScopeDTO
+    public function getScopeByProject(string $projectBpin): Collection
     {
         $scope = Scope::where('project_id', $projectBpin)->firstOrFail();
 
-        return new ScopeDTO($scope->toArray());
+        return collect($scope);
     }
 
     /**
      * Obtiene un alcance por su identificador único.
      *
      * @param string $id Identificador único del alcance.
-     * @return ScopeDTO
+     * @return Collection Datos del alcance solicitado.
      */
-    public function getScope(string $id): ScopeDTO
+    public function getScope(int $id): Collection
     {
         $scope = Scope::findOrFail($id);
-
-        return new ScopeDTO($scope->toArray());
+        return collect($scope);
     }
 
     /**
      * Elimina un alcance existente en la base de datos.
      *
      * @param int $id Identificador único del alcance a ser eliminado.
-     * @return ScopeDTO Datos del alcance eliminado.
+     * @return Collection Datos del alcance eliminado.
      */
-    public function deleteScope(int $id): ScopeDTO
+    public function deleteScope(int $id): Collection
     {
         $scope = Scope::findOrFail($id);
-        $scopeDTO = new ScopeDTO($scope->toArray());
         $scope->delete();
 
-        return $scopeDTO;
+        return collect($scope);
     }
 }

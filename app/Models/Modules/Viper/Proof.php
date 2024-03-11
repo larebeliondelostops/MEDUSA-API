@@ -4,7 +4,7 @@ namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Viper\Project;
+use App\Models\Modules\Viper\Project;
 
 /**
  * Modelo Eloquent para la tabla 'proofs'.
@@ -37,6 +37,17 @@ class Proof extends Model
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * Los atributos que son ocultado en masa.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
 
     /**
      * Los atributos que son asignables en masa.

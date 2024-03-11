@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Interfaces\Modules\Viper;
-use App\DTOs\Viper\Department\DepartmentRequestDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para la gestión de departamentos en el módulo VIPER.
@@ -9,57 +9,57 @@ use App\DTOs\Viper\Department\DepartmentRequestDTO;
  * Define los métodos necesarios para la creación, recuperación, actualización y eliminación de departamentos.
  * Estos métodos serán implementados por la clase que gestione la lógica de negocio relacionada con los departamentos.
  *
- * @package    App\Interfaces\Viper
+ * @package    App\Interfaces\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v2.0.0
  */
 interface DepartmentInterface
 {
     /**
      * Crea un nuevo departamento.
      *
-     * @param DepartmentRequestDTO $departmentDTO DTO con la información del departamento a crear.
-     * @return DepartmentRequestDTO DTO del departamento recién creado.
+     * @param Collection $departmentData Data con la información del departamento a crear.
+     * @return Collection Data del departamento recién creado.
      */
-    public function createNewDepartment(DepartmentRequestDTO $departmentDTO): DepartmentRequestDTO;
+    public function createNewDepartment(Collection $departmentData): Collection;
 
      /**
      * Obtiene todos los departamentos disponibles.
      *
-     * @return array Arreglo de DepartmentRequestDTO de todos los departamentos.
+     * @return Collection Arreglo de DepartmentRequestData de todos los departamentos.
      */
-    public function getAllDepartments(): array;
+    public function getAllDepartments(): Collection;
 
     /**
      * Obtiene un listado detallado de todos los departamentos.
      *
-     * @return array Arreglo de DepartmentRequestDTO con detalles de todos los departamentos.
+     * @return array Arreglo de DepartmentRequestData con detalles de todos los departamentos.
      */
-    public function getAllDepartmentsDetail() : array;
+    public function getAllDepartmentsDetail() : Collection;
 
     /**
      * Obtiene un departamento por su ID.
      *
      * @param int $id Identificador del departamento.
-     * @return DepartmentRequestDTO DTO del departamento solicitado.
+     * @return Collection Data del departamento solicitado.
      */
-    public function getDepartmentById(int $id) : DepartmentRequestDTO;
+    public function getDepartmentById(int $id) : Collection;
 
     /**
      * Actualiza un departamento existente.
      *
-     * @param DepartmentRequestDTO $departmentRequestDTO DTO con la nueva información del departamento.
+     * @param Collection $departmentRequestData Data con la nueva información del departamento.
      * @param int $id ID del departamento a actualizar.
-     * @return DepartmentRequestDTO DTO del departamento actualizado.
+     * @return Collection Data del departamento actualizado.
      */
-    public function updateDepartment(DepartmentRequestDTO $departmentDTO, int $id) : DepartmentRequestDTO;
+    public function updateDepartment(Collection $departmentData, int $id) : Collection;
 
     /**
      * Elimina un departamento.
      *
      * @param int $id ID del departamento a eliminar.
-     * @return DepartmentRequestDTO DTO del departamento eliminado.
+     * @return Collection Data del departamento eliminado.
      */
-    public function deleteDepartment(int $id) : DepartmentRequestDTO;
+    public function deleteDepartment(int $id) : Collection;
 }

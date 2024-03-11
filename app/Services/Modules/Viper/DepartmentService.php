@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Services\Modules\Viper;
-use App\DTOs\Viper\Department\DepartmentDetailDTO;
-use App\DTOs\Viper\Department\DepartmentRequestDTO;
-use App\DTOs\Viper\Location\LocationRequestDTO;
-use App\DTOs\Viper\Municipality\MunicipalityRequestDTO;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
 use App\Interfaces\Modules\Viper\DepartmentInterface;
 use App\Models\Modules\Viper\Department;
 use App\Models\Viper\Municipality;
+use Illuminate\Support\Collection;
 
 /**
  * Servicio para la gestión de departamentos en el módulo VIPER.
@@ -20,7 +17,7 @@ use App\Models\Viper\Municipality;
  * @package    App\Services\Modules\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.3
+ * @version    v2.0.0
  */
 class DepartmentService implements DepartmentInterface
 {
@@ -34,115 +31,86 @@ class DepartmentService implements DepartmentInterface
     /**
      * Crea un nuevo departamento y lo guarda en la base de datos.
      *
-     * @param DepartmentRequestDTO $departmentDTO DTO con la información del departamento a crear.
-     * @return DepartmentRequestDTO DTO del departamento recién creado.
+     * @param Collection $departmentData Data con la información del departamento a crear.
+     * @return Collection Data del departamento recién creado.
      */
-    public function createNewDepartment(DepartmentRequestDTO $departmentRequestDTO) : DepartmentRequestDTO
+    public function createNewDepartment(Collection $departmentRequestData) : Collection
     {
-        $departmentRequestDTO->coordinate = $this->coordinatesInterface
-                                            ->createNewCoordinates($departmentRequestDTO->coordinate);
+        $departmentRequestData['coordinate'] = $this->coordinatesInterface
+                                            ->createNewCoordinates(collect($departmentRequestData['coordinate']));
         $newDepartment = new Department(
-            $departmentRequestDTO->toArray() +
-            ['coordinate_id' => $departmentRequestDTO->coordinate->id]
+            $departmentRequestData->toArray() +
+            ['coordinate_id' => $departmentRequestData['coordinate']['id']]
         );
         $newDepartment->save();
         $newDepartment->load('coordinate');
-        return new DepartmentRequestDTO(
-            $newDepartment->toArray()
-        );
+        return collect($newDepartment);
     }
 
     /**
      * Obtiene todos los departamentos disponibles.
      *
-     * @return array Array de DepartmentDTO de todos los departamentos.
+     * @return array Array de DepartmentData de todos los departamentos.
      */
-    public function getAllDepartments() : array
+    public function getAllDepartments() : Collection
     {
         $departmentsGot = Department::with('coordinate')->get();
-        $departmentsDTO = $departmentsGot->transform(
-            fn (Department $department) => new DepartmentRequestDTO($department->toArray())
-        );
-        return $departmentsDTO->toArray();
+        return collect($departmentsGot);
     }
 
     /**
      * Obtiene un listado detallado de todos los departamentos, incluyendo sus municipios.
      *
-     * @return array Array de DepartmentDetailDTO con detalles de todos los departamentos.
+     * @return array Array de DepartmentDetailData con detalles de todos los departamentos.
      */
-    public function getAllDepartmentsDetail(): array
+    public function getAllDepartmentsDetail(): Collection
     {
         $departmentsGot = Department::with('municipalities', 'municipalities.coordinate', 'coordinate')->get();
-
-        $departmentsDetailDTO = $departmentsGot->map(
-            function (Department $department)
-            {
-                $data = $department->toArray();
-                $data['municipalities'] = $department->municipalities->map(
-                    function (Municipality $municipality)
-                    {
-                        $data = $municipality->toArray();
-                        return new MunicipalityRequestDTO($data);
-                    }
-                )->toArray();
-            return new DepartmentDetailDTO($data);
-            }
-        );
-
-        return $departmentsDetailDTO->toArray();
+        return collect($departmentsGot);
     }
 
     /**
      * Recupera un departamento por su ID y retorna sus detalles.
      *
      * @param int $id ID del departamento a recuperar.
-     * @return DepartmentRequestDTO DTO del departamento solicitado.
+     * @return Collection Data del departamento solicitado.
      */
-    public function getDepartmentById(int $id) : DepartmentRequestDTO
+    public function getDepartmentById(int $id) : Collection
     {
         $department = Department::with('coordinate')->findOrFail($id);
-        $departmentDTO = new DepartmentRequestDTO(
-            $department->toArray()
-        );
-        return $departmentDTO;
+        return collect($department);
     }
 
     /**
      * Actualiza un departamento existente identificado por su ID.
      *
-     * @param DepartmentRequestDTO $departmentDTO DTO con la nueva información del departamento.
+     * @param Collection $departmentData Data con la nueva información del departamento.
      * @param int $id ID del departamento a actualizar.
-     * @return DepartmentRequestDTO DTO del departamento actualizado.
+     * @return Collection Data del departamento actualizado.
      */
-    public function updateDepartment(DepartmentRequestDTO $departmentDTO, int $id) : DepartmentRequestDTO
+    public function updateDepartment(Collection $departmentData, int $id) : Collection
     {
         $department = Department::with('coordinate')->findOrFail($id);
-        $departmentDTO->coordinate = $this->coordinatesInterface->updateCoordinatesById(
-            $departmentDTO->coordinate,
+        $departmentData['coordinate'] = $this->coordinatesInterface->updateCoordinatesById(
+            collect($departmentData['coordinate']),
             $department->coordinate->id
         );
-        $department->fill($departmentDTO->toArray());
+        $department->fill($departmentData->toArray());
         $department->save();
         unset($department['coordinate']); // eliminamos los datos desactualizados
-        $departmentDTO->fill($department->toArray());
-        return $departmentDTO;
+        return collect($department);
     }
 
     /**
      * Elimina un departamento identificado por su ID y retorna los detalles del departamento eliminado.
      *
      * @param int $id ID del departamento a eliminar.
-     * @return DepartmentRequestDTO DTO del departamento eliminado.
+     * @return Collection Data del departamento eliminado.
      */
-    public function deleteDepartment(int $id) : DepartmentRequestDTO
+    public function deleteDepartment(int $id) : Collection
     {
         $department = Department::with('coordinate')->findOrFail($id);
-        $data = $department->toArray();
-        $departmentDeletedDTO = new DepartmentRequestDTO(
-            $data
-        );
         $department->delete();
-        return $departmentDeletedDTO;
+        return collect($department);
     }
 }

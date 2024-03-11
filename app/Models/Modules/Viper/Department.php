@@ -15,6 +15,7 @@ class Department extends Model
         "name",
         'coordinate_id',
     ] ;
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     protected static function boot()
     {

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\AvlHistoryCoordinates;
 use App\Models\Tenant;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Stancl\Tenancy\Concerns\TenantAwareCommand;
 
 class MovementUnits extends Command
@@ -27,19 +28,27 @@ class MovementUnits extends Command
 
     public function handle()
     {
-        $historicos = AvlHistoryCoordinates::all();
+        DB::table('avl_history_coordinates')->orderBy('imei', 'desc')
+        ->chunk(40, function ($historicals) {
+            // Agrupa los registros del lote actual por 'imei'
+            DB::beginTransaction();
+            foreach ($historicals as $historical)
+            {
+                $posiciones = json_decode($historical->position, true);
 
-        foreach ($historicos as $historico)
-        {
+                $firstElement = array_shift($posiciones);
+                array_push($posiciones, $firstElement);
 
-            $posiciones = json_decode($historico->position, true);
+                $posiciones = json_encode($posiciones);
 
-            $firstElement = array_shift($posiciones);
-            array_push($posiciones, $firstElement);
+                DB::table('avl_history_coordinates')
+                    ->where('imei', $historical->imei)
+                    ->update(['position' => $posiciones]);
 
-            $historico->position = json_encode($posiciones);
-            $historico->save();
-        }
+            }
+            DB::commit();
+
+        });
     }
 
     protected function getTenants()

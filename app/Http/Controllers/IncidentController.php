@@ -307,7 +307,7 @@ class IncidentController extends Controller
                     'incident' => $incident->indicator,
                     'date' => $incident->created_at,
                     'position' => $incident->position,
-                    'title' => $incident->Indicator->name
+                    'title' => $incident->Indicator->Name
                 ];
 
                 return $data;

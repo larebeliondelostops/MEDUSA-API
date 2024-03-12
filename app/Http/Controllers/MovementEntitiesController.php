@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AvlHistoryCoordinates;
 use App\Models\Ditra\AvlHistory;
+use App\Models\UnitsHistoryCoordinates;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
@@ -141,6 +142,72 @@ class MovementEntitiesController extends Controller
             }
 
             return $avl;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function villavoPosition()
+    {
+        try{
+            $historicos = UnitsHistoryCoordinates::orderBy('id', 'desc')->get();
+
+            $posiciones = [];
+
+            foreach ($historicos as $historico)
+            {
+
+                $array = json_decode($historico->position, true);
+
+                $posiciones[] = ['id' => $historico->id, 'position' => $array[0]];
+
+            }
+
+            return $posiciones;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public static function villavoUnits()
+    {
+        try{
+            $historicos = UnitsHistoryCoordinates::orderBy('id', 'desc')->get();
+
+            $units = [];
+
+            foreach ($historicos as $historico)
+            {
+
+                $array = json_decode($historico->position, true);
+
+                $units[] = [
+                    "markerType" => 54,
+                    "id" => $historico->id,
+                    "title" => $historico->title,
+                    "unitType" => $historico->unit_type,
+                    "geometry" => [
+                        "type" => "Point",
+                        "coordinates" => $array[0]
+                    ],
+                    "properties" => [
+                        "active" => true
+                    ]
+                ];
+
+            }
+
+            return $units;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

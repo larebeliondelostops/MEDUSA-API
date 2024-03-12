@@ -289,6 +289,8 @@ class NotificationAppController extends Controller
             if (tenant('id') == 'ditra')
             {
                 $positions = array_merge($positions, MovementEntitiesController::avlPosition());
+            } else if (tenant('id') == 'villavicencio') {
+                $positions = array_merge($positions, MovementEntitiesController::villavoPosition());
             }
 
             return Response::json($positions, 200, [], JSON_PRETTY_PRINT);
@@ -334,6 +336,8 @@ class NotificationAppController extends Controller
             if (tenant('id') == 'ditra')
             {
                 $transformedData = array_merge($transformedData, MovementEntitiesController::avlUnits());
+            } else if (tenant('id') == 'villavicencio') {
+                $transformedData = array_merge($transformedData, MovementEntitiesController::villavoUnits());
             }
 
             return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);

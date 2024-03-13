@@ -42,6 +42,6 @@ class WazeUpdateFile extends Command
         // Si decidiste no decodificar automáticamente, pero el contenido no está realmente comprimido, simplemente convierte el cuerpo a cadena
         $contenido = $body->getContents();
 
-        file_put_contents('public/waze.json', $contenido);
+        file_put_contents('waze.json', $contenido);
     }
 }

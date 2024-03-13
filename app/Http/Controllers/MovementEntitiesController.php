@@ -223,11 +223,19 @@ class MovementEntitiesController extends Controller
     {
         try {
 
-            $json_string = file_get_contents('public/waze.json');
+            $json_string = file_get_contents('waze.json');
+
             $data = json_decode($json_string, true);
+
+            $tipos = collect($data['alerts'])->groupBy('type');
+
+            $firstOfEachGroup = $tipos->map(function ($items) {
+                return $items->first();
+            });
+
             return Response::json([
                 'message' => 'Solicitud exitosa',
-                'data' => $data
+                'data' => $firstOfEachGroup
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

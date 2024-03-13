@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class MovementEntitiesController extends Controller
 {
@@ -222,34 +223,11 @@ class MovementEntitiesController extends Controller
     {
         try {
 
-            $peticion = new \GuzzleHttp\Client();
-
-            $headers = [
-                'Content-Encoding' => 'UTF-8',
-                'Accept-Encoding' => 'gzip, deflate',
-                'Content-Type' => 'application/json',
-            ];
-
-            $response = $peticion->get('https://www.waze.com/row-partnerhub-api/partners/11760827944/waze-feeds/85aedc64-4772-4f4c-ad4e-3a9461ee9c15?format=1', [
-                    'headers' => $headers,
-                    'decode_content' => false,
-            ]);
-
-            // Para acceder al cuerpo de la respuesta
-            $body = $response->getBody();
-
-            // Si decidiste no decodificar automáticamente, pero el contenido no está realmente comprimido, simplemente convierte el cuerpo a cadena
-            $contenido = $body->getContents();
-
-            // Si el contenido está comprimido (p.ej., gzip), necesitarás decodificarlo manualmente aquí. Este paso depende del tipo de compresión.
-            // Pero si has desactivado la decodificación automática debido a errores y el contenido no está comprimido, esto debería ser suficiente.
-
-            // Finalmente, si necesitas asegurarte de que el contenido se maneja como UTF-8, puedes verificar o convertir la codificación:
-            $contenidoUtf8 = mb_convert_encoding($contenido, 'UTF-8', 'UTF-8');
-
+            $json_string = file_get_contents('public/waze.json');
+            $data = json_decode($json_string, true);
             return Response::json([
                 'message' => 'Solicitud exitosa',
-                'data' => json_decode($contenidoUtf8)
+                'data' => $data
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -258,5 +236,4 @@ class MovementEntitiesController extends Controller
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
 }

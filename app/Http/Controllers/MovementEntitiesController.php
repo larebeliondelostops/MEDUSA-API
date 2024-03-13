@@ -233,9 +233,16 @@ class MovementEntitiesController extends Controller
                 return $items->first();
             });
 
+            $objetos = [];
+
+            foreach($firstOfEachGroup as $key => $value)
+            {
+                $objetos[] = $value;
+            }
+
             return Response::json([
                 'message' => 'Solicitud exitosa',
-                'data' => $firstOfEachGroup
+                'data' => $objetos
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

@@ -19,12 +19,29 @@ class SettingsController extends Controller
     public function allTable(Request $request)
     {
         try {
-            return Response::json([
-                'code' => '200',
-                'status' => 'success',
-                'data' => Setting::all(),
-                'message' => 'Solicitud Procesada Correctamente'
-            ], 200, [], JSON_PRETTY_PRINT);
+
+            $data = [
+                "data" => [
+                    [
+                        "ID" => "1",
+                        "Nombre" => "Configuraciones",
+                    ],
+                ],
+                "meta" => [
+                    "title" => "Configutaciones",
+                    "pagination" => [
+                        "total" => 1,
+                        "perPage" => 10,
+                        "currentPage" => 1,
+                        "lastPage" => 1,
+                        "from" => 1,
+                        "to" => 10
+                    ],
+                    "ableCreate" => true
+                ]
+            ];
+            //dd($data);
+            return $data;
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
@@ -45,7 +62,13 @@ class SettingsController extends Controller
     {
         try {
             foreach ($request->all() as $key => $value) {
-                Setting::set($key, $value);
+                if ($key == 'position') {
+                    $value = $value['coordinates'][0];
+                    $coordinates = $value[0] . ',' . $value[1];
+                    Setting::set($key, $coordinates);
+                } else {
+                    Setting::set($key, $value);
+                }
             }
             return Response::json([
                 'code' => '200',
@@ -71,11 +94,27 @@ class SettingsController extends Controller
     public function getOne($id)
     {
         try {
+            $campos = [];
+            $settings = Setting::allSettings();
+
+            foreach($settings as $setting) {
+                $campos[$setting->key] = $setting->value;
+                if ($setting->key == 'position') {
+                    $coordinates = explode(',', $setting->value);
+
+                    $latitud = (float)$coordinates[1];
+                    $longitud = (float)$coordinates[0];
+
+                    $campos[$setting->key] = [
+                        'type' => 'Point',
+                        'coordinates' => [[$longitud, $latitud]]
+                    ];
+                }
+            }
+
             return Response::json([
-                'code' => '200',
                 'status' => 'success',
-                'data' => Setting::get($id),
-                'message' => 'Solicitud Procesada Correctamente'
+                'data' => $campos,
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -98,9 +137,16 @@ class SettingsController extends Controller
     {
         try {
 
-            $setting = Setting::findOrFail($id);
+            foreach ($request->all() as $key => $value) {
+                if ($key == 'position') {
+                    $value = $value['coordinates'][0];
+                    $coordinates = $value[0] . ',' . $value[1];
 
-            Setting::updateKey($setting->key, $request->value);
+                    Setting::updateKey($key, $coordinates);
+                } else {
+                    Setting::updateKey($key, $value);
+                }
+            }
 
             return Response::json([
                 'code' => '200',

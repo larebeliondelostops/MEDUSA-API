@@ -22,7 +22,7 @@ class Setting extends Model
         {
             return self::where('key', $key)->first()->value;
         } else {
-            throw new \Exception('La clave no existe en la tabla de configuraciones.');
+            return null;
         }
     }
 

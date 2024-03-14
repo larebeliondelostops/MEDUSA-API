@@ -262,7 +262,7 @@ class DocumentService implements DocumentInterface
             return collect($result->all());
         } else {
             // Si no hay parámetros de consulta, obtener todos los documentos
-            $documentGOt = Document::all();
+            $documentGot = Document::all();
             $documents = $documentGot->transform(function ($document) {
                 return collect($document);
             });
@@ -283,7 +283,7 @@ class DocumentService implements DocumentInterface
             return [
                 'folder' => $folder->toArray(),
                 'subfolders' => $subfolders->all(),
-                'documents' => $documents,
+                'documents' => $document,
             ];
         } else {
 
@@ -304,7 +304,9 @@ class DocumentService implements DocumentInterface
      */
     public function getDocumentsByFolder($folderId): Collection
     {
-        $documents = Document::where('folder_id', $folderId)->get();orm(function ($document) {
+        $documents = Document::where('folder_id', $folderId)->get();
+        
+        (function ($document) {
             return collect($document);
         });
 

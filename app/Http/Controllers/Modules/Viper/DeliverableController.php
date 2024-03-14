@@ -39,7 +39,7 @@ class DeliverableController extends BaseController
         try
         {
             $deliverables = $request->validated()['deliverables']; // obtiene los deliverables validados
-            $result = $this->deliverableInterface->createMultipleDeliverables(collect($deliverables));
+            $result = $this->deliverableInterface->createMultipleDeliverables($deliverables);
             return response()->json([
                 'data' => $result
             ], Response::HTTP_CREATED);

@@ -32,7 +32,7 @@ class IndicatorService implements IndicatorInterface
         $newIndicator = new Indicator($indicator->toArray());
         $newIndicator->save();
 
-        return collect($indicator);
+        return collect($newIndicator);
     }
 
     /**

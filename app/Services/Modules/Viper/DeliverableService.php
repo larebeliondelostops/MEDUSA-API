@@ -27,15 +27,15 @@ class DeliverableService implements DeliverableInterface
     }
 
     public function createNewDeliverable(Collection $deliverableDTO) : Collection
-    {
+    {   
         $folderDTO = $this->folderInterface->createNewFolder(
             collect(
                 [
-                    'name' => $deliverableDTO->number .'. '.$deliverableDTO->name,
+                    'name' => $deliverableDTO['number'] .'. '.$deliverableDTO['name'],
                     'higher_folder_id' => (
-                        is_null($deliverableDTO->folder_id) ?
-                        ($this->productInterface->getProduct($deliverableDTO->product_id))->folder->id :
-                        $deliverableDTO->folder_id
+                        is_null($deliverableDTO['folder_id']) ?
+                        ($this->productInterface->getProduct($deliverableDTO['product_id'])['folder']['id']) :
+                        $deliverableDTO['folder_id']
                     ),
                 ]
             )
@@ -50,33 +50,33 @@ class DeliverableService implements DeliverableInterface
      * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el incremento
      * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
      */
-    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, Collection $activityDTO)
+    public function updateIncrementDataWithChildrenActivities(?int $deliverableId, Collection $activityData)
     {
         if(!is_null($deliverableId))
         {
             $deliverable = Deliverable::findOrFail($deliverableId);
             $deliverable->activity_quantity += 1;
-            $deliverable->value += $activityDTO['total_value'];
+            $deliverable->value += $activityData['total_value'];
             $deliverable->save();
-            $this->updateIncrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+            $this->updateIncrementDataWithChildrenActivities($deliverable->deliverable_id, $activityData);
         }
         else
             return;
     }
 
-      /**
+    /**
      * Metodo diseñado para cuando se asigne una actividad a un entregable, se llame a este metodos y este actulice el decremento
      * al entregable al que se asigno la actividad y a la vez se actualice la data de sus entregables padres.
      */
-    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, Collection $activityDTO)
+    public function updateDecrementDataWithChildrenActivities(?int $deliverableId, Collection $activityData)
     {
         if(!is_null($deliverableId))
         {
             $deliverable = Deliverable::findOrFail($deliverableId);
             $deliverable->activity_quantity -= 1;
-            $deliverable->value -= $activityDTO['total_value'];
+            $deliverable->value -= $activityData['total_value'];
             $deliverable->save();
-            $this->updateDecrementDataWithChildrenActivities($deliverable->deliverable_id, $activityDTO);
+            $this->updateDecrementDataWithChildrenActivities($deliverable->deliverable_id, $activityData);
         }
         else
             return;
@@ -96,17 +96,25 @@ class DeliverableService implements DeliverableInterface
         }
     }
 
-    public function createMultipleDeliverables(array $deliverablesDTO) : array
+    public function createMultipleDeliverables(Collection $deliverablesDTO) : Collection
     {
         $result = [];
         $this->adjustDataAndSave($deliverablesDTO, $result);
-        return  $result;
+        return  collect($result);
     }
 
-    public function getAllDeliverables() : array
+    public function getAllDeliverables() : Collection
     {
-        $deliverables = Deliverable::all();
-        return $deliverables->toArray();
+        $deliverableGoy = Deliverable::all();
+
+        $deliverables = $deliverableGot->transform(
+            function (Deliberable $deliverable)
+            {
+                return collect($deliverable);
+            }
+        );
+
+        return collection($deliverables);
     }
 
     private function getAndAjustData(array &$result, int &$productId, ?int $fatherDeliverableId = null) : void
@@ -126,29 +134,29 @@ class DeliverableService implements DeliverableInterface
         }
     }
 
-    public function getDeliverablesByProductId(int $productId) : array
+    public function getDeliverablesByProductId(int $productId) : Collection
     {
         $result = []; // array para guardar los deliverables
         $this->getAndAjustData($result, $productId);
-        return $result;
+        return collect($result);
     }
 
-    public function updateDeliverable(Collection $deliverableUpdateDTO, int $deliverableId) : Collection
+    public function updateDeliverable(Collection $deliverableData, int $deliverableId) : Collection
     {
         $delivarableForUpdate = Deliverable::findOrFail($deliverableId);
         $delivarableForUpdate->fill([
-            'number' => $deliverableUpdateDTO->number,
-            'name' => $deliverableUpdateDTO->name
+            'number' => $deliverableData->number,
+            'name' => $deliverableData->name
         ]);
         $delivarableForUpdate->save(); // Se actualiza la data del entregable
 
-        $deliverableUpdateDTO->fill($delivarableForUpdate->toArray()); // se llena el objeto con los datos actualizados
+        $deliverableData->fill($delivarableForUpdate->toArray()); // se llena el objeto con los datos actualizados
 
-        $deliverableUpdateDTO->folder = $this->folderInterface->updateFolderName(
+        $deliverableData->folder = $this->folderInterface->updateFolderName(
             $delivarableForUpdate->folder_id,
             $delivarableForUpdate->number.'. '.$delivarableForUpdate->name);
 
-        return $deliverableUpdateDTO;
+        return $deliverableData;
     }
 
     public function getDeliverablesChildren(array &$result, int $fatherDeliverableId)
@@ -160,12 +168,12 @@ class DeliverableService implements DeliverableInterface
         }
     }
 
-    public function deleteDeliverable(int $deliverableId) : array
+    public function deleteDeliverable(int $deliverableId) : Collection
     {
         $dataForDelete = [];
         $deliverableForDelete = Deliverable::with('folder')->findOrFail($deliverableId); // si no existe arroja error
         $this->getDeliverablesChildren($dataForDelete, $deliverableId); // agregamos la data de los hijos que se van a borrar
         $deliverableForDelete->delete(); // se encarga de borrado logico y de las carpetas recursivamente(hijos y carpetas hijos)
-        return $dataForDelete;
+        return colect($dataForDelete);
     }
 }

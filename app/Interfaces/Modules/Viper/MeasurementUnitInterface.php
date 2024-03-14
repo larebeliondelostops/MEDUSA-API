@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interface MeasurementUnitInterface
@@ -20,42 +20,39 @@ interface MeasurementUnitInterface {
     /**
      * Obtener todas las unidades de medida existentes.
      *
-     * @return \Illuminate\Support\Collection|MeasurementUnitDTO[] Colección de objetos MeasurementUnitDTO que representan las unidades de medida.
+     * @return Collection Colección de Collections que representan las unidades de medida.
      */
-    public function getAllMeasurementUnits();
+    public function getAllMeasurementUnits(): Collection;
 
     /**
      * Almacenar una nueva unidad de medida en el sistema.
      *
-     * @param  \App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO  $measurementUnitDTO Objeto MeasurementUnitDTO que contiene los datos de la nueva unidad.
-     * @return \App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO Objeto MeasurementUnitDTO que representa la unidad de medida recién creada.
+     * @param Collection Collection que contiene los datos de la nueva unidad.
+     * @return Collection Collection que representa la unidad de medida recién creada.
      */
-    public function storeMeasurementUnit(MeasurementUnitDTO $measurementUnitDTO);
+    public function storeMeasurementUnit( Collection $measurementUnit): Collection;
 
     /**
      * Actualizar los datos de una unidad de medida existente.
      *
-     * @param  int  $measurementUnitId ID de la unidad de medida que se va a actualizar.
-     * @param  \App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO  $measurementUnitDTO Objeto MeasurementUnitDTO que contiene los nuevos datos de la unidad.
-     * @return \App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO Objeto MeasurementUnitDTO que representa la unidad de medida actualizada.
-     * @throws \Exception Se arroja si la unidad de medida no se encuentra.
+     * @param int $measurementUnitId ID de la unidad de medida que se va a actualizar.
+     * @param Collection Collection que contiene los nuevos datos de la unidad.
+     * @return Collection Collection que representa la unidad de medida actualizada.
      */
-    public function updateMeasurementUnit($measurementUnitId, MeasurementUnitDTO $measurementUnitDTO);
+    public function updateMeasurementUnit(int $measurementUnitId, Collection $measurementUnit): Collection;
 
     /**
      * Eliminar una unidad de medida existente.
      *
      * @param  int  $measurementUnitId ID de la unidad de medida que se va a eliminar.
-     * @return void
-     * @throws \Exception Se arroja si la unidad de medida no se encuentra.
+     * @return Collection Collection que representa la unidad de medida eliminada.
      */
-    public function deleteMeasurementUnit($measurementUnitId);
+    public function deleteMeasurementUnit(int $measurementUnitId);
     
     /**
      * Obtiene la unidad de medida existente.
      *
-     * @return Collection|MeasurementUnitDTO[] Colección de objetos MeasurementUnitDTO que representan las unidades de medidas.
+     * @return Collection Colección de Collection que representan las unidades de medidas.
      */
-    public function getMeasurementUnit($measurementUnitId);
-
+    public function getMeasurementUnit(int $measurementUnitId): Collection;
 }

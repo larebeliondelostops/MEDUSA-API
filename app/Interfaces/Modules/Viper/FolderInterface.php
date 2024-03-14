@@ -69,7 +69,7 @@ interface FolderInterface {
      * @param array $contractName Nombre del tipo de contrato.
      * @param int $projectId Identificador del proyecto al que pertenecen las carpetas.
      */
-    public function createFolderContract(string $contractName, int $projectId);
+    public function createFolderContract(string $contractName, string $projectId);
 
     /**
      * Obtiene todas las carpetas asociadas a un proyecto y su jerarquía para un select.

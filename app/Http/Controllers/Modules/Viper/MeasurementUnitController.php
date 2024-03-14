@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\MeasurementUnitRequest;
-use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
 use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 
 /**
@@ -54,16 +53,8 @@ class MeasurementUnitController extends BaseController
     public function store(MeasurementUnitRequest $request)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
+            $newMeasurementUnit = $this->measurementUnitInterface->storeMeasurementUnit(collect($request->validated()));
 
-            // Crea un nuevo MeasurementUnitDTO con los datos del formulario
-            $measurementUnitDTO = new MeasurementUnitDTO($validatedData);
-
-            // Llama al servicio para almacenar la nueva unidad de medida
-            $newMeasurementUnit = $this->measurementUnitInterface->storeMeasurementUnit($measurementUnitDTO);
-
-            // Retorna la respuesta JSON con la nueva unidad de medida creada
             return response()->json([
                 'message' => 'unidad de medida creada correctamente',
                 'data' => $newMeasurementUnit,
@@ -84,14 +75,7 @@ class MeasurementUnitController extends BaseController
     public function update(MeasurementUnitRequest $request, $measurementUnitId)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
-
-            // Crea un nuevo MeasurementUnitDTO con los datos actualizados
-            $measurementUnitDTO = new MeasurementUnitDTO($validatedData);
-
-            // Llama al servicio para actualizar la unidad de medida
-            $updatedMeasurementUnit = $this->measurementUnitInterface->updateMeasurementUnit($measurementUnitId, $measurementUnitDTO);
+            $updatedMeasurementUnit = $this->measurementUnitInterface->updateMeasurementUnit($measurementUnitId,collect($request->validated()));
 
             // Retorna la respuesta JSON con la unidad de medida actualizada
             return response()->json([
@@ -104,7 +88,7 @@ class MeasurementUnitController extends BaseController
     }
 
 
-     /**
+    /**
      * Mostrar una lista de unidades de medida.
      *
      * @param  \Illuminate\Http\Request  $request

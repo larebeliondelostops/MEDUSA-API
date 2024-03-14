@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Viper\AlertRequest;
+use App\Http\Request\Modules\Viper\AlertRequest;
 use App\Interfaces\Modules\Viper\AlertInterface;
-use App\DTOs\Viper\Alert\AlertDTO;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -44,13 +43,11 @@ class AlertController extends BaseController
     public function store(AlertRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $alertDTO = new AlertDTO($validatedData);
-            $alertCreatedDTO = $this->alertInterface->createNewAlert($alertDTO);
+            $alertCreated = $this->alertInterface->createNewAlert(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Alert created successfully.',
-                'data'    => $alertCreatedDTO
+                'data'    => $alertCreated
             ], 201);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -67,13 +64,11 @@ class AlertController extends BaseController
     public function update(AlertRequest $request, int $id)
     {
         try {
-            $validatedData = $request->validated();
-            $alertDTO = new AlertDTO($validatedData);
-            $stateUpdatedDTO = $this->alertInterface->updateAlert($alertDTO, $id);
+            $stateUpdated = $this->alertInterface->updateAlert(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Alert updated successfully.',
-                'data'    => $stateUpdatedDTO,
+                'data'    => $stateUpdated,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -126,10 +121,10 @@ class AlertController extends BaseController
     public function destroy(Request $request, int $id)
     {
         try {
-            $alertDTO = $this->alertInterface->deleteAlert($id);
+            $alert = $this->alertInterface->deleteAlert($id);
             return response()->json([
                 'message' => 'Alert deleted successfully',
-                'data'=> $alertDTO->toArray()
+                'data'=> $alert
             ],200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

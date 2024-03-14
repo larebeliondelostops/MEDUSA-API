@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 
 interface DeliverableInterface
 {
-    public function updateIncrementDataWithChildrenActivities(int $deliverableId, Collection $activityData) : Collection;
-    public function updateDecrementDataWithChildrenActivities(int $deliverableId, Collection $activityData) : Collection;
+    public function updateIncrementDataWithChildrenActivities(int $deliverableId, Collection $activityData);
+    public function updateDecrementDataWithChildrenActivities(int $deliverableId, Collection $activityData);
     public function createNewDeliverable(Collection $deliverableRequestData) : Collection;
     public function createMultipleDeliverables(Collection $deliverables) : Collection;
     public function getAllDeliverables() : Collection;

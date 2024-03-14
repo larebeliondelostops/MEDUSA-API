@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Modules\Viper;
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\StageRequest;
 use App\Http\Controllers\Controller;
-use App\DTOs\Viper\Stage\StageDTO;
 use App\Interfaces\Modules\Viper\StageInterface;
 
 /**
@@ -25,11 +24,12 @@ class StageController extends BaseController
 
     public function __construct(StageInterface $stageInterface)
     {
-        parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
+        parent::__construct();
+
         $this->stageInterface = $stageInterface;
     }
 
-     /**
+    /**
      * Mostrar una lista de etapas.
      *
      * @return \Illuminate\Http\Response
@@ -56,18 +56,10 @@ class StageController extends BaseController
     public function store(StageRequest $request)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
+            $newStage = $this->stageInterface->storeStage(collect($request->validated()));
 
-            // Crea un nuevo StageDTO con los datos del formulario
-            $stageDTO = new StageDTO($validatedData);
-
-            // Llama al servicio para almacenar la nueva etapa
-            $newStage = $this->stageInterface->storeStage($stageDTO);
-
-            // Retorna la respuesta JSON con la nueva etapa creada
             return response()->json([
-                'message' => 'Etapa creada correctamente',
+                'message' => 'Stage created successfully.',
                 'data' => $newStage,
             ], 201);
         } catch (\Exception $exception) {
@@ -83,19 +75,11 @@ class StageController extends BaseController
      * @param  int  $StageId
      * @return \Illuminate\Http\Response
      */
-    public function update(StageRequest $request, $stageId)
+    public function update(StageRequest $request, int $stageId)
     {
         try {
-            // Valida y procesa los datos del formulario
-            $validatedData = $request->validated();
+            $updatedStage = $this->stageInterface->updateStage($stageId, collect($request->validated()));
 
-            // Crea un nuevo StageDTO con los datos actualizados
-            $stageDTO = new StageDTO($validatedData);
-
-            // Llama al servicio para actualizar la etapa
-            $updatedStage = $this->stageInterface->updateStage($stageId, $stageDTO);
-
-            // Retorna la respuesta JSON con la etapa actualizada
             return response()->json([
                 'message' => 'Etapa actualizada correctamente',
                 'data' => $updatedStage,
@@ -112,14 +96,13 @@ class StageController extends BaseController
      * @param  int  $StageId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($stageId)
+    public function destroy(int $stageId)
     {
         try {
-            // Llama al servicio para eliminar la etapa
             $this->stageInterface->deleteStage($stageId);
-            return response()->json(
-                ['message' => 'Etapa eliminada correctamente']
-            );
+            return response()->json([
+                'message' => 'Etapa eliminada correctamente'
+            ]);
             
         } catch (\Exception $exception) {
             return $this->handleException($exception);

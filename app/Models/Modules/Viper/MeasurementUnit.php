@@ -33,7 +33,18 @@ class MeasurementUnit extends Model
      * @var string
      */
     protected $primaryKey = 'id';
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    
+    /**
+     * Los atributos que son ocultado en masa.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
+
     /**
      * Los atributos que son asignables en masa.
      *

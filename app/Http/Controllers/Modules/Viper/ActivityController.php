@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Modules\Viper;
 
-use App\Http\Request\Viper\ActivityRequest;
-use App\DTOs\Viper\Activity\ActivityDTO;
+use App\Http\Request\Modules\Viper\ActivityRequest;
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use Illuminate\Http\Response; 
 /**
@@ -52,9 +51,7 @@ class ActivityController extends BaseController
     public function store(ActivityRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $activityDTO = new ActivityDTO($validatedData);
-            $newActivity = $this->activityInterface->storeActivity($activityDTO);
+            $newActivity = $this->activityInterface->storeActivity(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Actividad creada correctamente',
@@ -75,9 +72,7 @@ class ActivityController extends BaseController
     public function update(ActivityRequest $request, $activityId)
     {
         try {
-            $validatedData = $request->validated();
-            $activityDTO = new ActivityDTO($validatedData);
-            $updatedActivity = $this->activityInterface->updateActivity($activityId, $activityDTO);
+            $updatedActivity = $this->activityInterface->updateActivity($activityId,collect($request->validated()));
 
             return response()->json([
                 'message' => 'Actividad actualizada correctamente',

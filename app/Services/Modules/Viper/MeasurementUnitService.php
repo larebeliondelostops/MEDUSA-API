@@ -2,7 +2,6 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
 use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 use App\Models\Modules\Viper\MeasurementUnit;
 use Illuminate\Support\Collection;
@@ -23,76 +22,66 @@ class MeasurementUnitService implements MeasurementUnitInterface
     /**
      * Obtiene todas las unidades de medidas existentes.
      *
-     * @return Collection|MeasurementUnitDTO[] Colección de objetos MeasurementUnitDTO que representan las unidades de medidas.
+     * @return Collection Collection de Collections que representan las unidades de medidas.
      */
-    public function getAllMeasurementUnits()
+    public function getAllMeasurementUnits(): Collection
     {
-        $measurementUnits = MeasurementUnit::all();
-        $measurementUnitDTOs = $measurementUnits->transform(function ($measurementUnit) {
-            return new MeasurementUnitDTO($measurementUnit->toArray());
+        $measurementUnitGot = MeasurementUnit::all();
+        $measurementUnits = $measurementUnitGot->transform(function ($measurementUnit) {
+            return collect($measurementUnit);
         });
 
-        return $measurementUnitDTOs;
+        return $measurementUnits;
     }
 
     /**
      * Obtiene la unidad de medida existente.
      *
-     * @return Collection|MeasurementUnitDTO[] Colección de objetos MeasurementUnitDTO que representan las unidades de medidas.
+     * @param int $measurementUnitId Identificador único de la unidad de medida que se va a actualizar.
+     * @return Collection Collection de Collections que representan las unidades de medidas.
      */
-    public function getMeasurementUnit($measurementUnitId)
+    public function getMeasurementUnit(int $measurementUnitId): Collection
     {
         $measurementUnit = MeasurementUnit::findOrFail($measurementUnitId);
-        $measurementUnitDTO =new MeasurementUnitDTO($measurementUnit->toArray());
 
-        return $measurementUnitDTO;
+        return collect($measurementUnit);
     }
 
     /**
      * Almacena una nueva unidad de medida en la base de datos.
      *
-     * @param MeasurementUnitDTO $measurementUnitDTO Objeto MeasurementUnitDTO que contiene los datos de la nueva unidad de medida.
-     * @return MeasurementUnitDTO Objeto MeasurementUnitDTO que representa la unidad de medida recién creada.
+     * @param Collection $measurementUnit Collection que contiene los datos de la nueva unidad de medida.
+     * @return Collection Collection MeasurementUnit que representa la unidad de medida recién creada.
      */
-    public function storeMeasurementUnit(MeasurementUnitDTO $measurementUnitDTO)
+    public function storeMeasurementUnit(Collection $measurementUnit): Collection
     {
-        // Crea una nueva instancia del modelo MeasurementUnit y guarda los datos
-        $newMeasurementUnit = MeasurementUnit::create([
-            'name' => $measurementUnitDTO->name,
-        ]);
+        $newMeasurementUnit = MeasurementUnit::create($measurementUnit->toArray());
 
-        return new MeasurementUnitDTO($newMeasurementUnit->toArray());
+        return collection($newMeasurementUnit);
     }
 
     /**
      * Actualiza los datos de una unidad de medida existente.
      *
-     * @param int $measurementUnitId ID de la unidad de medida que se va a actualizar.
-     * @param MeasurementUnitDTO $measurementUnitDTO Objeto MeasurementUnitDTO que contiene los nuevos datos de la unidad de medida.
-     * @return MeasurementUnitDTO Objeto MeasurementUnitDTO que representa la unidad de medida actualizada.
-     * @throws \Exception Se arroja si la unidad de medida no se encuentra.
+     * @param int $measurementUnitId Identificador único de la unidad de medida que se va a actualizar.
+     * @param Collection $measurementUnit Collection que contiene los nuevos datos de la unidad de medida.
+     * @return Collection Collection que representa la unidad de medida actualizada.
      */
-    public function updateMeasurementUnit($measurementUnitId, MeasurementUnitDTO $measurementUnitDTO)
+    public function updateMeasurementUnit(int $measurementUnitId, Collection $measurementUnit): Collection
     {
-        // Encuentra la unidad de medida por su ID
-        $measurementUnit = MeasurementUnit::findOrFail($measurementUnitId);
-        // Actualiza los datos de la unidad de medida
-        $measurementUnit->update([
-            'name' => $measurementUnitDTO->name,
-        ]);
-        return new MeasurementUnitDTO($measurementUnit->toArray()); 
-
+        $measurementUnitUpdate = MeasurementUnit::findOrFail($measurementUnitId);
+        $measurementUnitUpdate->update($measurementUnit->toArray());
+        return collect($measurementUnitUpdate); 
     }
 
     /**
      * Elimina una unidad de medida existente.
      *
-     * @param int $measurementUnitId ID de la unidad de medida que se va a eliminar.
-     * @throws \Exception Se arroja si la unidad de medida no se encuentra.
+     * @param int $measurementUnitId Identificador único de la unidad de medida que se va a eliminar.
+     * @return Collection Collection que representa la unidad de medida eliminada.
      */
-    public function deleteMeasurementUnit($measurementUnitId)
+    public function deleteMeasurementUnit(int $measurementUnitId)
     {
-        // Encuentra la unidad de medida por su ID y elimínala
         $measurementUnit = MeasurementUnit::findOrFail($measurementUnitId);
         $measurementUnit->delete();
     }

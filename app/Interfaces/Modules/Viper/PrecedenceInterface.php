@@ -2,17 +2,17 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Precedence\PrecedenceDTO;
+use Illuminate\Support\Collection;
 
 interface PrecedenceInterface {
     
-    public function getAllPrecedences();
+    public function getAllPrecedences(): Collection;
 
-    public function storePrecedence(PrecedenceDTO $precedenceDTO);
+    public function storePrecedence(Collection $precedence): Collection;
 
-    public function updatePrecedence($precedenceId, PrecedenceDTO $precedenceDTO);
+    public function updatePrecedence(int $precedenceId, Collection $precedence);
 
-    public function deletePrecedence($precedenceId);
+    public function deletePrecedence(int $precedenceId);
 
-    public function getPrecedence($precedenceId);
+    public function getPrecedence(int $precedenceId): Collection;
 }

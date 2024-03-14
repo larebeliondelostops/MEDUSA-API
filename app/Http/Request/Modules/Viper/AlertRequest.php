@@ -40,7 +40,7 @@ class AlertRequest extends FormRequest
             'state' => 'required|string|max:100',
             'description' => 'required|string',
             'date' => 'required|date',
-            'indicator_id' => 'required|integer',
+            'indicator_id' => 'required|exists:indicators_viper,id|integer',
         ];
     }
 

@@ -2,8 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Document\DocumentDTO;
-use App\DTOs\Viper\Folder\FolderDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\Models\Modules\Viper\Document;
 use App\Models\Modules\Viper\Folder;
@@ -27,25 +26,20 @@ class DocumentService implements DocumentInterface
     /**
      * Crea un nuevo documento en el sistema Viper.
      *
-     * @param DocumentDTO $documentDTO Datos del documento a crear.
+     * @param Collection $document Datos del documento a crear.
      * @param \Illuminate\Http\UploadedFile $file Archivo a cargar.
      * @param int $project_id Identificador del proyecto al que pertenece el documento.
      * @return array Contiene los datos del documento creado en caso de éxito.
      */
-    public function createNewDocument(DocumentDTO $documentDTO, \Illuminate\Http\UploadedFile $file, string $project_id)
+    public function createNewDocument(Collection $document, \Illuminate\Http\UploadedFile $file):Collection
     {
-        // Verificar si el proyecto existe
-        Project::findOrFail($project_id);
-        Folder::findOrFail($documentDTO->folder_id);
-
-        // Crear una nueva instancia de Document
-        $document = new Document();
+        $newDocument = new Document();
 
         // Obtener el nombre original del archivo
         $originalFilename = $file->getClientOriginalName();
 
         // Construir la ruta de la carpeta basada en la jerarquía de carpetas
-        $folderPath = "test/{$project_id}/{$documentDTO->folder_id}";
+        $folderPath = "test/{$document->project_id}/{$document->folder_id}";
 
         // Generar un nombre único para el archivo
         $filename = $this->getUniqueFilename($folderPath, $originalFilename);
@@ -57,15 +51,15 @@ class DocumentService implements DocumentInterface
         $url = Storage::disk('spaces')->url($filePath);
 
         // Configurar los atributos del documento
-        $document->name = $filename;
-        $document->url = $url;
-        $document->responsible = $documentDTO->responsible;
-        $document->folder_id = $documentDTO->folder_id;
+        $newDocument->name = $filename;
+        $newDocument->url = $url;
+        $newDocument->responsible = $document->responsible;
+        $newDocument->folder_id = $document->folder_id;
 
         // Guardar el documento en la base de datos
-        $document->save();
+        $newDocument->save();
 
-        return $document->toArray();
+        return collect($newDocument);
     }
 
     /**
@@ -99,7 +93,6 @@ class DocumentService implements DocumentInterface
      */
     public function deleteDocument(int $documentId)
     {
-        // Obtener el documento por su ID
         $document = Document::findOrFail($documentId);
 
         $folder = Folder::findOrFail($document->folder_id);
@@ -201,7 +194,7 @@ class DocumentService implements DocumentInterface
      *
      * @return array Contiene los datos de todos los documentos en el sistema.
      */
-    public function getAllDocuments(array $queryParams = [], int $projectId)
+    public function getAllDocuments(array $queryParams = [], int $projectId): Collection
     {
         $filter = new DocumentFilter();
         $queryItems = $filter->transform($queryParams);
@@ -266,15 +259,15 @@ class DocumentService implements DocumentInterface
                 }
             }
     
-            return $result->all();
+            return collect($result->all());
         } else {
             // Si no hay parámetros de consulta, obtener todos los documentos
-            $documents = Document::all();
-            $documentDTOs = $documents->transform(function ($document) {
-                return (new DocumentDTO($document->toArray()))->toArray(['deleted_at']);
+            $documentGOt = Document::all();
+            $documents = $documentGot->transform(function ($document) {
+                return collect($document);
             });
 
-            return $documentDTOs;
+            return $documents;
         }
     }
     
@@ -288,13 +281,14 @@ class DocumentService implements DocumentInterface
 
         if ($folder->id == $document->folder_id) {
             return [
-                'folder' => new FolderDTO($folder->toArray()),
+                'folder' => $folder->toArray(),
                 'subfolders' => $subfolders->all(),
-                'documents' => [(new DocumentDTO($document->toArray()))->toArray(['deleted_at'])],
+                'documents' => $documents,
             ];
         } else {
+
             return [
-                'folder' => new FolderDTO($folder->toArray()),
+                'folder' => $folder->toArray(),
                 'subfolders' => $subfolders->all(),
                 'documents' => [],
             ];
@@ -308,17 +302,13 @@ class DocumentService implements DocumentInterface
      * @param int $folderId Identificador de la carpeta.
      * @return array Contiene los datos de documentos en la carpeta especificada.
      */
-    public function getDocumentsByFolder($folderId)
+    public function getDocumentsByFolder($folderId): Collection
     {
-        // Implementa la lógica para obtener documentos por carpeta
-        $documents = Document::where('folder_id', $folderId)->get();
+        $documents = Document::where('folder_id', $folderId)->get();orm(function ($document) {
+            return collect($document);
+        });
 
-        $documentDTOs = [];
-        foreach ($documents as $document) {
-            $documentDTOs[] = (new DocumentDTO($document->toArray()))->toArray(['deleted_at']);
-        }
-
-        return $documentDTOs;
+        return $documents;
     }
 
     /**
@@ -408,26 +398,15 @@ class DocumentService implements DocumentInterface
      *
      * @return array Contiene los datos de los documentos eliminados.
      */
-    public function getDeletedDocumentsByFolder(int $folderId)
+    public function getDeletedDocumentsByFolder(int $folderId): Collection
     {
-        // Obtén todos los documentos eliminados lógicamente por carpeta
-        $deletedDocuments = Document::onlyTrashed()
-            ->where('folder_id', $folderId)
-            ->get();
-    
-        // Cargar la información de la carpeta asociada a los documentos, incluyendo las carpetas eliminadas lógicamente
-        $deletedDocuments->load(['folder' => function ($query) {
-            $query->withTrashed();
-        }]);
-                
-        $documentDTOs = [];
-        foreach ($deletedDocuments as $document) {
-            $documentDTO = new DocumentDTO($document->toArray());
-            $documentDTO->folder = new FolderDTO($document->folder->toArray());
-            $documentDTOs[] = $documentDTO;
-        }
-    
-        return $documentDTOs;
+        $deletedDocuments = Document::onlyTrashed()->where('folder_id', $folderId)->with(['folder' => function ($query) {$query->withTrashed();}])->get();
+
+        $documents = $deletedDocuments->transform(function ($document) {
+                return collect($document);
+        });
+
+        return $documents;
     }
     
     
@@ -439,27 +418,15 @@ class DocumentService implements DocumentInterface
      * @param int $projectId Identificador del proyecto.
      * @return array Contiene los datos de los documentos eliminados.
      */
-    public function getDeletedDocumentsByProject(int $projectId)
+    public function getDeletedDocumentsByProject(int $projectId): Collection
     {
-        $deletedDocuments = Document::onlyTrashed()
-        ->whereHas('folder', function ($query) use ($projectId) {
-            $query->where('project_id', $projectId)->withTrashed();
-        })
-        ->get();
+        $deletedDocuments = Document::onlyTrashed()->whereHas('folder', function ($query) use ($projectId) { $query->where('project_id', $projectId)->withTrashed(); })->with(['folder' => function ($query) { $query->withTrashed(); }])->get();
 
-        $deletedDocuments->load(['folder' => function ($query) {
-            $query->withTrashed();
-        }]);
+        $documents = $deletedDocuments->transform(function ($document) {
+            return collect($document);
+        });
 
-        // Transforma los resultados utilizando el DTO
-        $documentDTOs = [];
-        foreach ($deletedDocuments as $document) {
-            $documentDTO = new DocumentDTO($document->toArray());
-            $documentDTO->folder = new FolderDTO($document->folder->toArray());
-            $documentDTOs[] = $documentDTO;
-        }
-
-        return $documentDTOs;
+        return $documents;
     }
 
 
@@ -503,7 +470,7 @@ class DocumentService implements DocumentInterface
      * @param int $newFolderId Identificador de la nueva carpeta donde se guardará el documento.
      * @return array Contiene los datos del documento recuperado.
      */
-    public function restoreDocument(int $documentId, int $folderId)
+    public function restoreDocument(int $documentId, int $folderId): Collection
     {
         // Obtén el documento eliminado lógicamente por su ID
         $deletedDocument = Document::onlyTrashed()
@@ -531,10 +498,7 @@ class DocumentService implements DocumentInterface
 
         $deletedDocument->save();
 
-        // Crear un DTO para el documento restaurado
-        $restoredDocumentDTO = new DocumentDTO($deletedDocument->toArray());
-
-        return $restoredDocumentDTO;
+        return collect($deletedDocument);
     }
 
 

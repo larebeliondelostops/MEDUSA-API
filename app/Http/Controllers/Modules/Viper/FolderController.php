@@ -27,7 +27,7 @@ class FolderController extends BaseController
         $this->folderInterface = $folderInterface;
     }
 
-     /**
+    /**
      * Mostrar una lista de carpetas.
      *
      * @return \Illuminate\Http\Response

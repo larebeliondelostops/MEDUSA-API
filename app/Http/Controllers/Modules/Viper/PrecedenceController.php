@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Viper\PrecedenceRequest;
-use App\DTOs\Viper\Precedence\PrecedenceDTO;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -53,11 +52,7 @@ class PrecedenceController extends BaseController
     public function store(PrecedenceRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
-            $precedenceDTO = new PrecedenceDTO($validatedData);
-
-            $newPrecedence = $this->precedenceInterface->storePrecedence($precedenceDTO);
+            $newPrecedence = $this->precedenceInterface->storePrecedence(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Precedencia creada correctamente',
@@ -114,12 +109,7 @@ class PrecedenceController extends BaseController
     public function update(PrecedenceRequest $request, int $precedenceId)
     {
         try {
-
-            $validatedData = $request->validated();
-
-            $precedenceDTO = new PrecedenceDTO($validatedData);
-
-            $this->precedenceInterface->updatePrecedence($precedenceId, $precedenceDTO);
+            $this->precedenceInterface->updatePrecedence($precedenceId, collect($request->validated()));
 
             return response()->json(['message' => 'Precedencia actualizada correctamente']);
         } catch (\Exception $exception) {

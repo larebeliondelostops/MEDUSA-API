@@ -64,7 +64,7 @@ class FolderService implements FolderInterface
 
         $folder->save();
 
-        return collect($folderData);
+        return collect($folder);
 
     }
 
@@ -144,10 +144,10 @@ class FolderService implements FolderInterface
         $folders = $folderQuery->where('project_id', $projectId)->get();
 
          // Crear una colección que contendrá la estructura jerárquica de carpetas
-         $result = collect();
+        $result = collect();
 
          // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
-         $folderDictionary = $folders->keyBy('id');
+        $folderDictionary = $folders->keyBy('id');
 
         // Iterar sobre cada carpeta
         foreach ($folders as $folder) {
@@ -238,10 +238,8 @@ class FolderService implements FolderInterface
             'higher_folder_id' => $parentFolder['id'] ?? null,
         ];
 
-        $folderData = collect($validatedData);
-
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
-        $folderResponse = $this->createNewFolder($folderData)->toArray();
+        $folderResponse = $this->createNewFolder(collect($validatedData))->toArray();
 
         // Ajustar el acceso a la respuesta según la estructura real
         $folder = isset($folderResponse['data']) ? $folderResponse['data'] : $folderResponse;
@@ -266,10 +264,10 @@ class FolderService implements FolderInterface
         $folders = Folder::where('project_id', $projectId)->get();
 
          // Crear una colección que contendrá la estructura jerárquica de carpetas
-         $result = collect();
+        $result = collect();
 
          // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
-         $folderDictionary = $folders->keyBy('id');
+        $folderDictionary = $folders->keyBy('id');
 
         // Iterar sobre cada carpeta
         foreach ($folders as $folder) {
@@ -309,27 +307,25 @@ class FolderService implements FolderInterface
      * @param string $contractName Nombre del tipo de contrato.
      * @param int $projectId Identificador del proyecto al que pertenecen las carpetas.
      */
-    public function createFolderContract(string $contractName, int $projectId)
+    public function createFolderContract(string $contractName, string $projectId)
     {
         $foldersName = ['Ajustes de', 'Precontractual de', 'Contractual de', 'Ejecución de', 'Cierre de'];
 
         $parentFolder = Folder::where('project_id', $projectId)
         ->where('name', 'Contratos del proyecto')
         ->first();
-
         $folderParentData = [
             'name' => $contractName,
             'higher_folder_id' => $parentFolder->id,
         ];
-
         $folderData = collect($folderParentData);
-        $contractFolderParent = $this->createNewFolder($folderData);
+        $contractFolderParent = $this->createNewFolder($folderData)->toArray();
 
 
         foreach ($foldersName as $folderName){
             $validatedData = [
                 'name' => $folderName . ' ' . strtolower($contractName),
-                'higher_folder_id' => $contractFolderParent->id,
+                'higher_folder_id' => $contractFolderParent['id'],
             ];
     
             $folderData = collect($validatedData);

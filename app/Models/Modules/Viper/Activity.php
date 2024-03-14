@@ -10,6 +10,17 @@ class Activity extends Model
     use HasFactory;
 
     /**
+     * Los atributos que son ocultado en masa.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
+
+    /**
      * Los atributos que se pueden asignar en masa.
      *
      * @var array

@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Alert\AlertDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interfaz para gestionar operaciones relacionadas con las alertas en el sistema Viper.
@@ -17,41 +17,41 @@ interface AlertInterface {
     /**
      * Crea una nueva alerta.
      *
-     * @param AlertDTO $alertDTO La información de la alerta a ser creada.
-     * @return AlertDTO La alerta creada.
+     * @param Collection $alert La información de la alerta a ser creada.
+     * @return Collection La alerta creada.
      */
-    public function createNewAlert(AlertDTO $alertDTO): AlertDTO;
+    public function createNewAlert(Collection $alert): Collection;
 
     /**
      * Actualiza una alerta existente.
      *
-     * @param AlertDTO $alertDTO La información de la alerta a ser actualizada.
+     * @param Collection $alert La información de la alerta a ser actualizada.
      * @param int $id El identificador único de la alerta a ser actualizada.
-     * @return AlertDTO La alerta actualizada.
+     * @return Collection La alerta actualizada.
      */
-    public function updateAlert(AlertDTO $alertDTO, int $id): AlertDTO;
+    public function updateAlert(Collection $alert, int $id): Collection;
 
     /**
      * Obtiene todas las alertas asociadas a un indicador específico.
      *
      * @param int $indicatorId El identificador único del indicador.
-     * @return array Un array de objetos AlertDTO.
+     * @return Collection Collection de Collections que contiene la información de una alerta de un inidicador.
      */
-    public function getAllAlertsByIndicator(int $indicatorId): array;
+    public function getAllAlertsByIndicator(int $indicatorId): Collection;
 
     /**
      * Obtiene los detalles de una alerta específica.
      *
      * @param int $id El identificador único de la alerta.
-     * @return AlertDTO La información de la alerta.
+     * @return Collection La información de la alerta.
      */
-    public function getAlert(int $id): AlertDTO;
+    public function getAlert(int $id): Collection;
 
     /**
      * Elimina una alerta específica.
      *
      * @param int $id El identificador único de la alerta a ser eliminada.
-     * @return AlertDTO La alerta eliminada.
+     * @return Collection La alerta eliminada.
      */
-    public function deleteAlert(int $id): AlertDTO;
+    public function deleteAlert(int $id): Collection;
 }

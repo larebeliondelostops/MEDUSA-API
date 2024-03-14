@@ -53,7 +53,7 @@ class MilestoneClassController extends BaseController
             return response()->json([
                 'message' => 'Milestone Class created successfully.',
                 'data'    => $milestoneClassCreated
-            ], 201);
+            ], Response::HTTP_CREATED);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -74,7 +74,7 @@ class MilestoneClassController extends BaseController
             return response()->json([
                 'message' => 'Milestone Class updated successfully.',
                 'data'    => $stateUpdated,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -91,7 +91,7 @@ class MilestoneClassController extends BaseController
             $milestoneClasses = $this->milestoneClassInterface->getAllMilestoneClasses();
             return response()->json([
                 'data' => $milestoneClasses,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -109,7 +109,7 @@ class MilestoneClassController extends BaseController
             $milestoneClass = $this->milestoneClassInterface->getMilestoneClass($id);
             return response()->json([
                 'data' => $milestoneClass,
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -129,7 +129,7 @@ class MilestoneClassController extends BaseController
             return response()->json([
                 'message' => 'Milestone Class deleted successfully',
                 'data'=> $milestoneClass
-            ],200);
+            ],Response::HTTP_OK);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }

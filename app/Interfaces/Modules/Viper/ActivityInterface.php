@@ -3,16 +3,17 @@
 namespace App\Interfaces\Modules\Viper;
 
 use App\DTOs\Viper\Activity\ActivityDTO;
+use Illuminate\Support\Collection;
 
 interface ActivityInterface {
     
-    public function getAllActivities(int $deliverableId);
+    public function getAllActivities(int $deliverableId): Collection;
 
-    public function storeActivity(ActivityDTO $activityDTO);
+    public function storeActivity(Collection $activity): Collection;
 
-    public function updateActivity($activityId, ActivityDTO $activityDTO);
+    public function updateActivity(int $activityId, Collection $activity): Collection;
 
-    public function deleteActivity($activityId);
+    public function deleteActivity(int $activityId);
 
-    public function getActivity($activityId);
+    public function getActivity(int $activityId): Collection;
 }

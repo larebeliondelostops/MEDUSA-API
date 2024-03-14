@@ -2,7 +2,6 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Product\ProductDTO;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Models\Modules\Viper\Folder;
@@ -87,11 +86,11 @@ class ProductService implements ProductInterface
         $product->fill($productData->toArray());
 
         // Obtiene el specificObjective correspondiente al specific_objective_id proporcionado
-        $specificObjective = SpecificObjective::findOrFail($productData['specific_objective_id']);
+        $specificObjective = SpecificObjective::findOrFail($product->specific_objective_id);
+        
         $scope_id = $specificObjective->scope_id;
 
         $project = Scope::findOrFail($scope_id)->project_id;
-
         // Obtener todos los objetivos específicos de un scope_id
         $objSpecificObjects = SpecificObjective::where('scope_id', $scope_id)->get();
 
@@ -100,8 +99,8 @@ class ProductService implements ProductInterface
         $product_number = $productsObjSpecifics->max('number') + 1;
 
         // Verifica si el número ya existe en los productos asociados a los objetivos específicos
-        if ($productData['number']) {
-            if ($productsObjSpecifics->where('number', $productData['number'])->count() > 0) {
+        if ($product->number) {
+            if ($productsObjSpecifics->where('number', $product->number)->count() > 0) {
                 // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees
                 throw new \Exception('Número ya existe en los productos asociados a los objetivos específicos', 422);
             }else{
@@ -120,7 +119,7 @@ class ProductService implements ProductInterface
 
         if ($folder->id) {
             $folderData = [
-                "name" =>  $product_number . '. ' . $productData->name,
+                "name" =>  $product_number . '. ' . $productData['name'],
                 "stage_id" => 4,
                 "project_id" => $project,
                 "higher_folder_id" => $folder->id

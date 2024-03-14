@@ -2,61 +2,50 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Precedence\PrecedenceDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use App\Models\Modules\Viper\Precedence;
 
 class PrecedenceService implements PrecedenceInterface
 {
-    public function getAllPrecedences()
+    public function getAllPrecedences(): Collection
     {
-        // Obtener todas las precedencias
-        $precedences = Precedence::all();
+        $precedenceGot = Precedence::all();
 
-        // Mapear las precedencias a tus DTO según sea necesario
-        $precedenceDTOs = $precedences->map(function ($precedence) {
-            return new PrecedenceDTO($precedence->toArray());
+        $precedences = $precedenceGot->transform(function ($precedence) {
+            return collect($precedence);
         });
 
-        return $precedenceDTOs;
+        return $precedences;
     }
 
-    public function storePrecedence(PrecedenceDTO $precedenceDTO)
+    public function storePrecedence(Collection $precedence): Collection
     {
-        // Crear una nueva instancia del modelo Precedence y guardar los datos
-        $precedence = new Precedence();
-        $precedence->fill($precedenceDTO->toArray());
-        $precedence->save();
+        $newPrecedence = new Precedence();
+        $newPrecedence->fill($precedence);
+        $newprecedence->save();
 
-        return new PrecedenceDTO($precedence->toArray());
+        return collect($newPrecedence);
     }
 
-    public function updatePrecedence($precedenceId, PrecedenceDTO $precedenceDTO)
+    public function updatePrecedence(int $precedenceId, Collection $precedence)
     {
-        // Encontrar la precedencia por su ID
+        $precedenceUpdate = Precedence::findOrFail($precedenceId);
+        $precedenceUpdate->fill($precedence);
+        $precedenceUpdate->save();
+    }
+
+    public function deletePrecedence(int $precedenceId)
+    {
         $precedence = Precedence::findOrFail($precedenceId);
 
-        // Actualizar los datos de la precedencia
-        $precedence->fill($precedenceDTO->toArray());
-        $precedence->save();
-
-        return new PrecedenceDTO($precedence->toArray());
-    }
-
-    public function deletePrecedence($precedenceId)
-    {
-        // Encontrar la precedencia por su ID
-        $precedence = Precedence::findOrFail($precedenceId);
-
-        // Eliminar la precedencia
         $precedence->delete();
     }
 
-    public function getPrecedence($precedenceId)
+    public function getPrecedence(int $precedenceId): Collection
     {
-        // Encontrar la precedencia por su ID
         $precedence = Precedence::findOrFail($precedenceId);
 
-        return new PrecedenceDTO($precedence->toArray());
+        return collect($precedence);
     }
 }

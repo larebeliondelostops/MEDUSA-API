@@ -2,7 +2,6 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Stage\StageDTO;
 use App\Interfaces\Modules\Viper\StageInterface;
 use App\Models\Modules\Viper\Stage;
 use App\Models\Modules\Viper\StageRelationship;
@@ -25,65 +24,56 @@ class StageService implements StageInterface
     /**
      * Obtiene todas las etapas existentes.
      *
-     * @return Collection|StageDTO[] Colección de objetos StageDTO que representan las etapas.
+     * @return Collection Collection de Collections que representan las etapas.
      */
-    public function getAllStages()
+    public function getAllStages(): Collection
     {
-        $stages = Stage::all();
-        $stageDTOs = $stages->transform(function ($stage) {
-            return new StageDTO($stage->toArray());
+        $stageGot = Stage::all();
+        $stages = $stagesGot->transform(function ($stage) {
+            return collect($stage);
         });
 
-        return $stageDTOs;
+        return collect($stages);
     }
 
     /**
      * Almacena una nueva etapa en la base de datos.
      *
-     * @param StageDTO $stageDTO Objeto StageDTO que contiene los datos de la nueva etapa.
-     * @return StageDTO Objeto StageDTO que representa la etapa recién creada.
+     * @param Collection $stage Collection que contiene los datos de la nueva etapa.
+     * @return Collection Collection que representa la etapa recién creada.
      */
-    public function storeStage(StageDTO $stageDTO)
+    public function storeStage(Collection $stage): Collection
     {
-        // Crea una nueva instancia del modelo Stage y guarda los datos
-        $newStage = Stage::create([
-            'name' => $stageDTO->name,
-        ]);
 
-        return new StageDTO($newStage->toArray());
+        $newStage = Stage::create($stage->toArray());
+
+        return collect($newStage);
     }
 
     /**
      * Actualiza los datos de una etapa existente.
      *
-     * @param int $stageId ID de la etapa que se va a actualizar.
-     * @param StageDTO $stageDTO Objeto StageDTO que contiene los nuevos datos de la etapa.
-     * @return StageDTO Objeto StageDTO que representa la etapa actualizada.
-     * @throws \Exception Se arroja si la etapa no se encuentra.
+     * @param int $stageId Identificador único de la etapa que se va a actualizar.
+     * @param Collection $stage Collection que contiene los nuevos datos de la etapa.
+     * @return Collection Collection que representa la etapa actualizada.
      */
-    public function updateStage($stageId, StageDTO $stageDTO)
+    public function updateStage($stageId, Collection $stage): Collection
     {
-        // Encuentra la etapa por su ID
-        $stage = Stage::findOrFail($stageId);
-        // Actualiza los datos de la etapa
-        $stage->update([
-            'name' => $stageDTO->name,
-        ]);
-        return new StageDTO($stage->toArray()); 
-
+        $stageUpadte = Stage::findOrFail($stageId);
+        $stage->update($stage->toArray());
+        return collect($stageUpdate); 
     }
 
     /**
      * Elimina una etapa existente.
      *
-     * @param int $stageId ID de la etapa que se va a eliminar.
-     * @throws \Exception Se arroja si la etapa no se encuentra.
+     * @param int $stageId Identificador único de la etapa que se va a eliminar.
+     * @return Collection Collection que representa la etapa eliminada.
      */
-    public function deleteStage($stageId)
+    public function deleteStage($stageId):Collection
     {
         // Encuentra la etapa por su ID y elimínala
         $stage = Stage::findOrFail($stageId);
         $stage->delete();
     }
-
 }

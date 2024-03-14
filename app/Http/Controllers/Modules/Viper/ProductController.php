@@ -27,7 +27,7 @@ class ProductController extends BaseController
         $this->productInterface = $productInterface;
     }
 
-     /**
+    /**
      * Mostrar una lista de productos.
      *
      * @return \Illuminate\Http\Response

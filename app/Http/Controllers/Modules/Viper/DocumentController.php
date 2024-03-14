@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Modules\Viper;
 use Illuminate\Http\Request;
 use App\Http\Request\Viper\DocumentRequest;
 use App\Interfaces\Modules\Viper\DocumentInterface;
-use App\DTOs\Viper\Document\DocumentDTO;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las los documentos almacenados en spaces de Digital Ocean
@@ -55,18 +54,12 @@ class DocumentController extends BaseController
     public function store(DocumentRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-
             $uploadedFiles = $request->file('files');
 
             $results = [];
 
             foreach ($uploadedFiles as $file) {
-
-                $documentDTO = new DocumentDTO($validatedData);
-
-                // Crear y almacenar cada documento.
-                $result = $this->documentInterface->createNewDocument($documentDTO, $file, $validatedData['project_id']);
+                $result = $this->documentInterface->createNewDocument(collect($request->validated()), $file);
                 $results[] = $result;
             }
 

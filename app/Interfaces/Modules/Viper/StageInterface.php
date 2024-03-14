@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Stage\StageDTO;
+use Illuminate\Support\Collection;
 
 /**
  * Interface StageInterface
@@ -20,35 +20,34 @@ interface StageInterface {
     /**
      * Obtener todas las etapas existentes.
      *
-     * @return \Illuminate\Support\Collection|StageDTO[] Colección de objetos StageDTO que representan las etapas.
+     * @return Collection Colección de Collection que representan las etapas.
+     * @return Collection Collection que representa todas las etapas.
      */
-    public function getAllStages();
+    public function getAllStages(): Collection;
 
     /**
      * Almacenar una nueva etapa en el sistema.
      *
-     * @param  \App\DTOs\Viper\Stage\StageDTO  $stageDTO Objeto StageDTO que contiene los datos de la nueva etapa.
-     * @return \App\DTOs\Viper\Stage\StageDTO Objeto StageDTO que representa la etapa recién creada.
+     * @param Collection $stage Collection que contiene los datos de la nueva etapa.
+     * @return Collection Collection que representa la etapa recién creada.
      */
-    public function storeStage(StageDTO $stageDTO);
+    public function storeStage(Collection $stage): Collection;
 
     /**
      * Actualizar los datos de una etapa existente.
      *
-     * @param  int  $stageId ID de la etapa que se va a actualizar.
-     * @param  \App\DTOs\Viper\Stage\StageDTO  $stageDTO Objeto StageDTO que contiene los nuevos datos de la etapa.
-     * @return \App\DTOs\Viper\Stage\StageDTO Objeto StageDTO que representa la etapa actualizada.
-     * @throws \Exception Se arroja si la etapa no se encuentra.
+     * @param  int  $stageId Identificador único de la etapa que se va a actualizar.
+     * @param Collection Collection que contiene los nuevos datos de la etapa.
+     * @return Collection Collection que representa la etapa actualizada.
      */
-    public function updateStage($stageId, StageDTO $stageDTO);
+    public function updateStage(int $stageId, Collection $stage): Collection;
 
     /**
      * Eliminar una etapa existente.
      *
-     * @param  int  $stageId ID de la etapa que se va a eliminar.
-     * @return void
-     * @throws \Exception Se arroja si la etapa no se encuentra.
+     * @param  int  $stageId Identificador único de la etapa que se va a eliminar.
+     * @return Collection Collection que representa la etapa eliminada.
      */
-    public function deleteStage($stageId);
+    public function deleteStage(int $stageId);
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
-use App\DTOs\Viper\Alert\AlertDTO;
+use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
 use Exception;
@@ -23,78 +23,76 @@ class AlertService implements AlertInterface{
     /**
      * Crea una nueva alerta en el sistema.
      *
-     * @param AlertDTO $alertDTO Datos de la alerta a crear.
-     * @return AlertDTO Datos de la nueva alerta creada.
+     * @param Collection $alert Datos de la alerta a crear.
+     * @return Collection Datos de la nueva alerta creada.
      */
-    public function createNewAlert(AlertDTO $alertDTO): AlertDTO
+    public function createNewAlert(Collection $alert): Collection
     {
-        $alert = new Alert($alertDTO->toArray());
-        $alert->save();
+        $newAlert = new Alert($alert->toArray());
+        $newAlert->save();
         
-        return new AlertDTO($alert->toArray());
+        return collect($newAlert);
     }
 
     /**
      * Actualiza una alerta existente en el sistema.
      *
-     * @param AlertDTO $alertDTO Datos actualizados de la alerta.
+     * @param Collection $alert Datos actualizados de la alerta.
      * @param int $id Identificador de la alerta a actualizar.
-     * @return AlertDTO Datos de la alerta actualizada.
-     * @throws Exception Si la alerta no se encuentra.
+     * @return Collection Datos de la alerta actualizada.
      */
-    public function updateAlert(AlertDTO $alertDTO, int $id): AlertDTO
+    public function updateAlert(Collection $alert, int $id): Collection
     {
-        $alert = Alert::findOrFail($id);
-        $alert->fill($alertDTO->toArray());
-        $alert->save();
+        $alertUpdate = Alert::findOrFail($id);
+        $alertUpdate->fill($alert->toArray());
+        $alertUpdate->save();
         
-        return new AlertDTO($alert->toArray());
+        return collect($alertUpdate);
     }
 
     /**
      * Obtiene todas las alertas asociadas a un indicador específico.
      *
      * @param int $indicatorId Identificador del indicador.
-     * @return array Colección de AlertDTO representando las alertas asociadas al indicador.
+     * @return Collection Collection de Collections representando las alertas asociadas al indicador.
      */
-    public function getAllAlertsByIndicator(int $indicatorId): array
+    public function getAllAlertsByIndicator(int $indicatorId): Collection
     {
-        $alerts = Alert::where('indicator_id', $indicatorId)->get();
+        $alertGot = Alert::where('indicator_id', $indicatorId)->get();
     
-        $alertDTOs = $alerts->map(function ($alert) {
-            return new AlertDTO($alert->toArray());
-        })->all();
-    
-        return $alertDTOs;
+        $alerts = $alertGot->transform(
+            function (Alert $alert)
+            {
+                return collect($alert);
+            }
+        );
+        return collect($alerts);
     }
 
     /**
      * Obtiene los datos de una alerta específica por su identificador.
      *
      * @param int $id Identificador de la alerta.
-     * @return AlertDTO Datos de la alerta solicitada.
-     * @throws Exception Si la alerta no se encuentra.
+     * @return Collection Datos de la alerta solicitada.
      */
-    public function getAlert(int $id): AlertDTO
+    public function getAlert(int $id): Collection
     {
         $alert = Alert::findOrFail($id);
         
-        return new AlertDTO($alert->toArray());
+        return collect($alert);
     }
 
     /**
      * Elimina una alerta específica por su identificador.
      *
      * @param int $id Identificador de la alerta a eliminar.
-     * @return AlertDTO Datos de la alerta eliminada.
-     * @throws Exception Si la alerta no se encuentra.
+     * @return Collection Datos de la alerta eliminada.
      */
-    public function deleteAlert(int $id): AlertDTO
+    public function deleteAlert(int $id): Collection
     {
         $alert = Alert::findOrFail($id);
-        $alertDTO = new AlertDTO($alert->toArray());
         $alert->delete();
 
-        return $alertDTO;
+        return collect($alert);
     }
 }

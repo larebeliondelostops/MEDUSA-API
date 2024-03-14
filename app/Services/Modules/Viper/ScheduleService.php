@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Services\Modules\Viper;
-use App\DTOs\Viper\EDT\EDTDTO;
-use App\DTOs\Viper\Product\ProductSummaryDTO;
-use App\DTOs\Viper\Product\ProductSummaryWithDeliverablesDTO;
 use App\Interfaces\Modules\Viper\DeliverableInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
@@ -45,17 +42,16 @@ class ScheduleService implements ScheduleInterface
     public function generateProjectEDT($projectBpin) : Collection
     {
         $EDT = [];
-        $projectDTO = $this->projectInterface->getProjectByBPIN($projectBpin);
-        $projectScopeDTO = $this->scopeInterface->getScopeByProject($projectBpin);
+        $projectData = $this->projectInterface->getProjectByBPIN($projectBpin);
+        $projectScopeData = $this->scopeInterface->getScopeByProject($projectBpin);
 
-        $EDT = new EDTDTO([
-            'name' => ''.$projectDTO->bpin.' '.$projectDTO->name,
+        $EDT = collect([
+            'name' => ''.$projectData['bpin'].' '.$projectData['name'],
             'products' => array_map(
-                fn (ProductSummaryDTO $productSummaryDTO) => new ProductSummaryWithDeliverablesDTO(
-                    $productSummaryDTO->toArray() +
-                    ['deliverables' => $this->deliverableInterface->getDeliverablesByProductId($productSummaryDTO->id)]
-                ),
-                $this->productInterface->getAllProductsSummaryByScope($projectScopeDTO->id)
+                fn (array $productSummaryData) =>
+                    $productSummaryData +
+                    ['deliverables' => $this->deliverableInterface->getDeliverablesByProductId($productSummaryData['id'])],
+                $this->productInterface->getAllProductsSummaryByScope($projectScopeData['id'])
             )
         ]);
 

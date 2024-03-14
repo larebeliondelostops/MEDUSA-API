@@ -24,7 +24,7 @@ interface ScheduleInterface
      *  - Nodos Hojas: Actividades del proyecto
      *
      * @param string BPIN del proyecto al que se le generara el Diagrama EDT
-     * @return array Diagrama EDT del proyecto
+     * @return Collection Diagrama EDT del proyecto
      */
     public function generateProjectEDT(string $projectBpin) : Collection;
 }

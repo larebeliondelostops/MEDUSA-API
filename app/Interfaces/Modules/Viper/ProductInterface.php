@@ -22,7 +22,7 @@ interface ProductInterface {
      *
      * @return \Illuminate\Support\Collection Colección de objetos ProductDTO que representan los productos.
      */
-    public function getAllProducts();
+    public function getAllProducts($projectId);
 
     /**
      * Almacenar un nueva producto en el sistema.

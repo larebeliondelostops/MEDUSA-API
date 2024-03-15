@@ -32,10 +32,10 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($projectId)
     {
         try {
-            $products = $this->productInterface->getAllProducts();
+            $products = $this->productInterface->getAllProducts($projectId);
 
             return response()->json([
                 'data' => $products,

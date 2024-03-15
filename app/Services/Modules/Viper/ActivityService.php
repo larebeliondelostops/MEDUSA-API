@@ -41,20 +41,20 @@ class ActivityService implements ActivityInterface
         $newActivity = new Activity();
         $newActivity->fill($activity->toArray());
 
-        $deliverable = Deliverable::findOrFail($activity->deliverable_id);
+        $deliverable = Deliverable::findOrFail($activity["deliverable_id"]);
 
         $activities = Activity::where('deliverable_id', $deliverable->id);
 
         $activity_number = $activities->max('number') + 1;
 
         // Verifica si el número ya existe en los productos asociados a los objetivos específicos
-        if ($activity->number) {
-            if ($activities->where('number', $activity->number)->count() > 0) {
+        if ($activity["number"]) {
+            if ($activities->where('number', $activity["number"])->count() > 0) {
                 // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees
                 throw new \Exception('Número ya existe en los productos asociados a los objetivos específicos', 422);
             }else{
                 // Calcula el próximo número disponible para el nuevo producto
-                $newActivity->number = $activity->number;
+                $newActivity->number = $activity["number"];
             }
         }else{
             // Calcula el próximo número disponible para el nuevo producto
@@ -65,11 +65,11 @@ class ActivityService implements ActivityInterface
 
         if ($folder->id) {
             $newFolder = new Folder();
-            $newFolder->name =  $activity_number . '. ' . $activity->description;
+            $newFolder->name =  $activity_number . '. ' . $activity["description"];
             $newFolder->higher_folder_id = $folder->id;
             // Crear la carpeta y establecer la relación higherFolders si se proporciona higher_folder_id
             $result = $this->folderInterface->createNewFolder(collect($newFolder));
-            $newActivity->folder_id = $result->id;
+            $newActivity->folder_id = $result["id"];
 
         } else {
             throw new \Exception('No se pudo asignar una carpeta a la actividad', 422);

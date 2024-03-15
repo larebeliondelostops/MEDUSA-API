@@ -24,7 +24,8 @@ class DeliverableService implements DeliverableInterface
     public function createNewDeliverable(Collection $deliverableData) : Collection
     {
         if (!isset($deliverableData['folder_id'])) $deliverableData['folder_id'] = null;
-
+        $deliverableData['activity_quantity'] =  0;
+        $deliverableData['value'] =  0;
         $folderData = $this->folderInterface->createNewFolder(
             collect(
                 [
@@ -38,9 +39,9 @@ class DeliverableService implements DeliverableInterface
             )
         );
         $deliverableData['folder_id'] = $folderData['id'];
-        $deliverable = collect($deliverableData->toArray());
+        $deliverable = new Deliverable($deliverableData->toArray());
         $deliverable->save();
-        return $deliverable;
+        return collect($deliverable);
     }
 
     /**

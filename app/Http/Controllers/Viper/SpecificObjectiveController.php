@@ -133,4 +133,24 @@ class SpecificObjectiveController extends BaseController
             return $this->handleException($exception);
         }
     }
+
+    /**
+     * Obtiene todos los Objetivos Específicos asociados a un alcance (scope) específico.
+     *
+     * @param Request $request
+     * @param int $scopeId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function indexByProject(Request $request, int $projectId)
+    {
+        try {
+            $specificObjectives = $this->specificObjectiveInterface->getAllSpecificObjectiveByProject($projectId);
+            return response()->json([
+                'message' => 'Sector created successfully.',
+                'data'    => $specificObjectives
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
 }

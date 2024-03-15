@@ -56,4 +56,12 @@ interface SpecificObjectiveInterface
      * @return SpecificObjectiveDTO DTO del objetivo específico eliminado.
      */
     public function deleteSpecificObjective(int $id): SpecificObjectiveDTO;
+
+    /**
+     * Obtiene todos los objetivos específicos asociados a un proyecto.
+     *
+     * @param int $projectId Identificador único del alcance.
+     * @return array Arreglo de objetivos específicos asociados al alcance.
+     */
+    public function getAllSpecificObjectiveByProject(int $projectId);
 }

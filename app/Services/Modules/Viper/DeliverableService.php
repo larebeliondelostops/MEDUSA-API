@@ -85,10 +85,10 @@ class DeliverableService implements DeliverableInterface
         foreach($deliverables as $deliverable)
         {
             $deliverableData = collect($deliverable);
-            $deliverableData->deliverable_id = $fatherDeliverableId;
+            $deliverableData['deliverable_id'] = $fatherDeliverableId;
             $deliverableData = $this->createNewDeliverable($deliverableData);
             if (count($deliverable['deliverables']) > 0)
-                $this->adjustDataAndSave($deliverable['deliverables'], $result, $deliverableData->id);
+                $this->adjustDataAndSave($deliverable['deliverables'], $result, $deliverableData['id']);
 
             array_push($result, $deliverableData); // se agrega el dato almacenado al array de resultado
         }
@@ -112,15 +112,18 @@ class DeliverableService implements DeliverableInterface
         $deliverables = Deliverable::with('activities')->where('product_id', $productId) // busca los entregables con productId $number
                         ->Where('deliverable_id', $fatherDeliverableId) // y que tenga de padre a $father
                         ->get() // realiza la consulta
-                        ->toArray(); // la convierte a un array
+                        ->toArray();
 
         foreach($deliverables as $deliverable)
         {
+            if (!isset($deliverable['deliverables'])) $deliverable['deliverables'] = [];
+
             array_push(
                 $result,
                 $deliverable
             );
-            $this->getAndAjustData($deliverable->deliverables, $productId, $deliverable->id);
+
+            $this->getAndAjustData($result[count($result)-1]['deliverables'], $productId, $deliverable['id']);
         }
     }
 

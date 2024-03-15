@@ -2,6 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Models\Modules\Viper\Scope;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\Models\Modules\Viper\SpecificObjective;
@@ -91,5 +92,24 @@ class SpecificObjectiveService implements SpecificObjectiveInterface
         $specificObjective->delete();
 
         return collect($specificObjective);
+    }
+
+    /**
+     * Obtiene todos los objetivos específicos asociados a un alcance.
+     *
+     * @param int $scopeId Identificador único del alcance.
+     * @return Collection Collection de objetivos específicos asociados al alcance.
+     */
+    public function getAllSpecificObjectiveByProject(int $projectId) : Collection
+    {
+        $scope = Scope::where( 'project_id', $projectId )->firstOrFail();
+        $specificObjectiveGot = SpecificObjective::where('scope_id', $scope->id)->get();
+        $specificObjectives = $specificObjectiveGot->transform(
+            function (SpecificObjective $specificObjective)
+            {
+                return collect($specificObjective);
+            }
+        );
+        return $specificObjectives;
     }
 }

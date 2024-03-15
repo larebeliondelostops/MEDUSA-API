@@ -56,4 +56,12 @@ interface SpecificObjectiveInterface
      * @return Collection Collection del objetivo específico eliminado.
      */
     public function deleteSpecificObjective(int $id): Collection;
+
+    /**
+     * Obtiene todos los objetivos específicos asociados a un proyecto.
+     *
+     * @param int $projectId Identificador único del alcance.
+     * @return Collection Arreglo de objetivos específicos asociados al alcance.
+     */
+    public function getAllSpecificObjectiveByProject(int $projectId): Collection;
 }

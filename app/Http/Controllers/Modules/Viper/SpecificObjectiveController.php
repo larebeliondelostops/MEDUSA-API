@@ -147,7 +147,6 @@ class SpecificObjectiveController extends BaseController
         try {
             $specificObjectives = $this->specificObjectiveInterface->getAllSpecificObjectiveByProject($projectId);
             return response()->json([
-                'message' => 'Sector created successfully.',
                 'data'    => $specificObjectives
             ], 200);
         } catch (Exception $exception) {

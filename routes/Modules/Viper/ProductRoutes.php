@@ -13,8 +13,8 @@ use App\Http\Controllers\Modules\Viper\ProductController;
 */
 
 Route::prefix('/viper/product')->group(function () {
-    Route::get('/list', [ProductController::class, 'index']);
-    Route::get('/list/scope/{scope}', [ProductController::class, 'indexByScope']);
+    Route::get('/list/project/{projectId}', [ProductController::class, 'index']);
+    Route::get('/list/scope/{scopeId}', [ProductController::class, 'indexByScope']);
     Route::get('/get/{ProductId}', [ProductController::class, 'show']);
     Route::post('/create', [ProductController::class, 'store']);
     Route::get('/list/specificObjective/{specificObjective}', [ProductController::class, 'indexBySpecificObjective']);

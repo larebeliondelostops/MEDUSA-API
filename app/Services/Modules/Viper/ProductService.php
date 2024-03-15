@@ -36,12 +36,17 @@ class ProductService implements ProductInterface
      *
      * @return Collection Colección de objetos ProductData que representan los productos.
      */
-    public function getAllProducts()
+    public function getAllProducts($projectId)
     {
-        $products = Product::with('measurementUnit', 'specificObjective', 'folder')->get();
+        $scopeId = Scope::where('project_id', $projectId)->firstOrFail()->id;
+        $products = Product::with('measurementUnit', 'specificObjective', 'folder')
+            ->whereHas('specificObjective', function ($query) use ($scopeId) {
+                $query->where('scope_id', $scopeId);
+            })
+            ->get();
+
         return collect($products);
     }
-
 
     /**
      * Obtiene todos los productos existentes por alcance.

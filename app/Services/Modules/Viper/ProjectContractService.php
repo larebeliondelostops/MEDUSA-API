@@ -1,19 +1,22 @@
 <?php
-
-namespace App\Service\Modules\Viper;
+namespace App\Services\Modules\Viper;
 
 use Illuminate\Support\Collection;
+use App\Models\User;
 use App\Models\Modules\Viper\ProjectUserRole;
+use App\Interfaces\Modules\Viper\ProjectContractInterface;
+use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
+use Spatie\Permission\Models\Role;
 
+class ProjectContractService Implements ProjectContractInterface {
 
-Class ProjectContractService Implements ProjectContractInterface {
-
-    public function createProjectContract(Collection $projectContract): Collection
+    public function createNewProjectContract(Collection $projectContract)
     {
         $imageName = null;
-        if ($projectContractt->has('avatar')) {
+        if ($projectContract->has('avatar')) {
 
-            $image_64 = $projectContractt['avatar']; //your base64 encoded data
+            $image_64 = $projectContract['avatar']; //your base64 encoded data
 
             $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
 
@@ -32,19 +35,21 @@ Class ProjectContractService Implements ProjectContractInterface {
 
         // Crear el usuario
         $user = new User();
-        $user->name = $projectContractt['name'];
-        $user->email = $projectContractt['email'];
-        $user->phone_number = $projectContractt['phone_number'];
-        $user->address = $projectContractt['address'];
+        $user->name = $projectContract['name'];
+        $user->email = $projectContract['email'];
+        $user->phone_number = $projectContract['phone_number'];
+        $user->address = $projectContract['address'];
         $user->avatar = $imageName;
-        $user->password = bcrypt($projectContractt['password']);
+        $user->password = bcrypt($projectContract['password']);
         $user->save();
         
         $projectUserRole = new ProjectUserRole();
         $projectUserRole->project_id = $projectContract['bpin']; 
         $projectUserRole->user_id = $user->id;
-        $projectUserRole->rol_id = $projectContract['rol'];
 
-        
+        $rol = Role::where('name', $projectContract['rol'])->first();
+
+        $projectUserRole->rol_id = $rol->id;
+        $projectUserRole->save();
     }
 }

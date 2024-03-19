@@ -30,7 +30,7 @@ use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\Interfaces\Modules\Viper\StageInterface;
 use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
-use App\Services\Modules\Viper\ProjectContractInterface;
+use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Services\Modules\Viper\ActivityService;
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;

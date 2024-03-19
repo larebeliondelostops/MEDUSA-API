@@ -28,9 +28,12 @@ class ProjectContractRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
             'password' => 'required',
-            'rol' => 'required|max:255',
-            'bpin' => 'required|string|max:255',
+            'rol' => 'required|exists:roles,name|max:255',
+            'bpin' => 'required|exists:projects,bpin|string|max:255',
+            'avatar.*' => 'file'
         ];
     }
 

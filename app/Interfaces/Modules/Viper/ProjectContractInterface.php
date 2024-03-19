@@ -6,5 +6,5 @@ use Illuminate\Support\Collection;
 
 interface ProjectContractInterface {
 
-    public function createProjectContract(Collection $projectContract): Collection;
+    public function createNewProjectContract(Collection $projectContract);
 }

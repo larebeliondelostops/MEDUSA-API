@@ -10,24 +10,23 @@ use Illuminate\Http\Request;
 
 class ProjectContractController extends BaseController
 {
-    private ProjectContrarInterface $projectContrarInterface;
+    private ProjectContractInterface $projectContractInterface;
 
 
-    public function __construct(ProjectContrarInterface $projectContrarInterface)
+    public function __construct(ProjectContractInterface $projectContractInterface)
     {
         parent::__construct();
-        $this->projectContrarInterface = $projectContrarInterface;
+        $this->projectContractInterface = $projectContractInterface;
     }
 
 
-    public function store(ProjectContrarRequest $request)
+    public function store(ProjectContractRequest $request)
     {
         try {
-            $projectContrarCreated = $this->projectContrarInterface->createNewProjectContrar(collect($request->validated()));
+            $this->projectContractInterface->createNewProjectContract(collect($request->validated()));
 
             return response()->json([
                 'message' => 'Project Contrar created successfully.',
-                'data'    => $projectContrarCreated
             ], 201);
         } catch (Exception $exception) {
             return $this->handleException($exception);

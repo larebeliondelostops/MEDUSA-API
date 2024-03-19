@@ -30,6 +30,7 @@ use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\Interfaces\Modules\Viper\StageInterface;
 use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
+use App\Services\Modules\Viper\ProjectContractInterface;
 use App\Services\Modules\Viper\ActivityService;
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
@@ -58,6 +59,7 @@ use App\Services\Modules\Viper\SpecificObjectiveService;
 use App\Services\Modules\Viper\StageService;
 use App\Services\Modules\Viper\StateService;
 use App\Services\Modules\Viper\SubstateService;
+use App\Services\Modules\Viper\ProjectContractService;
 use Illuminate\Support\ServiceProvider;
 
 class ViperServiceProvider extends ServiceProvider
@@ -91,5 +93,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProofInterface::class, ProofService::class);
         $this->app->bind(ScheduleInterface::class, ScheduleService::class);
         $this->app->bind(ReportInterface::class, ReportService::class);
+        $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
     }
 }

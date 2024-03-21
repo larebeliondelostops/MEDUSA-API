@@ -8,25 +8,28 @@ class ProjectUserRole extends Model
 {
     protected $table = 'project_user_role';
 
+    protected $hidden = [
+        'created_at', 
+        'updated_at', 
+        'deleted_at'
+    ];
+
     protected $fillable = [
         'project_id',
         'user_id',
         'rol_id',
     ];
 
-    // Relación con el modelo Project
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    // Relación con el modelo User
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Relación con el modelo Role (si es necesario)
     public function role()
     {
         return $this->belongsTo(Role::class, 'rol_id');

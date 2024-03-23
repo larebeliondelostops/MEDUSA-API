@@ -49,7 +49,7 @@ class VillavicencioSeeder extends Seeder
             PollingPlaceTableSeeder::class,
             SlugsSeeder::class,
             SubMenuSeeder::class,
-            IpatsTableSeeder::class,
+            //IpatsTableSeeder::class,
             TrafficLightsTableSeeder::class,
         ]);
     }

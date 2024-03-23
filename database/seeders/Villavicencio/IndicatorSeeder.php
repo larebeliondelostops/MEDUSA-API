@@ -84,5 +84,41 @@ class IndicatorSeeder extends Seeder
         $user10->description = '.';
 
         $user10->save();
+
+        $user11 = new Indicator();
+
+        $user11->name = 'Caída de ocupante';
+        $user11->description = '.';
+
+        $user11->save();
+
+        $user12 = new Indicator();
+
+        $user12->name = 'Choque';
+        $user12->description = '.';
+        
+        $user12->save();
+
+        $user13 = new Indicator();
+
+        $user13->name = 'Atropello';
+        $user13->description = '.';
+
+        $user13->save();
+
+        $user14 = new Indicator();
+
+        $user14->name = 'Volcamiento';
+        $user14->description = '.';
+
+        $user14->save();
+
+        $user15 = new Indicator();
+
+        $user15->name = 'Otro';
+        $user15->description = '.';
+
+        $user15->save();
+
     }
 }

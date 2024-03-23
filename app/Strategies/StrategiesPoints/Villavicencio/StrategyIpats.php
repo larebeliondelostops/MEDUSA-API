@@ -63,6 +63,8 @@ class StrategyIpats implements PointsInterface
                     'Víctimas' => $ipats->victims,
                     //'Georeferencia' => $ipats->coordinates,
                     'Fecha de IPAT' => $ipats->date_ipat,
+                    'Nombre agente' => $ipats->agent_name,
+                    'Hipotesis' => $ipats->hypothesis ?? 'Sin hipotesis'
                 ]
             ];
             return Response::json($ipats, 200, [], JSON_PRETTY_PRINT);

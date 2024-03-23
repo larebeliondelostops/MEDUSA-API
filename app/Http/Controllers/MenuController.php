@@ -237,6 +237,33 @@ class MenuController extends Controller
                         'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
                         'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
+                case 'bucarest':
+
+                    $defaultCoordinates = [
+                        'lat' => 44.43225,
+                        'lng' => 26.10626
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 6;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
                     break;
             }
 

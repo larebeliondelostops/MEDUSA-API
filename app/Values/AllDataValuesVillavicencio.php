@@ -3,7 +3,7 @@
 namespace App\Values;
 
 
-use App\Http\Controllers\Viper\Strategies\StrategyProjectMarker;
+use App\Http\Controllers\Modules\Viper\Strategies\StrategyProjectMarker;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\SettingsController;
 use App\Strategies\StrategiesPoints\Villavicencio\StrategyCai;

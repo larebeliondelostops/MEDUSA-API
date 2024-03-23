@@ -57,16 +57,6 @@ Route::middleware([
     require base_path('routes/api/Viper/ActivityRoutes.php');
     require base_path('routes/api/Viper/PrecedenceRoutes.php');
     require base_path('routes/api/Viper/LocationRoutes.php');
-    // Notification Route
-    require base_path('routes/api/notification.php');
-    // Heatmap Route
-    require base_path('routes/api/heatmap.php');
-    // Ipats Route
-    require base_path('routes/api/ipats.php');
-    // Import KMZ Route
-    require base_path('routes/api/kmz.php');
-
-
     require base_path('routes/api/Viper/MilestoneRoutes.php');
     require base_path('routes/api/Viper/MilestoneClassRoutes.php');
     require base_path('routes/api/Viper/MilestoneSubclassRoutes.php');

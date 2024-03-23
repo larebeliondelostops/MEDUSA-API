@@ -3,6 +3,7 @@
 namespace App\Interfaces\Viper;
 
 use App\DTOs\Viper\Product\ProductDTO;
+use App\DTOs\Viper\Product\ProductSummaryDTO;
 
 /**
  * Interface ProductInterface
@@ -16,7 +17,7 @@ use App\DTOs\Viper\Product\ProductDTO;
  */
 
 interface ProductInterface {
-    
+
     /**
      * Obtener todos los productos existentes.
      *
@@ -50,7 +51,7 @@ interface ProductInterface {
      * @throws \Exception Se arroja si el producto no se encuentra.
      */
     public function deleteProduct($productId);
-    
+
     /**
      * Obtiene el producto existente.
      *
@@ -65,5 +66,21 @@ interface ProductInterface {
      * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
      */
     public function getAllProductsByScope(int $scopeId);
+
+    /**
+     * Obtiene todos los productos existentes por ovjetivo especifico.
+     *
+     * @param int $scope_id Identificador único del alcance.
+     * @return Collection|ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     */
+    public function getAllProductsBySpecificObjective(int $specificObjectiveId);
+
+    /**
+     * Obtiene todos los productos existentes por alcance con un minimo de datos.
+     *
+     * @param int $scope_id Identificador único del alcance.
+     * @return ProductSummaryDTO[] Array de objetos ProductDTO que representan los productos.
+     */
+    public function getAllProductsSummaryByScope(int $scopeId) : array;
 
 }

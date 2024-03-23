@@ -11,6 +11,7 @@ use App\Models\Viper\Project;
 use App\Models\Viper\Stage;
 use App\Utils\Viper\Filters\FolderFilter;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Servicio para manejar operaciones relacionadas con las carpetas de documentos de los proyectos.
@@ -120,6 +121,11 @@ class FolderService implements FolderInterface
      */
     public function getAllFolders($projectId, array $queryParams = [])
     {
+
+        // Obtener el usuario autenticado y su rol
+        //$user = Auth::user();
+        //$role = $user->role; 
+
         // Crea una instancia del filtro y transforma los parámetros
         $filter = new FolderFilter();
         $queryItems = $filter->transform($queryParams);
@@ -131,6 +137,11 @@ class FolderService implements FolderInterface
                 $folderQuery->orWhere($item[0], $item[1], ($item[1]=="ilike"?"%".$item[2]."%":$item[2]));
             }
         }
+        
+        // Si el usuario no es administrador, se filtra por su ID de usuario
+        //if ($role !== 'admin') {
+        //    $folderQuery->where('user_id', $user->id);
+        //}
 
         // Obtén todas las carpetas para el proyecto específico con el filtro aplicado
         $folders = $folderQuery->where('project_id', $projectId)->get();

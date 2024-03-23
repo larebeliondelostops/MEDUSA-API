@@ -41,6 +41,14 @@ class Deliverable extends Model
     }
 
     /**
+     * Get the activities associated with the deliverable
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'deliverable_id');
+    }
+
+    /**
      * Get the product associated with the deliverable.
      */
     public function product()

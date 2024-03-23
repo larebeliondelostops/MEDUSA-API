@@ -60,4 +60,8 @@ class SpecificObjective extends Model
     {
         return $this->belongsTo(Scope::class, 'scope_id', 'id');
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

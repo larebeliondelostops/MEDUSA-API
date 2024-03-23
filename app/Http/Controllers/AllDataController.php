@@ -78,7 +78,7 @@ class AllDataController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud',
+                'message' => 'Error En La Generación De La Solicitud'.$exception->getMessage(),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -87,9 +87,9 @@ class AllDataController extends Controller
     {
         try {
             $this->getSubDomain();
-            
+
             $this->LinesMarkers = Marker::whereIn('marker_type', [2,4])->pluck('id')->toArray();
-            
+
             foreach ($this->LinesMarkers as $key) {
                 $data = $this->value::STRATEGY_LINES[$key]::all();
                 $data = json_decode($data->content(), true);

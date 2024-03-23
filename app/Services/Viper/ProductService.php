@@ -3,9 +3,11 @@
 namespace App\Services\Viper;
 
 use App\DTOs\Viper\Folder\FolderDTO;
+use App\DTOs\Viper\Indicator\IndicatorDTO;
 use App\DTOs\Viper\MeasurementUnit\MeasurementUnitDTO;
 use App\DTOs\Viper\Product\ProductDetailDTO;
 use App\DTOs\Viper\Product\ProductDTO;
+use App\DTOs\Viper\Product\ProductSummaryDTO;
 use App\DTOs\Viper\SpecificObjective\SpecificObjectiveDTO;
 use App\Interfaces\Viper\FolderInterface;
 use App\Interfaces\Viper\ProductInterface;
@@ -72,9 +74,6 @@ class ProductService implements ProductInterface
 
         $productDTOs = $products->transform(function ($product) {
             $data = $product->toArray();
-            $data['folder'] = new FolderDTO($data['folder']);
-            $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
-            $data['specific_objective'] = new SpecificObjectiveDTO($data['specific_objective']);
             return new ProductDetailDTO($data);
         });
 
@@ -244,5 +243,59 @@ class ProductService implements ProductInterface
         $product->delete();
 
     }
+  
+/**
+ * Obtiene el objetivo específico y sus productos asociados con indicadores por alcance.
+ *
+ * @param int $specificObjectiveId Identificador único del objetivo específico.
+ * @return array ['specific_objective' => SpecificObjectiveDTO, 'products' => Collection|ProductDetailDTO[]]
+ */
+public function getAllProductsBySpecificObjective($specificObjectiveId)
+{
+    // Obtener el objetivo específico
+    $specificObjective = SpecificObjective::findOrFail($specificObjectiveId);
+    $specificObjectiveDTO = new SpecificObjectiveDTO($specificObjective->toArray());
 
+    // Obtener los productos asociados al objetivo específico con indicadores cargados
+    $products = Product::with(['measurementUnit', 'indicators'])
+        ->where('specific_objective_id', $specificObjectiveId)
+        ->get();
+
+    // Transformar productos a objetos DTO
+    $productDTOs = $products->transform(function ($product) {
+        $data = $product->toArray();
+        $data['measurement_unit'] = new MeasurementUnitDTO($data['measurement_unit']);
+
+        // Transformar los indicadores en DTO
+        $data['indicators'] = $product->indicators->transform(function ($indicator) {
+            return new IndicatorDTO($indicator->toArray());
+        })->toArray();
+
+        return new ProductDetailDTO($data);
+    });
+
+    // Devolver un array con el objetivo específico y los productos asociados
+    return [
+        'specific_objective' => $specificObjectiveDTO,
+        'products' => $productDTOs,
+    ];
+}
+
+    /**
+     * Obtiene todos los productos existentes por alcance con un minimo de datos.
+     *
+     * @param int $scope_id Identificador único del alcance.
+     * @return ProductDTO[] Colección de objetos ProductDTO que representan los productos.
+     */
+    public function getAllProductsSummaryByScope(int $scopeId) : array
+    {
+        $products = Product::whereHas('specificObjective', function ($query) use ($scopeId) {
+            $query->where('scope_id', $scopeId);
+        })->get();
+
+        $productsDTO = $products->map(
+            fn (Product $product) => new ProductSummaryDTO($product->toArray())
+        );
+        return $productsDTO->toArray();
+    }
 }

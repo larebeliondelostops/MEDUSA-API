@@ -34,7 +34,7 @@ class Indicator extends Model
      *
      * @var string
      */
-    protected $table = 'indicators';
+    protected $table = 'indicators_viper';
 
     /**
      * Clave primaria de la tabla.
@@ -49,7 +49,7 @@ class Indicator extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'start_year_of_goal', 'end_year_goal', 'unit', 'target_value', 'progress', 'percentage_completed', 'is_main', 'product_id'
+        'name', 'start_year_of_goal', 'end_year_goal', 'target_value', 'progress', 'percentage_completed', 'is_main', 'product_id', 'measurement_unit_id'
     ];
 
     /**
@@ -70,5 +70,14 @@ class Indicator extends Model
     public function alerts()
     {
         return $this->hasMany(Alert::class, 'indicator_id');
+    }
+    /**
+     * Relación muchos a uno con la tabla 'measurement_units'.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function measurementUnit()
+    {
+        return $this->belongsTo(MeasurementUnit::class, 'measurement_unit_id');
     }
 }

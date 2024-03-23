@@ -98,4 +98,8 @@ class Project extends Model
     {
         return $this->hasMany(Location::class, 'project_bpin');
     }
+    public function scope()
+    {
+        return $this->hasOne(Scope::class, 'project_id');
+    }
 }

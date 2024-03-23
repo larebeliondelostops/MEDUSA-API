@@ -19,7 +19,7 @@ class MeasurementUnitSeeder extends Seeder
          */
         DB::table('measurement_units')->insert([
             [
-                'name' => '# de Suervisiones',
+                'name' => '# de Supervisiones',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

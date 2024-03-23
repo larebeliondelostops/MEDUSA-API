@@ -3,9 +3,9 @@
 namespace App\DTOs\Viper\ProjectMarker;
 use App\DTOs\Viper\DTO;
 
-class ProjectMarkerDTO extends DTO
+class ProjectMarkerPointDTO extends DTO
 {
-    public int $markerType;
+    public int $markerType = 100;
     public string $id;
     public GeometryDTO $geometry;
 }

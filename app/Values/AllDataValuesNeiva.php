@@ -2,6 +2,7 @@
 
 namespace App\Values;
 
+use App\Http\Controllers\SettingsController;
 use App\Strategies\StrategiesPoints\Neiva\StrategyAmbient;
 use App\Strategies\StrategiesPoints\Neiva\StrategyFiberSIESPoints;
 use App\Strategies\StrategiesPoints\Neiva\StrategyFiberCamerasPoints;
@@ -35,6 +36,7 @@ class AllDataValuesNeiva
         9 => StrategyPublicSafety::class,
         10 => StrategyDigitalZones::class,
         11 => StrategyEducationalCenters::class,
+        25 => SettingsController::class,
     ];
 
     const STRATEGY_LINES = [

@@ -68,8 +68,5 @@ class DatabaseSeeder extends Seeder
         #$this->call(PublicSafetySeeder::class);
         #$this->call(SportsVenuesSeeder::class);
         #$this->call(TrafficLightSeeder::class);
-
-        //data_ditra
-        $this->call(DataDitraTableSeeder::class);
     }
 }

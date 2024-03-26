@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('address');
+            $table->string('state');
             $table->text('url');
             $table->json('pointCoordinates');
             $table->timestamps();

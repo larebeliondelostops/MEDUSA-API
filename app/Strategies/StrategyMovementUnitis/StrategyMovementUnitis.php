@@ -18,11 +18,12 @@ class StrategyMovementUnitis implements MovementUnitisInterface
     public static function all()
     {
         try{
-            $rutaArchivo = public_path('js/GeoJson/movement-entities.json');
+            /* $rutaArchivo = public_path('js/GeoJson/movement-entities.json');
             $contenidoArchivo = File::get($rutaArchivo);
             $contenido = json_decode($contenidoArchivo, true);
 
-            return Response::json($contenido['features'], 200, [], JSON_PRETTY_PRINT);
+            return Response::json($contenido['features'], 200, [], JSON_PRETTY_PRINT); */
+            return Response::json([], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

@@ -2,8 +2,10 @@
 
 namespace App\Values;
 
+use App\Strategies\StrategiesPoints\Villavicencio\StrategyIpats;
 use App\Strategies\StrategyReports\Villavicencio\StrategyEventsReports;
 use App\Strategies\StrategyReports\Villavicencio\StrategyIncidentsReports;
+use App\Strategies\StrategyReports\Villavicencio\StrategyIpatsReports;
 use App\Strategies\StrategyReports\Villavicencio\StrategyProbabilisticReports;
 
 class ReportsValuesVillavicencio
@@ -23,6 +25,7 @@ class ReportsValuesVillavicencio
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class, */
         8 => StrategyIncidentsReports::class,
+        10 => StrategyIpatsReports::class,
         51 => StrategyProbabilisticReports::class,
         55 => StrategyEventsReports::class,
     ];

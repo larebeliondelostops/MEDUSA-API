@@ -33,6 +33,8 @@ Route::middleware([
     require base_path('routes/api/allData.php');
     require base_path('routes/api/forms.php');
     require base_path('routes/api/CRUD.php');
+    require base_path('routes/api/videoCameras.php');
+    require base_path('routes/api/movementUnits.php');
 
     // Viper Routes
     require base_path('routes/Modules/Viper/DocumentRoutes.php');
@@ -63,4 +65,14 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ReportRoutes.php');
     require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
     require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
+
+    // Notification Route
+    require base_path('routes/api/notification.php');
+
+    // Heatmap Route
+    require base_path('routes/api/heatmap.php');
+
+    // Import KMZ Route
+    require base_path('routes/api/kmz.php');
+    
 });

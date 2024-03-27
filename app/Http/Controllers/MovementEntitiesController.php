@@ -196,7 +196,7 @@ class MovementEntitiesController extends Controller
                     "markerType" => 54,
                     "id" => $historico->id,
                     "title" => $historico->title,
-                    "unitType" => $historico->unit_type,
+                    "unitType" => (int)$historico->unit_type,
                     "geometry" => [
                         "type" => "Point",
                         "coordinates" => $array[0]

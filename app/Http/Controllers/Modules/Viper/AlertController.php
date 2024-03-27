@@ -64,11 +64,11 @@ class AlertController extends BaseController
     public function update(AlertRequest $request, int $id)
     {
         try {
-            $stateUpdated = $this->alertInterface->updateAlert(collect($request->validated()), $id);
+            $alertUpdated = $this->alertInterface->updateAlert(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Alert updated successfully.',
-                'data'    => $stateUpdated,
+                'data'    => $alertUpdated,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

@@ -33,6 +33,7 @@ use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Models\Modules\Viper\Activity;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
+use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
 use App\Services\Modules\Viper\Activity\ActivityService;
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
@@ -63,6 +64,7 @@ use App\Services\Modules\Viper\StateService;
 use App\Services\Modules\Viper\SubstateService;
 use App\Services\Modules\Viper\ProjectContractService;
 use App\Services\Modules\Viper\ProjectUserRoleService;
+use App\Services\Modules\Viper\ImprovementPlanService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 
@@ -97,6 +99,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ScheduleInterface::class, ScheduleService::class);
         $this->app->bind(ReportInterface::class, ReportService::class);
         $this->app->bind(DeliverableEventActivityInterface::class, DeliverableEventActivityService::class);
+        $this->app->bind(ImprovementPlanInterface::class, ImprovementPlanService::class);
     }
 
     public function boot()

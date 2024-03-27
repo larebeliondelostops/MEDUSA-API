@@ -85,12 +85,12 @@ class MenuBarSeeder extends Seeder
                 'updated_at' => now(),
             ],
             // Viper
-            [
+            /*[
                 'id' => 100,
                 'marker' => 100,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
+            ],*/
         ]);
     }
 }

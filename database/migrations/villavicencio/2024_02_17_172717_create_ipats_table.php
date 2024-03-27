@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        //id_agente, id_ipat, lesionados, victimas, georeferencia, fecha_ipat
         Schema::create('ipats', function (Blueprint $table) {
-            //variables en ingless
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('id_agent')->nullable();
             $table->string('id_ipat')->nullable();
             $table->string('injured')->nullable();
             $table->string('victims')->nullable();
-            $table->string('coordinates')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->date('date_ipat')->nullable();
             $table->timestamps();
         });

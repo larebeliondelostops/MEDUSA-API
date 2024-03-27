@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ipats', function (Blueprint $table) {
-            $table->unsignedBigInteger('probabilisticgrid_id')->nullable();
-            $table->foreign('probabilisticgrid_id')->references('id')->on('probabilistic_grid_ipats');
+            $table->unsignedBigInteger('probabilistic_grid_id')->nullable();
+            $table->foreign('probabilistic_grid_id')->references('id')->on('probabilistic_grid_ipats');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('ipats', function (Blueprint $table) {
-            $table->dropForeign(['probabilisticgrid_id']);
-            $table->dropColumn('probabilisticgrid_id');
+            $table->dropForeign(['probabilistic_grid_id']);
+            $table->dropColumn('probabilistic_grid_id');
         });
     }
 };

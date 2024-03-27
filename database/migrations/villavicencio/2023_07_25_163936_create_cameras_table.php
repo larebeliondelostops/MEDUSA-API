@@ -16,21 +16,17 @@ return new class extends Migration
         Schema::create('cameras', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->string('address');
-            $table->text('url');
-            $table->json('pointCoordinates');
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->text('url')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('cameras');

@@ -21,7 +21,8 @@ return new class extends Migration
                 incident.month,
                 incident.year,
                 incident.created_at,
-                incident.position
+                incident.latitude,
+                incident.longitude
             FROM incident
             UNION ALL
             SELECT data_ditra.id,
@@ -53,7 +54,8 @@ return new class extends Migration
                     END AS month,
                 data_ditra.year::character varying AS year,
                 data_ditra.occurrence_date AS created_at,
-                data_ditra.coordinates AS position
+                data_ditra.latitude,
+                data_ditra.longitude
             FROM data_ditra
         ");
     }

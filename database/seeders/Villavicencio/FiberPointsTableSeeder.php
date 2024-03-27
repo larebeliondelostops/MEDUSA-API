@@ -888,7 +888,8 @@ class FiberPointsTableSeeder extends Seeder
             DB::table('fiber_points')->insert([
                 'name' => $data['title'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($data['geometry']),
+                'latitude' => $data['geometry']['coordinates'][0],
+                'longitude' => $data['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

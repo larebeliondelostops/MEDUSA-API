@@ -1,34 +1,72 @@
 <?php
 
-namespace Database\Seeders\Ditra;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\Ditra\MenuSeeder;
-use Database\Seeders\Ditra\SlugsSeeder;
-use Database\Seeders\Ditra\SubMenuSeeder;
-use Database\Seeders\Ditra\MarkersSeeder;
-use Database\Seeders\Ditra\MenuBarSeeder;
-use Database\Seeders\Ditra\IndicatorSeeder;
-use Database\Seeders\Ditra\MarkerTypeSeeder;
-use Database\Seeders\Ditra\CamerasTableSeeder;
-use Database\Seeders\Ditra\DataDitraTableSeeder;
-use Database\Seeders\Ditra\PermissionsTableSeeder;
+use Database\Seeders\Neiva\SlugsSeeder;
+use Database\Seeders\Neiva\AmbientSeeder;
+use Database\Seeders\Neiva\BusStopsSeeder;
+use Database\Seeders\Neiva\CRUDActionsSeeder;
+use Database\Seeders\Neiva\DigitalZonesSeeder;
+use Database\Seeders\Neiva\EducationalCentersSeeder;
+use Database\Seeders\Neiva\FiberCamerasLinesSeeder;
+use Database\Seeders\Neiva\FiberCamerasPointsSeeder;
+use Database\Seeders\Neiva\FiberSiesLinesSeeder;
+use Database\Seeders\Neiva\FiberSiesPointsSeeder;
+use Database\Seeders\Neiva\FieldsSeeder;
+use Database\Seeders\Neiva\FormAlarmsSeeder;
+use Database\Seeders\Neiva\FormAmbientSeeder;
+use Database\Seeders\Neiva\HeadquartersLasCeibasEPNSeeder;
+use Database\Seeders\Neiva\HealthCentersSeeder;
+use Database\Seeders\Neiva\IndicatorSeeder;
+use Database\Seeders\Neiva\LightingSeeder;
+use Database\Seeders\Neiva\MarkersSeeder;
+use Database\Seeders\Neiva\MarkerTypeSeeder;
+use Database\Seeders\Neiva\MenuBarSeeder;
+use Database\Seeders\Neiva\MenuSeeder;
+use Database\Seeders\Neiva\ModulesSeeder;  
+use Database\Seeders\Neiva\PublicSafetySeeder;
+use Database\Seeders\Neiva\SelectTypeSeeder;
+use Database\Seeders\Neiva\SportsVenuesSeeder;
+use Database\Seeders\Neiva\SubMenuSeeder;
+use Database\Seeders\Neiva\TrafficLightSeeder;
 
 class NeivaSeeder extends Seeder
 {
     public function run()
     {
         $this->call([
+            ///system
+            SelectTypeSeeder::class,
+            FieldsSeeder::class,
             SlugsSeeder::class,
-            CamerasTableSeeder::class,
+            ModulesSeeder::class,
+            FormAlarmsSeeder::class,
+            FormAmbientSeeder::class,
             IndicatorSeeder::class,
-            DataDitraTableSeeder::class,
-            MenuSeeder::class,
-            SubMenuSeeder::class,
             MarkerTypeSeeder::class,
             MarkersSeeder::class,
             MenuBarSeeder::class,
-            PermissionsTableSeeder::class,
+            MenuSeeder::class,
+            SubMenuSeeder::class,
+            //CRUDActionsSeeder::class,
+
+            //data
+            AmbientSeeder::class,
+            BusStopsSeeder::class,
+            DigitalZonesSeeder::class,
+            EducationalCentersSeeder::class,
+            FiberCamerasLinesSeeder::class,
+            FiberCamerasPointsSeeder::class,
+            FiberSiesLinesSeeder::class,
+            FiberSiesPointsSeeder::class,
+            HeadquartersLasCeibasEPNSeeder::class,
+            HealthCentersSeeder::class,
+            LightingSeeder::class,
+            PublicSafetySeeder::class,
+            SportsVenuesSeeder::class,
+            TrafficLightSeeder::class,
+
         ]);
     }
 }

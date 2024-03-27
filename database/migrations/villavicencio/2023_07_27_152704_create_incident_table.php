@@ -15,16 +15,17 @@ return new class extends Migration
     {
         Schema::create('incident', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
-            $table->bigInteger('indicator');
-            $table->foreign('indicator')->references('id')->on('indicators');
+            $table->uuid('uuid')->unique();
+            $table->bigInteger('indicator_id')->unsigned()->nullable();
+            $table->foreign('indicator_id')->references('id')->on('indicators');
             $table->string('address')->nullable();
             $table->text('description');
-            $table->string('position');
-            $table->string('day');
-            $table->string('month');
-            $table->string('year');
-            $table->string('image');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('day')->nullable();
+            $table->string('month')->nullable();
+            $table->string('year')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('reviewed')->default(false);
             $table->timestamps();
 
@@ -32,16 +33,10 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('incident', function (Blueprint $table) {
-            // Eliminar la clave foránea 'indicator'
-            $table->dropForeign(['indicator']);
+            $table->dropForeign(['indicator_id']);
         });
         Schema::dropIfExists('incident');
     }

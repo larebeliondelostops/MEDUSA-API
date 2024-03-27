@@ -1259,15 +1259,16 @@ class PollingPlaceTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('pollingPlace')->insert([
+            DB::table('polling_places')->insert([
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
-                "potencialWomen" => $Data['potencialWomen'],
-                "potencialMen" => $Data['potencialMen'],
-                "totalVotes" => $Data['totalVotes'],
+                "potential_women" => $Data['potencialWomen'],
+                "potential_men" => $Data['potencialMen'],
+                "total_votes" => $Data['totalVotes'],
                 "tables" => $Data['tables'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'latitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][0],
+                'longitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

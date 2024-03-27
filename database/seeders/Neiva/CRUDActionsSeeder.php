@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

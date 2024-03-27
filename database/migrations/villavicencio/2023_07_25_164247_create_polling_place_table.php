@@ -13,29 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pollingPlace', function (Blueprint $table) {
+        Schema::create('polling_places', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->string('address');
-            $table->json('pointCoordinates');
-            $table->integer('potencialWomen');
-            $table->integer('potencialMen');
-            $table->integer('totalVotes');
-            $table->integer('tables');
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->integer('potential_women')->nullable();
+            $table->integer('potential_men')->nullable();
+            $table->integer('total_votes')->nullable();
+            $table->integer('tables')->nullable();
             $table->timestamps();
 
             $table->index('uuid');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('pollingPlace');
+        Schema::dropIfExists('polling_places');
     }
 };

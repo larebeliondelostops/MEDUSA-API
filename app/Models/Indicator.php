@@ -9,7 +9,7 @@ class Indicator extends Model
 {
     use HasFactory;
 
-    protected $table = 'indicators';
+    protected $table = 'Indicators';
 
     public function CriminalActs()
     {

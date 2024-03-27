@@ -5,7 +5,7 @@ namespace App\Strategies\StrategiesPoints\Villavicencio;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use App\Clases\SaveGeoJson;
-use App\Models\PollingPlace;
+use App\Models\Villavicencio\PollingPlace;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

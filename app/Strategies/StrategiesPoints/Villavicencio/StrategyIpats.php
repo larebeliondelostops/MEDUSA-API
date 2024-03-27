@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\Ipats;
+use App\Models\Villavicencio\Ipats;
 use App\Interfaces\Markers\PointsInterface;
 
 class StrategyIpats implements PointsInterface

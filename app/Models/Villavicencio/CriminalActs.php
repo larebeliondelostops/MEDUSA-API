@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
+use App\Models\Indicator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

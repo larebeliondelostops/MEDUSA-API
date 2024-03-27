@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
 use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,4 +44,9 @@ class Event extends Model
 			$model->uuid = Uuid::uuid4()->toString(); // asigna el valor siguiente al atributo id
 		});
 	}
+
+    private function pointProperties()
+    {
+        return [];
+    }
 }

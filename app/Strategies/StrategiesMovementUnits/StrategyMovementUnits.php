@@ -2,7 +2,7 @@
 
 namespace App\Strategies\StrategiesMovementUnits;
 
-use App\Models\TrafficLights;
+use App\Models\Villavicencio\TrafficLights;
 use App\Interfaces\Markers\PointsInterface;
 
 /**

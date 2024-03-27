@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('marker', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('marker_type')->constrained('marker_type');
-            $table->string('name');
-            $table->string('icon');
-            $table->string('color');
             $table->integer('slug');
             $table->foreign('slug')->references('id')->on('slugs');
+            $table->string('name');
+            $table->string('description');
             $table->string('namespace');
-            $table->timestamps();
         });
     }
 
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marker');
+        Schema::dropIfExists('reports');
     }
 };

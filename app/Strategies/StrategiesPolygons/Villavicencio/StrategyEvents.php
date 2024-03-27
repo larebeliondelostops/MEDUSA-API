@@ -4,10 +4,10 @@ namespace App\Strategies\StrategyPolygons\Villavicencio;
 
 use Exception;
 use App\Clases\SaveGeoJson;
-use App\Models\Event;
+use App\Models\Villavicencio\Event;
 use \Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\EventCoordinate;
+use App\Models\Villavicencio\EventCoordinate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;

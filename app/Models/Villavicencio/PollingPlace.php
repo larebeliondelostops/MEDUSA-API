@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
 use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,4 +15,9 @@ class PollingPlace extends Model
     private $slug = 'pollingPlace';
 
     protected $guarded = [];
+
+    private function pointProperties()
+    {
+        return [];
+    }
 }

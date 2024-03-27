@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\Cai;
+use App\Models\Villavicencio\Cai;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Request\cai\CaiRequest;

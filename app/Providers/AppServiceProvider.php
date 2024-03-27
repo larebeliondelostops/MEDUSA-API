@@ -2,13 +2,15 @@
 
 namespace App\Providers;
 
-use App\Interfaces\Cruds\CrudInterface;
+use App\Services\Cruds\CrudService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use App\Interfaces\Cruds\CrudInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Reports\ReportService;
 use App\Services\Markers\MarkersService;
 use App\Interfaces\Markers\MarkersInterface;
-use App\Services\Cruds\CrudService;
+use App\Interfaces\Reports\ReportInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(MarkersInterface::class, MarkersService::class);
         $this->app->bind(CrudInterface::class, CrudService::class);
+        $this->app->bind(ReportInterface::class, ReportService::class);
     }
 
     /**

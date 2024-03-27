@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Strategies\StrategyReports\Villavicencio;
+namespace App\Strategies\StrategiesReports\Villavicencio;
 
 use Carbon\Carbon;
 use App\Helpers\Helper;
 use App\Models\Incident;
 use App\Models\Indicator;
 use Illuminate\Http\Request;
-use App\Strategies\Interface\ReportsInterface;
+use App\Interfaces\Reports\ReportActionsInterface;
 
-class StrategyIncidentsReports implements ReportsInterface
+class StrategyIncidentsReports implements ReportActionsInterface
 {
     private $indicator;
     private $request;
 
-    public function getReportsData(Request $request)
+    public function getReportsData(Request $request) :? array
     {
         $this->request = $request;
 
@@ -60,7 +60,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'reportsData' => $generalData
         ];
 
-        return response()->json($data);
+        return $data;
     }
 
     public function cardsIncidents()

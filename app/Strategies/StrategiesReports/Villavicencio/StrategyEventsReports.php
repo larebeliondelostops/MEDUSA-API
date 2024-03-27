@@ -8,9 +8,9 @@ use App\Helpers\Helper;
 use App\Models\EventType;
 use Illuminate\Http\Request;
 use App\Strategies\GetEvents\GetEventCoordinate;
-use App\Strategies\Interface\ReportsInterface;
+use App\Interfaces\Reports\ReportActionsInterface;
 
-class StrategyEventsReports implements ReportsInterface
+class StrategyEventsReports implements ReportActionsInterface
 {
     private $type;
     private $request;
@@ -49,7 +49,7 @@ class StrategyEventsReports implements ReportsInterface
             'reportsData' => $generalData
         ];
 
-        return response()->json($data);
+        return $data;
     }
 
     public function tabsEvents()

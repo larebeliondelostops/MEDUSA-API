@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

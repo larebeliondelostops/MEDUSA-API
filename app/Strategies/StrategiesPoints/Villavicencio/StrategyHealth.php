@@ -4,7 +4,7 @@ namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
 use Ramsey\Uuid\Uuid;
-use App\Models\Health;
+use App\Models\Villavicencio\Health;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

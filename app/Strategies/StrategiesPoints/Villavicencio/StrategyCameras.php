@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\Cameras;
+use App\Models\Villavicencio\Cameras;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

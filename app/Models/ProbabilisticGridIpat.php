@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ProbabilisticGridIpat extends Model
+{
+    use HasFactory;
+
+    protected $table = 'probabilistic_grid_ipats';
+
+    public function Ipats()
+    {
+        return $this->hasOne(Ipats::class, 'probabilisticgrid_id');
+    }
+}

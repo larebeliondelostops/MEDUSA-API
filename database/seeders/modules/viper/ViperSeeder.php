@@ -16,6 +16,11 @@ class ViperSeeder extends Seeder
             StageSeeder::class,
             StateSeeder::class,
             SubstateSeeder::class,
+            
+            MarkerTypeSeeder::class,
+            MarkersSeeder::class,
+            MenuBarSeeder::class,
+            MenuSeeder::class,
 
         ]);
     }

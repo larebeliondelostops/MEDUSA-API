@@ -45,14 +45,6 @@ class DatabaseSeeder extends Seeder
         //$this->call(FiberLinesTableSeeder::class);
         //$this->call(FiberPointsTableSeeder::class);
         $this->call(SlugsSeeder::class);
-        //viper
-        $this->call(DepartmentSeeder::class);
-        $this->call(MunicipalitySeeder::class);
-        $this->call(StageSeeder::class);
-        $this->call(StateSeeder::class);
-        $this->call(SubstateSeeder::class);
-        $this->call(MeasurementUnitSeeder::class);
-        $this->call(SectorSeeder::class);
 
         //Exclusivo Neiva
         #$this->call(FiberSiesLinesSeeder::class);
@@ -68,8 +60,5 @@ class DatabaseSeeder extends Seeder
         #$this->call(PublicSafetySeeder::class);
         #$this->call(SportsVenuesSeeder::class);
         #$this->call(TrafficLightSeeder::class);
-
-        //data_ditra
-        $this->call(DataDitraTableSeeder::class);
     }
 }

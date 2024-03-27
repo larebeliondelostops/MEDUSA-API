@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Modules\Viper;
 use App\Http\Request\Modules\Viper\DeliverableRequest;
-use App\Interfaces\Modules\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\Deliverable\DeliverableInterface;
 
 use Exception;
 use Illuminate\Http\Request;

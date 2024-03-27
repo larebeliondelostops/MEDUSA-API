@@ -5,6 +5,7 @@ namespace App\Contexts;
 use App\Values\AllDataValuesDitra;
 use App\Values\AllDataValuesNeiva;
 use App\Values\AllDataValuesVillavicencio;
+use App\Values\AllDataValuesViper;
 
 class AllDataContext
 {
@@ -15,6 +16,7 @@ class AllDataContext
     const VALUE = [
         'neiva' => AllDataValuesNeiva::class,
         'villavicencio' => AllDataValuesVillavicencio::class,
-        'ditra' => AllDataValuesDitra::class
+        'ditra' => AllDataValuesDitra::class,
+        'viper' => AllDataValuesViper::class
     ];
 }

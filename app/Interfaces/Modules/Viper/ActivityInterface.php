@@ -2,7 +2,6 @@
 
 namespace App\Interfaces\Modules\Viper;
 
-use App\DTOs\Viper\Activity\ActivityDTO;
 use Illuminate\Support\Collection;
 
 interface ActivityInterface {

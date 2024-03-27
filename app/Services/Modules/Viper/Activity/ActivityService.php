@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\Modules\Viper;
+namespace App\Services\Modules\Viper\Activity;
 
 use App\Interfaces\Modules\Viper\ActivityInterface;
-use App\Interfaces\Modules\Viper\DeliverableInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Models\Modules\Viper\Activity;
 use App\Models\Modules\Viper\Folder;
@@ -13,15 +12,12 @@ use Illuminate\Support\Collection;
 class ActivityService implements ActivityInterface
 {
     private FolderInterface $folderInterface;
-    private DeliverableInterface $deliverableInterface;
 
     public function __construct(
-        FolderInterface $folderInterface,
-        DeliverableInterface $deliverableInterface
+        FolderInterface $folderInterface
     )
     {
         $this->folderInterface = $folderInterface;
-        $this->deliverableInterface = $deliverableInterface;
     }
 
     public function getAllActivities(int $deliverableId): Collection
@@ -76,7 +72,6 @@ class ActivityService implements ActivityInterface
         }
 
         $newActivity->save();
-        $this->deliverableInterface->updateIncrementDataWithChildrenActivities($deliverable->id, collect($activity));
 
         return collect($newActivity);
     }
@@ -86,26 +81,23 @@ class ActivityService implements ActivityInterface
         // Encontrar la actividad por su ID
         $activityUpdate = Activity::findOrFail($activityId);
 
-        $this->deliverableInterface->updateDecrementDataWithChildrenActivities($activityUpdate->deliverable_id, collect($activityUpdate));
-
         // Guardar la descripción actual de la actividad
         $oldDescription = $activityUpdate->description;
         $oldNumber = $activityUpdate->number;
 
-        $deliverable = Deliverable::findOrFail($activity->deliverable_id);
+        $deliverable = Deliverable::findOrFail($activity['deliverable_id']);
 
         // Obtener todas las actividades del mismo deliverable_id
         $activities = Activity::where('deliverable_id', $deliverable->id);
 
-        if ($activities->where('number', $activity->number)->count() > 0 && $activityUpdate->number !== $activity->number) {
+        if ($activities->where('number', $activity['number'])->count() > 0 && $activityUpdate->number !== $activity['number']) {
             // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees
             throw new \Exception('Número ya existe en los productos asociados a los objetivos específicos', 422);
         }
 
         // Actualizar los datos de la actividad
-        $activityUpdate->fill($activity->toArray([is_null($activity->number) ? 'number' : '', 'folder_id']));
+        $activityUpdate->fill($activity->except([is_null($activity['number']) ? 'number' : '', 'folder_id'])->toArray());
         $activityUpdate->save();
-        $this->deliverableInterface->updateIncrementDataWithChildrenActivities($activity->deliverable_id, collect($activity));
 
         // Verificar si la descripción ha cambiado
         if ($oldDescription !== $activityUpdate->description || $oldNumber !== $activityUpdate->number) {
@@ -136,8 +128,6 @@ class ActivityService implements ActivityInterface
 
         // Eliminar la actividad
         $activity->delete();
-
-        $this->deliverableInterface->updateDecrementDataWithChildrenActivities($activity->deliverable_id, collect($activity));
     }
 
     public function getActivity(int $activityId): Collection

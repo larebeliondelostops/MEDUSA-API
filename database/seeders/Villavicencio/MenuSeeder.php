@@ -46,15 +46,6 @@ class MenuSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 4,
-                'name' => 'Viper',
-                'path' => 'viper',
-                'icon' => 'assured_workload',
-                'slug' => 'viper',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
                 'id' => 5,
                 'name' => 'Marcadores',
                 'path' => NULL,

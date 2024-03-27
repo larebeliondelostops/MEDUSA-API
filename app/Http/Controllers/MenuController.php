@@ -155,6 +155,33 @@ class MenuController extends Controller
 
             switch ($sub_domain)
             {
+                case 'viper':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = [];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;
                 case 'villavicencio':
                     $defaultCoordinates = [
                         'lat' => 4.132543365663997,

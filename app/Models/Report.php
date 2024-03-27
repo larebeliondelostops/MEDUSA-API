@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FiberLine extends Model
+class Report extends Model
 {
     use HasFactory;
 
-    protected $table = 'fiber_lines';
-
-    protected $guarded = [];
+    protected $table = 'reports';
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
 use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,4 +77,9 @@ class Ipats extends Model
 		// Asignar el día de la semana al atributo dayOfWeek
 		$this->dayOfWeek = $dayOfWeek;
 	}
+
+	private function pointProperties()
+    {
+        return [];
+    }
 }

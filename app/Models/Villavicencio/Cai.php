@@ -1,19 +1,23 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Villavicencio;
 
 use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Health extends Model
+class Cai extends Model
 {
     use HasFactory, HasPoints;
 
-    protected $table = 'health';
+    protected $table = 'cai';
 
-    private $slug = 'entity';
+    private $slug = 'cai';
 
     protected $guarded = [];
 
+    private function pointProperties()
+    {
+        return [];
+    }
 }

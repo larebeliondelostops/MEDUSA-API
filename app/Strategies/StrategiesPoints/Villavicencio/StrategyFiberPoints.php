@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\FiberPoint;
+use App\Models\Villavicencio\FiberPoint;
 use App\Interfaces\Markers\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;

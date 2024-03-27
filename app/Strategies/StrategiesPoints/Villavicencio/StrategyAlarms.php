@@ -2,7 +2,7 @@
 
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
-use App\Models\Alarms;
+use App\Models\Villavicencio\Alarms;
 use App\Interfaces\Markers\PointsInterface;
 
 class StrategyAlarms implements PointsInterface

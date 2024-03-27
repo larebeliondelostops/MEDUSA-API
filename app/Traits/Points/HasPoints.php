@@ -26,6 +26,8 @@ trait HasPoints
                 ]
             ];
 
+            $point = $point + $item->pointProperties();
+
             return $point;
         });
 

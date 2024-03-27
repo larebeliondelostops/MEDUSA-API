@@ -7,9 +7,9 @@ use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\Ditra\Indicator;
 use App\Models\Ditra\Incidents as Incident;
-use App\Strategies\Interface\ReportsInterface;
+use App\Interfaces\Reports\ReportInterface;
 
-class StrategyIncidentsReports implements ReportsInterface
+class StrategyIncidentsReports implements ReportInterface
 {
     private $indicator;
     private $request;

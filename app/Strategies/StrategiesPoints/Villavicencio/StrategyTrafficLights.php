@@ -2,7 +2,7 @@
 
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
-use App\Models\TrafficLights;
+use App\Models\Villavicencio\TrafficLights;
 use App\Interfaces\Markers\PointsInterface;
 
 class StrategyTrafficLights implements PointsInterface

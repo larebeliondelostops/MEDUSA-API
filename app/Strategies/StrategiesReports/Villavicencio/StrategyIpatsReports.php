@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\Ipats as Incident;
-use App\Strategies\Interface\ReportsInterface;
+use App\Interfaces\Reports\ReportActionsInterface;
 
-class StrategyIpatsReports implements ReportsInterface
+class StrategyIpatsReports implements ReportActionsInterface
 {
     private $request;
 
@@ -33,7 +33,7 @@ class StrategyIpatsReports implements ReportsInterface
             'reportsData' => [$data]
         ];
 
-        return response()->json($data);
+        return $data;
     }
 
     public function getIncidents()

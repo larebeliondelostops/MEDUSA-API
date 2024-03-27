@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventType extends Model
 {
-    protected $table = 'eventsType';
+    protected $table = 'events_type';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'eventName',
-        'eventDescription',
+        'event_name',
+        'event_description',
     ];
 
     use HasFactory;

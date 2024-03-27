@@ -3,9 +3,9 @@
 namespace App\Strategies\StrategyReports\Villavicencio;
 
 use Carbon\Carbon;
-use App\Models\Event;
+use App\Models\Villavicencio\Event;
 use App\Helpers\Helper;
-use App\Models\EventType;
+use App\Models\Villavicencio\EventType;
 use Illuminate\Http\Request;
 use App\Strategies\GetEvents\GetEventCoordinate;
 use App\Interfaces\Reports\ReportActionsInterface;

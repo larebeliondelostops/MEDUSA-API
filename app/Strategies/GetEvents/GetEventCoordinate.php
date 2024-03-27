@@ -4,7 +4,7 @@ namespace App\Strategies\GetEvents;
 
 use Carbon\Carbon;
 use App\Strategies\Interface\GetEventInterface;
-use App\Models\Event;
+use App\Models\Villavicencio\Event;
 
 /**
  * Clase que maneja toda la logica para la consulta de eventos con coordenadas
@@ -23,7 +23,7 @@ class GetEventCoordinate implements GetEventInterface
     public function getAllEvents()
     {
 
-        $events = Event::with('eventType', 'eventCoordinate')->where('endDate', '>=', Carbon::now())->get();
+        $events = Event::with('eventType', 'eventCoordinate')->where('end_date', '>=', Carbon::now())->get();
 
         $eventsOrder = $this->OrderEvents($events);
 
@@ -38,7 +38,7 @@ class GetEventCoordinate implements GetEventInterface
 
         $eventsOrder = $this->OrderEvents($events);
 
-        return $eventsOrder;
+        return response()->json($eventsOrder, 200);
     }
 
     //Metodo para traer eventos por su fecha
@@ -49,7 +49,7 @@ class GetEventCoordinate implements GetEventInterface
 
         $eventsOrder = $this->OrderEvents($events);
 
-        return $eventsOrder;
+        return response()->json($eventsOrder, 200);
     }
 
     // Metodo para trer un evento por su id
@@ -59,7 +59,7 @@ class GetEventCoordinate implements GetEventInterface
 
         $eventsOrder = $this->OrderEventsOne($event);
 
-        return $eventsOrder;
+        return response()->json($eventsOrder, 200);
     }
 
     //Metodo para organizar en un mismo formato el retorno de la informacion de los eventos
@@ -103,6 +103,6 @@ class GetEventCoordinate implements GetEventInterface
             ];
         });
 
-        return response()->json($eventosOrganizados, 200);
+        return $eventosOrganizados;
     }
 }

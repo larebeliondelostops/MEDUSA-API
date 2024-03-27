@@ -82,4 +82,9 @@ class Ipats extends Model
     {
         return [];
     }
+
+	public function ProbabilisticGridIpats()
+    {
+        return $this->belongsTo(ProbabilisticGridIpat::class, 'probabilistic_grid_id');
+    }
 }

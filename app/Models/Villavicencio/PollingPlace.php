@@ -10,7 +10,7 @@ class PollingPlace extends Model
 {
     use HasFactory, HasPoints;
 
-    protected $table = 'pollingPlace';
+    protected $table = 'polling_places';
 
     private $slug = 'pollingPlace';
 

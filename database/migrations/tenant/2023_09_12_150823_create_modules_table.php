@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->integer('slug');
             $table->foreign('slug')->references('id')->on('slugs');
-            $table->string('namespace');
+            $table->string('namespace')->nullable();
             $table->timestamps();
         });
     }

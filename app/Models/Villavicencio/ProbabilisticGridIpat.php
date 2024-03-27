@@ -13,6 +13,6 @@ class ProbabilisticGridIpat extends Model
 
     public function Ipats()
     {
-        return $this->hasOne(Ipats::class, 'probabilisticgrid_id');
+        return $this->hasOne(Ipats::class, 'probabilistic_grid_id');
     }
 }

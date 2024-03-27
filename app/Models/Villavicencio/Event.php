@@ -29,12 +29,12 @@ class Event extends Model
 
     public function eventType()
     {
-        return $this->belongsTo(EventType::class, 'idEventType');
+        return $this->belongsTo(EventType::class, 'event_type_id');
     }
 
     public function eventCoordinate()
     {
-        return $this->hasOne(EventCoordinate::class, 'eventId');
+        return $this->hasOne(EventCoordinate::class, 'event_id');
     }
 
     public static function boot()

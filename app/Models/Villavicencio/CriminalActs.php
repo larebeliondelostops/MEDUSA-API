@@ -10,15 +10,15 @@ class CriminalActs extends Model
 {
     use HasFactory;
 
-    protected $table = 'CriminalActs';
+    protected $table = 'criminal_acts';
 
     public function Indicator()
     {
-        return $this->belongsTo(Indicator::class, 'IndicatorId');
+        return $this->belongsTo(Indicator::class, 'indicator_id');
     }
 
     public function ProbabilisticGrid()
     {
-        return $this->belongsTo(ProbabilisticGrid::class, 'ProbabilisticGridId');
+        return $this->belongsTo(ProbabilisticGrid::class, 'probabilistic_grid_id');
     }
 }

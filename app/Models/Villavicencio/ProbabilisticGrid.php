@@ -9,10 +9,10 @@ class ProbabilisticGrid extends Model
 {
     use HasFactory;
 
-    protected $table = 'ProbabilisticGrid';
+    protected $table = 'probabilistic_grid';
 
     public function CriminalActs()
     {
-        return $this->hasOne(CriminalActs::class, 'ProbabilisticGridId');
+        return $this->hasOne(CriminalActs::class, 'probabilistic_grid_id');
     }
 }

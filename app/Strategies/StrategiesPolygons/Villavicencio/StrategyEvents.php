@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Strategies\StrategyPolygons\Villavicencio;
+namespace App\Strategies\StrategiesPolygons\Villavicencio;
 
 use Exception;
 use App\Clases\SaveGeoJson;
@@ -13,27 +13,29 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Strategies\GetEvents\GetEventCoordinate;
 use Carbon\Carbon;
+use App\Interfaces\Markers\PolygonsInterface;
 
-class StrategyEvents
+class StrategyEvents implements PolygonsInterface
 {
+    public function __construct(
+        private Event $model
+    ) {}
+
+    public function getModel() : Event
+    {
+        return $this->model;
+    }
+
     /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
      */
-    public static function all()
+    public function allPolygons()
     {
-        try {
-            $events = new GetEventCoordinate();
-            return $events->getAllEvents();
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $events = new GetEventCoordinate();
+
+        return $events->getAllEvents()->toArray();
     }
 
     public function allTable(Request $request)

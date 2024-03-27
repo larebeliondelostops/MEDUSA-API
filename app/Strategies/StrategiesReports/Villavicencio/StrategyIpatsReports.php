@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Strategies\StrategyReports\Villavicencio;
+namespace App\Strategies\StrategiesReports\Villavicencio;
 
 use Carbon\Carbon;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
-use App\Models\Ipats as Incident;
+use App\Models\Villavicencio\Ipats as Incident;
 use App\Interfaces\Reports\ReportActionsInterface;
 
 class StrategyIpatsReports implements ReportActionsInterface
@@ -39,9 +39,9 @@ class StrategyIpatsReports implements ReportActionsInterface
     public function getIncidents()
     {
         if (isset($this->request->start) && isset($this->request->end)) {
-            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
+            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
         } else {
-            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->get();
+            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->get();
         }
     }
 
@@ -259,13 +259,9 @@ class StrategyIpatsReports implements ReportActionsInterface
         $incidents = $this->incidents;
 
         $incidents = $incidents->map(function ($incident) {
-            $coordenadas = explode(', ', $incident->coordinates);
 
-            // Convierte los valores en números
-            $latitud = (float)$coordenadas[1];
-            $longitud = (float)$coordenadas[0];
+            return [(float)$incident->latitude , (float)$incident->longitude];
 
-            return [$longitud , $latitud];
         });
 
         $incidents = [

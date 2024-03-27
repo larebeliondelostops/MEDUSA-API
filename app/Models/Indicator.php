@@ -13,6 +13,6 @@ class Indicator extends Model
 
     public function CriminalActs()
     {
-        return $this->hasOne(CriminalActs::class, 'IndicatorId');
+        return $this->hasOne(CriminalActs::class, 'indicator_id');
     }
 }

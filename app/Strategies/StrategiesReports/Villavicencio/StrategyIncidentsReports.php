@@ -4,7 +4,7 @@ namespace App\Strategies\StrategiesReports\Villavicencio;
 
 use Carbon\Carbon;
 use App\Helpers\Helper;
-use App\Models\Incident;
+use App\Models\Villavicencio\Incident;
 use App\Models\Indicator;
 use Illuminate\Http\Request;
 use App\Interfaces\Reports\ReportActionsInterface;
@@ -40,11 +40,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         array_push($generalData, $general);
 
-        $types = Incident::select('indicator')->orderBy('indicator', 'asc')->groupBy('indicator')->get()->toArray();
+        $types = Incident::select('indicator_id')->orderBy('indicator_id', 'asc')->groupBy('indicator_id')->get()->toArray();
 
         foreach ($types as $type) {
             $data = [];
-            $this->indicator = $type['indicator'] ?? null;
+            $this->indicator = $type['indicator_id'] ?? null;
             $data = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
@@ -83,7 +83,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $cardsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
             ->whereBetween('created_at', [$hace_30_dias, $hoy])
-            ->groupBy('indicator')
+            ->groupBy('indicator_id')
             ->orderBy('count', 'desc')
             ->take(3)
             ->get();
@@ -92,11 +92,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         if ($cantidadEncontrados < 3) {
 
-            $existingIndicators = $cardsIncidents->pluck('indicator')->toArray();
+            $existingIndicators = $cardsIncidents->pluck('indicator_id')->toArray();
 
             $cardsOthersIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
-                ->whereNotIn('indicator', $existingIndicators)
-                ->groupBy('indicator')
+                ->whereNotIn('indicator_id', $existingIndicators)
+                ->groupBy('indicator_id')
                 ->orderBy('count', 'desc')
                 ->take(3 - $cantidadEncontrados)
                 ->get();
@@ -108,7 +108,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             $cardsIncidents = $cardsIncidents->concat($cardsOthersIncidents);
         }
 
-        $indicadores = array_column($cardsIncidents->toArray(), 'indicator');
+        $indicadores = array_column($cardsIncidents->toArray(), 'indicator_id');
 
         $cantidadDiaInicioToDiaActualAnterior = [];
         $cantidadDiaInicioToDiaActualActual = [];
@@ -120,16 +120,16 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
                 $diasTranscurridos = $hoy->copy()->diffInDays($hace_30_dias);
 
-                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
+                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
 
-                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
+                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
             }
         } else {
             foreach($indicadores as $indicador) {
 
-                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
+                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
 
-                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator')->where('indicator', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
             }
         }
 
@@ -168,13 +168,13 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         if (isset($this->request->start) && isset($this->request->end)) {
             $tabsIncidents = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->selectRaw('indicator, COUNT(*) as count')
-                ->groupBy('indicator')
+                ->selectRaw('indicator_id, COUNT(*) as count')
+                ->groupBy('indicator_id')
                 ->orderBy('count', 'desc')
                 ->get();
         } else {
-            $tabsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
-                ->groupBy('indicator')
+            $tabsIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
+                ->groupBy('indicator_id')
                 ->orderBy('count', 'desc')
                 ->get();
         }
@@ -182,9 +182,9 @@ class StrategyIncidentsReports implements ReportActionsInterface
         $indicadores = Indicator::orderBy('id', 'DESC')->get();
 
         foreach ($indicadores as $indicardor) {
-            if (!$tabsIncidents->pluck('indicator')->contains($indicardor->id)) {
+            if (!$tabsIncidents->pluck('indicator_id')->contains($indicardor->id)) {
                 $tabsIncidents->push((object) [
-                    'indicator' => $indicardor->id,
+                    'indicator_id' => $indicardor->id,
                     'count' => 0,
                     'Indicator' => $indicardor
                 ]);
@@ -198,12 +198,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $labels = $tabsIncidents
             ->map(function ($incident) {
-                return $incident->Indicator->Name;
+                return $incident->Indicator->name;
             });
 
         $key = $tabsIncidents
             ->map(function ($incident) {
-            return $incident->indicator;
+            return $incident->indicator_id;
         });
 
         if (isset($this->request->start) && isset($this->request->end)) {
@@ -232,7 +232,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             if ($this->indicator != null){
                 $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
                     ->selectRaw('month, COUNT(*) as count')
-                    ->where('indicator', $this->indicator)
+                    ->where('indicator_id', $this->indicator)
                     ->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
@@ -248,7 +248,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         } else {
             if ($this->indicator != null){
                 $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                    ->where('indicator', $this->indicator)
+                    ->where('indicator_id', $this->indicator)
                     //->where('year', date('Y'))
                     ->groupBy('month')
                     ->orderBy('month', 'asc')
@@ -303,22 +303,22 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         
-
-        $indicadores_usados = $incidentes->pluck('indicator');
+        
+        $indicadores_usados = $incidentes->pluck('indicator_id');
 
         $series = [];
         $labels = [];
 
         foreach (Indicator::all() as $indicador) {
             if ($indicadores_usados->contains($indicador->id)) {
-                $series[] = $incidentes->where('indicator', $indicador->id)->count();
-                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->Name;
+                $series[] = $incidentes->where('indicator_id', $indicador->id)->count();
+                $labels[] = $incidentes->where('indicator_id', $indicador->id)->first()->Indicator->Name;
             } else {
                 $series[] = 0;
-                $labels[] = $indicador->Name;
+                $labels[] = $indicador->name;
             }
         }
-
+        
         $data = [
             'title' => '# Incidentes por tipo',
             'date' =>  $date,
@@ -335,25 +335,25 @@ class StrategyIncidentsReports implements ReportActionsInterface
         if (isset($this->request->start) && isset($this->request->end)) {
             if ($this->indicator != null){
                 $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator')
-                    ->where('indicator', $this->indicator)
-                    ->groupBy('indicator')
+                    ->select('indicator_id')
+                    ->where('indicator_id', $this->indicator)
+                    ->groupBy('indicator_id')
                     ->get();
             } else {
                 $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator')
-                    ->groupBy('indicator')
+                    ->select('indicator_id')
+                    ->groupBy('indicator_id')
                     ->get();
             }
         } else {
             if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::select('indicator')
-                    ->where('indicator', $this->indicator)
-                    ->groupBy('indicator')
+                $incidentes_por_tipo_incidente = Incident::select('indicator_id')
+                    ->where('indicator_id', $this->indicator)
+                    ->groupBy('indicator_id')
                     ->get();
             } else {
-                $incidentes_por_tipo_incidente = Incident::select('indicator')
-                    ->groupBy('indicator')
+                $incidentes_por_tipo_incidente = Incident::select('indicator_id')
+                    ->groupBy('indicator_id')
                     ->get();
             }
         }
@@ -363,12 +363,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
         foreach ($incidentes_por_tipo_incidente as $incidente_por_tipo_incidente) {
             if (isset($this->request->start) && isset($this->request->end)) {
                 $incidentes_por_dia = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->where('indicator', $incidente_por_tipo_incidente->indicator)
+                    ->where('indicator_id', $incidente_por_tipo_incidente->indicator)
                     ->selectRaw('day, COUNT(*) as count')
                     ->groupBy('day')
                     ->get();
             } else {
-                $incidentes_por_dia = Incident::where('indicator', $incidente_por_tipo_incidente->indicator)
+                $incidentes_por_dia = Incident::where('indicator_id', $incidente_por_tipo_incidente->indicator)
                     ->selectRaw('day, COUNT(*) as count')
                     ->groupBy('day')
                     ->get();
@@ -384,7 +384,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             }
 
             $series[] = [
-                'name'  => $incidente_por_tipo_incidente->Indicator->Name,
+                'name'  => $incidente_por_tipo_incidente->Indicator->name,
                 'data' => $data
             ];
 
@@ -397,7 +397,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : '# Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por día de la semana' : '# Incidentes por día de la semana',
             'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -412,21 +412,21 @@ class StrategyIncidentsReports implements ReportActionsInterface
         if (isset($this->request->start) && isset($this->request->end)) {
             if ($this->indicator != null){
                 $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator', 'created_at')
-                    ->where('indicator', $this->indicator)
+                    ->select('indicator_id', 'created_at')
+                    ->where('indicator_id', $this->indicator)
                     ->get();
             } else {
                 $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator', 'created_at')
+                    ->select('indicator_id', 'created_at')
                     ->get();
             }
         } else {
             if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at')
-                    ->where('indicator', $this->indicator)
+                $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at')
+                    ->where('indicator_id', $this->indicator)
                     ->get();
             } else {
-                $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at')
+                $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at')
                     ->get();
             }
         }
@@ -444,7 +444,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         $series = [];
         $labels = [];
 
-        foreach ($incidentes_por_tipo_incidente->groupBy('indicator') as $incidentes) {
+        foreach ($incidentes_por_tipo_incidente->groupBy('indicator_id') as $incidentes) {
             $countByInterval = [0, 0, 0, 0, 0, 0];
             foreach ($incidentes as $incidente) {
                 // Obtener la hora de creación de la instancia de Incident
@@ -461,7 +461,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             }
 
             $series[] = [
-                'name' => $incidentes->first()->Indicator->Name,
+                'name' => $incidentes->first()->Indicator->name,
                 'data' => $countByInterval
             ];
         }
@@ -473,7 +473,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -487,10 +487,10 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         if (isset($this->request->start) && isset($this->request->end)) {
             $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->select('indicator', 'created_at', 'month')
+                ->select('indicator_id', 'created_at', 'month')
                 ->get();
         } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at', 'month')
+            $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at', 'month')
                 ->get();
         }
 
@@ -541,12 +541,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         if (isset($this->request->start) && isset($this->request->end)) {
             $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->select('indicator', 'created_at', 'day')
-                ->where('indicator', $this->indicator)
+                ->select('indicator_id', 'created_at', 'day')
+                ->where('indicator_id', $this->indicator)
                 ->get();
         } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator', 'created_at', 'day')
-                ->where('indicator', $this->indicator)
+            $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at', 'day')
+                ->where('indicator_id', $this->indicator)
                 ->get();
         }
 
@@ -595,7 +595,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => Indicator::find($this->indicator)->Name . ' por día de la semana y rango de horas',
+            'title' => Indicator::find($this->indicator)->name . ' por día de la semana y rango de horas',
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -607,15 +607,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
     public function points()
     {
-        $incidents = Incident::where('indicator', $this->indicator)->get();
+        $incidents = Incident::where('indicator_id', $this->indicator)->get();
 
         $incidents = $incidents->map(function ($incident) {
-            $coordenadas = explode(', ', $incident->position);
-            // Convierte los valores en números
-            $latitud = (float)$coordenadas[0];
-            $longitud = (float)$coordenadas[1];
 
-            return [$longitud , $latitud];
+            return [(float)$incident->latitude , (float)$incident->longitude];
+
         });
 
         $incidents = [

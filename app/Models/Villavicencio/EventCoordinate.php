@@ -11,18 +11,19 @@ class EventCoordinate extends Model
 
     use HasFactory;
 
-    protected $table= 'coordinatesEvents';
+    protected $table= 'coordinates_events';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'eventId',
-        'pointCoordinates',
+        'event_id',
+        'latitude',
+        'longitude',
     ];
 
     public function event()
     {
-        return $this->belongsTo(Event::class, 'eventId');
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
 }

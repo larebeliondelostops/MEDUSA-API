@@ -13,16 +13,12 @@ trait HasPoints
 
         $points = $data->map(function ($item) {
 
-            $coordinates = explode(',', $item->position);
-
-            $coordinates = array_map('floatval', $coordinates);
-
             $point = [
                 'markerType' => Slug::where('name', $this->slug)->first()->id,
                 'id' => $item->uuid,
                 'geometry' => [
                     'type' => "Point",
-                    'coordinates' => $coordinates
+                    'coordinates' => [(float)$item->latitude , (float)$item->longitude]
                 ]
             ];
 

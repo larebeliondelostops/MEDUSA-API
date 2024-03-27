@@ -18,14 +18,14 @@ class MarkerFactory
 
     public function getStrategyLines($slug_id) : LinesInterface
     {
-        $markerClass = Marker::where('marker_type', 4)->where('slug', $slug_id)->firstOrFail();
+        $markerClass = Marker::where('marker_type', 2)->where('slug', $slug_id)->firstOrFail();
 
         return app($markerClass->namespace);
     }
 
     public function getStrategyPolygons($slug_id) : PolygonsInterface
     {
-        $markerClass = Marker::where('marker_type', 5)->where('slug', $slug_id)->firstOrFail();
+        $markerClass = Marker::where('marker_type', 3)->where('slug', $slug_id)->firstOrFail();
 
         return app($markerClass->namespace);
     }

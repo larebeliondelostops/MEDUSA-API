@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Strategies\StrategyLines\Villavicencio;
+namespace App\Strategies\StrategiesLines\Villavicencio;
 
 
 use Exception;

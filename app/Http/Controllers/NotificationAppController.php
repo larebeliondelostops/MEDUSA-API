@@ -269,16 +269,12 @@ class NotificationAppController extends Controller
     public function AllPosition()
     {
         try {
-            $activeDevices = MobileDevice::where('is_active_position', true)->whereNotNull('position')->orderBy('id')->get()/* ->pluck('position', 'id') */;
+            $activeDevices = MobileDevice::where('is_active_position', true)->whereNotNull(['latitude', 'longitude'])->orderBy('id')->get()/* ->pluck('position', 'id') */;
 
             $arrayOfArrays = $activeDevices->map(function ($item) {
 
-                $coordenadas = explode(', ', $item->position);
+                return ['id' => $item->id, 'position' => [$item->latitude, $item->longitude]];
 
-                $latitud = (float)$coordenadas[1];
-                $longitud = (float)$coordenadas[0]; 
-
-                return ['id' => $item->id, 'position' => [$latitud, $longitud]];
             })->toArray();
 
             $positions = [];
@@ -299,16 +295,11 @@ class NotificationAppController extends Controller
     public function allUnits()
     {
         try {
-            $moviles = MobileDevice::where('is_active_position', true)->whereNotNull('position')->orderBy('id')->get();
+            $moviles = MobileDevice::where('is_active_position', true)->whereNotNull(['latitude', 'longitude'])->orderBy('id')->get();
             
             $transformedData = [];
 
             foreach ($moviles as $movil) {
-
-                $coordenadas = explode(', ', $movil->position);
-
-                    $latitud = (float)$coordenadas[1];
-                    $longitud = (float)$coordenadas[0];
 
                     $transformedData[] = [
                         'markerType' => 54,
@@ -317,7 +308,7 @@ class NotificationAppController extends Controller
                         'unitType' => 3,
                         'geometry' => [
                             'type' => "Point",
-                            'coordinates' => [$latitud, $longitud]
+                            'coordinates' => [$movil->latitude, $movil->longitude]
                         ],
                         'properties' => [
                             'active' => $movil->is_active_position

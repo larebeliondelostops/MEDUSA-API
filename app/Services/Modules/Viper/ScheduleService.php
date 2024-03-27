@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Modules\Viper;
-use App\Interfaces\Modules\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\Deliverable\DeliverableInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Interfaces\Modules\Viper\ScheduleInterface;

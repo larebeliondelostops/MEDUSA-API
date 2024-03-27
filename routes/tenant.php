@@ -37,7 +37,7 @@ Route::middleware([
     require base_path('routes/api/movementUnits.php');
     require base_path('routes/api/notification.php');
 
-// Viper Routes
+    // Viper Routes
     require base_path('routes/Modules/Viper/DocumentRoutes.php');
     require base_path('routes/Modules/Viper/FolderRoutes.php');
     require base_path('routes/Modules/Viper/ProjectRoutes.php');
@@ -66,4 +66,18 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ReportRoutes.php');
     require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
     require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
+<<<<<<< HEAD
+    require base_path('routes/Modules/Viper/ImprovementPlanRoutes.php');
+=======
+
+    // Notification Route
+    require base_path('routes/api/notification.php');
+
+    // Heatmap Route
+    require base_path('routes/api/heatmap.php');
+
+    // Import KMZ Route
+    require base_path('routes/api/kmz.php');
+    
+>>>>>>> viper-develop
 });

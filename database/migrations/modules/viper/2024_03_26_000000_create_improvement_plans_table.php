@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('indicators', function (Blueprint $table) {
+        Schema::create('improvement_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',255);
             $table->string('description');
+            $table->unsignedBigInteger('alert_id')->unique(); 
             $table->timestamps();
+        
+            $table->foreign('alert_id')->references('id')->on('alerts')->onDelete('cascade');
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('indicators');
+        Schema::dropIfExists('improvement_plans');
     }
 };

@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proofs');
+        Schema::dropIfExists('project_user_role');
     }
 };

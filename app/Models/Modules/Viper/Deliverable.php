@@ -16,6 +16,8 @@ class Deliverable extends Model
     protected $fillable = [
         'number',
         'name',
+        'min_date',
+        'max_date',
         'activity_quantity',
         'value',
         'product_id',
@@ -78,5 +80,27 @@ class Deliverable extends Model
     public function childDeliverables()
     {
         return $this->hasMany(Deliverable::class, 'deliverable_id');
+    }
+
+
+    public function allParents()
+    {
+        return $this->parentDeliverable()->with('allParents');
+    }
+
+    /**
+     * Get all descendants of the deliverable.
+     */
+    public function allParentsOfDeliverableWithDescendants()
+    {
+        return $this->parentDeliverable()->with('allParentsOfDeliverableWithDescendants')->with('childDeliverables')->with('activities');
+    }
+
+        /**
+     * Get all descendants of the deliverable.
+     */
+    public function allDeliverablesWithDescendants()
+    {
+        return $this->childDeliverables()->with('allParents')->with('childDeliverables');
     }
 }

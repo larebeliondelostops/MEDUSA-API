@@ -5,7 +5,8 @@ namespace App\Providers\Modules\Viper;
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
-use App\Interfaces\Modules\Viper\DeliverableInterface;
+use App\Interfaces\Modules\Viper\Deliverable\DeliverableEventActivityInterface;
+use App\Interfaces\Modules\Viper\Deliverable\DeliverableInterface;
 use App\Interfaces\Modules\Viper\DepartmentInterface;
 use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
@@ -19,7 +20,6 @@ use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
-use App\Interfaces\Modules\Viper\ProjectMarkerInterface;
 use App\Interfaces\Modules\Viper\ProofInterface;
 use App\Interfaces\Modules\Viper\ReportInterface;
 use App\Interfaces\Modules\Viper\ScheduleInterface;
@@ -30,12 +30,15 @@ use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
 use App\Interfaces\Modules\Viper\StageInterface;
 use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
+use App\Models\Modules\Viper\Activity;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
-use App\Services\Modules\Viper\ActivityService;
+use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
+use App\Services\Modules\Viper\Activity\ActivityService;
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
-use App\Services\Modules\Viper\DeliverableService;
+use App\Services\Modules\Viper\Deliverable\DeliverableEventActivityService;
+use App\Services\Modules\Viper\Deliverable\DeliverableService;
 use App\Services\Modules\Viper\DepartmentService;
 use App\Services\Modules\Viper\DocumentService;
 use App\Services\Modules\Viper\FolderService;
@@ -48,7 +51,6 @@ use App\Services\Modules\Viper\MilestoneSubclassService;
 use App\Services\Modules\Viper\MunicipalityService;
 use App\Services\Modules\Viper\PrecedenceService;
 use App\Services\Modules\Viper\ProductService;
-use App\Services\Modules\Viper\ProjectMarkerService;
 use App\Services\Modules\Viper\ProjectService;
 use App\Services\Modules\Viper\ProofService;
 use App\Services\Modules\Viper\ReportService;
@@ -62,7 +64,9 @@ use App\Services\Modules\Viper\StateService;
 use App\Services\Modules\Viper\SubstateService;
 use App\Services\Modules\Viper\ProjectContractService;
 use App\Services\Modules\Viper\ProjectUserRoleService;
+use App\Services\Modules\Viper\ImprovementPlanService;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Modules\Viper\Activity\ActivityObserver;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -85,7 +89,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(DeliverableInterface::class, DeliverableService::class);
         $this->app->bind(CoordinatesInterface::class, CoordinatesService::class);
         $this->app->bind(ProductInterface::class, ProductService::class);
-        $this->app->bind(ProjectMarkerInterface::class, ProjectMarkerService::class);
         $this->app->bind(ActivityInterface::class, ActivityService::class);
         $this->app->bind(PrecedenceInterface::class, PrecedenceService::class);
         $this->app->bind(LocationInterface::class, LocationService::class);
@@ -95,6 +98,14 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProofInterface::class, ProofService::class);
         $this->app->bind(ScheduleInterface::class, ScheduleService::class);
         $this->app->bind(ReportInterface::class, ReportService::class);
+        $this->app->bind(DeliverableEventActivityInterface::class, DeliverableEventActivityService::class);
+        $this->app->bind(ImprovementPlanInterface::class, ImprovementPlanService::class);
+    }
+
+    public function boot()
+    {
+        // observers registered
+        Activity::observe(ActivityObserver::class);
         $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
     }

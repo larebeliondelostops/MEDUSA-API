@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -6523,7 +6523,7 @@ class FiberSiesLinesSeeder extends Seeder
             DB::table('fiber_sies_lines')->insert([
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($Data['geometry']),
+                'coordinates' => json_encode($Data['geometry']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

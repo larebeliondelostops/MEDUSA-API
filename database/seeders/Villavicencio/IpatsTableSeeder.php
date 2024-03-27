@@ -1530,13 +1530,19 @@ class IpatsTableSeeder extends Seeder
 
         $dataArray = json_decode($data, true);
         foreach ($dataArray['array'] as $Data) {
+
+            $coordinates = explode(', ', $Data['georeferencia']);
+            $latitude = $coordinates[0] ?? null;
+            $longitude = $coordinates[1] ?? null;
+            
             DB::table('ipats')->insert([
                 'id_agent' => $Data['id_agente'],
                 'uuid'=> Str::uuid(),
                 'id_ipat' => $Data['id_ipat'],
                 'injured' => $Data['lesionados'],
                 'victims' => $Data['victimas'],
-                'coordinates' => $Data['georeferencia'],
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'date_ipat' => $Data['fecha_ipat'],
                 'created_at' => now(),
                 'updated_at' => now(),

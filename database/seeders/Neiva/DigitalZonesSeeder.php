@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -348,7 +348,8 @@ class DigitalZonesSeeder extends Seeder
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
                 'type'=> $Data['properties']['Tipo'],
-                'position' => json_encode($Data['geometry']),
+                'latitude' => $Data['geometry']['coordinates'][0],
+                'longitude' => $Data['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

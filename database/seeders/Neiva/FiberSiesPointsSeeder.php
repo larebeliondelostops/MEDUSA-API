@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,8 +16,6 @@ class FiberSiesPointsSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
-
         $data = '        
         {
             "array":[
@@ -1238,7 +1236,8 @@ class FiberSiesPointsSeeder extends Seeder
             DB::table('fiber_sies_points')->insert([
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
-                'position' => json_encode($Data['geometry']),
+                'latitude' => $Data['geometry']['coordinates'][0],
+                'longitude' => $Data['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

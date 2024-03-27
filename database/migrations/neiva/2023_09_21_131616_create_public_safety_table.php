@@ -18,9 +18,10 @@ return new class extends Migration
         Schema::create('public_safety', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('status')->nullable();
-            $table->json('position');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

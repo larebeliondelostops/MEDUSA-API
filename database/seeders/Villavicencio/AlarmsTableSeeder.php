@@ -1490,7 +1490,8 @@ class AlarmsTableSeeder extends Seeder
                 'name' => $Data['name'],
                 'uuid'=> Str::uuid(),
                 'address' => $Data['address'],
-                'pointCoordinates' => json_encode($Data['pointCoordinates']),
+                'latitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][0],
+                'longitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

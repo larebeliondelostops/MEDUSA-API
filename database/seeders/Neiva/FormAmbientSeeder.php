@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class FormAmbientSeeder extends Seeder
         /**
          * Marcadores para neiva
          */
-        DB::connection('neiva')->table('forms')->insert([
+        DB::table('forms')->insert([
             [
                 //'id' => 1,
                 'module' => 4,

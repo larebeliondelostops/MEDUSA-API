@@ -262,24 +262,18 @@ class CamerasTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
         //constante de usrl
         $url = 'https://villavicencio.medusaapi.online/api/v1/ver-video1';
+        $i = 0;
         foreach ($dataArray['array'] as $Data) {
           //nombre "camara 1", camara 2, etc
-            $i = 0;
             $nombre = "Camara " . ($i + 1);
-
             DB::table('cameras')->insert([
                 'name' => $nombre,
                 'uuid'=> Str::uuid(),
                 'address' => $Data['UBICACION'],
                 'state' => $Data['NOVEDAD'],
                 'url' => $url,
-                'pointCoordinates' => json_encode([
-                    'type' => 'Point',
-                    'coordinates' => [
-                        $Data['Latitud'],
-                        $Data['Longitud']
-                    ]
-                    ]),
+                'latitude' => $Data['Latitud'],
+                'longitude' => $Data['Longitud'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

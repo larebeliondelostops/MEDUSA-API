@@ -1283,7 +1283,8 @@ class TollboothTableSeeder extends Seeder
                 'pr' => $dataItem['Pr'],
                 'department' => $dataItem['Departamento'],
                 'municipality' => $dataItem['Municipio'],
-                'coordinates' => $dataItem['Latitud'] . ',' . $dataItem['Longitud'],
+                'latitude' => $dataItem['Latitud'],
+                'longitude' => $dataItem['Longitud'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

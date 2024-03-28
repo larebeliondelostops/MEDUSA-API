@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Villavicencio\CamerasTableSeeder;
+use Database\Seeders\Villavicencio\CaiTableSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Villavicencio\MenuSeeder;
 use Database\Seeders\Villavicencio\SlugsSeeder;
@@ -54,6 +56,8 @@ class VillavicencioSeeder extends Seeder
             PollingPlaceTableSeeder::class,
             IpatsTableSeeder::class,
             TrafficLightsTableSeeder::class,
+            CamerasTableSeeder::class,
+            CaiTableSeeder::class,
         ]);
     }
 }

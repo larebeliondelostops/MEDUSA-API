@@ -15,4 +15,6 @@ interface ProjectUserRoleInterface {
     public function getProjectUserRole(int $id): Collection;
 
     public function deleteProjectUserRole(int $id): Collection;
+    
+    public function getRoleByProjectUser(int $projectId, int $userId): ?Collection;
 }

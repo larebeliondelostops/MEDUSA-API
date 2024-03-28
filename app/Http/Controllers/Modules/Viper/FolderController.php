@@ -166,8 +166,9 @@ class FolderController extends BaseController
             $jsonData = $request->json()->all();
             $projectId = $jsonData['project_id'];
             $contractName = $jsonData['contract_name'];
+            $userId = $jsonData['user_id'];
 
-            $this->folderInterface->createFolderContract($contractName, $projectId);
+            $this->folderInterface->createFolderContract($contractName, $projectId, $userId);
 
             return response()->json(['message' => 'Carpetas creadas exitosamente'], 200);
         } catch (\Exception $exception) {

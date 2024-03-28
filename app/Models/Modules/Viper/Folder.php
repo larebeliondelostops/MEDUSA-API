@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Modules\Viper;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -45,6 +46,11 @@ class Folder extends Model
     public function subfolders()
     {
         return $this->hasMany(Folder::class, 'higher_folder_id');
+    }
+    
+    public function responsible()
+    {
+        return $this->belongsTo(User::class, "responsible");
     }
 }
 

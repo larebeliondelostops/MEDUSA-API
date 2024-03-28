@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('url', 255);
-            $table->string('responsible', 100)->nullable();
+            $table->unsignedBigInteger('responsible')->nullable();
             $table->unsignedBigInteger('folder_id');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade')->onUpdate('cascade');
         });
     }

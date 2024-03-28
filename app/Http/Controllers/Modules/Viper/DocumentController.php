@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Modules\Viper;
 
+use App\Http\Request\Modules\Viper\DocumentRequest;
 use Illuminate\Http\Request;
-use App\Http\Request\Viper\DocumentRequest;
 use App\Interfaces\Modules\Viper\DocumentInterface;
 
 /**

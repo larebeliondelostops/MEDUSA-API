@@ -72,7 +72,6 @@ class ProjectRequest extends FormRequest
 
             'project_duration_in_months' => 'required|integer|min:0',
             'reporting_frequency' => 'required|integer|min:1',
-            'general_objective' => 'required|string|max:1000',
         ];
         if ($this->method()=='PUT')
             $rules['locations.*.id'] = 'sometimes|integer';

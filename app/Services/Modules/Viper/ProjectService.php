@@ -193,7 +193,18 @@ class ProjectService implements ProjectInterface
     {
         $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
                           ->findOrFail($bpin);
-        return collect($project);
+        
+        $projectData = $project->toArray();
+        $projectData['total_value'] = (float)$projectData['total_value'];
+        $projectData['requested_value'] = (float)$projectData['requested_value'];
+
+        foreach ($projectData['locations'] as $key => $location)
+        {
+            $projectData['locations'][$key]['coordinate']['latitude'] = (float) $location['coordinate']['latitude'];
+            $projectData['locations'][$key]['coordinate']['longitude'] = (float) $location['coordinate']['longitude'];
+        }
+        
+        return collect($projectData);
     }
 
     /**

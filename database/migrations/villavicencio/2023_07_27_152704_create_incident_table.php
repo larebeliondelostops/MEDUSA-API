@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->bigInteger('indicator');
-            $table->foreign('indicator')->references('id')->on('Indicators');
+            $table->foreign('indicator')->references('id')->on('indicators');
             $table->string('address')->nullable();
             $table->text('description');
             $table->string('position');

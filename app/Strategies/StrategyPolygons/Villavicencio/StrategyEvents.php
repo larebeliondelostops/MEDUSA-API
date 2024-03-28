@@ -74,6 +74,7 @@ class StrategyEvents
                         'to' => $events->lastItem(),
                     ],
                     'filterDate' => true,
+		            'ableCreate' => true
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -129,9 +130,9 @@ class StrategyEvents
             $event->capacity = $request->capacity;
             $event->place = $request->address;
             $event->authorizingEntity = $request->authorizingEntity;
-            $event->day = Carbon::now()->dayOfWeek;
-            $event->month = date('m');
-            $event->year = date('Y');
+            //$event->day = Carbon::now()->dayOfWeek;
+            //$event->month = date('m');
+            //$event->year = date('Y');
             $event->save();
 
             $pointCoordinate = $this->asingCoordinateEvent($request, $event->id);

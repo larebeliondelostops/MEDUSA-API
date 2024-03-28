@@ -198,7 +198,7 @@ return [
          * Viper Providers
          */
 
-        App\Providers\Viper\ViperServiceProvider::class,
+        App\Providers\Modules\Viper\ViperServiceProvider::class,
     ],
 
     /*

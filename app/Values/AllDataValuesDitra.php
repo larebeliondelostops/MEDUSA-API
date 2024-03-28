@@ -2,10 +2,11 @@
 
 namespace App\Values;
 
-use App\Strategies\StrategiesPoints\Ditra\StrategyTolls;
+use App\Http\Controllers\SettingsController;
 use App\Strategies\StrategiesPoints\Ditra\StrategyIncidents;
+use App\Strategies\StrategiesPoints\Ditra\StrategyTollbooth;
 use App\Strategies\StrategyMovementUnitis\StrategyMovementUnitis;
-use App\Strategies\StrategiesPoints\Villavicencio\StrategyCameras;
+use App\Strategies\StrategiesPoints\Ditra\StrategyCameras;
 
 class AllDataValuesDitra
 {
@@ -15,7 +16,8 @@ class AllDataValuesDitra
      */
     const STRATEGY = [
         1 => StrategyIncidents::class,
-        2 => StrategyTolls::class,
+        2 => StrategyTollbooth::class,
+        25 => SettingsController::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
     ];

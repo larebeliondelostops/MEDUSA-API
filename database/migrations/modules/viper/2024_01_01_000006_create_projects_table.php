@@ -32,9 +32,6 @@ return new class extends Migration
 
             $table->decimal('total_value', 21, 2);
             $table->decimal('requested_value', 21, 2);
-            $table->decimal('executed_value', 21, 2);
-            $table->float('physical_progress');
-            $table->float('financial_progress');
             $table->string('responsible_entity', 255);
 
             $table->unsignedBigInteger('sector_id');
@@ -50,7 +47,6 @@ return new class extends Migration
 
             $table->integer('project_duration_in_months');
             $table->integer('reporting_frequency');
-            $table->string('general_objective', 255);
             $table->timestamps();
             $table->softDeletes();
         });

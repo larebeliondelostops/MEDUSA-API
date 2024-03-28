@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Menu;
 use App\Models\BarMenu;
+use App\Models\Marker;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 /**
@@ -22,25 +25,28 @@ use Illuminate\Support\Facades\Response;
 class MenuController extends Controller
 {
     /**
-     * Slugs para generar las peticiones de las respectivas ciudades
-     */
-    CONST MARKERS_VILLAVICENCIO = [
-        'alarm', 'cai', 'healt', 'pollingPlace', 'OpticalFiber', 'camera', 'event'
-    ];
-
-    CONST MARKERS_NEIVA = [
-        'SIESOpticalFiber', 'cameraOpticalFiber', 'deportiveScenary', 'mobility', 'healt', 'EPNceiba', 'citizenSecurity',
-        'digitalZone', 'educationalHeadquarters', 'camera'
-    ];
-
-    /**
-     * Display a listing of the resource.
+     * Función para armar la estructura del command bar a partir de permisos
      *
      * @return \Illuminate\Http\Response
      */
     public function commandBar()
     {
-        $data_menu = BarMenu::with('Marker')->where('bar_menu.enabled', true)->orderby('bar_menu.id')->get();
+        $user = Auth::user();
+
+        $permisos = $user->getAllPermissions()->pluck('name');
+
+        $permisos = $permisos->filter(function ($item) {
+            return strpos($item, 'commandbar-') === 0;
+        });
+
+        $permisos = $permisos->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $markers_permisos = Marker::whereIn('name', $permisos->toArray())->get()->pluck('id')->toArray();
+
+        $data_menu = BarMenu::with('Marker')->whereIn('bar_menu.marker', $markers_permisos)->where('bar_menu.enabled', true)->orderBy('bar_menu.id')->get();
 
         // Crear un nuevo arreglo en la estructura deseada
         $menu = [];
@@ -73,17 +79,40 @@ class MenuController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Función para armar la estructura del menu a partir de permisos
+     * y así enviar al front-end el menu que el usuario puede ver
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function menuBar()
     {
-        $menu = Menu::with('SubMenu:menu,icon,name,slug,path,identifier as id')->where('menu.enabled', true)->orderby('menu.id')->get();
+        $user = Auth::user();
 
-        $menu = $menu->map(function ($item) {
+        $permisos = $user->getAllPermissions()->pluck('name');
+
+        $menu_permisions = $permisos->filter(function ($item) {
+            return strpos($item, 'menu-') === 0;
+        });
+
+        $menu_permisions = $menu_permisions->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $sub_menu_permisions = $permisos->filter(function ($item) {
+            return strpos($item, 'submenu-') === 0;
+        });
+
+        $sub_menu_permisions = $sub_menu_permisions->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $menu = Menu::where('menu.enabled', true)->whereIn('name', $menu_permisions)->orderby('menu.id')->get();
+
+        $menu = $menu->map(function ($item) use ($sub_menu_permisions) {
             // Realiza aquí la organización o transformación personalizada que necesitas
+
             $organizedItem = [
                 'id' => $item->id,
                 'name' => $item->name,
@@ -92,8 +121,7 @@ class MenuController extends Controller
                 'slug' => $item->slug,
             ];
 
-            // Agrega la relación 'submenu' con el nombre deseado
-            $organizedItem['submenu'] = $item->SubMenu;
+            $organizedItem['submenu'] = $item->SubMenu($sub_menu_permisions)->get();
 
             return $organizedItem;
         });
@@ -127,34 +155,141 @@ class MenuController extends Controller
 
             switch ($sub_domain)
             {
-                case 'villavicencio':
+                case 'viper':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = [];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' => [
-                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
-                        ],
-                        'mapRequest' => ['incidents', 'indicators'],
-                        'mapZoom' => 14
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;
+                case 'villavicencio':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
                 case 'neiva':
+
+                    $defaultCoordinates = [
+                        'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
+                        'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = [];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' =>  [
-                            'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
-                        ],
-                        'mapRequest' => [],
-                        'mapZoom' => 14
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
                 case 'ditra':
+
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 6;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' => [
-                            'lat' => floatval(env('MAP_CENTER_VILLAVICENCIO_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_VILLAVICENCIO_LONGITUD'))
-                        ],
-                        'mapRequest' => ['incidents', 'indicators'],
-                        'mapZoom' => 6
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                case 'bucarest':
+
+                    $defaultCoordinates = [
+                        'lat' => 44.43225,
+                        'lng' => 26.10626
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 6;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
             }
@@ -173,5 +308,37 @@ class MenuController extends Controller
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public function parsePosition()
+    {
+
+        $coordinatesDB = Setting::get('position');
+
+        if ($coordinatesDB != null) {
+            $coordinatesDB = explode(',', $coordinatesDB);
+
+            $coordinatesDB = array_map('floatval', $coordinatesDB);
+    
+            $coordinatesDB = [
+                'lat' => $coordinatesDB[0],
+                'lng' => $coordinatesDB[1]
+            ];
+        }
+
+        return $coordinatesDB;
+    }
+
+    public function parseMapRequest()
+    {
+        $mapRequest = Setting::get('map_request');
+
+        if ($mapRequest != null) {
+
+            $mapRequest = explode(', ', $mapRequest);
+
+        }
+
+        return $mapRequest;
     }
 }

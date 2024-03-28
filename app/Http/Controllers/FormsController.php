@@ -110,11 +110,6 @@ class FormsController extends Controller
         }
     }
 
-    /**
-     * Método para devolver el formulario para registro de alarmas
-     *
-     * @access public
-     */
     public function pollingPlace()
     {
         $alarm_data = Form::with('Fields')->where('module', 7)->orderby('field')->get();
@@ -139,11 +134,6 @@ class FormsController extends Controller
         }
     }
 
-    /**
-     * Método para devolver el formulario para registro de alarmas
-     *
-     * @access public
-     */
     public function event()
     {
         $event_data = Form::with('Fields')->where('module', 2)->orderby('field')->get();
@@ -174,16 +164,40 @@ class FormsController extends Controller
         }
     }
 
-    /**
-     * Método para devolver el formulario para registro de health
-     *
-     * @access public
-     */
     public function health()
     {
         $health_data = Form::with('Fields')->where('module', 3)->orderby('field')->get();
 
         $fields = $health_data->map(function ($data) {
+            return $data->fields;
+        });
+
+        try{
+            return Response::json([
+                'status'=> 'succes',
+                'message' => 'Solicitud exitosa',
+                'data' => $fields
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return Response::json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    /**
+     * Método para devolver el formulario para registro de settings
+     *
+     * @access public
+     */
+    public function settings()
+    {
+        $settings = Form::with('Fields')->where('module', 8)->orderby('field')->get();
+
+        $fields = $settings->map(function ($data) {
             return $data->fields;
         });
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('CriminalActs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('IndicatorId');
-            $table->foreign('IndicatorId')->references('id')->on('Indicators');
+            $table->foreign('IndicatorId')->references('id')->on('indicators');
             $table->bigInteger('ProbabilisticGridId');
             $table->foreign('ProbabilisticGridId')->references('id')->on('ProbabilisticGrid');
             $table->string('head')->nullable();

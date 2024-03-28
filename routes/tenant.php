@@ -33,33 +33,46 @@ Route::middleware([
     require base_path('routes/api/allData.php');
     require base_path('routes/api/forms.php');
     require base_path('routes/api/CRUD.php');
+    require base_path('routes/api/videoCameras.php');
+    require base_path('routes/api/movementUnits.php');
 
     // Viper Routes
-    require base_path('routes/api/Viper/DocumentRoutes.php');
-    require base_path('routes/api/Viper/FolderRoutes.php');
-    require base_path('routes/api/Viper/ProjectRoutes.php');
-    require base_path('routes/api/Viper/StageRoutes.php');
-    require base_path('routes/api/Viper/StateRoutes.php');
-    require base_path('routes/api/Viper/SubstateRoutes.php');
-    require base_path('routes/api/Viper/DepartmentRoutes.php');
-    require base_path('routes/api/Viper/MunicipalityRoutes.php');
-    require base_path('routes/api/Viper/SectorRoutes.php');
-    require base_path('routes/api/Viper/SelectsRoutes.php');
-    require base_path('routes/api/Viper/ScopeRoutes.php');
-    require base_path('routes/api/Viper/SpecificObjectiveRoutes.php');
-    require base_path('routes/api/Viper/AlertRoutes.php');
-    require base_path('routes/api/Viper/IndicatorRoutes.php');
-    require base_path('routes/api/Viper/MeasurementUnitRoutes.php');
-    require base_path('routes/api/Viper/DeliverableRoutes.php');
-    require base_path('routes/api/Viper/ProductRoutes.php');
-    require base_path('routes/api/Viper/ActivityRoutes.php');
-    require base_path('routes/api/Viper/PrecedenceRoutes.php');
-    require base_path('routes/api/Viper/LocationRoutes.php');
-    require base_path('routes/api/Viper/MilestoneRoutes.php');
-    require base_path('routes/api/Viper/MilestoneClassRoutes.php');
-    require base_path('routes/api/Viper/MilestoneSubclassRoutes.php');
-    require base_path('routes/api/Viper/ProofRoutes.php');
-    require base_path('routes/api/Viper/ScheduleRoutes.php');
-    require base_path('routes/api/Viper/ReportRoutes.php');
-    require base_path('routes/api/Viper/TrackingMatrixRoutes.php');
+    require base_path('routes/Modules/Viper/DocumentRoutes.php');
+    require base_path('routes/Modules/Viper/FolderRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectRoutes.php');
+    require base_path('routes/Modules/Viper/StageRoutes.php');
+    require base_path('routes/Modules/Viper/StateRoutes.php');
+    require base_path('routes/Modules/Viper/SubstateRoutes.php');
+    require base_path('routes/Modules/Viper/DepartmentRoutes.php');
+    require base_path('routes/Modules/Viper/MunicipalityRoutes.php');
+    require base_path('routes/Modules/Viper/SectorRoutes.php');
+    require base_path('routes/Modules/Viper/SelectsRoutes.php');
+    require base_path('routes/Modules/Viper/ScopeRoutes.php');
+    require base_path('routes/Modules/Viper/SpecificObjectiveRoutes.php');
+    require base_path('routes/Modules/Viper/AlertRoutes.php');
+    require base_path('routes/Modules/Viper/IndicatorRoutes.php');
+    require base_path('routes/Modules/Viper/MeasurementUnitRoutes.php');
+    require base_path('routes/Modules/Viper/DeliverableRoutes.php');
+    require base_path('routes/Modules/Viper/ProductRoutes.php');
+    require base_path('routes/Modules/Viper/ActivityRoutes.php');
+    require base_path('routes/Modules/Viper/PrecedenceRoutes.php');
+    require base_path('routes/Modules/Viper/LocationRoutes.php');
+    require base_path('routes/Modules/Viper/MilestoneRoutes.php');
+    require base_path('routes/Modules/Viper/MilestoneClassRoutes.php');
+    require base_path('routes/Modules/Viper/MilestoneSubclassRoutes.php');
+    require base_path('routes/Modules/Viper/ProofRoutes.php');
+    require base_path('routes/Modules/Viper/ScheduleRoutes.php');
+    require base_path('routes/Modules/Viper/ReportRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
+    require base_path('routes/Modules/Viper/TrackingMatrixRoutes.php');
+
+    // Notification Route
+    require base_path('routes/api/notification.php');
+
+    // Heatmap Route
+    require base_path('routes/api/heatmap.php');
+
+    // Import KMZ Route
+    require base_path('routes/api/kmz.php');
 });

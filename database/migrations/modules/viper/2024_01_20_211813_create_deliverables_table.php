@@ -20,6 +20,9 @@ return new class extends Migration
             $table->integer('activity_quantity');
             $table->decimal('value', 21, 2);
 
+            $table->date('min_date')->nullable(true)->default(null);
+            $table->date('max_date')->nullable(true)->default(null);
+
             $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 

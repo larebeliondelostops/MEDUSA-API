@@ -18,11 +18,12 @@ return new class extends Migration
             $table->string('name', 255);
             $table->unsignedBigInteger('stage_id');
             $table->string('project_id', 255);
-            $table->string('responsible', 100)->nullable(); // Asignar en el futuro el id del interventor/supervisor los cuales van a poder subir documentos o crear subcarpetas en la carpeta seleccionada para cada uno
+            $table->unsignedBigInteger('responsible')->nullable();
             $table->unsignedBigInteger('higher_folder_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('stage_id')->references('id')->on('stages')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('higher_folder_id')->references('id')->on('folders')->onDelete('set null')->onUpdate('cascade');

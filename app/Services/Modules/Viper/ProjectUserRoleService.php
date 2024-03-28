@@ -52,4 +52,20 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
 
         return collect($projectUserRole);
     }
+
+
+    public function getRoleByProjectUser(int $projectId, int $userId): ?Collection
+    {
+        $projectUserRole = ProjectUserRole::where('project_id', $projectId)
+                                          ->where('user_id', $userId)
+                                          ->first();
+    
+        if ($projectUserRole === null) {
+            return null;
+        }
+        
+        return collect($projectUserRole);
+    }
+    
+    
 }

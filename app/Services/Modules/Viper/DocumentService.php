@@ -2,11 +2,11 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Utils\Filters\Modules\Viper\DocumentFilter;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\Models\Modules\Viper\Document;
 use App\Models\Modules\Viper\Folder;
-use App\Utils\Viper\Filters\DocumentFilter;
 use App\Models\Modules\Viper\Project; 
 use Storage;
 
@@ -31,36 +31,40 @@ class DocumentService implements DocumentInterface
      * @param int $project_id Identificador del proyecto al que pertenece el documento.
      * @return array Contiene los datos del documento creado en caso de éxito.
      */
-    public function createNewDocument(Collection $document, \Illuminate\Http\UploadedFile $file):Collection
+    public function createNewDocument(Collection $document, \Illuminate\Http\UploadedFile $file): Collection
     {
         $newDocument = new Document();
-
+    
         // Obtener el nombre original del archivo
         $originalFilename = $file->getClientOriginalName();
-
+    
+        $projectId = $document['project_id'];
+        $folderId = $document['folder_id'];
         // Construir la ruta de la carpeta basada en la jerarquía de carpetas
-        $folderPath = "test/{$document->project_id}/{$document->folder_id}";
-
+        $folderPath = "test/{$projectId}/{$folderId}";
+    
         // Generar un nombre único para el archivo
         $filename = $this->getUniqueFilename($folderPath, $originalFilename);
-
+    
         // Almacenar el archivo en Spaces con la carpeta y nombre construido
         $filePath = Storage::disk('spaces')->putFileAs($folderPath, $file, $filename);
-
+    
         // Obtener la URL del documento
         $url = Storage::disk('spaces')->url($filePath);
-
+    
         // Configurar los atributos del documento
         $newDocument->name = $filename;
         $newDocument->url = $url;
-        $newDocument->responsible = $document->responsible;
-        $newDocument->folder_id = $document->folder_id;
-
+        // Obtener el ID del usuario autenticado, o establecerlo como null si no hay usuario autenticado
+        $newDocument->responsible = auth()->user() ? auth()->user()->id : null;
+        $newDocument->folder_id = $folderId;
+    
         // Guardar el documento en la base de datos
         $newDocument->save();
-
+    
         return collect($newDocument);
     }
+    
 
     /**
      * Obtiene un nombre de archivo único en una carpeta
@@ -422,14 +426,23 @@ class DocumentService implements DocumentInterface
      */
     public function getDeletedDocumentsByProject(int $projectId): Collection
     {
-        $deletedDocuments = Document::onlyTrashed()->whereHas('folder', function ($query) use ($projectId) { $query->where('project_id', $projectId)->withTrashed(); })->with(['folder' => function ($query) { $query->withTrashed(); }])->get();
-
-        $documents = $deletedDocuments->transform(function ($document) {
-            return collect($document);
+        $deletedDocuments = Document::onlyTrashed()
+            ->whereHas('folder', function ($query) use ($projectId) {
+                $query->where('project_id', $projectId)->withTrashed();
+            })
+            ->with(['folder' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->get();
+    
+        // Transformar los documentos y añadir la fecha de borrado
+        $documents = $deletedDocuments->map(function ($document) {
+            return collect($document)->merge(['deleted_at' => $document->deleted_at]);
         });
-
+    
         return $documents;
     }
+    
 
 
     /**

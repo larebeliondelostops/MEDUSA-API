@@ -60,6 +60,6 @@ class ProjectContractService Implements ProjectContractInterface {
         $projectUserRole->rol_id = $rol->id;
         $projectUserRole->save();
         
-        $this->folderInterface->createFolderContract($projectContract['rol'],$projectContract['bpin']);
+        $this->folderInterface->createFolderContract($projectContract['rol'], $projectContract['bpin'],  $user->id);
     }
 }

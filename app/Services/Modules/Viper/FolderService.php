@@ -5,6 +5,7 @@ namespace App\Services\Modules\Viper;
 // Librerias propias
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\DocumentInterface;
+use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Models\Modules\Viper\Folder;
 use App\Models\Modules\Viper\Project;
 use App\Models\Modules\Viper\Stage;
@@ -27,10 +28,13 @@ class FolderService implements FolderInterface
 {
 
     private DocumentInterface $documentInterface;
+    private ProjectUserRoleInterface $projectUserRoleInterface;
 
-    public function __construct(DocumentInterface $documentInterface)
+
+    public function __construct(DocumentInterface $documentInterface, ProjectUserRoleInterface $projectUserRoleInterface)
     {
         $this->documentInterface = $documentInterface;
+        $this->projectUserRoleInterface = $projectUserRoleInterface;
     }
 
     /**
@@ -53,6 +57,7 @@ class FolderService implements FolderInterface
             $folder->parentFolder()->associate($higherFolder);
             $folder->stage_id = $higherFolder->stage_id;
             $folder->project_id = $higherFolder->project_id;
+            $folder->responsible = $folderData->has('responsible') ? $folderData['responsible'] : auth()->user()->id;
         }else{
             if (empty($folderData['project_id']) || empty($folderData['stage_id'])) {
                 throw new \Exception('No se ha definido proyecto ni etapa para la carpeta');
@@ -65,7 +70,6 @@ class FolderService implements FolderInterface
         $folder->save();
 
         return collect($folder);
-
     }
 
     /**
@@ -119,9 +123,7 @@ class FolderService implements FolderInterface
     public function getAllFolders($projectId, array $queryParams = [])
     {
 
-        // Obtener el usuario autenticado y su rol
-        //$user = Auth::user();
-        //$role = $user->role; 
+        $user = auth()->user();
 
         // Crea una instancia del filtro y transforma los parámetros
         $filter = new FolderFilter();
@@ -134,11 +136,15 @@ class FolderService implements FolderInterface
                 $folderQuery->orWhere($item[0], $item[1], ($item[1]=="ilike"?"%".$item[2]."%":$item[2]));
             }
         }
-        
-        // Si el usuario no es administrador, se filtra por su ID de usuario
-        //if ($role !== 'admin') {
-        //    $folderQuery->where('user_id', $user->id);
-        //}
+
+        $userProjectRole = null;
+
+        if ($user) {
+            $userProjectRole = $this->projectUserRoleInterface->getRoleByProjectUser($projectId, $user->id);
+            if ($userProjectRole && $userProjectRole['rol_id'] !== 2 ) {
+                $folderQuery->where('responsible', $user->id);
+            }
+        }
 
         // Obtén todas las carpetas para el proyecto específico con el filtro aplicado
         $folders = $folderQuery->where('project_id', $projectId)->get();
@@ -148,11 +154,11 @@ class FolderService implements FolderInterface
 
          // Crear un diccionario para realizar búsquedas rápidas de carpetas por ID
         $folderDictionary = $folders->keyBy('id');
-
+        
         // Iterar sobre cada carpeta
         foreach ($folders as $folder) {
             // Si la carpeta no tiene una carpeta superior, es decir, es la carpeta raíz o si tiene algun filtro
-            if (!$folder->higher_folder_id || $queryItems) {
+            if (!$folder->higher_folder_id || $queryItems || ($userProjectRole && Folder::find($folder->higher_folder_id)->name === 'Contratos del proyecto')) {
                 // Agregar la carpeta raíz y sus subcarpetas a la colección
                 $result->push($this->buildFolderHierarchy($folder, $folderDictionary));
             }
@@ -236,6 +242,7 @@ class FolderService implements FolderInterface
             'stage_id' => $folderData['stage_id'] ?? $parentFolder['stage_id'],
             'project_id' => $projectId,
             'higher_folder_id' => $parentFolder['id'] ?? null,
+            'responsible' =>  auth()->user()->id
         ];
 
         // Usar el servicio para crear la carpeta y establecer la relación higherFolders
@@ -307,25 +314,26 @@ class FolderService implements FolderInterface
      * @param string $contractName Nombre del tipo de contrato.
      * @param int $projectId Identificador del proyecto al que pertenecen las carpetas.
      */
-    public function createFolderContract(string $contractName, string $projectId)
+    public function createFolderContract(string $contractName, string $projectId, int $responsible)
     {
         $foldersName = ['Ajustes de', 'Precontractual de', 'Contractual de', 'Ejecución de', 'Cierre de'];
 
         $parentFolder = Folder::where('project_id', $projectId)
         ->where('name', 'Contratos del proyecto')
-        ->first();
+        ->firstOrFail();
         $folderParentData = [
             'name' => $contractName,
             'higher_folder_id' => $parentFolder->id,
+            'responsible' => $responsible
         ];
         $folderData = collect($folderParentData);
         $contractFolderParent = $this->createNewFolder($folderData)->toArray();
-
 
         foreach ($foldersName as $folderName){
             $validatedData = [
                 'name' => $folderName . ' ' . strtolower($contractName),
                 'higher_folder_id' => $contractFolderParent['id'],
+                'responsible' => $responsible
             ];
     
             $folderData = collect($validatedData);

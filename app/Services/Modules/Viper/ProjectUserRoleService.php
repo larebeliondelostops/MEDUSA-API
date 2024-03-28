@@ -27,11 +27,16 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
 
     public function getAllProjectUserRoleByProject(int $projectId): Collection
     {
-        $projectUserRoleGot = ProjectUserRole::where('project_id', $projectId)->get();
+        $projectUserRoleGot = ProjectUserRole::with('user','role')->where('project_id', $projectId)->get();
     
         $projectUserRoles = $projectUserRoleGot->transform(
             function (ProjectUserRole $projectUserRole)
             {
+                $projectUserRole->makeHidden(['user_id', 'rol_id']);
+
+                $projectUserRole->user->makeHidden(['created_at', 'updated_at']);
+        
+                $projectUserRole->role->makeHidden(['created_at', 'updated_at']);
                 return collect($projectUserRole);
             }
         );

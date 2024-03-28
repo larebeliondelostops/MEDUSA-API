@@ -27,11 +27,11 @@ class ProjectUserRole extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'rol_id');
+        return $this->belongsTo(\Spatie\Permission\Models\Role::class, 'rol_id');
     }
 }

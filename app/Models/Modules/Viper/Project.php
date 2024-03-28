@@ -26,9 +26,6 @@ class Project extends Model
         'substate_id',
         'total_value',
         'requested_value',
-        'executed_value',
-        'physical_progress',
-        'financial_progress',
         'responsible_entity',
         'sector_id',
         'coordinates_id',
@@ -43,7 +40,6 @@ class Project extends Model
         'bilateral_termination',
         'project_duration_in_months',
         'reporting_frequency',
-        'general_objective',
     ];
 
     /**

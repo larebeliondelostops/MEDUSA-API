@@ -66,9 +66,9 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ReportRoutes.php');
     require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
     require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
-<<<<<<< HEAD
+
     require base_path('routes/Modules/Viper/ImprovementPlanRoutes.php');
-=======
+
 
     // Notification Route
     require base_path('routes/api/notification.php');
@@ -79,5 +79,4 @@ Route::middleware([
     // Import KMZ Route
     require base_path('routes/api/kmz.php');
     
->>>>>>> viper-develop
 });

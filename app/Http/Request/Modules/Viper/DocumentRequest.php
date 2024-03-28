@@ -36,8 +36,9 @@ class DocumentRequest extends FormRequest
     {
         return [
             'files.*' => 'required|file',
-            'project_id' => 'required|exists:projects,bpin|integer',
-            'folder_id' => 'required|exists:folders,id|string',
+            'project_id' => 'required|exists:projects,bpin|string',
+            'folder_id' => 'required|exists:folders,id|integer',
+            'responsible' => 'required|integer',
         ];
     }
 

@@ -43,7 +43,7 @@ class MarkersController extends Controller
     {
         try {
 
-            $lines = $this->service->allPoints();
+            $lines = $this->service->allLines();
 
             return Response::json($lines, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {

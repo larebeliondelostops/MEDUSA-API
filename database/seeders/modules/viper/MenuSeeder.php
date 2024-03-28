@@ -19,6 +19,15 @@ class MenuSeeder extends Seeder
          */
         DB::table('menu')->insert([
             [
+                'id' => 1,
+                'name' => 'Mapa',
+                'path' => 'map',
+                'icon' => 'public',
+                'slug' => 'map',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'id' => 4,
                 'name' => 'Viper',
                 'path' => 'viper',

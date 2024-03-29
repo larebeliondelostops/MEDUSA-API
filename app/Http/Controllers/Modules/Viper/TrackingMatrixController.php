@@ -15,8 +15,15 @@ class TrackingMatrixController extends BaseController
 
     public function show(Request $request, string $projectBpin)
     {
-        return response()->json([
-            "trackingMatrix" => $this->trackingMatrixInterface->getTrackingMatrixOfProject($projectBpin)
-        ]);
+        try
+        {
+            return response()->json([
+                "trackingMatrix" => $this->trackingMatrixInterface->getTrackingMatrixOfProject($projectBpin)
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return $this->handleException($e);
+        }
     }   
 }

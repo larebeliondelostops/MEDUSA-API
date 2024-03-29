@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->unsignedBigInteger('indicator_id')->nullable();
             $table->string('project_id',255);
-            $table->unsignedBigInteger('improvement_plan_id')->unique(); 
+            $table->unsignedBigInteger('improvement_plan_id')->nullable(); 
 
             $table->foreign('indicator_id')->references('id')->on('indicators_viper')->onDelete('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade');

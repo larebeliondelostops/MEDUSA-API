@@ -70,6 +70,25 @@ class AlertService implements AlertInterface{
     }
 
     /**
+     * Obtiene todas las alertas asociadas a un project específico.
+     *
+     * @param int $projectId Identificador del projecto.
+     * @return Collection Collection de Collections representando las alertas asociadas al projecto.
+     */
+    public function getAllAlertsByProject(int $projectId): Collection
+    {
+        $alertGot = Alert::where('project_id', $projectId)->get();
+    
+        $alerts = $alertGot->transform(
+            function (Alert $alert)
+            {
+                return collect($alert);
+            }
+        );
+        return collect($alerts);
+    }
+
+    /**
      * Obtiene los datos de una alerta específica por su identificador.
      *
      * @param int $id Identificador de la alerta.

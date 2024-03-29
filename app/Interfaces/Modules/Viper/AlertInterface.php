@@ -40,6 +40,14 @@ interface AlertInterface {
     public function getAllAlertsByIndicator(int $indicatorId): Collection;
 
     /**
+     * Obtiene todas las alertas asociadas a un projecto específico.
+     *
+     * @param int $projectId El identificador único del projecto.
+     * @return Collection Collection de Collections que contiene la información de una alerta de un projecto.
+     */
+    public function getAllAlertsByProject(int $projectId): Collection;
+
+    /**
      * Obtiene los detalles de una alerta específica.
      *
      * @param int $id El identificador único de la alerta.

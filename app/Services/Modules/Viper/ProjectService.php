@@ -4,6 +4,8 @@ namespace App\Services\Modules\Viper;
 
 // Librerias del modulo viper
 
+use App\Helpers\Modules\Viper\AlertCreator;
+use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Models\Modules\Viper\Project;
@@ -27,10 +29,12 @@ use Illuminate\Support\Collection;
 class ProjectService implements ProjectInterface
 {
     private LocationInterface $locationInterface;
+    private AlertInterface $alertInterface;
 
-    public function __construct(LocationInterface $locationInterface)
+    public function __construct(LocationInterface $locationInterface, AlertInterface $alertInterface)
     {
         $this->locationInterface = $locationInterface;
+        $this->alertInterface = $alertInterface;
     }
 
      /**
@@ -65,6 +69,17 @@ class ProjectService implements ProjectInterface
             );
         }
 
+        $alertData = AlertCreator::createAlertCumplimientoRequisitosIniciales($projectData['bpin'], $projectData['execution_approval_date']);
+        $alert = [
+            "name" => $alertData["name"],
+            "type" => $alertData["type"],
+            "state" => "estado_de_alerta",
+            "description" => $alertData["description"],
+            "indicator_id" => null,
+            "project_id"=> $projectData['bpin']
+        ];
+
+        $this->alertInterface->createNewAlert(collect($alert));
         return $this->getProjectByBPIN($projectData['bpin']);
     }
 

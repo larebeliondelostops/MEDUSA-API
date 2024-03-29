@@ -43,13 +43,20 @@ class UserForTestingSeeder extends Seeder
         DB::table('permissions')->insert([
             [
                 'id' => 1,
+                'name' => 'menu-Mapa',
+                'guard_name' => 'menu-Mapa',
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            [
+                'id' => 2,
                 'name' => 'menu-Viper',
                 'guard_name' => 'menu-Viper',
                 'created_at' => null,
                 'updated_at' => null,
             ],
             [
-                'id' => 2,
+                'id' => 3,
                 'name' => 'commandbar-Proyectos',
                 'guard_name' => 'commandbar-Proyectos',
                 'created_at' => null,
@@ -64,6 +71,11 @@ class UserForTestingSeeder extends Seeder
             ],
             [
                 'permission_id' => 2,
+                'role_id'=> 1,
+            ],
+            
+            [
+                'permission_id' => 3,
                 'role_id'=> 1,
             ],
         ]);

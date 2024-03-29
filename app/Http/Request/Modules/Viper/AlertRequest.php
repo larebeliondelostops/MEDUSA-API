@@ -41,7 +41,7 @@ class AlertRequest extends FormRequest
             'state' => 'required|string|max:100',
             'description' => 'required|string',
             'date' => 'required|date',
-            'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
+            'indicator_id' => 'nullable|integer',
             'project_id' => 'required|exists:projects,bpin|string|max:100',
         ];
     }

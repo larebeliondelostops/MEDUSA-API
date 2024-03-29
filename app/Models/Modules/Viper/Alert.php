@@ -54,7 +54,7 @@ class Alert extends Model
      * @var array
      */
     protected $fillable = [
-        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id'
+        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id','improvement_plan_id'
     ];
 
     /**

@@ -75,7 +75,6 @@ class ProjectService implements ProjectInterface
             "type" => $alertData["type"],
             "state" => "estado_de_alerta",
             "description" => $alertData["description"],
-            "date" => "2024-02-01",
             "indicator_id" => null,
             "project_id"=> $projectData['bpin']
         ];

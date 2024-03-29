@@ -36,6 +36,7 @@ use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
 use App\Services\Modules\Viper\Activity\ActivityService;
+
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
 use App\Services\Modules\Viper\Deliverable\DeliverableEventActivityService;
@@ -73,6 +74,7 @@ use App\Services\Modules\Viper\Activity\ActivityObserver;
 class ViperServiceProvider extends ServiceProvider
 {
     public function register(){
+        $this->app->bind(AlertInterface::class, AlertService::class);
         $this->app->bind(ProjectInterface::class, ProjectService::class);
         $this->app->bind(FolderInterface::class, FolderService::class);
         $this->app->bind(DocumentInterface::class, DocumentService::class);
@@ -85,7 +87,6 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(MunicipalityInterface::class, MunicipalityService::class);
         $this->app->bind(StateInterface::class, StateService::class);
         $this->app->bind(SelectsInterface::class, SelectsService::class);
-        $this->app->bind(AlertInterface::class, AlertService::class);
         $this->app->bind(IndicatorInterface::class, IndicatorService::class);
         $this->app->bind(MeasurementUnitInterface::class, MeasurementUnitService::class);
         $this->app->bind(DeliverableInterface::class, DeliverableService::class);

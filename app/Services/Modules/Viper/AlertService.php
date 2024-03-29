@@ -110,7 +110,7 @@ class AlertService implements AlertInterface{
             return new Collection(['error' => 'You must log in to access this functionality.']);
         }
     
-        if (!$user->hasRole('admin')) {
+        if (!$user->hasRole('ApoyoAdmon')) {
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
 
@@ -145,7 +145,7 @@ class AlertService implements AlertInterface{
             return new Collection(['error' => 'You must log in to access this functionality.']);
         }
     
-        if (!$user->hasRole('admin')) {
+        if (!$user->hasRole('ApoyoAdmon')) {
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
         $alerts = Alert::All();

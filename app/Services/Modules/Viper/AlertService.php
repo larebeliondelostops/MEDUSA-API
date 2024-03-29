@@ -2,6 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Events\Modules\Viper\ViperWebSocket;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
@@ -39,6 +40,7 @@ class AlertService implements AlertInterface{
     {
         $newAlert = new Alert($alert->toArray());
         $newAlert->save();
+        event(new ViperWebSocket($newAlert));
         
         return collect($newAlert);
     }

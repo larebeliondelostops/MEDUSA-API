@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Modules\Viper;
 
+use App\Models\Modules\Viper\Alert;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class testWebSocket implements ShouldBroadcast
+class ViperWebSocket implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +21,8 @@ class testWebSocket implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public string $message)
+    public function __construct(public Alert $alert)
     {
-        //
     }
 
     /**
@@ -32,12 +32,12 @@ class testWebSocket implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('testing');
+        return new Channel('notifications');
     }
 
     public function broadcastAs()
     {
-        return 'message';
+        return 'alerts';
     }
 }
 

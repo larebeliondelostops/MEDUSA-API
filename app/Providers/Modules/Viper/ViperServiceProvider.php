@@ -103,13 +103,13 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(DeliverableEventActivityInterface::class, DeliverableEventActivityService::class);
         $this->app->bind(ImprovementPlanInterface::class, ImprovementPlanService::class);
         $this->app->bind(TrackingMatrixInterface::class, TrackingMatrixService::class);
+        $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
+        $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
     }
 
     public function boot()
     {
         // observers registered
         Activity::observe(ActivityObserver::class);
-        $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
-        $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
     }
 }

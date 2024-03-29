@@ -5,6 +5,7 @@ namespace App\Services\Modules\Viper;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
+use App\Interfaces\Modules\Viper\ProjectInterface;
 use Exception;
 
 /**
@@ -19,6 +20,14 @@ use Exception;
  * @version    v1.0.0
  */
 class AlertService implements AlertInterface{
+
+    private ProjectInterface $projectInterface;
+
+    public function __construct(ProjectInterface $projectInterface)
+    {
+        $this->projectInterface = $projectInterface;
+    }
+
     
     /**
      * Crea una nueva alerta en el sistema.
@@ -86,6 +95,62 @@ class AlertService implements AlertInterface{
             }
         );
         return collect($alerts);
+    }
+
+    /**
+     * Obtiene todas las alertas asociadas a un usuario específico.
+     *
+     * @return Collection Collection de Collections representando las alertas asociadas al usuario especifico.
+     */
+    public function getAlertsByUser(): Collection
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return new Collection(['error' => 'You must log in to access this functionality.']);
+        }
+    
+        if (!$user->hasRole('ApoyoAdmon')) {
+            return new Collection(['error' => 'You do not have permission to access this functionality.']);
+        }
+
+        $projects = $this->projectInterface->getAllProjects();
+
+        $alertsByProject = collect();
+        
+        foreach ($projects as $project) {
+            $alerts = Alert::where('project_id', $project['bpin'])->get();
+
+            $alerts->makeHidden(['project_id']);
+
+            $alertsByProject->push([
+                'project_id' => $project['bpin'],
+                'alerts' => $alerts
+            ]);
+        }
+
+        return $alertsByProject;
+    }
+
+    /**
+     * Obtiene todas las alertas.
+     *
+     * @return Collection Collection de Collections representando las alertas.
+     */
+    public function getAllAlerts(): Collection
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return new Collection(['error' => 'You must log in to access this functionality.']);
+        }
+    
+        if (!$user->hasRole('ApoyoAdmon')) {
+            return new Collection(['error' => 'You do not have permission to access this functionality.']);
+        }
+        $alerts = Alert::All();
+
+        return $alerts;
     }
 
     /**

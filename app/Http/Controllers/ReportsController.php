@@ -49,7 +49,8 @@ class ReportsController extends Controller
             $this->getSubDomain();
 
             $this->slugs = Slug::where('name', $slug)->first();
-
+            Log::info($slug);
+            Log::info($this->slugs->id);
             $strategy_report = $this->value::STRATEGY[$this->slugs->id];
 
             $strategy_report_instace = new $strategy_report();

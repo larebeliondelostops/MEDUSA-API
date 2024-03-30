@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\Ipats as Incident;
+use Illuminate\Support\Facades\Log;
 use App\Strategies\Interface\ReportsInterface;
 
 class StrategyIpatsReports implements ReportsInterface
@@ -260,7 +261,14 @@ class StrategyIpatsReports implements ReportsInterface
 
         $incidents = $incidents->map(function ($incident) {
             $coordenadas = explode(', ', $incident->coordinates);
+            Log::info($coordenadas);
+            if (!isset($coordenadas[1])) {
+                $coordenadas = explode(',', $incident->coordinates);
+            }
 
+            if (!isset($coordenadas[1])) {
+                return [4.17677, -73.60589];
+            }
             // Convierte los valores en números
             $latitud = (float)$coordenadas[1];
             $longitud = (float)$coordenadas[0];

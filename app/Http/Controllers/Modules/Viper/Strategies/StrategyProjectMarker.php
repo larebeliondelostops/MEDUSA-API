@@ -53,7 +53,7 @@ class StrategyProjectMarker
                     'estado' => $coordinate->location->project->state->name,
                     'subestado' => $coordinate->location->project->substate->name,
                     'entidad ejecutora' => $coordinate->location->project->responsible_entity,
-                    'valor requerido' => $coordinate->location->project->requested_valued,
+                    'valor requerido' => $coordinate->location->project->requested_value,
                     'valor ejecutado' => $coordinate->location->project->executed_value,
                     'fecha de aprobación' => $coordinate->location->project->execution_approval_date,
                     'fecha de finalización' => $coordinate->location->project->completion_date,

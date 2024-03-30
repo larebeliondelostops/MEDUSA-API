@@ -39,13 +39,14 @@ class ProjectRequest extends FormRequest
     {
         $rules = [
             'bpin' => 'required|string|max:255',
-            'name' => 'required|string|max:100',
-            'ocad' => 'required|string|max:100',
+            'name' => 'required|string|max:512',
+            'ocad' => 'required|string|max:255',
             'state_id' => 'required|integer',
             'substate_id' => 'nullable|integer',
             'total_value' => 'required|numeric',
             'requested_value' => 'required|numeric',
-            'responsible_entity' => 'required|string|max:255',
+            'executed_value' => 'required|numeric',
+            'responsible_entity' => 'sometimes|string|max:255',
             'sector_id' => 'required|integer',
             'department_id' => 'required|integer',
             'municipality_id' => 'required|integer',

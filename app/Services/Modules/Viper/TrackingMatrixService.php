@@ -2,6 +2,7 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Exceptions\Modules\Viper\UndefinedProjectScopeException;
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
 use App\Models\Modules\Viper\Project;
 use App\Models\Modules\Viper\Scope;
@@ -45,7 +46,7 @@ class TrackingMatrixService implements TrackingMatrixInterface
         } 
         else 
         {
-            throw (new ModelNotFoundException('Scope sin definir para el proyecto '.$projectBpin))->setModel(Scope::class);
+            throw new UndefinedProjectScopeException('No se ha definido un alcance al proyecto '.$projectBpin);
         }
         return collect($trackingMatrix);
     }

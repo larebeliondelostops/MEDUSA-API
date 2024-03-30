@@ -2,12 +2,14 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Exceptions\Modules\Viper\InterventoryFolderNotFoundException;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Models\Modules\Viper\Folder;
 use App\Models\Modules\Viper\Product;
 use App\Models\Modules\Viper\Scope;
 use App\Models\Modules\Viper\SpecificObjective;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -121,6 +123,11 @@ class ProductService implements ProductInterface
         $folder = Folder::where('project_id', $project)
                 ->where('name', 'Ejecución de interventoría')
                 ->first();
+
+        if (is_null($folder)) 
+        {
+            throw new InterventoryFolderNotFoundException('La carpeta de interventoria no fue encontrada para el proyecto '.$project);
+        }
 
         if ($folder->id) {
             $folderData = [

@@ -83,6 +83,11 @@ class Deliverable extends Model
     }
 
 
+    public function deliverables()
+    {
+        return $this->childDeliverables()->with('deliverables')->with('activities');
+    }
+
     public function allParents()
     {
         return $this->parentDeliverable()->with('allParents');

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->string('bpin', 255)->primary();
-            $table->string('name', 100);
-            $table->string('ocad', 100);
+            $table->string('name', 512);
+            $table->string('ocad', 255);
 
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
@@ -32,9 +32,7 @@ return new class extends Migration
 
             $table->decimal('total_value', 21, 2);
             $table->decimal('requested_value', 21, 2);
-            $table->decimal('executed_value', 21, 2);
-            $table->float('physical_progress');
-            $table->float('financial_progress');
+            $table->decimal('executed_value', 21, 2)->default(0.0);
             $table->string('responsible_entity', 255);
 
             $table->unsignedBigInteger('sector_id');
@@ -50,7 +48,6 @@ return new class extends Migration
 
             $table->integer('project_duration_in_months');
             $table->integer('reporting_frequency');
-            $table->string('general_objective', 255);
             $table->timestamps();
             $table->softDeletes();
         });

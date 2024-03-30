@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
- * @property \App\Models\Viper\Project $project
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Viper\SpecificObjective[] $specificObjectives
+ * @property \App\Models\Modules\Viper\Project $project
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Modules\Viper\SpecificObjective[] $specificObjectives
  *
  * @package App\Models\Viper
  * @package App\DTOs\Viper

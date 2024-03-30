@@ -33,7 +33,7 @@ class ProjectService implements ProjectInterface
         $this->locationInterface = $locationInterface;
     }
 
-     /**
+    /**
      * Crea un nuevo proyecto.
      *
      * Toma un ProjectDTO, lo convierte a un modelo de Eloquent y lo guarda en la base de datos.
@@ -65,10 +65,10 @@ class ProjectService implements ProjectInterface
             );
         }
 
-        return $this->getProjectByBPIN($projectData['bpin']);
+        return $this->getProjectByBPIN($project['bpin']);
     }
 
-     /**
+    /**
      * Actualiza un proyecto existente.
      *
      * Busca un proyecto por su identificador 'bpin', y actualiza sus datos con los proporcionados
@@ -192,8 +192,19 @@ class ProjectService implements ProjectInterface
     public function getProjectByBPIN(string $bpin) : Collection
     {
         $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
-                          ->findOrFail($bpin);
-        return collect($project);
+                        ->findOrFail($bpin);
+        
+        $projectData = $project->toArray();
+        $projectData['total_value'] = (float)$projectData['total_value'];
+        $projectData['requested_value'] = (float)$projectData['requested_value'];
+
+        foreach ($projectData['locations'] as $key => $location)
+        {
+            $projectData['locations'][$key]['coordinate']['latitude'] = (float) $location['coordinate']['latitude'];
+            $projectData['locations'][$key]['coordinate']['longitude'] = (float) $location['coordinate']['longitude'];
+        }
+        
+        return collect($projectData);
     }
 
     /**

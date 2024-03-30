@@ -44,7 +44,6 @@ class Alert extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 
         'updated_at', 
         'deleted_at'
     ];
@@ -55,7 +54,7 @@ class Alert extends Model
      * @var array
      */
     protected $fillable = [
-        'type', 'state', 'description', 'date', 'indicator_id'
+        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id','improvement_plan_id'
     ];
 
     /**
@@ -66,5 +65,13 @@ class Alert extends Model
     public function indicator()
     {
         return $this->belongsTo(Indicator::class, 'indicator_id');
+    }
+
+    /**
+     * Obtiene el proyecto asociado a la alerta.
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }

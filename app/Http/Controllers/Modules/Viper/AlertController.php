@@ -94,6 +94,58 @@ class AlertController extends BaseController
     }
 
     /**
+     * Obtiene todas las alertas asociadas a un projecto.
+     *
+     * @param int $indicatorId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function view(int $projectId)
+    {
+        try {
+            $alerts = $this->alertInterface->getAllAlertsByProject($projectId);
+            return response()->json([
+                'data' => $alerts,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Obtiene todas las alertas asociadas a un usuario especifico.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unveil()
+    {
+        try {
+            $alerts = $this->alertInterface->getAlertsByUser();
+            return response()->json([
+                'data' => $alerts,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Obtiene todas las alertas.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function display()
+    {
+        try {
+            $alerts = $this->alertInterface->getAllAlerts();
+            return response()->json([
+                'data' => $alerts,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
      * Obtiene los detalles de una alerta específica.
      *
      * @param int $id

@@ -37,7 +37,7 @@ class MilestoneRequest extends FormRequest
     {
         return [
             'milestone_classes_id' => 'required|exists:milestone_classes,id',
-            'milestone_subclasses_id' => 'required|exists:milestone_subclasses,id',
+            'milestone_subclasses_id' => 'required|exists:milestone_subclasses,id|integer',
             'date' => 'required|date',
             'project_id' => 'required|exists:projects,bpin|string|max:255',
         ];

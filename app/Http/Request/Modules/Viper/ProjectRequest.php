@@ -39,17 +39,15 @@ class ProjectRequest extends FormRequest
     {
         $rules = [
             'bpin' => 'required|string|max:255',
-            'name' => 'required|string|max:100',
-            'ocad' => 'required|string|max:100',
+            'name' => 'required|string|max:512',
+            'ocad' => 'required|string|max:255',
             'state_id' => 'required|integer',
             'substate_id' => 'nullable|integer',
             'total_value' => 'required|numeric',
             'requested_value' => 'required|numeric',
-            'responsible_entity' => 'required|string|max:255',
+            'executed_value' => 'required|numeric',
+            'responsible_entity' => 'sometimes|string|max:255',
             'sector_id' => 'required|integer',
-            "executed_value" => 'required|numeric',
-            "physical_progress" => 'required|numeric',
-            "financial_progress" => 'required|numeric',
             'department_id' => 'required|integer',
             'municipality_id' => 'required|integer',
 
@@ -75,7 +73,6 @@ class ProjectRequest extends FormRequest
 
             'project_duration_in_months' => 'required|integer|min:0',
             'reporting_frequency' => 'required|integer|min:1',
-            'general_objective' => 'required|string|max:1000',
         ];
         if ($this->method()=='PUT')
             $rules['locations.*.id'] = 'sometimes|integer';

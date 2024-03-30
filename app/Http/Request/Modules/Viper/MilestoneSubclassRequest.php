@@ -37,7 +37,7 @@ class MilestoneSubclassRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'milestone_class_id' => 'required|exists:milestone_classes,id',
+            'milestone_class_id' => 'required|exists:milestone_classes,id|integer',
         ];
     }
 

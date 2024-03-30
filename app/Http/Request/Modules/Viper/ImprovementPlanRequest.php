@@ -38,7 +38,6 @@ class ImprovementPlanRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'description' => 'required|string',
-            'alert_id' => 'required|exists:alerts,id|integer',
         ];
     }
 

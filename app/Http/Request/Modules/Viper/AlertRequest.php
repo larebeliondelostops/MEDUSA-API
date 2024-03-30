@@ -36,11 +36,13 @@ class AlertRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'description' => 'required|string',
-            'date' => 'required|date',
-            'indicator_id' => 'required|exists:indicators_viper,id|integer',
+            'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
+            'project_id' => 'required|exists:projects,bpin|string|max:100',
+            'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
         ];
     }
 

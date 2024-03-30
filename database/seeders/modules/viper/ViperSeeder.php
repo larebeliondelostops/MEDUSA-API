@@ -21,7 +21,6 @@ class ViperSeeder extends Seeder
             MarkersSeeder::class,
             MenuBarSeeder::class,
             MenuSeeder::class,
-
         ]);
     }
 }

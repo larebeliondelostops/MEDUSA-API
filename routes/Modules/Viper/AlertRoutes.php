@@ -6,7 +6,10 @@ use App\Http\Controllers\Modules\Viper\AlertController;
 Route::prefix('/viper/alert')->group(function () {
     Route::post('/create', [AlertController::class, 'store']);
     Route::put('/update/{id}', [AlertController::class, 'update']);
-    Route::get('/list/{indicatorId}', [AlertController::class, 'index']);
+    Route::get('/listIndicator/{indicatorId}', [AlertController::class, 'index']);
+    Route::get('/listProject/{projectId}', [AlertController::class, 'view']);
+    Route::get('/listUser', [AlertController::class, 'unveil']);
+    Route::get('/list', [AlertController::class, 'display']);
     Route::get('/detail/{id}', [AlertController::class, 'show']);
     Route::delete('/delete/{id}', [AlertController::class, 'destroy']);
 });

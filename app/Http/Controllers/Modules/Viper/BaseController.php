@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Modules\Viper;
+use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -65,10 +66,17 @@ class BaseController extends Controller
                 'message' => 'Acción no autorizada.'
             ], Response::HTTP_FORBIDDEN);
         }
-        else {
+        elseif ($exception instanceof CustomException)
+        {
             return response()->json([
                 'message' => $exception->getMessage() ?? 'Se produjo un error interno del servidor.',
-            ], ($exception->getCode() === 0) ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode());
+            ], $exception->getCode());
+        }
+        else 
+        {
+            return response()->json([
+                'message' => $exception->getMessage() ?? 'Se produjo un error interno del servidor.',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         
     }

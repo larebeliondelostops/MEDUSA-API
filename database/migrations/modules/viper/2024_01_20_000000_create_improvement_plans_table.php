@@ -17,10 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('description');
-            $table->unsignedBigInteger('alert_id')->unique(); 
             $table->timestamps();
-        
-            $table->foreign('alert_id')->references('id')->on('alerts')->onDelete('cascade');
         });
     }
 

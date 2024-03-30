@@ -2,12 +2,14 @@
 
 namespace App\Services\Modules\Viper;
 
+use App\Exceptions\Modules\Viper\InterventoryFolderNotFoundException;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Models\Modules\Viper\Folder;
 use App\Models\Modules\Viper\Product;
 use App\Models\Modules\Viper\Scope;
 use App\Models\Modules\Viper\SpecificObjective;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -121,6 +123,11 @@ class ProductService implements ProductInterface
         $folder = Folder::where('project_id', $project)
                 ->where('name', 'Ejecución de interventoría')
                 ->first();
+
+        if (is_null($folder)) 
+        {
+            throw new InterventoryFolderNotFoundException('La carpeta de interventoria no fue encontrada para el proyecto '.$project);
+        }
 
         if ($folder->id) {
             $folderData = [
@@ -241,14 +248,36 @@ public function getAllProductsBySpecificObjective(int $specificObjectiveId)
     $specificObjectiveData = collect($specificObjective->toArray());
 
     // Obtener los productos asociados al objetivo específico con indicadores cargados
-    $products = Product::with(['measurementUnit', 'indicators'])
+    $products = Product::with(['measurementUnit', 'indicators.measurementUnit'])
         ->where('specific_objective_id', $specificObjectiveId)
         ->get();
+
+    $productsData = $products->toArray();
+    $productsData = array_map(
+        function($product)
+        {
+            unset($product["measurement_unit_id"]);
+            $product["measurement_unit"] = $product["measurement_unit"]["name"]; 
+
+            $product["indicators"] = array_map(
+                function($indicator)
+                {
+                    unset($indicator["measurement_unit_id"]);
+                    $indicator["measurement_unit"] = $indicator["measurement_unit"]["name"]; 
+                    return $indicator;
+                },
+                $product["indicators"]
+            );
+
+            return $product;    
+        },
+        $productsData
+    );
 
     // Devolver un array con el objetivo específico y los productos asociados
     return [
         'specific_objective' => $specificObjectiveData,
-        'products' => $products->toArray(),
+        'products' => $productsData,
     ];
 }
 

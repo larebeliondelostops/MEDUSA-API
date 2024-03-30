@@ -4,8 +4,6 @@ namespace App\Services\Modules\Viper;
 
 // Librerias del modulo viper
 
-use App\Helpers\Modules\Viper\AlertCreator;
-use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Models\Modules\Viper\Project;
@@ -29,15 +27,13 @@ use Illuminate\Support\Collection;
 class ProjectService implements ProjectInterface
 {
     private LocationInterface $locationInterface;
-    private AlertInterface $alertInterface;
 
-    public function __construct(LocationInterface $locationInterface, AlertInterface $alertInterface)
+    public function __construct(LocationInterface $locationInterface)
     {
         $this->locationInterface = $locationInterface;
-        $this->alertInterface = $alertInterface;
     }
 
-     /**
+    /**
      * Crea un nuevo proyecto.
      *
      * Toma un ProjectDTO, lo convierte a un modelo de Eloquent y lo guarda en la base de datos.
@@ -69,21 +65,10 @@ class ProjectService implements ProjectInterface
             );
         }
 
-        $alertData = AlertCreator::createAlertCumplimientoRequisitosIniciales($projectData['bpin'], $projectData['execution_approval_date']);
-        $alert = [
-            "name" => $alertData["name"],
-            "type" => $alertData["type"],
-            "state" => "estado_de_alerta",
-            "description" => $alertData["description"],
-            "indicator_id" => null,
-            "project_id"=> $projectData['bpin']
-        ];
-
-        $this->alertInterface->createNewAlert(collect($alert));
-        return $this->getProjectByBPIN($projectData['bpin']);
+        return $this->getProjectByBPIN($project['bpin']);
     }
 
-     /**
+    /**
      * Actualiza un proyecto existente.
      *
      * Busca un proyecto por su identificador 'bpin', y actualiza sus datos con los proporcionados
@@ -207,7 +192,7 @@ class ProjectService implements ProjectInterface
     public function getProjectByBPIN(string $bpin) : Collection
     {
         $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
-                          ->findOrFail($bpin);
+                        ->findOrFail($bpin);
         
         $projectData = $project->toArray();
         $projectData['total_value'] = (float)$projectData['total_value'];

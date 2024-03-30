@@ -32,6 +32,7 @@ use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
 use App\Models\Modules\Viper\Activity;
+use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
@@ -70,6 +71,7 @@ use App\Services\Modules\Viper\ImprovementPlanService;
 use App\Services\Modules\Viper\TrackingMatrixService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Modules\Viper\Activity\ActivityObserver;
+use App\Services\Modules\Viper\Project\ProjectObserver;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -112,5 +114,6 @@ class ViperServiceProvider extends ServiceProvider
     {
         // observers registered
         Activity::observe(ActivityObserver::class);
+        Project::observe(ProjectObserver::class);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Services\Modules\Viper;
 
 use App\Events\Modules\Viper\ViperWebSocket;
-use App\Models\Modules\Viper\Project;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
@@ -21,8 +20,16 @@ use Exception;
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class AlertService implements AlertInterface
-{
+class AlertService implements AlertInterface{
+
+    private ProjectInterface $projectInterface;
+
+    public function __construct(ProjectInterface $projectInterface)
+    {
+        $this->projectInterface = $projectInterface;
+    }
+
+    
     /**
      * Crea una nueva alerta en el sistema.
      *
@@ -109,7 +116,7 @@ class AlertService implements AlertInterface
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
 
-        $projects = collect(Project::all());
+        $projects = $this->projectInterface->getAllProjects();
 
         $alertsByProject = collect();
         

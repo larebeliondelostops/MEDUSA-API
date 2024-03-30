@@ -19,6 +19,7 @@ use App\Interfaces\Modules\Viper\MilestoneSubclassInterface;
 use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
+use App\Interfaces\Modules\Viper\Project\ProjectObserverAssignContractInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Interfaces\Modules\Viper\ProofInterface;
 use App\Interfaces\Modules\Viper\ReportInterface;
@@ -54,6 +55,7 @@ use App\Services\Modules\Viper\MilestoneSubclassService;
 use App\Services\Modules\Viper\MunicipalityService;
 use App\Services\Modules\Viper\PrecedenceService;
 use App\Services\Modules\Viper\ProductService;
+use App\Services\Modules\Viper\Project\ProjectObserverAssignContract;
 use App\Services\Modules\Viper\ProjectService;
 use App\Services\Modules\Viper\ProofService;
 use App\Services\Modules\Viper\ReportService;
@@ -108,6 +110,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(TrackingMatrixInterface::class, TrackingMatrixService::class);
         $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
+
+        //Observers
+        $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);
     }
 
     public function boot()

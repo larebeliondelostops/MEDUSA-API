@@ -241,14 +241,36 @@ public function getAllProductsBySpecificObjective(int $specificObjectiveId)
     $specificObjectiveData = collect($specificObjective->toArray());
 
     // Obtener los productos asociados al objetivo específico con indicadores cargados
-    $products = Product::with(['measurementUnit', 'indicators'])
+    $products = Product::with(['measurementUnit', 'indicators.measurementUnit'])
         ->where('specific_objective_id', $specificObjectiveId)
         ->get();
+
+    $productsData = $products->toArray();
+    $productsData = array_map(
+        function($product)
+        {
+            unset($product["measurement_unit_id"]);
+            $product["measurement_unit"] = $product["measurement_unit"]["name"]; 
+
+            $product["indicators"] = array_map(
+                function($indicator)
+                {
+                    unset($indicator["measurement_unit_id"]);
+                    $indicator["measurement_unit"] = $indicator["measurement_unit"]["name"]; 
+                    return $indicator;
+                },
+                $product["indicators"]
+            );
+
+            return $product;    
+        },
+        $productsData
+    );
 
     // Devolver un array con el objetivo específico y los productos asociados
     return [
         'specific_objective' => $specificObjectiveData,
-        'products' => $products->toArray(),
+        'products' => $productsData,
     ];
 }
 

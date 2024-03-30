@@ -59,13 +59,8 @@ class SpecificObjectiveService implements SpecificObjectiveInterface
     public function getAllSpecificObjectiveByScope(int $scopeId): Collection
     {
         $specificObjectiveGot = SpecificObjective::where('scope_id', $scopeId)->get();
-        $specificObjectives = $specificObjectiveGot->transform(
-            function (SpecificObjective $specificObjective)
-            {
-                return collect($specificObjective);
-            }
-        );
-        return $specificObjectives;
+
+        return collect($specificObjectiveGot);
     }
 
     /**

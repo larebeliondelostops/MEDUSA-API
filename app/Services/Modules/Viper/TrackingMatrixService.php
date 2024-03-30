@@ -4,7 +4,9 @@ namespace App\Services\Modules\Viper;
 
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
 use App\Models\Modules\Viper\Project;
+use App\Models\Modules\Viper\Scope;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TrackingMatrixService implements TrackingMatrixInterface
 {
@@ -26,18 +28,25 @@ class TrackingMatrixService implements TrackingMatrixInterface
         ])
         ->first();
 
-        $trackingMatrix->makeHidden(['bpin',]);
-        $trackingMatrix->scope->makeHidden(['id', 'project_id']);
-        foreach($trackingMatrix->scope->specificObjectives as $specific_objective)
+        if ($trackingMatrix && $trackingMatrix->scope && $trackingMatrix->scope->exists()) 
         {
-            $specific_objective->makeHidden(['scope_id']);
-            foreach($specific_objective->products as $product)
+            $trackingMatrix->makeHidden(['bpin',]);
+            $trackingMatrix->scope->makeHidden(['id', 'project_id']);
+            foreach($trackingMatrix->scope->specificObjectives as $specific_objective) 
             {
-                $product->makeHidden(['measurement_unit_id', 'specific_objective_id', 'folder_id']);
-                $product->measurementUnit->makeHidden(['id']);
+                $specific_objective->makeHidden(['scope_id']);
+                foreach($specific_objective->products as $product) 
+                {
+                    $product->makeHidden(['measurement_unit_id', 'specific_objective_id', 'folder_id']);
+                    $product->measurementUnit->makeHidden(['id']);
+                }
             }
+            return collect($trackingMatrix);
+        } 
+        else 
+        {
+            throw (new ModelNotFoundException('Scope sin definir para el proyecto '.$projectBpin))->setModel(Scope::class);
         }
-        
         return collect($trackingMatrix);
     }
 }

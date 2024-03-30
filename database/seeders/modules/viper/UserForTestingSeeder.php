@@ -2,6 +2,10 @@
 
 namespace Database\Seeders\Modules\Viper;
 
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +20,6 @@ class UserForTestingSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'id' => 1,
                 'name' => 'user test',
                 'email'=> 'ignicion@ignicion.com',
                 'phone_number' => null,
@@ -30,16 +33,16 @@ class UserForTestingSeeder extends Seeder
             ],
         ]);
 
+        $idUser = User::where('email','ignicion@ignicion.com')->first()->id;
+
         DB::table('roles')->insert([
             [
-                'id' => 1,
                 'name' => 'ApoyoAdmon',
                 'guard_name' => 'ApoyoAdmon',
                 'created_at' => null,
                 'updated_at' => null,
             ],
             [
-                'id' => 2,
                 'name' => 'Interventoría',
                 'guard_name' => 'Interventoría',
                 'created_at' => null,
@@ -47,23 +50,24 @@ class UserForTestingSeeder extends Seeder
             ],
         ]);
 
+        $roles = [];
+        $roles['ApoyoAdmon'] = Role::where('name','ApoyoAdmon')->first()->id;
+        $roles['Interventoría'] = Role::where('name','Interventoría')->first()->id;
+
         DB::table('permissions')->insert([
             [
-                'id' => 1,
                 'name' => 'menu-Mapa',
                 'guard_name' => 'menu-Mapa',
                 'created_at' => null,
                 'updated_at' => null,
             ],
             [
-                'id' => 2,
                 'name' => 'menu-Viper',
                 'guard_name' => 'menu-Viper',
                 'created_at' => null,
                 'updated_at' => null,
             ],
             [
-                'id' => 3,
                 'name' => 'commandbar-Proyectos',
                 'guard_name' => 'commandbar-Proyectos',
                 'created_at' => null,
@@ -71,45 +75,50 @@ class UserForTestingSeeder extends Seeder
             ],
         ]);
 
+        $permission = [];
+        $permission['menu-Mapa'] = Permission::where('name', 'menu-Mapa')->first()->id;
+        $permission['menu-Viper'] = Permission::where('name', 'menu-Viper')->first()->id;
+        $permission['commandbar-Proyectos'] = Permission::where('name', 'commandbar-Proyectos')->first()->id;
+
         DB::table('role_has_permissions')->insert([
             [
-                'permission_id' => 1,
-                'role_id'=> 1,
+                'permission_id' => $permission['menu-Mapa'],
+                'role_id'=> $roles['ApoyoAdmon'],
             ],
             [
-                'permission_id' => 2,
-                'role_id'=> 1,
-            ],
-            
-            [
-                'permission_id' => 3,
-                'role_id'=> 1,
-            ],
-            [
-                'permission_id' => 1,
-                'role_id'=> 2,
-            ],
-            [
-                'permission_id' => 2,
-                'role_id'=> 2,
+                'permission_id' => $permission['menu-Viper'],
+                'role_id'=> $roles['ApoyoAdmon'],
             ],
             
             [
-                'permission_id' => 3,
-                'role_id'=> 2,
+                'permission_id' => $permission['commandbar-Proyectos'],
+                'role_id'=> $roles['ApoyoAdmon'],
+            ],
+            [
+                'permission_id' => $permission['menu-Mapa'],
+                'role_id'=> $roles['Interventoría'],
+            ],
+            [
+                'permission_id' => $permission['menu-Viper'],
+                'role_id'=> $roles['Interventoría'],
+            ],
+            
+            [
+                'permission_id' => $permission['commandbar-Proyectos'],
+                'role_id'=> $roles['Interventoría'],
             ],
         ]);
 
         DB::table('model_has_roles')->insert([
             [
-                'role_id' => 1,
+                'role_id' => $roles['ApoyoAdmon'],
                 'model_type' => 'App\Models\User',
-                'model_id' => 1,
+                'model_id' => $idUser,
             ],
             [
-                'role_id' => 2,
+                'role_id' => $roles['Interventoría'],
                 'model_type' => 'App\Models\User',
-                'model_id' => 1,
+                'model_id' => $idUser,
             ],
         ]);
     }

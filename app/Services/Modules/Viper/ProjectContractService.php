@@ -64,6 +64,6 @@ class ProjectContractService extends ObservableWithDataBase Implements ProjectCo
         $projectUserRole->save();
         
         $this->folderInterface->createFolderContract($projectContract['rol'], $projectContract['bpin'],  $user->id);
-        $this->notifyAll([]);
+        $this->notifyAll($projectUserRole->toArray());
     }
 }

@@ -8,7 +8,7 @@ class ObservableWithDataBase implements ObservableWithDataInterface
 {
     private $observers = [];
 
-    protected function notifyAll(array $data): void
+    public function notifyAll(array $data): void
     {
         foreach ($this->observers as $observer) {
             $observer->notify($data);

@@ -21,7 +21,7 @@ class AlertCreator
     }
     
 
-    private static function createAlertRevisionContratacion($projectNumber, $date, $requiredDate)
+    public static function createAlertRevisionContratacion($projectNumber, $date, $requiredDate)
     {
         return [
             "name" => "Alerta de revisión por parte del equipo de contratación",

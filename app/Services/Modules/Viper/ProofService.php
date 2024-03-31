@@ -46,7 +46,8 @@ class ProofService implements ProofInterface
 
         $newProof->name = $filename;
         $newProof->url = $url;
-
+        $newProof->responsible = auth()->user()->id;
+        
         $newProof->save();
 
         return collect($newProof);

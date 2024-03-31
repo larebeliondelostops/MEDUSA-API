@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('description');
-            $table->string('responsible',255);
+            $table->unsignedBigInteger('responsible');
             $table->date('date');
             $table->unsignedBigInteger('product_id');
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

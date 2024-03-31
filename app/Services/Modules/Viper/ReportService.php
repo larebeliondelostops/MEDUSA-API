@@ -28,6 +28,7 @@ class ReportService implements ReportInterface
     public function createNewReport(Collection $report): Collection
     {
         $newReport = new Report($report->toArray());
+        $newReport->responsible = auth()->user()->id;
         $newReport->save();
         
         return collect($newReport);

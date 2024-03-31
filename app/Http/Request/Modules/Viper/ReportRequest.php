@@ -25,7 +25,7 @@ class ReportRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -38,7 +38,6 @@ class ReportRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'description' => 'required|string',
-            'responsible' => 'required|string|max:100',
             'date' => 'required|date',
             'product_id' => 'required|exists:products,id|integer',
         ];

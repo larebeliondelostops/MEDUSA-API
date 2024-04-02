@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('url',255);
-            $table->string('responsible',255);
+            $table->unsignedBigInteger('responsible');
             $table->unsignedBigInteger('report_id');
 
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

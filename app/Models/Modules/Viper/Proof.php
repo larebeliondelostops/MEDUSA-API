@@ -82,7 +82,7 @@ class Proof extends Model
             $query->whereHas('specificObjectives', function ($query) {
                 $query->whereHas('products.reports',function($query)
                 {
-                    $query->where('id', $this->report->id);
+                    $query->where('id', $this->report_id);
                 });          
             });
         })->value('bpin');

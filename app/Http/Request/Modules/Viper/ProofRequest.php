@@ -25,7 +25,7 @@ class ProofRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -37,7 +37,6 @@ class ProofRequest extends FormRequest
     {
         return [
             'files.*' => 'required|file',
-            'responsible' => 'required|string|max:255',
             'report_id' => 'required|exists:reports,id|integer',
         ];
     }

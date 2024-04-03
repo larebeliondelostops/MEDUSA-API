@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Request\Users;
+namespace App\Http\Requests\Tenant\Users;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -42,12 +43,20 @@ class AssignRolRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'user_id' => 'required|exists:users,id|integer',
             'rol_name' => 'required|string|min:5|max:25',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'user_id' => 'integer',
+                'rol_name' => 'string|min:5|max:25',
+            ];
+        }
+    
+        return $rules;
     }
-
     /**
      * Mensajes para las validaciones especificas de cada uno de los campos
      *
@@ -84,8 +93,16 @@ class AssignRolRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator) : void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

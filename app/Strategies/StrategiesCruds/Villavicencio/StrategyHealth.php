@@ -2,20 +2,20 @@
 
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
-use App\Models\Villavicencio\Alarms;
+use App\Models\Villavicencio\Health;
 use App\Traits\Cruds\ValidateFormRequest;
-use App\Http\Requests\Villavicencio\AlarmsRequest;
+use App\Http\Requests\Villavicencio\HealthRequest;
 use App\Strategies\StrategiesCruds\BaseCrud;
 
-class StrategyAlarms extends BaseCrud
+class StrategyHealth extends BaseCrud
 {
     use ValidateFormRequest;
 
     public function __construct(
-        private Alarms $model
+        private Health $model
     ) {}
 
-    public function getModel() : Alarms
+    public function getModel() : Health
     {
         return $this->model;
     }
@@ -30,13 +30,25 @@ class StrategyAlarms extends BaseCrud
                 'ID' => $item->id,
                 'Nombre' => $item->name,
                 'Direccion' => $item->address,
+                'Pacientes de emergencia' => $item->emergency_patients,
+                'Camas de emergencia disponibles' => $item->emergency_beds_available,
+                'Salas de operaciones disponibles' => $item->available_operating_rooms,
+                'Unidad de cuidados intensivos disponible' => $item->intensive_care_unit_available,
+                'Camas de primer nivel' => $item->first_level_beds,
+                'Camas de segundo nivel' => $item->second_level_beds,
+                'Camas de tercer nivel' => $item->third_level_beds,
+                'Banco de sangre' => $item->blood_bank,
+                'Doctores en el turno' => $item->doctors_in_the_shift,
+                'Enfermeras en el turno' => $item->nurses_in_the_shift,
+                'IPS afiliadas' => $item->affiliated_ips,
+                'Numero de emergencias al dia' => $item->number_of_emergencies_day,
             ];
         }
 
         $data = [
             'data' => $transformedData,
             'meta' => [
-                'title' => 'Alarmas',
+                'title' => 'Salud',
                 'pagination' => [
                     'total' => $items->total(),
                     'perPage' => $items->perPage(),
@@ -54,7 +66,7 @@ class StrategyAlarms extends BaseCrud
 
     public function store($request)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(HealthRequest::class, $request);
 
         $item = parent::store($request->toArray());
 
@@ -70,7 +82,7 @@ class StrategyAlarms extends BaseCrud
 
     public function update($request, $id)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(HealthRequest::class, $request);
         
         $item = parent::update($request->toArray(), $id);
 

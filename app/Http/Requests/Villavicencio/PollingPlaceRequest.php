@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Request\User;
+namespace App\Http\Requests\Villavicencio;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class UserRequest extends FormRequest
+class PollingPlaceRequest extends FormRequest
 {
     /**
      * Objeto Validator.
@@ -33,10 +34,12 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required',
-            'email_verified_at' => '',
-            'password' => 'required',
-            'remember_token' => '',
+            'address' => 'required',
+            'potencialWomen' => 'required',
+            'potencialMen' => 'required',
+            'totalVotes' => 'required',
+            'tables' => 'required',
+            'position' => 'required',
         ];
     }
 
@@ -61,11 +64,12 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'Nombre',
-            'email' => 'Correo',
-            'email_verified_at' => '',
-            'password' => 'Contraseña',
-            'remember_token' => '',
-
+            'address' => 'Dirección',
+            'potencialWomen' => 'Potencial de mujeres',
+            'potencialMen' => 'Potencial de hombres',
+            'totalVotes' => 'Total de votos',
+            'tables' => 'Mesas',
+            'position' => 'Coordenadas',
         ];
     }
 
@@ -75,8 +79,16 @@ class UserRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator): void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

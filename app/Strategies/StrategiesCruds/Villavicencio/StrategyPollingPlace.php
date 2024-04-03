@@ -2,20 +2,20 @@
 
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
-use App\Models\Villavicencio\Alarms;
+use App\Models\Villavicencio\PollingPlace;
 use App\Traits\Cruds\ValidateFormRequest;
-use App\Http\Requests\Villavicencio\AlarmsRequest;
+use App\Http\Requests\Villavicencio\PollingPlaceRequest;
 use App\Strategies\StrategiesCruds\BaseCrud;
 
-class StrategyAlarms extends BaseCrud
+class StrategyPollingPlace extends BaseCrud
 {
     use ValidateFormRequest;
 
     public function __construct(
-        private Alarms $model
+        private PollingPlace $model
     ) {}
 
-    public function getModel() : Alarms
+    public function getModel() : PollingPlace
     {
         return $this->model;
     }
@@ -30,13 +30,17 @@ class StrategyAlarms extends BaseCrud
                 'ID' => $item->id,
                 'Nombre' => $item->name,
                 'Direccion' => $item->address,
+                'Potencial de Mujeres' => $item->potencial_women,
+                'Potencial de Hombres' => $item->potencial_men,
+                'Total de Votos' => $item->total_votes,
+                'Mesas' => $item->tables,
             ];
         }
 
         $data = [
             'data' => $transformedData,
             'meta' => [
-                'title' => 'Alarmas',
+                'title' => 'Mesas de votación',
                 'pagination' => [
                     'total' => $items->total(),
                     'perPage' => $items->perPage(),
@@ -54,7 +58,7 @@ class StrategyAlarms extends BaseCrud
 
     public function store($request)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(PollingPlaceRequest::class, $request);
 
         $item = parent::store($request->toArray());
 
@@ -70,7 +74,7 @@ class StrategyAlarms extends BaseCrud
 
     public function update($request, $id)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(PollingPlaceRequest::class, $request);
         
         $item = parent::update($request->toArray(), $id);
 

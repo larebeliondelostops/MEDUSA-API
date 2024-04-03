@@ -6,7 +6,7 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use App\Models\Ambient;
 use App\Clases\SaveGeoJson;
-use App\Http\Request\Ambient\AmbientRequest;
+use App\Http\Requests\Neiva\AmbientRequest;
 use \Illuminate\Http\Request;
 use App\Strategies\Interface\PointsInterface;
 use Illuminate\Support\Facades\Log;

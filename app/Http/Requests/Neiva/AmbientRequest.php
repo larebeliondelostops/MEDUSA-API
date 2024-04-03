@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Request\Cai;
+namespace App\Http\Requests\Neiva;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class CaiRequest extends FormRequest
+class AmbientRequest extends FormRequest
 {
     /**
      * Objeto Validator.
@@ -13,7 +14,7 @@ class CaiRequest extends FormRequest
      * @var object
      */
     public $validator;
-    
+
     /**
      * Determina si el usuario esta autorizado para hacer esta solicitud.
      *
@@ -31,11 +32,21 @@ class CaiRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
-            'address' => 'required',
-            'pointCoordinates' => 'required',
+        $rules = [
+            'name' => 'required|string',
+            'longitude' => 'required|string',
+            'latitude' => 'required|string',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => 'string',
+                'longitude' => 'string',
+                'latitude' => 'string',
+            ];
+        }
+    
+        return $rules;
     }
 
     /**
@@ -47,6 +58,7 @@ class CaiRequest extends FormRequest
     {
         return [
             'required' => 'El campo :attribute es requerido',
+            'string' => 'El campo :attribute debe ser una cadena de texto',
         ];
     }
 
@@ -59,8 +71,8 @@ class CaiRequest extends FormRequest
     {
         return [
             'name' => 'Nombre',
-            'address' => 'Dirección',
-            'pointCoordinates' => 'Coordenadas',
+            'longitude' => 'Longitud',
+            'latitude' => 'Latitud',
         ];
     }
 
@@ -70,8 +82,16 @@ class CaiRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator): void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

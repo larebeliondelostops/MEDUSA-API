@@ -2,20 +2,20 @@
 
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
-use App\Models\Villavicencio\Alarms;
+use App\Models\Villavicencio\Cameras;
 use App\Traits\Cruds\ValidateFormRequest;
-use App\Http\Requests\Villavicencio\AlarmsRequest;
+use App\Http\Requests\Villavicencio\CamerasRequest;
 use App\Strategies\StrategiesCruds\BaseCrud;
 
-class StrategyAlarms extends BaseCrud
+class StrategyCameras extends BaseCrud
 {
     use ValidateFormRequest;
 
     public function __construct(
-        private Alarms $model
+        private Cameras $model
     ) {}
 
-    public function getModel() : Alarms
+    public function getModel() : Cameras
     {
         return $this->model;
     }
@@ -30,13 +30,14 @@ class StrategyAlarms extends BaseCrud
                 'ID' => $item->id,
                 'Nombre' => $item->name,
                 'Direccion' => $item->address,
+                'URL' => $item->url,
             ];
         }
 
         $data = [
             'data' => $transformedData,
             'meta' => [
-                'title' => 'Alarmas',
+                'title' => 'Camaras',
                 'pagination' => [
                     'total' => $items->total(),
                     'perPage' => $items->perPage(),
@@ -54,7 +55,7 @@ class StrategyAlarms extends BaseCrud
 
     public function store($request)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(CamerasRequest::class, $request);
 
         $item = parent::store($request->toArray());
 
@@ -70,7 +71,7 @@ class StrategyAlarms extends BaseCrud
 
     public function update($request, $id)
     {
-        $this->validateRequest(AlarmsRequest::class, $request);
+        $this->validateRequest(CamerasRequest::class, $request);
         
         $item = parent::update($request->toArray(), $id);
 

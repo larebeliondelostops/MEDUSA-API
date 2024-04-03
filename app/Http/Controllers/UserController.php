@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Request\User\UserRequest;
+use App\Http\Requests\Tenant\Users\UserRequest;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use App\Http\Request\Users\AssignRolRequest;
-use App\Http\Request\Users\StoreRequest;
+use App\Http\Requests\Tenant\Users\AssignRolRequest;
+use App\Http\Requests\Tenant\Users\StoreRequest;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Storage;
 

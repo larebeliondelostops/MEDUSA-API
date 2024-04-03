@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Request\Alarms;
+namespace App\Http\Requests\Villavicencio;
 
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AlarmsRequest extends FormRequest
+class CamerasRequest extends FormRequest
 {
     /**
      * Objeto Validator.
@@ -33,11 +33,25 @@ class AlarmsRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
-            'address' => 'required',
-            'position' => 'required|integer|size:2',
+        $rules = [
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'longitude' => 'required|string',
+            'latitude' => 'required|string',
+            'url' => 'required|text',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => 'string',
+                'address' => 'string',
+                'longitude' => 'string',
+                'latitude' => 'string',
+                'url' => 'text',
+            ];
+        }
+    
+        return $rules;
     }
 
     /**
@@ -49,8 +63,10 @@ class AlarmsRequest extends FormRequest
     {
         return [
             'required' => 'El campo :attribute es requerido',
+            'string' => 'El campo :attribute debe ser una cadena de texto',
             'integer' => 'El campo :attribute debe ser un número entero',
             'size' => 'El campo :attribute debe tener :size elementos',
+            'text' => 'El campo :attribute debe ser un texto',
         ];
     }
 
@@ -64,7 +80,9 @@ class AlarmsRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'position' => 'Coordenadas',
+            'longitude' => 'Longitud',
+            'latitude' => 'Latitud',
+            'url' => 'URL',
         ];
     }
 

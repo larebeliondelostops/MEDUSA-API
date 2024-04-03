@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Request\Users;
+namespace App\Http\Requests\Tenant\Users;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -42,7 +43,7 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'role_id' => 'required|exists:roles,id',
@@ -52,8 +53,21 @@ class StoreRequest extends FormRequest
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => 'string',
+                'email' => 'email',
+                'role_id' => 'exists:roles,id',
+                'phone_number' => 'string',
+                'address' => 'string',
+                'avatar' => 'file',
+                'password' => 'min:8',
+                'password_confirmation' => 'same:password',
+            ];
+        } 
+        return $rules;
     }
-
     /**
      * Mensajes para las validaciones especificas de cada uno de los campos
      *
@@ -96,8 +110,16 @@ class StoreRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator) : void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

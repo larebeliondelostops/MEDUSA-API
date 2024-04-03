@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Request\Cameras;
+namespace App\Http\Requests\Tenant\Users;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class CamerasRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Objeto Validator.
@@ -31,14 +32,26 @@ class CamerasRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required',
-            'address' => 'required',
-            'url' => 'required',
-            'pointCoordinates' => 'required',
+            'email' => 'required',
+            'email_verified_at' => '',
+            'password' => 'required',
+            'remember_token' => '',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => '',
+                'email' => '',
+                'email_verified_at' => '',
+                'password' => '',
+                'remember_token' => '',
+            ];
+        }
+    
+        return $rules;
     }
-
     /**
      * Mensajes para las validaciones especificas de cada uno de los campos
      *
@@ -60,9 +73,11 @@ class CamerasRequest extends FormRequest
     {
         return [
             'name' => 'Nombre',
-            'address' => 'Dirección',
-            'url' => 'URL',
-            'pointCoordinates' => 'Coordenadas',
+            'email' => 'Correo',
+            'email_verified_at' => '',
+            'password' => 'Contraseña',
+            'remember_token' => '',
+
         ];
     }
 
@@ -72,8 +87,16 @@ class CamerasRequest extends FormRequest
      * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function failedValidation(Validator $validator): void
+    protected function failedValidation(Validator $validator)
     {
-        $this->validator = $validator;
+        $keys = $validator->errors()->keys();
+        $errors = $validator->errors()->first($keys[0]);
+        unset($keys[0]);
+
+        foreach ($keys as $key) {
+            $errors .= ", " .$validator->errors()->first($key);
+        }
+
+        throw new Exception($errors, 400);
     }
 }

@@ -3,12 +3,13 @@
 namespace App\Models\Villavicencio;
 
 use App\Traits\Points\HasPoints;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Heatmaps\HasHeatmap;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ipats extends Model
 {
-    use HasFactory, HasPoints;
+    use HasFactory, HasPoints, HasHeatmap;
 
     /**
 	 * Defines the table associated with the model.

@@ -3,7 +3,7 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\Villavicencio\Cai;
+use App\Models\Villavicencio\Cais;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Request\cai\CaiRequest;
@@ -13,10 +13,10 @@ use App\Interfaces\Markers\PointsInterface;
 class StrategyCai implements PointsInterface
 {
     public function __construct(
-        private Cai $model
+        private Cais $model
     ) {}
 
-    public function getModel() : Cai
+    public function getModel() : Cais
     {
         return $this->model;
     }

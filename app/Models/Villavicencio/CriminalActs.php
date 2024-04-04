@@ -3,12 +3,14 @@
 namespace App\Models\Villavicencio;
 
 use App\Models\Indicator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Heatmaps\HasHeatmap;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class CriminalActs extends Model
 {
-    use HasFactory;
+    use HasFactory, HasHeatmap;
 
     protected $table = 'criminal_acts';
 

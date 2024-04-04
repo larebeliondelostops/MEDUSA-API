@@ -12,7 +12,7 @@ class Health extends Model
 
     protected $table = 'health';
 
-    private $slug = 'entity';
+    private $slug = 'health';
 
     protected $guarded = [];
 

@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('coordinates_events', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_id');
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->json('coordinates')->nullable();
             $table->foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('coordinates')->nullable();
             $table->string('agent_name')->nullable();
             $table->bigInteger('indicator')->nullable();
-            $table->foreign('indicator')->references('id')->on('Indicators');
+            $table->foreign('indicator')->references('id')->on('indicators');
             $table->timestamp('date_ipat')->nullable();
             $table->string('hypothesis')->nullable();
             $table->timestamps();

@@ -13,6 +13,7 @@ class StrategyIncidentsReports implements ReportsInterface
 {
     private $indicator;
     private $request;
+    private $indicadores;
 
     public function getReportsData(Request $request)
     {
@@ -40,11 +41,18 @@ class StrategyIncidentsReports implements ReportsInterface
 
         array_push($generalData, $general);
 
-        $types = Incident::select('indicator')->orderBy('indicator', 'asc')->groupBy('indicator')->get()->toArray();
+        //$types = Incident::select('indicator')->orderBy('indicator', 'DESC')->groupBy('indicator')->get()->toArray();
 
-        foreach ($types as $type) {
+        $tabs = $this->tabsIncidents();
+
+        if ($this->indicadores[0] == 0) {
+            unset($this->indicadores[0]);
+        }
+        
+        foreach ($this->indicadores as $type) {
             $data = [];
-            $this->indicator = $type['indicator'] ?? null;
+
+            $this->indicator = $type ?? null;
             $data = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
@@ -56,7 +64,7 @@ class StrategyIncidentsReports implements ReportsInterface
         }
 
         $data = [
-            'tabs' => $this->tabsIncidents(),
+            'tabs' => $tabs,
             'reportsData' => $generalData
         ];
 
@@ -170,16 +178,16 @@ class StrategyIncidentsReports implements ReportsInterface
             $tabsIncidents = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
                 ->selectRaw('indicator, COUNT(*) as count')
                 ->groupBy('indicator')
-                ->orderBy('count', 'desc')
+                ->orderBy('indicator', 'desc')
                 ->get();
         } else {
             $tabsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
                 ->groupBy('indicator')
-                ->orderBy('count', 'desc')
+                ->orderBy('indicator', 'desc')
                 ->get();
         }
 
-        $indicadores = Indicator::orderBy('id', 'DESC')->get();
+        $indicadores = Indicator::whereBetween('id', [1, 10])->orderBy('id', 'DESC')->get();
 
         foreach ($indicadores as $indicardor) {
             if (!$tabsIncidents->pluck('indicator')->contains($indicardor->id)) {
@@ -212,6 +220,8 @@ class StrategyIncidentsReports implements ReportsInterface
             $series = $series->prepend(Incident::count());
         }
 
+        $this->indicadores = $key;
+
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 
@@ -219,7 +229,7 @@ class StrategyIncidentsReports implements ReportsInterface
             'title' => 'Tabs',
             'series' => $series,
             'labels' => $labels,
-            'key' => $key,
+            'key' => array_keys($key->toArray()),
             'type' => 'tabs'
         ];
 

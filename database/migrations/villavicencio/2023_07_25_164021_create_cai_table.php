@@ -18,8 +18,8 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

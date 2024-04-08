@@ -32,8 +32,8 @@ return new class extends Migration
             $table->string('support')->nullable();
             $table->string('transformer')->nullable();
             $table->string('image')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
         
             $table->index('uuid');

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreign('indicator_id')->references('id')->on('indicators');
             $table->string('address')->nullable();
             $table->text('description');
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('day')->nullable();
             $table->string('month')->nullable();
             $table->string('year')->nullable();

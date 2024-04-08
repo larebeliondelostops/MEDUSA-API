@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('imei')->nullable();
             $table->timestamp('mobile_date')->nullable();
             $table->timestamp('gps_date')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('precision')->nullable();
             $table->timestamps();
         });

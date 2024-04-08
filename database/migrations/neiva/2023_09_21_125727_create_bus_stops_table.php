@@ -19,8 +19,8 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('bus_stop_setp')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

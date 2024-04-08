@@ -43,6 +43,8 @@ class Ipats extends Model
 
 	private $slug = 'ipat';
 
+	private $specialType = 8;
+
 	public function getMonth()
 	{
 		// Obtener la fecha en formato 'YYYY-MM-DD' del atributo date_ipat
@@ -81,7 +83,10 @@ class Ipats extends Model
 
 	private function pointProperties()
     {
-        return [];
+        return [
+			'specialType' => $this->specialType,
+			'filter' => [date('Y', strtotime($this->date_ipat))]
+		];
     }
 
 	public function ProbabilisticGridIpats()

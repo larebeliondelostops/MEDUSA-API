@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('probabilistic_grid', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->json('coordinates')->nullable();
             $table->float('actual_state_personal_injuries', 6, 6)->nullable();
             $table->float('future_state_personal_injuries', 6, 6)->nullable();
             $table->float('actual_state_theft_residences', 6, 6)->nullable();

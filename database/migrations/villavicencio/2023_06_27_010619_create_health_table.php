@@ -18,8 +18,8 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->integer('emergency_patients')->nullable();
             $table->integer('emergency_beds_available')->nullable();
             $table->integer('available_operating_rooms')->nullable();

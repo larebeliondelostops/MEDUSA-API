@@ -36,16 +36,16 @@ class CaiRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'address' => 'required|string',
-            'longitude' => 'required|string',
-            'latitude' => 'required|string',
+            'longitude' => 'required|float',
+            'latitude' => 'required|float',
         ];
     
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules = [
                 'name' => 'string',
                 'address' => 'string',
-                'longitude' => 'string',
-                'latitude' => 'string',
+                'longitude' => 'float',
+                'latitude' => 'float',
             ];
         }
     

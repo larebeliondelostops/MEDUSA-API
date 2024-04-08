@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('id_ipat')->nullable();
             $table->string('injured')->nullable();
             $table->string('victims')->nullable();
-            $table->string('coordinates')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('agent_name')->nullable();
             $table->bigInteger('indicator')->nullable();
             $table->foreign('indicator')->references('id')->on('indicators');

@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('pr')->nullable();
             $table->string('department')->nullable();
             $table->string('municipality')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
         });
     }

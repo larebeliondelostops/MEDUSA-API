@@ -36,8 +36,8 @@ class CamerasRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'address' => 'required|string',
-            'longitude' => 'required|string',
-            'latitude' => 'required|string',
+            'longitude' => 'required|float',
+            'latitude' => 'required|float',
             'url' => 'required|text',
         ];
     
@@ -45,8 +45,8 @@ class CamerasRequest extends FormRequest
             $rules = [
                 'name' => 'string',
                 'address' => 'string',
-                'longitude' => 'string',
-                'latitude' => 'string',
+                'longitude' => 'float',
+                'latitude' => 'float',
                 'url' => 'text',
             ];
         }

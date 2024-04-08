@@ -34,15 +34,15 @@ class AmbientRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string',
-            'longitude' => 'required|string',
-            'latitude' => 'required|string',
+            'longitude' => 'required|float',
+            'latitude' => 'required|float',
         ];
     
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules = [
                 'name' => 'string',
-                'longitude' => 'string',
-                'latitude' => 'string',
+                'longitude' => 'float',
+                'latitude' => 'float',
             ];
         }
     

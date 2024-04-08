@@ -23,7 +23,6 @@ use Database\Seeders\Villavicencio\HealthTableSeeder;
 use Database\Seeders\Villavicencio\FiberLinesTableSeeder;
 use Database\Seeders\Villavicencio\FiberPointsTableSeeder;
 use Database\Seeders\Villavicencio\FormPollingPlacesSeeder;
-use Database\Seeders\Villavicencio\IpatsTableSeeder;
 use Database\Seeders\Villavicencio\PollingPlaceTableSeeder;
 use Database\Seeders\Villavicencio\TrafficLightsTableSeeder;
 
@@ -54,7 +53,6 @@ class VillavicencioSeeder extends Seeder
             FiberPointsTableSeeder::class,
             HealthTableSeeder::class,
             PollingPlaceTableSeeder::class,
-            IpatsTableSeeder::class,
             TrafficLightsTableSeeder::class,
             CamerasTableSeeder::class,
             CaiTableSeeder::class,

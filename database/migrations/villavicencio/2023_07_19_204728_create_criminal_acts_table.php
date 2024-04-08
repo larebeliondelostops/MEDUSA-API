@@ -44,8 +44,8 @@ return new class extends Migration
             $table->string('unique_number')->nullable();
             $table->integer('quantity_2')->nullable();
             $table->string('plate')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
         });
     }

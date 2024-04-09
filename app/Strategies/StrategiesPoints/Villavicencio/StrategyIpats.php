@@ -32,7 +32,9 @@ class StrategyIpats implements PointsInterface
                     'geometry' => [
                         'type' => "Point",
                         'coordinates' => $coordinates
-                    ]
+                    ],
+                    'filter' => [date('Y', strtotime($item->date_ipat))],
+                    'specialType' => 8,
                 ];
 
                 return $ipats;

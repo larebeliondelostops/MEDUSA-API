@@ -13,7 +13,7 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
 
     public function GetIndicators()
     {
-        $indicators = Indicator::all();
+        $indicators = Indicator::where('id','<',11)->get();
 
         $dataIndicators = [];
 

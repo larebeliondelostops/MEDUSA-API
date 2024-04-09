@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Strategies\StrategyProbabilistic\Villavicencio;
+namespace App\Strategies\StrategiesProbabilistic\Villavicencio;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use App\Models\ProbabilisticGrid;
-use App\Models\ProbabilisticGridIpat;
+use App\Models\Villavicencio\ProbabilisticGrid;
+use App\Models\Villavicencio\ProbabilisticGridIpat;
 use App\Models\Ipats;
 use App\Strategies\Interface\Villavicencio\ProbabilisticInterface;
 

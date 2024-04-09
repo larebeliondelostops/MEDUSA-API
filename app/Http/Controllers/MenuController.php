@@ -51,15 +51,23 @@ class MenuController extends Controller
             // Crear un nuevo arreglo en la estructura deseada
             $menu = [];
 
+
             foreach ($data_menu as $data) {
-                $menu[] = [
+                $menu_item = [
                     "color" => $data->Marker->color,
                     "icon" => $data->Marker->icon,
                     "name" => $data->Marker->name,
                     "id" => $data->Marker->id,
                     "defaultActive" => $data->Marker->id == 54 ? true : false
                 ];
+            
+                if ($data->Marker->name === 'Ipats') {
+                    $menu_item['specialType'] = 8;
+                }
+            
+                $menu[] = $menu_item;
             }
+
 
             return Response::json([
                 'code' => '200',

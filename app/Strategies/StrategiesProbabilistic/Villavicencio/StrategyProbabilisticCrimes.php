@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Strategies\StrategyProbabilistic\Villavicencio;
+namespace App\Strategies\StrategiesProbabilistic\Villavicencio;
 
 use Illuminate\Http\Request;
-use App\Models\ProbabilisticGrid;
-use App\Models\CriminalActs;
+use App\Models\Villavicencio\ProbabilisticGrid;
+use App\Models\Villavicencio\CriminalActs;
 use App\Models\Indicator;
 use App\Strategies\Interface\Villavicencio\ProbabilisticInterface;
 
@@ -13,7 +13,7 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
 
     public function GetIndicators()
     {
-        $indicators = Indicator::all();
+        $indicators = Indicator::where('id','<',11)->get();
 
         $dataIndicators = [];
 
@@ -243,8 +243,8 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
                 "type" => "Feature",
                 "properties" => [
                     "id" => $grid->id,
-                    "CurrentPercentage" => $grid->ActualStateAverage,
-                    "FuturePercentage" => $grid->FutureStateAverage
+                    "CurrentPercentage" => $grid->actual_state_average,
+                    "FuturePercentage" => $grid->future_state_average
                 ],
                 "geometry" => [
                     "type" => $grid->type,
@@ -263,16 +263,16 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
     {
 
         // Obtener la hora con más ocurrencias de delitos históricamente por indicador y cuadrícula
-        $horaMasOcurrencias = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+        $horaMasOcurrencias = CriminalActs::where('indicator_id', '=', $request->indicatorId)
+            ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
             ->groupBy('time')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('time')
             ->first();
 
         // Obtener el día de la semana con más ocurrencias de delitos históricamente por indicador y cuadrícula
-        $diaSemanaMasOcurrencias = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+        $diaSemanaMasOcurrencias = CriminalActs::where('indicator_id', '=', $request->indicatorId)
+            ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
@@ -282,8 +282,8 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
         $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
         // Obtener cantidad de delitos por día de la semana
-        $delitosPorDiaSemana = CriminalActs::where('IndicatorId', '=', $request->indicatorId)
-            ->where('ProbabilisticGridId', '=', $request->ProbabilisticGridId)
+        $delitosPorDiaSemana = CriminalActs::where('indicator_id', '=', $request->indicatorId)
+            ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
             ->selectRaw('day, COUNT(*) as count')
             ->groupBy('day')
             ->orderByRaw('COUNT(*) DESC')

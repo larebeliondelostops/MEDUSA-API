@@ -17,6 +17,7 @@ class TrackingMatrixService implements TrackingMatrixInterface
         ->where('projects.bpin', $projectBpin)
         ->with([
             'scope.specificObjectives.products.measurementUnit',
+            'scope.specificObjectives.products.reports.proofs',
             'scope.specificObjectives.products.deliverables' => function ($query) {
                 $query->whereNull('deliverable_id');
             },

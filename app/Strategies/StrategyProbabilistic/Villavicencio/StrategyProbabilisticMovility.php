@@ -15,7 +15,7 @@ class StrategyProbabilisticMovility implements ProbabilisticInterface
 
     public function GetIndicators()
     {
-        $indicators = Indicator::where('id','>',11)->get();
+        $indicators = Indicator::where('id','>',10)->get();
 
         $dataIndicators = [];
 

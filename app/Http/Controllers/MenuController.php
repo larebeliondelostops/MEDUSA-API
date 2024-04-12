@@ -52,13 +52,31 @@ class MenuController extends Controller
         $menu = [];
 
         foreach ($data_menu as $data) {
-            $menu[] = [
+            $menu_item = [
                 "color" => $data->Marker->color,
                 "icon" => $data->Marker->icon,
                 "name" => $data->Marker->name,
                 "id" => $data->Marker->id,
                 "defaultActive" => $data->Marker->id == 54 ? true : false
             ];
+
+            if ($data->Marker->name == 'Ipats') {
+                $menu_item['specialType'] = 8;
+            } else if ($data->Marker->name == 'Mapa de Calor') {
+                $menu_item['specialType'] = 4;
+            } else if ($data->Marker->name == 'Tráfico') {
+                $menu_item['specialType'] = 5;
+            } else if ($data->Marker->name == 'Modelo Probabilistico') {
+                $menu_item['specialType'] = 2;
+            } else if ($data->Marker->name == 'Modelo Probabilistico IPATS') {
+                $menu_item['specialType'] = 2;
+            } else if ($data->Marker->name == 'Modelo Probabilistico General') {
+                $menu_item['specialType'] = 3;
+            } else if ($data->Marker->name == 'Unidades móviles') {
+                $menu_item['specialType'] = 6;
+            }
+
+            $menu[] = $menu_item;
         }
 
         try{

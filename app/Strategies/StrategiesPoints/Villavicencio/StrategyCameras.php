@@ -34,6 +34,7 @@ class StrategyCameras implements CamerasInterface
                     'url' => $cameras->url,
                     'id' => $cameras->uuid,
                     'geometry' => $geometry,
+                    'specialType' => 1,
                 ];
             }
 

@@ -105,7 +105,8 @@ class HeatmapController extends Controller
                                 isset($coordinates[0]) && $coordinates[0] !== '' ? floatval($coordinates[0]) : null,
                                 isset($coordinates[1]) && $coordinates[1] !== '' ? floatval($coordinates[1]) : null
                             ]
-                        ]
+                        ],
+                        'specialType' => 4,
                     ];
                     $features[] = $feature;
                 }
@@ -138,7 +139,8 @@ class HeatmapController extends Controller
                     "coordinates" => [
                         $longitud, $latitud
                     ]
-                ]
+                ],
+                'specialType' => 4,
             ];
             $features[] = $feature;
         }

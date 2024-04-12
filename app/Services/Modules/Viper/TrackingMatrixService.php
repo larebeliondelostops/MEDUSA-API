@@ -17,64 +17,65 @@ class TrackingMatrixService implements TrackingMatrixInterface
         ->where('projects.bpin', $projectBpin)
         ->with([
             'scope.specificObjectives.products.measurementUnit',
+            'scope.specificObjectives.products.reports.proofs',
             'scope.specificObjectives.products.deliverables' => function ($query) {
                 $query->whereNull('deliverable_id');
             },
-            'scope.specificObjectives.products.deliverables.activities',
+            'scope.specificObjectives.products.deliverables.activities.measurementUnit',
             'scope.specificObjectives.products.deliverables.deliverables' => function ($query) {
                 $query->with('activities.measurementUnit');
             }
         ])
         ->first();
-
+    
+    $trackingMatrixData = $trackingMatrix->toArray(); 
+    //return collect($trackingMatrixData);
     if ($trackingMatrix && $trackingMatrix->scope && $trackingMatrix->scope->exists()) 
-    {
-        $trackingMatrix->makeHidden(['bpin']);
-        $trackingMatrix->scope->makeHidden(['id', 'project_id']);
-        
-        foreach($trackingMatrix->scope->specificObjectives as $specific_objective) 
-        {
-            $specific_objective->makeHidden(['scope_id']);
-            
-            foreach($specific_objective->products as $product) 
+    {    
+        foreach($trackingMatrixData['scope']['specific_objectives'] as &$specific_objective) 
+        { 
+            foreach($specific_objective['products'] as &$product) 
             {
-                $product->makeHidden(['measurement_unit_id', 'specific_objective_id', 'folder_id']);
-                $product->measurement_unit = $product->measurementUnit->name;
-                unset($product->measurementUnit); // Elimina el campo measurementUnit
+                $product['measurement_unit'] = $product['measurement_unit']['name'];
+                
+                foreach ($product['deliverables'] as &$deliverable)
+                {
+                    $deliverable['number'] = $product['number'] . '.' . $deliverable['number'];
+                    foreach ($deliverable['activities'] as &$activity) 
+                    {
+                        $activity['number'] = $deliverable['number'] . '.' . $activity['number'];
+                        $activity['measurement_unit'] = $activity['measurement_unit']['name'];
+                    }
 
-                // Update deliverables number
-                foreach ($product->deliverables as $index => $deliverable) {
-                    $deliverable->number = $product->number . '.' . ($index + 1);
-
-                    // Recursively update numbers for child deliverables and activities
-                    $this->updateChildNumbers($deliverable, $deliverable->number);
+                    if($deliverable['deliverables']!=[])
+                        $this->updateChildNumbers($deliverable['deliverables'], $deliverable['number']);
                 }
             }
         }
-        return collect($trackingMatrix);
+        return collect($trackingMatrixData);
     } 
     else 
     {
         throw new UndefinedProjectScopeException('No se ha definido un alcance al proyecto '.$projectBpin);
     }
-    return collect($trackingMatrix);
+    return collect($trackingMatrixData);
 }
 
     
-    private function updateChildNumbers($parentDeliverable, $parentNumber)
+    private function updateChildNumbers(array &$deliverables, string $parentNumber)
     {
-        foreach ($parentDeliverable->deliverables as $index => $childDeliverable) {
-            $childDeliverable->number = $parentNumber . '.' . ($index + 1);
+        foreach ($deliverables as  &$deliverable)
+        {
+            $deliverable['number'] = $parentNumber . '.' . $deliverable['number'];
+
             // Update activities numbers for child deliverable
-            foreach ($childDeliverable->activities as $activityIndex => $activity) {
-                $activity->number = $childDeliverable->number . '.' . ($activityIndex + 1);
-                $activity->measurement_unit = $activity->measurementUnit->name;
-                unset($activity->measurement_unit_id);
-                unset($activity->measurementUnit);
+            foreach ($deliverable['activities'] as &$activity) {
+                $activity['number'] = $deliverable['number'] . '.' . $activity['number'];
+                $activity['measurement_unit'] = $activity['measurement_unit']['name'];
             }
-    
+
             // Recursively update numbers for nested child deliverables and activities
-            $this->updateChildNumbers($childDeliverable, $childDeliverable->number);
+            $this->updateChildNumbers($deliverable['deliverables'], $deliverable['number']);
         }
     }   
 }

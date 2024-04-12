@@ -37,10 +37,10 @@ class TrackingMatrixService implements TrackingMatrixInterface
             foreach($specific_objective['products'] as &$product) 
             {
                 $product['measurement_unit'] = $product['measurement_unit']['name'];
-                $parentNumber = '1';
+                
                 foreach ($product['deliverables'] as &$deliverable)
                 {
-                    $deliverable['number'] = $parentNumber . '.' . $deliverable['number'];
+                    $deliverable['number'] = $product['number'] . '.' . $deliverable['number'];
                     foreach ($deliverable['activities'] as &$activity) 
                     {
                         $activity['number'] = $deliverable['number'] . '.' . $activity['number'];

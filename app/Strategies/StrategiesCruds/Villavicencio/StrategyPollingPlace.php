@@ -31,13 +31,13 @@ class StrategyPollingPlace extends BaseCrud
                 'ID' => $item->id,
                 'Nombre' => $item->name,
                 'Direccion' => $item->address,
-                'Potencial de Mujeres' => $item->potencial_women,
-                'Potencial de Hombres' => $item->potencial_men,
+                'Potencial de Mujeres' => $item->potential_women,
+                'Potencial de Hombres' => $item->potential_men,
                 'Total de Votos' => $item->total_votes,
                 'Mesas' => $item->tables,
             ];
         }
-
+        //dd($transformedData);
         $data = [
             'data' => $transformedData,
             'meta' => [

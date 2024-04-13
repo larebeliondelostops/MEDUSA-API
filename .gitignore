@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 waze.json
 docker-compose/nginx/*
+docker-compose/webroot/*

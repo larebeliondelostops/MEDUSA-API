@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   app:
     build:
@@ -32,6 +33,16 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
     networks:
       - medusa
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+      - ./docker-compose/webroot:/var/www/html
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - nginx
 
 networks:
   medusa:

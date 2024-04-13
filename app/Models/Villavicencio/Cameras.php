@@ -17,7 +17,14 @@ class Cameras extends Model
     private $specialType = 1;
 
     protected $guarded = [];
-
+    private function pointPropertiesToShow()
+    {
+        return [
+            'name' => $this->name,
+            'address' => $this->address,
+            'url' => $this->url
+        ];
+    }
     private function pointProperties()
     {
         return [

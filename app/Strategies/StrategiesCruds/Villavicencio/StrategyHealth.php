@@ -2,6 +2,7 @@
 
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
+use App\Helpers\Helper;
 use App\Models\Villavicencio\Health;
 use App\Traits\Cruds\ValidateFormRequest;
 use App\Http\Requests\Villavicencio\HealthRequest;
@@ -68,14 +69,16 @@ class StrategyHealth extends BaseCrud
     {
         $this->validateRequest(HealthRequest::class, $request);
 
-        $item = parent::store($request->toArray());
+        $request = Helper::transformRequestToPoints($request->toArray(), 'POST');
+
+        $item = parent::store($request);
 
         return $item;
     }
 
     public function show($id)
     {
-        $item = parent::show($id);
+        $item = parent::show($id)->show();
 
         return $item;
     }
@@ -84,10 +87,13 @@ class StrategyHealth extends BaseCrud
     {
         $this->validateRequest(HealthRequest::class, $request);
         
-        $item = parent::update($request->toArray(), $id);
+        $request = Helper::transformRequestToPoints($request->toArray(), 'PUT');
+
+        $item = parent::update($request, $id);
 
         return $item;
     }
+
 
     public function destroy($id)
     {

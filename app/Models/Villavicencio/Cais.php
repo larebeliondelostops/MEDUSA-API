@@ -15,7 +15,13 @@ class Cais extends Model
     private $slug = 'cai';
 
     protected $guarded = [];
-
+    private function pointPropertiesToShow()
+    {
+        return [
+            'name' => $this->name,
+            'address' => $this->address
+        ];
+    }
     private function pointProperties()
     {
         return [];

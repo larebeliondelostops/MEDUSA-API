@@ -16,6 +16,17 @@ class PollingPlace extends Model
 
     protected $guarded = [];
 
+    private function pointPropertiesToShow()
+    {
+        return [
+            'name' => $this->name,
+            'address' => $this->address,
+            'potencial_women' => $this->potencial_woman,
+            'potencial_men' => $this->potencial_men,
+            'total_votes' => $this->total_votes,
+            'tables' => $this->tables,
+        ];
+    }
     private function pointProperties()
     {
         return [];

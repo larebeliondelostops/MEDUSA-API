@@ -36,16 +36,14 @@ class AlarmsRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'address' => 'required|string',
-            'longitude' => 'required|float',
-            'latitude' => 'required|float',
+            'position' => 'required|array',
         ];
     
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules = [
                 'name' => 'string',
                 'address' => 'string',
-                'longitude' => 'float',
-                'latitude' => 'float',
+                'position' => 'array',
             ];
         }
     
@@ -62,8 +60,7 @@ class AlarmsRequest extends FormRequest
         return [
             'required' => 'El campo :attribute es requerido',
             'string' => 'El campo :attribute debe ser una cadena de texto',
-            'integer' => 'El campo :attribute debe ser un número entero',
-            'size' => 'El campo :attribute debe tener :size elementos',
+            'array' => 'El campo :attribute debe ser un array',
         ];
     }
 
@@ -77,8 +74,7 @@ class AlarmsRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'longitude' => 'Longitud',
-            'latitude' => 'Latitud',
+            'position' => 'Posición',
         ];
     }
 

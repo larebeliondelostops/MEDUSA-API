@@ -9,7 +9,7 @@ abstract class BaseCrud implements CrudActionsInterface
 {
     use CrudActions;
 
-    public function index(array $request)
+    public function index($request)
     {
         if (isset($request['start']) && isset($request['end'])) {
             $data = $this->getModel()::whereBetween('created_at', [$request['start'], $request['end']])

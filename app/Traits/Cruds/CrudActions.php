@@ -6,7 +6,7 @@ trait CrudActions
 {
     public function storeModel($request)
     {
-        return $this->getModel()->create($request);
+        return $this->getModel()->insert($request);
     }
 
     public function showModel($id)

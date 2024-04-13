@@ -340,21 +340,21 @@ class AuthController extends Controller
      */
     public function refresh(Request $request)
     {
-        //$token = $request->header('Authorization');
-        $token = str_replace('Bearer ', '', $request->header('Authorization'));
-        // Setear el token para trabajar con él
-        $jwtAuth = JWTAuth::setToken($token);
-
-        // Obtener el token actual en una variable
-        $currentToken = JWTAuth::getToken();
-
-        // Invoación del modelo asociado al token
-        $user = $jwtAuth->authenticate();
-
-        // Almacenar el tiempo actual en un formato entendible para el JWT
-        $currentTimestamp = time();
-
         try {
+            //$token = $request->header('Authorization');
+            $token = str_replace('Bearer ', '', $request->header('Authorization'));
+            // Setear el token para trabajar con él
+            $jwtAuth = JWTAuth::setToken($token);
+
+            // Obtener el token actual en una variable
+            $currentToken = JWTAuth::getToken();
+
+            // Invoación del modelo asociado al token
+            $user = $jwtAuth->authenticate();
+
+            // Almacenar el tiempo actual en un formato entendible para el JWT
+            $currentTimestamp = time();
+
             // Generar un nuevo access token para el usuario
             $newAccessToken = JWTAuth::fromUser($user, ['exp' => time() + (15 * 60)]);
 

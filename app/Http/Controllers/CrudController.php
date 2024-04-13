@@ -70,7 +70,9 @@ class CrudController extends Controller
     {
         try {
 
-            return $this->service->show($slug, $id);
+            $data = $this->service->show($slug, $id);
+
+            return Response::json(['status' => 'succes', 'data' => $data], 200, [], JSON_PRETTY_PRINT);
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

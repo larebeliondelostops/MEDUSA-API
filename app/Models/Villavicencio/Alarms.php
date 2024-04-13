@@ -24,13 +24,13 @@ class Alarms extends Model
 
     protected $attributes = ['uuid', 'name', 'address'];
 
-    public static function boot()
-	{
-		parent::boot();
-		self::creating(function ($model) {
-			$model->uuid = Uuid::uuid4()->toString(); // asigna el valor siguiente al atributo id
-		});
-	}
+    private function pointPropertiesToShow()
+    {
+        return [
+            'name' => $this->name,
+            'address' => $this->address
+        ];
+    }
 
     private function pointProperties()
     {

@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -364,5 +365,30 @@ class Helper
 
     public static function monedaColombiaSinCeros($valor) {
         return number_format($valor, 0, ',', '.');
+    }
+
+    public static function transformRequestToPoints($request, string $method = 'POST')
+    {
+        if (isset($request['position'])) {
+            $position = $request['position'];
+
+            $request['latitude'] = $position['coordinates'][0][0];
+        
+            $request['longitude'] = $position['coordinates'][0][1];
+
+            unset($request['position']);
+        }    
+
+        if ($method == 'POST') {
+            $request['uuid'] = Uuid::uuid4()->toString();
+        }
+
+        if ($method == 'PUT') {
+            unset($request['id']);
+
+            unset($request['markerType']);
+        }
+
+        return $request;
     }
 }

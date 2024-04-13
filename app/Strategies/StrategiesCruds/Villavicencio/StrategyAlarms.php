@@ -2,10 +2,12 @@
 
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Villavicencio\Alarms;
+use App\Helpers\Helper;
 use App\Traits\Cruds\ValidateFormRequest;
-use App\Http\Requests\Villavicencio\AlarmsRequest;
 use App\Strategies\StrategiesCruds\BaseCrud;
+use App\Http\Requests\Villavicencio\AlarmsRequest;
 
 class StrategyAlarms extends BaseCrud
 {
@@ -56,14 +58,16 @@ class StrategyAlarms extends BaseCrud
     {
         $this->validateRequest(AlarmsRequest::class, $request);
 
-        $item = parent::store($request->toArray());
+        $request = Helper::transformRequestToPoints($request->toArray(), 'POST');
+
+        $item = parent::store($request);
 
         return $item;
     }
 
     public function show($id)
     {
-        $item = parent::show($id);
+        $item = parent::show($id)->show();
 
         return $item;
     }
@@ -72,7 +76,9 @@ class StrategyAlarms extends BaseCrud
     {
         $this->validateRequest(AlarmsRequest::class, $request);
         
-        $item = parent::update($request->toArray(), $id);
+        $request = Helper::transformRequestToPoints($request->toArray(), 'PUT');
+
+        $item = parent::update($request, $id);
 
         return $item;
     }

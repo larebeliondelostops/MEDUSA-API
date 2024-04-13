@@ -30,6 +30,22 @@ trait HasPoints
         return $points;
     }
 
+    public function show() : array
+    {
+        $point = [
+            'id' => $this->uuid,
+            'markerType' => Slug::where('name', $this->slug)->first()->id,
+            'position' => [
+                'type' => "Point",
+                'coordinates' => [[(float)$this->latitude , (float)$this->longitude]]
+            ]
+        ];
+        
+        $point = $point + $this->pointPropertiesToShow();
+
+        return $point;
+    }
+
     public function getInfoPoint() : array
     {
         $point = [

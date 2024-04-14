@@ -36,8 +36,7 @@ class CamerasRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'address' => 'required|string',
-            'longitude' => 'required|float',
-            'latitude' => 'required|float',
+            'position' => 'required|array',
             'url' => 'required|text',
         ];
     
@@ -45,8 +44,7 @@ class CamerasRequest extends FormRequest
             $rules = [
                 'name' => 'string',
                 'address' => 'string',
-                'longitude' => 'float',
-                'latitude' => 'float',
+                'position' => 'array',
                 'url' => 'text',
             ];
         }
@@ -67,6 +65,7 @@ class CamerasRequest extends FormRequest
             'integer' => 'El campo :attribute debe ser un número entero',
             'size' => 'El campo :attribute debe tener :size elementos',
             'text' => 'El campo :attribute debe ser un texto',
+            'array' => 'El campo :attribute debe ser un array',
         ];
     }
 
@@ -80,8 +79,7 @@ class CamerasRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'longitude' => 'Longitud',
-            'latitude' => 'Latitud',
+            'position' => 'Posicion',
             'url' => 'URL',
         ];
     }

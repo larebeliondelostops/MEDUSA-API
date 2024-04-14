@@ -81,10 +81,6 @@ class StrategyEvents extends BaseCrud
             ], 404, [], JSON_PRETTY_PRINT);
         }
         $events = new GetEventCoordinate();
-        //dd($events->getEvent($id));
-        //dd(json_decode($events->getEvent($id)->getContent())->original);
-        //dd(json_decode($events->getEvent($id)));
-        //$event = $events->getEvent($id);
         
         return $events->getEvent($id)['data'];
     }
@@ -124,13 +120,13 @@ class StrategyEvents extends BaseCrud
     {
         $event = Event::find($id);
 
-        $request->event_type_id != null ? $event->idEventType = $request->idEventType : $event->idEventType = $event->idEventType;
+        $request->event_type_id != null ? $event->event_type_id = $request->event_type_id : $event->event_type_id = $event->event_type_id;
         $request->name != null ? $event->name = $request->name : $event->name = $event->name;
-        $request->start_date != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
-        $request->end_date != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
+        $request->start_date != null ? $event->start_date = $request->start_date : $event->start_date = $event->start_date;
+        $request->end_date != null ? $event->end_date = $request->end_date : $event->end_date = $event->end_date;
         $request->capacity != null ? $event->capacity = $request->capacity : $event->capacity = $event->capacity;
         $request->address != null ? $event->place = $request->address : $event->place = $event->place;
-        $request->authorizing_entity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
+        $request->authorizing_entity != null ? $event->authorizing_entity = $request->authorizing_entity : $event->authorizing_entity = $event->authorizing_entity;
 
         $event->save();
 

@@ -32,16 +32,31 @@ class PollingPlaceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
-            'address' => 'required',
-            'potential_women' => 'required',
-            'potential_men' => 'required',
-            'total_votes' => 'required',
-            'tables' => 'required',
-            'position' => 'required',
+        $rules = [
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'position' => 'required|array',
+            'potential_women' => 'required|integer',
+            'potential_men' => 'required|integer',
+            'total_votes' => 'required|integer',
+            'tables' => 'required|integer',
         ];
+    
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules = [
+                'name' => 'string',
+                'address' => 'string',
+                'position' => 'array',
+                'potential_women' => 'integer',
+                'potential_men' => 'integer',
+                'total_votes' => 'integer',
+                'tables' => 'integer',
+            ];
+        }
+    
+        return $rules;
     }
+
 
     /**
      * Mensajes para las validaciones especificas de cada uno de los campos
@@ -52,6 +67,9 @@ class PollingPlaceRequest extends FormRequest
     {
         return [
             'required' => 'El campo :attribute es requerido',
+            'string' => 'El campo :attribute debe ser una cadena de texto',
+            'integer' => 'El campo :attribute debe ser un número entero',
+            'array' => 'El campo :attribute debe ser un array',
         ];
     }
 
@@ -65,9 +83,9 @@ class PollingPlaceRequest extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'potencialWomen' => 'Potencial de mujeres',
-            'potencialMen' => 'Potencial de hombres',
-            'totalVotes' => 'Total de votos',
+            'potencial_women' => 'Potencial de mujeres',
+            'potencial_men' => 'Potencial de hombres',
+            'total_votes' => 'Total de votos',
             'tables' => 'Mesas',
             'position' => 'Coordenadas',
         ];

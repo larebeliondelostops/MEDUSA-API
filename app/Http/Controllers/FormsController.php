@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Villavicencio\EventType;
 use Exception;
 use App\Models\Form;
 use App\Models\Field;
@@ -40,46 +39,12 @@ class FormsController extends Controller
 
             $module = Module::where('slug', $slug->id)->first()->id;
 
-            if ($slug->id == 55) {
-                return $this->event($module);
-            }
+            $form = Form::with('Fields')->where('module', $module)->orderby('field')->get();
 
-            $userData = Form::with('Fields')->where('module', $module)->orderby('field')->get();
-
-            $fields = $userData->map(function ($data) {
-                return $data->fields;
-            });
-
-            return Response::json([
-                'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
-                'data' => $fields
-            ], 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
-    }
-
-    /**
-     * Método para devolver el formulario para registro de alarmas
-     *
-     * @access public
-     */
-    public function event($module)
-    {
-        try{
-            $event_data = Form::with('Fields')->where('module', $module)->orderby('field')->get();
-
-            $fields = $event_data->map(function ($data) {
+            $fields = $form->map(function ($data) {
                 if ($data->fields->type == 4) {
-                    if ($data->fields->key == 'event_type') {
-                        $eventType = EventType::select('id as value', 'event_name as label')->get();
-                        $data->fields->options = $eventType;
-                    }
+                    $options = $data->fields->model_select::select('id as value', 'value as label')->get();
+                    $data->fields->options = $options;
                 }
                 return $data->fields;
             });
@@ -92,7 +57,6 @@ class FormsController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
-                'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
@@ -166,7 +130,8 @@ class FormsController extends Controller
                     'key' => $data->Fields->key,
                     'type' => $data->Fields->type,
                     'required' => $data->Fields->required,
-                    'schema' =>  $data->Fields->schema
+                    'schema' =>  $data->Fields->schema,
+                    'model_select' => $data->Fields->model_select
                 ];
                 return $campo;
             });
@@ -249,6 +214,7 @@ class FormsController extends Controller
                 'type' => $campo_nuevo['type'],
                 'required' => $campo_nuevo['required'],
                 'schema' => $campo_nuevo['schema'],
+                'model_select' => $campo_nuevo['options'] ?? null
             ]);
         }
     }
@@ -261,6 +227,7 @@ class FormsController extends Controller
             ->where('type', $campo_nuevo['type'])
             ->where('required', $campo_nuevo['required'])
             ->where('schema', $campo_nuevo['schema'])
+            ->where('model_select', $campo_nuevo['options'] ?? null)
             ->first();
 
         Form::create([

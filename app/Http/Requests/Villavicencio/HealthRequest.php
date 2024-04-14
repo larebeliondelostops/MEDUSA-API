@@ -34,10 +34,9 @@ class HealthRequest  extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'=> 'required|srting',
+            'name'=> 'required|string',
             'address'=> 'required|string',
-            'latitude'=> 'required|string',
-            'longitude'=> 'required|string',
+            'position' => 'required|array',
             'emergency_patients'=> 'required|integer|min:0',
             'emergency_beds_available'=> 'required|integer|min:0',
             'available_operating_rooms'=> 'required|integer|min:0',
@@ -56,8 +55,7 @@ class HealthRequest  extends FormRequest
             $rules = [
                 'name'=> 'string',
                 'address'=> 'string',
-                'latitude'=> 'string',
-                'longitude'=> 'string',
+                'position' => 'array',
                 'emergency_patients'=> 'integer|min:0',
                 'emergency_beds_available'=> 'integer|min:0',
                 'available_operating_rooms'=> 'integer|min:0',
@@ -76,6 +74,7 @@ class HealthRequest  extends FormRequest
         return $rules;
     }
 
+
     /**
      * Mensajes para las validaciones especificas de cada uno de los campos
      *
@@ -89,6 +88,7 @@ class HealthRequest  extends FormRequest
             'boolean' => 'El campo :attribute debe ser de tipo booleano',
             'string' => 'El campo :attribute debe ser una cadena de texto',
             'integer' => 'El campo :attribute debe ser un número entero',
+            'array' => 'El campo :attribute debe ser un array',
         ];
     }
 
@@ -102,8 +102,7 @@ class HealthRequest  extends FormRequest
         return [
             'name' => 'Nombre',
             'address' => 'Dirección',
-            'latitude' => 'Latitud',
-            'longitude' => 'Longitud',
+            'position' => 'Posicion',
             'emergency_patients' => 'Pacientes en Urgencia',
             'emergency_beds_available' => 'Camas de Emergencia Disponibles',
             'available_operating_rooms' => 'Salas de Operaciones Disponibles',

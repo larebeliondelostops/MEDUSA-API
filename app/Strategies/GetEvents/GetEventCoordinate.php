@@ -85,7 +85,7 @@ class GetEventCoordinate implements GetEventInterface
                 'properties' => [
                     'ID' => $evento->id,
                     'idEventType' => $evento->event_type_id,
-                    'eventTypeName' => $evento['eventType']->event_name,
+                    'eventTypeName' => $evento['eventType']->value,
                     'name' => $evento->name,
                     'startDate' => $evento->start_date,
                     'endDate' => $evento->end_date,

@@ -14,7 +14,7 @@ class EventType extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'event_name',
+        'value',
         'event_description',
     ];
 }

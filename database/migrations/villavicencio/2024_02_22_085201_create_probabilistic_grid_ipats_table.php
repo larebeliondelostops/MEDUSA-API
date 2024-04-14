@@ -34,6 +34,8 @@ return new class extends Migration
             $table->float('future_state_other', 6, 6);
             $table->float('actual_state_accidents', 6, 6);
             $table->float('future_state_accidents', 6, 6);
+            $table->float('actual_state_average', 6, 6)->nullable();
+            $table->float('future_state_average', 6, 6)->nullable();
             $table->timestamps();
         });
     }

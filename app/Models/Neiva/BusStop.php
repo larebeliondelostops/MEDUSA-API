@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Neiva;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BusStop extends Model
 {
+    use HasFactory, HasPoints;
 
     protected $table = 'bus_stops';
 
-    use HasFactory;
+    private function pointProperties()
+    {
+        return [];
+    }
 }

@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Neiva;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lighting extends Model
 {
+    use HasFactory, HasPoints;
 
     protected $table = 'lighting';
 
-    use HasFactory;
+    private function pointProperties()
+    {
+        return [];
+    }
 }

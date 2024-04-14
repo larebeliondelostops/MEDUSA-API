@@ -18,12 +18,12 @@ class StrategyAlarms implements PointsInterface
 
     public function allPoints()
     {
-        return $this->model->allPoints();
+        return $this->getModel()->allPoints();
     }
 
     public function getInfoPoint($id)
     {
-        $alarm = $this->model->where('uuid', $id)->first();
+        $alarm = $this->getModel()->where('uuid', $id)->first();
 
         $alarm = [
             'title' => $alarm->name,

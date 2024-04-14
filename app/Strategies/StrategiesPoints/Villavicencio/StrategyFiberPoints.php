@@ -22,12 +22,12 @@ class StrategyFiberPoints implements PointsInterface
 
     public function allPoints()
     {
-        return $this->model->allPoints();
+        return $this->getModel()->allPoints();
     }
 
     public function getInfoPoint($id)
     {
-        $fiberPoint = $this->model->where('uuid', $id)->first();
+        $fiberPoint = $this->getModel()->where('uuid', $id)->first();
 
         $fiberPoint = [
             'title' => $fiberPoint->name,

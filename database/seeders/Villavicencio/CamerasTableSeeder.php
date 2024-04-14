@@ -270,7 +270,6 @@ class CamerasTableSeeder extends Seeder
                 'name' => $nombre,
                 'uuid'=> Str::uuid(),
                 'address' => $Data['UBICACION'],
-                'state' => $Data['NOVEDAD'],
                 'url' => $url,
                 'latitude' => $Data['Latitud'],
                 'longitude' => $Data['Longitud'],

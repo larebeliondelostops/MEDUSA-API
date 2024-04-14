@@ -2,12 +2,8 @@
 
 namespace App\Strategies\StrategiesLines\Villavicencio;
 
-
-use Exception;
 use App\Models\Villavicencio\FiberLine;
 use App\Interfaces\Markers\LinesInterface;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 
 class StrategyFiberLines implements LinesInterface
 {
@@ -27,7 +23,7 @@ class StrategyFiberLines implements LinesInterface
      */
     public function allLines()
     {
-        $fiberLines = FiberLine::all();
+        $fiberLines = $this->getModel()::all();
 
         $Lines = $fiberLines->map(function ($item) {
 

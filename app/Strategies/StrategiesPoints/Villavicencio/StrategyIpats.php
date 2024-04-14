@@ -19,12 +19,12 @@ class StrategyIpats implements PointsInterface
 
     public function allPoints()
     {
-        return $this->model->allPoints();
+        return $this->getModel()->allPoints();
     }
 
     public function getInfoPoint($id)
     {
-        $ipat = $this->model->where('uuid', $id)->first();
+        $ipat = $this->getModel()->where('uuid', $id)->first();
 
         $ipat = [
             'title' => $ipat->name,

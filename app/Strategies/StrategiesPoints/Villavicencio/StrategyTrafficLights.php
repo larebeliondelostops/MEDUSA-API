@@ -18,12 +18,12 @@ class StrategyTrafficLights implements PointsInterface
 
     public function allPoints()
     {
-        return $this->model->allPoints();
+        return $this->getModel()->allPoints();
     }
 
     public function getInfoPoint($id)
     {
-        $cai = $this->model->where('uuid', $id)->first();
+        $cai = $this->getModel()->where('uuid', $id)->first();
 
         $cai = [
             'title' => $cai->name,

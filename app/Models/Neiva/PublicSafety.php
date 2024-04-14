@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Neiva;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PublicSafety extends Model
 {
+    use HasFactory, HasPoints;
 
     protected $table = 'public_safety';
 
-    use HasFactory;
+    private function pointProperties()
+    {
+        return [];
+    }
 }

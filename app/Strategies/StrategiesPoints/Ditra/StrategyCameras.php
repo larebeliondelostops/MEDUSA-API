@@ -2,70 +2,36 @@
 
 namespace App\Strategies\StrategiesPoints\Ditra;
 
-use Exception;
-use App\Models\Cameras;
-use App\Strategies\Interface\PointsInterface;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
-
-
+use App\Models\Ditra\Cameras;
+use App\Interfaces\Markers\PointsInterface;
 
 class StrategyCameras implements PointsInterface
 {
-    /**
-     * Metodo para obtener todos los centros de Entidades
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
-    {
-        try {
-            $cameras = Cameras::all();
-            $transformedData = [];
-            foreach ($cameras as $cameras) {
-                $coordinates = json_decode($cameras->pointCoordinates, true);
-                //$geometry = $coordinates['features'][0]['geometry'];
-                $transformedData[] = [
-                    'markerType' => 50,
-                    'url' => $cameras->url,
-                    'id' => $cameras->uuid,
-                    'geometry' => $coordinates,
-                ];
-                
-            }
+    public function __construct(
+        private Cameras $model
+    ) {}
 
-            return Response::json($transformedData, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+    public function getModel() : Cameras
+    {
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $camera = Cameras::where('uuid', $uuid)->first();
+        return $this->getModel()->allPoints();
+    }
 
-            $camera = [
-                'title' => $camera->name,
-                'properties' => [
-                    'Direccion' => $camera->address,
-                    'Status'=> $camera->status
-                ]
-            ];
+    public function getInfoPoint($id)
+    {
+        $camera = $this->getModel()->where('uuid', $id)->first();
 
-            return Response::json($camera, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $camera = [
+            'title' => $camera->name,
+            'properties' => [
+                'Direccion' => $camera->address
+            ]
+        ];
+
+        return $camera;
     }
 }

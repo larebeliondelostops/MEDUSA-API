@@ -25,6 +25,7 @@ use Database\Seeders\Villavicencio\FiberPointsTableSeeder;
 use Database\Seeders\Villavicencio\FormPollingPlacesSeeder;
 use Database\Seeders\Villavicencio\PollingPlaceTableSeeder;
 use Database\Seeders\Villavicencio\TrafficLightsTableSeeder;
+use Database\Seeders\Villavicencio\BooleanSelectTableSeeder;
 
 class VillavicencioSeeder extends Seeder
 {
@@ -45,6 +46,7 @@ class VillavicencioSeeder extends Seeder
             MenuBarSeeder::class,
             MenuSeeder::class,   
             SubMenuSeeder::class,
+            BooleanSelectTableSeeder::class,
              //CRUDActionsSeeder::class,
 
             //Data

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventType extends Model
 {
+    use HasFactory;
+
     protected $table = 'events_type';
 
     public $timestamps = false;
@@ -15,6 +17,4 @@ class EventType extends Model
         'event_name',
         'event_description',
     ];
-
-    use HasFactory;
 }

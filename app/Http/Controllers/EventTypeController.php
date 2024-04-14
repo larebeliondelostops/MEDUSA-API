@@ -49,8 +49,8 @@ class EventTypeController extends Controller
         }
 
         $EventTypes = new EventType();
-        $EventTypes->eventName = $request->eventName;
-        $EventTypes->eventDescription = $request->eventDescription;
+        $EventTypes->event_name = $request->eventName;
+        $EventTypes->event_description = $request->eventDescription;
         $EventTypes->save();
         return request()->json(200, $EventTypes);
     }
@@ -61,10 +61,10 @@ class EventTypeController extends Controller
         $EventTypes = EventType::find($id);
 
         if ($request->eventName != null)
-            $EventTypes->eventName = $request->eventName;
+            $EventTypes->event_name = $request->eventName;
 
         if ($request->eventDescription != null)
-            $EventTypes->eventDescription = $request->eventDescription;
+            $EventTypes->event_description = $request->eventDescription;
 
         $EventTypes->save();
         return request()->json(200, $EventTypes);

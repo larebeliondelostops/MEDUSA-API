@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EventType;
+use App\Models\Villavicencio\EventType;
 use Exception;
 use App\Models\Form;
 use App\Models\Field;
@@ -76,8 +76,8 @@ class FormsController extends Controller
 
             $fields = $event_data->map(function ($data) {
                 if ($data->fields->type == 4) {
-                    if ($data->fields->key == 'eventType') {
-                        $eventType = EventType::select('id as value', 'eventName as label')->get();
+                    if ($data->fields->key == 'event_type') {
+                        $eventType = EventType::select('id as value', 'event_name as label')->get();
                         $data->fields->options = $eventType;
                     }
                 }

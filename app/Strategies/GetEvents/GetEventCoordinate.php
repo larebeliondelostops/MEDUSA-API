@@ -55,25 +55,25 @@ class GetEventCoordinate implements GetEventInterface
 
         $eventsOrder = $this->OrderEventsOne($event);
 
-        return response()->json($eventsOrder, 200);
+        return $eventsOrder;
     }
 
     public function OrderEventsOne($events)
     {
         $eventosOrganizados = [ 'data' => [
             
-                'eventType' => $events->event_type_id,
+                'event_type' => $events->event_type_id,
                 'address' => $events->place,
                 'name' => $events->name,
-                'startDate' => $events->start_date,
-                'endDate' => $events->end_date,
+                'start_date' => $events->start_date,
+                'end_date' => $events->end_date,
                 'capacity' => $events->capacity,
-                'authorizingEntity' => $events->authorizing_entity,
+                'authorizing_entity' => $events->authorizing_entity,
                 'position' => json_decode($events['eventCoordinate']->coordinates)
             
         ]];
 
-        return response()->json($eventosOrganizados, 200);
+        return $eventosOrganizados;
     }
 
     public function OrderEvents($events)

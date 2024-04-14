@@ -162,13 +162,13 @@ class StrategyEvents implements PolygonsInterface
 
             $event = Event::find($id);
 
-            $request->event_type_id != null ? $event->idEventType = $request->idEventType : $event->idEventType = $event->idEventType;
+            $request->event_type_id != null ? $event->id_event_type = $request->id_event_type : $event->id_event_type = $event->id_event_type;
             $request->name != null ? $event->name = $request->name : $event->name = $event->name;
-            $request->start_date != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
-            $request->end_date != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
+            $request->start_date != null ? $event->start_date = $request->start_date : $event->start_date = $event->start_date;
+            $request->end_date != null ? $event->end_date = $request->end_date : $event->end_date = $event->end_date;
             $request->capacity != null ? $event->capacity = $request->capacity : $event->capacity = $event->capacity;
             $request->address != null ? $event->place = $request->address : $event->place = $event->place;
-            $request->authorizing_entity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
+            $request->authorizing_entity != null ? $event->authorizing_entity = $request->authorizing_entity : $event->authorizing_entity = $event->authorizing_entity;
 
             $event->save();
 

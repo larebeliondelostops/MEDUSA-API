@@ -19,7 +19,6 @@ use App\Models\Villavicencio\Event;
 
 class GetEventCoordinate implements GetEventInterface
 {
-    //Metodo para traer todos los eventos
     public function getAllEvents()
     {
 
@@ -30,29 +29,26 @@ class GetEventCoordinate implements GetEventInterface
         return $eventsOrder;
     }
 
-    //Metodo para traer eventos por su tipo
     public function getEventsType($request)
     {
 
-        $events = Event::where('idEventType', $request->idEventType)->with('eventType', 'eventCoordinate')->get();
+        $events = Event::where('event_type_id', $request->idEventType)->with('eventType', 'eventCoordinate')->get();
 
         $eventsOrder = $this->OrderEvents($events);
 
         return response()->json($eventsOrder, 200);
     }
 
-    //Metodo para traer eventos por su fecha
     public function getEventsForDate($request)
     {
 
-        $events = Event::where('startDate', '>=', $request->startDate)->where('endDate', '<=', $request->endDate)->with('eventType', 'eventCoordinate')->get();
+        $events = Event::where('start_date', '>=', $request->startDate)->where('end_date', '<=', $request->endDate)->with('eventType', 'eventCoordinate')->get();
 
         $eventsOrder = $this->OrderEvents($events);
 
         return response()->json($eventsOrder, 200);
     }
 
-    // Metodo para trer un evento por su id
     public function getEvent($id)
     {
         $event = Event::where('id', $id)->with('eventType', 'eventCoordinate')->first();
@@ -62,19 +58,18 @@ class GetEventCoordinate implements GetEventInterface
         return response()->json($eventsOrder, 200);
     }
 
-    //Metodo para organizar en un mismo formato el retorno de la informacion de los eventos
     public function OrderEventsOne($events)
     {
         $eventosOrganizados = [ 'data' => [
             
-                'eventType' => $events->idEventType,
+                'eventType' => $events->event_type_id,
                 'address' => $events->place,
                 'name' => $events->name,
-                'startDate' => $events->startDate,
-                'endDate' => $events->endDate,
+                'startDate' => $events->start_date,
+                'endDate' => $events->end_date,
                 'capacity' => $events->capacity,
-                'authorizingEntity' => $events->authorizingEntity,
-                'position' => json_decode($events['eventCoordinate']->pointCoordinates)
+                'authorizingEntity' => $events->authorizing_entity,
+                'position' => json_decode($events['eventCoordinate']->coordinates)
             
         ]];
 
@@ -89,16 +84,16 @@ class GetEventCoordinate implements GetEventInterface
                 'markerType' => 55,
                 'properties' => [
                     'ID' => $evento->id,
-                    'idEventType' => $evento->idEventType,
-                    'eventTypeName' => $evento['eventType']->eventName,
+                    'idEventType' => $evento->event_type_id,
+                    'eventTypeName' => $evento['eventType']->event_name,
                     'name' => $evento->name,
-                    'startDate' => $evento->startDate,
-                    'endDate' => $evento->endDate,
+                    'startDate' => $evento->start_date,
+                    'endDate' => $evento->end_date,
                     'capacity' => $evento->capacity,
                     'address' => $evento->place,
-                    'authorizingEntity' => $evento->authorizingEntity,
+                    'authorizingEntity' => $evento->authorizing_entity,
                 ],
-                'position' => json_decode($evento['eventCoordinate']->pointCoordinates)
+                'position' => json_decode($evento['eventCoordinate']->coordinates)
 
             ];
         });

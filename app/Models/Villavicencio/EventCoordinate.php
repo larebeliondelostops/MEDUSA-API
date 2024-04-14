@@ -17,13 +17,11 @@ class EventCoordinate extends Model
 
     protected $fillable = [
         'event_id',
-        'latitude',
-        'longitude',
+        'coordinates',
     ];
 
     public function event()
     {
         return $this->belongsTo(Event::class, 'event_id');
     }
-
 }

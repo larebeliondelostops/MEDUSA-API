@@ -41,12 +41,10 @@ class StrategyEvents implements PolygonsInterface
     public function allTable(Request $request)
     {
         try {
-            // Obtener fechas de inicio y fin
             $start = $request->start;
             $end = $request->end;
             if ($start && $end) {
-                //dd($start, $end);
-                $events = Event::whereBetween('startDate', [$start, $end])
+                $events = Event::whereBetween('start_date', [$start, $end])
                     ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             } else {
                 $events = Event::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
@@ -59,12 +57,12 @@ class StrategyEvents implements PolygonsInterface
                     'ID' => $event->id,
                     'Nombre' => $event->name,
                     'Direccion' => $event->place,
-                    'Fecha' => $event->startDate,
+                    'Fecha' => $event->start_date,
                 ];
             }
             
             return response()->json([
-                'data' => $transformedData,
+                'data' => $transformed_data,
                 'meta' => [
                     'title' => 'Eventos',
                     'pagination' => [
@@ -115,7 +113,6 @@ class StrategyEvents implements PolygonsInterface
     public function store(Request $request)
     {
         try {
-            //Validación
             if (isset($request->validator) && $request->validator->fails()) {
                 return Response::json([
                     'code' => '2001',
@@ -125,16 +122,13 @@ class StrategyEvents implements PolygonsInterface
                 ], 400, [], JSON_PRETTY_PRINT);
             }
             $event = new Event();
-            $event->idEventType = $request->eventType;
+            $event->event_type_id = $request->eventType;
             $event->name = $request->name;
-            $event->startDate = $request->startDate;
-            $event->endDate = $request->endDate;
+            $event->start_date = $request->startDate;
+            $event->end_date = $request->endDate;
             $event->capacity = $request->capacity;
             $event->place = $request->address;
-            $event->authorizingEntity = $request->authorizingEntity;
-            //$event->day = Carbon::now()->dayOfWeek;
-            //$event->month = date('m');
-            //$event->year = date('Y');
+            $event->authorizing_entity = $request->authorizingEntity;
             $event->save();
 
             $pointCoordinate = $this->asingCoordinateEvent($request, $event->id);
@@ -150,13 +144,12 @@ class StrategyEvents implements PolygonsInterface
         }
     }
 
-    //Metodo para asignar las coordenadas a un evento
     public function asingCoordinateEvent($request, $eventId)
     {
 
         $pointCoordinate = new EventCoordinate();
-        $pointCoordinate->eventId = $eventId;
-        $pointCoordinate->pointCoordinates = json_encode($request->position);
+        $pointCoordinate->event_id = $event_id;
+        $pointCoordinate->coordinates = json_encode($request->position);
 
         $pointCoordinate->save();
 
@@ -169,19 +162,19 @@ class StrategyEvents implements PolygonsInterface
 
             $event = Event::find($id);
 
-            $request->idEventType != null ? $event->idEventType = $request->idEventType : $event->idEventType = $event->idEventType;
+            $request->event_type_id != null ? $event->idEventType = $request->idEventType : $event->idEventType = $event->idEventType;
             $request->name != null ? $event->name = $request->name : $event->name = $event->name;
-            $request->startDate != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
-            $request->endDate != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
+            $request->start_date != null ? $event->startDate = $request->startDate : $event->startDate = $event->startDate;
+            $request->end_date != null ? $event->endDate = $request->endDate : $event->endDate = $event->endDate;
             $request->capacity != null ? $event->capacity = $request->capacity : $event->capacity = $event->capacity;
             $request->address != null ? $event->place = $request->address : $event->place = $event->place;
-            $request->authorizingEntity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
+            $request->authorizing_entity != null ? $event->authorizingEntity = $request->authorizingEntity : $event->authorizingEntity = $event->authorizingEntity;
 
             $event->save();
 
             if ($request->position != null) {
-                $eventCoordinate = EventCoordinate::where('eventId', $event->id)->first();
-                $eventCoordinate->pointCoordinates = $request->position;
+                $eventCoordinate = EventCoordinate::where('event_id', $event->id)->first();
+                $eventCoordinate->coordinates = $request->position;
                 $eventCoordinate->save();
             }
 
@@ -202,7 +195,7 @@ class StrategyEvents implements PolygonsInterface
     public function destroy($id)
     {
         try {
-            EventCoordinate::where('eventId', $id)->delete();
+            EventCoordinate::where('event_id', $id)->delete();
 
             return Event::destroy($id);
         } catch (Exception $exception) {

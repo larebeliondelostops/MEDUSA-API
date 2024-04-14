@@ -21,8 +21,8 @@ class PollingPlace extends Model
         return [
             'name' => $this->name,
             'address' => $this->address,
-            'potencial_women' => $this->potencial_woman,
-            'potencial_men' => $this->potencial_men,
+            'potential_women' => $this->potential_women,
+            'potential_men' => $this->potential_men,
             'total_votes' => $this->total_votes,
             'tables' => $this->tables,
         ];

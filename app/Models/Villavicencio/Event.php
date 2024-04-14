@@ -15,13 +15,13 @@ class Event extends Model
     protected $table= 'events';
 
     protected $fillable = [
-        'idEventType',
+        'event_type_id',
         'name',
-        'startDate',
-        'endDate',
+        'start_date',
+        'end_date',
         'capacity',
         'place',
-        'authorizingEntity',
+        'authorizing_entity',
     ];
 
     private $slug = 'event';
@@ -41,7 +41,7 @@ class Event extends Model
 	{
 		parent::boot();
 		self::creating(function ($model) {
-			$model->uuid = Uuid::uuid4()->toString(); // asigna el valor siguiente al atributo id
+			$model->uuid = Uuid::uuid4()->toString();
 		});
 	}
 

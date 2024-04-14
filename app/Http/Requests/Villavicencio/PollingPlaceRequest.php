@@ -35,9 +35,9 @@ class PollingPlaceRequest extends FormRequest
         return [
             'name' => 'required',
             'address' => 'required',
-            'potencialWomen' => 'required',
-            'potencialMen' => 'required',
-            'totalVotes' => 'required',
+            'potential_women' => 'required',
+            'potential_men' => 'required',
+            'total_votes' => 'required',
             'tables' => 'required',
             'position' => 'required',
         ];

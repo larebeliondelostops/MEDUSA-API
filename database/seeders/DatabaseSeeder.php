@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         #$this->call(CamerasTableSeeder::class);
         #$this->call(PollingPlaceTableSeeder::class);
         #$this->call(HealthTableSeeder::class);
-        $this->call(IndicatorSeeder::class);
+       // $this->call(IndicatorSeeder::class);
         //$this->call(TenancySeeder::class);
         $this->call(MarkerTypeSeeder::class); // tenant
         $this->call(MarkersSeeder::class); // tenant

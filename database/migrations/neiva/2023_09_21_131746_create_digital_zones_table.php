@@ -18,9 +18,10 @@ return new class extends Migration
         Schema::create('digital_zones', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('type')->nullable();
-            $table->json('position');
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

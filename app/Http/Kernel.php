@@ -43,7 +43,6 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             //\App\Http\Middleware\SetTenantFromSubdomain::class,
-            \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
         ],
     ];
 

@@ -18,8 +18,9 @@ return new class extends Migration
         Schema::create('ambient', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->json('position');
+            $table->string('name')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

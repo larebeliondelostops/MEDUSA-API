@@ -2,67 +2,36 @@
 
 namespace App\Strategies\StrategiesPoints\Neiva;
 
-use Exception;
-use App\Models\DigitalZone;
-use App\Strategies\Interface\PointsInterface;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
+use App\Models\Neiva\DigitalZone;
+use App\Interfaces\Markers\PointsInterface;
 
 class StrategyDigitalZones implements PointsInterface
 {
-    /**
-     * Metodo para obtener todos los centros de Entidades
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
+    public function __construct(
+        private DigitalZone $model
+    ) {}
+
+    public function getModel() : DigitalZone
     {
-        try {
-            $DigitalZones = DigitalZone::all();
-
-            $Zones = $DigitalZones->map(function ($item) {
-
-                $DigitalZones = [
-                    'markerType' => 10,
-                    'id' => $item->uuid,
-                    'geometry' => json_decode($item->position)
-                ];
-
-                return $DigitalZones;
-            });
-
-            return Response::json($Zones, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $DigitalZones = DigitalZone::where('uuid', $uuid)->first();
-
-            $DigitalZones = [
-                'title' => $DigitalZones->name,
-                'properties' => [
-                    'Tipo' => $DigitalZones->type,
-                ]
-            ];
-
-            return Response::json($DigitalZones, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->getModel()->allPoints();
     }
 
+    public function getInfoPoint($uuid)
+    {
+        $digitalZones = $this->getModel()->where('uuid', $uuid)->first();
+
+        $digitalZones = [
+            'title' => $digitalZones->name,
+            'properties' => [
+                'Tipo' => $digitalZones->type,
+            ]
+        ];
+
+        return $digitalZones;
+    }
 }

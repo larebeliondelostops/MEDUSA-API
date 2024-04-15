@@ -2,12 +2,13 @@
 
 namespace App\Models\Ditra;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DataDitra extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPoints;
 
     protected $table = 'data_ditra';
 
@@ -21,5 +22,10 @@ class DataDitra extends Model
     public function Indicator()
     {
         return $this->belongsTo(Indicator::class, 'indicator');
+    }
+
+    private function pointProperties()
+    {
+        return [];
     }
 }

@@ -2,77 +2,73 @@
 
 namespace App\Strategies\StrategiesPoints\Ditra;
 
-use Exception;
-use App\Models\Incident;
-use App\Strategies\Interface\PointsInterface;
-use Illuminate\Support\Facades\Log;
-use App\Models\DataDitra;
-use Illuminate\Support\Facades\Response;
-use Psy\CodeCleaner\IssetPass;
+use App\Models\Ditra\Incident;
+use App\Models\Ditra\DataDitra;
+use App\Interfaces\Markers\PointsInterface;
 
 class StrategyIncidents implements PointsInterface
 {
+    public function __construct(
+        private Incident $model,
+        private DataDitra $modelDataDitra
+    ) {}
+
+    public function getModel() : Incident
+    {
+        return $this->model;
+    }
      /**
      * Metodo para obtener todos los centros de Entidades
      *
      * @return \Illuminate\Http\Response
      */
-    public static function all()
+    public function allPoints()
     {
-        try {
-            $incidents = Incident::all();
-            $incidents = $incidents->map(function ($item) {
+        $incidents = $this->getModel()->allPoints();
 
-                $incident = [
-                    'markerType' => 1,
-                    'id' => $item->uuid,
-                    'geometry' => json_decode($item->position),
-                ];
+        $datosDataDitra = $this->modelDataDitra->allPoints();
 
-                return $incident;
-            });
-
-            $datosDataDitra = StrategyDataDitra::all();
-
-            if (!isset($incidents)) {
-                $incidents = $incidents->merge($datosDataDitra);
-            } else {
-                $incidents = $datosDataDitra;
-            }
-
-            return Response::json($incidents, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+        if (!isset($incidents)) {
+            $incidents = $incidents->merge($datosDataDitra);
+        } else {
+            $incidents = $datosDataDitra;
         }
+
+        return $incidents;
     }
 
 
 
-    public static function getInfoPoint($uuid)
+    public function getInfoPoint($uuid)
     {
-        try {
-            $data = Incident::where('uuid', $uuid)->first();
-            if (isset($data)) {
-                $data = [
-                    'title' => $data->name,
-                    'properties' => []
-                ];
-            }else{
-                $data = StrategyDataDitra::getInfoPoint($uuid);
-            }
-            return Response::json($data, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+        $data = $this->getModel()->where('uuid', $uuid)->first();
+
+        if (isset($data)) {
+            $data = [
+                'title' => $data->name,
+                'properties' => []
+            ];
+        }else{
+            $dataDitra = $this->modelDataDitra->where('uuid', $uuid)->first();
+
+            $data = [
+                'title' => $dataDitra->type,
+                'properties' => [
+                    'Fecha de ocurrencia' => $dataDitra->occurrence_date,
+                    'Seccional' => $dataDitra->sectional,
+                    'Asignado' => $dataDitra->assigned,
+                    'Intoxicación' => $dataDitra->intoxication,
+                    'Responsabilidad' => $dataDitra->responsibility,
+                    'Clase de vehículo' => $dataDitra->vehicle_class,
+                    'Clase de servicio' => $dataDitra->service_class,
+                    'Inspección' => $dataDitra->inspection,
+                    'Tipo' => $dataDitra->type,
+                    'Hipótesis' => $dataDitra->hypothesis,
+                    'Posible ocurrencia' => $dataDitra->possible_occurrence,
+                ]
+            ];
         }
+
+        return $data;
     }
 }

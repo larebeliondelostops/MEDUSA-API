@@ -15,11 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('headquarters_las_ceibas_e_p_n', function (Blueprint $table) {
+        Schema::create('headquarters_las_ceibas_epn', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->json('position');
+            $table->string('name')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

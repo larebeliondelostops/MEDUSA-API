@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,105 +17,100 @@ class SlugsSeeder extends Seeder
     public function run()
     {
         /**
-         * Marcadores para villavicencio
-         */
-        DB::connection('villavicencio')->table('slugs')->insert([
-            [
-                'id' => 1,
-                'name' => 'alarm',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-              'id' => 2,
-              'name' => 'cai',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 3,
-              'name' => 'entity',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 4,
-              'name' => 'pollingPlace',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 50,
-              'name' => 'camera',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 54,
-              'name' => 'movementUnity',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 55,
-              'name' => 'event',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-        ]);
-
-        /**
-         * Marcadores para ditra
-         */
-        DB::connection('ditra')->table('slugs')->insert([
-            [
-                'id' => 1,
-                'name' => 'alarm',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-              'id' => 2,
-              'name' => 'cai',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 3,
-              'name' => 'entity',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 4,
-              'name' => 'pollingPlace',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 50,
-              'name' => 'camera',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-            [
-              'id' => 54,
-              'name' => 'movementUnity',
-              'created_at' => now(),
-              'updated_at' => now(),
-            ],
-        ]);
-
-        /**
+         * 
          * Marcadores para neiva
          */
-        DB::connection('neiva')->table('slugs')->insert([
+        DB::table('slugs')->insert([
+            [
+              'id' => 1,
+              'name' => 'fiber_optic_sies',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 2,
+              'name' => 'fiber_optic_cameras',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 3,
+              'name' => 'public_lighting',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
             [
               'id' => 4,
               'name' => 'ambient',
               'created_at' => now(),
               'updated_at' => now(),
             ],
+            [
+              'id' => 5,
+              'name' => 'sports_venues',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 6,
+              'name' => 'mobility',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 7,
+              'name' => 'health',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 8,
+              'name' => 'headquarters_las_ceibas_epn',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 9,
+              'name' => 'public_safety',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 10,
+              'name' => 'digital_zones',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 11,
+              'name' => 'educational_centers',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 50,
+              'name' => 'cameras',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 51,
+              'name' => 'model_probabilistic',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 52,
+              'name' => 'heat_map',
+              'created_at' => now(),
+              'updated_at' => now(),
+            ],
+            [
+              'id' => 53,
+              'name' => 'traffic',
+              'created_at' => now(),
+              'updated_at' => now(),  
+            ]
         ]);
     }
 }

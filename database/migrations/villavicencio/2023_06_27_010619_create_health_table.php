@@ -16,34 +16,30 @@ return new class extends Migration
         Schema::create('health', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->string('address');
-            $table->json('position');
-            $table->integer('emergencyPatients');
-            $table->integer('emergencyBedsAvailable');
-            $table->integer('availableOperatingRooms');
-            $table->integer('intensiveCareUnitAvailable');
-            $table->integer('firstLevelBeds');
-            $table->integer('secondLevelBeds');
-            $table->integer('thirdLevelBeds');
-            $table->boolean('bloodBank');
-            $table->integer('doctorsInTheShift');
-            $table->integer('nursesInTheShift');
-            $table->string('affiliatedIps');
-            $table->integer('numberOfEmergenciesDay');
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
+            $table->integer('emergency_patients')->nullable();
+            $table->integer('emergency_beds_available')->nullable();
+            $table->integer('available_operating_rooms')->nullable();
+            $table->integer('intensive_care_unit_available')->nullable();
+            $table->integer('first_level_beds')->nullable();
+            $table->integer('second_level_beds')->nullable();
+            $table->integer('third_level_beds')->nullable();
+            $table->boolean('blood_bank')->nullable();
+            $table->integer('doctors_in_the_shift')->nullable();
+            $table->integer('nurses_in_the_shift')->nullable();
+            $table->string('affiliated_ips')->nullable();
+            $table->integer('number_of_emergencies_day')->nullable();
             $table->timestamps();
-            
+
             $table->index('uuid');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('Health');
+        Schema::dropIfExists('health');
     }
 };

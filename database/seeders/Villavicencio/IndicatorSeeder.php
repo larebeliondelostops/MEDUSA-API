@@ -96,7 +96,7 @@ class IndicatorSeeder extends Seeder
 
         $user12->name = 'Choque';
         $user12->description = '.';
-        
+
         $user12->save();
 
         $user13 = new Indicator();
@@ -119,6 +119,5 @@ class IndicatorSeeder extends Seeder
         $user15->description = '.';
 
         $user15->save();
-
     }
 }

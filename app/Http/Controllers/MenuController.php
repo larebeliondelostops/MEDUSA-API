@@ -31,55 +31,57 @@ class MenuController extends Controller
      */
     public function commandBar()
     {
-        $user = Auth::user();
+        try{
+            $user = Auth::user();
 
-        $permisos = $user->getAllPermissions()->pluck('name');
+            $permisos = $user->getAllPermissions()->pluck('name');
 
-        $permisos = $permisos->filter(function ($item) {
-            return strpos($item, 'commandbar-') === 0;
-        });
+            $permisos = $permisos->filter(function ($item) {
+                return strpos($item, 'commandbar-') === 0;
+            });
 
-        $permisos = $permisos->map(function ($item) {
-            // Obtener la parte después del guion
-            return substr($item, strpos($item, '-') + 1);
-        });
+            $permisos = $permisos->map(function ($item) {
+                // Obtener la parte después del guion
+                return substr($item, strpos($item, '-') + 1);
+            });
 
-        $markers_permisos = Marker::whereIn('name', $permisos->toArray())->get()->pluck('id')->toArray();
+            $markers_permisos = Marker::whereIn('name', $permisos->toArray())->get()->pluck('id')->toArray();
 
-        $data_menu = BarMenu::with('Marker')->whereIn('bar_menu.marker', $markers_permisos)->where('bar_menu.enabled', true)->orderBy('bar_menu.id')->get();
+            $data_menu = BarMenu::with('Marker')->whereIn('bar_menu.marker', $markers_permisos)->where('bar_menu.enabled', true)->orderBy('bar_menu.id')->get();
 
-        // Crear un nuevo arreglo en la estructura deseada
-        $menu = [];
+            // Crear un nuevo arreglo en la estructura deseada
+            $menu = [];
 
-        foreach ($data_menu as $data) {
-            $menu_item = [
-                "color" => $data->Marker->color,
-                "icon" => $data->Marker->icon,
-                "name" => $data->Marker->name,
-                "id" => $data->Marker->id,
-                "defaultActive" => $data->Marker->id == 54 ? true : false
-            ];
 
-            if ($data->Marker->name == 'Ipats') {
+            foreach ($data_menu as $data) {
+                $menu_item = [
+                    "color" => $data->Marker->color,
+                    "icon" => $data->Marker->icon,
+                    "name" => $data->Marker->name,
+                    "id" => $data->Marker->id,
+                    "defaultActive" => $data->Marker->id == 54 ? true : false
+                ];
+
+                if ($data->Marker->name == 'Ipats') {
                 $menu_item['specialType'] = 8;
-            } else if ($data->Marker->name == 'Mapa de Calor') {
-                $menu_item['specialType'] = 4;
-            } else if ($data->Marker->name == 'Tráfico') {
-                $menu_item['specialType'] = 5;
-            } else if ($data->Marker->name == 'Modelo Probabilistico') {
-                $menu_item['specialType'] = 2;
-            } else if ($data->Marker->name == 'Modelo Probabilistico IPATS') {
-                $menu_item['specialType'] = 2;
-            } else if ($data->Marker->name == 'Modelo Probabilistico General') {
-                $menu_item['specialType'] = 3;
-            } else if ($data->Marker->name == 'Unidades móviles') {
-                $menu_item['specialType'] = 6;
+                } else if ($data->Marker->name == 'Mapa de Calor') {
+                    $menu_item['specialType'] = 4;
+                } else if ($data->Marker->name == 'Tráfico') {
+                    $menu_item['specialType'] = 5;
+                } else if ($data->Marker->name == 'Modelo Probabilistico') {
+                    $menu_item['specialType'] = 2;
+                } else if ($data->Marker->name == 'Modelo Probabilistico IPATS') {
+                    $menu_item['specialType'] = 2;
+                } else if ($data->Marker->name == 'Modelo Probabilistico General') {
+                    $menu_item['specialType'] = 3;
+                } else if ($data->Marker->name == 'Unidades móviles') {
+                    $menu_item['specialType'] = 6;
+                }
+
+                $menu[] = $menu_item;
             }
 
-            $menu[] = $menu_item;
-        }
 
-        try{
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
@@ -104,47 +106,48 @@ class MenuController extends Controller
      */
     public function menuBar()
     {
-        $user = Auth::user();
-
-        $permisos = $user->getAllPermissions()->pluck('name');
-
-        $menu_permisions = $permisos->filter(function ($item) {
-            return strpos($item, 'menu-') === 0;
-        });
-
-        $menu_permisions = $menu_permisions->map(function ($item) {
-            // Obtener la parte después del guion
-            return substr($item, strpos($item, '-') + 1);
-        });
-
-        $sub_menu_permisions = $permisos->filter(function ($item) {
-            return strpos($item, 'submenu-') === 0;
-        });
-
-        $sub_menu_permisions = $sub_menu_permisions->map(function ($item) {
-            // Obtener la parte después del guion
-            return substr($item, strpos($item, '-') + 1);
-        });
-
-        $menu = Menu::where('menu.enabled', true)->whereIn('name', $menu_permisions)->orderby('menu.id')->get();
-
-        $menu = $menu->map(function ($item) use ($sub_menu_permisions) {
-            // Realiza aquí la organización o transformación personalizada que necesitas
-
-            $organizedItem = [
-                'id' => $item->id,
-                'name' => $item->name,
-                'path' => $item->path,
-                'icon' => $item->icon,
-                'slug' => $item->slug,
-            ];
-
-            $organizedItem['submenu'] = $item->SubMenu($sub_menu_permisions)->get();
-
-            return $organizedItem;
-        });
-
         try{
+            $user = Auth::user();
+
+            $permisos = $user->getAllPermissions()->pluck('name');
+
+            $menu_permisions = $permisos->filter(function ($item) {
+                return strpos($item, 'menu-') === 0;
+            });
+
+            $menu_permisions = $menu_permisions->map(function ($item) {
+                // Obtener la parte después del guion
+                return substr($item, strpos($item, '-') + 1);
+            });
+
+            $sub_menu_permisions = $permisos->filter(function ($item) {
+                return strpos($item, 'submenu-') === 0;
+            });
+
+            $sub_menu_permisions = $sub_menu_permisions->map(function ($item) {
+                // Obtener la parte después del guion
+                return substr($item, strpos($item, '-') + 1);
+            });
+
+            $menu = Menu::where('menu.enabled', true)->whereIn('name', $menu_permisions)->orderby('menu.id')->get();
+
+            $menu = $menu->map(function ($item) use ($sub_menu_permisions) {
+                // Realiza aquí la organización o transformación personalizada que necesitas
+
+                $organizedItem = [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'path' => $item->path,
+                    'icon' => $item->icon,
+                    'slug' => $item->slug,
+                ];
+
+                $organizedItem['submenu'] = $item->SubMenu($sub_menu_permisions)->get();
+
+                return $organizedItem;
+            });
+
+
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
@@ -337,7 +340,7 @@ class MenuController extends Controller
             $coordinatesDB = explode(',', $coordinatesDB);
 
             $coordinatesDB = array_map('floatval', $coordinatesDB);
-    
+
             $coordinatesDB = [
                 'lat' => $coordinatesDB[0],
                 'lng' => $coordinatesDB[1]

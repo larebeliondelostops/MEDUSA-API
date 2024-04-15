@@ -2,8 +2,8 @@
 
 namespace App\Values;
 
-use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilisticCrimes;
-use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilisticMovility;
+use App\Strategies\StrategiesProbabilistic\Villavicencio\StrategyProbabilisticCrimes;
+use App\Strategies\StrategiesProbabilistic\Villavicencio\StrategyProbabilisticMovility;
 
 class ProbabilisticValuesVillavicencio
 {

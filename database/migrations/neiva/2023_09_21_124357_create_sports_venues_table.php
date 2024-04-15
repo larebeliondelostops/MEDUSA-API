@@ -19,8 +19,9 @@ return new class extends Migration
         Schema::create('sports_venues', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->json('position')->nullable();
+            $table->string('name')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('neighborhood')->nullable();
             $table->string('scenery')->nullable();
             $table->string('address')->nullable();

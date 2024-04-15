@@ -19,16 +19,20 @@ class DitraSeeder extends Seeder
     public function run()
     {
         $this->call([
+            //system
             SlugsSeeder::class,
-            CamerasTableSeeder::class,
             IndicatorSeeder::class,
-            DataDitraTableSeeder::class,
             MenuSeeder::class,
             SubMenuSeeder::class,
             MarkerTypeSeeder::class,
             MarkersSeeder::class,
             MenuBarSeeder::class,
             PermissionsTableSeeder::class,
+            
+            //data
+            CamerasTableSeeder::class,
+            DataDitraTableSeeder::class,
+
         ]);
     }
 }

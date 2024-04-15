@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -20,31 +21,30 @@ class JWTMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
-            //dd($request);
-            // Verficar si existe un token en el header
-            //$token = $request->header('Authorization');
-            $token = str_replace('Bearer ', '', $request->header('Authorization'));
+            $this->validateDomainToken();
 
-            if (!$token) {
-                return response()->json(['message' => 'No se proporcionó un token'], 401);
+            JWTAuth::parseToken()->authenticate();
+
+        } catch (Exception $e) {
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                return response()->json(['status' => 'El token no es válido'], 401);
+            } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json(['status' => 'El token ha caducado'], 401);
+            } else if ($e->getCode() == 403) {
+                return response()->json(['status' => $e->getMessage()], 403);
+            } else {
+                return response()->json(['status' => 'Token de autorización no encontrado'], 401);
             }
-
-            // Set del token para trabajar con el mismo
-            JWTAuth::setToken($token);
-
-            // Verificar que el usuario con este token exista en la base de datos
-            $user = JWTAuth::authenticate();
-            if (!$user) {
-                return response()->json(['message' => 'Usuario no encontrado'], 500);
-            }
-        } catch (TokenExpiredException $e) {
-            // Si el token ha expirado, retorna tu propia respuesta personalizada
-            return response()->json([
-                'message' => 'El token ha expirado.',
-            ], 401);
-        } catch (JWTException $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
         }
         return $next($request);
+    }
+
+    protected function validateDomainToken()
+    {
+        $tenantIdFromToken = JWTAuth::parseToken()->payload()->get('tenant_id');
+
+        if ($tenantIdFromToken != tenant('id')) {
+            throw new Exception('El Token no pertenece al dominio', 403);
+        }
     }
 }

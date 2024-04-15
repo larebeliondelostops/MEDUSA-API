@@ -414,10 +414,15 @@ class TrafficLightsTableSeeder extends Seeder
 
         $dataArray = json_decode($data, true);
         foreach ($dataArray['array'] as $Data) {
+            $coordinates = explode(', ', $Data['coordinates']);
+            $latitude = $coordinates[0] ?? null;
+            $longitude = $coordinates[1] ?? null;
+            
             DB::table('traffic_lights')->insert([
                 'uuid'=> Str::uuid(),
-                'name' => $Data['name'],
-                'coordinates' => $Data['coordinates'],
+                'name' => $Data['name'],  
+                'latitude' => $latitude,
+                'longitude' => $longitude,              
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

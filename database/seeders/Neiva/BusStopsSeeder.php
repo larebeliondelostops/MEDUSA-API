@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -10604,8 +10604,9 @@ class BusStopsSeeder extends Seeder
             DB::table('bus_stops')->insert([
                 'name' => $Data['title'],
                 'uuid'=> Str::uuid(),
-                'paraderosSETP'=> $Data['properties']['ParaderosSETP'],
-                'position' => json_encode($Data['geometry']),
+                'bus_stop_setp'=> $Data['properties']['ParaderosSETP'],
+                'latitude'=> $Data['geometry']['coordinates'][0],
+                'longitude'=> $Data['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

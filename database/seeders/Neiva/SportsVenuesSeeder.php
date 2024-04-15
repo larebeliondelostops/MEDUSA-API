@@ -1,7 +1,5 @@
 <?php
-
-namespace Database\Seeders;
-
+namespace Database\Seeders\Neiva;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +15,6 @@ class SportsVenuesSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('neiva');
 
         $data = '        
         {
@@ -3053,7 +3050,8 @@ class SportsVenuesSeeder extends Seeder
                 'neighborhood'=> $Data['properties']['BARRIO'],
                 'address'=> $Data['properties']['DIRECCIÓN'],
                 'scenery'=> $Data['properties']['ESCENARIO'],
-                'position' => json_encode($Data['geometry']),
+                'latitude'=> $Data['properties']['LATUTUD'],
+                'longitude'=> $Data['properties']['LONGITUD'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

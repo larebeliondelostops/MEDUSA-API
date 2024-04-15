@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
-use App\Models\Incident;
+use App\Models\Villavicencio\Incident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;

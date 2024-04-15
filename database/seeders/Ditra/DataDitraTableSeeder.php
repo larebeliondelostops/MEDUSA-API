@@ -10027,6 +10027,10 @@ class DataDitraTableSeeder extends Seeder
                 $tipoNumber = 1;
             }
 
+            $coordinates = explode(', ', $dataItem['COORDENADAS']);
+            $latitude = $coordinates[0] ?? null;
+            $longitude = $coordinates[1] ?? null;
+
             $uuid = Str::uuid();
             DB::table('data_ditra')->insert([
                 'year' => $dataItem['ANIO '],
@@ -10037,7 +10041,8 @@ class DataDitraTableSeeder extends Seeder
                 'hour' => $dataItem['HORA'],
                 'hour_range' => $dataItem['RANGO_HORA'],
                 'sectional' => $dataItem['SECCIONAL'],
-                'coordinates' => $dataItem['COORDENADAS'],
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'assigned' => $dataItem['ADSCRITO'],
                 'identification' => $dataItem['IDENTIFICACION'],
                 'grade' => $dataItem['GRADO'],

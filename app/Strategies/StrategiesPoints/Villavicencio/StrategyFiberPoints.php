@@ -3,63 +3,37 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use Exception;
-use App\Models\FiberPoint;
-use App\Strategies\Interface\PointsInterface;
+use App\Models\Villavicencio\FiberPoint;
+use App\Interfaces\Markers\PointsInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class StrategyFiberPoints implements PointsInterface
 {
-     /**
-     * Metodo para obtener todos los centros de Entidades
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public static function all()
+
+    public function __construct(
+        private FiberPoint $model
+    ) {}
+
+    public function getModel() : FiberPoint
     {
-        try {
-            $fiberLines = FiberPoint::all();
-
-            $Lines = $fiberLines->map(function ($item) {
-
-                $fiberLines = [
-                    'markerType' => 5,
-                    'id' => $item->uuid,
-                    'geometry' => json_decode($item->position),
-                ];
-
-                return $fiberLines;
-            });
-
-            return Response::json($Lines, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        return $this->model;
     }
 
-    public static function getInfoPoint($uuid)
+    public function allPoints()
     {
-        try {
-            $fiberLines = FiberPoint::where('uuid', $uuid)->first();
+        return $this->getModel()->allPoints();
+    }
 
-            $fiberLines = [
-                'title' => $fiberLines->name,
-                'properties' => []
-            ];
+    public function getInfoPoint($id)
+    {
+        $fiberPoint = $this->getModel()->where('uuid', $id)->first();
 
-            return Response::json($fiberLines, 200, [], JSON_PRETTY_PRINT);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json([
-                'code' => '1001',
-                'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
-        }
+        $fiberPoint = [
+            'title' => $fiberPoint->name,
+            'properties' => []
+        ];
+
+        return $fiberPoint;
     }
 }

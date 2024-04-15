@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Villavicencio\CamerasTableSeeder;
+use Database\Seeders\Villavicencio\CaiTableSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Villavicencio\MenuSeeder;
 use Database\Seeders\Villavicencio\SlugsSeeder;
@@ -21,36 +23,41 @@ use Database\Seeders\Villavicencio\HealthTableSeeder;
 use Database\Seeders\Villavicencio\FiberLinesTableSeeder;
 use Database\Seeders\Villavicencio\FiberPointsTableSeeder;
 use Database\Seeders\Villavicencio\FormPollingPlacesSeeder;
-use Database\Seeders\Villavicencio\IpatsTableSeeder;
 use Database\Seeders\Villavicencio\PollingPlaceTableSeeder;
 use Database\Seeders\Villavicencio\TrafficLightsTableSeeder;
+use Database\Seeders\Villavicencio\BooleanSelectTableSeeder;
 
 class VillavicencioSeeder extends Seeder
 {
     public function run()
     {
         $this->call([
-            AlarmsTableSeeder::class,
-            //CRUDActionsSeeder::class,
-            FiberLinesTableSeeder::class,
-            FiberPointsTableSeeder::class,
+            //system
             SelectTypeSeeder::class,
             FieldsSeeder::class,
+            SlugsSeeder::class,
             ModulesSeeder::class,
             FormAlarmsSeeder::class,
             FormPollingPlacesSeeder::class,
             FormUsersSeeder::class,
-            HealthTableSeeder::class,
             IndicatorSeeder::class,
             MarkerTypeSeeder::class,
             MarkersSeeder::class,
             MenuBarSeeder::class,
-            MenuSeeder::class,         
-            PollingPlaceTableSeeder::class,
-            SlugsSeeder::class,
+            MenuSeeder::class,
             SubMenuSeeder::class,
-            //IpatsTableSeeder::class,
+            BooleanSelectTableSeeder::class,
+             //CRUDActionsSeeder::class,
+
+            //Data
+            AlarmsTableSeeder::class,
+            FiberLinesTableSeeder::class,
+            FiberPointsTableSeeder::class,
+            HealthTableSeeder::class,
+            PollingPlaceTableSeeder::class,
             TrafficLightsTableSeeder::class,
+            CamerasTableSeeder::class,
+            CaiTableSeeder::class,
         ]);
     }
 }

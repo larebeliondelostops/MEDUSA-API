@@ -23,7 +23,8 @@ return new class extends Migration
             $table->time('hour')->nullable();
             $table->string('hour_range')->nullable();
             $table->string('sectional')->nullable();
-            $table->string('coordinates')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();;
             $table->string('assigned')->nullable();
             $table->bigInteger('identification')->nullable();
             $table->string('grade')->nullable();

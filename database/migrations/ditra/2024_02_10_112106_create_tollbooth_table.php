@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tollbooth', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->string('id_peaje');
+            $table->string('id_peaje')->nullable();
             $table->string('name')->nullable();
             $table->string('state')->nullable();
             $table->string('project')->nullable();
@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('pr')->nullable();
             $table->string('department')->nullable();
             $table->string('municipality')->nullable();
-            $table->string('coordinates')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
         });
     }

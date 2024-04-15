@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Neiva;
 
 use Ramsey\Uuid\Uuid;
 use App\Clases\SaveGeoJson;
@@ -19,12 +19,13 @@ class AmbientSeeder extends Seeder
         /**
          * Marcadores para neiva
          */
-        DB::connection('neiva')->table('ambient')->insert([
+        DB::table('ambient')->insert([
             [
                 'id' => 1,
                 'uuid' => Uuid::uuid4()->toString(),
                 'name' => 'Estacion Alcaldia',
-                'position' => SaveGeoJson::saveLikePoint(["type" => "Point", "coordinates" => [[2.928784311025512, -75.2894654206662]]]),
+                'latitude' => '2.928784311025512',  
+                'longitude' => '-75.2894654206662',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -32,7 +33,8 @@ class AmbientSeeder extends Seeder
                 'id' => 2,
                 'uuid' => Uuid::uuid4()->toString(),
                 'name' => 'Estacion Talleres Alcaldia',
-                'position' => SaveGeoJson::saveLikePoint(["type" => "Point", "coordinates" => [[2.935833924226003, -75.29291833161336]]]),
+                'latitude' => '2.935833924226003',
+                'longitude' => '-75.29291833161336',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

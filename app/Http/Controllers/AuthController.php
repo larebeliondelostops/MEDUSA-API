@@ -197,7 +197,7 @@ class AuthController extends Controller
 
         try {
             // this authenticates the user details with the database and generates a token
-            if (! $token = JWTAuth::attempt($input)) {
+            if (! $token = JWTAuth::claims(['tenant_id' => tenant('id')])->attempt($input)) {
 
                 $this->data = [];
                 $this->message = 'La contraseña es incorrecta';
@@ -238,6 +238,77 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function loginGoogle(Request $request)
+    {
+        try {
+            
+            $rules = [
+                'username' => [
+                    'required',
+                ],
+                'email' => [
+                    'required'
+                ]
+            ];
+            $messages = [
+                'required' => 'El campo :attribute es obligatorio',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return Response::json([
+                    'code' => '2001',
+                    'status' => 'error',
+                    'message' => 'Datos Recibidos Incorrectos',
+                    'errors' => $validator->messages()
+                ], 400, [], JSON_PRETTY_PRINT);
+            }
+
+            $validar_correo = User::where('email', $request->email)->first();
+
+            if (isset($validar_correo)) {
+
+                $token = auth()->claims(['tenant_id' => tenant('id'), 'exp' => time() + (180 * 60)])->login($validar_correo);
+                
+            } else {
+                // Crear el usuario
+                $user = new User();
+                $user->name = $request->username;
+                $user->email = $request->email;
+                $user->password = bcrypt(1123456789);
+                $user->save();
+                $user->assignRole(2);
+                $keys = ['email' => $request->email, 'password' => 1123456789];
+                
+                $token = JWTAuth::claims(['tenant_id' => tenant('id'), 'exp' => time() + (180 * 60)])->attempt($keys);
+            }
+
+
+            $user = Auth::user();
+
+            $success = [
+                'accessToken' => $token,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roleName' => $user->getRoleNames()[0] ?? null,
+                'id' => $user->id
+            ];
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Datos almacenados exitosamente',
+                'data' => $success
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+            return response()->json([
+                'code' => '1001',
+                'status' => 'error',
+                'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -343,21 +414,21 @@ class AuthController extends Controller
      */
     public function refresh(Request $request)
     {
-        //$token = $request->header('Authorization');
-        $token = str_replace('Bearer ', '', $request->header('Authorization'));
-        // Setear el token para trabajar con él
-        $jwtAuth = JWTAuth::setToken($token);
-
-        // Obtener el token actual en una variable
-        $currentToken = JWTAuth::getToken();
-
-        // Invoación del modelo asociado al token
-        $user = $jwtAuth->authenticate();
-
-        // Almacenar el tiempo actual en un formato entendible para el JWT
-        $currentTimestamp = time();
-
         try {
+            //$token = $request->header('Authorization');
+            $token = str_replace('Bearer ', '', $request->header('Authorization'));
+            // Setear el token para trabajar con él
+            $jwtAuth = JWTAuth::setToken($token);
+
+            // Obtener el token actual en una variable
+            $currentToken = JWTAuth::getToken();
+
+            // Invoación del modelo asociado al token
+            $user = $jwtAuth->authenticate();
+
+            // Almacenar el tiempo actual en un formato entendible para el JWT
+            $currentTimestamp = time();
+
             // Generar un nuevo access token para el usuario
             $newAccessToken = JWTAuth::fromUser($user, ['exp' => time() + (15 * 60)]);
 

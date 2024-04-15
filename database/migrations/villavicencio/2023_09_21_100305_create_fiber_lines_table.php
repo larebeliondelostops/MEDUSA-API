@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('fiber_lines', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->json('position');
+            $table->string('name')->nullable();
+            $table->json('coordinates')->nullable();
             $table->timestamps();
 
             $table->index('uuid');

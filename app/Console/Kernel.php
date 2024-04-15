@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        MultiSchemaMigrate::class,
-        OneSchemaMigrate::class,
-        Commands\MovementUnits::class,
+
+        /* MultiSchemaMigrate::class,
+        OneSchemaMigrate::class, */
     ];
 
     /**

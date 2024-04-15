@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Stancl\Tenancy\Concerns\TenantAwareCommand;
 use Exception;
-use App\Models\Ipats;
+use App\Models\Villavicencio\Ipats;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -38,7 +38,7 @@ class SaveIpats extends Command
 
             // Obtener datos del endpoint
             $endpointData = file_get_contents($endpointUrl);
-            
+
             // Decodificar datos JSON
             $ipatsData = json_decode($endpointData);
 
@@ -48,12 +48,12 @@ class SaveIpats extends Command
                 'Choque' => 12,
                 'Atropello' => 13,
                 'Volcamiento' => 14,
-                'Otro' => 15, 
+                'Otro' => 15,
             ];
-         
+
             // Iterar sobre los datos y guardar en la base de datos si no existen
             foreach ($ipatsData as $data) {
-                $fecha = str_replace(' :00', '00:00', $data->fecha); 
+                $fecha = str_replace(' :00', '00:00', $data->fecha);
                 // Convertir la fecha a un formato válido
                 $fechaValida = Carbon::parse($fecha)->toDateTimeString();
                 // Obtener el ID del indicador a partir del mapeo
@@ -62,7 +62,7 @@ class SaveIpats extends Command
                 if (!$existingIpats) {
                     // Normalizar las coordenadas
                     $normalizedCoordinates = $this->normalizeCoordinates($data->georeferencia);
-                    
+
                     if ($normalizedCoordinates !== null) {
                         // Crear el registro en la base de datos con las coordenadas normalizadas
                         Ipats::create([
@@ -71,7 +71,8 @@ class SaveIpats extends Command
                             'id_ipat' => $data->id_ipat,
                             'injured' => $data->lesionados,
                             'victims' => $data->victimas,
-                            'coordinates' => $normalizedCoordinates,
+                            'latitude' => explode(',', $normalizedCoordinates)[0],
+                            'longitude' => explode(',', $normalizedCoordinates)[1],
                             'agent_name' => $data->nombre_agente,
                             'indicator' => $indicatorId,
                             'date_ipat' => $fechaValida,
@@ -82,7 +83,7 @@ class SaveIpats extends Command
                         Log::error('Coordenadas no válidas: ' . $data->georeferencia);
                     }
                 }
-            
+
             }
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

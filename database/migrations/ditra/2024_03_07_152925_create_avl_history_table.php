@@ -12,15 +12,17 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
+    {   //atributos en ingles
         Schema::create('avl_history', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_uniformado')->nullable();
+            // $table->string('nombre_uniformado')->nullable();
+
+            $table->string('uniformed_name')->nullable();
             $table->string('imei')->nullable();
-            $table->timestamp('fecha_movil')->nullable();
-            $table->timestamp('fecha_gps')->nullable();
-            $table->string('latitud')->nullable();
-            $table->string('longitud')->nullable();
+            $table->timestamp('mobile_date')->nullable();
+            $table->timestamp('gps_date')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('precision')->nullable();
             $table->timestamps();
         });

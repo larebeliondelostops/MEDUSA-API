@@ -13,6 +13,7 @@ use Database\Seeders\Ditra\MarkerTypeSeeder;
 use Database\Seeders\Ditra\CamerasTableSeeder;
 use Database\Seeders\Ditra\DataDitraTableSeeder;
 use Database\Seeders\Ditra\PermissionsTableSeeder;
+use Database\Seeders\Ditra\IncidentTableSeeder;
 
 class DitraSeeder extends Seeder
 {
@@ -32,6 +33,7 @@ class DitraSeeder extends Seeder
             //data
             CamerasTableSeeder::class,
             DataDitraTableSeeder::class,
+            IncidentTableSeeder::class,
 
         ]);
     }

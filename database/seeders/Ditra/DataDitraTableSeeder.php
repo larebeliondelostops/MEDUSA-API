@@ -10027,9 +10027,24 @@ class DataDitraTableSeeder extends Seeder
                 $tipoNumber = 1;
             }
 
-            $coordinates = explode(', ', $dataItem['COORDENADAS']);
-            $latitude = $coordinates[0] ?? null;
-            $longitude = $coordinates[1] ?? null;
+            if (isset($dataItem['COORDENADAS'])) {
+                $coordinates = explode(', ', $dataItem['COORDENADAS']);
+                // Verificar si se pueden obtener las coordenadas
+                if (count($coordinates) >= 2) {
+                    $latitude = floatval($coordinates[0]) ?? null;
+                    $longitude = floatval($coordinates[1]) ?? null;
+                } else {
+                    // En caso de que las coordenadas no sean válidas, establecer valores predeterminados o manejar el caso según sea necesario
+                    $latitude = null;
+                    $longitude = null;
+                    // Opcional: podrías lanzar una excepción o registrar un mensaje de error aquí
+                }
+            } else {
+                // En caso de que las coordenadas no estén presentes en absoluto, establecer valores predeterminados o manejar el caso según sea necesario
+                $latitude = null;
+                $longitude = null;
+                // Opcional: podrías lanzar una excepción o registrar un mensaje de error aquí
+            }
 
             $uuid = Str::uuid();
             DB::table('data_ditra')->insert([

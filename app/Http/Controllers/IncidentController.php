@@ -103,7 +103,7 @@ class IncidentController extends Controller
                         'to' => $incidents->lastItem(),
                     ],
                     'filterDate' => true,
-                    'ableCreate' => true
+                    'ableCreate' => false
                 ],
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -307,7 +307,7 @@ class IncidentController extends Controller
                     'incident' => $incident->indicator,
                     'date' => $incident->created_at,
                     'position' => $incident->position,
-                    'title' => $incident->Indicator->name
+                    'title' => $incident->Indicator->Name
                 ];
 
                 return $data;

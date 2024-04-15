@@ -14,6 +14,7 @@ class MenuSeeder extends Seeder
      */
     public function run()
     {
+
         $data = '
         {
           "array":[
@@ -102,6 +103,7 @@ class MenuSeeder extends Seeder
                 'icon' => $Data['icon'],
                 'slug' => $Data['slug'],
                 'enabled' => $Data['enabled'],
+
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -13,6 +13,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 {
     private $indicator;
     private $request;
+    private $indicadores;
 
     public function getReportsData(Request $request) :? array
     {
@@ -42,7 +43,13 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $types = Incident::select('indicator_id')->orderBy('indicator_id', 'asc')->groupBy('indicator_id')->get()->toArray();
 
-        foreach ($types as $type) {
+        $tabs = $this->tabsIncidents();
+
+        if ($this->indicadores[0] == 0) {
+            unset($this->indicadores[0]);
+        }
+
+        foreach ($this->indicadores as $type) {
             $data = [];
             $this->indicator = $type['indicator_id'] ?? null;
             $data = [
@@ -56,7 +63,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         $data = [
-            'tabs' => $this->tabsIncidents(),
+            'tabs' => $tabs,
             'reportsData' => $generalData
         ];
 
@@ -179,7 +186,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
                 ->get();
         }
 
-        $indicadores = Indicator::orderBy('id', 'DESC')->get();
+        $indicadores = Indicator::whereBetween('id', [1, 10])->orderBy('id', 'DESC')->get();
 
         foreach ($indicadores as $indicardor) {
             if (!$tabsIncidents->pluck('indicator_id')->contains($indicardor->id)) {
@@ -212,6 +219,8 @@ class StrategyIncidentsReports implements ReportActionsInterface
             $series = $series->prepend(Incident::count());
         }
 
+        $this->indicadores = $key;
+
         $labels = $labels->prepend('General');
         $key = $key->prepend(0);
 
@@ -219,7 +228,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             'title' => 'Tabs',
             'series' => $series,
             'labels' => $labels,
-            'key' => $key,
+            'key' => array_keys($key->toArray()),
             'type' => 'tabs'
         ];
 
@@ -290,7 +299,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
     public function incidentsByTypeLastTDays()
     {
-        
+
 
         if (isset($this->request->start) && isset($this->request->end)) {
             $hoy =  Carbon::parse($this->request->end);
@@ -302,8 +311,8 @@ class StrategyIncidentsReports implements ReportActionsInterface
             $incidentes = Incident::with('Indicator')->get();
         }
 
-        
-        
+
+
         $indicadores_usados = $incidentes->pluck('indicator_id');
 
         $series = [];
@@ -318,7 +327,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
                 $labels[] = $indicador->name;
             }
         }
-        
+
         $data = [
             'title' => '# Incidentes por tipo',
             'date' =>  $date,

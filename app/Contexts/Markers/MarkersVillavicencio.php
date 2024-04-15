@@ -30,6 +30,7 @@ class MarkersVillavicencio
         //6 => StrategyIncidents::class,
         7 => StrategyIpats::class,
         8 => StrategyTrafficLights::class,
+        25 => SettingsController::class,
         50 => StrategyCameras::class,
         54 => StrategyMovementUnitis::class,
         55 => StrategyEvents::class,

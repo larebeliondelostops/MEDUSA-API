@@ -17,4 +17,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+waze.json
 docker-compose/nginx/*
+docker-compose/webroot/*

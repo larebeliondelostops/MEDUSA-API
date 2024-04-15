@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Menu;
 use App\Models\BarMenu;
 use App\Models\Marker;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,7 @@ class MenuController extends Controller
                     "id" => $data->Marker->id,
                     "defaultActive" => $data->Marker->id == 54 ? true : false
                 ];
-            
+
                 if ($data->Marker->name == 'Ipats') {
                 $menu_item['specialType'] = 8;
                 } else if ($data->Marker->name == 'Mapa de Calor') {
@@ -76,7 +77,7 @@ class MenuController extends Controller
                 } else if ($data->Marker->name == 'Unidades móviles') {
                     $menu_item['specialType'] = 6;
                 }
-            
+
                 $menu[] = $menu_item;
             }
 
@@ -146,7 +147,7 @@ class MenuController extends Controller
                 return $organizedItem;
             });
 
-        
+
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
@@ -175,34 +176,141 @@ class MenuController extends Controller
 
             switch ($sub_domain)
             {
-                case 'villavicencio':
+                case 'viper':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = [];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' => [
-                            'lat' => 4.132543365663997,
-                            'lng' => -73.62534265307882
-                        ],
-                        'mapRequest' => ['incidents', 'indicators'],
-                        'mapZoom' => 14
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;
+                case 'villavicencio':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
                 case 'neiva':
+
+                    $defaultCoordinates = [
+                        'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
+                        'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = [];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' =>  [
-                            'lat' => floatval(env('MAP_CENTER_NEIVA_LATITUD')),
-                            'lng' => floatval(env('MAP_CENTER_NEIVA_LONGITUD'))
-                        ],
-                        'mapRequest' => [],
-                        'mapZoom' => 14
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
                 case 'ditra':
+
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 6;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
                     $data = [
-                        'mapCenter' => [
-                            'lat' => 4.132543365663997,
-                            'lng' => -73.62534265307882
-                        ],
-                        'mapRequest' => ['incidents', 'indicators'],
-                        'mapZoom' => 6
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                case 'bucarest':
+
+                    $defaultCoordinates = [
+                        'lat' => 44.43225,
+                        'lng' => 26.10626
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 6;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
             }
@@ -221,5 +329,37 @@ class MenuController extends Controller
                 'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    public function parsePosition()
+    {
+
+        $coordinatesDB = Setting::get('position');
+
+        if ($coordinatesDB != null) {
+            $coordinatesDB = explode(',', $coordinatesDB);
+
+            $coordinatesDB = array_map('floatval', $coordinatesDB);
+
+            $coordinatesDB = [
+                'lat' => $coordinatesDB[0],
+                'lng' => $coordinatesDB[1]
+            ];
+        }
+
+        return $coordinatesDB;
+    }
+
+    public function parseMapRequest()
+    {
+        $mapRequest = Setting::get('map_request');
+
+        if ($mapRequest != null) {
+
+            $mapRequest = explode(', ', $mapRequest);
+
+        }
+
+        return $mapRequest;
     }
 }

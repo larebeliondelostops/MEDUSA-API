@@ -1,0 +1,13 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Modules\Viper\ReportController;
+
+Route::prefix('/viper/report')->group(function () {
+    Route::post('/create', [ReportController::class, 'store']);
+    Route::put('/update/{id}', [ReportController::class, 'update']);
+    Route::get('/list/{productId}', [ReportController::class, 'index']);
+    Route::get('/list/proof/{porductId}', [ReportController::class, 'view']);
+    Route::get('/detail/{id}', [ReportController::class, 'show']);
+    Route::delete('/delete/{id}', [ReportController::class, 'destroy']);
+});

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 use App\Models\Villavicencio\ProbabilisticGrid;
 use App\Models\Villavicencio\ProbabilisticGridIpat;
 use App\Models\Ipats;
+use App\Models\Indicator;
 use App\Strategies\Interface\Villavicencio\ProbabilisticInterface;
 
 class StrategyProbabilisticMovility implements ProbabilisticInterface
@@ -14,35 +15,20 @@ class StrategyProbabilisticMovility implements ProbabilisticInterface
 
     public function GetIndicators()
     {
-
-        $indicators = Ipats::select(
-                \DB::raw('count(*) as count'),
-                \DB::raw("id_agent")
-                )->groupBy('id_agent')
-                ->get();
+        $indicators = Indicator::where('id','>',10)->get();
 
         $dataIndicators = [];
 
         foreach ($indicators as $indicator) {
             $dataIndicators[] = [
-                "id" => $indicator->id_agent,
-                "name" => $indicator->id_agent,
-                "description" => '...',
+                "id" => $indicator->id,
+                "name" => $indicator->Name,
+                "description" => $indicator->Description,
             ];
         }
 
 
         return response()->json($dataIndicators, 200, [], JSON_NUMERIC_CHECK);
-
-        $tabs = [
-            [
-                'id'=> 1,
-                'name' => 'Accidentes',
-                'description' => '.'
-            ]
-        ];
-
-        return Response::json($tabs, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function obtenerCuadriculaProbabilisticaPorIndicador($id)
@@ -80,89 +66,6 @@ class StrategyProbabilisticMovility implements ProbabilisticInterface
         return response()->json($resultData, 200, [], JSON_NUMERIC_CHECK);
     }
 
-
-    // public function getProbabilisticData(Request $request)
-    // {
-    //     $ProbabilisticData = [
-    //         "types" => [
-    //             [
-    //                 "name" => "IPATS",
-    //                 "key" => 0,
-    //                 "id" => 1
-    //             ]
-    //             ],
-    //         "data" => []
-
-    //     ];
-
-    //     $timeInterval = 1;
-
-    //     $days = [
-    //         "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
-    //     ];
-
-    //     $daysGraphic = [
-    //         "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"
-    //     ];
-
-    //     $Ipats = Ipats::all()->count();
-
-    //         $Ipatgrid = Ipats::where('probabilisticgrid_id', $request->ProbabilisticGridId)
-    //                   ->where('probabilisticgrid_id', '!=', '1')
-    //                   ->count();
-
-    //         // Obtener datos de la base de datos por dia de la semana
-    //         $IpatsCount = Ipats::select(
-    //             \DB::raw('count(*) as count'),
-    //             \DB::raw('extract(dow from date_ipat) as day'),
-    //         )
-    //             ->where('probabilisticgrid_id', $request->ProbabilisticGridId)
-    //             ->where('probabilisticgrid_id', '!=', '1')
-    //             ->groupBy('day')
-    //             ->get();
-
-    //         //dia de mas ocurrencias
-    //         $day = Ipats::select(
-    //             \DB::raw('count(*) as count'),
-    //             \DB::raw("DATE_PART('dow', date_ipat) as day")
-    //         )
-    //             ->where('probabilisticgrid_id', $request->ProbabilisticGridId)
-    //             ->where('probabilisticgrid_id', '!=', '1')
-    //             ->groupBy('day')
-    //             ->orderBy('count', 'desc')
-    //             ->first();
-
-    //         // Inicializar la estructura del JSON
-    //         $jsonData = [
-    //             "series" => array_fill(0, count($daysGraphic), 0),
-    //             "labels" => $daysGraphic
-    //         ];
-
-    //         // Llenar la información en el JSON
-    //         foreach ($IpatsCount as $count) {
-    //             $dayIndex = (int)$count->day; // Restamos 1 ya que los meses en PHP son indexados desde 0
-    //             $jsonData["series"][$dayIndex] = ($count->count / $Ipatgrid) * 100;
-    //         }
-
-    //         $data = [
-    //             "infoData" => "...",
-    //             "graphs" => [ [
-    //                     "horaMasOcurrencias" => NULL,
-    //                     "diaSemanaMasOcurrencias" => $day && $day->day !== null ? $days[(int)$day->day] : null,
-    //                     "title" => "IPATS",
-    //                     "yaxis" => "Porcentaje de accidentes",
-    //                     "series" => $jsonData["series"],
-    //                     "labels" => $jsonData["labels"],
-    //                     "type" => "bar"]
-
-    //             ]
-    //         ];
-
-    //         array_push($ProbabilisticData['data'], $data);
-
-    //     return $ProbabilisticData;
-    // }
-
     public function getProbabilisticData(Request $request)
     {
 
@@ -171,13 +74,60 @@ class StrategyProbabilisticMovility implements ProbabilisticInterface
                 \DB::raw('count(*) as count'),
                 \DB::raw("DATE_PART('dow', date_ipat) as day")
             )
-                ->where('probabilisticgrid_id', $request->ProbabilisticGridId)
-                ->where('id_agent', $request->indicatorId)
-                ->where('probabilisticgrid_id', '!=', '1')
+                ->where('probabilistic_grid_id', $request->ProbabilisticGridId)
+                ->where('indicator', $request->indicatorId)
+                ->where('probabilistic_grid_id', '!=', '1')
                 ->groupBy('day')
                 ->orderBy('count', 'desc')
                 ->pluck('day')
-                ->first();
+                ->first();   // //reportes de actos ipats
+    // public function getProbabilisticData(Request $request)
+    // {
+
+    //     // Obtener la hora con más ocurrencias de delitos históricamente por indicador y cuadrícula
+    //     $horaMasOcurrencias = Ipats::where('indicator', '=', $request->indicatorId)
+    //         ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
+    //         ->groupBy('time')
+    //         ->orderByRaw('COUNT(*) DESC')
+    //         ->pluck('time')
+    //         ->first();
+
+    //     // Obtener el día de la semana con más ocurrencias de delitos históricamente por indicador y cuadrícula
+    //     $diaSemanaMasOcurrencias = Ipats::where('indicator', '=', $request->indicatorId)
+    //         ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
+    //         ->groupBy('day')
+    //         ->orderByRaw('COUNT(*) DESC')
+    //         ->pluck('day')
+    //         ->first();
+
+    //     // Definir todos los días de la semana
+    //     $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
+
+    //     // Obtener cantidad de delitos por día de la semana
+    //     $delitosPorDiaSemana = Ipats::where('indicator', '=', $request->indicatorId)
+    //         ->where('probabilistic_grid_id', '=', $request->ProbabilisticGridId)
+    //         ->selectRaw('day, COUNT(*) as count')
+    //         ->groupBy('day')
+    //         ->orderByRaw('COUNT(*) DESC')
+    //         ->get();
+
+    //     // Crear una colección para almacenar los resultados
+    //     $porcentajePorDiaSemana = collect();
+
+    //     // Iterar sobre todos los días de la semana
+    //     foreach ($diasSemana as $dia) {
+    //         $delitos = $delitosPorDiaSemana->firstWhere('day', $dia);
+
+    //         $porcentaje = [
+    //             'day' => $dia,
+    //             'percentage' => $delitos ? ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100 : 0,
+    //         ];
+
+    //         $porcentajePorDiaSemana->push($porcentaje);
+    //     }
+
+    //     return response()->json(['horaMasOcurrencias' => $horaMasOcurrencias, 'diaSemanaMasOcurrencias' => $diaSemanaMasOcurrencias, 'porcentajePorDiaSemana' => $porcentajePorDiaSemana]);
+    // }
 
         // Definir todos los días de la semana
         $diasSemana = ['DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO'];
@@ -191,9 +141,9 @@ class StrategyProbabilisticMovility implements ProbabilisticInterface
                 \DB::raw('count(*) as count'),
                 \DB::raw('extract(dow from date_ipat) as day'),
             )
-                ->where('probabilisticgrid_id', $request->ProbabilisticGridId)
-                ->where('id_agent', $request->indicatorId)
-                ->where('probabilisticgrid_id', '!=', '1')
+                ->where('probabilistic_grid_id', $request->ProbabilisticGridId)
+                ->where('indicator', $request->indicatorId)
+                ->where('probabilistic_grid_id', '!=', '1')
                 ->groupBy('day')
                 ->get();
 

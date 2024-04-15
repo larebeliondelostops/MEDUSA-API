@@ -38,7 +38,7 @@ class SaveIpats extends Command
 
             // Obtener datos del endpoint
             $endpointData = file_get_contents($endpointUrl);
-            
+
             // Decodificar datos JSON
             $ipatsData = json_decode($endpointData);
 
@@ -48,12 +48,12 @@ class SaveIpats extends Command
                 'Choque' => 12,
                 'Atropello' => 13,
                 'Volcamiento' => 14,
-                'Otro' => 15, 
+                'Otro' => 15,
             ];
-         
+
             // Iterar sobre los datos y guardar en la base de datos si no existen
             foreach ($ipatsData as $data) {
-                $fecha = str_replace(' :00', '00:00', $data->fecha); 
+                $fecha = str_replace(' :00', '00:00', $data->fecha);
                 // Convertir la fecha a un formato válido
                 $fechaValida = Carbon::parse($fecha)->toDateTimeString();
                 // Obtener el ID del indicador a partir del mapeo
@@ -62,7 +62,7 @@ class SaveIpats extends Command
                 if (!$existingIpats) {
                     // Normalizar las coordenadas
                     $normalizedCoordinates = $this->normalizeCoordinates($data->georeferencia);
-                    
+
                     if ($normalizedCoordinates !== null) {
                         // Crear el registro en la base de datos con las coordenadas normalizadas
                         Ipats::create([
@@ -83,7 +83,7 @@ class SaveIpats extends Command
                         Log::error('Coordenadas no válidas: ' . $data->georeferencia);
                     }
                 }
-            
+
             }
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());

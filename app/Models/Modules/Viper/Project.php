@@ -1,14 +1,14 @@
 <?php
 namespace App\Models\Modules\Viper;
 
-use App\Traits\Points\Points;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory, SoftDeletes, Points;
+    use HasFactory, SoftDeletes, HasPoints;
 
     protected $table = 'projects';
     protected $primaryKey = 'bpin';

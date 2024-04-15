@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 use App\Models\Ipats;
 use App\Models\Ditra\DataDitra;
 use App\Models\Ditra\Incident;
-use App\Models\CriminalActs;
+use App\Models\Villavicencio\CriminalActs;
 
 /**
  * Controlador para Menu's
@@ -62,17 +62,17 @@ class HeatmapController extends Controller
         switch ($sub_domain)
         {
             case 'villavicencio':
-                    $data = CriminalActs::select('coordinates')->get();
+                    $data = CriminalActs::select('latitude', 'longitude')->get();
                     $features = [];
                     foreach ($data as $row) {
-                        $coordinates = json_decode($row->coordinates);
+
                         $feature = [
                             "type" => "Feature",
                             "geometry" => [
                                 "type" => "Point",
                                 "coordinates" => [
-                                    $coordinates->lat,
-                                    $coordinates->lng
+                                    $row->latitude,
+                                    $row->longitude
                                 ]
                             ]
                         ];
@@ -127,17 +127,13 @@ class HeatmapController extends Controller
 
         $features = [];
         foreach ($data as $row) {
-            $coordenadas = explode(', ', $row->coordinates);
-    
-            $latitud = (float)$coordenadas[1];
-            $longitud = (float)$coordenadas[0];
     
             $feature = [
                 "type" => "Feature",
                 "geometry" => [
                     "type" => "Point",
                     "coordinates" => [
-                        $longitud, $latitud
+                        (float)$row->latitude, (float)$row->longitude
                     ]
                 ],
                 'specialType' => 4,

@@ -18,15 +18,13 @@ class ReportsSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::table('reports')->insert([
+        DB::table('reports_data')->insert([
             [
                 'id' => 1,
                 'slug' => 6,
                 'name' => 'Incidentes',
                 'description' => 'Incidentes Villavicencio',
                 'namespace' => 'App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'id' => 2,
@@ -34,8 +32,6 @@ class ReportsSeeder extends Seeder
                 'name' => 'Ipats',
                 'description' => 'Incidentes automovilisticos',
                 'namespace' => 'App\Strategies\StrategiesReports\Villavicencio\StrategyIpatsReports',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
         ]);
     }

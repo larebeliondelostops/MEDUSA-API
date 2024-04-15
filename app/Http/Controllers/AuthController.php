@@ -98,7 +98,7 @@ class AuthController extends Controller
 
     }
 
-    public function loginGoogle(Request $request)
+    /* public function loginGoogle(Request $request)
     {
         try {
             
@@ -170,7 +170,7 @@ class AuthController extends Controller
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
-    }
+    } */
 
     /**
      * Método para realizar el registro en el sistema de un usuario

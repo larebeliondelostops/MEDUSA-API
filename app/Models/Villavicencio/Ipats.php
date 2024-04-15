@@ -2,6 +2,7 @@
 
 namespace App\Models\Villavicencio;
 
+use App\Models\Indicator;
 use App\Traits\Points\HasPoints;
 use App\Traits\Heatmaps\HasHeatmap;
 use Illuminate\Database\Eloquent\Model;
@@ -80,6 +81,11 @@ class Ipats extends Model
 		// Asignar el día de la semana al atributo dayOfWeek
 		$this->dayOfWeek = $dayOfWeek;
 	}
+
+	public function Indicator()
+    {
+        return $this->belongsTo(Indicator::class, 'indicator');
+    }
 
 	private function pointProperties()
     {

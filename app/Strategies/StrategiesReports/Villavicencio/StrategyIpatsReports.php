@@ -309,10 +309,10 @@ class StrategyIpatsReports implements ReportActionsInterface
         foreach (Indicator::whereBetween('id', [11, 15])->get() as $indicador) {
             if ($indicadores_usados->contains($indicador->id)) {
                 $series[] = $incidentes->where('indicator', $indicador->id)->count();
-                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->Name;
+                $labels[] = $incidentes->where('indicator', $indicador->id)->first()->Indicator->name;
             } else {
                 $series[] = 0;
-                $labels[] = $indicador->Name;
+                $labels[] = $indicador->name;
             }
         }
 
@@ -381,7 +381,7 @@ class StrategyIpatsReports implements ReportActionsInterface
             }
 
             $series[] = [
-                'name'  => $incidente_por_tipo_incidente->Indicator->Name,
+                'name'  => $incidente_por_tipo_incidente->Indicator->name,
                 'data' => $data
             ];
 
@@ -394,7 +394,7 @@ class StrategyIpatsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por día de la semana' : '# Incidentes por día de la semana',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por día de la semana' : '# Incidentes por día de la semana',
             'date' =>  $date,
             'series' => $series,
             'labels' => Helper::DAY_NAME,
@@ -596,7 +596,7 @@ class StrategyIpatsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => Indicator::find($this->indicator)->Name . ' por día de la semana y rango de horas',
+            'title' => Indicator::find($this->indicator)->name . ' por día de la semana y rango de horas',
             'date' =>  $date,
             'series' => $series,
             //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -609,9 +609,9 @@ class StrategyIpatsReports implements ReportActionsInterface
     public function incidentsTopAgents()
     {
         if (isset($this->request->start) && isset($this->request->end)) {
-            $incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
         } else {
-            $incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'date_ipat')->get();
         }
 
         $incidents = $incidents->groupBy('id_agent')->toArray();
@@ -658,9 +658,9 @@ class StrategyIpatsReports implements ReportActionsInterface
     public function incidentsHeatMap()
     {
         if (isset($this->request->start) && isset($this->request->end)) {
-            $incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
         } else {
-            $incidents = Incident::select('id_agent', 'injured', 'victims', 'coordinates', 'date_ipat')->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'date_ipat')->get();
         }
 
         $incidents->each(function ($incident) {

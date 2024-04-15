@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Strategies\StrategiesReports\Villavicencio;
-
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Helpers\Helper;
 use App\Models\Villavicencio\Incident;
@@ -51,7 +51,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         foreach ($this->indicadores as $type) {
             $data = [];
-            $this->indicator = $type['indicator_id'] ?? null;
+            $this->indicator = $type ?? null;
             $data = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
@@ -321,7 +321,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         foreach (Indicator::all() as $indicador) {
             if ($indicadores_usados->contains($indicador->id)) {
                 $series[] = $incidentes->where('indicator_id', $indicador->id)->count();
-                $labels[] = $incidentes->where('indicator_id', $indicador->id)->first()->Indicator->Name;
+                $labels[] = $incidentes->where('indicator_id', $indicador->id)->first()->Indicator->name;
             } else {
                 $series[] = 0;
                 $labels[] = $indicador->name;
@@ -372,12 +372,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
         foreach ($incidentes_por_tipo_incidente as $incidente_por_tipo_incidente) {
             if (isset($this->request->start) && isset($this->request->end)) {
                 $incidentes_por_dia = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->where('indicator_id', $incidente_por_tipo_incidente->indicator)
+                    ->where('indicator_id', $incidente_por_tipo_incidente->indicator_id)
                     ->selectRaw('day, COUNT(*) as count')
                     ->groupBy('day')
                     ->get();
             } else {
-                $incidentes_por_dia = Incident::where('indicator_id', $incidente_por_tipo_incidente->indicator)
+                $incidentes_por_dia = Incident::where('indicator_id', $incidente_por_tipo_incidente->indicator_id)
                     ->selectRaw('day, COUNT(*) as count')
                     ->groupBy('day')
                     ->get();

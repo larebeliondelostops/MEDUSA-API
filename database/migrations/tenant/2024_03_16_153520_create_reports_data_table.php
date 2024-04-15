@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('reports_data', function (Blueprint $table) {
             $table->id();
             $table->integer('slug');
             $table->foreign('slug')->references('id')->on('slugs');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('reports_data');
     }
 };

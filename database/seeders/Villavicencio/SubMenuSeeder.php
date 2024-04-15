@@ -88,9 +88,9 @@ class SubMenuSeeder extends Seeder
               "menu": 7,
               "level": 2,
               "name": "Ipats",
-              "path": "reports/ipats",
+              "path": "reports/ipat",
               "icon": "error",
-              "slug": "ipats",
+              "slug": "ipat",
               "enabled": true,
               "created_at": "2023-10-06 17:23:06",
               "updated_at": "2023-10-06 17:23:07"

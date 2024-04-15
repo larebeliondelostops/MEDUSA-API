@@ -14,73 +14,80 @@ class ModulesSeeder extends Seeder
      */
     public function run()
     {
-        /**
-         * Marcadores para villavicencio
-         */
-        DB::table('modules')->insert([
-            [
-                'id' => 1,
-                'name' => 'Usuarios',
-                'slug' => 10,
-                'description' => 'Módulo para la gestión de usuarios',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyAlarms',
+        $data = '
+        {
+          "array":[
+            {
+              "id": 1,
+              "name": "Usuarios",
+              "description": "Módulo para la gestión de usuarios",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 2,
+              "name": "Eventos",
+              "description": "Módulo para la gestión de eventos",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 3,
+              "name": "Salud",
+              "description": "Módulo para la gestión de salud",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 4,
+              "name": "Gobierno",
+              "description": "Módulo para la gestión de gobierno",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 5,
+              "name": "Cámaras",
+              "description": "Módulo para la gestión de cámaras",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 6,
+              "name": "Alarmas",
+              "description": "Módulo para la gestión de las alarmas",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 7,
+              "name": "Mesas de votación",
+              "description": "Módulo para la gestión de las mesas de votación (lugares)",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            },
+            {
+              "id": 8,
+              "name": "Configuraciones",
+              "description": "Modulo para configurar los parametros de inicio de la plataforma",
+              "created_at": "2023-09-27 22:17:26",
+              "updated_at": "2023-09-27 22:17:26"
+            }
+          ]
+        }
+
+        ';
+
+        $dataArray = json_decode($data, true);
+
+        foreach ($dataArray['array'] as $Data) {
+            DB::table('modules')->insert([
+                'id' => $Data['id'],
+                'name' => $Data['name'],
+                'description' => $Data['description'],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Eventos',
-                'slug' => 55,
-                'description' => 'Módulo para la gestión de eventos',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyEvents',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'Salud',
-                'slug' => 3,
-                'description' => 'Módulo para la gestión de salud',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyHealth',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 4,
-                'name' => 'Cais',
-                'slug' => 2,
-                'description' => 'Módulo para la gestión de cais',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyCais',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 5,
-                'name' => 'Cámaras',
-                'slug' => 50,
-                'description' => 'Módulo para la gestión de cámaras',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyCameras',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 6,
-                'name' => 'Alarmas',
-                'slug' => 1,
-                'description' => 'Módulo para la gestión de las alarmas',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyAlarms',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 7,
-                'name' => 'Mesas de votación',
-                'slug' => 4,
-                'description' => 'Módulo para la gestión de las mesas de votación (lugares)',
-                'namespace' => 'App\Strategies\StrategiesCruds\Villavicencio\StrategyVotingTables',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+            ]);
+        }
     }
 }

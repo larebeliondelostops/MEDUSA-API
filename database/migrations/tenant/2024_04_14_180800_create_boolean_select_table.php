@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('boolean_select', function (Blueprint $table) {
             $table->id();
-            $table->value();
+            $table->string('value');
             $table->timestamps();
         });
     }

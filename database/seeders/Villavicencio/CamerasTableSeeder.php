@@ -19,240 +19,1469 @@ class CamerasTableSeeder extends Seeder
     {
         $data = '
         {
-          "array": [
+          "array":  [
             {
-              "Latitud": 4.7087482,
-              "Longitud": -74.0538622,
-              "UBICACION": "Autopista norte calle 127a",
-              "NOVEDAD": "sin senal"
+              "name": "IGLESIA PORFIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.082492168,
+                        -73.6694145
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7602914,
-                "Longitud": -74.02632129999999,
-                "UBICACION": "Carrera 7 con Calle 183",
-                "NOVEDAD": "sin senal"
+              "name": "BARRIO MONTECARLO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.104435675,
+                        -73.6564804
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7627932,
-                "Longitud": -74.0273232,
-                "UBICACION": "Carrera 7 con Calle 186",
-                "NOVEDAD": "funcionando"
+              "name": "PUENTE UNION RECREO Y POPULAR",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.142513528,
+                        -73.6124916
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.8203639,
-                "Longitud": -74.0347874,
-                "UBICACION": "Carrera 7 con Calle 245",
-                "NOVEDAD": "funcionando"
+              "name": "ENTRADA M CENTAUROS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.115452504,
+                        -73.6343266
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7152789,
-                "Longitud": -74.0520977,
-                "UBICACION": "Carrera 45 con Calle 183",
-                "NOVEDAD": "sin senal"
+              "name": "ENTRADA LA SALLE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150838507,
+                        -73.6408079
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7152789,
-                "Longitud": -74.0520977,
-                "UBICACION": "Carrera 45 con Calle 224",
-                "NOVEDAD": "funcionando"
+              "name": "CC VILLLA JULIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.154000353,
+                        -73.6353551
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.8012227,
-                "Longitud": -74.0351481,
-                "UBICACION": "Carrera 7 con Calle 224",
-                "NOVEDAD": "funcionando"
+              "name": "TRANSITO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150313337,
+                        -73.6206604
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.769724099999999,
-                "Longitud": -74.04305130000002,
-                "UBICACION": "Autopista Norte Calle 192",
-                "NOVEDAD": "sin senal"
+              "name": "CHANTILLY VIZCAYA - HACARITAMA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.12653531,
+                        -73.6160647
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7647547,
-                "Longitud": -74.0445408,
-                "UBICACION": "Autopista Norte Calle 187",
-                "NOVEDAD": "funcionando"
+              "name": "ESTADIO BOMBONERA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.139742765,
+                        -73.6141847
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.6962964,
-                "Longitud": -73.9631426,
-                "UBICACION": "Via la Calera ",
-                "NOVEDAD": "funcionando"
+              "name": "PUENTE ESPERANZA ENTRE 6 Y 7",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.128946092,
+                        -73.6314078
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.528659,
-                "Longitud": -73.922968,
-                "UBICACION": "Via Bogota a Choachi km 11",
-                "NOVEDAD": "funcionando"
+              "name": "COLEGIO COFREM",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.147111003,
+                        -73.6198352
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.528659,
-                "Longitud": -73.922968,
-                "UBICACION": "Via Bogota a Choachi km 12",
-                "NOVEDAD": "funcionando"
+              "name": "BOMBA LA SABANA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.148066504,
+                        -73.6246818
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.528659,
-                "Longitud": -73.922968,
-                "UBICACION": "Via Bogota a Choachi km 13",
-                "NOVEDAD": "funcionando"
+              "name": "BOMBA ESSO VIA MARACOS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.135400999,
+                        -73.6180555
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.528659,
-                "Longitud": -73.922968,
-                "UBICACION": "Via Bogota a Choachi km 02",
-                "NOVEDAD": "sin senal"
+              "name": "COLEGIO ABRAHAM LINCOLN",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.143106706,
+                        -73.6263363
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.5100381,
-                "Longitud": -74.1178322,
-                "UBICACION": "Calle 78 bis sur Carrera 14C bis",
-                "NOVEDAD": "funcionando"
+              "name": "ENTRADA ALBORADA BOMBA TEXACO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.125115756,
+                        -73.6193326
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.1491688,
-                "Longitud": -73.6285475,
-                "UBICACION": "Via Bogota a Villavicencio",
-                "NOVEDAD": "sin senal"
+              "name": "BARRIO INDUSTRIAL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153469819,
+                        -73.6274772
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.710988599999999,
-                "Longitud": -74.072092,
-                "UBICACION": "Via Villavicencio a Bogota ",
-                "NOVEDAD": "sin senal"
+              "name": "LAVAUTOS LOS TIGRES",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.147876665,
+                        -73.6292444
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.6050245,
-                "Longitud": -74.1855748,
-                "UBICACION": "Calle 65C sur con  Carrera 77G",
-                "NOVEDAD": "sin senal"
+              "name": "COLEGIO FEMENINO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.135838412,
+                        -73.6279773
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.6051252,
-                "Longitud": -74.1852619,
-                "UBICACION": "Carrera 77G con Calle 65B sur",
-                "NOVEDAD": "funcionando"
+              "name": "MEGA COLEGIO LA RELIQUIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.123763189,
+                        -73.5424442
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.5852206,
-                "Longitud": -74.1004512,
-                "UBICACION": "Calle 17 con Carrera 137A",
-                "NOVEDAD": "sin senal"
+              "name": "RELIQUIA CENTRO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.127308594,
+                        -73.547041
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.5852206,
-                "Longitud": -74.1004512,
-                "UBICACION": "Calle 17 con Carrera 137A",
-                "NOVEDAD": "funcionando"
+              "name": "CALLE DE LAS FERRETERIAS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150179234,
+                        -73.6343508
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.5852206,
-                "Longitud": -74.1004512,
-                "UBICACION": "Calle 17 con Carrera 137A",
-                "NOVEDAD": "funcionando"
+              "name": "ENTRADA RECREO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.146161609,
+                        -73.611611
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7243042,
-                "Longitud": -74.1231511,
-                "UBICACION": "Calle 80 con Carrera 116B",
-                "NOVEDAD": "funcionando"
+              "name": "PORFIA BARRIO PLAYITA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.07908049,
+                        -73.6742013
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.6947594,
-                "Longitud": -74.0878288,
-                "UBICACION": "Calle 80 con Carrera 116C",
-                "NOVEDAD": "funcionando"
+              "name": "BARRIO SANTA FE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.149752104,
+                        -73.6254501
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7590374,
-                "Longitud": -74.0773454,
-                "UBICACION": "Calle 170 con Carrera 92",
-                "NOVEDAD": "sin senal"
+              "name": "PORFIA GAVIONES",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.083909619,
+                        -73.6715228
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7635019,
-                "Longitud": -74.0447435,
-                "UBICACION": "Autopista Norte con Calle 185",
-                "NOVEDAD": "sin senal"
+              "name": "RESPALDO CLINICA META",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.144027455,
+                        -73.6367259
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7793983,
-                "Longitud": -74.0415879,
-                "UBICACION": "Autopista Norte con Calle 200 ",
-                "NOVEDAD": "sin senal"
+              "name": "HATO GRANDE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.147121965,
+                        -73.6176239
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.676980,
-                "Longitud": -74.034548,
-                "UBICACION": "km 2 Via la Calera",
-                "NOVEDAD": "funcionando"
+              "name": "PORFIA BANCO CONGENTE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.078543968,
+                        -73.6694246
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.487534,
-                "Longitud": -74.106138,
-                "UBICACION": "Carrera 6B Este con Calle 115 sur",
-                "NOVEDAD": "funcionando"
+              "name": "CAMELIAS PLANCHON",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.137103722,
+                        -73.6105586
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.492640,
-                "Longitud": -74.104323,
-                "UBICACION": "Carrera 1 Diagonal 98G sur",
-                "NOVEDAD": "funcionando"
+              "name": "PLAZOLETA LOS CENTAUROS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.151005058,
+                        -73.6361089
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.649271,
-                "Longitud": -74.172145,
-                "UBICACION": "Carrera 1 con Calle 97C sur",
-                "NOVEDAD": "funcionando"
+              "name": "IGLESIA BUQUE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.137608398,
+                        -73.6476916
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.5165359,
-                "Longitud": -74.0892955,
-                "UBICACION": "Calle 81 bis sur con Carrera 15 bis Este",
-                "NOVEDAD": "sin senal"
+              "name": "LLANO ABASTOS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.123176586,
+                        -73.6117336
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.505192699999999,
-                "Longitud": -74.1127954,
-                "UBICACION": "Carrera 1F con Calle 91 sur",
-                "NOVEDAD": "funcionando"
+              "name": "SEPTIMA BRIGADA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.119375462,
+                        -73.6153347
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.514613499999999,
-                "Longitud": -74.1212365,
-                "UBICACION": "Calle 74b bis sur con Carrera 14U",
-                "NOVEDAD": "sin senal"
+              "name": "ETELL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.13113547,
+                        -73.6285029
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7996605,
-                "Longitud": -74.0462491,
-                "UBICACION": "Calle 222 con Carrera 45 ",
-                "NOVEDAD": "funcionando"
+              "name": "GAITAN MOTELES",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.143131182,
+                        -73.6285841
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7797892,
-                "Longitud": -74.0494239,
-                "UBICACION": "Carrera 7 con Calle 201",
-                "NOVEDAD": "funcionando"
+              "name": "MEGA COLEGIO CALDAS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.148978012,
+                        -73.6317051
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7734381,
-                "Longitud": -74.0484667,
-                "UBICACION": "Calle 195 con Carrera45 ",
-                "NOVEDAD": "funcionando"
+              "name": "BARRIO VILLA JULIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153025932,
+                        -73.6322248
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7603315,
-                "Longitud": -74.0403642,
-                "UBICACION": "Carrera 45 con Diagonal 183A",
-                "NOVEDAD": "funcionando"
+              "name": "EL NOGAL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.139431758,
+                        -73.625789
+                      ]
+                    }
+                  }
+                ]
+              }
             },
             {
-                "Latitud": 4.7152789,
-                "Longitud": -74.0520977,
-                "UBICACION": "Carrera 45 con Calle 198",
-                "NOVEDAD": "funcionando"
+              "name": "VILLA SUAREZ",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.154188794,
+                        -73.615248
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO CALAMAR",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153491165,
+                        -73.6132963
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO PLAYA RICA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.107297738,
+                        -73.660721
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO ANTONIO PINILLA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.133186653,
+                        -73.5885898
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BOMBEROS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153995923,
+                        -73.6344848
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ENTRADA POPULAR CEIBA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.141934227,
+                        -73.6170945
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ENTRADA COVISAN",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.137229625,
+                        -73.5867173
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "7 DE AGOSTO PLAZA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.14146709,
+                        -73.6376209
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "IGLESIA JORDAN",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.152681062,
+                        -73.6219415
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "P SALUD BARRIO COMUNEROS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.12396548,
+                        -73.6264263
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "VILLA SUAREZ",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.133919409,
+                        -73.6376273
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO CALAMAR",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153491165,
+                        -73.6132963
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "PARQUE FUNDADORES",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.123398069,
+                        -73.6427047
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "VILLA DEL SOL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.139693475,
+                        -73.6084591
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "SAN JOSE ENTRADA PRINCIPAL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.147040476,
+                        -73.6406753
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CAUDAL ALTO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.159507285,
+                        -73.6390251
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CAI GALAN",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.155571492,
+                        -73.6565583
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO EL RETIRO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.141626625,
+                        -73.6243205
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "REGISTRADURIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150503866,
+                        -73.639455
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "SAN JOSE, (via BARZAL Bajo)",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.147608061,
+                        -73.6400788
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ENTRADA MONTECARLO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.098903735,
+                        -73.6551367
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "HOTEL BAHIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.133879219,
+                        -73.613117
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ENTRADA BRISAS DE GUATIQUIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.153925884,
+                        -73.6273276
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CHANTILLY VILLA BOLIVAR",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.123404207,
+                        -73.6336132
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO ESTERO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.129288068,
+                        -73.6129116
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "POLIDEPORTIVO BRISAS GUATIQUIA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.155344425,
+                        -73.6286006
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "BARRIO 7 DE AGOSTO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.14128166,
+                        -73.6389936
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "PUENTE LA CRUZ",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150079161,
+                        -73.6395551
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "PIEL CANELA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.141316296,
+                        -73.6318753
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "ENTRADA CANTA RANA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.134614751,
+                        -73.6221623
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "DIAN",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.150873462,
+                        -73.6374085
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "COLEGIO BARRIO SAN JOSE",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.14791563,
+                        -73.6432183
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "PLAZA DE MERCADO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.151647192,
+                        -73.6330589
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "EXITO VECINO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.151963462,
+                        -73.6351372
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CLINICA MARTHA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.146931616,
+                        -73.6389157
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "GLORIETA DAS",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.14454629,
+                        -73.6433724
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "EXITO DE LA SABANA",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.126589895,
+                        -73.6378572
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "MANANTIAL",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.145280801,
+                        -73.6063572
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "CALLE 36 DIVINO NIÑO",
+              "address": "PU",
+              "estado": "funcionando",
+              "pointCoordinates": {
+                "features": [
+                  {
+                    "type": "Feature",
+                    "geometry": {
+                      "type": "Point",
+                      "coordinates": [
+                        4.151220681,
+                        -73.6348115
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -262,17 +1491,16 @@ class CamerasTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
         //constante de usrl
         $url = 'https://villavicencio.medusaapi.online/api/v1/ver-video1';
-        $i = 0;
         foreach ($dataArray['array'] as $Data) {
-          //nombre "camara 1", camara 2, etc
-            $nombre = "Camara " . ($i + 1);
+
             DB::table('cameras')->insert([
-                'name' => $nombre,
+                'name' => $Data['name'],    
                 'uuid'=> Str::uuid(),
-                'address' => $Data['UBICACION'],
+                'address' => $Data['address'],
                 'url' => $url,
-                'latitude' => $Data['Latitud'],
-                'longitude' => $Data['Longitud'],
+                'state' => $Data['estado'],
+                'latitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][0],
+                'longitude' => $Data['pointCoordinates']['features'][0]['geometry']['coordinates'][1],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

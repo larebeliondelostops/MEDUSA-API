@@ -320,7 +320,8 @@ class NotificationAppController extends Controller
                         ],
                         'properties' => [
                             'active' => $movil->is_active_position
-                        ]
+                        ],
+                        'specialType' => 6
                     ];
             }
 

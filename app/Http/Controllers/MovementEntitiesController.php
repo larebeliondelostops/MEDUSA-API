@@ -137,7 +137,8 @@ class MovementEntitiesController extends Controller
                     ],
                     "properties" => [
                         "active" => true
-                    ]
+                    ],
+                    'specialType' => 6
                 ];
 
             }
@@ -203,7 +204,8 @@ class MovementEntitiesController extends Controller
                     ],
                     "properties" => [
                         "active" => true
-                    ]
+                    ],
+                    'specialType' => 6
                 ];
 
             }

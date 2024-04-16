@@ -48,7 +48,7 @@ class StrategyMobility implements PointsInterface
             $mobility = [
                 'title' => $busStop->name,
                 'properties' => [
-                    'ParaderosSETP' => $busStop->paraderosSETP,
+                    'ParaderosSETP' => $busStop->bus_stop_setp,
                 ]
             ];
 

@@ -28,7 +28,7 @@ class StrategyAlarms implements PointsInterface
         $alarm = [
             'title' => $alarm->name,
             'properties' => [
-                'id' => $alarm->uuid,
+                //'id' => $alarm->uuid,
                 'Direccion' => $alarm->address,
             ]
         ];

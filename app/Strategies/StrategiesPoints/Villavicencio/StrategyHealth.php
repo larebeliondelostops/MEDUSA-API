@@ -35,18 +35,18 @@ class StrategyHealth implements PointsInterface
             'title' => $health->name,
             'properties' => [
                 'Direccion' => $health->address,
-                'Pacientes en Emergencia' => $health->emergencyPatients ?? null,
-                'Camas de Emergencia Disponibles' => $health->emergencyBedsAvailable ?? null,
-                'Quirófanos Disponibles' => $health->availableOperatingRooms ?? null,
-                'Unidad de Cuidados Intensivos Disponible' => $health->intensiveCareUnitAvailable ?? null,
-                'Camas de Primer Nive' => $health->firstLevelBeds ?? null,
-                'Camas de Segundo Nivel' => $health->secondLevelBeds ?? null,
-                'Camas de Tercer Nivel' => $health->thirdLevelBeds ?? null,
-                'Banco de Sangre' => $health->bloodBank ?? null,
-                'Médicos en Turno' => $health->doctorsInTheShift ?? null,
-                'Enfermeras en Turno' => $health->nursesInTheShift ?? null,
-                'IPS Afiliada' => $health->affiliatedIps ?? null,
-                'Número de Emergencias al Día' => $health->numberOfEmergenciesDay ?? null
+                'Pacientes en Emergencia' => $health->emergency_patients ?? null,
+                'Camas de Emergencia Disponibles' => $health->emergency_beds_vailable ?? null,
+                'Quirófanos Disponibles' => $health->available_operating_rooms ?? null,
+                'Unidad de Cuidados Intensivos Disponible' => $health->intensive_care_unit_available ?? null,
+                'Camas de Primer Nive' => $health->first_level_beds ?? null,
+                'Camas de Segundo Nivel' => $health->second_level_beds ?? null,
+                'Camas de Tercer Nivel' => $health->third_level_beds ?? null,
+                'Banco de Sangre' => $health->blood_bank ?? null,
+                'Médicos en Turno' => $health->doctors_in_the_shift ?? null,
+                'Enfermeras en Turno' => $health->nurses_in_the_shift ?? null,
+                'IPS Afiliada' => $health->affiliated_ips ?? null,
+                'Número de Emergencias al Día' => $health->number_of_emergencies_day ?? null
             ]
         ];
 

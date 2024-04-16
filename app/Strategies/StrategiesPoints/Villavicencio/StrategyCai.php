@@ -6,7 +6,7 @@ use Exception;
 use App\Models\Villavicencio\Cais;
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Request\cai\CaiRequest;
+use App\Http\Requests\Villavicencio\CaiRequest;
 use Illuminate\Support\Facades\Response;
 use App\Interfaces\Markers\PointsInterface;
 
@@ -44,7 +44,7 @@ class StrategyCai implements PointsInterface
     public function getOne($id)
     {
         try {
-            $cai = Cai::find($id);
+            $cai = Cais::find($id);
 
             $transformedData = [];
 
@@ -77,10 +77,10 @@ class StrategyCai implements PointsInterface
             $end = $request->end;
 
             if ($start && $end) {
-                $cais = Cai::whereBetween('created_at', [$start, $end])
+                $cais = Cais::whereBetween('created_at', [$start, $end])
                     ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             } else {
-                $cais = Cai::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                $cais = Cais::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }
 
             $transformedData = [];
@@ -136,7 +136,7 @@ class StrategyCai implements PointsInterface
             }
 
             //$entidades = Entidades::create($request->all());
-            $cai = new Cai();
+            $cai = new Cais();
             $cai->name = $request->name;
             $cai->address = $request->address;
             $cai->pointCoordinates = json_encode($request->pointCoordinates);
@@ -177,7 +177,7 @@ class StrategyCai implements PointsInterface
             //     ], 400, [], JSON_PRETTY_PRINT);
             // }
 
-            $cai = Cai::find($id);
+            $cai = Cais::find($id);
             if ($request->name != null) {
                 $cai->name = $request->name;
             }
@@ -213,7 +213,7 @@ class StrategyCai implements PointsInterface
     {
         try {
 
-            return Cai::destroy($id);
+            return Cais::destroy($id);
 
             return Response::json([
                 'status' => 'succes',
@@ -243,7 +243,7 @@ class StrategyCai implements PointsInterface
 
             // Recorrer el array de JSON y guardar cada elemento en la base de datos
             foreach ($request->array as $Data) {
-                $cai = new Cai();
+                $cai = new Cais();
                 $cai->name = $Data['name'];
                 $cai->address = $Data['address'];
                 $cai->pointCoordinates = json_encode($Data['pointCoordinates']);

@@ -36,9 +36,9 @@ class StrategyPollingPlace implements PointsInterface
             'title' => $pollingPlace->name,
             'properties' => [
                 'Direccion' => $pollingPlace->address,
-                'Potencial de mujeres' => $pollingPlace->potencialWomen,
-                'Potencial de hombres' => $pollingPlace->potencialMen,
-                'Total Votos' => $pollingPlace->totalVotes,
+                'Potencial de mujeres' => $pollingPlace->potential_women,
+                'Potencial de hombres' => $pollingPlace->potential_men,
+                'Total Votos' => $pollingPlace->total_votes,
                 'Mesas' => $pollingPlace->tables,
             ]
         ];

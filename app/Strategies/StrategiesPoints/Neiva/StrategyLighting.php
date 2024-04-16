@@ -28,21 +28,22 @@ class StrategyLighting implements PointsInterface
         $lightings = [
             'title' => $lightings->name,
             'properties' => [
-                'name' => $lightings->name,
-                'farola' => $lightings->farola,
-                'sticker' => $lightings->sticker,
-                'potencia' => $lightings->potencia,
-                'tecnologia' => $lightings->tecnologia,
-                'cuadrante' => $lightings->cuadrante,
-                'departamento' => $lightings->departamento,
-                'municipio' => $lightings->municipio,
-                'w' => $lightings->w,
-                'h' => $lightings->h,
-                'transformador' => $lightings->transformador,
-                'imagen' => $lightings->imagen,
+                'Nombre' => $lightings->name,
+                'Poste' => $lightings->street_light,
+                'Sticker' => $lightings->sticker,
+                'Potencia' => $lightings->power,
+                'Tecnología' => $lightings->technology,
+                'Cuadrante' => $lightings->quadrant,
+                'Departamento' => $lightings->department,
+                'Municipio' => $lightings->municipality,
+                'Ancho' => $lightings->width,
+                'Alto' => $lightings->height,
+                'Soporte' => $lightings->support,
+                'Transformador' => $lightings->transformer,
+                'Imagen' => $lightings->image,
+                
             ]
         ];
-
         return $lightings;
     }
 }

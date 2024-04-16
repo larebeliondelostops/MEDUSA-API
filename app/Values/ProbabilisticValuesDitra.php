@@ -2,16 +2,16 @@
 
 namespace App\Values;
 
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyNAProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyChoqueProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyChoqueObjetoProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyVolcamientoLateralProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyVolcamientoProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategySalidaCalzadaProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyAtropelloProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyCaidaOcupanteProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyOtroProbabilistic;
-use App\Strategies\StrategyProbabilistic\Ditra\StrategyAccidentsProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyNAProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyChoqueProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyChoqueObjetoProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyVolcamientoLateralProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyVolcamientoProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategySalidaCalzadaProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyAtropelloProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyCaidaOcupanteProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyOtroProbabilistic;
+use App\Strategies\StrategiesProbabilistic\Ditra\StrategyAccidentsProbabilistic;
 
 class ProbabilisticValuesDitra
 {

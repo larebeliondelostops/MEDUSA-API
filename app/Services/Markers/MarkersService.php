@@ -4,6 +4,7 @@ namespace App\Services\Markers;
 
 use App\Models\Marker;
 use App\Factories\MarkerFactory;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Markers\MarkersByDomain;
 use App\Interfaces\Markers\MarkersInterface;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,20 @@ class MarkersService implements MarkersInterface
 
     public function allPoints()
     {
-        $pointsMarkers = Marker::where('marker_type', 1 )->pluck('slug')->toArray();
+        $user = Auth::user();
+
+        $permisos = $user->getAllPermissions()->pluck('name');
+
+        $permisos = $permisos->filter(function ($item) {
+            return strpos($item, 'commandbar-') === 0;
+        });
+
+        $permisos = $permisos->map(function ($item) {
+            // Obtener la parte después del guion
+            return substr($item, strpos($item, '-') + 1);
+        });
+
+        $pointsMarkers = Marker::where('marker_type', 1 )->whereIn('name', $permisos->toArray())->pluck('slug')->toArray();
 
         $points = [];
 

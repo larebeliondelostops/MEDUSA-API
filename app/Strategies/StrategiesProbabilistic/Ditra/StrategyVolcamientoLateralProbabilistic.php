@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Strategies\StrategyProbabilistic\Ditra;
+namespace App\Strategies\StrategiesProbabilistic\Ditra;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;

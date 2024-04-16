@@ -43,7 +43,7 @@ class IncidentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'IndicatorId' => 'required|exists:Indicators,id|integer',
+            'IndicatorId' => 'required|exists:indicators,id|integer',
             //'address' => 'required|string',
             'description' => 'required|string',
             'pointCoordinates' => 'required',

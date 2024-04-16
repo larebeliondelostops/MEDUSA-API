@@ -12,6 +12,8 @@ class Tollbooth extends Model
 
     protected $table = 'tollbooth';
 
+    private $slug = 'tolls';
+
     protected $fillable = [
         'uuid', 'id_peaje', 'name', 'state', 'project', 'electronic', 'cod_via', 'pr', 'department', 'municipality', 'coordinates'
     ];

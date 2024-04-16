@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Strategies\StrategyReports\Ditra;
+namespace App\Strategies\StrategiesReports\Ditra;
 
 use Carbon\Carbon;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Models\Ditra\Indicator;
 use App\Models\Ditra\Incidents as Incident;
-use App\Interfaces\Reports\ReportInterface;
+use App\Interfaces\Reports\ReportActionsInterface;
 
-class StrategyIncidentsReports implements ReportInterface
+class StrategyIncidentsReports implements ReportActionsInterface
 {
     private $indicator;
     private $request;
 
-    public function getReportsData(Request $request)
+    public function getReportsData(Request $request, )
     {
         $this->request = $request;
 
@@ -60,7 +60,7 @@ class StrategyIncidentsReports implements ReportInterface
             'reportsData' => $generalData
         ];
 
-        return response()->json($data);
+        return $data;
     }
 
     public function cardsIncidents()
@@ -609,16 +609,12 @@ class StrategyIncidentsReports implements ReportInterface
 
     public function points()
     {
-        $incidents = Incident::where('indicator', $this->indicator)->whereNotNull('position')->get();
+        $incidents = Incident::where('indicator', $this->indicator)->whereNotNull(['latitude', 'longitude'])->get();
 
         $incidents = $incidents->map(function ($incident) {
-            $coordenadas = explode(', ', $incident->position);
 
-            // Convierte los valores en números
-            $latitud = (float)$coordenadas[1];
-            $longitud = (float)$coordenadas[0];
+            return [(float)$incident->latitude , (float)$incident->longitude];
 
-            return [$longitud , $latitud];
         });
 
         $incidents = [

@@ -40,7 +40,8 @@ class NotificationAppController extends Controller
                     'id_user' => $user->id,
                     'device_token' => $deviceToken,
                     'is_active' => true, // Puedes establecer el valor por defecto según tus necesidades
-                    'position' => null,
+                    'latitude' => null,
+                    'longitude' => null,
                     'is_active_position' => false,
                 ]);
 

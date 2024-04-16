@@ -12,6 +12,8 @@ class DataDitra extends Model
 
     protected $table = 'data_ditra';
 
+    private $slug = 'incident';
+
     protected $fillable = [
         'year', 'uuid', 'occurrence_date', 'month', 'day', 'hour', 'hour_range', 'sectional', 'coordinates',
         'assigned', 'identification', 'grade', 'names', 'last_names', 'age', 'age_range', 'gender',

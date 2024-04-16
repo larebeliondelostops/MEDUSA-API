@@ -39,7 +39,7 @@ class IncidentController extends Controller
 
             $transformedData = [];
             foreach ($incidents as $incident) {
-                $coordinates = $incident->position;
+                $coordinates = $incident->latitude . ', ' .$incident->longitude;
                 //$geometry = $coordinates['features'][0]['geometry'];
 
                 $transformedData[] = [
@@ -84,7 +84,7 @@ class IncidentController extends Controller
                 $transformedData[] = [
                     'ID' => $incident->id,
                     'Nombre' => $incident->description,
-                    'Indicador' => $incident->Indicator->Name,
+                    'Indicador' => $incident->Indicator->name,
                     'Direccion' => $incident->address,
                     'Fecha' => substr($incident->created_at, 0, 10),
                 ];
@@ -123,7 +123,7 @@ class IncidentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(IncidentRequest $request)
-    {
+    {        
         $user = $request->user(); // Obtener el usuario actual
 
         // Aplicar límite de tasa por usuario
@@ -160,13 +160,16 @@ class IncidentController extends Controller
 
             $photo = Storage::disk('public')->put('', $request->file('image'));
 
+            $coordenadas = explode(',', $request->pointCoordinates);
+
             $incident = new Incident();
             $incident->uuid = Uuid::uuid4()->toString();
-            $incident->indicator = $request->IndicatorId;
+            $incident->indicator_id = 1;
             $incident->address = $request->address;
             $incident->description = $request->description;
             $incident->image = $photo;
-            $incident->position = $request->pointCoordinates;
+            $incident->latitude = $coordenadas[1];
+            $incident->longitude = $coordenadas[0];
             $incident->day = Carbon::now()->dayOfWeek;
             $incident->month = date('m');
             $incident->year = date('Y');
@@ -207,13 +210,13 @@ class IncidentController extends Controller
                 'status' => 'succes',
                 'data' => [
                     'id' => $incident->uuid,
-                    'indicator' => $incident->indicator,
+                    'indicator' => $incident->indicator_id,
                     'date' => $incident->created_at,
                     'address' => $incident->address,
                     'description' => $incident->description,
                     'image' => tenant('id') . '/' . $incident->image,
                     'position' => $incident->position,
-                    'titile' => $incident->Indicator->Name
+                    'titile' => $incident->Indicator->name
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -302,12 +305,13 @@ class IncidentController extends Controller
             $incidents = Incident::with('Indicator')->where('reviewed', false)->get();
             
             $incidents = $incidents->map(function ($incident) {
+
                 $data = [
                     'identifier' => $incident->uuid,
-                    'incident' => $incident->indicator,
+                    'incident' => $incident->indicator_id,
                     'date' => $incident->created_at,
-                    'position' => $incident->position,
-                    'title' => $incident->Indicator->Name
+                    'position' => $incident->latitude . ', ' .$incident->longitude,
+                    'title' => $incident->Indicator->name
                 ];
 
                 return $data;

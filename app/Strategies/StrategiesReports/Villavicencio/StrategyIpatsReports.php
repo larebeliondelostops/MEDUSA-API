@@ -67,7 +67,7 @@ class StrategyIpatsReports implements ReportActionsInterface
         }
 
         $data = [
-            'tabs' => $this->tabsIncidents(),
+            'tabs' => $tabs,
             'reportsData' => $generalData
         ];
 
@@ -147,7 +147,7 @@ class StrategyIpatsReports implements ReportActionsInterface
 
         $labels = $cardsIncidents
             ->map(function ($incident) {
-                return $incident->Indicator->Name;
+                return $incident->Indicator->name;
             });
 
         $data = [
@@ -195,7 +195,7 @@ class StrategyIpatsReports implements ReportActionsInterface
 
         $labels = $tabsIncidents
             ->map(function ($incident) {
-                return $incident->Indicator->Name;
+                return $incident->Indicator->name;
             });
 
         $key = $tabsIncidents
@@ -275,7 +275,7 @@ class StrategyIpatsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por mes' : '# Incidentes por mes',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -458,7 +458,7 @@ class StrategyIpatsReports implements ReportActionsInterface
             }
 
             $series[] = [
-                'name' => $incidentes->first()->Indicator->Name,
+                'name' => $incidentes->first()->Indicator->name,
                 'data' => $countByInterval
             ];
         }
@@ -470,7 +470,7 @@ class StrategyIpatsReports implements ReportActionsInterface
         }
 
         $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
+            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
             'date' =>  $date,
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -479,61 +479,6 @@ class StrategyIpatsReports implements ReportActionsInterface
 
         return $data;
     }
-
-    /* public function incidentsHeatMap()
-    {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $incidentes_por_tipo_incidente = Incident::whereBetween('date_ipat', [$this->request->start, $this->request->end])
-                ->select('indicator', 'date_ipat')
-                ->selectRaw("EXTRACT(MONTH FROM date_ipat) AS month")
-                ->get();
-        } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator', 'date_ipat')
-                ->selectRaw("EXTRACT(MONTH FROM date_ipat) AS month")
-                ->get();
-        }
-
-        $data = $incidentes_por_tipo_incidente->sortBy('month')->groupBy('month')->toArray();
-
-        // Transformación de datos
-        $series = [];
-
-        // Definir el rango de días (1-31)
-        $rangoDias = range(1, 31);
-
-        foreach (Helper::MONTH_NUMBER_DB as $mes) {
-
-            $monthData = ['name' => Helper::mesNombre($mes), 'data' => []];
-
-            foreach ($rangoDias as $day) {
-                // Verificar si hay datos para el mes y día actual
-                $monthAndDayData = $data[$mes] ?? [];
-                $dayIncidents = array_filter($monthAndDayData, function ($incident) use ($day) {
-                    return (int)date('d', strtotime($incident['date_ipat'])) === $day;
-                });
-
-                $monthData['data'][] = ['x' => str_pad($day, 2, '0', STR_PAD_LEFT), 'y' => count($dayIncidents)];
-            }
-
-            $series[] = $monthData;
-        }
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => 'Incidentes Mediante Mapa de Calor',
-            'date' =>  $date,
-            'series' => $series,
-            //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'matrix'
-        ];
-
-        return $data;
-    } */
 
     public function incidentsByTypeHeatMap()
     {

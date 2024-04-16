@@ -28,7 +28,7 @@ class StrategyIncidents implements PointsInterface
 
         $datosDataDitra = $this->modelDataDitra->allPoints();
 
-        if (!isset($incidents)) {
+        if (isset($incidents)) {
             $incidents = $incidents->merge($datosDataDitra);
         } else {
             $incidents = $datosDataDitra;

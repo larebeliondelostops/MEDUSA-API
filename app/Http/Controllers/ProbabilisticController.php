@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ditra\Indicator;
-use App\Strategies\StrategyProbabilistic\Villavicencio\StrategyProbabilisticCrimes;
+use App\Strategies\StrategiesProbabilistic\Villavicencio\StrategyProbabilisticCrimes;
 use App\Values\ProbabilisticValuesDitra;
 use App\Values\ProbabilisticValuesVillavicencio;
 use Illuminate\Support\Facades\Response;
@@ -96,10 +96,17 @@ class ProbabilisticController extends Controller
     {
         try {
             $key = $request->key;
-
             $strategy = ProbabilisticValuesDitra::STRATEGY[$key];
 
-            return (new $strategy)->getProbabilisticData();
+            $data = (new $strategy)->getProbabilisticData();
+            // Asumiendo que $data es un array que puede contener valores INF
+            array_walk_recursive($data, function (&$item) {
+                if (is_float($item) && is_infinite($item)) {
+                    $item = 0; // O cualquier otro valor que consideres adecuado
+                }
+            });
+
+            return response()->json($data);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([

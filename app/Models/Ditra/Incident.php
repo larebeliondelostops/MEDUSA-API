@@ -14,6 +14,8 @@ class Incident extends Model
 
     protected $guarded = [];
 
+    private $slug = 'incident';
+
     public function Indicator()
     {
         return $this->belongsTo(Indicator::class, 'indicator');

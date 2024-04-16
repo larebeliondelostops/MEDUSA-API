@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Ditra;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -1272,7 +1272,7 @@ class TollboothTableSeeder extends Seeder
 
         foreach ($dataArray['array'] as $dataItem) {
             $uuid = Str::uuid();
-            DB::connection('ditra')->table('tollbooth')->insert([
+            DB::table('tollbooth')->insert([
                 'uuid' => $uuid,
                 'id_peaje' => $dataItem['IdPea'],
                 'name' => $dataItem['Nombre'],

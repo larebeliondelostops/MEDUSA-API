@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use App\Models\Ipats;
+use App\Models\Villavicencio\Ipats;
 use App\Models\Ditra\DataDitra;
 use App\Models\Ditra\Incident;
 use App\Models\Villavicencio\CriminalActs;
@@ -123,7 +123,7 @@ class HeatmapController extends Controller
 
     public function especific()
     {
-        $data = Ipats::select('coordinates')->get();
+        $data = Ipats::select('latitude', 'longitude')->get();
 
         $features = [];
         foreach ($data as $row) {

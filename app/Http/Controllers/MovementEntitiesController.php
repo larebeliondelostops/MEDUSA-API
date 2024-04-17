@@ -127,7 +127,7 @@ class MovementEntitiesController extends Controller
                 //$posiciones[] = ['id' => $historico->imei, 'position' => $array[0]];
 
                 $avl[] = [
-                    "markerType" => 54,
+                    "markerType" => 7,
                     "id" => $historico->imei,
                     "title" => AvlHistory::select('nombre_uniformado')->where('imei', $historico->imei)->first()->nombre_uniformado,
                     "unitType" => 3,
@@ -193,8 +193,14 @@ class MovementEntitiesController extends Controller
 
                 $array = json_decode($historico->position, true);
 
+                $markertype = 7;
+
+                if (tenant('id') == 'villavicencio') {
+                    $markertype = 54;
+                }
+
                 $units[] = [
-                    "markerType" => 54,
+                    "markerType" => $markertype,
                     "id" => $historico->id,
                     "title" => $historico->title,
                     "unitType" => (int)$historico->unit_type,

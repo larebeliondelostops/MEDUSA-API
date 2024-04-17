@@ -88,7 +88,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $diasTranscurridos = $hoy->copy()->diffInDays($primerDiaDelMes);
 
-        $cardsIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+        $cardsIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
             ->whereBetween('created_at', [$hace_30_dias, $hoy])
             ->groupBy('indicator_id')
             ->orderBy('count', 'desc')
@@ -101,7 +101,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
             $existingIndicators = $cardsIncidents->pluck('indicator_id')->toArray();
 
-            $cardsOthersIncidents = Incident::selectRaw('indicator, COUNT(*) as count')
+            $cardsOthersIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
                 ->whereNotIn('indicator_id', $existingIndicators)
                 ->groupBy('indicator_id')
                 ->orderBy('count', 'desc')

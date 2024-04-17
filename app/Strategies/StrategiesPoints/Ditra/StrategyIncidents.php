@@ -5,6 +5,7 @@ namespace App\Strategies\StrategiesPoints\Ditra;
 use App\Models\Ditra\Incident;
 use App\Models\Ditra\DataDitra;
 use App\Interfaces\Markers\PointsInterface;
+use Illuminate\Support\Facades\Log;
 
 class StrategyIncidents implements PointsInterface
 {
@@ -44,9 +45,14 @@ class StrategyIncidents implements PointsInterface
         $data = $this->getModel()->where('uuid', $uuid)->first();
 
         if (isset($data)) {
+            //Log::info($data->Indicator);
             $data = [
-                'title' => $data->name,
-                'properties' => []
+                'title' => $data->Indicator->name,
+                'properties' => [
+                    'address' => $data->address,
+                    'description' => $data->description,
+                    //'image' => env('APP_URL') . tenant('id') . '/' . $data->image,
+                ]
             ];
         }else{
             $dataDitra = $this->modelDataDitra->where('uuid', $uuid)->first();

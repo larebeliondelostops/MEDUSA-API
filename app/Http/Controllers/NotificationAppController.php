@@ -205,13 +205,16 @@ class NotificationAppController extends Controller
     {
         try {
             $position = $request->input('position');
+            $coordinates = explode(',', $position);
             $id = $request->input('id_user');
 
             $user = User::find($id);
             $mobileDevice = $user->mobileDevice;
 
             if(isset($mobileDevice)){
-                $mobileDevice->update(['position' => $position]);
+                $mobileDevice->latitude = $coordinates[1];
+                $mobileDevice->longitude = $coordinates[0];
+                $mobileDevice->save();
 
                 return response()->json([
                     'status' => 'Éxito',
@@ -271,7 +274,7 @@ class NotificationAppController extends Controller
     public function AllPosition()
     {
         try {
-            $activeDevices = MobileDevice::where('is_active_position', true)->whereNotNull(['latitude', 'longitude'])->orderBy('id')->get()/* ->pluck('position', 'id') */;
+            $activeDevices = MobileDevice::where('is_active_position', true)->whereNotNull('latitude')->orderBy('id')->get()/* ->pluck('position', 'id') */;
 
             $arrayOfArrays = $activeDevices->map(function ($item) {
 
@@ -311,7 +314,7 @@ class NotificationAppController extends Controller
             foreach ($moviles as $movil) {
 
                     $transformedData[] = [
-                        'markerType' => 54,
+                        'markerType' => 8,
                         'id' => $movil->id,
                         'title' => $movil->user->name,
                         'unitType' => 3,

@@ -14,7 +14,7 @@ use App\Http\Controllers\IncidentController;
 |
 */
 
-Route::middleware([/* 'jwt.verify' */])->group(function() {
+Route::middleware(['jwt.verify'])->group(function() {
     /**
      * Manejo de Incidents
      */

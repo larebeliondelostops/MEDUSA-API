@@ -21,7 +21,7 @@ class StrategyIpatsReports implements ReportActionsInterface
 
         if (isset($this->request->start) && isset($this->request->end)) {
             $general = [
-                $this->cardsIncidents(),
+                //$this->cardsIncidents(),
                 $this->incidensByMonth(),
                 $this->incidentsByTypeLastTDays(),
                 $this->incidentsByWeekDay(),

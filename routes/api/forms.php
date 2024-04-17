@@ -13,7 +13,7 @@ use App\Http\Controllers\FormsController;
 |
 */
 
-Route::middleware([/* 'jwt.verify' */])->group(function() {
+Route::middleware(['jwt.verify'])->group(function() {
 
     /**
      * Exposición de data para hacer un CRUD

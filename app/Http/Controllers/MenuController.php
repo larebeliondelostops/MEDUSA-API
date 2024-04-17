@@ -76,6 +76,8 @@ class MenuController extends Controller
                     $menu_item['specialType'] = 3;
                 } else if ($data->Marker->name == 'Unidades móviles') {
                     $menu_item['specialType'] = 6;
+                } else if ($data->Marker->name == 'Unidades móviles App') {
+                    $menu_item['specialType'] = 6;
                 }
 
                 $menu[] = $menu_item;

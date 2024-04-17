@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ImportKMZController;
+//use App\Http\Controllers\ImportKMZController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
 
-    Route::post('/import/importLines', [ImportKMZController::class, 'importLines']);
-    Route::post('/import/importPoints', [ImportKMZController::class, 'importPoints']);
-    Route::post('/import/importDinamic', [ImportKMZController::class, 'importDinamic']);
+    //Route::post('/import/importLines', [ImportKMZController::class, 'importLines']);
+   // Route::post('/import/importPoints', [ImportKMZController::class, 'importPoints']);
+    //Route::post('/import/importDinamic', [ImportKMZController::class, 'importDinamic']);
     
 });
 

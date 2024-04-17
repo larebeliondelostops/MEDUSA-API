@@ -21,7 +21,7 @@ use App\Http\Controllers\CrudController;
     Route::delete('{slug}/destroy/{id}', [CrudController::class, 'destroy']);
 }); */
 
-Route::middleware([/*'jwt.verify'*/])->controller(CrudController::class)->group(function () {
+Route::middleware(['jwt.verify'])->controller(CrudController::class)->group(function () {
     Route::get('{slug}/allTable', 'index');
     Route::get('{slug}/get/{id}', 'show');
     Route::post('{slug}/store', 'store');

@@ -164,7 +164,7 @@ class IncidentController extends Controller
 
             $incident = new Incident();
             $incident->uuid = Uuid::uuid4()->toString();
-            $incident->indicator_id = 1;
+            $incident->indicator_id = $request->IndicatorId;
             $incident->address = $request->address;
             $incident->description = $request->description;
             $incident->image = $photo;
@@ -310,7 +310,7 @@ class IncidentController extends Controller
                     'identifier' => $incident->uuid,
                     'incident' => $incident->indicator_id,
                     'date' => $incident->created_at,
-                    'position' => $incident->latitude . ', ' .$incident->longitude,
+                    'position' => $incident->longitude . ', ' .$incident->latitude,
                     'title' => $incident->Indicator->name
                 ];
 

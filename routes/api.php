@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AllDataController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FormsController;
@@ -51,16 +50,17 @@ Route::get('/correlacionador', function (Request $request) {
         return $response->json();
 });
 
-Route::post('/import/excel', [ImportExcelController::class, 'import']);
+//Route::post('/import/excel', [ImportExcelController::class, 'import']);
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('auth/user', [AuthController::class, 'getUser']);
+Route::post('auth/refresh', [AuthController::class, 'refresh']);
 
 Route::middleware('jwt.verify')->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::post('auth/validateToken', [AuthController::class, 'validateToken']);
-    Route::post('auth/refresh', [AuthController::class, 'refresh']);
+    
 
     Route::get('tipo_evento/all', [EventTypeController::class, 'allEventTypes']);
     Route::get('tipo_evento/{id}', [EventTypeController::class, 'getEventType']);

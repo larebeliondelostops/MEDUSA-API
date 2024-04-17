@@ -12,7 +12,7 @@ use App\Http\Controllers\ModulesController;
 |
 */
 
-Route::middleware([/* 'jwt.verify' */])->group(function() {
+Route::middleware(['jwt.verify'])->group(function() {
     /**
      * Rutas para el manejo de modulos
      */

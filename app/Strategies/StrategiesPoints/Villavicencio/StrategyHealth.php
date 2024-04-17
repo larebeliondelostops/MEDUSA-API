@@ -30,19 +30,19 @@ class StrategyHealth implements PointsInterface
     public function getInfoPoint($id)
     {
         $health = $this->getModel()->where('uuid', $id)->first();
-
+    
         $health = [
             'title' => $health->name,
             'properties' => [
                 'Direccion' => $health->address,
                 'Pacientes en Emergencia' => $health->emergency_patients ?? null,
-                'Camas de Emergencia Disponibles' => $health->emergency_beds_vailable ?? null,
+                'Camas de Emergencia Disponibles' => $health->emergency_beds_available ?? null,
                 'Quirófanos Disponibles' => $health->available_operating_rooms ?? null,
                 'Unidad de Cuidados Intensivos Disponible' => $health->intensive_care_unit_available ?? null,
                 'Camas de Primer Nive' => $health->first_level_beds ?? null,
                 'Camas de Segundo Nivel' => $health->second_level_beds ?? null,
                 'Camas de Tercer Nivel' => $health->third_level_beds ?? null,
-                'Banco de Sangre' => $health->blood_bank ?? null,
+                'Banco de Sangre' => ($health->blood_bank) ? "Si" : "No",
                 'Médicos en Turno' => $health->doctors_in_the_shift ?? null,
                 'Enfermeras en Turno' => $health->nurses_in_the_shift ?? null,
                 'IPS Afiliada' => $health->affiliated_ips ?? null,

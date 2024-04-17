@@ -12,7 +12,7 @@ use App\Http\Controllers\MarkersController;
 |
 */
 
-Route::middleware([/*'jwt.verify'*/])->controller(MarkersController::class)->group(function () {
+Route::middleware(['jwt.verify'])->controller(MarkersController::class)->group(function () {
     Route::get('allData/allPoints', 'allPoints');
     Route::get('allData/allLines', 'allLines');
     Route::get('allData/allPolygons', 'allPolygons');

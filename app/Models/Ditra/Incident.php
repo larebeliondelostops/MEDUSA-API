@@ -18,7 +18,7 @@ class Incident extends Model
 
     public function Indicator()
     {
-        return $this->belongsTo(Indicator::class, 'indicator');
+        return $this->belongsTo(Indicator::class, 'indicator_id');
     }
 
     private function pointProperties()

@@ -15,7 +15,7 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
+Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
     /**
      * Manejo de Roles
      */

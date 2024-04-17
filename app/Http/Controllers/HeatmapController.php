@@ -87,30 +87,25 @@ class HeatmapController extends Controller
                     return $geojson;     
                 break;
             case 'ditra':
-                $data = DataDitra::whereNotNull('coordinates')
-                ->where(function ($query) {
-                    $query->whereRaw('length(coordinates) > 0');
-                })->get();
+                $data = DataDitra::whereNotNull('latitude')->get();
                 $features = [];
             
                 foreach ($data as $row) {
                     // Suponiendo que las coordenadas están en formato "latitud,longitud"
-                    $coordinates = explode(',', $row->coordinates);
                     
                     $feature = [
                         "type" => "Feature",
                         "geometry" => [
                             "type" => "Point",
                             'coordinates' => [
-                                isset($coordinates[0]) && $coordinates[0] !== '' ? floatval($coordinates[0]) : null,
-                                isset($coordinates[1]) && $coordinates[1] !== '' ? floatval($coordinates[1]) : null
+                                (float)$row->latitude, (float)$row->longitude
                             ]
                         ],
                         'specialType' => 4,
                     ];
                     $features[] = $feature;
                 }
-            
+
                 $geojson = [
                     "type" => "FeatureCollection",
                     "features" => $features

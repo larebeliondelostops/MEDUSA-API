@@ -35,6 +35,7 @@ Route::middleware([
     require base_path('routes/api/cruds.php');
     require base_path('routes/api/videoCameras.php');
     require base_path('routes/api/modules.php');
+    require base_path('routes/api/movementUnits.php');
 
     // Viper Routes
     require base_path('routes/Modules/Viper/DocumentRoutes.php');

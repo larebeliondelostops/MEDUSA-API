@@ -32,7 +32,7 @@ class ViperWebSocket implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notifications');
+        return new Channel('channel_' . $this->alert->project_id);
     }
 
     public function broadcastAs()

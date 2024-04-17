@@ -6,8 +6,10 @@ use App\Services\Modules\Observer\ObservableWithDataBase;
 use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Modules\Viper\ProjectUserRole;
+use Spatie\Permission\Models\Permission;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
+use App\Interfaces\Modules\PermissionInterface;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Models\Role;
@@ -16,10 +18,11 @@ class ProjectContractService extends ObservableWithDataBase Implements ProjectCo
 
     private FolderInterface $folderInterface;
 
-    public function __construct( FolderInterface $folderInterface, ProjectObserverAssignContractInterface $projectObserverAssignContractInterface )
+    public function __construct( FolderInterface $folderInterface, ProjectObserverAssignContractInterface $projectObserverAssignContractInterface,PermissionInterface $permissionInterface )
     {
         $this->folderInterface = $folderInterface;
         $this->addObserver($projectObserverAssignContractInterface);
+        $this->permissionInterface = $permissionInterface;
     }
 
     public function createNewProjectContract(Collection $projectContract)
@@ -62,6 +65,9 @@ class ProjectContractService extends ObservableWithDataBase Implements ProjectCo
 
         $projectUserRole->rol_id = $rol->id;
         $projectUserRole->save();
+
+        $permission = Permission::where('name', "channel_".$projectContract['bpin'])->first();
+        $this->permissionInterface->assignPermissionsToUser($permission['id'], collect($user));
         
         $this->folderInterface->createFolderContract($projectContract['rol'], $projectContract['bpin'],  $user->id);
         $this->notifyAll($projectUserRole->toArray());

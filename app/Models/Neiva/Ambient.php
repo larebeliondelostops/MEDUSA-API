@@ -12,6 +12,8 @@ class Ambient extends Model
 
     protected $table = 'ambient';
 
+    private $slug = 'ambient';
+
     private function pointProperties()
     {
         return [];

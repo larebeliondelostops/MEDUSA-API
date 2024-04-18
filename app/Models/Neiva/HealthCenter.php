@@ -12,6 +12,8 @@ class HealthCenter extends Model
 
     protected $table = 'health_centers';
 
+    private $slug = 'health';
+
     private function pointProperties()
     {
         return [];

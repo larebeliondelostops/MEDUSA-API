@@ -12,6 +12,8 @@ class SportVenues extends Model
 
     protected $table = 'sports_venues';
 
+    private $slug = 'sports_venues';
+
     private function pointProperties()
     {
         return [];

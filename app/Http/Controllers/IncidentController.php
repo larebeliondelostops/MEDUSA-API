@@ -302,7 +302,7 @@ class IncidentController extends Controller
     {
         try {
 
-            $incidents = Incident::with('Indicator')->where('reviewed', false)->get();
+            $incidents = Incident::with('Indicator')->where('reviewed', false)->orderBy('id', 'ASC')->get();
             
             $incidents = $incidents->map(function ($incident) {
 

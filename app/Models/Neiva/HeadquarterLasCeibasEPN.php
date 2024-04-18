@@ -10,7 +10,9 @@ class HeadquarterLasCeibasEPN extends Model
 {
     use HasFactory, HasPoints;
 
-    protected $table = 'headquarters_las_ceibas_e_p_n';
+    protected $table = 'headquarters_las_ceibas_epn';
+
+    private $slug = 'headquarters_las_ceibas_epn';
 
     private function pointProperties()
     {

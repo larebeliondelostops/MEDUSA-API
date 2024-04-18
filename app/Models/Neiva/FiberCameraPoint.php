@@ -12,6 +12,8 @@ class FiberCameraPoint extends Model
 
     protected $table = 'fiber_cameras_points';
 
+    private $slug = 'fiber_optic_cameras';
+
     private function pointProperties()
     {
         return [];

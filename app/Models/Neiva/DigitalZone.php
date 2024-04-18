@@ -12,6 +12,8 @@ class DigitalZone extends Model
 
     protected $table = 'digital_zones';
 
+    private $slug = 'digital_zones';
+
     private function pointProperties()
     {
         return [];

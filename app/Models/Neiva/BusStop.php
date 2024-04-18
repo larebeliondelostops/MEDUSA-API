@@ -12,6 +12,8 @@ class BusStop extends Model
 
     protected $table = 'bus_stops';
 
+    private $slug = 'mobility';
+
     private function pointProperties()
     {
         return [];

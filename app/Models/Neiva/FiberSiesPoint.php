@@ -12,6 +12,8 @@ class FiberSiesPoint extends Model
 
     protected $table = 'fiber_sies_points';
 
+    private $slug = 'fiber_optic_sies';
+
     private function pointProperties()
     {
         return [];

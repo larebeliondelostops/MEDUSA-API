@@ -12,6 +12,8 @@ class PublicSafety extends Model
 
     protected $table = 'public_safety';
 
+    private $slug = 'public_safety';
+
     private function pointProperties()
     {
         return [];

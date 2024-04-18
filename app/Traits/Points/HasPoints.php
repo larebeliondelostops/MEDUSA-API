@@ -4,6 +4,7 @@ namespace App\Traits\Points;
 
 use App\Models\Slug;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 trait HasPoints
 {

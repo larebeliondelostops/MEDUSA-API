@@ -73,7 +73,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 51,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Modelo Probabilistico",
               "icon": "data_usage",
               "color": "cyan",
@@ -82,7 +82,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 52,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Mapa de Calor",
               "icon": "local_fire_department",
               "color": "lightgreen",
@@ -118,7 +118,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 6,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Incidentes",
               "icon": "radar",
               "color": "orange",
@@ -127,7 +127,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 56,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Modelo Probabilistico IPATS",
               "icon": "bolt",
               "color": "cyan",
@@ -136,7 +136,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 57,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Modelo Probabilistico IPATS",
               "icon": "bolt",
               "color": "cyan",
@@ -154,7 +154,7 @@ class MarkersSeeder extends Seeder
             },
             {
               "id": 53,
-              "marker_type": 5,
+              "marker_type": 4,
               "name": "Tráfico",
               "icon": "directions_car",
               "color": "bluegreen",
@@ -175,6 +175,8 @@ class MarkersSeeder extends Seeder
                 'name' => $Data['name'],
                 'icon' => $Data['icon'],
                 'color' => $Data['color'],
+                'slug' => 1,
+                'namespace' => NULL,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

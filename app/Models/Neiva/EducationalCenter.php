@@ -12,6 +12,8 @@ class EducationalCenter extends Model
 
     protected $table = 'educational_centers';
 
+    private $slug = 'educational_centers';
+
     private function pointProperties()
     {
         return [];

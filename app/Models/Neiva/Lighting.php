@@ -10,7 +10,9 @@ class Lighting extends Model
 {
     use HasFactory, HasPoints;
 
-    protected $table = 'lighting';
+    protected $table = 'lightings';
+
+    private $slug = 'public_lighting';
 
     private function pointProperties()
     {

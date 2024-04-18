@@ -3,6 +3,7 @@
 namespace App\Factories;
 
 use App\Models\Marker;
+use Illuminate\Support\Facades\Log;
 use App\Interfaces\Markers\LinesInterface;
 use App\Interfaces\Markers\PointsInterface;
 use App\Interfaces\Markers\PolygonsInterface;

@@ -12,6 +12,8 @@ class TrafficLight extends Model
 
     protected $table = 'traffic_light';
 
+    private $slug = 'mobility';
+
     private function pointProperties()
     {
         return [];

@@ -64,9 +64,11 @@ class IndicatorService implements IndicatorInterface
         $indicators = $indicatorGot->transform(
             function (Indicator $indicator)
             {
+                unset($indicator['measurement_unit_id']);
                 return collect($indicator);
             }
         );
+
         return $indicators;
     }
 

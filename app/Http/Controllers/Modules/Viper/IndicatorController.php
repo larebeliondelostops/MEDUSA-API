@@ -94,13 +94,9 @@ class IndicatorController extends BaseController
     {
         try {
             $indicators = $this->indicatorInterface->getAllIndicatorsByProduct($productId);
-            $modifiedIndicators = $indicators->map(function ($item) {
-                unset($item['measurement_unit_id']);
-                $item['measurement_unit'] = $item['measurement_unit']['name'];
-                return $item;
-            });            
+                    
             return response()->json([
-                'data' => $modifiedIndicators,
+                'data' => $indicators,
             ], 200);
         } catch (Exception $exception) {
             return $this->handleException($exception);

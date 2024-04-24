@@ -21,12 +21,14 @@ return new class extends Migration
             $table->text('description');
             $table->unsignedBigInteger('indicator_id')->nullable();
             $table->string('project_id',255);
-            $table->unsignedBigInteger('improvement_plan_id')->nullable(); 
+            $table->unsignedBigInteger('improvement_plan_id')->nullable();
+            $table->string('user_email'); 
 
             $table->foreign('indicator_id')->references('id')->on('indicators_viper')->onDelete('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade');
             $table->foreign('improvement_plan_id')->references('id')->on('improvement_plans')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade');
         });
     }
 

@@ -6,9 +6,7 @@ namespace App\Services\Modules\Viper;
 
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
-use App\Interfaces\Modules\PermissionInterface;
 use App\Models\Modules\Viper\Project;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 
 // Librerias de terceros
@@ -30,12 +28,10 @@ use Illuminate\Support\Collection;
 class ProjectService implements ProjectInterface
 {
     private LocationInterface $locationInterface;
-    private PermissionInterface $permissionInterface;
 
-    public function __construct(LocationInterface $locationInterface,PermissionInterface $permissionInterface)
+    public function __construct(LocationInterface $locationInterface)
     {
         $this->locationInterface = $locationInterface;
-        $this->permissionInterface = $permissionInterface;
     }
 
     /**
@@ -69,11 +65,6 @@ class ProjectService implements ProjectInterface
                 collect($location)
             );
         }
-        
-        $permission = New Permission();
-        $permission->name = "channel_".$project['bpin'];
-        $permission = $this->permissionInterface->createNewPermission(collect($permission));
-        $this->permissionInterface->assignPermissionsToUser($permission["id"], collect(Auth::user()));
 
         return $this->getProjectByBPIN($project['bpin']);
     }

@@ -69,7 +69,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByIndicator(int $indicatorId): Collection
     {
-        $alertGot = Alert::where('indicator_id', $indicatorId)->get();
+        $alertGot = Alert::where('indicator_id', $indicatorId)->orderBy('created_at', 'asc')->get();
     
         $alerts = $alertGot->transform(
             function (Alert $alert)
@@ -88,7 +88,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByProject(int $projectId): Collection
     {
-        $alertGot = Alert::where('project_id', $projectId)->where('user_email', auth()->user()->email)->get();
+        $alertGot = Alert::where('project_id', $projectId)->where('user_email', auth()->user()->email)->orderBy('created_at', 'asc')->get();
     
         $alerts = $alertGot->transform(
             function (Alert $alert)
@@ -121,7 +121,7 @@ class AlertService implements AlertInterface{
         $alertsByProject = collect();
         
         foreach ($projects as $project) {
-            $alerts = Alert::where('project_id', $project['bpin'])->get();
+            $alerts = Alert::where('project_id', $project['bpin'])->orderBy('created_at', 'asc')->get();
 
             $alerts->makeHidden(['project_id']);
 
@@ -141,7 +141,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByUser(): Collection
     {
-        $alerts = Alert::where('user_email', auth()->user()->email)->get();
+        $alerts = Alert::where('user_email', auth()->user()->email)->orderBy('created_at', 'asc')->get();
 
         return collect($alerts);
     }
@@ -162,7 +162,8 @@ class AlertService implements AlertInterface{
         if (!$user->hasRole('ApoyoAdmon')) {
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
-        $alerts = Alert::All();
+        $alerts = Alert::orderBy('created_at', 'asc')->get();
+
 
         return $alerts;
     }
@@ -175,7 +176,7 @@ class AlertService implements AlertInterface{
      */
     public function getAlert(int $id): Collection
     {
-        $alert = Alert::findOrFail($id);
+        $alert = Alert::orderBy('created_at', 'asc')->findOrFail($id);
         
         return collect($alert);
     }

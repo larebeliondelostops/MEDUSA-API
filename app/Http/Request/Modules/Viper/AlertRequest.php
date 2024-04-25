@@ -25,7 +25,7 @@ class AlertRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -38,11 +38,12 @@ class AlertRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
+            'state' => 'bolean',
             'description' => 'required|string',
             'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
             'project_id' => 'required|exists:projects,bpin|string|max:100',
             'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
+            'user_email' => 'required|string',
         ];
     }
 

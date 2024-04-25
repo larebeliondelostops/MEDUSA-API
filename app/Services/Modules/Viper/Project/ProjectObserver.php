@@ -27,7 +27,6 @@ class ProjectObserver
         $alert = [
             "name" => $alertData["name"],
             "type" => $alertData["type"],
-            "state" => "estado_de_alerta",
             "description" => $alertData["description"],
             "indicator_id" => null,
             "project_id"=> $project['bpin'],

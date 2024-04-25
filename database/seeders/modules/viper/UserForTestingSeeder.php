@@ -44,7 +44,7 @@ class UserForTestingSeeder extends Seeder
             ],
             [
                 'name' => 'Interventoría',
-                'guard_name' => 'Interventoría',
+                'guard_name' => 'api',
                 'created_at' => null,
                 'updated_at' => null,
             ],

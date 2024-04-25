@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('type');
-            $table->string('state');
+            $table->boolean('state')->default(false); 
             $table->text('description');
             $table->unsignedBigInteger('indicator_id')->nullable();
             $table->string('project_id',255);
@@ -27,8 +27,10 @@ return new class extends Migration
             $table->foreign('indicator_id')->references('id')->on('indicators_viper')->onDelete('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade');
             $table->foreign('improvement_plan_id')->references('id')->on('improvement_plans')->onDelete('cascade');
-            $table->timestamps();
             $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade');
+
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

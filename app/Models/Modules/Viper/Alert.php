@@ -4,6 +4,7 @@ namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Eloquent para la tabla 'alerts'.
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
 class Alert extends Model
 {
     use HasFactory;
+
+    use SoftDeletes;
 
     /**
      * Nombre de la tabla en la base de datos.

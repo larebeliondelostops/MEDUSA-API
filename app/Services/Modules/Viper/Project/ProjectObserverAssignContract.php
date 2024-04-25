@@ -25,11 +25,10 @@ class ProjectObserverAssignContract implements ProjectObserverAssignContractInte
         $alert = [
             "name" => $alertData["name"],
             "type" => $alertData["type"],
-            "state" => "estado_de_alerta",
             "description" => $alertData["description"],
             "indicator_id" => null,
             "project_id"=> $project['bpin'],
-            "user_email" => 'ignicion@ignicion.com'
+            "user_email" => "ignicion@ignicion.com"
         ];
 
         $this->alertInterface->createNewAlert(collect($alert));

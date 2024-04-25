@@ -88,7 +88,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByProject(int $projectId): Collection
     {
-        $alertGot = Alert::where('project_id', $projectId)->get();
+        $alertGot = Alert::where('project_id', $projectId)->where('user_email', auth()->user()->email)->get();
     
         $alerts = $alertGot->transform(
             function (Alert $alert)
@@ -135,6 +135,18 @@ class AlertService implements AlertInterface{
     }
 
     /**
+     * Obtiene todas las alertas asociadas a un usuario específico.
+     *
+     * @return Collection Collection de Collections representando las alertas asociadas al usuario especifico.
+     */
+    public function getAllAlertsByUser(): Collection
+    {
+        $alerts = Alert::where('user_email', auth()->user()->email)->get();
+
+        return collect($alerts);
+    }
+
+    /**
      * Obtiene todas las alertas.
      *
      * @return Collection Collection de Collections representando las alertas.
@@ -169,7 +181,7 @@ class AlertService implements AlertInterface{
     }
 
     /**
-     * Elimina una alerta específica por su identificador.
+     * Elimina logicamente una alerta específica por su identificador.
      *
      * @param int $id Identificador de la alerta a eliminar.
      * @return Collection Datos de la alerta eliminada.
@@ -178,6 +190,35 @@ class AlertService implements AlertInterface{
     {
         $alert = Alert::findOrFail($id);
         $alert->delete();
+
+        return collect($alert);
+    }
+
+    /**
+     * Elimina permanentemente una alerta específica por su identificador.
+     *
+     * @param int $id Identificador de la alerta a eliminar.
+     * @return Collection Datos de la alerta eliminada.
+     */
+    public function forceDeleteAlert(int $id): Collection
+    {
+        $alert = Alert::withTrashed()->findOrFail($id);
+        
+        $alert->forceDelete();
+
+        return collect($alert);
+    }
+
+    /**
+     * Recupera una alerta específica por su identificador.
+     *
+     * @param int $id Identificador de la alerta a eliminar.
+     * @return Collection Datos de la alerta eliminada.
+     */
+    public function recoverAlert(int $id): Collection
+    {
+        $alert = Alert::onlyTrashed()->findOrFail($id);
+        $alert->restore();
 
         return collect($alert);
     }

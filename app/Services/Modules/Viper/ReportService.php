@@ -59,7 +59,7 @@ class ReportService implements ReportInterface
     public function getReportByDeliverable(int $deliverableId): Collection
     {
         $report = Report::whereHas('deliverables', function ($query) use ($deliverableId) {
-            $query->where('deliverable_id', $deliverableId);
+            $query->where('id', $deliverableId);
         })->get();
     
         return collect($report);
@@ -74,7 +74,7 @@ class ReportService implements ReportInterface
     public function getReportByDeliverableWithProof(int $deliverableId): Collection
     {
         $report = Report::with('proofs')->whereHas('deliverables', function ($query) use ($deliverableId) {
-            $query->where('deliverable_id', $deliverableId);
+            $query->where('id', $deliverableId);
         })->get();
 
         return $report;

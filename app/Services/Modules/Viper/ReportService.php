@@ -51,39 +51,31 @@ class ReportService implements ReportInterface
     }
     
     /**
-     * Obtiene todos los informes asociados a un producto.
+     * Obtiene el informe asociado a un entregable.
      *
-     * @param  int  $productId El ID del producto.
-     * @return Collection Datos que representando los informes asociados al producto.
+     * @param  int  $deliverableId El ID del entregable.
+     * @return Collection Datos que representan el informe asociado al entregable.
      */
-    public function getAllReportsByProduct(int $productId): Collection
+    public function getReportByDeliverable(int $deliverableId): Collection
     {
-        $reportGot = Report::where('product_id', $productId)->get();
-        $reports = $reportGot->transform(
-            function (Report $report)
-            {
-                return collect($report);
-            }
-        );
+        $report = Report::whereHas('deliverables', function ($query) use ($deliverableId) {
+            $query->where('deliverable_id', $deliverableId);
+        })->get();
     
-        return $reports;
+        return collect($report);
     }
 
     /**
-     * Obtiene todos los informes asociados a un producto con sus pruebas.
+     * Obtiene el informe asociado a un entregable con sus pruebas.
      *
-     * @param  int  $productId El ID del producto.
-     * @return  Collection Daots que representando los informes asociados al producto, incluyendo pruebas.
+     * @param  int  $deliverableId El ID del producto.
+     * @return  Collection Daots que representan el informe asociado al entregable, incluyendo pruebas.
      */
-    public function getAllReportsByProductWithProof(int $productId): Collection
+    public function getReportByDeliverableWithProof(int $deliverableId): Collection
     {
-        $reportGot = Report::with('proofs')->where('product_id', $productId)->get();
-        $reports = $reportGot->transform(
-            function (Report $report)
-            {
-                return collect($report);
-            }
-        );
+        $report = Report::with('proofs')->whereHas('deliverables', function ($query) use ($deliverableId) {
+            $query->where('deliverable_id', $deliverableId);
+        })->get();
 
         return $reports;
     }

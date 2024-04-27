@@ -58,18 +58,7 @@ class Report extends Model
         'description',
         'responsible',
         'date',
-        'product_id',
     ];
-
-    /**
-     * Obtener el producto asociado con el reporte.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
 
     /**
      * Obtener las pruebas asociadas con el reporte.
@@ -79,5 +68,15 @@ class Report extends Model
     public function proofs(): HasMany
     {
         return $this->hasMany(Proof::class);
+    }
+
+    /**
+     * Obtener los entregables asociadas con el reporte.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function deliverables():HasMany
+    {
+        return $this->hasMany(Deliverable::class);
     }
 }

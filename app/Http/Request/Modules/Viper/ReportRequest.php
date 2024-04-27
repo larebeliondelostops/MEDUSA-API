@@ -39,7 +39,6 @@ class ReportRequest extends FormRequest
             'name' => 'required|string|max:100',
             'description' => 'required|string',
             'date' => 'required|date',
-            'product_id' => 'required|exists:products,id|integer',
         ];
     }
 

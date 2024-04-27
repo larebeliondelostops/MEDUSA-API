@@ -36,10 +36,10 @@ interface ReportInterface
     /**
      * Obtiene todos los reportes asociados a un producto en el sistema.
      *
-     * @param int $productId identificador del producto.
+     * @param int $productId identificador del entregable.
      * @return Collection Collection de Collections de asociados a reportes.
      */
-    public function getAllReportsByProduct(int $productId): Collection;
+    public function getReportByDeliverable(int $deliverableId): Collection;
 
     /**
      * Obtiene todos los reportes asociados a un producto con su reportes incluidos en el sistema.
@@ -47,7 +47,7 @@ interface ReportInterface
      * @param int $productId identifiador del producto.
      * @return Collection Collection de Collections de asociados a reportes.
      */
-    public function getAllReportsByProductWithProof(int $productId): Collection;
+    public function getReportByDeliverableWithProof(int $productId): Collection;
 
     /**
      * Obtiene un reporte específico del sistema por su identificador único.

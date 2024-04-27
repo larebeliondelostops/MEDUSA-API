@@ -22,7 +22,8 @@ class Deliverable extends Model
         'value',
         'product_id',
         'deliverable_id',
-        'folder_id'
+        'folder_id',
+        'report_id'
     ];
 
     protected static function boot()
@@ -58,12 +59,20 @@ class Deliverable extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-   /**
+    /**
      * Get the folder associated with the deliverable.
      */
     public function folder()
     {
         return $this->belongsTo(Folder::class, 'folder_id');
+    }
+
+    /**
+     * Get the report associated with the deliverable.
+     */
+    public function report()
+    {
+        return $this->belongsTo(Report::class, 'report_id');
     }
 
     /**
@@ -81,7 +90,6 @@ class Deliverable extends Model
     {
         return $this->hasMany(Deliverable::class, 'deliverable_id');
     }
-
 
     public function deliverables()
     {

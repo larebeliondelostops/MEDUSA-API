@@ -77,7 +77,7 @@ class ReportService implements ReportInterface
             $query->where('deliverable_id', $deliverableId);
         })->get();
 
-        return $reports;
+        return $report;
     }
 
     /**

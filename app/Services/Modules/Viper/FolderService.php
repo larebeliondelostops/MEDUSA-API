@@ -316,6 +316,23 @@ class FolderService implements FolderInterface
      */
     public function createFolderContract(string $contractName, string $projectId, int $responsible)
     {
+
+        if ($contractName === "Interventoría") {
+            // Encuentra la carpeta padre específica para Interventoría
+            $parentFolder = Folder::where('project_id', $projectId)
+                ->where('name', $contractName)
+                ->firstOrFail();
+    
+            // Actualiza el responsable de la carpeta padre y todas las carpetas relacionadas
+            $parentFolder->update(['responsible' => $responsible]);
+            $childFolders = Folder::where('higher_folder_id', $parentFolder->id)->get();
+            foreach ($childFolders as $folder) {
+                $folder->update(['responsible' => $responsible]);
+            }
+    
+            return; // Finaliza la función después de actualizar
+        }
+        
         $foldersName = ['Ajustes de', 'Precontractual de', 'Contractual de', 'Ejecución de', 'Cierre de'];
 
         $parentFolder = Folder::where('project_id', $projectId)

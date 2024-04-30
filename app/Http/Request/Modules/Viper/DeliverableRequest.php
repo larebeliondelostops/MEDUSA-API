@@ -29,7 +29,6 @@ class DeliverableRequest extends FormRequest
                 'number' => 'required|integer',
                 'product_id' => 'required|integer',
                 'deliverable_id' => 'nullable|integer',
-                'report_id' => 'integer',
             ],
             "createMultiple" => [
                 'deliverables' => 'required|array',
@@ -45,7 +44,6 @@ class DeliverableRequest extends FormRequest
             "update" => [
                 'number' => 'required|integer',
                 'name' => 'required|string|max:256',
-                'report_id' => 'integer',
             ]
         ]
     ];

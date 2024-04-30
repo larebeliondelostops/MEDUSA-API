@@ -71,12 +71,12 @@ class Report extends Model
     }
 
     /**
-     * Obtener los entregables asociadas con el reporte.
+     * Obtener las actividades asociadas con el reporte.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function deliverables():HasMany
+    public function activities():HasMany
     {
-        return $this->hasMany(Deliverable::class);
+        return $this->hasMany(Activity::class);
     }
 }

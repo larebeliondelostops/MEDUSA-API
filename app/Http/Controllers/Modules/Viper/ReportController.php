@@ -86,10 +86,10 @@ class ReportController extends BaseController
      * @param int $deliverableId Identificador único del entregable.
      * @return \Illuminate\Http\JsonResponse Respuesta JSON del reporte asociado al entregable.
      */
-    public function index(int $deliverableId)
+    public function index(int $activityId)
     {
         try {
-            $reports = $this->reportInterface->getReportByDeliverable($deliverableId);
+            $reports = $this->reportInterface->getReportByActivity($activityId);
             return response()->json([
                 'data' => $reports,
             ], Response::HTTP_OK);
@@ -104,10 +104,10 @@ class ReportController extends BaseController
      * @param int $deliverableId Identificador único del entregable.
      * @return \Illuminate\Http\JsonResponse Respuesta JSON con el reporte asociadas al entregable.
      */
-    public function view(int $deliverableId)
+    public function view(int $activityId)
     {
         try {
-            $report = $this->reportInterface->getReportByDeliverableWithProof($deliverableId);
+            $report = $this->reportInterface->getReportByActivityWithProof($activityId);
             return response()->json([
                 'data' => $report,
             ], Response::HTTP_OK);

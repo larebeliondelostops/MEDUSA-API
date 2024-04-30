@@ -4,6 +4,7 @@ namespace App\Services\Modules\Viper;
 
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ReportInterface;
+use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Models\Modules\Viper\Report;
 use Exception;
 
@@ -19,6 +20,13 @@ use Exception;
  */
 class ReportService implements ReportInterface
 {
+    private ActivityInterface $activityInterface;
+
+    public function __construct(ActivityInterface $activityInterface)
+    {
+        $this->activityInterface = $activityInterface;
+    }
+
     /**
      * Crea un nuevo informe.
      *
@@ -30,6 +38,10 @@ class ReportService implements ReportInterface
         $newReport = new Report($report->toArray());
         $newReport->responsible = auth()->user()->id;
         $newReport->save();
+
+        if ($report['activities']!= null){
+            $this->assignToActivity($newReport->id,$report['activities']);
+        }
         
         return collect($newReport);
     }
@@ -47,34 +59,38 @@ class ReportService implements ReportInterface
         $reportUpdate->fill($report->toArray());
         $reportUpdate->save();
 
+        if ($report['activities'] != null){
+            $this->assignToActivity($reportUpdate->id,$report['activities']);
+        }
+
         return collect($reportUpdate);
     }
     
     /**
-     * Obtiene el informe asociado a un entregable.
+     * Obtiene el informe asociado a un actividad.
      *
-     * @param  int  $deliverableId El ID del entregable.
-     * @return Collection Datos que representan el informe asociado al entregable.
+     * @param  int  $activityId El ID de la actividad.
+     * @return Collection Datos que representan el informe asociado al actividad.
      */
-    public function getReportByDeliverable(int $deliverableId): Collection
+    public function getReportByActivity(int $activityId): Collection
     {
-        $report = Report::whereHas('deliverables', function ($query) use ($deliverableId) {
-            $query->where('id', $deliverableId);
+        $report = Report::whereHas('activities', function ($query) use ($activityId) {
+            $query->where('id', $activityId);
         })->get();
     
         return collect($report);
     }
 
     /**
-     * Obtiene el informe asociado a un entregable con sus pruebas.
+     * Obtiene el informe asociado a una actividad con sus pruebas.
      *
-     * @param  int  $deliverableId El ID del producto.
-     * @return  Collection Daots que representan el informe asociado al entregable, incluyendo pruebas.
+     * @param  int  $activityId El ID de la actividad.
+     * @return  Collection Daots que representan el informe asociado a la actividad, incluyendo pruebas.
      */
-    public function getReportByDeliverableWithProof(int $deliverableId): Collection
+    public function getReportByActivityWithProof(int $activityId): Collection
     {
-        $report = Report::with('proofs')->whereHas('deliverables', function ($query) use ($deliverableId) {
-            $query->where('id', $deliverableId);
+        $report = Report::with('proofs')->whereHas('activities', function ($query) use ($activityId) {
+            $query->where('id', $activityId);
         })->get();
 
         return $report;
@@ -105,5 +121,13 @@ class ReportService implements ReportInterface
         $report->delete();
 
         return collect($report);
+    }
+
+    public function assignToActivity(int $reportId,array $activities)
+    {
+        foreach ($activities as $activity) 
+        {
+            $this->activityInterface->assignToReport($activity,$reportId);
+        }
     }
 }

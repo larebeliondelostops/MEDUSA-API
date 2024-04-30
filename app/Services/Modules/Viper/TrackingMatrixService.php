@@ -21,10 +21,10 @@ class TrackingMatrixService implements TrackingMatrixInterface
                 $query->whereNull('deliverable_id');
             },
             'scope.specificObjectives.products.deliverables.activities.measurementUnit',
-            'scope.specificObjectives.products.deliverables.report.proofs',
+            'scope.specificObjectives.products.deliverables.activities.report.proofs',
             'scope.specificObjectives.products.deliverables.deliverables' => function ($query) {
                 $query->with('activities.measurementUnit');
-                $query->with('report.proofs');
+                $query->with('activities.report.proofs');
             }
 
         ])

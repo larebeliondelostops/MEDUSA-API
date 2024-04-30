@@ -32,9 +32,6 @@ return new class extends Migration
             $table->integer('folder_id');
             $table->foreign('folder_id')->references('id')->on('folders');
 
-            $table->integer('report_id')->nullable();
-            $table->foreign('report_id')->references('id')->on('reports');
-
             $table->timestamps();
             $table->softDeletes();
         });

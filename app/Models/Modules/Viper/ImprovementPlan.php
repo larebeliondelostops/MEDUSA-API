@@ -56,16 +56,5 @@ class ImprovementPlan extends Model
     protected $fillable = [
         'name',
         'description',
-        'alert_id',
     ];
-
-    /**
-     * Relación uno a uno con la tabla 'reports'.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function report()
-    {
-        return $this->belongsTo(Report::class);
-    }
 }

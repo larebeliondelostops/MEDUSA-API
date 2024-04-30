@@ -116,6 +116,12 @@ class ActivityService implements ActivityInterface
         return collect($activityUpdate);
     }
 
+    public function assignToReport(int $activityId, int $reportId)
+    {
+        $activity = Activity::findOrFail($activityId);
+        $activity->report_id = $reportId;
+        $activity->save();
+    }
 
     public function deleteActivity(int $activityId)
     {

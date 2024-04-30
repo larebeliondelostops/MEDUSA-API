@@ -12,6 +12,8 @@ interface ActivityInterface {
 
     public function updateActivity(int $activityId, Collection $activity): Collection;
 
+    public function assignToReport(int $activityId, int $reportId);
+
     public function deleteActivity(int $activityId);
 
     public function getActivity(int $activityId): Collection;

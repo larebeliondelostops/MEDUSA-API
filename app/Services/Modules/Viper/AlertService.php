@@ -176,7 +176,10 @@ class AlertService implements AlertInterface{
      */
     public function getAlert(int $id): Collection
     {
-        $alert = Alert::orderBy('created_at', 'asc')->findOrFail($id);
+        $alert = Alert::with('indicator')->with('improvementPlan')->orderBy('created_at', 'asc')->findOrFail($id);
+
+        unset($alert['indicator_id']);
+        unset($alert['improvement_plan_id']);
         
         return collect($alert);
     }

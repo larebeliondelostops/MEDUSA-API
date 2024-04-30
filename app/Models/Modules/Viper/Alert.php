@@ -70,6 +70,11 @@ class Alert extends Model
         return $this->belongsTo(Indicator::class, 'indicator_id');
     }
 
+    public function improvementPlan()
+    {
+        return $this->belongsTo(ImprovementPlan::class, 'improvement_plan_id');
+    }
+
     /**
      * Obtiene el proyecto asociado a la alerta.
      */
@@ -77,4 +82,6 @@ class Alert extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+
 }

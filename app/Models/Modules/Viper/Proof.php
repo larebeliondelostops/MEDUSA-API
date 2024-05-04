@@ -80,7 +80,7 @@ class Proof extends Model
     {
         return Project::whereHas('scope', function ($query) {
             $query->whereHas('specificObjectives', function ($query) {
-                $query->whereHas('products.reports',function($query)
+                $query->whereHas('products.deliverables.activities.report',function($query)
                 {
                     $query->where('id', $this->report_id);
                 });          

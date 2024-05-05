@@ -238,7 +238,7 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+            ], 401, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -309,7 +309,7 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generación De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+            ], 401, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -345,7 +345,7 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+            ], 401, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -395,7 +395,7 @@ class AuthController extends Controller
                 return Response::json([
                     'status' => 'error',
                     'message' => 'Token Expirado'
-                ], 500, [], JSON_PRETTY_PRINT);
+                ], 401, [], JSON_PRETTY_PRINT);
             }
         } catch (JWTException $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -403,7 +403,7 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+            ], 401, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -456,7 +456,7 @@ class AuthController extends Controller
                 'code' => '1001',
                 'status' => 'error',
                 'message' => 'Error En La Generacion De La Solicitud'
-            ], 500, [], JSON_PRETTY_PRINT);
+            ], 401, [], JSON_PRETTY_PRINT);
         }
     }
 }

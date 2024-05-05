@@ -40,7 +40,7 @@ class StrategyLighting implements PointsInterface
                 'Alto' => $lightings->height,
                 'Soporte' => $lightings->support,
                 'Transformador' => $lightings->transformer,
-                'Imagen' => $lightings->image,
+                //'Imagen' => $lightings->image,
                 
             ]
         ];

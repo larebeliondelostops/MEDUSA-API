@@ -11,9 +11,14 @@ class Project extends Model
     use HasFactory, SoftDeletes, HasPoints;
 
     protected $table = 'projects';
+
     protected $primaryKey = 'bpin';
+
     public $incrementing = false;
+
     protected $keyType = 'string';
+
+    private $slug = 'project';
 
     protected $dates = ['deleted_at'];
 
@@ -61,6 +66,11 @@ class Project extends Model
                     $location->delete();
             }
         });
+    }
+
+    private function pointProperties()
+    {
+        return [];
     }
 
     public function department()

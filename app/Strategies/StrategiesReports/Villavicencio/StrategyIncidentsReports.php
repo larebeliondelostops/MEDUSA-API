@@ -15,6 +15,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
     private $request;
     private $indicadores;
 
+    public function getCacheKeyReport(): string
+    {
+        return 'villavicencio_incidents_reports';
+    }
+
     public function getReportsData(Request $request) :? array
     {
         $this->request = $request;

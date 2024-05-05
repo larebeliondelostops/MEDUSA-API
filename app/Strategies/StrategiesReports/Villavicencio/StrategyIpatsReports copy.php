@@ -4,16 +4,22 @@ namespace App\Strategies\StrategyReports\Villavicencio;
 
 use Carbon\Carbon;
 use App\Helpers\Helper;
+use App\Interfaces\Reports\ReportActionsInterface;
 use Illuminate\Http\Request;
-use App\Models\Ipats as Incident;
+use App\Models\Villavicencio\Ipats as Incident;
 use Illuminate\Support\Facades\Log;
 use App\Strategies\Interface\ReportsInterface;
 
-class StrategyIpatsReports implements ReportsInterface
+class StrategyIpatsReports implements ReportActionsInterface
 {
     private $request;
 
     private $incidents;
+
+    public function getCacheKeyReport(): string
+    {
+        return 'StrategyIpatsReports';
+    }
 
     public function getReportsData(Request $request)
     {

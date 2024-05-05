@@ -2,7 +2,7 @@
 
 namespace App\Strategies\StrategyReports\Villavicencio;
 
-use App\Models\CriminalActs;
+use App\Models\Villavicencio\CriminalActs;
 use Illuminate\Http\Request;
 
 

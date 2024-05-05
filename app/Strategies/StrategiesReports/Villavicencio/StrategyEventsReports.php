@@ -15,6 +15,11 @@ class StrategyEventsReports implements ReportActionsInterface
     private $type;
     private $request;
 
+    public function getCacheKeyReport(): string
+    {
+        return 'villavicencio_events_reports';
+    }
+
     public function getReportsData(Request $request)
     {
         $this->request = $request;

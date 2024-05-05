@@ -14,6 +14,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
     private $indicator;
     private $request;
 
+    public function getCacheKeyReport(): string
+    {
+        return 'ditra_incidents_reports';
+    }
+
     public function getReportsData(Request $request, )
     {
         $this->request = $request;

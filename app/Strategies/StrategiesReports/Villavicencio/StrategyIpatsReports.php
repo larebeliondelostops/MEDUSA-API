@@ -15,6 +15,11 @@ class StrategyIpatsReports implements ReportActionsInterface
     private $request;
     private $indicadores;
 
+    public function getCacheKeyReport(): string
+    {
+        return 'villavicencio_ipats_reports';
+    }
+
     public function getReportsData(Request $request)
     {
         $this->request = $request;
@@ -125,9 +130,9 @@ class StrategyIpatsReports implements ReportActionsInterface
         $cantidadDiaInicioToDiaActualActual = [];
 
         if (isset($this->request->start) && isset($this->request->end)) {
-            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->whereBetween('date_ipat', [$this->request->start, $this->request->end])->get();
         } else {
-            $this->incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->get();
+            $incidents = Incident::select('id_agent', 'injured', 'victims', 'latitude', 'longitude', 'date_ipat')->get();
         }
 
         $series = [];

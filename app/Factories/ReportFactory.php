@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Cache\Reports\ReportsCache;
 use Exception;
 use App\Models\Slug;
 use App\Interfaces\Reports\ReportActionsInterface;
@@ -17,7 +18,9 @@ class ReportFactory
 
         $classReport = self::getNamespaceReport();
 
-        return app($classReport);
+        $strategy = app($classReport);
+
+        return new ReportsCache($strategy);
     }
 
     public function getNamespaceReport(): string

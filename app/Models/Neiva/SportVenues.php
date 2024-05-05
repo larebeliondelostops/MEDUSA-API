@@ -14,8 +14,15 @@ class SportVenues extends Model
 
     private $slug = 'sports_venues';
 
+    private $cacheKeyMarker = 'sports_venues_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

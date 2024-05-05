@@ -16,6 +16,8 @@ class Incident extends Model
 
     private $slug = 'incident';
 
+    private $cacheKeyMarker = 'incident__ditra_marker';
+
     public function Indicator()
     {
         return $this->belongsTo(Indicator::class, 'indicator_id');
@@ -24,5 +26,10 @@ class Incident extends Model
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

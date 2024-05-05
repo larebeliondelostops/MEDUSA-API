@@ -12,39 +12,21 @@ class Ipats extends Model
 {
     use HasFactory, HasPoints, HasHeatmap;
 
-    /**
-	 * Defines the table associated with the model.
-	 * @var string
-	 */
     protected $table = 'ipats';
 
-	/**
-	 * Defines the primary key of the model.
-	 * @var string
-	 */
 	protected $primaryKey = 'id';
 
-	/**
-	 * Indicates if the model has timestamps.
-	 * @var string
-	 */
 	public $timestamps = true;
 
-	/**
-	 * The attributes that are mass assignable.
-	 * @var array
-	 */
 	protected $guarded = [];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 * @var array
-	 */
 	protected $hidden = [];
 
 	private $slug = 'ipat';
 
 	private $specialType = 8;
+
+	private $cacheKeyMarker = 'ipats_marker';
 
 	public function getMonth()
 	{
@@ -99,4 +81,9 @@ class Ipats extends Model
     {
         return $this->belongsTo(ProbabilisticGridIpat::class, 'probabilistic_grid_id');
     }
+
+	public function getCacheKeyMarker()
+	{
+		return $this->cacheKeyMarker;
+	}
 }

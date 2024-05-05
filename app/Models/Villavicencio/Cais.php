@@ -14,7 +14,10 @@ class Cais extends Model
 
     private $slug = 'cai';
 
+    private $cacheKeyMarker = 'cais_marker';
+
     protected $guarded = [];
+
     private function pointPropertiesToShow()
     {
         return [
@@ -22,8 +25,14 @@ class Cais extends Model
             'address' => $this->address
         ];
     }
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

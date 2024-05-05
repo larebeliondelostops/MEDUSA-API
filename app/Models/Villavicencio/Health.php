@@ -14,8 +14,10 @@ class Health extends Model
 
     private $slug = 'health';
 
+    private $cacheKeyMarker = 'health_marker';
+
     protected $guarded = [];
-    
+
     private function pointPropertiesToShow()
     {
         return [
@@ -35,8 +37,14 @@ class Health extends Model
             'number_of_emergencies_day' => $this->number_of_emergencies_day,
         ];
     }
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

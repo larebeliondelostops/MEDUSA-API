@@ -14,8 +14,15 @@ class FiberSiesPoint extends Model
 
     private $slug = 'fiber_optic_sies';
 
+    private $cacheKeyMarker = 'fiber_sies_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

@@ -14,8 +14,15 @@ class FiberCameraPoint extends Model
 
     private $slug = 'fiber_optic_cameras';
 
+    private $cacheKeyMarker = 'fiber_cameras_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

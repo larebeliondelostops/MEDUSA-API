@@ -14,8 +14,15 @@ class EducationalCenter extends Model
 
     private $slug = 'educational_centers';
 
+    private $cacheKeyMarker = 'educational_centers_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

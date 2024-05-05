@@ -14,6 +14,8 @@ class Tollbooth extends Model
 
     private $slug = 'tolls';
 
+    private $cacheKeyMarker = 'tolls__ditra_marker';
+
     protected $fillable = [
         'uuid', 'id_peaje', 'name', 'state', 'project', 'electronic', 'cod_via', 'pr', 'department', 'municipality', 'coordinates'
     ];
@@ -21,5 +23,10 @@ class Tollbooth extends Model
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

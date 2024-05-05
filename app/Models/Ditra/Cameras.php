@@ -14,6 +14,8 @@ class Cameras extends Model
 
     private $slug = 'camera';
 
+    private $cacheKeyMarker = 'cameras__ditra_marker';
+
     private $specialType = 1;
 
     protected $guarded = [];
@@ -24,5 +26,10 @@ class Cameras extends Model
             'specialType' => $this->specialType,
             'url' => $this->url
         ];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

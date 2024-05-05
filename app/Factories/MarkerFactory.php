@@ -3,7 +3,7 @@
 namespace App\Factories;
 
 use App\Models\Marker;
-use Illuminate\Support\Facades\Log;
+use App\Cache\Markers\MarkerCache;
 use App\Interfaces\Markers\LinesInterface;
 use App\Interfaces\Markers\PointsInterface;
 use App\Interfaces\Markers\PolygonsInterface;
@@ -14,7 +14,9 @@ class MarkerFactory
     {
         $markerClass = Marker::where('marker_type', 1)->where('slug', $slug_id)->firstOrFail();
 
-        return app($markerClass->namespace);
+        $strategy = app($markerClass->namespace);
+
+        return new MarkerCache($strategy);
     }
 
     public function getStrategyLines($slug_id) : LinesInterface

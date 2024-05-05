@@ -14,10 +14,17 @@ class FiberPoint extends Model
 
     private $slug = 'fiber';
 
+    private $cacheKeyMarker = 'fiber_marker';
+
     protected $guarded = [];
 
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

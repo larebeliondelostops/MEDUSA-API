@@ -14,6 +14,8 @@ class DataDitra extends Model
 
     private $slug = 'incident';
 
+    private $cacheKeyMarker = 'data_ditra_marker';
+
     protected $fillable = [
         'year', 'uuid', 'occurrence_date', 'month', 'day', 'hour', 'hour_range', 'sectional', 'coordinates',
         'assigned', 'identification', 'grade', 'names', 'last_names', 'age', 'age_range', 'gender',
@@ -29,5 +31,10 @@ class DataDitra extends Model
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

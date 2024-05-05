@@ -14,8 +14,15 @@ class HeadquarterLasCeibasEPN extends Model
 
     private $slug = 'headquarters_las_ceibas_epn';
 
+    private $cacheKeyMarker = 'headquarters_las_ceibas_epn_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

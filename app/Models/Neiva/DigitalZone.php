@@ -14,8 +14,15 @@ class DigitalZone extends Model
 
     private $slug = 'digital_zones';
 
+    private $cacheKeyMarker = 'digital_zones_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

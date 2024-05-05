@@ -14,9 +14,12 @@ class Cameras extends Model
 
     private $slug = 'camera';
 
+    private $cacheKeyMarker = 'cameras_marker';
+
     private $specialType = 1;
 
     protected $guarded = [];
+
     private function pointPropertiesToShow()
     {
         return [
@@ -25,11 +28,17 @@ class Cameras extends Model
             'url' => $this->url
         ];
     }
+
     private function pointProperties()
     {
         return [
             'specialType' => $this->specialType,
             'url' => $this->url
         ];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

@@ -14,8 +14,15 @@ class Lighting extends Model
 
     private $slug = 'public_lighting';
 
+    private $cacheKeyMarker = 'lightings_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

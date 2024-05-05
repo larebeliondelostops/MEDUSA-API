@@ -14,8 +14,15 @@ class TrafficLight extends Model
 
     private $slug = 'mobility';
 
+    private $cacheKeyMarker = 'traffic_light_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

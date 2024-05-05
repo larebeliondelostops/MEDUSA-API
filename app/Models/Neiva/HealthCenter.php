@@ -14,8 +14,15 @@ class HealthCenter extends Model
 
     private $slug = 'health';
 
+    private $cacheKeyMarker = 'health_centers_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

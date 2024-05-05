@@ -14,8 +14,15 @@ class Ambient extends Model
 
     private $slug = 'ambient';
 
+    private $cacheKeyMarker = 'ambient_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

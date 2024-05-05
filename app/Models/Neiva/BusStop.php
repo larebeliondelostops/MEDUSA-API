@@ -14,8 +14,15 @@ class BusStop extends Model
 
     private $slug = 'mobility';
 
+    private $cacheKeyMarker = 'bus_stops_neiva_marker';
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

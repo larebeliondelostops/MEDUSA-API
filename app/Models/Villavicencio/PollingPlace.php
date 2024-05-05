@@ -14,6 +14,8 @@ class PollingPlace extends Model
 
     private $slug = 'pollingPlace';
 
+    private $cacheKeyMarker = 'polling_place_marker';
+
     protected $guarded = [];
 
     private function pointPropertiesToShow()
@@ -27,8 +29,14 @@ class PollingPlace extends Model
             'tables' => $this->tables,
         ];
     }
+
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

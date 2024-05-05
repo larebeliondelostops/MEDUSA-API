@@ -20,10 +20,17 @@ class TrafficLights extends Model
 
 	private $slug = 'trafficLight';
 
+	private $cacheKeyMarker = 'traffic_lights_marker';
+
 	protected $hidden = [];
 
 	private function pointProperties()
     {
         return [];
     }
+
+	public function getCacheKeyMarker()
+	{
+		return $this->cacheKeyMarker;
+	}
 }

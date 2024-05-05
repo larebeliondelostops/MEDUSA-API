@@ -20,6 +20,8 @@ class Alarms extends Model
 
     protected $keyType = 'string';
 
+    private $cacheKeyMarker = 'alarms_marker';
+
     public $incrementing = true; // Indica que el campo 'id' es autoincremental
 
     protected $attributes = ['uuid', 'name', 'address'];
@@ -35,5 +37,10 @@ class Alarms extends Model
     private function pointProperties()
     {
         return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

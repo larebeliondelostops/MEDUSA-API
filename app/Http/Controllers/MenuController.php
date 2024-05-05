@@ -144,6 +144,10 @@ class MenuController extends Controller
                     'slug' => $item->slug,
                 ];
 
+                if (tenant('id') == 'neiva' && $item->name == 'Umbrella') {
+                    $organizedItem['externalUrl'] = 'https://stg-etb.lavenirapps.co/';
+                }
+
                 $organizedItem['submenu'] = $item->SubMenu($sub_menu_permisions)->get();
 
                 return $organizedItem;

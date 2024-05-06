@@ -144,4 +144,21 @@ class ActivityService implements ActivityInterface
         return collect($activity);
     }
 
+    public function getActivityByProductoWithReportNull(int $productId):Collection
+    {
+        $activityGod = Activity::whereHas('deliverable', function ($query) use ($productId) {
+            $query->where('product_id', $productId);
+        })
+        ->whereNull('report_id')
+        ->get();
+    
+        $activities = $activityGod->transform(
+            function (Activity $activity)
+            {
+                return collect($activity);
+            }
+        );
+        return $activities;
+    }
+
 }

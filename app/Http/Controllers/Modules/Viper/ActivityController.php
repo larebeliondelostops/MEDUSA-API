@@ -83,6 +83,18 @@ class ActivityController extends BaseController
         }
     }
 
+    public function display($productId)
+    {
+        try {
+            $activities = $this->activityInterface->getActivityByProductoWithReportNull($productId);
+            return response()->json([
+                'data' => $activities,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
     /**
      * Mostrar detalles de una actividad específica.
      *

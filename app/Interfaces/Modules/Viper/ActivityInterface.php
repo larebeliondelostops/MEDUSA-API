@@ -17,4 +17,6 @@ interface ActivityInterface {
     public function deleteActivity(int $activityId);
 
     public function getActivity(int $activityId): Collection;
+
+    public function getActivityByProductoWithReportNull(int $productId):Collection;
 }

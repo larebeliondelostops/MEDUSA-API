@@ -38,6 +38,7 @@ use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
+use App\Interfaces\Modules\Viper\MessageBotInterface;
 use App\Services\Modules\Viper\Activity\ActivityService;
 
 use App\Services\Modules\Viper\AlertService;
@@ -72,6 +73,7 @@ use App\Services\Modules\Viper\ProjectContractService;
 use App\Services\Modules\Viper\ProjectUserRoleService;
 use App\Services\Modules\Viper\ImprovementPlanService;
 use App\Services\Modules\Viper\TrackingMatrixService;
+use App\Services\Modules\Viper\MessageBotService;
 use App\Services\Modules\PermissionService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Modules\Viper\Activity\ActivityObserver;
@@ -113,6 +115,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
         $this->app->bind(PermissionInterface::class, PermissionService::class);
+        $this->app->bind(MessageBotInterface::class, MessageBotService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

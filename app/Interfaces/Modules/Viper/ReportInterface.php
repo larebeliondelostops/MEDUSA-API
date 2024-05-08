@@ -49,6 +49,8 @@ interface ReportInterface
      */
     public function getReportByActivityWithProof(int $activityId): Collection;
 
+    public function getReportByProject(int $projectId): Collection;
+
     /**
      * Obtiene un reporte específico del sistema por su identificador único.
      *

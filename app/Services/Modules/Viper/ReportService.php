@@ -96,6 +96,16 @@ class ReportService implements ReportInterface
         return $report;
     }
 
+    public function getReportByProject(int $projectId): Collection
+    {
+        $report = Report::with('proofs')->whereHas('activities.deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        })->get();
+
+        return $report;
+    }
+
+
     /**
      * Obtiene un informe por su ID.
      *

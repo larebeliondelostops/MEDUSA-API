@@ -116,6 +116,18 @@ class ReportController extends BaseController
         }
     }
 
+    public function display(int $projectId)
+    {
+        try {
+            $report = $this->reportInterface->getReportByProject($projectId);
+            return response()->json([
+                'data' => $report,
+            ], Response::HTTP_OK);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
 
     /**
      * Obtiene un reporte específica por su identificador.

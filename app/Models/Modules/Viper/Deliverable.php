@@ -58,7 +58,7 @@ class Deliverable extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-   /**
+    /**
      * Get the folder associated with the deliverable.
      */
     public function folder()
@@ -81,7 +81,6 @@ class Deliverable extends Model
     {
         return $this->hasMany(Deliverable::class, 'deliverable_id');
     }
-
 
     public function deliverables()
     {

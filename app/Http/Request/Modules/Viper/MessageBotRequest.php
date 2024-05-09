@@ -5,8 +5,18 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-class ActivityRequest extends FormRequest
+/**
+ * Request personalizado para la validación de datos de Reportes.
+ *
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de Reportes,
+ * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud llegue al controlador.
+ *
+ * @package App\Http\Requests\Viper
+ * @author     Jhon Orjuela <jhonfanor.06.2000@gmail.com>
+ * @copyright  2024 Ignicion S.A.S.
+ * @version    v1.0.0
+ */
+class MessageBotRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para realizar esta solicitud.
@@ -15,7 +25,7 @@ class ActivityRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -26,21 +36,10 @@ class ActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|max:255',
-            'number' => 'numeric|nullable',
-            'total_quantity' => 'required|numeric',
-            'optimistic_time' => 'required|numeric',
-            'most_likely_time' => 'required|numeric',
-            'pessimistic_time' => 'required|numeric',
-            'estimated_time' => 'numeric|nullable',
-            'total_value' => 'required|numeric',
-            'in_kind_contribution' => 'required|boolean',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'deliverable_id' => 'required|exists:deliverables,id',
-            // 'folder_id' => 'required|exists:folders,id',
-            'measurement_unit_id' => 'required|exists:measurement_units,id',
-            'report_id' => 'numeric|exists:reports,id',
+            'query' => 'required|string|max:255',
+            'response' => 'required|string|max:255',
+            'files' => 'required|string|max:255',
+            'project_user_role_id'=> 'required|integer|exists:project_user_role,id',
         ];
     }
 

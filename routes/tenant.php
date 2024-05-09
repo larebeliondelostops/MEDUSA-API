@@ -66,6 +66,7 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ReportRoutes.php');
     require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
     require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
+    require base_path('routes/Modules/Viper/MessageBotRoutes.php');
 
     require base_path('routes/Modules/Viper/TrackingMatrixRoutes.php');
 

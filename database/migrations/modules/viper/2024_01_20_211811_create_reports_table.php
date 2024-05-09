@@ -19,9 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('responsible');
             $table->date('date');
-            $table->unsignedBigInteger('product_id');
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

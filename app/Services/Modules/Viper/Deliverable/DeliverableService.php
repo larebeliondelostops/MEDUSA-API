@@ -111,19 +111,14 @@ class DeliverableService implements DeliverableInterface
     public function updateDeliverable(Collection $deliverableUpdateData, int $deliverableId) : Collection
     {
         $delivarableForUpdate = Deliverable::findOrFail($deliverableId);
-        $delivarableForUpdate->fill([
-            'number' => $deliverableUpdateData['number'],
-            'name' => $deliverableUpdateData['name']
-        ]);
-        $delivarableForUpdate->save(); // Se actualiza la data del entregable
+        $delivarableForUpdate->fill($deliverableUpdateData->toArray());
+        $delivarableForUpdate->save(); 
 
-        $deliverableUpdateData->fill($delivarableForUpdate->toArray()); // se llena el objeto con los datos actualizados
-
-        $deliverableUpdateData->folder = $this->folderInterface->updateFolderName(
+        $this->folderInterface->updateFolderName(
             $delivarableForUpdate->folder_id,
             $delivarableForUpdate->number.'. '.$delivarableForUpdate->name);
 
-        return $deliverableUpdateData;
+        return collect($delivarableForUpdate);
     }
 
     public function getDeliverablesChildren(array &$result, int $fatherDeliverableId)

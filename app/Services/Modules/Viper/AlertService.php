@@ -69,7 +69,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByIndicator(int $indicatorId): Collection
     {
-        $alertGot = Alert::where('indicator_id', $indicatorId)->get();
+        $alertGot = Alert::where('indicator_id', $indicatorId)->orderBy('created_at', 'asc')->get();
     
         $alerts = $alertGot->transform(
             function (Alert $alert)
@@ -88,7 +88,7 @@ class AlertService implements AlertInterface{
      */
     public function getAllAlertsByProject(int $projectId): Collection
     {
-        $alertGot = Alert::where('project_id', $projectId)->get();
+        $alertGot = Alert::where('project_id', $projectId)->where('user_email', auth()->user()->email)->orderBy('created_at', 'asc')->get();
     
         $alerts = $alertGot->transform(
             function (Alert $alert)
@@ -121,7 +121,7 @@ class AlertService implements AlertInterface{
         $alertsByProject = collect();
         
         foreach ($projects as $project) {
-            $alerts = Alert::where('project_id', $project['bpin'])->get();
+            $alerts = Alert::where('project_id', $project['bpin'])->orderBy('created_at', 'asc')->get();
 
             $alerts->makeHidden(['project_id']);
 
@@ -132,6 +132,18 @@ class AlertService implements AlertInterface{
         }
 
         return $alertsByProject;
+    }
+
+    /**
+     * Obtiene todas las alertas asociadas a un usuario específico.
+     *
+     * @return Collection Collection de Collections representando las alertas asociadas al usuario especifico.
+     */
+    public function getAllAlertsByUser(): Collection
+    {
+        $alerts = Alert::where('user_email', auth()->user()->email)->orderBy('created_at', 'asc')->get();
+
+        return collect($alerts);
     }
 
     /**
@@ -150,7 +162,8 @@ class AlertService implements AlertInterface{
         if (!$user->hasRole('ApoyoAdmon')) {
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
-        $alerts = Alert::All();
+        $alerts = Alert::orderBy('created_at', 'asc')->get();
+
 
         return $alerts;
     }
@@ -163,13 +176,16 @@ class AlertService implements AlertInterface{
      */
     public function getAlert(int $id): Collection
     {
-        $alert = Alert::findOrFail($id);
+        $alert = Alert::with('indicator')->with('improvementPlan')->orderBy('created_at', 'asc')->findOrFail($id);
+
+        unset($alert['indicator_id']);
+        unset($alert['improvement_plan_id']);
         
         return collect($alert);
     }
 
     /**
-     * Elimina una alerta específica por su identificador.
+     * Elimina logicamente una alerta específica por su identificador.
      *
      * @param int $id Identificador de la alerta a eliminar.
      * @return Collection Datos de la alerta eliminada.
@@ -178,6 +194,35 @@ class AlertService implements AlertInterface{
     {
         $alert = Alert::findOrFail($id);
         $alert->delete();
+
+        return collect($alert);
+    }
+
+    /**
+     * Elimina permanentemente una alerta específica por su identificador.
+     *
+     * @param int $id Identificador de la alerta a eliminar.
+     * @return Collection Datos de la alerta eliminada.
+     */
+    public function forceDeleteAlert(int $id): Collection
+    {
+        $alert = Alert::withTrashed()->findOrFail($id);
+        
+        $alert->forceDelete();
+
+        return collect($alert);
+    }
+
+    /**
+     * Recupera una alerta específica por su identificador.
+     *
+     * @param int $id Identificador de la alerta a eliminar.
+     * @return Collection Datos de la alerta eliminada.
+     */
+    public function recoverAlert(int $id): Collection
+    {
+        $alert = Alert::onlyTrashed()->findOrFail($id);
+        $alert->restore();
 
         return collect($alert);
     }

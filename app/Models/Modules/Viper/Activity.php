@@ -39,7 +39,8 @@ class Activity extends Model
         'deliverable_id',
         'folder_id',
         'measurement_unit_id',
-        'number'
+        'number',
+        'report_id'
     ];
 
     /**
@@ -81,4 +82,13 @@ class Activity extends Model
     {
         return $this->hasMany(Precedence::class, 'lower_id');
     }
+
+    /**
+     *  Obtener el reporte a la que pertenece la actividad.
+     */
+    public function report()
+    {
+        return $this->belongsTo(Report::class, 'report_id');
+    }
+
 }

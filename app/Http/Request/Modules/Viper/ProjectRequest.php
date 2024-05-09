@@ -5,6 +5,7 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 
 /**
@@ -27,7 +28,7 @@ class ProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**

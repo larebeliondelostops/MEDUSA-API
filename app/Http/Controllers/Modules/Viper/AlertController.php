@@ -146,6 +146,23 @@ class AlertController extends BaseController
     }
 
     /**
+     * Obtiene todas las alertas de un usuario.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function discover()
+    {
+        try {
+            $alerts = $this->alertInterface->getAllAlertsByUser();
+            return response()->json([
+                'data' => $alerts,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
      * Obtiene los detalles de una alerta específica.
      *
      * @param int $id
@@ -164,7 +181,7 @@ class AlertController extends BaseController
     }
 
     /**
-     * Elimina una alerta.
+     * Elimina logicamente una alerta.
      *
      * @param Request $request
      * @param int $id
@@ -176,6 +193,46 @@ class AlertController extends BaseController
             $alert = $this->alertInterface->deleteAlert($id);
             return response()->json([
                 'message' => 'Alert deleted successfully',
+                'data'=> $alert
+            ],200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Elimina logicamente una alerta.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDestroy(Request $request, int $id)
+    {
+        try {
+            $alert = $this->alertInterface->forceDeleteAlert($id);
+            return response()->json([
+                'message' => 'Alert force deleted successfully',
+                'data'=> $alert
+            ],200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
+     * Elimina logicamente una alerta.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function recover(Request $request, int $id)
+    {
+        try {
+            $alert = $this->alertInterface->recoverAlert($id);
+            return response()->json([
+                'message' => 'Alert recover successfully',
                 'data'=> $alert
             ],200);
         } catch (Exception $exception) {

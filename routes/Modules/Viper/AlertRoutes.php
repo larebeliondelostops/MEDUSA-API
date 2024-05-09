@@ -11,5 +11,8 @@ Route::prefix('/viper/alert')->group(function () {
     Route::get('/listUser', [AlertController::class, 'unveil']);
     Route::get('/list', [AlertController::class, 'display']);
     Route::get('/detail/{id}', [AlertController::class, 'show']);
+    Route::get('/listAlertByUser', [AlertController::class, 'discover'])->middleware('auth');
     Route::delete('/delete/{id}', [AlertController::class, 'destroy']);
+    Route::delete('/forceDelete/{id}', [AlertController::class, 'forceDestroy']);
+    Route::get('/recover/{id}', [AlertController::class, 'recover']);
 });

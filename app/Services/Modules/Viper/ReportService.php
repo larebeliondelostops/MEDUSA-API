@@ -4,6 +4,7 @@ namespace App\Services\Modules\Viper;
 
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ReportInterface;
+use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Models\Modules\Viper\Report;
 use Exception;
 
@@ -19,6 +20,13 @@ use Exception;
  */
 class ReportService implements ReportInterface
 {
+    private ActivityInterface $activityInterface;
+
+    public function __construct(ActivityInterface $activityInterface)
+    {
+        $this->activityInterface = $activityInterface;
+    }
+
     /**
      * Crea un nuevo informe.
      *
@@ -30,6 +38,10 @@ class ReportService implements ReportInterface
         $newReport = new Report($report->toArray());
         $newReport->responsible = auth()->user()->id;
         $newReport->save();
+
+        if ($report['activities']!= null){
+            $this->assignToActivity($newReport->id,$report['activities']);
+        }
         
         return collect($newReport);
     }
@@ -47,46 +59,52 @@ class ReportService implements ReportInterface
         $reportUpdate->fill($report->toArray());
         $reportUpdate->save();
 
+        if ($report['activities'] != null){
+            $this->assignToActivity($reportUpdate->id,$report['activities']);
+        }
+
         return collect($reportUpdate);
     }
     
     /**
-     * Obtiene todos los informes asociados a un producto.
+     * Obtiene el informe asociado a un actividad.
      *
-     * @param  int  $productId El ID del producto.
-     * @return Collection Datos que representando los informes asociados al producto.
+     * @param  int  $activityId El ID de la actividad.
+     * @return Collection Datos que representan el informe asociado al actividad.
      */
-    public function getAllReportsByProduct(int $productId): Collection
+    public function getReportByActivity(int $activityId): Collection
     {
-        $reportGot = Report::where('product_id', $productId)->get();
-        $reports = $reportGot->transform(
-            function (Report $report)
-            {
-                return collect($report);
-            }
-        );
+        $report = Report::whereHas('activities', function ($query) use ($activityId) {
+            $query->where('id', $activityId);
+        })->get();
     
-        return $reports;
+        return collect($report);
     }
 
     /**
-     * Obtiene todos los informes asociados a un producto con sus pruebas.
+     * Obtiene el informe asociado a una actividad con sus pruebas.
      *
-     * @param  int  $productId El ID del producto.
-     * @return  Collection Daots que representando los informes asociados al producto, incluyendo pruebas.
+     * @param  int  $activityId El ID de la actividad.
+     * @return  Collection Daots que representan el informe asociado a la actividad, incluyendo pruebas.
      */
-    public function getAllReportsByProductWithProof(int $productId): Collection
+    public function getReportByActivityWithProof(int $activityId): Collection
     {
-        $reportGot = Report::with('proofs')->where('product_id', $productId)->get();
-        $reports = $reportGot->transform(
-            function (Report $report)
-            {
-                return collect($report);
-            }
-        );
+        $report = Report::with('proofs')->whereHas('activities', function ($query) use ($activityId) {
+            $query->where('id', $activityId);
+        })->get();
 
-        return $reports;
+        return $report;
     }
+
+    public function getReportByProject(int $projectId): Collection
+    {
+        $report = Report::with('proofs')->whereHas('activities.deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        })->get();
+
+        return $report;
+    }
+
 
     /**
      * Obtiene un informe por su ID.
@@ -113,5 +131,13 @@ class ReportService implements ReportInterface
         $report->delete();
 
         return collect($report);
+    }
+
+    public function assignToActivity(int $reportId,array $activities)
+    {
+        foreach ($activities as $activity) 
+        {
+            $this->activityInterface->assignToReport($activity,$reportId);
+        }
     }
 }

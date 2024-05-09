@@ -34,20 +34,22 @@ interface ReportInterface
     public function updateReport(Collection $report, int $id): Collection;
     
     /**
-     * Obtiene todos los reportes asociados a un producto en el sistema.
+     * Obtiene todos los reportes asociados a un actividad en el sistema.
      *
-     * @param int $productId identificador del producto.
+     * @param int $activityId identificador de la actividad.
      * @return Collection Collection de Collections de asociados a reportes.
      */
-    public function getAllReportsByProduct(int $productId): Collection;
+    public function getReportByActivity(int $activityId): Collection;
 
     /**
-     * Obtiene todos los reportes asociados a un producto con su reportes incluidos en el sistema.
+     * Obtiene todos los reportes asociados a una actividad con su reportes incluidos en el sistema.
      *
-     * @param int $productId identifiador del producto.
+     * @param int $activityId identifiador de la actividad.
      * @return Collection Collection de Collections de asociados a reportes.
      */
-    public function getAllReportsByProductWithProof(int $productId): Collection;
+    public function getReportByActivityWithProof(int $activityId): Collection;
+
+    public function getReportByProject(int $projectId): Collection;
 
     /**
      * Obtiene un reporte específico del sistema por su identificador único.

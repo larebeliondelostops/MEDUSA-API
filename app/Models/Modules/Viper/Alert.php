@@ -4,6 +4,7 @@ namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Eloquent para la tabla 'alerts'.
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
 class Alert extends Model
 {
     use HasFactory;
+
+    use SoftDeletes;
 
     /**
      * Nombre de la tabla en la base de datos.
@@ -54,7 +57,7 @@ class Alert extends Model
      * @var array
      */
     protected $fillable = [
-        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id','improvement_plan_id'
+        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id','improvement_plan_id','user_email'
     ];
 
     /**
@@ -67,6 +70,11 @@ class Alert extends Model
         return $this->belongsTo(Indicator::class, 'indicator_id');
     }
 
+    public function improvementPlan()
+    {
+        return $this->belongsTo(ImprovementPlan::class, 'improvement_plan_id');
+    }
+
     /**
      * Obtiene el proyecto asociado a la alerta.
      */
@@ -74,4 +82,6 @@ class Alert extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+
 }

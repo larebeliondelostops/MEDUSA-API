@@ -105,9 +105,4 @@ class Product extends Model
     {
         return $this->hasMany(Deliverable::class, 'product_id');
     }
-
-    public function reports()
-    {
-        return $this->hasMany(Report::class, 'product_id');
-    }
 }

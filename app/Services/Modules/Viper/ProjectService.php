@@ -7,6 +7,7 @@ namespace App\Services\Modules\Viper;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Models\Modules\Viper\Project;
+use Illuminate\Support\Facades\Auth;
 
 // Librerias de terceros
 use App\Utils\Filters\Modules\Viper\ProjectFilter;

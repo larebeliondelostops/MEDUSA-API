@@ -17,14 +17,16 @@ class TrackingMatrixService implements TrackingMatrixInterface
         ->where('projects.bpin', $projectBpin)
         ->with([
             'scope.specificObjectives.products.measurementUnit',
-            'scope.specificObjectives.products.reports.proofs',
             'scope.specificObjectives.products.deliverables' => function ($query) {
                 $query->whereNull('deliverable_id');
             },
             'scope.specificObjectives.products.deliverables.activities.measurementUnit',
+            'scope.specificObjectives.products.deliverables.activities.report.proofs',
             'scope.specificObjectives.products.deliverables.deliverables' => function ($query) {
                 $query->with('activities.measurementUnit');
+                $query->with('activities.report.proofs');
             }
+
         ])
         ->first();
     

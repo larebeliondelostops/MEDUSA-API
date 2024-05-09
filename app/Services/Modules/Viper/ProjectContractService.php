@@ -6,11 +6,11 @@ use App\Services\Modules\Observer\ObservableWithDataBase;
 use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Modules\Viper\ProjectUserRole;
+use Spatie\Permission\Models\Role;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
-use Spatie\Permission\Models\Role;
 
 class ProjectContractService extends ObservableWithDataBase Implements ProjectContractInterface {
 
@@ -62,6 +62,8 @@ class ProjectContractService extends ObservableWithDataBase Implements ProjectCo
 
         $projectUserRole->rol_id = $rol->id;
         $projectUserRole->save();
+
+        $user->assignRole($rol,'Interventoría');
         
         $this->folderInterface->createFolderContract($projectContract['rol'], $projectContract['bpin'],  $user->id);
         $this->notifyAll($projectUserRole->toArray());

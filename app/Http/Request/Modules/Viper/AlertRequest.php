@@ -5,6 +5,8 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Arr;
+
 /**
  * Request personalizado para la validación de datos de Alertas.
  *
@@ -18,6 +20,35 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  */
 class AlertRequest extends FormRequest
 {
+    private static array $rules = [
+        "POST"=> [
+            "create" => [
+                'name' => 'required|string|max:255',
+                'type' => 'required|string|max:100',
+                'state' => 'boolean',
+                'description' => 'required|string',
+                'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
+                'project_id' => 'required|exists:projects,bpin|string|max:100',
+                'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
+                'user_email' => 'required|string',
+            ],
+        ],
+        "PUT" => [
+            "update" => [
+                'name' => 'string|max:255',
+                'type' => 'string|max:100',
+                'state' => 'boolean',
+                'description' => 'string',
+                'indicator_id' => 'exists:indicators_viper,id|integer',
+                'project_id' => 'exists:projects,bpin|string|max:100',
+                'improvement_plan_id' => 'exists:improvement_plans,id|integer',
+                'user_email' => 'string',
+            ]
+        ]
+    ];
+
+    public string $lastSlugPath;
+
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
      *
@@ -25,7 +56,23 @@ class AlertRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
+    }
+
+    /**
+     * Prepara la instancia antes de la validación.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $path = $this->path();
+        if ($this->method() == 'PUT') {
+            $segments = explode('/', $path);
+            array_pop($segments);
+            $path = implode('/', $segments);
+        }
+        $this->lastSlugPath = Arr::last(explode('/', $path));
     }
 
     /**
@@ -35,15 +82,7 @@ class AlertRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:255',
-            'type' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'description' => 'required|string',
-            'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
-            'project_id' => 'required|exists:projects,bpin|string|max:100',
-            'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
-        ];
+        return self::$rules[$this->method()][$this->lastSlugPath];
     }
 
     /**

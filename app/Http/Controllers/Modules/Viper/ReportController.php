@@ -81,15 +81,15 @@ class ReportController extends BaseController
     }
 
     /**
-     * Obtiene todas los reportes asociadas a un reporte específico.
+     * Obtiene el reporte asociado a un entregable específico.
      *
-     * @param int $productId Identificador único del producto.
-     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de reportes asociadas al reporte.
+     * @param int $deliverableId Identificador único del entregable.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON del reporte asociado al entregable.
      */
-    public function index(int $productId)
+    public function index(int $activityId)
     {
         try {
-            $reports = $this->reportInterface->getAllReportsByProduct($productId);
+            $reports = $this->reportInterface->getReportByActivity($activityId);
             return response()->json([
                 'data' => $reports,
             ], Response::HTTP_OK);
@@ -99,15 +99,27 @@ class ReportController extends BaseController
     }
 
     /**
-     * Obtiene todas los reportes asociadas a un reporte con sus pruebas.
+     * Obtiene el reporte asociado a un entregalbe con sus pruebas.
      *
-     * @param int $productId Identificador único del producto.
-     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de reportes asociadas al reporte.
+     * @param int $deliverableId Identificador único del entregable.
+     * @return \Illuminate\Http\JsonResponse Respuesta JSON con el reporte asociadas al entregable.
      */
-    public function view(int $productId)
+    public function view(int $activityId)
     {
         try {
-            $report = $this->reportInterface->getAllReportsByProductWithProof($productId);
+            $report = $this->reportInterface->getReportByActivityWithProof($activityId);
+            return response()->json([
+                'data' => $report,
+            ], Response::HTTP_OK);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function display(int $projectId)
+    {
+        try {
+            $report = $this->reportInterface->getReportByProject($projectId);
             return response()->json([
                 'data' => $report,
             ], Response::HTTP_OK);

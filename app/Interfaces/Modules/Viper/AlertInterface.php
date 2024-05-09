@@ -62,6 +62,13 @@ interface AlertInterface {
     public function getAllAlerts(): Collection;
 
     /**
+     * Obtiene todas las alertas asociadas a un usuario específico.
+     *
+     * @return Collection Collection de Collections que contiene la información de una alerta si es el usuario especificado.
+     */
+    public function getAllAlertsByUser(): Collection;
+
+    /**
      * Obtiene los detalles de una alerta específica.
      *
      * @param int $id El identificador único de la alerta.
@@ -76,4 +83,20 @@ interface AlertInterface {
      * @return Collection La alerta eliminada.
      */
     public function deleteAlert(int $id): Collection;
+
+    /**
+     * Elimina una alerta específica.
+     *
+     * @param int $id El identificador único de la alerta a ser eliminada.
+     * @return Collection La alerta eliminada.
+     */
+    public function forceDeleteAlert(int $id): Collection;
+
+    /**
+     * Recupera una alerta eliminada.
+     *
+     * @param int $id El identificador único de la alerta a ser eliminada.
+     * @return Collection La alerta eliminada.
+     */
+    public function recoverAlert(int $id): Collection;
 }

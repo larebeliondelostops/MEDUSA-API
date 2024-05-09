@@ -115,7 +115,7 @@ class ProductController extends BaseController
     {
         try {
             // Llama al servicio para actualizar el producto
-            $updatedProduct = $this->productInterface->updateProduct($productId, $request->validated());
+            $updatedProduct = $this->productInterface->updateProduct($productId, collect($request->validated()));
 
             // Retorna la respuesta JSON con el producto actualizado
             return response()->json([
@@ -128,7 +128,7 @@ class ProductController extends BaseController
     }
 
 
-     /**
+    /**
      * Mostrar una lista de productos.
      *
      * @param  \Illuminate\Http\Request  $request

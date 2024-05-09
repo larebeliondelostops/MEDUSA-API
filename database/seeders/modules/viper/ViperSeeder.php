@@ -17,6 +17,7 @@ class ViperSeeder extends Seeder
             StateSeeder::class,
             SubstateSeeder::class,
             
+            SlugSeeder::class,
             MarkerTypeSeeder::class,
             MarkersSeeder::class,
             MenuBarSeeder::class,

@@ -3,11 +3,10 @@
 
 namespace Database\Seeders\modules\viper;
 
-use App\Models\Slug;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MarkersSeeder extends Seeder
+class SlugSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,18 +18,13 @@ class MarkersSeeder extends Seeder
         /**
          * Marcadores para villavicencio
          */
-        DB::table('marker')->insert([
+        DB::table('slugs')->insert([
             [
-                'id' => 100,
-                'marker_type' => 1,
+                'id' => 1,
                 'name' => 'Proyectos',
-                'icon' => 'location_on',
-                'color' => 'blue',
-                'slug' => Slug::where(['name' => 'Proyectos'])->first()->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
         ]);
     }
 }

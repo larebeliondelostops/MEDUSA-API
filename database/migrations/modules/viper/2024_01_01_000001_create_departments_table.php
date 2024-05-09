@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->integer('slug');
-            $table->foreign('slug')->references('id')->on('slugs');
             $table->string('name');
-            $table->string('description');
-            $table->string('namespace');
+
+            $table->uuid('coordinate_id');
+            $table->foreign('coordinate_id')->references('id')->on('coordinates');
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('departments');
     }
 };

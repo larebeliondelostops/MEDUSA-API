@@ -2,6 +2,7 @@
 
 namespace App\Providers\Modules\Viper;
 
+// Interfaces
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
@@ -33,14 +34,13 @@ use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
 use App\Interfaces\Modules\PermissionInterface;
-use App\Models\Modules\Viper\Activity;
-use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
 use App\Interfaces\Modules\Viper\MessageBotInterface;
-use App\Services\Modules\Viper\Activity\ActivityService;
+use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 
+// Services
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
 use App\Services\Modules\Viper\Deliverable\DeliverableEventActivityService;
@@ -75,9 +75,19 @@ use App\Services\Modules\Viper\ImprovementPlanService;
 use App\Services\Modules\Viper\TrackingMatrixService;
 use App\Services\Modules\Viper\MessageBotService;
 use App\Services\Modules\PermissionService;
-use Illuminate\Support\ServiceProvider;
+use App\Services\Modules\Viper\Activity\ActivityService;
+use App\Services\Modules\Viper\ProjectMunicipalityService;
+
+// Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
+
+// Models
+use App\Models\Modules\Viper\Activity;
+use App\Models\Modules\Viper\Project;
+
+// Third Party
+use Illuminate\Support\ServiceProvider;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -116,6 +126,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
         $this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(MessageBotInterface::class, MessageBotService::class);
+        $this->app->bind(ProjectMunicipalityInterface::class, ProjectMunicipalityService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

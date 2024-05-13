@@ -73,14 +73,14 @@ class Project extends Model
         return [];
     }
 
+    public function projectMunicipality()
+    {
+        return $this->hasMany(ProjectMunicipality::class, 'project_bpin', 'bpin');
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, "department_id");
-    }
-
-    public function municipality()
-    {
-        return $this->belongsTo(Municipality::class, "municipality_id");
     }
 
     public function state()

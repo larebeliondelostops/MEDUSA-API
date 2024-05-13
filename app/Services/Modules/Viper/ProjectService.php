@@ -7,7 +7,7 @@ namespace App\Services\Modules\Viper;
 use App\Interfaces\Modules\Viper\LocationInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Models\Modules\Viper\Project;
-use Illuminate\Support\Facades\Auth;
+use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 
 // Librerias de terceros
 use App\Utils\Filters\Modules\Viper\ProjectFilter;
@@ -28,10 +28,15 @@ use Illuminate\Support\Collection;
 class ProjectService implements ProjectInterface
 {
     private LocationInterface $locationInterface;
+    private ProjectMunicipalityInterface $projectMunicipalityInterface;
 
-    public function __construct(LocationInterface $locationInterface)
+    public function __construct(
+        LocationInterface $locationInterface,
+        ProjectMunicipalityInterface $projectMunicipalityInterface
+    )
     {
         $this->locationInterface = $locationInterface;
+        $this->projectMunicipalityInterface = $projectMunicipalityInterface;
     }
 
     /**
@@ -44,7 +49,6 @@ class ProjectService implements ProjectInterface
      */
     public function createNewProject(Collection $projectData) : Collection
     {
-
         /**
          * Se almacena el proyecto para poder relacionarlo
          * con sus locaciones una vez registrado
@@ -64,6 +68,20 @@ class ProjectService implements ProjectInterface
             $location  = $this->locationInterface->createNewLocation(
                 collect($location)
             );
+        }
+
+        /**
+         * Se registran todas las municipalidades y se relacionan
+         * con el proyecto ya registrado
+         */
+        foreach($projectData['municipalities'] as $municipality)
+        {
+            $this->projectMunicipalityInterface->createProjectMunicipality(collect(
+                [
+                    "project_bpin" => $projectData['bpin'],
+                    "municipality_id" => $municipality['municipality_id']
+                ]
+            ));
         }
 
         return $this->getProjectByBPIN($project['bpin']);
@@ -103,6 +121,49 @@ class ProjectService implements ProjectInterface
                     collect($location)
                 );
             }
+        }
+
+        $existingMunicipalities = $this->projectMunicipalityInterface->getAllProjectMunicipalities(["bpin" => ["eq" => $projectData["bpin"]]])->toArray();
+        $requestMunicipalities = array_map(function($municipality) {
+            return ['id' => $municipality['municipality_id']];
+        }, $projectData['municipalities']);
+        
+       // Obtener los IDs de los municipios existentes y de los municipios del proyecto
+        $existingMunicipalityIds = array_column($existingMunicipalities, 'id');
+        error_log("existingMunicipalityIds: ".json_encode($existingMunicipalityIds));
+        $requestMunicipalityIds = array_column($requestMunicipalities, 'id');
+        error_log("requestMunicipalityIds: ".json_encode($requestMunicipalityIds));
+
+        // Determinar los IDs de los municipios que se deben crear
+        $municipalitiesIdsForCreate = array_values(array_diff($requestMunicipalityIds, $existingMunicipalityIds));
+        error_log("municipalitiesIdsForCreate: ".json_encode($municipalitiesIdsForCreate));
+
+        // Iterar sobre los IDs de los municipios que se deben crear y crearlos
+        foreach ($municipalitiesIdsForCreate as $municipalityId) {
+            // Verificar si existe una entrada previamente eliminada suavemente para este municipio
+            $existingMunicipality = $this->projectMunicipalityInterface->getSoftDeletedProjectMunicipality($projectData['bpin'], $municipalityId);
+        
+            if ($existingMunicipality->isNotEmpty()) {
+                // Si existe, restaurar la entrada eliminada suavemente
+                $this->projectMunicipalityInterface->restoreSoftDeletedProjectMunicipality($existingMunicipality->first()->id);
+            } else {
+                // Si no existe, crear una nueva entrada
+                $this->projectMunicipalityInterface->createProjectMunicipality(collect(
+                    [
+                        "project_bpin" => $projectData['bpin'],
+                        "municipality_id" => $municipalityId
+                    ]
+                ));
+            }
+        }
+
+        // Determinar los IDs de los municipios que se deben eliminar
+        $municipalitiesIdsForDelete = array_values(array_diff($existingMunicipalityIds, $requestMunicipalityIds));
+        error_log("municipalitiesIdsForDelete: ".json_encode($municipalitiesIdsForDelete));
+
+        // Iterar sobre los IDs de los municipios que se deben eliminar y eliminarlos
+        foreach ($municipalitiesIdsForDelete as $municipalityId) {
+            $this->projectMunicipalityInterface->deleteProjectMunicipality($municipalityId);
         }
 
         return $this->getProjectByBPIN($bpin);
@@ -192,10 +253,19 @@ class ProjectService implements ProjectInterface
      */
     public function getProjectByBPIN(string $bpin) : Collection
     {
-        $project = Project::with(['department', 'municipality', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
+        $project = Project::with(['projectMunicipality.municipality', 'department', 'state', 'substate', 'sector', 'locations', 'locations.coordinate'])
                         ->findOrFail($bpin);
         
         $projectData = $project->toArray();
+        $projectData['municipalities'] = array_map(
+            function($municipality)
+            {
+                return $municipality['municipality'];
+            },
+            $projectData['project_municipality']
+        );
+        unset($projectData['project_municipality']);
+
         $projectData['total_value'] = (float)$projectData['total_value'];
         $projectData['requested_value'] = (float)$projectData['requested_value'];
 

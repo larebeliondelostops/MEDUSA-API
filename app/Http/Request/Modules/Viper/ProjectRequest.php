@@ -49,16 +49,15 @@ class ProjectRequest extends FormRequest
             'responsible_entity' => 'sometimes|string|max:255',
             'sector_id' => 'required|integer',
             'department_id' => 'required|integer',
-            'municipality_id' => 'required|integer',
+            'municipalities' => 'required|array',
+                'municipalities.*.municipality_id' => 'required|integer',
 
-                'locations' => 'required|array', // array con las locaciones del proyecto
+            'locations' => 'required|array', // array con las locaciones del proyecto
                 'locations.*.name' =>'required|string|max:64',
-
                     'locations.*.coordinate' => 'required|array',
-                    'locations.*.coordinate.type' => 'required|string|max:32',
-                    'locations.*.coordinate.latitude' => 'required|numeric',
-                    'locations.*.coordinate.longitude' => 'required|numeric',
-
+                        'locations.*.coordinate.type' => 'required|string|max:32',
+                        'locations.*.coordinate.latitude' => 'required|numeric',
+                        'locations.*.coordinate.longitude' => 'required|numeric',
                 'locations.*.department_id' => 'required|integer',
                 'locations.*.municipality_id' => 'required|integer',
 

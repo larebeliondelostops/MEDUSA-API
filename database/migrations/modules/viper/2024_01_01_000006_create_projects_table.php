@@ -21,9 +21,6 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
-            $table->unsignedBigInteger('municipality_id')->nullable();
-            $table->foreign('municipality_id')->references('id')->on('municipalities');
-
             $table->unsignedBigInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states');
 

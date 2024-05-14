@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('messages_bot', function (Blueprint $table) {
             $table->id();
             $table->string('query',255);
-            $table->string('response',1024);
+            $table->text('response');
             $table->string('files',255);
             $table->unsignedBigInteger('project_user_role_id');
             $table->timestamps();

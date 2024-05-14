@@ -20,6 +20,7 @@ use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\Project\ProjectObserverAssignContractInterface;
+use App\Interfaces\Modules\Viper\ProjectBotDocumentsInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Interfaces\Modules\Viper\ProofInterface;
 use App\Interfaces\Modules\Viper\ReportInterface;
@@ -58,6 +59,7 @@ use App\Services\Modules\Viper\MunicipalityService;
 use App\Services\Modules\Viper\PrecedenceService;
 use App\Services\Modules\Viper\ProductService;
 use App\Services\Modules\Viper\Project\ProjectObserverAssignContract;
+use App\Services\Modules\Viper\ProjectBotDocumentsService;
 use App\Services\Modules\Viper\ProjectService;
 use App\Services\Modules\Viper\ProofService;
 use App\Services\Modules\Viper\ReportService;
@@ -116,6 +118,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
         $this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(MessageBotInterface::class, MessageBotService::class);
+        $this->app->bind(ProjectBotDocumentsInterface::class, ProjectBotDocumentsService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

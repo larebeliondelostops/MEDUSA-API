@@ -29,7 +29,7 @@ class MessageBotController extends BaseController
     public function store(MessageBotRequest $request)
     {
         try {
-            $messageBotCreated = $this->messageBotInterface->createNewMessageBot(collect($request->validated()));
+            $messageBotCreated = $this->messageBotInterface->createNewMessageBot($request->question, $request->bpin);
 
             return response()->json([
                 'message' => 'Message bot created successfully.',
@@ -40,24 +40,26 @@ class MessageBotController extends BaseController
         }
     }
 
-    public function update(MessageBotRequest $request, int $id)
+
+    public function uploadFiles(Request $request)
     {
         try {
-            $messageBotUpdated = $this->messageBotInterface->updateMessageBot(collect($request->validated()), $id);
+            $messageBotFiles = $this->messageBotInterface->uploadFiles($request->file, $request->bpin);
 
             return response()->json([
-                'message' => 'Message Bot updated successfully.',
-                'data'    => $messageBotUpdated,
-            ], 200);
+                'message' => 'Message bot created successfully.',
+                'data'    => $messageBotFiles
+            ], 201);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
     }
 
-    public function index(int $projectUserRoleId)
+
+    public function index(int $bpin)
     {
         try {
-            $messagesBot = $this->messageBotInterface->getAllMessageBotByProjectUserRole($projectUserRoleId);
+            $messagesBot = $this->messageBotInterface->getAllMessageBotByProjectUserRole($bpin);
             return response()->json([
                 'data' => $messagesBot,
             ], 200);

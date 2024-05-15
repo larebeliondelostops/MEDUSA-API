@@ -36,10 +36,8 @@ class MessageBotRequest extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'required|string|max:255',
-            'response' => 'required|string|max:255',
-            'files' => 'required|string|max:255',
-            'project_user_role_id'=> 'required|integer|exists:project_user_role,id',
+            'question' => 'required|string|max:255',
+            'bpin' => 'required|string|max:255'
         ];
     }
 

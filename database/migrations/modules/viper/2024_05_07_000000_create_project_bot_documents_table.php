@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages_bot', function (Blueprint $table) {
+        Schema::create('project_bot_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('query',255);
-            $table->text('response');
-            $table->string('files',255);
-            $table->unsignedBigInteger('project_user_role_id');
+            $table->string('project_id', 255);
+            $table->unsignedBigInteger('document_id');
             $table->timestamps();
         
-            $table->foreign('project_user_role_id')->references('id')->on('project_user_role')->onDelete('cascade');
+            $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade');
+            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages_bot');
+        Schema::dropIfExists('project_bot_documents');
     }
 };

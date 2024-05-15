@@ -516,6 +516,4 @@ class DocumentService implements DocumentInterface
         return collect($deletedDocument);
     }
 
-
-    
 }

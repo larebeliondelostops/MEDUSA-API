@@ -41,7 +41,6 @@ class ProjectMunicipalityService implements ProjectMunicipalityInterface
      */
     public function getAllProjectMunicipalities(array $queryparam = []) : Collection
     {   
-        error_log('Queryparam: '.json_encode($queryparam));
         // Instancia del filtro para transformar los parámetros de consulta
         $filter = new ProjectMunicipalityFilter();
         $queryItems = $filter->transform($queryparam);

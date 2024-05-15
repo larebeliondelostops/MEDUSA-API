@@ -5,6 +5,7 @@ namespace App\Services\Modules\Viper;
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\SectorInterface;
 use App\Models\Modules\Viper\Sector;
+use App\Utils\Filters\Modules\Viper\SectorFilter;
 use Exception;
 
 /**
@@ -53,17 +54,20 @@ class SectorService implements SectorInterface
      *
      * @return Collection Collection de Collection representando todos los sectores.
      */
-    public function getAllSectors(): Collection
+    public function getAllSectors(array $queryParam = []): Collection
     {
-        $sectorGot = Sector::all();
-        $sectors = $sectorGot->transform(
-            function(Sector $sector)
-            {
-                return collect($sector);
-            }
-        );
+        // Instancia del filtro para transformar los parámetros de consulta
+        $filter = new SectorFilter();
+        $queryItems = $filter->transform($queryParam);
 
-        return $sectors;
+        // Construir la consulta de states
+        $sectorQuery = Sector::query();
+        foreach($queryItems as $item)
+        {
+            $sectorQuery->orWhere(...$item);
+        }
+
+        return collect($sectorQuery->get());
     }
 
     /**

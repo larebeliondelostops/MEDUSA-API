@@ -2,16 +2,16 @@
 
 namespace App\Utils\Filters\Modules\Viper;
 
-class SubstateFilter extends Filter
+class DepartmentFilter extends Filter
 {
     protected $safeParam = [
-        'state_id' => ['eq'],
-        'nameSubstate' => ['eq', 'cont'],
+        'nameDepartment' => ['eq', 'cont'],
     ];
     protected $columnMap = [
-        'nameSubstate' => 'name',
+        'nameDepartment' => 'name',
     ];
     protected $operatorMap = [
         'eq' => '=',
+        'cont' => 'ilike',
     ];
 }

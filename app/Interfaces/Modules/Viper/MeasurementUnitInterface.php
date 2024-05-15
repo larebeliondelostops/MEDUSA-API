@@ -22,7 +22,7 @@ interface MeasurementUnitInterface {
      *
      * @return Collection Colección de Collections que representan las unidades de medida.
      */
-    public function getAllMeasurementUnits(): Collection;
+    public function getAllMeasurementUnits(array $queryParam = []): Collection;
 
     /**
      * Almacenar una nueva unidad de medida en el sistema.

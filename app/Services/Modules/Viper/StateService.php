@@ -4,6 +4,7 @@ namespace App\Services\Modules\Viper;
 use App\Interfaces\Modules\Viper\StateInterface;
 use App\Models\Modules\Viper\State;
 use App\Models\Modules\Viper\Substate;
+use App\Utils\Filters\Modules\Viper\StateFilter;
 use Illuminate\Support\Collection;
 
 
@@ -82,10 +83,19 @@ class StateService implements StateInterface
      *
      * @return Collection Array de s de todos los estados.
      */
-    public function getAllStates() : Collection
+    public function getAllStates(array $queryparam = []) : Collection
     {
-        $statesGot = State::all();
-        $states = $statesGot->transform(
+        // Instancia del filtro para transformar los parámetros de consulta
+        $filter = new StateFilter();
+        $queryItems = $filter->transform($queryparam);
+
+        // Construir la consulta de states
+        $statesQuery = State::query();
+        foreach($queryItems as $item)
+        {
+            $statesQuery->orWhere(...$item);
+        }
+        $states = $statesQuery->get()->transform(
             function (State $state)
             {
                 return collect($state)->except(self::KEYS_TO_EXCLUDE);

@@ -102,10 +102,11 @@ class ProductService implements ProductInterface
         $objSpecificObjects = SpecificObjective::where('scope_id', $scope_id)->get();
 
         // Obtener todos los productos de los objetivos específicos asociados al scope_id
-        $productsObjSpecifics = Product::whereIn('specific_objective_id', $objSpecificObjects->pluck('id'))->get();
+        $productsObjSpecifics = Product::where('specific_objective_id', $productData['specific_objective_id'])->get();
         $product_number = $productsObjSpecifics->max('number') + 1;
 
         // Verifica si el número ya existe en los productos asociados a los objetivos específicos
+        error_log("ProductsObjSpecifics: ". json_encode($productsObjSpecifics->where('number', $product->number)));
         if ($product->number) {
             if ($productsObjSpecifics->where('number', $product->number)->count() > 0) {
                 // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees

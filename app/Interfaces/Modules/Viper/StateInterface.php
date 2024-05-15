@@ -54,7 +54,7 @@ interface StateInterface
      *
      * @return Collection Collection de Collections de todos los estados.
      */
-    public function getAllStates() : Collection;
+    public function getAllStates(array $queryParam = []) : Collection;
 
     /**
      * Obtiene un listado detallado de todos los estados.

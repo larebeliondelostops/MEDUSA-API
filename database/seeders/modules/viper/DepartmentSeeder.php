@@ -48,5 +48,77 @@ class DepartmentSeeder extends Seeder
             DB::table('departments')->insert([
                 $deparment
             ]);
+
+        /**
+         * Marcadores para Valle del Cauca
+         */
+        $coordinates = [
+            "Valle del Cauca" =>   [
+                "id" => Uuid::uuid4()->toString(),
+                "type" => "Point",
+                "latitude" => '4.0400707',
+                "longitude" => '-77.9517134',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
+
+        $departments = [
+            [
+                "name" => "Valle del Cauca",
+                "coordinate_id" => $coordinates["Valle del Cauca"]["id"],
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
+
+        // Primero se debe registrar la locación
+        foreach ($coordinates as $coordinate) {
+            DB::table('coordinates')->insert([
+                $coordinate
+            ]);
+        }
+
+        foreach ($departments as $department) {
+            DB::table('departments')->insert([
+                $department
+            ]);
+        }
+
+        /**
+         * Marcadores para San Andres y Providencia
+         */
+        $coordinates = [
+            "San Andres y Providencia" =>   [
+                "id" => Uuid::uuid4()->toString(),
+                "type" => "Point",
+                "latitude" => '12.9379259',
+                "longitude" => '-82.2034544',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
+
+        $departments = [
+            [
+                "name" => "San Andres y Providencia",
+                "coordinate_id" => $coordinates["San Andres y Providencia"]["id"],
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
+
+        // Primero se debe registrar la locación
+        foreach ($coordinates as $coordinate) {
+            DB::table('coordinates')->insert([
+                $coordinate
+            ]);
+        }
+
+        foreach ($departments as $department) {
+            DB::table('departments')->insert([
+                $department
+            ]);
+        }
     }
 }

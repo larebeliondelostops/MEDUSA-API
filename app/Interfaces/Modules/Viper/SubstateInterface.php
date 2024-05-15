@@ -22,7 +22,7 @@ interface SubstateInterface {
      *
      * @return \Illuminate\Support\Collection Colección de objetos SubstateData que representan los subestados.
      */
-    public function getAllSubstates() : Collection;
+    public function getAllSubstates(array $queryParams = []) : Collection;
 
     /**
      * Almacenar un nuevo subestado en el sistema.

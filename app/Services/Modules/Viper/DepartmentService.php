@@ -5,6 +5,7 @@ use App\Interfaces\Modules\Viper\CoordinatesInterface;
 use App\Interfaces\Modules\Viper\DepartmentInterface;
 use App\Models\Modules\Viper\Department;
 use App\Models\Viper\Municipality;
+use App\Utils\Filters\Modules\Viper\DepartmentFilter;
 use Illuminate\Support\Collection;
 
 /**
@@ -52,10 +53,20 @@ class DepartmentService implements DepartmentInterface
      *
      * @return array Array de DepartmentData de todos los departamentos.
      */
-    public function getAllDepartments() : Collection
+    public function getAllDepartments(array $queryParam = []) : Collection
     {
-        $departmentsGot = Department::with('coordinate')->get();
-        return collect($departmentsGot);
+        // Instancia del filtro para transformar los parámetros de consulta
+        $filter = new DepartmentFilter();
+        $queryItems = $filter->transform($queryParam);
+
+        // Construir la consulta de departments
+        $departmentQuery = Department::with('coordinate');
+        foreach($queryItems as $item)
+        {
+            $departmentQuery->orWhere(...$item);
+        }
+
+        return collect($departmentQuery->get());
     }
 
     /**

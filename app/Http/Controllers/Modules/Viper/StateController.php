@@ -152,8 +152,9 @@ class StateController extends BaseController
     {
         try
         {
+            $queryFilterParam = $request->query();
             return response()->json([
-                "data" => $this->stateInterface->getAllStates(),
+                "data" => $this->stateInterface->getAllStates($queryFilterParam),
             ], Response::HTTP_OK);
         }
         catch(Exception $exception)

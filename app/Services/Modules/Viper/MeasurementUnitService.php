@@ -4,6 +4,7 @@ namespace App\Services\Modules\Viper;
 
 use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 use App\Models\Modules\Viper\MeasurementUnit;
+use App\Utils\Filters\Modules\Viper\MeasurementUnitFilter;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,14 +25,20 @@ class MeasurementUnitService implements MeasurementUnitInterface
      *
      * @return Collection Collection de Collections que representan las unidades de medidas.
      */
-    public function getAllMeasurementUnits(): Collection
+    public function getAllMeasurementUnits(array $queryParam = []): Collection
     {
-        $measurementUnitGot = MeasurementUnit::all();
-        $measurementUnits = $measurementUnitGot->transform(function ($measurementUnit) {
-            return collect($measurementUnit);
-        });
-
-        return $measurementUnits;
+                // Instancia del filtro para transformar los parámetros de consulta
+                $filter = new MeasurementUnitFilter();
+                $queryItems = $filter->transform($queryParam);
+        
+                // Construir la consulta de unidades de medidas
+                $measurementUnitQuery = MeasurementUnit::query();
+                foreach($queryItems as $item)
+                {
+                    $measurementUnitQuery->orWhere(...$item);
+                }
+                
+                return $measurementUnitQuery->get();
     }
 
     /**

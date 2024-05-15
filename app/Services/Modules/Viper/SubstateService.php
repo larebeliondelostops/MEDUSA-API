@@ -4,6 +4,7 @@ namespace App\Services\Modules\Viper;
 
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Models\Modules\Viper\Substate;
+use App\Utils\Filters\Modules\Viper\SubstateFilter;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,10 +25,20 @@ class SubstateService implements SubstateInterface
      *
      * @return Collection Colección de objetos SubstateDTO que representan los subestados.
      */
-    public function getAllSubstates() : Collection
+    public function getAllSubstates(array $queryParam = []) : Collection
     {
-        $substates = Substate::with(['state'])->get();
-        return collect($substates);
+        // Instancia del filtro para transformar los parámetros de consulta
+        $filter = new SubstateFilter();
+        $queryItems = $filter->transform($queryParam);
+
+        // Construir la consulta de states
+        $substatesQuery = Substate::query();
+        foreach($queryItems as $item)
+        {
+            $substatesQuery->orWhere(...$item);
+        }
+        $subtates = $substatesQuery->get();
+        return $subtates;
     }
 
     /**

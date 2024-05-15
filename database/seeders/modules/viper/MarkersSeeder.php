@@ -27,6 +27,7 @@ class MarkersSeeder extends Seeder
                 'icon' => 'location_on',
                 'color' => 'blue',
                 'slug' => Slug::where(['name' => 'Proyectos'])->first()->id,
+                'namespace' => 'App\Strategies\StrategiesPoints\Viper\StrategyProjectMarker',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

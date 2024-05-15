@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 
 interface MessageBotInterface {
 
-    public function createNewMessageBot(Collection $messageBot): Collection;
+    public function createNewMessageBot(string $question, string $bpin): Collection;
 
-    public function updateMessageBot(Collection $messageBot, int $id): Collection;
+    public function uploadFiles(int $fileId, string $bpin): Collection;
 
-    public function getAllMessageBotByProjectUserRole(int $projectUserRoleId): Collection;
+    public function getAllMessageBotByProjectUserRole(int $bpin): Collection;
 
     public function getMessageBot(int $id): Collection;
 

@@ -4,6 +4,7 @@ namespace App\Interfaces\Modules\Viper;
 
 use App\DTOs\Viper\Project\ProjectDetailDTO;
 use App\DTOs\Viper\Project\ProjectRequestDTO;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 /**
@@ -67,4 +68,12 @@ interface ProjectInterface {
      * @return ProjectDetailDTO DTO del proyecto eliminado.
      */
     public function deleteProject(string $bpin) : Collection;
+
+    /**
+     * Crea un nuevo proyecto a partir de un archivo MGA.
+     * 
+     * @param Uploadedfile $mgaFile
+     * @return Collection
+    */
+    public function createNewProjectFromMGA( UploadedFile $mgaFile) : Collection;
 }

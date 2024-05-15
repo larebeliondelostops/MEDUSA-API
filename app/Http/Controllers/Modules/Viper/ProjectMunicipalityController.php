@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 // Librerias del modulo viper
-use App\Http\Request\Modules\Viper\ProjectRequest;
-use App\Interfaces\Modules\Viper\ProjectInterface;
-
+use App\Http\Request\Modules\Viper\ProjectMunicipalityRequest;
+use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 // Librerias para el manejo de excepciones
 use Exception;
 
@@ -22,15 +21,12 @@ use Exception;
  * @package    App\Http\Controllers\Viper
  * @copyright  2024 Ignicion S.A.S.
  * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
- * @version    v1.0.2
+ * @version    v1.0.0
  */
-class ProjectController extends BaseController
+class ProjectMunicipalityController extends BaseController
 {
-    // Número de proyectos por página para la paginación.
-    private const DEFAULT_PROJECT_PER_PAGE = 8;
-
     // Interface con todas las funcionalidades de la logica del negocio
-    private ProjectInterface $projectInterface;
+    private ProjectMunicipalityInterface $projectMunicipalityInterface;
 
     /**
      * Constructor del controlador.
@@ -39,10 +35,10 @@ class ProjectController extends BaseController
      *
      * @param ProjectInterface $projectInterface Interfaz para las operaciones de negocio de proyectos.
      */
-    public function __construct(ProjectInterface $projectInterface)
+    public function __construct(ProjectMunicipalityInterface $projectMunicipalityInterface)
     {
         parent::__construct(); // Se tiene que llamar al contructor padre para que se configure correctamente el BaseController
-        $this->projectInterface = $projectInterface;
+        $this->projectMunicipalityInterface = $projectMunicipalityInterface;
     }
 
      /**
@@ -54,45 +50,17 @@ class ProjectController extends BaseController
      * @param ProjectRequest $request Datos de la solicitud validados para la creación del proyecto.
      * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto creado.
      */
-    public function store(ProjectRequest $request)
+    public function store(ProjectMunicipalityRequest $request)
     {
         try
         {
-            $projectSavedDTO = $this->projectInterface->createNewProject(collect($request->validated()));
+            $projectMunicipalitySavedDTO = $this->projectMunicipalityInterface->createProjectMunicipality(collect($request->validated()));
             return response()->json([
                 'message' => 'Proyecto creado satisfactoriamente.',
-                'data'    => $projectSavedDTO,
+                'data'    => $projectMunicipalitySavedDTO,
             ], Response::HTTP_CREATED);
         }
         catch (Exception $exception)
-        {
-            return $this->handleException($exception);
-        }
-    }
-
-
-    /**
-     * Actualiza un proyecto existente.
-     *
-     * Utiliza los datos validados de la solicitud para actualizar un proyecto específico.
-     * Identifica el proyecto por su 'bpin'.
-     *
-     * @param ProjectRequest $request Datos de la solicitud validados para la actualización del proyecto.
-     * @param string $bpin Identificador único del proyecto a actualizar.
-     * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto actualizado.
-     */
-    public function update(ProjectRequest $request, string $bpin)
-    {
-        try
-        {
-            $projectUpdatedDTO = $this->projectInterface->updateProject(collect($request->validated()), $bpin);
-
-            return response()->json([
-                'message' => 'Proyecto actualizado satisfactoriamente',
-                'data'    => $projectUpdatedDTO,
-            ], Response::HTTP_OK);
-        }
-        catch(Exception $exception)
         {
             return $this->handleException($exception);
         }
@@ -111,11 +79,9 @@ class ProjectController extends BaseController
     {
         try
         {
-            $page = $request->input('page', 1);
-            $name = $request->input('name', null);
             $queryFilterParam = $request->query();
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $queryFilterParam);
-            return response()->json($paginatedProjects, Response::HTTP_OK);
+            $projectMunicipalities = $this->projectMunicipalityInterface->getAllProjectMunicipalities($queryFilterParam);
+            return response()->json($projectMunicipalities, Response::HTTP_OK);
         }
         catch(Exception $exception) // Error general
         {
@@ -131,11 +97,11 @@ class ProjectController extends BaseController
      * @param string $bpin Identificador único del proyecto a mostrar.
      * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto solicitado.
      */
-    public function show(Request $request, string $bpin)
+    public function show(Request $request, int $id)
     {
         try
         {
-            $projectDTO = $this->projectInterface->getProjectByBPIN($bpin);
+            $projectDTO = $this->projectMunicipalityInterface->getProjectMunicipality($id);
             return response()->json([
                 "data" => $projectDTO,
             ], Response::HTTP_OK);
@@ -154,11 +120,11 @@ class ProjectController extends BaseController
      * @param string $bpin Identificador único del proyecto a eliminar.
      * @return \Illuminate\Http\Response Respuesta JSON con los datos del proyecto eliminado.
      */
-    public function destroy(Request $request, string $bpin)
+    public function destroy(Request $request, int $id)
     {
         try
         {
-            $projectDTO = $this->projectInterface->deleteProject($bpin);
+            $projectDTO = $this->projectMunicipalityInterface->deleteProjectMunicipality($id);
             return response()->json([
                 "message" => "Proyecto eliminado satisfactoriamente.",
                 "data" => $projectDTO
@@ -169,34 +135,4 @@ class ProjectController extends BaseController
             return $this->handleException($exception);
         }
     }
-
-    public function createFromMGA(ProjectRequest $request)
-    {
-        try {
-            // Validar si se envió un archivo
-            if (!$request->hasFile('mgaFile')) {
-                return response()->json(['error' => 'No se envió ningún archivo.'], 400);
-            }
-    
-            // Obtener el archivo MGA
-            $mgaFile = $request->file('mgaFile');
-    
-            // Validar si es un archivo MGA
-            if (!$mgaFile->isValid() || $mgaFile->extension() !== 'pdf') {
-                return response()->json(['error' => 'El archivo enviado no es un archivo MGA válido.'], 400);
-            }
-    
-            // Procesar el archivo para crear el proyecto
-            $projectDTO = $this->projectInterface->createNewProjectFromMGA($mgaFile);
-    
-            return response()->json([
-                'message' => 'Proyecto creado satisfactoriamente.',
-                'data'    => $projectDTO,
-            ], Response::HTTP_CREATED);
-        } catch (Exception $exception) {
-            // Manejo de excepciones
-            return $this->handleException($exception);
-        }
-    }
-    
 }

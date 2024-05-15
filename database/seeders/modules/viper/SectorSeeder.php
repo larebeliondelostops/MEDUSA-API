@@ -19,22 +19,22 @@ class SectorSeeder extends Seeder
          */
         DB::table('sectors')->insert([
             [
-                'name' => 'Ambiente y Desarrollo Rural',
+                'name' => 'Ambiente y desarrollo rural',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Ambiente y Desarrollo Sostenible',
+                'name' => 'Ambiente y desarrollo sostenible',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Ciencia, Tecnología e Innovación',
+                'name' => 'Ciencia, tecnología e innovación',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Comercio, Industria y Turismo',
+                'name' => 'Comercio, industria y turismo',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -44,7 +44,7 @@ class SectorSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Deporte y Recreación',
+                'name' => 'Deporte y recreación',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -54,37 +54,37 @@ class SectorSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Gobierno Territorial',
+                'name' => 'Gobierno territorial',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Inclusión Social y Reconciliación',
+                'name' => 'Inclusión social y reconciliación',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Información Estadistica',
+                'name' => 'Información estadistica',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Justicia y del Derecho',
+                'name' => 'Justicia y del derecho',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Minas y Energía',
+                'name' => 'Minas y energía',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Salud y Protección Social',
+                'name' => 'Salud y protección Social',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Tecnologías de la Información y las Comunicaciones',
+                'name' => 'Tecnologías de la información y las comunicaciones',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -99,7 +99,7 @@ class SectorSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Vivienda, Ciudad y Territorio',
+                'name' => 'Vivienda, ciudad y territorio',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

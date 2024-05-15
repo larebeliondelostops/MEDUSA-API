@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('indicators_viper', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('start_year_of_goal');
-            $table->bigInteger('end_year_goal');
+            $table->bigInteger('start_year_of_goal')->nullable();
+            $table->bigInteger('end_year_goal')->nullable();
             $table->bigInteger('target_value');
             $table->bigInteger('progress');
             $table->double('percentage_completed');
             $table->boolean('is_main');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('measurement_unit_id');
+            $table->unsignedBigInteger('measurement_unit_id')->nullable();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('measurement_unit_id')->references('id')->on('measurement_units')->onDelete('cascade')->onUpdate('cascade');

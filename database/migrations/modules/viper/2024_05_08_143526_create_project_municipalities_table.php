@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages_bot', function (Blueprint $table) {
+        Schema::create('project_municipalities', function (Blueprint $table) {
             $table->id();
-            $table->string('query',255);
-            $table->text('response');
-            $table->string('files',255);
-            $table->unsignedBigInteger('project_user_role_id');
+            $table->string('project_bpin')->max(255);
+            $table->foreign('project_bpin')->references('bpin')->on('projects');
+            $table->unsignedBigInteger('municipality_id');
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->timestamps();
-        
-            $table->foreign('project_user_role_id')->references('id')->on('project_user_role')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages_bot');
+        Schema::dropIfExists('project_municipalities');
     }
 };

@@ -37,47 +37,53 @@ class ProjectRequest extends FormRequest
      * @return array Reglas de validación.
      */
     public function rules()
-    {
+    {   
+        $parts = explode('/', $this->route()->uri());
+        $endpoint = end($parts);
+        $method = $this->method();
         $rules = [
             'bpin' => 'required|string|max:255',
             'name' => 'required|string|max:512',
             'ocad' => 'required|string|max:255',
             'state_id' => 'required|integer',
-            'substate_id' => 'nullable|integer',
-            'total_value' => 'required|numeric',
-            'requested_value' => 'required|numeric',
+            'substate_id' => 'required|integer',
+            'total_value' => 'required|numeric',    
             'responsible_entity' => 'sometimes|string|max:255',
             'sector_id' => 'required|integer',
             'department_id' => 'required|integer',
-            'municipality_id' => 'required|integer',
+            'municipalities' => 'required|array',
+                'municipalities.*.municipality_id' => 'required|integer',
 
-                'locations' => 'required|array', // array con las locaciones del proyecto
+            'locations' => 'nullable|array', // array con las locaciones del proyecto
                 'locations.*.name' =>'required|string|max:64',
-
                     'locations.*.coordinate' => 'required|array',
-                    'locations.*.coordinate.type' => 'required|string|max:32',
-                    'locations.*.coordinate.latitude' => 'required|numeric',
-                    'locations.*.coordinate.longitude' => 'required|numeric',
-
+                        'locations.*.coordinate.type' => 'required|string|max:32',
+                        'locations.*.coordinate.latitude' => 'required|numeric',
+                        'locations.*.coordinate.longitude' => 'required|numeric',
                 'locations.*.department_id' => 'required|integer',
                 'locations.*.municipality_id' => 'required|integer',
 
             'beneficiaries' => 'required|integer',
             'planner' => 'required|string|max:255',
-            'execution_approval_date' => 'required|date',
+            'execution_approval_date' => 'nullable|date',
             'completion_date' => 'nullable|date|after_or_equal:execution_approval_date',
             'start_date_execution_phase' => 'nullable|date',
 
             'unilateral_termination' => 'nullable|date|after_or_equal:completion_date',
             'bilateral_termination' => 'nullable|date|after_or_equal:unilateral_termination',
 
-            'project_duration_in_months' => 'required|integer|min:0',
-            'reporting_frequency' => 'required|integer|min:1',
+            'project_duration_in_months' => 'nullable|integer|min:0',
+            'reporting_frequency' => 'nullable|integer|min:1',
         ];
-        if ($this->method()=='PUT')
+        if ($method=='PUT')
+        {
             $rules['locations.*.id'] = 'sometimes|integer';
-
-        return $rules;
+            return $rules;
+        }
+        else if ($method == 'POST' && $endpoint==='createFromMga')
+            return [];
+        else
+            return $rules;
     }
 
     /**

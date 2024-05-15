@@ -9,4 +9,5 @@ Route::prefix("/viper/project")->group(function () {
     Route::get('/list', [ProjectController::class, 'index']);
     Route::get('/get/{bpin}', [ProjectController::class, 'show']);
     Route::delete('/delete/{bpin}', [ProjectController::class, 'destroy']);
+    Route::post('/createFromMga', [ProjectController::class, 'createFromMGA']);
 });

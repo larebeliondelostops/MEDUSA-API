@@ -5,17 +5,21 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 
 /**
- * Request personalizado para la validación de productos.
+ * Request personalizado para la validación de proyectos.
  *
+ * Este FormRequest se utiliza para validar las solicitudes entrantes para la creación y actualización de proyectos,
+ * garantizando que todos los datos necesarios estén presentes y sean correctos antes de que la solicitud
+ * llegue al controlador.
  * @package    App\Http\Request\Viper
- * @author     Daniel Alferez <dan.alferez1@gmail.com>
+ * @author     Jorge Abella <j0rg3.4b3ll4@gmail.com>
  * @copyright  2024 Ignicion S.A.S.
  * @version    v1.0.0
  */
-class ProductRequest extends FormRequest
+class ProjectMunicipalityRequest extends FormRequest
 {
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
@@ -24,7 +28,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -34,14 +38,13 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:191',
-            'number' => 'integer|nullable',
-            'amount' => 'required|float',
-            'measurement_unit_id' => 'required|integer',
-            'folder_id' => 'integer|nullable',
-            'specific_objective_id' => 'required|integer',
+        $rules = [
+            'municipalities' => 'required|array',
+                'municipalities.*.municipality_id' => 'required|integer',
+                'municipalities.*.project_bpin' => 'required|integer',
         ];
+
+        return $rules;
     }
 
     /**
@@ -55,7 +58,8 @@ class ProductRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'message' => 'Error en los parametros requeridos.',
+            'success' => false,
+            'message' => 'Error in the required parameters.',
         ], 400));
     }
 }

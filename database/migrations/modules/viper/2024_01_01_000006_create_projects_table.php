@@ -21,17 +21,13 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
-            $table->unsignedBigInteger('municipality_id')->nullable();
-            $table->foreign('municipality_id')->references('id')->on('municipalities');
-
-            $table->unsignedBigInteger('state_id');
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->foreign('state_id')->references('id')->on('states');
 
             $table->unsignedBigInteger('substate_id')->nullable();
             $table->foreign('substate_id')->references('id')->on('substates');
 
             $table->decimal('total_value', 21, 2);
-            $table->decimal('requested_value', 21, 2);
             $table->decimal('executed_value', 21, 2)->default(0.0);
             $table->string('responsible_entity', 255);
 
@@ -39,15 +35,15 @@ return new class extends Migration
             $table->foreign('sector_id')->references('id')->on('sectors');
 
             $table->integer('beneficiaries');
-            $table->string('planner', 255);
-            $table->date('execution_approval_date');
+            $table->string('planner', 255)->nullable();
+            $table->date('execution_approval_date')->nullable();
             $table->date('completion_date')->nullable();
             $table->date('start_date_execution_phase')->nullable();
             $table->date('unilateral_termination')->nullable();
             $table->date('bilateral_termination')->nullable();
 
-            $table->integer('project_duration_in_months');
-            $table->integer('reporting_frequency');
+            $table->integer('project_duration_in_months')->nullable();
+            $table->integer('reporting_frequency')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

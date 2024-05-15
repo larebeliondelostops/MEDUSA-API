@@ -374,7 +374,7 @@ class ProjectService implements ProjectInterface
                 $dataMga['municipalities'][0]
             );
             $department_id = $this->departmentInterface->getAllDepartments(["nameDepartment" => ["eq" => $dataMga['department']]])->first()->id;
-            $sector_id = $this->sectorInterface->getAllSectors(["name" => ["eq" => $dataMga['sector']]])->first()->id;
+            $sector_id = $this->sectorInterface->getAllSectors(["nameSector" => ["eq" => $dataMga['sector']]])->first()->id;
             
             $project = $this->createNewProject(
                 collect([ 

@@ -80,7 +80,8 @@ class DepartmentController extends BaseController
     {
         try
         {
-            $departmens = $this->departmentInterface->getAllDepartments();
+            $queryParam = $request->query();
+            $departmens = $this->departmentInterface->getAllDepartments($queryParam);
             return response()->json([
                 "data"=> $departmens,
             ], Response::HTTP_OK);

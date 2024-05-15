@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('milestone_class');
+        Schema::dropIfExists('milestone_classes');
     }
 };

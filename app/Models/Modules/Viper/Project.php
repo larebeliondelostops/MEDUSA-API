@@ -24,6 +24,8 @@ class Project extends Model
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
+    private $cacheKeyMarker = 'projects_marker';
+
     protected $fillable = [
         'bpin',
         'name',
@@ -110,5 +112,10 @@ class Project extends Model
     public function scope()
     {
         return $this->hasOne(Scope::class, 'project_id');
+    }
+
+    public function getCacheKeyMarker()
+    {
+        return $this->cacheKeyMarker;
     }
 }

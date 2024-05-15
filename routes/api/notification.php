@@ -14,7 +14,7 @@ use App\Http\Controllers\NotificationAppController;
 |
 */
 
-Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() {
+Route::middleware([/* 'jwt.verify' *//* , 'role:Administrador' */])->group(function() {
 
     Route::post('/notify', [NotificationAppController::class, 'sendNotification']);
     Route::post('/notify/add-device', [NotificationAppController::class, 'addDevice']);

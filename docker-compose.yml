@@ -44,6 +44,19 @@ services:
     depends_on:
       - nginx
 
+  redis:
+    container_name: redis
+    image: redis:7.0
+    expose:
+      - 6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - medusa
+
 networks:
   medusa:
     driver: bridge
+
+volumes:
+  redis-data:

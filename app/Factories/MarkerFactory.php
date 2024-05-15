@@ -13,7 +13,6 @@ class MarkerFactory
     public function getStrategyPoints($slug_id) : PointsInterface
     {
         $markerClass = Marker::where('marker_type', 1)->where('slug', $slug_id)->firstOrFail();
-
         $strategy = app($markerClass->namespace);
 
         return new MarkerCache($strategy);

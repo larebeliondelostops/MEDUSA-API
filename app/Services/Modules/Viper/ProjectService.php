@@ -381,7 +381,7 @@ class ProjectService implements ProjectInterface
                     "bpin" => $dataMga['bpin'],
                     "name" => $dataMga['name'],
                     "ocad" => "",
-                    "state_id" => 4,
+                    "state_id" => null,
                     "substate_id" => null,
                     "total_value" => $dataMga['total_value'],
                     "responsible_entity" => "",

@@ -19,6 +19,7 @@ use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 use App\Interfaces\Modules\Viper\ScopeInterface;
 use App\Interfaces\Modules\Viper\SectorInterface;
 use App\Interfaces\Modules\Viper\SpecificObjectiveInterface;
+use App\Interfaces\Modules\Viper\StateInterface;
 use App\Models\Modules\Viper\MeasurementUnit;
 // Librerias de terceros
 use App\Utils\Filters\Modules\Viper\ProjectFilter;
@@ -51,8 +52,8 @@ class ProjectService implements ProjectInterface
     private ProductInterface $productInterface;
     private DeliverableInterface $deliverableInterface;
     private IndicatorInterface $indicatorInterface;
-
-    
+    private StateInterface $stateInterface;
+    private MeasurementUnitInterface $measurementUnitInterface;
 
     public function __construct(
         LocationInterface $locationInterface,
@@ -65,7 +66,9 @@ class ProjectService implements ProjectInterface
         SpecificObjectiveInterface $specificObjectiveInterface,
         ProductInterface $productInterface,
         DeliverableInterface $deliverableInterface,
-        IndicatorInterface $indicatorInterface
+        IndicatorInterface $indicatorInterface,
+        StateInterface $stateInterface,
+        MeasurementUnitInterface $measurementUnitInterface
     )
     {
         $this->locationInterface = $locationInterface;
@@ -79,6 +82,8 @@ class ProjectService implements ProjectInterface
         $this->productInterface = $productInterface;
         $this->deliverableInterface = $deliverableInterface;
         $this->indicatorInterface = $indicatorInterface;
+        $this->stateInterface = $stateInterface;
+        $this->measurementUnitInterface = $measurementUnitInterface;
     }
 
     /**
@@ -375,13 +380,14 @@ class ProjectService implements ProjectInterface
             );
             $department_id = $this->departmentInterface->getAllDepartments(["nameDepartment" => ["eq" => $dataMga['department']]])->first()->id;
             $sector_id = $this->sectorInterface->getAllSectors(["nameSector" => ["eq" => $dataMga['sector']]])->first()->id;
-            
+            $state_id = $this->stateInterface->getAllStates(["nameState" => ["eq" => "Aprobado"]])->first()['id'];
+
             $project = $this->createNewProject(
                 collect([ 
                     "bpin" => $dataMga['bpin'],
                     "name" => $dataMga['name'],
                     "ocad" => "",
-                    "state_id" => null,
+                    "state_id" => $state_id,
                     "substate_id" => null,
                     "total_value" => $dataMga['total_value'],
                     "responsible_entity" => "",
@@ -542,6 +548,7 @@ class ProjectService implements ProjectInterface
                     ])
                 );
                 
+                $measurement_unit_id = $this->measurementUnitInterface->getAllMeasurementUnits(["nameMeasurementUnit" => ["eq" => '--sin especificar--']])->first()->id; 
                 foreach ($specificObjective['products'] as $product)
                 {
                     $parts = explode('.', $product['number']);
@@ -552,7 +559,7 @@ class ProjectService implements ProjectInterface
                         "amount" => $product['amount'],
                         "folder_id" => $folder_id,
                         "specific_objective_id" => $specificObjectiveSaved['id'],
-                        "measurement_unit_id" => null,
+                        "measurement_unit_id" => $measurement_unit_id,
                     ]);
                     $productSaved = $this->productInterface->storeProduct(
                        $productForSave 
@@ -572,36 +579,33 @@ class ProjectService implements ProjectInterface
                         );
                     }
                     
+                    $measurement_unit_id = $this->measurementUnitInterface->getAllMeasurementUnits(["nameMeasurementUnit" => ["eq" => '--sin especificar--']])->first()->id;
                     foreach($product['indicators'] as $indicator)
                     {
                         $parts = explode('.', $indicator['number']);
                         $number = intval(end($parts));
+                        $indicatorData = collect([
+                            'name' => $indicator['description'],
+                            'start_year_of_goal' => null,
+                            'end_year_goal' => null,
+                            'target_value' => 0,
+                            'progress' => 0.0,
+                            'percentage_completed' => 0.0,
+                            'is_main' => ($indicator['isMain'] === 'Si'? true: false),
+                            'product_id' => $productSaved['id'],
+                            'measurement_unit_id' => $measurement_unit_id,
+                        ]);
                         $this->indicatorInterface->createNewIndicator(
-                            collect([
-                                'name' => $indicator['description'],
-                                'start_year_of_goal' => null,
-                                'end_year_goal' => null,
-                                'target_value' => 0,
-                                'progress' => 0.0,
-                                'percentage_completed' => 0.0,
-                                'is_main' => ($indicator['isMain'] === 'Si'? true: false),
-                                'product_id' => $productSaved['id'],
-                                'measurement_unit_id' => null,
-                            ])
+                            $indicatorData
                         );
                     }
                 }
 
             }
-            
 
             // Devuelve la información obtenida del servicio externo como una colección
             return collect($dataMga);
         } catch (RequestException $e) {
-            // Captura la excepción de la petición fallida y registra el motivo del fallo en el registro de errores
-            $errorMessage = $e->getMessage();
-            error_log("Error en la petición HTTP: $errorMessage");
-
             // Lanza la excepción nuevamente para que pueda ser manejada en otro lugar si es necesario
             throw $e;
         }

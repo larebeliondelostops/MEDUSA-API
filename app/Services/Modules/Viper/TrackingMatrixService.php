@@ -20,16 +20,13 @@ class TrackingMatrixService implements TrackingMatrixInterface
             'scope.specificObjectives.products.deliverables' => function ($query) {
                 $query->whereNull('deliverable_id');
             },
-            'scope.specificObjectives.products.deliverables.activities.measurementUnit',
-            'scope.specificObjectives.products.deliverables.activities.report.proofs',
-            'scope.specificObjectives.products.deliverables.deliverables' => function ($query) {
-                $query->with('activities.measurementUnit');
-                $query->with('activities.report.proofs');
-            }
-
         ])
         ->first();
-    
+    $trackingMatrix->scope->specificObjectives->each(function($objective) {
+        $objective->products->each(function($product) {
+            $this->loadDeliverablesActivities($product->deliverables);
+        });
+    });
     $trackingMatrixData = $trackingMatrix->toArray(); 
     //return collect($trackingMatrixData);
     if ($trackingMatrix && $trackingMatrix->scope && $trackingMatrix->scope->exists()) 
@@ -79,5 +76,17 @@ class TrackingMatrixService implements TrackingMatrixInterface
             // Recursively update numbers for nested child deliverables and activities
             $this->updateChildNumbers($deliverable['deliverables'], $deliverable['number']);
         }
-    }   
+    } 
+    
+    function loadDeliverablesActivities($deliverables) {
+        $deliverables->each(function($deliverable) {
+            $deliverable->activities->each(function($activity) {
+                $activity->load('measurementUnit', 'report.proofs');
+            });
+    
+            if ($deliverable->deliverables->isNotEmpty()) {
+                $this->loadDeliverablesActivities($deliverable->deliverables);
+            }
+        });
+    }
 }

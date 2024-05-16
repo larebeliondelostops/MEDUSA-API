@@ -143,6 +143,8 @@ class FolderService implements FolderInterface
             $userProjectRole = $this->projectUserRoleInterface->getRoleByProjectUser($projectId, $user->id);
             if ($userProjectRole && $userProjectRole['rol_id'] !== 1 ) {
                 $folderQuery->where('responsible', $user->id);
+            }else{
+                $userProjectRole = null;
             }
         }
 

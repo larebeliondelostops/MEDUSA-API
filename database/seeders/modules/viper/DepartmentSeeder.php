@@ -22,8 +22,8 @@ class DepartmentSeeder extends Seeder
             "Meta" =>   [
                             "id" => Uuid::uuid4()->toString(),
                             "type" => "Point",
-                            "latitude" => 3.2719886587045397,
-                            "longitude" => -73.0877486836099,
+                            "latitude" => '3.500009',
+                            "longitude" => -'73.000009',
                             "created_at" => now(),
                             "updated_at" => now(),
                         ],
@@ -56,8 +56,8 @@ class DepartmentSeeder extends Seeder
             "Valle del Cauca" =>   [
                 "id" => Uuid::uuid4()->toString(),
                 "type" => "Point",
-                "latitude" => '4.0400707',
-                "longitude" => '-77.9517134',
+                "latitude" => '3.6984053',
+                "longitude" => '-76.5501996',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -92,8 +92,8 @@ class DepartmentSeeder extends Seeder
             "San Andres y Providencia" =>   [
                 "id" => Uuid::uuid4()->toString(),
                 "type" => "Point",
-                "latitude" => '12.9379259',
-                "longitude" => '-82.2034544',
+                "latitude" => '13.3531165',
+                "longitude" => '-81.3749889',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

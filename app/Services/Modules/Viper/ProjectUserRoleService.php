@@ -61,9 +61,7 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
 
     public function getRoleByProjectUser(int $projectId, int $userId): ?Collection
     {
-        $projectUserRole = ProjectUserRole::where('project_id', $projectId)
-                                          ->where('user_id', $userId)
-                                          ->first();
+        $projectUserRole = ProjectUserRole::where('project_id', $projectId)->where('user_id', $userId)->first();
     
         if ($projectUserRole === null) {
             return null;
@@ -72,5 +70,12 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
         return collect($projectUserRole);
     }
     
-    
+    public function assignToMainUser(String $project)
+    {
+        $newProjectUserRole = new ProjectUserRole();
+        $newProjectUserRole->rol_id=1;
+        $newProjectUserRole->user_id=1;
+        $newProjectUserRole->project_id=$project;
+        $newProjectUserRole->save();
+    }
 }

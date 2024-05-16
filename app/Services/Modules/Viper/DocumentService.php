@@ -265,8 +265,8 @@ class DocumentService implements DocumentInterface
     
             return collect($result->all());
         } else {
-            // Si no hay parámetros de consulta, obtener todos los documentos
-            $documentGot = Document::all();
+
+            $documentGot =  Document::whereHas('folder', function ($query) use ($projectId) {$query->where('project_id', $projectId);})->get();
             $documents = $documentGot->transform(function ($document) {
                 return collect($document);
             });

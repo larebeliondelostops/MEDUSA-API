@@ -46,7 +46,7 @@ class ProjectRequest extends FormRequest
             'name' => 'required|string|max:512',
             'ocad' => 'required|string|max:255',
             'state_id' => 'required|integer',
-            'substate_id' => 'required|integer',
+            'substate_id' => 'nullable|integer',
             'total_value' => 'required|numeric',    
             'responsible_entity' => 'sometimes|string|max:255',
             'sector_id' => 'required|integer',

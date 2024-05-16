@@ -105,8 +105,7 @@ class ProductService implements ProductInterface
         $productsObjSpecifics = Product::where('specific_objective_id', $productData['specific_objective_id'])->get();
         $product_number = $productsObjSpecifics->max('number') + 1;
 
-        // Verifica si el número ya existe en los productos asociados a los objetivos específicos
-        error_log("ProductsObjSpecifics: ". json_encode($productsObjSpecifics->where('number', $product->number)));
+        // Verifica si el número ya existe en los productos asociados a los objetivos específicos;
         if ($product->number) {
             if ($productsObjSpecifics->where('number', $product->number)->count() > 0) {
                 // Si el número ya existe, puedes manejar aquí el error o la respuesta que desees

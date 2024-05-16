@@ -14,6 +14,7 @@ use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
+use App\Services\Modules\Viper\ProjectUserRoleService;
 use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 use App\Interfaces\Modules\Viper\ScopeInterface;
@@ -51,6 +52,7 @@ class ProjectService implements ProjectInterface
     private ProductInterface $productInterface;
     private DeliverableInterface $deliverableInterface;
     private IndicatorInterface $indicatorInterface;
+    private ProjectUserRoleService $projectUserRoleService;
 
     
 
@@ -65,7 +67,8 @@ class ProjectService implements ProjectInterface
         SpecificObjectiveInterface $specificObjectiveInterface,
         ProductInterface $productInterface,
         DeliverableInterface $deliverableInterface,
-        IndicatorInterface $indicatorInterface
+        IndicatorInterface $indicatorInterface,
+        ProjectUserRoleService $projectUserRoleService,
     )
     {
         $this->locationInterface = $locationInterface;
@@ -79,6 +82,7 @@ class ProjectService implements ProjectInterface
         $this->productInterface = $productInterface;
         $this->deliverableInterface = $deliverableInterface;
         $this->indicatorInterface = $indicatorInterface;
+        $this->projectUserRoleService = $projectUserRoleService;
     }
 
     /**
@@ -125,6 +129,8 @@ class ProjectService implements ProjectInterface
                 ]
             ));
         }
+
+        $this->projectUserRoleService->assignToMainUser($project['bpin']);
 
         return $this->getProjectByBPIN($project['bpin']);
     }

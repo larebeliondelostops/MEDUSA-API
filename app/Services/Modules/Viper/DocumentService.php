@@ -75,18 +75,22 @@ class DocumentService implements DocumentInterface
      */
     private function getUniqueFilename($folderPath, $originalFilename)
     {
-        $filename = $originalFilename;
+        // Reemplazar espacios con guiones bajos en el nombre original del archivo
+        $baseFilename = str_replace(' ', '_', pathinfo($originalFilename, PATHINFO_FILENAME));
+        $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
+        $filename = "{$baseFilename}.{$extension}";
         $counter = 1;
-
+    
         // Verificar si el archivo ya existe en la carpeta
         while (Storage::disk('spaces')->exists("{$folderPath}/{$filename}")) {
             // Generar un nuevo nombre con un número entre paréntesis
-            $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . "({$counter})" . '.' . pathinfo($originalFilename, PATHINFO_EXTENSION);
+            $filename = "{$baseFilename}({$counter}).{$extension}";
             $counter++;
         }
-
+    
         return $filename;
     }
+    
 
 
     /**
@@ -265,8 +269,8 @@ class DocumentService implements DocumentInterface
     
             return collect($result->all());
         } else {
-
-            $documentGot =  Document::whereHas('folder', function ($query) use ($projectId) {$query->where('project_id', $projectId);})->get();
+            // Si no hay parámetros de consulta, obtener todos los documentos
+            $documentGot = Document::all();
             $documents = $documentGot->transform(function ($document) {
                 return collect($document);
             });

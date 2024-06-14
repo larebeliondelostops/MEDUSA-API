@@ -10,6 +10,7 @@ use App\Interfaces\Modules\Viper\ProjectInterface;
 class ProjectObserverAssignContract implements ProjectObserverAssignContractInterface
 {
     private AlertInterface $alertInterface;
+    private ProjectInterface $projectInterface;
 
     public function __construct(AlertInterface $alertInterface,ProjectInterface $projectInterface)
     {

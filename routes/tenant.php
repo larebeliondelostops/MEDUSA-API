@@ -70,6 +70,9 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ProjectBotDocumentsRoutes.php');
     require base_path('routes/Modules/Viper/ProjectMunicipalityRoutes.php');
     require base_path('routes/Modules/Viper/TrackingMatrixRoutes.php');
+    require base_path('routes/Modules/Viper/PhaseRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectSheetRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectSheetDocumentRoutes.php');
 
     require base_path('routes/Modules/Viper/ImprovementPlanRoutes.php');
 

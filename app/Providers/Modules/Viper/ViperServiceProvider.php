@@ -40,6 +40,9 @@ use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
 use App\Interfaces\Modules\Viper\MessageBotInterface;
 use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
+use App\Interfaces\Modules\Viper\PhaseInterface;
+use App\Interfaces\Modules\Viper\ProjectSheetInterface;
+use App\Interfaces\Modules\Viper\ProjectSheetDocumentInterface;
 
 // Services
 use App\Services\Modules\Viper\AlertService;
@@ -79,7 +82,9 @@ use App\Services\Modules\Viper\MessageBotService;
 use App\Services\Modules\PermissionService;
 use App\Services\Modules\Viper\Activity\ActivityService;
 use App\Services\Modules\Viper\ProjectMunicipalityService;
-
+use App\Services\Modules\Viper\PhaseService;
+use App\Services\Modules\Viper\ProjectSheetService;
+use App\Services\Modules\Viper\ProjectSheetDocumentService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
@@ -130,6 +135,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(MessageBotInterface::class, MessageBotService::class);
         $this->app->bind(ProjectBotDocumentsInterface::class, ProjectBotDocumentsService::class);
         $this->app->bind(ProjectMunicipalityInterface::class, ProjectMunicipalityService::class);
+        $this->app->bind(PhaseInterface::class, PhaseService::class);
+        $this->app->bind(ProjectSheetInterface::class, ProjectSheetService::class);
+        $this->app->bind(ProjectSheetDocumentInterface::class, ProjectSheetDocumentService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

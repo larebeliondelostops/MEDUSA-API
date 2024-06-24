@@ -43,6 +43,7 @@ use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
 use App\Interfaces\Modules\Viper\PhaseInterface;
 use App\Interfaces\Modules\Viper\ProjectSheetInterface;
 use App\Interfaces\Modules\Viper\ProjectSheetDocumentInterface;
+use App\Interfaces\Modules\Viper\ProgressInterface;
 
 // Services
 use App\Services\Modules\Viper\AlertService;
@@ -85,6 +86,7 @@ use App\Services\Modules\Viper\ProjectMunicipalityService;
 use App\Services\Modules\Viper\PhaseService;
 use App\Services\Modules\Viper\ProjectSheetService;
 use App\Services\Modules\Viper\ProjectSheetDocumentService;
+use App\Services\Modules\Viper\ProgressService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
@@ -138,6 +140,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(PhaseInterface::class, PhaseService::class);
         $this->app->bind(ProjectSheetInterface::class, ProjectSheetService::class);
         $this->app->bind(ProjectSheetDocumentInterface::class, ProjectSheetDocumentService::class);
+        $this->app->bind(ProgressInterface::class, ProgressService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

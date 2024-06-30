@@ -14,12 +14,14 @@ use App\Http\Controllers\Modules\Viper\DocumentController;
 
 Route::prefix('/viper/document')->group(function () {
     Route::post('create', [DocumentController::class, 'store']);
+    Route::post('createByChunk', [DocumentController::class, 'squirrelAway']);
     Route::get('list/project/{projectId}', [DocumentController::class, 'index']);
     Route::get('list/folder/{folderId}', [DocumentController::class, 'indexByFolder']);
     Route::get('listSpaces', [DocumentController::class, 'allSpaces']);
     Route::get('listDeleted/folder/{folderId}', [DocumentController::class, 'getDeletedDocumentsByFolder']);
     Route::get('listDeleted/project/{projectId}', [DocumentController::class, 'getDeletedDocumentsByProject']);
     Route::delete('delete/{documentId}', [DocumentController::class, 'destroy']);
+    Route::delete('deleteByChunk', [DocumentController::class, 'deleteByChunk']);
     Route::delete('deletePermanent/{documentId}', [DocumentController::class, 'destroyForce']); 
     Route::delete('delete/several', [DocumentController::class, 'destroySeveral']);
     Route::delete('deletePermanent/several', [DocumentController::class, 'destroyForceSeveral']);

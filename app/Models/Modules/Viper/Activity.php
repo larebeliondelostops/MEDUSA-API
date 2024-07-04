@@ -91,4 +91,14 @@ class Activity extends Model
         return $this->belongsTo(Report::class, 'report_id');
     }
 
+    public function progresses()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
+    public function progress()
+    {
+        return $this->hasOne(Progress::class)->latest();
+    }
+
 }

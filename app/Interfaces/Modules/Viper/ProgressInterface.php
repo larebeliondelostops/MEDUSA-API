@@ -14,5 +14,7 @@ interface ProgressInterface {
 
     public function getProgress(int $id): Collection;
 
+    public function getAverageProgress(int $projectId): Collection;
+
     public function deleteProgress(int $id): Collection;
 }

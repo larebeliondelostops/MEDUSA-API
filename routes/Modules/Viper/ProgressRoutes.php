@@ -8,5 +8,6 @@ Route::prefix('/viper/progress')->group(function () {
     Route::put('/update/{id}', [ProgressController::class, 'update']);
     Route::get('/list/{activityId}', [ProgressController::class, 'index']);
     Route::get('/detail/{id}', [ProgressController::class, 'show']);
+    Route::get('/average/{projectId}', [ProgressController::class, 'display']);
     Route::delete('/delete/{id}', [ProgressController::class, 'destroy']);
 });

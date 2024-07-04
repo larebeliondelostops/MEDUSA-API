@@ -8,7 +8,7 @@ use App\Interfaces\Modules\Viper\ProgressInterface;
 use Exception;
 use Illuminate\Http\Request;
 
-class ProgressController extends Controller
+class ProgressController extends BaseController
 {
     private ProgressInterface $progressInterface;
 
@@ -69,6 +69,20 @@ class ProgressController extends Controller
             return $this->handleException($exception);
         }
     }
+
+    public function display(int $projectId)
+    {
+        try {
+            $progresses = $this->progressInterface->getAverageProgress($projectId);
+
+            return response()->json([
+                'data' => $progresses,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
 
     public function destroy(int $id)
     {

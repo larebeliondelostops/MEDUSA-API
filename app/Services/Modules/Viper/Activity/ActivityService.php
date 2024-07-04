@@ -161,4 +161,20 @@ class ActivityService implements ActivityInterface
         return $activities;
     }
 
+    public function getActivityByProject(int $projectId): Collection
+    {
+        $activities = Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+                $query->where('project_id', $projectId);
+            })
+            ->with('progress') 
+            ->get()
+            ->transform(function (Activity $activity) {
+                $activityData = collect($activity);
+                $activityData['progress'] = $activity->progress->makeHidden(['id', 'week','observations','summary','conclusions','recommendations','activity_id','created_at']);
+                
+                return $activityData;
+            });
+    
+        return $activities;
+    }
 }

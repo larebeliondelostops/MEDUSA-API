@@ -25,6 +25,10 @@ class ReportsCache implements ReportActionsInterface
 
     public function getReportsData($request)
     {
+        if (isset($request->start)) {
+            return $this->strategyReport->getReportsData($request);
+        }
+
         return Cache::remember($this->key, self::TTL, function() use ($request) {
             return $this->strategyReport->getReportsData($request);
         });

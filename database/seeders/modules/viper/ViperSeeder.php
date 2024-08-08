@@ -24,6 +24,7 @@ class ViperSeeder extends Seeder
             MenuSeeder::class,
             PhaseSeeder::class,
             ProjectSheetSeeder::class,
+            DofaPlanningSeeder::class,
         ]);
     }
 }

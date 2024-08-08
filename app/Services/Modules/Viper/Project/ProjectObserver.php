@@ -41,7 +41,7 @@ class ProjectObserver
 
         $this->projectSheetDocumentSeeder->createProjectSheetDocumentsForProject($project['bpin']);
 
-        $this->dofaPlanningProjectSeeder->createDofaPlanningProjectForProject($project['bpin']);
+        $this->dofaPlanningProjectSeeder->createDofaPlanningProjectForProject($project['bpin']); 
 
         $this->alertInterface->createNewAlert(collect($alert));
     }

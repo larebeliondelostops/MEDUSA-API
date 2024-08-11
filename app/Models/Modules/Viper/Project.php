@@ -118,4 +118,9 @@ class Project extends Model
     {
         return $this->cacheKeyMarker;
     }
+
+    public function dofaPlanningProject()
+    {
+        return $this->hasMany(DofaPlanningProject::class);
+    }
 }

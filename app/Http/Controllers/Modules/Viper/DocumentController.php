@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Request\Modules\Viper\DocumentRequest;
+use App\Http\Request\Modules\Viper\DocumentByChunkRequest;
 use Illuminate\Http\Request;
 use App\Interfaces\Modules\Viper\DocumentInterface;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Controlador que maneja todo lo que tiene que ver con las los documentos almacenados en spaces de Digital Ocean
@@ -69,6 +71,20 @@ class DocumentController extends BaseController
         }
     }
 
+    public function squirrelAway(DocumentByChunkRequest $request)
+    {
+        try {
+            $file = $request->file('file');
+            $documentCreate = $this->documentInterface->createNewDocumentByChunk(collect($request->validated()), $file);
+
+            return response()->json([
+                'data'    => $documentCreate
+            ], 201);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
     /**
      * Actualizar el nombre de un documento especificado.
      *
@@ -110,6 +126,19 @@ class DocumentController extends BaseController
         } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
+    }
+
+    public function deleteByChunk()
+    {
+        $tempDir = 'test/chunks';
+
+        // Verificar si el directorio existe
+        if (Storage::disk('spaces')->exists($tempDir)) {
+            // Eliminar todos los archivos dentro del directorio
+            Storage::disk('spaces')->deleteDirectory($tempDir);
+        }
+
+        return response()->json(['message' => 'Directorio temporal limpiado correctamente'], 200);
     }
 
 

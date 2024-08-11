@@ -64,29 +64,69 @@ class DocumentService implements DocumentInterface
     
         return collect($newDocument);
     }
+
+    public function createNewDocumentByChunk(Collection $chunk, \Illuminate\Http\UploadedFile $file): Collection
+    {
+        $fileName = $file->getClientOriginalName();
+        $tempDir = 'test/chunks/'.$fileName;
+    
+        if ($chunk['chunk_index'] + 1 != $chunk['total_chunks']) {
+            // Combinar todos los chunks en el archivo final
+            for ($i = 0; $i < $chunk['total_chunks']; $i++) {
+                Storage::disk('spaces')->append($tempDir, $file);
+            }
+    
+            return collect(['message' => 'Chunk subido exitosamente']);
+        }else{
+            Storage::disk('spaces')->append($tempDir, file_get_contents($file->path()));
+
+            // Generar una ruta única para el archivo final
+            $folderPath = "test/{$chunk['project_id']}/{$chunk['folder_id']}";
+            $filename = $this->getUniqueFilename($folderPath, $fileName);
+            $filePath = "{$folderPath}/{$filename}";
+
+            // Mover el archivo temporal al almacenamiento deseado
+            Storage::disk('spaces')->move($tempDir, $filePath);
+
+            // Crear el nuevo documento con la información correspondiente
+            $newDocument = new Document();
+            $newDocument->name = $filename;
+            $newDocument->url = Storage::disk('spaces')->url($filePath); // URL pública del archivo
+            $newDocument->responsible = auth()->user() ? auth()->user()->id : null;
+            $newDocument->folder_id = $chunk['folder_id'];
+            $newDocument->save();
+
+            return collect($newDocument);
+        }
+    }
+    
     
 
     /**
      * Obtiene un nombre de archivo único en una carpeta
      *
      * @param string $folderPath Ruta de la carpeta en "Spaces".
-     * @param string $originalFilename Nombre inicial del documento.
+     * @param string $originalFilename Nombre inicial del documento.  
      * @return string Nombre final del documento.
      */
     private function getUniqueFilename($folderPath, $originalFilename)
     {
-        $filename = $originalFilename;
+        // Reemplazar espacios con guiones bajos en el nombre original del archivo
+        $baseFilename = str_replace(' ', '_', pathinfo($originalFilename, PATHINFO_FILENAME));
+        $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
+        $filename = "{$baseFilename}.{$extension}";
         $counter = 1;
-
+    
         // Verificar si el archivo ya existe en la carpeta
         while (Storage::disk('spaces')->exists("{$folderPath}/{$filename}")) {
             // Generar un nuevo nombre con un número entre paréntesis
-            $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . "({$counter})" . '.' . pathinfo($originalFilename, PATHINFO_EXTENSION);
+            $filename = "{$baseFilename}({$counter}).{$extension}";
             $counter++;
         }
-
+    
         return $filename;
     }
+    
 
 
     /**
@@ -265,8 +305,8 @@ class DocumentService implements DocumentInterface
     
             return collect($result->all());
         } else {
-
-            $documentGot =  Document::whereHas('folder', function ($query) use ($projectId) {$query->where('project_id', $projectId);})->get();
+            // Si no hay parámetros de consulta, obtener todos los documentos
+            $documentGot = Document::all();
             $documents = $documentGot->transform(function ($document) {
                 return collect($document);
             });

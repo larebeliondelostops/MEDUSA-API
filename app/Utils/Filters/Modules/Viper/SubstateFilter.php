@@ -6,8 +6,11 @@ class SubstateFilter extends Filter
 {
     protected $safeParam = [
         'state_id' => ['eq'],
+        'nameSubstate' => ['eq', 'cont'],
     ];
-    protected $columnMap = [];
+    protected $columnMap = [
+        'nameSubstate' => 'name',
+    ];
     protected $operatorMap = [
         'eq' => '=',
     ];

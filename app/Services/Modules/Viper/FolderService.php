@@ -143,6 +143,8 @@ class FolderService implements FolderInterface
             $userProjectRole = $this->projectUserRoleInterface->getRoleByProjectUser($projectId, $user->id);
             if ($userProjectRole && $userProjectRole['rol_id'] !== 1 ) {
                 $folderQuery->where('responsible', $user->id);
+            }else{
+                $userProjectRole = null;
             }
         }
 
@@ -285,6 +287,27 @@ class FolderService implements FolderInterface
             }
         }
         return $result->all();
+    }
+
+    public function getFolderByNames($names)
+    {
+        $folders = explode('/', $names);
+
+        $currentFolder = null;
+
+        foreach ($folders as $folderName) {
+            if ($currentFolder) {
+                $currentFolder = $currentFolder->subfolders()->where('name', $folderName)->first();
+            } else {
+                $currentFolder = Folder::where('name', $folderName)->whereNull('higher_folder_id')->first();
+            }
+    
+            if (!$currentFolder) {
+                abort(404, "Folder not found: " . $folderName);
+            }
+        }
+    
+        return $currentFolder;
     }
 
     /**

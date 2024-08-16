@@ -31,8 +31,8 @@ RUN apt-get update && \
 RUN echo "extension=pdo_pgsql.so" >> /usr/local/etc/php/conf.d/postgres.ini
 
 
-RUN echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
-RUN echo "post_max_size=50M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
+RUN echo "upload_max_filesize=200M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
+RUN echo "post_max_size=200M" >> /usr/local/etc/php/conf.d/docker-fpm.ini
 RUN echo "memory_limit=1024M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
 # Clear cache

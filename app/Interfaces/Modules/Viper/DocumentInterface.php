@@ -14,6 +14,8 @@ interface DocumentInterface
      * @param int $project_id Identificador del proyecto al que pertenece el documento.
      */
     public function createNewDocument(Collection $document, \Illuminate\Http\UploadedFile $file): Collection;
+
+    public function createNewDocumentByChunk(Collection $chunk, \Illuminate\Http\UploadedFile $file): Collection;
     
     /**
      * Obtiene todos los documentos del sistema Viper.

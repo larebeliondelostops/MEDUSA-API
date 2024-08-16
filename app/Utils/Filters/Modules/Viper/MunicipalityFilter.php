@@ -6,9 +6,13 @@ class MunicipalityFilter extends Filter
 {
     protected $safeParam = [
         'department_id' => ['eq'],
+        'nameMunicipality' => ['eq', 'cont'],
     ];
-    protected $columnMap = [];
+    protected $columnMap = [
+        'nameMunicipality' => 'name',
+    ];
     protected $operatorMap = [
         'eq' => '=',
+        'cont' => 'ilike',
     ];
 }

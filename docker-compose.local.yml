@@ -27,7 +27,7 @@ services:
       - 81:80
     volumes:
       - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx-local/conf.d/
+      - ./docker-compose/nginx-local:/etc/nginx/conf.d/
     networks:
       - medusa
 
@@ -60,10 +60,20 @@ services:
       - postgres
     networks:
       - medusa
+  redis:
+    container_name: redis
+    image: redis:7.0
+    expose:
+      - 6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - medusa
 
 volumes:
   postgres_data:
   pgadmin_data:
+  redis-data:
 
 networks:
   medusa:

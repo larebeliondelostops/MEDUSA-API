@@ -39,7 +39,7 @@ interface SectorInterface {
      *
      * @return Collection Collection de Collections que representando todos los sectores.
      */
-    public function getAllSectors(): Collection;
+    public function getAllSectors(array $queryParam = []): Collection;
 
     /**
      * Elimina un sector por su identificador único.

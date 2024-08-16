@@ -169,4 +169,34 @@ class ProjectController extends BaseController
             return $this->handleException($exception);
         }
     }
+
+    public function createFromMGA(ProjectRequest $request)
+    {
+        try {
+            // Validar si se envió un archivo
+            if (!$request->hasFile('mgaFile')) {
+                return response()->json(['error' => 'No se envió ningún archivo.'], 400);
+            }
+    
+            // Obtener el archivo MGA
+            $mgaFile = $request->file('mgaFile');
+    
+            // Validar si es un archivo MGA
+            if (!$mgaFile->isValid() || $mgaFile->extension() !== 'pdf') {
+                return response()->json(['error' => 'El archivo enviado no es un archivo MGA válido.'], 400);
+            }
+    
+            // Procesar el archivo para crear el proyecto
+            $projectDTO = $this->projectInterface->createNewProjectFromMGA($mgaFile);
+    
+            return response()->json([
+                'message' => 'Proyecto creado satisfactoriamente.',
+                'data'    => $projectDTO,
+            ], Response::HTTP_CREATED);
+        } catch (Exception $exception) {
+            // Manejo de excepciones
+            return $this->handleException($exception);
+        }
+    }
+    
 }

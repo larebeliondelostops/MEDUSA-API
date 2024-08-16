@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:191',
             'number' => 'integer|nullable',
-            'amount' => 'required|integer',
+            'amount' => 'required|numeric',
             'measurement_unit_id' => 'required|integer',
             'folder_id' => 'integer|nullable',
             'specific_objective_id' => 'required|integer',

@@ -113,6 +113,18 @@ class ActivityController extends BaseController
         }
     }
 
+    public function view($projectId)
+    {
+        try {
+            $activity = $this->activityInterface->getActivityByProject($projectId);
+            return response()->json([
+                'data' => $activity,
+            ], 200);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+    
     /**
      * Eliminar una actividad específica.
      *

@@ -49,4 +49,9 @@ class Municipality extends Model
     {
         return $this->belongsTo(Coordinates::class, 'coordinate_id');
     }
+
+    public function projectMunicipality()
+    {
+        return $this->hasMany(ProjectMunicipality::class, 'municipality_id', 'id');
+    }  
 }

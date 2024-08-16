@@ -158,6 +158,11 @@ class MeasurementUnitSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => '--sin especificar--',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

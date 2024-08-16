@@ -34,7 +34,8 @@ class MeasurementUnitController extends BaseController
     public function index()
     {
         try {
-            $measurementUnits = $this->measurementUnitInterface->getAllMeasurementUnits();
+            $queryParam = request()->query();
+            $measurementUnits = $this->measurementUnitInterface->getAllMeasurementUnits($queryParam);
 
             return response()->json([
                 'data' => $measurementUnits,

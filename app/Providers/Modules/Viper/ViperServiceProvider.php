@@ -2,6 +2,7 @@
 
 namespace App\Providers\Modules\Viper;
 
+// Interfaces
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
@@ -20,6 +21,7 @@ use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\PrecedenceInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\Project\ProjectObserverAssignContractInterface;
+use App\Interfaces\Modules\Viper\ProjectBotDocumentsInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use App\Interfaces\Modules\Viper\ProofInterface;
 use App\Interfaces\Modules\Viper\ReportInterface;
@@ -33,14 +35,19 @@ use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
 use App\Interfaces\Modules\PermissionInterface;
-use App\Models\Modules\Viper\Activity;
-use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
 use App\Interfaces\Modules\Viper\MessageBotInterface;
-use App\Services\Modules\Viper\Activity\ActivityService;
-
+use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
+use App\Interfaces\Modules\Viper\PhaseInterface;
+use App\Interfaces\Modules\Viper\ProjectSheetInterface;
+use App\Interfaces\Modules\Viper\ProjectSheetDocumentInterface;
+use App\Interfaces\Modules\Viper\ProgressInterface;
+use App\Interfaces\Modules\Viper\DofaPlanningInterface;
+use App\Interfaces\Modules\Viper\DofaPlanningProjectInterface;
+use App\Interfaces\Modules\Viper\ActivityControlInterface;
+// Services
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
 use App\Services\Modules\Viper\Deliverable\DeliverableEventActivityService;
@@ -58,6 +65,7 @@ use App\Services\Modules\Viper\MunicipalityService;
 use App\Services\Modules\Viper\PrecedenceService;
 use App\Services\Modules\Viper\ProductService;
 use App\Services\Modules\Viper\Project\ProjectObserverAssignContract;
+use App\Services\Modules\Viper\ProjectBotDocumentsService;
 use App\Services\Modules\Viper\ProjectService;
 use App\Services\Modules\Viper\ProofService;
 use App\Services\Modules\Viper\ReportService;
@@ -75,9 +83,25 @@ use App\Services\Modules\Viper\ImprovementPlanService;
 use App\Services\Modules\Viper\TrackingMatrixService;
 use App\Services\Modules\Viper\MessageBotService;
 use App\Services\Modules\PermissionService;
-use Illuminate\Support\ServiceProvider;
+use App\Services\Modules\Viper\Activity\ActivityService;
+use App\Services\Modules\Viper\ProjectMunicipalityService;
+use App\Services\Modules\Viper\PhaseService;
+use App\Services\Modules\Viper\ProjectSheetService;
+use App\Services\Modules\Viper\ProjectSheetDocumentService;
+use App\Services\Modules\Viper\ProgressService;
+use App\Services\Modules\Viper\DofaPlanningService;
+use App\Services\Modules\Viper\DofaPlanningProjectService;
+use App\Services\Modules\Viper\ActivityControlService;
+// Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
+
+// Models
+use App\Models\Modules\Viper\Activity;
+use App\Models\Modules\Viper\Project;
+
+// Third Party
+use Illuminate\Support\ServiceProvider;
 
 class ViperServiceProvider extends ServiceProvider
 {
@@ -116,6 +140,15 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
         $this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(MessageBotInterface::class, MessageBotService::class);
+        $this->app->bind(ProjectBotDocumentsInterface::class, ProjectBotDocumentsService::class);
+        $this->app->bind(ProjectMunicipalityInterface::class, ProjectMunicipalityService::class);
+        $this->app->bind(PhaseInterface::class, PhaseService::class);
+        $this->app->bind(ProjectSheetInterface::class, ProjectSheetService::class);
+        $this->app->bind(ProjectSheetDocumentInterface::class, ProjectSheetDocumentService::class);
+        $this->app->bind(ProgressInterface::class, ProgressService::class);
+        $this->app->bind(DofaPlanningInterface::class, DofaPlanningService::class);
+        $this->app->bind(DofaPlanningProjectInterface::class, DofaPlanningProjectService::class);
+        $this->app->bind(ActivityControlInterface::class, ActivityControlService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

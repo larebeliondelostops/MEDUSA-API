@@ -19,4 +19,6 @@ interface ActivityInterface {
     public function getActivity(int $activityId): Collection;
 
     public function getActivityByProductoWithReportNull(int $productId):Collection;
+
+    public function getActivityByProject(int $projectId):Collection;
 }

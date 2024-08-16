@@ -29,7 +29,7 @@ interface DepartmentInterface
      *
      * @return Collection Arreglo de DepartmentRequestData de todos los departamentos.
      */
-    public function getAllDepartments(): Collection;
+    public function getAllDepartments(array $queryParam = []): Collection;
 
     /**
      * Obtiene un listado detallado de todos los departamentos.

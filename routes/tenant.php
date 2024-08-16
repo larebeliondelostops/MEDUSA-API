@@ -67,8 +67,16 @@ Route::middleware([
     require base_path('routes/Modules/Viper/ProjectContractRoutes.php');
     require base_path('routes/Modules/Viper/ProjectUserRoleRoutes.php');
     require base_path('routes/Modules/Viper/MessageBotRoutes.php');
-
+    require base_path('routes/Modules/Viper/ProjectBotDocumentsRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectMunicipalityRoutes.php');
     require base_path('routes/Modules/Viper/TrackingMatrixRoutes.php');
+    require base_path('routes/Modules/Viper/PhaseRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectSheetRoutes.php');
+    require base_path('routes/Modules/Viper/ProjectSheetDocumentRoutes.php');
+    require base_path('routes/Modules/Viper/ProgressRoutes.php');
+    require base_path('routes/Modules/Viper/DofaPlanningRoutes.php');
+    require base_path('routes/Modules/Viper/DofaPlanningProjectRoutes.php');
+    require base_path('routes/Modules/Viper/ActivityControlRoutes.php');
 
     require base_path('routes/Modules/Viper/ImprovementPlanRoutes.php');
 

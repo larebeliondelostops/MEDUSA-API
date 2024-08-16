@@ -78,6 +78,8 @@ interface FolderInterface {
      */
     public function getAllFoldersSelect(int $projectId);
 
+    public function getFolderByNames($names);
+
     /**
      * Elimina todas las carpetas y subcarpetas asociadas a un proyecto en el sistema Viper.
      *

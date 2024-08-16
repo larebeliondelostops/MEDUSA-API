@@ -170,7 +170,9 @@ class ActivityService implements ActivityInterface
             ->get()
             ->transform(function (Activity $activity) {
                 $activityData = collect($activity);
-                $activityData['progress'] = $activity->progress->makeHidden(['id', 'week','observations','summary','conclusions','recommendations','activity_id','created_at']);
+                if ($activity->progress) {
+                    $activityData['progress'] = $activity->progress->makeHidden(['id', 'week', 'observations', 'summary', 'conclusions', 'recommendations', 'activity_id', 'created_at']);
+                }
                 
                 return $activityData;
             });

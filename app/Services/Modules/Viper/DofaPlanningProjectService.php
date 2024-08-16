@@ -27,12 +27,40 @@ class DofaPlanningProjectService implements DofaPlanningProjectInterface{
 
     public function getDofaPlanningProjectByProject(String $projectId): Collection
     {
-        $dofaPlanningProject = DofaPlanningProject::with('dofaPlanning')->where('project_id', $projectId)->get();
+        $dofaPlanningProject = DofaPlanningProject::where('project_id', $projectId)
+            ->with('dofaPlanning')
+            ->get();
         
-        $dofaPlanningProject->makeHidden('dofa_planning_id');
 
-        return collect($dofaPlanningProject);
-    }
+        $grouped = $dofaPlanningProject->groupBy(function ($item) {
+            return explode('.', $item->dofaPlanning->item)[0];
+        });
+    
+
+        $buildHierarchy = function ($items, $parentItem = null) use (&$buildHierarchy) {
+
+            $children = $items->filter(function ($item) use ($parentItem) {
+                if ($parentItem === null) {
+                    return strpos($item->dofaPlanning->item, '.') === false;
+                } else {
+                    $parentParts = explode('.', $parentItem->dofaPlanning->item);
+                    $currentParts = explode('.', $item->dofaPlanning->item);
+                    return count($currentParts) === count($parentParts) + 1
+                        && strpos($item->dofaPlanning->item, $parentItem->dofaPlanning->item . '.') === 0;
+                }
+            });
+    
+
+            return $children->map(function ($child) use ($items, $buildHierarchy) {
+                $child->subDofaPlanningProject = $buildHierarchy($items, $child);
+                return $child;
+            })->values();
+        };
+    
+        $result = $buildHierarchy($dofaPlanningProject);
+    
+        return collect($result);
+    }       
 
     public function getDofaPlanningProject(int $id): Collection
     {

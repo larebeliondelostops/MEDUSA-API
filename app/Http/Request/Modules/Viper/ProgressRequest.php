@@ -27,6 +27,7 @@ class ProgressRequest extends FormRequest
     {
         return [
             'week' => 'required|integer',
+            'activity_completed' => 'required|string',
             'activity_id' => 'required|integer|exists:activities,id',
             'observations' => 'required|string',
             'summary' => 'required|string',

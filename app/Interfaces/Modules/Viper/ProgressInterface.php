@@ -12,6 +12,8 @@ interface ProgressInterface {
 
     public function getAllProgressesByActivity(int $activityId): Collection;
 
+    public function getProgressesByActivityAndWeek(int $activityId, String $week): Collection;
+
     public function getProgress(int $id): Collection;
 
     public function getAverageProgress(int $projectId): Collection;

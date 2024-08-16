@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('progresses', function (Blueprint $table) {
             $table->id();
-            $table->string('week');
+            $table->integer('week');
+            $table->text('activity_completed')->nullable();
             $table->text('observations')->nullable(); 
             $table->text('summary')->nullable(); 
             $table->text('conclusions')->nullable(); 
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->timestamps();
         
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unique(['week','activity_id']);
         });
     }
 

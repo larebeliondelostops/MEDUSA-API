@@ -20,6 +20,7 @@ class Progress extends Model
 
     protected $fillable = [
         'week',
+        'activity_completed',
         'activity_id',
         'observations',
         'summary',

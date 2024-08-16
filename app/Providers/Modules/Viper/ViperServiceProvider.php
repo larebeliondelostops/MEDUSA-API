@@ -46,7 +46,7 @@ use App\Interfaces\Modules\Viper\ProjectSheetDocumentInterface;
 use App\Interfaces\Modules\Viper\ProgressInterface;
 use App\Interfaces\Modules\Viper\DofaPlanningInterface;
 use App\Interfaces\Modules\Viper\DofaPlanningProjectInterface;
-
+use App\Interfaces\Modules\Viper\ActivityControlInterface;
 // Services
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
@@ -91,6 +91,7 @@ use App\Services\Modules\Viper\ProjectSheetDocumentService;
 use App\Services\Modules\Viper\ProgressService;
 use App\Services\Modules\Viper\DofaPlanningService;
 use App\Services\Modules\Viper\DofaPlanningProjectService;
+use App\Services\Modules\Viper\ActivityControlService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
@@ -147,6 +148,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ProgressInterface::class, ProgressService::class);
         $this->app->bind(DofaPlanningInterface::class, DofaPlanningService::class);
         $this->app->bind(DofaPlanningProjectInterface::class, DofaPlanningProjectService::class);
+        $this->app->bind(ActivityControlInterface::class, ActivityControlService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

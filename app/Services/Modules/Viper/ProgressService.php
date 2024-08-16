@@ -38,6 +38,18 @@ class ProgressService implements ProgressInterface {
         return $progresses;
     }
 
+    public function getProgressesByActivityAndWeek(int $activityId, String $week): Collection
+    {
+        $progresses = Progress::where('activity_id', $activityId)->where('week',$week)->get();
+
+        $progresses = $progresses->transform(function ($progress) {
+            return collect($progress);
+        });
+        
+
+        return $progresses;
+    }
+
     public function getProgress(int $id): Collection
     {
         $progress = Progress::findOrFail($id);

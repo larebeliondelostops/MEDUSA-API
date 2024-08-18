@@ -40,7 +40,13 @@ class ProductService implements ProductInterface
      */
     public function getAllProducts($projectId)
     {
-        $scopeId = Scope::where('project_id', $projectId)->firstOrFail()->id;
+        $scope = Scope::where('project_id', $projectId)->first();;
+        if ($scope === null) {
+            return null;
+        }
+
+        $scopeId = $scope->id;
+
         $products = Product::with('measurementUnit', 'specificObjective', 'folder')
             ->whereHas('specificObjective', function ($query) use ($scopeId) {
                 $query->where('scope_id', $scopeId);

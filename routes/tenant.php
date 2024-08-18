@@ -77,6 +77,9 @@ Route::middleware([
     require base_path('routes/Modules/Viper/DofaPlanningRoutes.php');
     require base_path('routes/Modules/Viper/DofaPlanningProjectRoutes.php');
     require base_path('routes/Modules/Viper/ActivityControlRoutes.php');
+    require base_path('routes/Modules/Viper/StageControlRoutes.php');
+    require base_path('routes/Modules/Viper/ControlPanelRoutes.php');
+    require base_path('routes/Modules/Viper/ControlPanelProjectRoutes.php');
 
     require base_path('routes/Modules/Viper/ImprovementPlanRoutes.php');
 

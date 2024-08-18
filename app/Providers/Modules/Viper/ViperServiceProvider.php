@@ -47,6 +47,9 @@ use App\Interfaces\Modules\Viper\ProgressInterface;
 use App\Interfaces\Modules\Viper\DofaPlanningInterface;
 use App\Interfaces\Modules\Viper\DofaPlanningProjectInterface;
 use App\Interfaces\Modules\Viper\ActivityControlInterface;
+use App\Interfaces\Modules\Viper\StageControlInterface;
+use App\Interfaces\Modules\Viper\ControlPanelInterface;
+use App\Interfaces\Modules\Viper\ControlPanelProjectInterface;
 // Services
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
@@ -92,6 +95,9 @@ use App\Services\Modules\Viper\ProgressService;
 use App\Services\Modules\Viper\DofaPlanningService;
 use App\Services\Modules\Viper\DofaPlanningProjectService;
 use App\Services\Modules\Viper\ActivityControlService;
+use App\Services\Modules\Viper\StageControlService;
+use App\Services\Modules\Viper\ControlPanelService;
+use App\Services\Modules\Viper\ControlPanelProjectService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
@@ -149,6 +155,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(DofaPlanningInterface::class, DofaPlanningService::class);
         $this->app->bind(DofaPlanningProjectInterface::class, DofaPlanningProjectService::class);
         $this->app->bind(ActivityControlInterface::class, ActivityControlService::class);
+        $this->app->bind(StageControlInterface::class, StageControlService::class);
+        $this->app->bind(ControlPanelInterface::class, ControlPanelService::class);
+        $this->app->bind(ControlPanelProjectInterface::class, ControlPanelProjectService::class);
 
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);

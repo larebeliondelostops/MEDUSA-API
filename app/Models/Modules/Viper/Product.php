@@ -55,6 +55,7 @@ class Product extends Model
         'name',
         'number',
         'amount',
+        'deliverable_quantity',
         'specific_objective_id',
         'folder_id',
         'measurement_unit_id'

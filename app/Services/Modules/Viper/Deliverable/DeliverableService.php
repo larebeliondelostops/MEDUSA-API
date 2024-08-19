@@ -121,6 +121,13 @@ class DeliverableService implements DeliverableInterface
         return collect($delivarableForUpdate);
     }
 
+    public function updateDeliverableActivityQuantity(int $id)
+    {
+        $deliverable = Deliverable::findOrFail($deliverableId);
+        $deriverable->activity_quantity += 1;
+        $deliverable->save();
+    }
+
     public function getDeliverablesChildren(array &$result, int $fatherDeliverableId)
     {
         $deliverables = Deliverable::with('folder')->where('deliverable_id', $fatherDeliverableId)->get();

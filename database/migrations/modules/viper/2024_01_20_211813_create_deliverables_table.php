@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('number');
             $table->string('name', 256);
-            $table->integer('activity_quantity');
+            $table->integer('activity_quantity')->default(0);
             $table->decimal('value', 21, 2);
 
             $table->date('min_date')->nullable(true)->default(null);

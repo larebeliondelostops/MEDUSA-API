@@ -101,11 +101,11 @@ use App\Services\Modules\Viper\ControlPanelProjectService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
-
+use App\Services\Modules\Viper\Deliverable\DeliverableObserver;
 // Models
 use App\Models\Modules\Viper\Activity;
 use App\Models\Modules\Viper\Project;
-
+use App\Models\Modules\Viper\Deliverable;
 // Third Party
 use Illuminate\Support\ServiceProvider;
 
@@ -168,5 +168,6 @@ class ViperServiceProvider extends ServiceProvider
         // observers registered
         Activity::observe(ActivityObserver::class);
         Project::observe(ProjectObserver::class);
+        Deliverable::observe(DeliverableObserver::class);
     }
 }

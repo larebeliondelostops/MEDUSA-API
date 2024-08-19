@@ -62,6 +62,7 @@ class ActivityObserver
         $activity = Activity::find($activity->id);
         $this->refreshDataDeliverablesForActivity($activity->deliverable_id);
         $this->deliverableEventActivityInterface->updateDecrementDataWithChildrenActivities(null, $activity->toArray(), $this->dataDeliverablesForActivity[0], $this->dataDeliverablesForUpdate);
+        $this->deliverableInterface->updateDeliverableActivityQuantity($activity->deliverable_id);
         $this->saveDataDeliverablesForActivity();
     }
 

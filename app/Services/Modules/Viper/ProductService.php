@@ -219,6 +219,12 @@ class ProductService implements ProductInterface
         return collect($product);
     }
 
+    public function updateProductDeliverableQuantity(int $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->deliverable_quantity += 1;
+        $product->save();
+    }
 
     /**
      * Elimina un producto existente.

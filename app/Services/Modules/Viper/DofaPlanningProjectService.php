@@ -27,12 +27,15 @@ class DofaPlanningProjectService implements DofaPlanningProjectInterface{
 
     public function getDofaPlanningProjectByProject(String $projectId): Collection
     {
-        $dofaPlanningProject = DofaPlanningProject::where('project_id', $projectId)
-            ->with('dofaPlanning')
-            ->get();
-        
+        $dofaPlanningProjects = DofaPlanningProject::where('project_id', $projectId)
+        ->with('dofaPlanning')
+        ->get();
 
-        $grouped = $dofaPlanningProject->groupBy(function ($item) {
+        $dofaPlanningProjects = $dofaPlanningProjects->sortBy(function ($dofaPlanningProject) {
+            return array_map('intval', explode('.', $dofaPlanningProject->dofaPlanning->item));
+        });
+
+        $grouped = $dofaPlanningProjects->groupBy(function ($item) {
             return explode('.', $item->dofaPlanning->item)[0];
         });
     
@@ -52,12 +55,12 @@ class DofaPlanningProjectService implements DofaPlanningProjectInterface{
     
 
             return $children->map(function ($child) use ($items, $buildHierarchy) {
-                $child->subDofaPlanningProject = $buildHierarchy($items, $child);
+                $child->subDofaPlanningProjects = $buildHierarchy($items, $child);
                 return $child;
             })->values();
         };
     
-        $result = $buildHierarchy($dofaPlanningProject);
+        $result = $buildHierarchy($dofaPlanningProjects);
     
         return collect($result);
     }       

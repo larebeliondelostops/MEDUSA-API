@@ -12,5 +12,8 @@ interface DeliverableInterface
     public function getDeliverableWithAllParentsByDeliverableFatherActivityId(int $deliverableFatherActivityId) : array;
     public function getDeliverablesByProductId(int $productId) : Collection;
     public function updateDeliverable(Collection $deliverableData, int $deliverableId) : Collection;
+
+    public function updateDeliverableActivityQuantity(int $id);
+
     public function deleteDeliverable(int $deliverableId) : Collection;
 }

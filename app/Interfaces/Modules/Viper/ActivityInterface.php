@@ -20,5 +20,5 @@ interface ActivityInterface {
 
     public function getActivityByProductoWithReportNull(int $productId):Collection;
 
-    public function getActivityByProject(int $projectId):Collection;
+    public function getActivityByProject(String $projectId):Collection;
 }

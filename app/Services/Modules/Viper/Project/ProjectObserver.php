@@ -7,18 +7,21 @@ use App\Helpers\Modules\Viper\AlertCreator;
 use Illuminate\Support\Facades\DB;
 use Database\Seeders\modules\viper\ProjectSheetDocumentSeeder;
 use Database\Seeders\modules\viper\DofaPlanningProjectSeeder;
+use Database\Seeders\modules\viper\ControlPanelProjectSeeder;
 
 class ProjectObserver
 {
     private AlertInterface $alertInterface;
     private ProjectSheetDocumentSeeder $projectSheetDocumentSeeder;
     private DofaPlanningProjectSeeder $dofaPlanningProjectSeeder;
+    private ControlPanelProjectSeeder $controlPanelProjectSeeder;
 
-    public function __construct(AlertInterface $alertInterface, ProjectSheetDocumentSeeder $projectSheetDocumentSeeder, DofaPlanningProjectSeeder $dofaPlanningProjectSeeder)
+    public function __construct(AlertInterface $alertInterface, ProjectSheetDocumentSeeder $projectSheetDocumentSeeder, DofaPlanningProjectSeeder $dofaPlanningProjectSeeder, ControlPanelProjectSeeder $controlPanelProjectSeeder)
     {
         $this->alertInterface = $alertInterface;
         $this->projectSheetDocumentSeeder = $projectSheetDocumentSeeder;  
         $this->dofaPlanningProjectSeeder = $dofaPlanningProjectSeeder;
+        $this->controlPanelProjectSeeder = $controlPanelProjectSeeder;
     }
 
     /**
@@ -42,6 +45,8 @@ class ProjectObserver
         $this->projectSheetDocumentSeeder->createProjectSheetDocumentsForProject($project['bpin']);
 
         $this->dofaPlanningProjectSeeder->createDofaPlanningProjectForProject($project['bpin']); 
+
+        $this->controlPanelProjectSeeder->createControlPanelProjectForProject($project['bpin']); 
 
         $this->alertInterface->createNewAlert(collect($alert));
     }

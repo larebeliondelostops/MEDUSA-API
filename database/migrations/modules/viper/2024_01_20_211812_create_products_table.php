@@ -18,9 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('number');
             $table->string('name');
             $table->decimal('amount', 21, 2);
+            $table->integer('deliverable_quantity')->default(0);
             $table->unsignedBigInteger('specific_objective_id');
             $table->unsignedBigInteger('folder_id');
             $table->unsignedBigInteger('measurement_unit_id')->nullable();
+
             $table->foreign('specific_objective_id')->references('id')->on('specific_objectives')->onDelete('cascade');
             $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
             $table->foreign('measurement_unit_id')->references('id')->on('measurement_units')->onDelete('cascade')->onUpdate('cascade');

@@ -42,6 +42,9 @@ interface ProductInterface {
      */
     public function updateProduct(int $productId, Collection $productDTO);
 
+    public function updateProductDeliverableQuantity(int $id);
+
+
     /**
      * Eliminar un producto existente.
      *

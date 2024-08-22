@@ -31,8 +31,12 @@ class ActivityControlService implements ActivityControlInterface{
         $project = Project::where('bpin', $projectId)
             ->select('start_date_execution_phase', 'completion_date')
             ->first();
+        
+        $startDate = Carbon::parse($activities->min('start_date'));
+        $endDate = Carbon::parse($activities->max('end_date'));
 
-        if (!$project || !$project->start_date_execution_phase || !$project->completion_date) {
+        if (!$activities || !$startDate || !$endDate) 
+        {
             return collect([
                 'isBefore' => false,
                 'isDuring' => false,
@@ -41,17 +45,15 @@ class ActivityControlService implements ActivityControlInterface{
                 'weeks' => [],
                 'activityWeeks' => collect(),
             ]);
-            }
-        
-        $startDate = Carbon::parse($project->start_date_execution_phase);
-        $endDate = Carbon::parse($project->completion_date);
+        }
+
         $currentDate = Carbon::now();
         
         $isBefore = $currentDate->isBefore($startDate);
         $isDuring = $currentDate->isBetween($startDate, $endDate, true);
         $isAfter = $currentDate->isAfter($endDate);
 
-        $weeks = $this->calculateProjectWeeks($startDate, $endDate);
+        $weeks = $this->calculateWeeks($startDate, $endDate);
 
         $currentWeek = $this->calculateCurrentWeek($currentDate, $weeks, $isDuring, $isAfter);
     
@@ -86,7 +88,7 @@ class ActivityControlService implements ActivityControlInterface{
     }
 
 
-    public function calculateProjectWeeks(Carbon $startDate, Carbon $endDate): Collection
+    public function calculateWeeks(Carbon $startDate, Carbon $endDate): Collection
     {
         $weeks = collect();
         $weekNumber = 1;

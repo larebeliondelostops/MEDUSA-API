@@ -55,7 +55,7 @@ class ActivityControlService implements ActivityControlInterface{
 
         $weeks = $this->calculateWeeks($startDate, $endDate);
 
-        $currentWeek = $this->calculateCurrentWeek($currentDate, $weeks, $isDuring, $isAfter);
+        $currentWeek = $this->calculateCurrentWeek($currentDate, $weeks, $isDuring);
     
         $activityWeeks = $this->assignActivitiesToWeeks($activities, $weeks);
 
@@ -69,7 +69,7 @@ class ActivityControlService implements ActivityControlInterface{
         ]);
     }    
 
-    private function calculateCurrentWeek(Carbon $currentDate, Collection $weeks, bool $isDuring): int
+    private function calculateCurrentWeek(Carbon $currentDate, Collection $weeks, bool $isDuring)
     {
         $currentWeek = null;
 

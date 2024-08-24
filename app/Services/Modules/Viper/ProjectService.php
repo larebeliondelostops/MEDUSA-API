@@ -14,6 +14,7 @@ use App\Interfaces\Modules\Viper\MeasurementUnitInterface;
 use App\Interfaces\Modules\Viper\MunicipalityInterface;
 use App\Interfaces\Modules\Viper\ProductInterface;
 use App\Interfaces\Modules\Viper\ProjectInterface;
+use App\Models\Modules\Viper\ProjectUserRole;
 use App\Services\Modules\Viper\ProjectUserRoleService;
 use App\Models\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\ProjectMunicipalityInterface;
@@ -28,6 +29,7 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Servicio para manejar operaciones relacionadas con proyectos.
@@ -218,14 +220,23 @@ class ProjectService implements ProjectInterface
         return $this->getProjectByBPIN($bpin);
     }
 
-        /**
-     * Obtiene una lista de todos los proyectos.
-     *
+    /**
+     * Obtiene una lista de todos los proyectos asociados a un usuario.
+     * @param int $userId Identificador del usuario autenticado.
      * @return Collection Collection con todos los proyectos.
      */
-    public function getAllProjects() : Collection
+    public function getAllProjects(int $userId) : Collection
     {
-        $projectsGot = Project::with('state')->get();
+        $projectIdsAllowed = ProjectUserRole::with('user')
+        ->where('user_id', $userId)
+        ->get()
+        ->pluck('project_id')
+        ->toArray();
+                    
+        $projectsGot = Project::with('state')
+                        ->whereIn('bpin', $projectIdsAllowed)
+                        ->get();
+        
         $projectsGot->transform(
             function (Project $project)
             {
@@ -239,21 +250,30 @@ class ProjectService implements ProjectInterface
 
 
     /**
-     * Obtiene una lista paginada de proyectos.
-     *
+     * Obtiene una lista de proyectos asociados a un usuario paginada.
+     * 
      * Opcionalmente, filtra proyectos por nombre. Devuelve una lista paginada de ProjectSummaryDTOs.
      *
+     * @param int $userId Identificador del usuario autenticado.
      * @param int $perPage Número de proyectos por página.
-     * @param int $page Número de la página actual.
-     * @param array $queryParams Parametros de filtrado.
+     * @param int $page Página actual para la paginación.
+     * @param array $queryParams Filtros y ordenamientos para la consulta
      * @return Collection Array que contiene los proyectos paginados y metadatos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, array $queryParams = []): Collection
+    public function getAllProjectsPaginated(int $userId, int $perPage, int $page, array $queryParams = []): Collection
     {
         $filter = new ProjectFilter();
         $queryItems = $filter->transform($queryParams);
 
-        $projectQuery = Project::with('state');
+        $projectIdsAllowed = ProjectUserRole::with('user')
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('project_id')
+            ->toArray();
+
+        $projectQuery = Project::with('state')
+                        ->whereIn('bpin', $projectIdsAllowed);
+
         foreach($queryItems as $item) {
             if(count($item) === 3) {
                 $projectQuery->orWhere($item[0], $item[1], ($item[1]=="like"?"%".$item[2]."%":$item[2]));

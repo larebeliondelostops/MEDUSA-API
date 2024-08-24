@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 // Librerias de terceros
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -111,10 +112,17 @@ class ProjectController extends BaseController
     {
         try
         {
+            $userId = Optional(Auth::user())->id;
             $page = $request->input('page', 1);
-            $name = $request->input('name', null);
             $queryFilterParam = $request->query();
-            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated(self::DEFAULT_PROJECT_PER_PAGE, $page, $queryFilterParam);
+            
+            if (is_null($userId)) {
+                return response()->json([
+                    'message' => 'No se ha podido identificar al usuario autenticado.',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            $paginatedProjects = $this->projectInterface->getAllProjectsPaginated($userId, self::DEFAULT_PROJECT_PER_PAGE, $page, $queryFilterParam);
             return response()->json($paginatedProjects, Response::HTTP_OK);
         }
         catch(Exception $exception) // Error general

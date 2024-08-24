@@ -37,21 +37,22 @@ interface ProjectInterface {
     public function updateProject(Collection $projectDTO, string $bpin) : Collection;
 
     /**
-     * Obtiene una lista de todos los proyectos.
-     *
+     * Obtiene una lista de todos los proyectos asociados a un usuario.
+     * @param int $userId Identificador del usuario autenticado.
      * @return array Array con todos los proyectos.
      */
-    public function getAllProjects() : Collection;
+    public function getAllProjects(int $userId) : Collection;
 
 
     /**
-     * Obtiene una lista de proyectos paginada.
-     *
+     * Obtiene una lista de proyectos asociados a un usuario paginada.
+     * @param int $userId Identificador del usuario autenticado.
      * @param int $perPage Número de proyectos por página.
      * @param int $page Página actual para la paginación.
+     * @param array $queryParams Filtros y ordenamientos para la consulta. 
      * @return array Array de proyectos paginados y datos de paginación.
      */
-    public function getAllProjectsPaginated(int $perPage, int $page, array $queryParams = []) : Collection;
+    public function getAllProjectsPaginated(int $userId, int $perPage, int $page, array $queryParams = []) : Collection;
 
     /**
      * Recupera un proyecto específico por su identificador 'bpin'.

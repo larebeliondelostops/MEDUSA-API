@@ -84,6 +84,7 @@ class ControlPanelProjectService implements ControlPanelProjectInterface {
     private function getControlPanelProjects(string $projectId): Collection
     {
         return ControlPanelProject::where('project_id', $projectId)
+            ->whereHas('project')
             ->with('controlPanel.stageControl')
             ->with('project.scope')
             ->with('project.department')

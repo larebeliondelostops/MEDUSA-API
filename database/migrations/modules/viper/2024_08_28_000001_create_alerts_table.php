@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('project_id',255);
             $table->unsignedBigInteger('improvement_plan_id')->nullable();
             $table->string('user_email'); 
-            $table->string('related_item_type', 40)->nullable();
+            $table->unsignedBigInteger('related_item_type')->nullable();
             $table->unsignedBigInteger('related_item_id')->nullable();
 
-            $table->foreign('related_item_type')->on('id')->references('viper_items')->onDelete('cascade');
+            $table->foreign('related_item_type')->references('id')->on('viper_items')->onDelete('cascade');
             $table->foreign('severity_id')->references('id')->on('alert_severities')->onDelete('cascade');
             $table->foreign('indicator_id')->references('id')->on('indicators_viper')->onDelete('cascade');
             $table->foreign('project_id')->references('bpin')->on('projects')->onDelete('cascade');

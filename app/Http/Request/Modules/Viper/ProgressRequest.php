@@ -33,8 +33,8 @@ class ProgressRequest extends FormRequest
             'summary' => 'required|string',
             'conclusions' => 'required|string',
             'recommendations' => 'required|string',
-            'planned_physical_progress' => 'required|numeric',
-            'actual_physical_progress' => 'required|numeric',
+            'planned_physical_progress' => 'required|numeric|between:0,100',
+            'actual_physical_progress' => 'required|numeric|between:0,100',
             'financial_progress_on_site' => 'required|numeric',
             'billed_financial_progress' => 'required|numeric',
         ];

@@ -21,4 +21,6 @@ interface ActivityInterface {
     public function getActivityByProductoWithReportNull(int $productId):Collection;
 
     public function getActivityByProject(String $projectId):Collection;
+
+    public function updateStateActivityToInProgressByCurrentDate();
 }

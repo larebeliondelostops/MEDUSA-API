@@ -4,7 +4,6 @@ namespace App\Services\Modules\Viper\Project;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Project;
 use App\Helpers\Modules\Viper\AlertCreator;
-use Illuminate\Support\Facades\DB;
 use Database\Seeders\modules\viper\ProjectSheetDocumentSeeder;
 use Database\Seeders\modules\viper\DofaPlanningProjectSeeder;
 use Database\Seeders\modules\viper\ControlPanelProjectSeeder;
@@ -39,7 +38,8 @@ class ProjectObserver
             "description" => $alertData["description"],
             "indicator_id" => null,
             "project_id"=> $project['bpin'],
-            "user_email" => "ignicion@ignicion.com"
+            "user_email" => "ignicion@ignicion.com",
+            'severity_id' => $alertData['severity_id']   
         ];
 
         $this->projectSheetDocumentSeeder->createProjectSheetDocumentsForProject($project['bpin']);

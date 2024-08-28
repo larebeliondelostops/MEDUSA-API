@@ -57,7 +57,16 @@ class Alert extends Model
      * @var array
      */
     protected $fillable = [
-        'name','type', 'state', 'description', 'date', 'indicator_id', 'project_id','improvement_plan_id','user_email'
+        'name',
+        'type', 
+        'state', 
+        'description', 
+        'date', 
+        'indicator_id', 
+        'project_id',
+        'improvement_plan_id',
+        'user_email',
+        'severity_id'
     ];
 
     /**
@@ -82,6 +91,4 @@ class Alert extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
-
-
 }

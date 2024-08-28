@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Modules\Viper;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 class StatusViper extends Model
 {
     use HasFactory;
+
+    protected $table = 'status_viper';
 
     protected $hidden = ['created_at', 'updated_at'];
 

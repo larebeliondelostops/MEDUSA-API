@@ -4,20 +4,28 @@ namespace App\Services\Modules\Viper\Activity;
 
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Interfaces\Modules\Viper\FolderInterface;
+use App\Interfaces\Modules\Viper\StatusInterface;
 use App\Models\Modules\Viper\Activity;
 use App\Models\Modules\Viper\Folder;
 use App\Models\Modules\Viper\Deliverable;
+use App\Models\Modules\Viper\StatusViper;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ActivityService implements ActivityInterface
 {
     private FolderInterface $folderInterface;
+    private StatusInterface $statusInterface;
 
     public function __construct(
-        FolderInterface $folderInterface
+        FolderInterface $folderInterface,
+        StatusInterface $statusInterface
     )
     {
         $this->folderInterface = $folderInterface;
+        $this->statusInterface = $statusInterface;
     }
 
     public function getAllActivities(int $deliverableId): Collection
@@ -139,8 +147,7 @@ class ActivityService implements ActivityInterface
     public function getActivity(int $activityId): Collection
     {
         // Encontrar la actividad por su ID
-        $activity = Activity::findOrFail($activityId);
-
+        $activity = Activity::with('status')->findOrFail($activityId);
         return collect($activity);
     }
 
@@ -178,4 +185,24 @@ class ActivityService implements ActivityInterface
     
         return collect($activities);
     }
+
+    public function updateStateActivityToInProgressByCurrentDate()
+    {
+        try
+        {
+            $currentDate = Carbon::now();
+            $pendingStatusId = StatusViper::where('name', 'Pendiente')->first()->id;
+            $activities = Activity::where('status_id', '=', $pendingStatusId)
+                                ->where('start_date', '<=', $currentDate)
+                                ->get();
+            foreach ($activities as $activity) {
+                $activity->status_id = $this->statusInterface->getStatusByName('En progreso')['id'];
+                $activity->save();
+            }
+        }
+        catch(Exception $exception)
+        {
+            Log::error($exception->getMessage() . ' - ' . $exception->getFile() . ' - ' . $exception->getLine());
+        }
+    }    
 }

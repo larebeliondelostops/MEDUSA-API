@@ -9,6 +9,8 @@ class Activity extends Model
 {
     use HasFactory;
 
+    protected $table = 'activities';
+
     /**
      * Los atributos que son ocultado en masa.
      *
@@ -40,7 +42,8 @@ class Activity extends Model
         'folder_id',
         'measurement_unit_id',
         'number',
-        'report_id'
+        'report_id',
+        'status_id'
     ];
 
     /**
@@ -56,7 +59,7 @@ class Activity extends Model
      */
     public function folder()
     {
-        return $this->belongsTo(Folder::class);
+        return $this->belongsTo(Folder::class)->withTrashed();
     }
 
     /**
@@ -101,4 +104,12 @@ class Activity extends Model
         return $this->hasOne(Progress::class)->latest();
     }
 
+    /**
+     * obtiene el estado actual de la actividad
+     *
+     */
+    public function status()
+    {
+        return $this->hasOne(StatusViper::class, 'id', 'status_id');
+    }
 }

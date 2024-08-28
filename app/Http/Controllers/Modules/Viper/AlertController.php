@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Modules\Viper;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Modules\Viper\AlertRequest;
 use App\Interfaces\Modules\Viper\AlertInterface;
+use Auth;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -119,7 +120,8 @@ class AlertController extends BaseController
     public function unveil()
     {
         try {
-            $alerts = $this->alertInterface->getAlertsByUser();
+            $userId = Auth::user()->id;
+            $alerts = $this->alertInterface->getAlertsByUser($userId);
             return response()->json([
                 'data' => $alerts,
             ], 200);

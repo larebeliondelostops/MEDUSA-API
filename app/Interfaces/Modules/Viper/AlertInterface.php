@@ -49,10 +49,10 @@ interface AlertInterface {
 
     /**
      * Obtiene todas las alertas asociadas a un usuario específico.
-     *
+     * @param int $userId El identificador único del usuario.
      * @return Collection Collection de Collections que contiene la información de una alerta si es el usuario especificado.
      */
-    public function getAlertsByUser(): Collection;
+    public function getAlertsByUser(int $userId): Collection;
 
     /**
      * Obtiene todas las alertas.

@@ -50,7 +50,7 @@ class ControlPanelProjectService implements ControlPanelProjectInterface {
         
         $projectInformation = $this->getProjectInformation($projectInfo);
         
-        $activities = $this->activityInterface->getActivityByProject($projectId);
+        $activities = $this->activityInterface->getAllActivityByProject($projectId);
         $formulationAndApproval = $this->getFormulationAndApproval($projectInfo, $projectId, $activities);
         $prioritizationAndApproval = $this->getPrioritizationAndApproval($projectInfo);
         $prioritizationAndApproval = $this->getPrioritizationAndApproval($projectInfo);
@@ -110,7 +110,6 @@ class ControlPanelProjectService implements ControlPanelProjectInterface {
             return $this->indicatorInterface->getAllIndicatorsByProduct($product->id)->map->only(['id','name','target_value','progress','percentage_completed','is_main','measurementUnit']);
         }) : null;
         $products =  $products ? $products->map->only(['id','name','measurementUnit']):null;
-        $activities = $activities->map->only(['id', 'description', 'number']);
         return [
             'META DEL PROYECTO' => [
                 $projectInfo->scope ? $projectInfo->scope->description : null,
@@ -241,11 +240,7 @@ class ControlPanelProjectService implements ControlPanelProjectInterface {
                 if ($activityStartDate->lessThanOrEqualTo($monthEnd) && $activityEndDate->greaterThanOrEqualTo($monthStart)) {
                     $activitiesPerMonth = $activitiesPerMonth->map(function ($activities, $monthNumber) use ($activity, $month) {
                         if ($monthNumber === $month['month']) {
-                            $activities[] = [
-                                'id' => $activity->id,
-                                'description' => $activity->description,
-                                'number' => $activity->number,
-                            ];
+                            $activities[] = $activity;
                         }
                         return $activities;
                     });

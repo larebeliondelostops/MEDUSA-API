@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Modules\Viper;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Modules\Viper\ProgressRequest;
 use App\Interfaces\Modules\Viper\ProgressInterface;
-use Exception;
+
 use Illuminate\Http\Request;
 
 class ProgressController extends BaseController
@@ -26,7 +26,7 @@ class ProgressController extends BaseController
                 'message' => 'Progress created successfully.',
                 'data'    => $progressCreated
             ], 201);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
     }

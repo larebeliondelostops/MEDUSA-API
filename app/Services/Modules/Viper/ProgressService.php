@@ -4,19 +4,61 @@ namespace App\Services\Modules\Viper;
 
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ProgressInterface;
+use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Models\Modules\Viper\Progress;
 use App\Models\Modules\Viper\Activity;
-use Exception;
+
 
 class ProgressService implements ProgressInterface {
+
+    private ActivityInterface $activityInterface;
+
+    public function __construct(ActivityInterface $activityInterface)
+    {
+        $this->activityInterface = $activityInterface;
+    }
 
     public function createNewProgress(Collection $progress): Collection
     {
         $newProgress = new Progress($progress->toArray());
-        $newProgress->save();
-
+        $activity = $this->activityInterface->getActivity($newProgress->activity_id);
+    
+        $progresses = $this->getAllProgressesByActivity($newProgress->activity_id);
+        $newProgress->financial_progress_on_site = $newProgress->billed_financial_progress /  $activity['total_value']  * 100;
+    
+        if ($progresses->isEmpty()) {
+            if ($newProgress->financial_progress_on_site > 100) {
+                dd("El progreso financiero en sitio no puede exceder el 100%.");
+                throw new \Exception('El progreso financiero en sitio no puede exceder el 100%.');
+            }
+            
+            $newProgress->progress_of_term = $newProgress->actual_physical_progress;
+            $newProgress->save();
+        } else {
+            $totalFinancialProgress = $progresses->sum('financial_progress_on_site') + $newProgress->financial_progress_on_site;
+            
+            if ($totalFinancialProgress > 100) {
+                dd('El progreso financiero en sitio no puede exceder el 100%.');
+                throw new \Exception('El progreso financiero en sitio no puede exceder el 100%.');
+            }
+    
+            $totalProgressOfTerm = $progresses->sum('progress_of_term') + $newProgress->actual_physical_progress;
+            
+            if ($totalProgressOfTerm > 100) {
+                dd('La suma del progreso físico no puede exceder el 100%.');
+                throw new \Exception('La suma del progreso físico no puede exceder el 100%.');
+            }
+            
+            foreach ($progresses as $item) {
+                $this->updateProgress($item, $item['id']);
+            }
+            $newProgress->progress_of_term = $totalProgressOfTerm;
+            $newProgress->save();
+        }
+        
         return collect($newProgress);
     }
+    
 
     public function updateProgress(Collection $progress, int $id): Collection
     {

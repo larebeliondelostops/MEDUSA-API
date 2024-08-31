@@ -30,11 +30,13 @@ return new class extends Migration
             $table->unsignedBigInteger('folder_id');
             $table->unsignedBigInteger('measurement_unit_id');
             $table->unsignedBigInteger('report_id')->nullable();
+            $table->unsignedBigInteger('status_id')->default(1);
 
             $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
             $table->foreign('folder_id')->references('id')->on('folders')->onDelete('cascade');
             $table->foreign('measurement_unit_id')->references('id')->on('measurement_units')->onDelete('cascade');
             $table->foreign('report_id')->references('id')->on('reports');
+            $table->foreign('status_id')->references('id')->on('status_viper');
 
             $table->timestamps();
         });

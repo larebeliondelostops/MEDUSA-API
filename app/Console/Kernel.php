@@ -2,10 +2,11 @@
 
 namespace App\Console;
 
-use App\Console\Commands\MultiSchemaMigrate;
-use App\Console\Commands\OneSchemaMigrate;
+use App\Console\Schedule\modules\viper\ViperKernel;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,6 +30,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        try
+        {
+            $viperKernel = app(ViperKernel::class);
+            $viperKernel->schedule($schedule);
+        }
+        catch(Exception $exception)
+        {
+            Log::error($exception->getMessage() . ' - ' . $exception->getFile() . ' - ' . $exception->getLine());   
+        }
     }
 
     /**

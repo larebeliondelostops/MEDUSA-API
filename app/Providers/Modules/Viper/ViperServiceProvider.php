@@ -34,7 +34,9 @@ use App\Interfaces\Modules\Viper\StageInterface;
 use App\Interfaces\Modules\Viper\StateInterface;
 use App\Interfaces\Modules\Viper\SubstateInterface;
 use App\Interfaces\Modules\Viper\TrackingMatrixInterface;
-use App\Interfaces\Modules\PermissionInterface;
+
+use App\Interfaces\Modules\Viper\ActivityAlertInterface;
+use App\Interfaces\Modules\Viper\Alert\DeadlineActivityAlertInterface;
 use App\Interfaces\Modules\Viper\ProjectContractInterface;
 use App\Interfaces\Modules\Viper\ProjectUserRoleInterface;
 use App\Interfaces\Modules\Viper\ImprovementPlanInterface;
@@ -50,6 +52,7 @@ use App\Interfaces\Modules\Viper\ActivityControlInterface;
 use App\Interfaces\Modules\Viper\StageControlInterface;
 use App\Interfaces\Modules\Viper\ControlPanelInterface;
 use App\Interfaces\Modules\Viper\ControlPanelProjectInterface;
+use App\Interfaces\Modules\Viper\StatusInterface;
 // Services
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
@@ -85,7 +88,7 @@ use App\Services\Modules\Viper\ProjectUserRoleService;
 use App\Services\Modules\Viper\ImprovementPlanService;
 use App\Services\Modules\Viper\TrackingMatrixService;
 use App\Services\Modules\Viper\MessageBotService;
-use App\Services\Modules\PermissionService;
+
 use App\Services\Modules\Viper\Activity\ActivityService;
 use App\Services\Modules\Viper\ProjectMunicipalityService;
 use App\Services\Modules\Viper\PhaseService;
@@ -106,6 +109,9 @@ use App\Services\Modules\Viper\Deliverable\DeliverableObserver;
 use App\Models\Modules\Viper\Activity;
 use App\Models\Modules\Viper\Project;
 use App\Models\Modules\Viper\Deliverable;
+use App\Services\Modules\Viper\Activity\ActivityAlertService;
+use App\Services\Modules\Viper\Alert\DeadlineActivityAlertService;
+use App\Services\Modules\Viper\StatusService;
 // Third Party
 use Illuminate\Support\ServiceProvider;
 
@@ -144,7 +150,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(TrackingMatrixInterface::class, TrackingMatrixService::class);
         $this->app->bind(ProjectContractInterface::class, ProjectContractService::class);
         $this->app->bind(ProjectUserRoleInterface::class, ProjectUserRoleService::class);
-        $this->app->bind(PermissionInterface::class, PermissionService::class);
+        //$this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(MessageBotInterface::class, MessageBotService::class);
         $this->app->bind(ProjectBotDocumentsInterface::class, ProjectBotDocumentsService::class);
         $this->app->bind(ProjectMunicipalityInterface::class, ProjectMunicipalityService::class);
@@ -159,6 +165,9 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ControlPanelInterface::class, ControlPanelService::class);
         $this->app->bind(ControlPanelProjectInterface::class, ControlPanelProjectService::class);
 
+        $this->app->bind(ActivityAlertInterface::class, ActivityAlertService::class); 
+        $this->app->bind(DeadlineActivityAlertInterface::class, DeadlineActivityAlertService::class);
+        $this->app->bind(StatusInterface::class, StatusService::class);
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);
     }

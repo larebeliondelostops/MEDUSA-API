@@ -75,7 +75,7 @@ class BaseController extends Controller
         else 
         {
             return response()->json([
-                'message' => $exception->getMessage() ?? 'Se produjo un error interno del servidor.',
+                'message' => $exception->getTrace() ?? 'Se produjo un error interno del servidor.',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         

@@ -29,6 +29,9 @@ class ViperSeeder extends Seeder
             DofaPlanningSeeder::class,
             StageControlSeeder::class,
             ControlPanelSeeder::class,
+
+            AlertSeveritySeeder::class,
+            ViperItemsSeeder::class,
         ]);
     }
 }

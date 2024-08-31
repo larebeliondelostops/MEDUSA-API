@@ -8,6 +8,7 @@ use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
 use App\Interfaces\Modules\Viper\ProjectInterface;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Servicio de manejo de alertas en el sistema Viper.
@@ -38,11 +39,19 @@ class AlertService implements AlertInterface{
      */
     public function createNewAlert(Collection $alert): Collection
     {
-        $newAlert = new Alert($alert->toArray());
-        $newAlert->save();
-        event(new ViperWebSocket($newAlert));
-        
-        return collect($newAlert);
+        try
+        {
+            $newAlert = new Alert($alert->toArray());
+            $newAlert->save();
+            $socket = new ViperWebSocket($newAlert);
+            event($socket); 
+            return collect($newAlert);
+        }
+        catch(Exception $exception)
+        {
+            Log::Info($exception->getMessage() . ' - ' . $exception->getFile() . ' - ' . $exception->getLine());   
+            throw $exception;
+        }
     }
 
     /**
@@ -104,7 +113,7 @@ class AlertService implements AlertInterface{
      *
      * @return Collection Collection de Collections representando las alertas asociadas al usuario especifico.
      */
-    public function getAlertsByUser(): Collection
+    public function getAlertsByUser(int $userId): Collection
     {
         $user = auth()->user();
 
@@ -116,7 +125,7 @@ class AlertService implements AlertInterface{
             return new Collection(['error' => 'You do not have permission to access this functionality.']);
         }
 
-        $projects = $this->projectInterface->getAllProjects();
+        $projects = $this->projectInterface->getAllProjects($userId);
 
         $alertsByProject = collect();
         

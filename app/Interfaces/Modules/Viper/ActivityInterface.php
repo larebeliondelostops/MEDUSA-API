@@ -22,5 +22,7 @@ interface ActivityInterface {
 
     public function getActivityByProject(String $projectId):Collection;
 
+    public function getAllActivityByProject(String $projectId):Collection;
+
     public function updateStateActivityToInProgressByCurrentDate();
 }

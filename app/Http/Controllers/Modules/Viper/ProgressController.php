@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Modules\Viper;
 use App\Http\Controllers\Controller;
 use App\Http\Request\Modules\Viper\ProgressRequest;
 use App\Interfaces\Modules\Viper\ProgressInterface;
-use Exception;
+
 use Illuminate\Http\Request;
 
 class ProgressController extends BaseController
@@ -26,7 +26,7 @@ class ProgressController extends BaseController
                 'message' => 'Progress created successfully.',
                 'data'    => $progressCreated
             ], 201);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->handleException($exception);
         }
     }
@@ -73,7 +73,7 @@ class ProgressController extends BaseController
     public function display(int $projectId)
     {
         try {
-            $progresses = $this->progressInterface->getAverageProgress($projectId);
+            $progresses = $this->progressInterface->getStatisticsProgress($projectId);
 
             return response()->json([
                 'data' => $progresses,
@@ -82,7 +82,6 @@ class ProgressController extends BaseController
             return $this->handleException($exception);
         }
     }
-
 
     public function destroy(int $id)
     {

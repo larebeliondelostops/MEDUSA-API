@@ -27,4 +27,17 @@ class ActivityControlController extends BaseController
             return $this->handleException($exception);
         }
     }
+
+    public function view(int $projectId)
+    {
+        try {
+            $activityControl = $this->activityControlInterface->getActivitiesControlByProject($projectId);
+
+            return response()->json([
+                'data' => $activityControl,
+            ], Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
 }

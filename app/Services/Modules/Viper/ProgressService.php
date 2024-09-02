@@ -42,7 +42,7 @@ class ProgressService implements ProgressInterface {
             $weekStart = Carbon::parse($week['startDate']);
             $weekEnd = Carbon::parse($week['endDate']);
             
-            if ($activityEndDate->greaterThanOrEqualTo($weekEnd) && $activityStartDate->lessThanOrEqualTo($weekStart)) {
+            if ($activityStartDate->lessThanOrEqualTo($weekEnd) && $activityEndDate->greaterThanOrEqualTo($weekStart)) {
                 $progress = new Progress();
                 $progress->week = $week['week'];
                 $progress->activity_id = $activity->id;
@@ -189,7 +189,7 @@ class ProgressService implements ProgressInterface {
                 $weekEnd = Carbon::parse($week['endDate']);
 
 
-                if ($activityEndDate->lessThanOrEqualTo($weekEnd) && $activityStartDate->greaterThanOrEqualTo($weekStart)) {
+                if ($activityStartDate->lessThanOrEqualTo($weekEnd) && $activityEndDate->greaterThanOrEqualTo($weekStart)) {
                     $progress = $progresses->get($i);
                     if($progress->week != $week['week'])
                     {

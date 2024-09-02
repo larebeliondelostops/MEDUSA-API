@@ -186,6 +186,17 @@ class ActivityService implements ActivityInterface
         return collect($activities);
     }
 
+    public function getAllActivityByProject(String $projectId):Collection
+    {
+        $activities = Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        })
+        ->with('measurementUnit') 
+        ->get();
+
+        return collect($activities);
+    }
+
     public function updateStateActivityToInProgressByCurrentDate()
     {
         try

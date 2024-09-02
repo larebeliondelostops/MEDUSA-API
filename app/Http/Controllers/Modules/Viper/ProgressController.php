@@ -73,7 +73,7 @@ class ProgressController extends BaseController
     public function display(int $projectId)
     {
         try {
-            $progresses = $this->progressInterface->getAverageProgress($projectId);
+            $progresses = $this->progressInterface->getStatisticsProgress($projectId);
 
             return response()->json([
                 'data' => $progresses,
@@ -82,7 +82,6 @@ class ProgressController extends BaseController
             return $this->handleException($exception);
         }
     }
-
 
     public function destroy(int $id)
     {

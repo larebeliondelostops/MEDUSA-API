@@ -7,6 +7,7 @@ use App\Interfaces\Modules\Viper\ProgressInterface;
 use App\Interfaces\Modules\Viper\ActivityInterface;
 use App\Models\Modules\Viper\Progress;
 use App\Models\Modules\Viper\Activity;
+use Carbon\Carbon;
 
 
 class ProgressService implements ProgressInterface {
@@ -21,42 +22,79 @@ class ProgressService implements ProgressInterface {
     public function createNewProgress(Collection $progress): Collection
     {
         $newProgress = new Progress($progress->toArray());
-        $activity = $this->activityInterface->getActivity($newProgress->activity_id);
-    
-        $progresses = $this->getAllProgressesByActivity($newProgress->activity_id);
-        $newProgress->financial_progress_on_site = $newProgress->billed_financial_progress /  $activity['total_value']  * 100;
-    
-        if ($progresses->isEmpty()) {
-            if ($newProgress->financial_progress_on_site > 100) {
-                dd("El progreso financiero en sitio no puede exceder el 100%.");
-                throw new \Exception('El progreso financiero en sitio no puede exceder el 100%.');
-            }
-            
-            $newProgress->progress_of_term = $newProgress->actual_physical_progress;
-            $newProgress->save();
-        } else {
-            $totalFinancialProgress = $progresses->sum('financial_progress_on_site') + $newProgress->financial_progress_on_site;
-            
-            if ($totalFinancialProgress > 100) {
-                dd('El progreso financiero en sitio no puede exceder el 100%.');
-                throw new \Exception('El progreso financiero en sitio no puede exceder el 100%.');
-            }
-    
-            $totalProgressOfTerm = $progresses->sum('progress_of_term') + $newProgress->actual_physical_progress;
-            
-            if ($totalProgressOfTerm > 100) {
-                dd('La suma del progreso físico no puede exceder el 100%.');
-                throw new \Exception('La suma del progreso físico no puede exceder el 100%.');
-            }
-            
-            foreach ($progresses as $item) {
-                $this->updateProgress($item, $item['id']);
-            }
-            $newProgress->progress_of_term = $totalProgressOfTerm;
-            $newProgress->save();
-        }
+        $newProgress->save();
         
         return collect($newProgress);
+    }
+
+    public function createProgressesByActivity(Activity $activity)
+    {
+        $startDate = Carbon::parse(Activity::min('start_date'));
+        $endDate = Carbon::parse(Activity::max('end_date'));
+    
+        $weeks = $this->calculateWeeks($startDate, $endDate);
+    
+        $activityStartDate = Carbon::parse($activity->start_date);
+        $activityEndDate = Carbon::parse($activity->end_date);
+    
+        foreach($weeks as $week)
+        {
+            $weekStart = Carbon::parse($week['startDate']);
+            $weekEnd = Carbon::parse($week['endDate']);
+            
+            if ($activityEndDate->greaterThanOrEqualTo($weekEnd) && $activityStartDate->lessThanOrEqualTo($weekStart)) {
+                $progress = new Progress();
+                $progress->week = $week['week'];
+                $progress->activity_id = $activity->id;
+                
+                $progress->save();
+            }
+        }
+    
+        // Actualizar progresos para todas las actividades dentro del mismo proyecto
+        $this->updateProgressesByAllActivity($activity->getProjectBpin(), $weeks);
+    }
+    
+
+    public function calculateWeeks(Carbon $startDate, Carbon $endDate): Collection
+    {
+        $weeks = collect();
+        $weekNumber = 1;
+    
+        $currentStartDate = $startDate;
+        $firstSunday = $startDate->copy()->endOfWeek(Carbon::SUNDAY);
+    
+        if ($firstSunday->gt($endDate)) {
+            $firstSunday = $endDate;
+        }
+    
+        $weeks->push([
+            'week' => $weekNumber,
+            'startDate' => $currentStartDate->format('Y-m-d'),
+            'endDate' => $firstSunday->format('Y-m-d'),
+        ]);
+        $weekNumber++;
+    
+        $currentStartDate = $firstSunday->copy()->addDay();
+    
+        while ($currentStartDate->lt($endDate)) {
+            $weekEnd = $currentStartDate->copy()->endOfWeek(Carbon::SUNDAY);
+    
+            if ($weekEnd->gt($endDate)) {
+                $weekEnd = $endDate;
+            }
+    
+            $weeks->push([
+                'week' => $weekNumber,
+                'startDate' => $currentStartDate->format('Y-m-d'),
+                'endDate' => $weekEnd->format('Y-m-d'),
+            ]);
+    
+            $weekNumber++;
+            $currentStartDate = $weekEnd->copy()->addDay();
+        }
+    
+        return $weeks;
     }
     
 
@@ -64,14 +102,109 @@ class ProgressService implements ProgressInterface {
     {
         $progressUpdate = Progress::findOrFail($id);
         $progressUpdate->fill($progress->toArray());
+        $activity = $this->activityInterface->getActivity($progressUpdate->activity_id);
+
+        $progressUpdate->financial_progress_on_site = $progressUpdate->billed_financial_progress /  $activity['total_value']  * 100;
+
+        if ($this->totalBilledFinancialProgress($activity['id'],$id) + $progressUpdate->financial_progress_on_site > $activity['total_value']) {
+            throw new \Exception('El avance financiero en sitio no puede exceder el 100%.');
+        }
+        
+        if ($this->totalActualPhysicalProgress($activity['id'],$id) + $progressUpdate->actual_physical_progress > 100) {
+            throw new \Exception('La suma del avance físico no puede exceder el 100%.');
+        }
+
+        if ($this->totalProgressOfTerm($activity['id'],$id) + $progressUpdate->progress_of_term > 100) {
+            throw new \Exception('La suma del avance de plazo no puede exceder el 100%.');
+        }
+        
         $progressUpdate->save();
+
+        $progresses = $this->getAllProgressesByActivity($progressUpdate->activity_id);
+
+        $previousProgress = null;
+        foreach ($progresses as $item) {
+            if ($item['week'] >= $progressUpdate->week) {
+                if ($previousProgress) {
+                    $item['financial_progress_on_site'] = $previousProgress['financial_progress_on_site'] + $item['billed_financial_progress'] /  $activity['total_value']*100;
+
+                    $this->update($item,$item['id']);
+                }    
+            }
+            $previousProgress = $item;
+        }
 
         return collect($progressUpdate);
     }
 
+    private function totalBilledFinancialProgress(int $activityId, int $id)
+    {
+        return Progress::where('activity_id', $activityId)
+            ->where('id', '!=', $id)
+            ->sum('billed_financial_progress'); 
+    }
+
+    private function totalActualPhysicalProgress(int $activityId, int $id)
+    {
+        return Progress::where('activity_id', $activityId)
+            ->where('id', '!=', $id)
+            ->sum('actual_physical_progress'); 
+    }
+
+    private function totalProgressOfTerm(int $activityId, int $id)
+    {
+        return Progress::where('activity_id', $activityId)
+            ->where('id', '!=', $id)
+            ->sum('progress_of_term'); 
+    }
+
+    public function update(Collection $progress, int $id): Collection
+    {
+        $progressUpdate = Progress::findOrFail($id);
+        $progressUpdate->fill($progress->toArray());
+        $progressUpdate->save();
+        
+        return collect($progressUpdate);
+    }
+
+
+    public function updateProgressesByAllActivity(String $projectId, Collection $weeks)
+    { 
+        $activities = $this->activityInterface->getActivityByProject($projectId);
+
+        foreach($activities as $activity)
+        {
+            $progresses = Progress::where('activity_id', $activity->id)
+                ->orderBy('week', 'asc')
+                ->get();
+
+            $i =0;
+
+            $activityStartDate = Carbon::parse($activity->start_date);
+            $activityEndDate = Carbon::parse($activity->end_date);
+    
+            foreach($weeks as $week)
+            {
+                $weekStart = Carbon::parse($week['startDate']);
+                $weekEnd = Carbon::parse($week['endDate']);
+
+
+                if ($activityEndDate->lessThanOrEqualTo($weekEnd) && $activityStartDate->greaterThanOrEqualTo($weekStart)) {
+                    $progress = $progresses->get($i);
+                    if($progress->week != $week['week'])
+                    {
+                        $progress->week = $week['week'];
+                        $this->updateProgress($progress,$progress->id);
+                    }
+                    $i += 1;
+                }
+            }
+        }
+    }
+
     public function getAllProgressesByActivity(int $activityId): Collection
     {
-        $progresses = Progress::where('activity_id', $activityId)->get();
+        $progresses = Progress::where('activity_id', $activityId)->orderBy('week', 'asc')->get();
 
         $progresses = $progresses->transform(function ($progress) {
             return collect($progress);
@@ -92,48 +225,35 @@ class ProgressService implements ProgressInterface {
         return $progresses;
     }
 
+    public function getStatisticsProgress(int $projectId): Collection
+    {
+        $activities = Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        })
+        ->get();
+        $statisticsProgress = [];
+        foreach($activities as $activity)
+        {
+            $progresses =  $this->getAllProgressesByActivity($activity->id);
+            $statisticsProgress[] = [
+                'activity_id' => $activity->id,
+                'totalFinancialProgressOnSite' => $progresses->sum('billed_financial_progress'),
+                'totalBilledFinancialProgress' => $progresses->sum('billed_financial_progress') / $activity->total_value*100,
+                'totalActualPhysicalProgress' => $progresses->sum('actual_physical_progress'),
+                'totalProgressOfTerm' => $progresses->sum('progress_of_term'),
+
+            ];
+        }
+
+        return collect($statisticsProgress);
+    }
+
     public function getProgress(int $id): Collection
     {
         $progress = Progress::findOrFail($id);
 
         return collect($progress);
     }
-
-    public function getAverageProgress(int $projectId): Collection
-    {
-        $activities = Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
-            $query->where('project_id', $projectId);
-        })
-        ->with('progress') 
-        ->get();
-
-        $totalPlannedPhysicalProgress = 0;
-        $totalActualPhysicalProgress = 0;
-        $totalFinancialProgressOnSite = 0;
-        $totalBilledFinancialProgress = 0;
-
-        foreach ($activities as $activity) {
-            $progress = $activity->progress;
-
-            if ($progress) {
-                $totalPlannedPhysicalProgress += $progress->planned_physical_progress;
-                $totalActualPhysicalProgress += $progress->actual_physical_progress;
-                $totalFinancialProgressOnSite += $progress->financial_progress_on_site;
-                $totalBilledFinancialProgress += $progress->billed_financial_progress;
-            }
-        }
-
-        $totalActivityCount = $activities->count();
-        $averageProgress = [
-            'planned_physical_progress' => $totalPlannedPhysicalProgress / $totalActivityCount,
-            'actual_physical_progress' => $totalActualPhysicalProgress / $totalActivityCount,
-            'financial_progress_on_site' => $totalFinancialProgressOnSite / $totalActivityCount,
-            'billed_financial_progress' => $totalBilledFinancialProgress / $totalActivityCount,
-        ];
-
-        return new Collection([$averageProgress]);
-    }
-
 
     public function deleteProgress(int $id): Collection
     {

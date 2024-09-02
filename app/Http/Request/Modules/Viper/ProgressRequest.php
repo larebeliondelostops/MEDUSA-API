@@ -5,9 +5,42 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Arr;
 
 class ProgressRequest extends FormRequest
-{
+{   
+    private static array $rules = [
+        "POST"=> [
+            "create" => [
+                'week' => 'required|integer',
+                'activity_completed' => 'required|string',
+                'activity_id' => 'required|integer|exists:activities,id',
+                'observations' => 'required|string',
+                'summary' => 'required|string',
+                'conclusions' => 'required|string',
+                'recommendations' => 'required|string',
+                'progress_of_term' => 'required|numeric|between:0,100',
+                'actual_physical_progress' => 'required|numeric|between:0,100',
+                'billed_financial_progress' => 'required|numeric',
+            ],
+        ],
+        "PUT" => [
+            "update" => [
+                'week' => 'nullable|integer',
+                'activity_completed' => 'nullable|string',
+                'activity_id' => 'nullable|integer|exists:activities,id',
+                'observations' => 'nullable|string',
+                'summary' => 'nullable|string',
+                'conclusions' => 'nullable|string',
+                'recommendations' => 'nullable|string',
+                'progress_of_term' => 'required|numeric|between:0,100',
+                'actual_physical_progress' => 'required|numeric|between:0,100',
+                'billed_financial_progress' => 'required|numeric',
+            ]
+        ]
+    ];
+
+    public string $lastSlugPath;
     /**
      * Determina si el usuario está autorizado para hacer esta solicitud.
      *
@@ -19,24 +52,31 @@ class ProgressRequest extends FormRequest
     }
 
     /**
-     * Reglas de validación que se aplicarán a la solicitud.
+     * Prepara la instancia antes de la validación.
      *
-     * @return array Reglas de validación.
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $path = $this->path();
+        if ($this->method() == 'PUT') {
+            $segments = explode('/', $path);
+            array_pop($segments);
+            $path = implode('/', $segments);
+        }
+        $this->lastSlugPath = Arr::last(explode('/', $path));
+    }
+
+    /**
+     * Reglas de validación que se aplican a la solicitud.
+     *
+     * @return array
      */
     public function rules()
     {
-        return [
-            'week' => 'required|integer',
-            'activity_completed' => 'required|string',
-            'activity_id' => 'required|integer|exists:activities,id',
-            'observations' => 'required|string',
-            'summary' => 'required|string',
-            'conclusions' => 'required|string',
-            'recommendations' => 'required|string',
-            'actual_physical_progress' => 'required|numeric|between:0,100',
-            'billed_financial_progress' => 'required|numeric',
-        ];
+        return self::$rules[$this->method()][$this->lastSlugPath];
     }
+
 
     /**
      * Maneja el comportamiento en caso de validación fallida.

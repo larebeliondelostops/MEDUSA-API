@@ -15,7 +15,7 @@ class Progress extends Model
 
     protected $hidden = [
         'updated_at', 
-        'deleted_at'
+        'created_at'
     ];
 
     protected $fillable = [
@@ -26,7 +26,7 @@ class Progress extends Model
         'summary',
         'conclusions',
         'recommendations',
-        'planned_physical_progress',
+        'progress_of_term',
         'actual_physical_progress',
         'financial_progress_on_site',
         'billed_financial_progress'

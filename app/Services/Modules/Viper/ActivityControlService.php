@@ -160,5 +160,62 @@ class ActivityControlService implements ActivityControlInterface{
         return $activitiesPerWeek->sortKeys();
     }
 
+    public function getActivitiesControlByProject(String $projectId): Collection
+    {
+        $activities = Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        })
+        ->with('progress') 
+        ->get();
+
+        $project = Project::where('bpin', $projectId)
+            ->select('start_date_execution_phase', 'completion_date')
+            ->first();
+        
+        $startDate = Carbon::parse($activities->min('start_date'));
+        $endDate = Carbon::parse($activities->max('end_date'));
+
+        if (!$activities || !$startDate || !$endDate) 
+        {
+            return collect([
+                'isBefore' => false,
+                'isDuring' => false,
+                'isAfter' => false,
+                'currentWeek' => null,
+                'weeks' => [],
+                'activityWeeks' => collect(),
+            ]);
+        }
+
+        $currentDate = Carbon::now();
+        
+        $isBefore = $currentDate->isBefore($startDate);
+        $isDuring = $currentDate->isBetween($startDate, $endDate, true);
+        $isAfter = $currentDate->isAfter($endDate);
+
+        $weeks = $this->calculateWeeks($startDate, $endDate);
+
+        $currentWeek = $this->calculateCurrentWeek($currentDate, $weeks, $isDuring);
     
+        $activityWeeks = $this->assignActivitiesToWeeks($activities, $weeks);
+
+        $activityWeeks = $activityWeeks->map(function ($activities) {
+            return collect($activities)->map(function ($activity) {
+                $activity['progress'] = collect($activity['progress'])->map(function ($progress) {
+                    return collect($progress)->except(['activity_completed', 'observations','summary','conclusions','recommendations']);
+                });
+        
+                return $activity;
+            });
+        });
+
+        return collect([
+            'isBefore' => $isBefore,
+            'isDuring' => $isDuring,
+            'isAfter' => $isAfter,
+            'currentWeek' => $currentWeek,
+            'weeks' => $weeks,
+            'activityWeeks' => $activityWeeks,
+        ]);
+    }    
 }

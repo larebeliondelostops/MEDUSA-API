@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
-use App\Http\Request\Modules\Viper\ControlPaneProjectRequest;
+use App\Http\Request\Modules\Viper\ControlPanelProjectRequest;
 use App\Interfaces\Modules\Viper\ControlPanelProjectInterface;
 use Illuminate\Http\Request;
 use Exception;
@@ -21,7 +21,7 @@ class ControlPanelProjectController extends BaseController
         $this->controlPanelProjectInterface = $controlPanelProjectInterface;
     }
 
-    public function store(ControlPanelRequest $request)
+    public function store(ControlPanelProjectRequest $request)
     {
         try {
             $controlPanelProjectCreated = $this->controlPanelProjectInterface->createNewControlPanel(collect($request->validated()));
@@ -35,7 +35,7 @@ class ControlPanelProjectController extends BaseController
         }
     }
 
-    public function update(ControlPanelRequest $request, int $id)
+    public function update(ControlPanelProjectRequest $request, int $id)
     {
         try {
             $controlPanelProjectUpdate = $this->controlPanelProjectInterface->updateControlPanelProject(collect($request->validated()), $id);

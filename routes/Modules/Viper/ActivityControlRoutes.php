@@ -6,4 +6,5 @@ use App\Http\Controllers\Modules\Viper\ActivityControlController;
 
 Route::prefix('/viper/activityControl')->group(function () {
     Route::get('/listByProject/{projectId}', [ActivityControlController::class, 'index']);
+    Route::get('/listStatisticsByProject/{projectId}', [ActivityControlController::class, 'view']);
 });

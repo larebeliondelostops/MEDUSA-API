@@ -112,4 +112,11 @@ class Activity extends Model
     {
         return $this->hasOne(StatusViper::class, 'id', 'status_id');
     }
+
+    public function getProjectBpin()
+    {
+        return Project::whereHas('scope.specificObjectives.products.deliverables.activities', function ($query) {
+            $query->where('activities.id', $this->id);
+        })->value('bpin');
+    }
 }

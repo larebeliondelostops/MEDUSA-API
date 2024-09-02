@@ -154,6 +154,23 @@ class MunicipalitySeeder extends Seeder
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
+            "Tuluá" => [
+                "id" => Uuid::uuid4()->toString(),
+                "type" => "Point",
+                "latitude" => '4.0856667',
+                "longitude" => '-76.1972779',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            "Vijes" => [
+                "id" => Uuid::uuid4()->toString(),
+                "type" => "Point",
+                "latitude" => '3.7003997',
+                "longitude" => '-76.4428876',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            
             // Continuar agregando municipios aquí...
         ];
 
@@ -224,6 +241,20 @@ class MunicipalitySeeder extends Seeder
             [
                 "name" => "Florida",
                 "coordinate_id" => $coordinates["Florida"]['id'],
+                "department_id" => 2,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "name" => "Tuluá",
+                "coordinate_id" => $coordinates["Tuluá"]['id'],
+                "department_id" => 2,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "name" => "Vijes",
+                "coordinate_id" => $coordinates["Vijes"]['id'],
                 "department_id" => 2,
                 "created_at" => now(),
                 "updated_at" => now(),

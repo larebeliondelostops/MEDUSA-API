@@ -28,9 +28,12 @@ class ProgressService implements ProgressInterface {
     }
 
     public function createProgressesByActivity(Activity $activity)
-    {
-        $startDate = Carbon::parse(Activity::min('start_date'));
-        $endDate = Carbon::parse(Activity::max('end_date'));
+    {  
+        $projectId = $activity->getProjectBpin();
+        $startDate = Carbon::parse( Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);})->min('start_date'));
+        $endDate = Carbon::parse( Activity::whereHas('deliverable.product.specificObjective.scope', function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);})->max('end_date'));
     
         $weeks = $this->calculateWeeks($startDate, $endDate);
     
@@ -51,8 +54,7 @@ class ProgressService implements ProgressInterface {
             }
         }
     
-        // Actualizar progresos para todas las actividades dentro del mismo proyecto
-        $this->updateProgressesByAllActivity($activity->getProjectBpin(), $weeks);
+        $this->updateProgressesByAllActivity($projectId, $weeks);
     }
     
 
@@ -169,38 +171,35 @@ class ProgressService implements ProgressInterface {
 
 
     public function updateProgressesByAllActivity(String $projectId, Collection $weeks)
-    { 
+    {
         $activities = $this->activityInterface->getActivityByProject($projectId);
-
-        foreach($activities as $activity)
-        {
+    
+        foreach ($activities as $activity) {
             $progresses = Progress::where('activity_id', $activity->id)
-                ->orderBy('week', 'asc')
+                ->orderBy('week', 'desc') // Cambiar el orden a descendente
                 ->get();
-
-            $i =0;
-
+    
+            $i = 0;
+    
             $activityStartDate = Carbon::parse($activity->start_date);
             $activityEndDate = Carbon::parse($activity->end_date);
     
-            foreach($weeks as $week)
-            {
+            foreach (array_reverse($weeks->toArray()) as $week) {
                 $weekStart = Carbon::parse($week['startDate']);
                 $weekEnd = Carbon::parse($week['endDate']);
-
-
+    
                 if ($activityStartDate->lessThanOrEqualTo($weekEnd) && $activityEndDate->greaterThanOrEqualTo($weekStart)) {
                     $progress = $progresses->get($i);
-                    if($progress->week != $week['week'])
-                    {
+    
+                    if ($progress->week != $week['week']) {
                         $progress->week = $week['week'];
-                        $this->updateProgress($progress,$progress->id);
+                        $this->updateProgress(collect($progress), $progress->id);
                     }
                     $i += 1;
                 }
             }
         }
-    }
+    }    
 
     public function getAllProgressesByActivity(int $activityId): Collection
     {

@@ -123,8 +123,10 @@ class DeliverableService implements DeliverableInterface
 
     public function updateDeliverableActivityQuantity(int $id)
     {
-        $deliverable = Deliverable::findOrFail($deliverableId);
-        $deriverable->activity_quantity += 1;
+        $deliverable = Deliverable::findOrFail($id);
+    
+        $deliverable->activity_quantity = ($deliverable->activity_quantity ?? 0) + 1;
+    
         $deliverable->save();
     }
 

@@ -24,7 +24,7 @@ class DeadlineActivityAlertService implements DeadlineActivityAlertInterface
         $this->alertInterface = $alertInterface;
     }
 
-    public function alert() : array
+    public function execute()
     {
         try
         {
@@ -51,8 +51,6 @@ class DeadlineActivityAlertService implements DeadlineActivityAlertInterface
                 ];
                 $this->alertInterface->createNewAlert(collect($alert));
             }
-            
-            return [];
         }
         catch(Exception $exception)
         {

@@ -3,6 +3,7 @@
 namespace App\Console\Schedule\modules\viper;
 
 use App\Console\Commands\DeadlineActivityAlert;
+use App\Console\Commands\PartialComplianceAlert;
 use App\Console\Commands\UpdateStateActivitiesByCurrentDate;
 use Exception;
 use Illuminate\Console\Scheduling\Schedule;
@@ -28,6 +29,10 @@ class ViperKernel extends ConsoleKernel
 
             $schedule->command(
                 DeadlineActivityAlert::class
+            )->everyMinute();
+
+            $schedule->command(
+                PartialComplianceAlert::class
             )->everyMinute();
         }
         catch(Exception $exception)

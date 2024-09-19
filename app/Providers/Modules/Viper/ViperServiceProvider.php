@@ -4,6 +4,7 @@ namespace App\Providers\Modules\Viper;
 
 // Interfaces
 use App\Interfaces\Modules\Viper\ActivityInterface;
+use App\Interfaces\Modules\Viper\Alert\PartialComplianceAlertInterface;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Interfaces\Modules\Viper\CoordinatesInterface;
 use App\Interfaces\Modules\Viper\Deliverable\DeliverableEventActivityInterface;
@@ -54,6 +55,7 @@ use App\Interfaces\Modules\Viper\ControlPanelInterface;
 use App\Interfaces\Modules\Viper\ControlPanelProjectInterface;
 use App\Interfaces\Modules\Viper\StatusInterface;
 // Services
+use App\Services\Modules\Viper\Alert\PartialComplianceAlertService;
 use App\Services\Modules\Viper\AlertService;
 use App\Services\Modules\Viper\CoordinatesService;
 use App\Services\Modules\Viper\Deliverable\DeliverableEventActivityService;
@@ -168,6 +170,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(ActivityAlertInterface::class, ActivityAlertService::class); 
         $this->app->bind(DeadlineActivityAlertInterface::class, DeadlineActivityAlertService::class);
         $this->app->bind(StatusInterface::class, StatusService::class);
+        $this->app->bind(PartialComplianceAlertInterface::class, PartialComplianceAlertService::class);
         //Observers
         $this->app->bind(ProjectObserverAssignContractInterface::class, ProjectObserverAssignContract::class);
     }

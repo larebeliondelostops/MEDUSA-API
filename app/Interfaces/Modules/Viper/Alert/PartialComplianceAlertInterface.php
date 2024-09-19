@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace App\Interfaces\Modules\Viper\Alert;
 
-interface DeadlineActivityAlertInterface
+interface PartialComplianceAlertInterface
 {
     public function execute();
 }

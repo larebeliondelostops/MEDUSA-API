@@ -25,7 +25,7 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
         return collect($projectUserRoleUpdate);
     }
 
-    public function getAllProjectUserRoleByProject(int $projectId): Collection
+    public function getAllProjectUserRoleByProject(string $projectId): Collection
     {
         $projectUserRoleGot = ProjectUserRole::with('user','role')->where('project_id', $projectId)->get();
     
@@ -59,7 +59,7 @@ class ProjectUserRoleService implements ProjectUserRoleInterface {
     }
 
 
-    public function getRoleByProjectUser(int $projectId, int $userId): ?Collection
+    public function getRoleByProjectUser(string $projectId, int $userId): ?Collection
     {
         $projectUserRole = ProjectUserRole::where('project_id', $projectId)->where('user_id', $userId)->first();
     

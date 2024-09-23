@@ -47,7 +47,7 @@ class ProjectUserRoleController extends BaseController
         }
     }
 
-    public function index(int $projectId)
+    public function index(string $projectId)
     {
         try {
             $projectUserRoles = $this->projectUserRoleInterface->getAllProjectUserRoleByProject($projectId);

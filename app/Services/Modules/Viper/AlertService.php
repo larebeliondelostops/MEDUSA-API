@@ -92,10 +92,10 @@ class AlertService implements AlertInterface{
     /**
      * Obtiene todas las alertas asociadas a un project específico.
      *
-     * @param int $projectId Identificador del projecto.
+     * @param string $projectId Identificador del projecto.
      * @return Collection Collection de Collections representando las alertas asociadas al projecto.
      */
-    public function getAllAlertsByProject(int $projectId): Collection
+    public function getAllAlertsByProject(string $projectId): Collection
     {
         $alertGot = Alert::where('project_id', $projectId)->where('user_email', auth()->user()->email)->orderBy('created_at', 'asc')->get();
     

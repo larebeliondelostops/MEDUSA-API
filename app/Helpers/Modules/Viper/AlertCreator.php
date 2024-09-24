@@ -71,7 +71,7 @@ class AlertCreator
             '. SE HA DETECTADO QUE EL CONTRATISTA HA EJECUTADO EL PROYECTO SOLO HASTA UN 50% O MÁS DE LAS ACTIVIDADES PROGRAMADAS. ' .
             'ESTE ESTADO SE CONSIDERA CRÍTICO. SE RECOMIENDA IMPLEMENTAR UN PLAN REMEDIAL Y REALIZAR UNA MESA TÉCNICA Y JURÍDICA ENTRE ' . 
             'LA INTERVENTORÍA, LA SUPERVISIÓN Y EL CONTRATISTA PARA RESOLVER LAS CIRCUNSTANCIAS QUE GENERARON EL ATRASO.',
-            "type" => "SEGUIMIENTO TÉCNICO",
+            "type" => "SEGUIMIENTO DE EJECUCIÓN",
             'severity_name' => 'Crítico',
             "severity_id" => AlertSeverity::where('name', 'Critical')->first()->id,
             "recommendations" => [

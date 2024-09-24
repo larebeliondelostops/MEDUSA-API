@@ -29,11 +29,13 @@ class ViperKernel extends ConsoleKernel
 
             $schedule->command(
                 DeadlineActivityAlert::class
-            )->everyMinute();
+            )->everyThirtyMinutes();
 
             $schedule->command(
                 PartialComplianceAlert::class
-            )->everyMinute();
+            )->cron('59 23 28-31 * *')->when(function() {
+                return now()->endOfMonth()->isToday();
+            });
         }
         catch(Exception $exception)
         {

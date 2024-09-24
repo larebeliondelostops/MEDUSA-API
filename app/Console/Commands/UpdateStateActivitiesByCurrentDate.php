@@ -25,7 +25,7 @@ class UpdateStateActivitiesByCurrentDate extends Command
      *
      * @var string
      */
-    protected $description = 'update state activity to in progress by current date';
+    protected $description = 'Update state activity to in progress by current date';
 
     protected $activityInterface;
 

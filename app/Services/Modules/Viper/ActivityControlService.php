@@ -139,15 +139,19 @@ class ActivityControlService implements ActivityControlInterface{
             $activityStartDate = Carbon::parse($activity->start_date);
             $activityEndDate = Carbon::parse($activity->end_date);
 
+            $activityWeeks = $this->calculateWeeks($activityStartDate, $activityEndDate);
+            $totalWeeks = $activityWeeks->count(); 
+
             foreach ($weeks as $week) {
                 $weekStart = Carbon::parse($week['startDate']);
                 $weekEnd = Carbon::parse($week['endDate']);
 
                 if ($activityStartDate->lessThanOrEqualTo($weekEnd) && $activityEndDate->greaterThanOrEqualTo($weekStart)) {
-                    $activitiesPerWeek = $activitiesPerWeek->map(function ($activities, $weekNumber) use ($activity, $week) {
+                    $activitiesPerWeek = $activitiesPerWeek->map(function ($activities, $weekNumber) use ($activity, $week, $totalWeeks) {
                         if ($weekNumber === $week['week']) {
                             $activities[] = [
                                 'activity_id' => $activity->id,
+                                'weekValue' => $activity->total_value/$totalWeeks,
                                 'progress' => $this->progressInterface->getProgressesByActivityAndWeek($activity->id, $week['week']),
                             ];
                         }

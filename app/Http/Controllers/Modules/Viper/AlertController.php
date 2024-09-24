@@ -100,7 +100,7 @@ class AlertController extends BaseController
      * @param int $indicatorId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function view(int $projectId)
+    public function view(string $projectId)
     {
         try {
             $alerts = $this->alertInterface->getAllAlertsByProject($projectId);

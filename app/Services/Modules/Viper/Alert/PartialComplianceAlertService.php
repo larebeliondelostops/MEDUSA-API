@@ -27,8 +27,8 @@ class PartialComplianceAlertService implements PartialComplianceAlertInterface
                     $query->where('name', '=', 'En ejecución');
                 })->get();
             
-            $currentDate = Carbon::now()->format('Y-m-d');
-            $firstDayOfCurrentMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $currentDate = Carbon::now();
+            $firstDayOfCurrentMonth = Carbon::now()->startOfMonth();
             foreach($executingProjects as $executingProject)
             {
                 $numberOfActivitiesForThisMonth  = Activity::with('folder.project')
@@ -38,7 +38,7 @@ class PartialComplianceAlertService implements PartialComplianceAlertInterface
                         });
                     })
                     ->where('end_date', '<=', $currentDate)->get()->count();
-
+                
                 $numberOfActivitiesCompletedThisMonth  = Activity::with('folder.project')
                     ->whereHas('folder', function($query) use ($executingProject){
                         $query->whereHas('project', function($subquery) use ($executingProject){
@@ -49,7 +49,10 @@ class PartialComplianceAlertService implements PartialComplianceAlertInterface
                     ->whereHas('status', function($query){
                             $query->where('name', '=', 'Completada');
                     })->get()->count();
+
                 $percentageOfActivitiesCompletedForThisMonth = ($numberOfActivitiesCompletedThisMonth / $numberOfActivitiesForThisMonth) * 100;
+                Log::channel('command_errors')->info(json_encode($percentageOfActivitiesCompletedForThisMonth));
+
                 if($percentageOfActivitiesCompletedForThisMonth >= 50)
                 {
                     $emailsToSendNotification = ProjectUserRole::with(['role', 'user'])
@@ -63,15 +66,15 @@ class PartialComplianceAlertService implements PartialComplianceAlertInterface
                     {
                         $alertData = AlertCreator::createAlertCumplimientoParcialActividades(
                             $executingProject->bpin,
-                            $firstDayOfCurrentMonth,
+                            $executingProject->start_date_execution_phase,
                             $currentDate
                         );
                         $alert = [
                             "name" => $alertData['name'],
                             "description" => $alertData['description'],
                             "type" => $alertData['type'],
-                            "severity_name" => $alertData['serverity_name'],
-                            "severity_id" => $alertData['serverity_id'],
+                            "severity_name" => $alertData['severity_name'],
+                            "severity_id" => $alertData['severity_id'],
                             "recommendations" => $alertData['recommendations'],
                             "project_id"=> $executingProject->bpin,
                             "user_email" => $email,

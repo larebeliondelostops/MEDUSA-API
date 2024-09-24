@@ -7,6 +7,7 @@ use App\Interfaces\Modules\Viper\ActivityAlertInterface;
 use App\Interfaces\Modules\Viper\Alert\DeadlineActivityAlertInterface;
 use App\Interfaces\Modules\Viper\AlertInterface;
 use App\Models\Modules\Viper\Alert;
+use App\Models\Modules\Viper\ProjectUserRole;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -39,17 +40,27 @@ class DeadlineActivityAlertService implements DeadlineActivityAlertInterface
             {
                 $activity = $activity->load('folder.project');
                 $project = $activity->folder->project;
-                $alertData = AlertCreator::createAlertVencimientoPlazos($project->bpin, '');
-                $alert = [
-                    "name" => $alertData["name"],
-                    "type" => $alertData["type"],
-                    "description" => $alertData["description"],
-                    "indicator_id" => null,
-                    "project_id"=> $project->bpin,
-                    "user_email" => "ignicion@ignicion.com",
-                    'severity_id' => $alertData['severity_id']   
-                ];
-                $this->alertInterface->createNewAlert(collect($alert));
+                $emailsToSendNotification = ProjectUserRole::with(['role', 'user'])
+                        ->where('project_id', '=', $project->bpin)
+                        ->whereHas('role', function($query){
+                            $query->where('name', '=', 'ApoyoAdmon');
+                        })->get()
+                        ->pluck('user.email');
+                    
+                foreach($emailsToSendNotification as $email)
+                {
+                    $alertData = AlertCreator::createAlertVencimientoPlazos($project->bpin, '');
+                    $alert = [
+                        "name" => $alertData["name"],
+                        "type" => $alertData["type"],
+                        "description" => $alertData["description"],
+                        "indicator_id" => null,
+                        "project_id"=> $project->bpin,
+                        "user_email" => $email,
+                        'severity_id' => $alertData['severity_id']   
+                    ];
+                    $this->alertInterface->createNewAlert(collect($alert));
+                }
             }
         }
         catch(Exception $exception)

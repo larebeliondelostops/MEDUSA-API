@@ -17,7 +17,7 @@ class PartialComplianceAlert extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'viper:partial-compliance-alert';
     protected PartialComplianceAlertInterface $partialComplianceAlertInterface;
 
     /**

@@ -59,14 +59,15 @@ class Alert extends Model
     protected $fillable = [
         'name',
         'type', 
-        'state', 
+        'severity_id',
+        'is_read', 
         'description', 
-        'date', 
         'indicator_id', 
         'project_id',
         'improvement_plan_id',
         'user_email',
-        'severity_id'
+        'related_item_type',
+        'related_item_id'
     ];
 
     /**

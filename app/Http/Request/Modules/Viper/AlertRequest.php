@@ -25,24 +25,26 @@ class AlertRequest extends FormRequest
             "create" => [
                 'name' => 'required|string|max:255',
                 'type' => 'required|string|max:100',
-                'state' => 'boolean',
+                'severity_id' => 'required|integer|exists:alert_severities,id',
+                'is_read' => 'boolean',
                 'description' => 'required|string',
                 'indicator_id' => 'nullable|exists:indicators_viper,id|integer',
                 'project_id' => 'required|exists:projects,bpin|string|max:100',
                 'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
-                'user_email' => 'required|string',
+                'user_email' => 'required|string|exists:users,email',
             ],
         ],
         "PUT" => [
             "update" => [
-                'name' => 'string|max:255',
-                'type' => 'string|max:100',
-                'state' => 'boolean',
-                'description' => 'string',
-                'indicator_id' => 'exists:indicators_viper,id|integer',
-                'project_id' => 'exists:projects,bpin|string|max:100',
-                'improvement_plan_id' => 'exists:improvement_plans,id|integer',
-                'user_email' => 'string',
+                'name' => 'nullable|string|max:255',
+                'type' => 'nullable|string|max:100',
+                'severity_id' => 'nullable|integer|exists:alert_severities,id',
+                'is_read' => 'nullable|boolean',
+                'description' => 'nullable|string',
+                'indicator_id' => 'nullable|xists:indicators_viper,id|integer',
+                'project_id' => 'nullable|exists:projects,bpin|string|max:100',
+                'improvement_plan_id' => 'nullable|exists:improvement_plans,id|integer',
+                'user_email' => 'nullable|string',
             ]
         ]
     ];

@@ -24,7 +24,7 @@ class DeadlineActivityAlert extends Command
      *
      * @var string
      */
-    protected $description = 'Command to search for upcoming due activities and send deadline alert';
+    protected $description = 'Search for upcoming due activities and send deadline alert';
 
 
     protected $deadlineActivityAlert;
@@ -51,7 +51,7 @@ class DeadlineActivityAlert extends Command
             {
                 tenancy()->initialize($tenantId);
                 try {
-                    $this->deadlineActivityAlertInterface->alert();
+                    $this->deadlineActivityAlertInterface->execute();
                 } catch (Exception $exception) {
                     Log::channel('command_errors')->error($exception->getMessage() . ' - ' . $exception->getFile() . ' - ' . $exception->getLine());
                 } finally {

@@ -86,7 +86,7 @@ class ActivityController extends BaseController
     public function display($productId)
     {
         try {
-            $activities = $this->activityInterface->getActivityByProductoWithReportNull($productId);
+            $activities = $this->activityInterface->getActivityByProducto($productId);
             return response()->json([
                 'data' => $activities,
             ], 200);

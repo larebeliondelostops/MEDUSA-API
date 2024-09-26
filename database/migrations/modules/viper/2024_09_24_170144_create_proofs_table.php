@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('proofs', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255);
-            $table->text('description');
-            $table->unsignedBigInteger('responsible');
-            $table->date('date');
+            $table->unsignedBigInteger('document_id');
+            $table->unsignedBigInteger('progress_id');
 
-            $table->foreign('responsible')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('progress_id')->references('id')->on('progresses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('proofs');
     }
 };

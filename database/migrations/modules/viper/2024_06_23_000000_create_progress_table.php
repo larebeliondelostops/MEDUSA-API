@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('summary')->nullable(); 
             $table->text('conclusions')->nullable(); 
             $table->text('recommendations')->nullable();
-            $table->decimal('progress_of_term', 8, 2)->nullable();
             $table->decimal('actual_physical_progress', 8, 2)->nullable(); 
             $table->decimal('financial_progress_on_site', 15, 2)->nullable(); 
             $table->decimal('billed_financial_progress', 15, 2)->nullable(); 

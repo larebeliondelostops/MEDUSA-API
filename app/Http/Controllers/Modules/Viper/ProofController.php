@@ -89,15 +89,15 @@ class ProofController extends BaseController
     }
 
     /**
-     * Obtiene todas las pruebas asociadas a un reporte específico.
+     * Obtiene todas las pruebas asociadas a un progreso específico.
      *
      * @param int $REPORTId Identificador único del reporte.
      * @return \Illuminate\Http\JsonResponse Respuesta JSON con el conjunto de pruebas asociadas al reporte.
      */
-    public function index(int $reportId)
+    public function index(int $progressId)
     {
         try {
-            $proofs = $this->proofInterface->getAllProofsByReport($reportId);
+            $proofs = $this->proofInterface->getAllProofsByProgress($progressId);
             return response()->json([
                 'data' => $proofs,
             ], Response::HTTP_OK);

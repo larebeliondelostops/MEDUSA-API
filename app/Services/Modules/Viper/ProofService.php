@@ -4,7 +4,9 @@ namespace App\Services\Modules\Viper;
 
 use Illuminate\Support\Collection;
 use App\Interfaces\Modules\Viper\ProofInterface;
+use App\Interfaces\Modules\Viper\DocumentInterface;
 use App\Models\Modules\Viper\Proof;
+use App\Models\Modules\Viper\Document;
 use Exception;
 use Storage;
 
@@ -20,6 +22,14 @@ use Storage;
  */
 class ProofService implements ProofInterface
 {
+    private DocumentInterface $documentInterface;
+
+
+    public function __construct(DocumentInterface $documentInterface)
+    {
+        $this->documentInterface = $documentInterface;
+    }
+
     /**
      * Crea una nueva prueba.
      *
@@ -30,24 +40,14 @@ class ProofService implements ProofInterface
      */
     public function createNewProof(Collection $proof, \Illuminate\Http\UploadedFile $file): Collection
     {
-        $originalFilename = $file->getClientOriginalName();
-
         $newProof = new Proof($proof->toArray());
 
-        $project_id = $newProof->getProjectBpin();
-
-        $folderPath = "test/{$project_id}/report_{$newProof->report_id}";
-    
-        $filename = $this->getUniqueFilename($folderPath, $originalFilename);
-
-        $filePath = Storage::disk('spaces')->putFileAs($folderPath, $file, $filename);
-
-        $url = Storage::disk('spaces')->url($filePath);
-
-        $newProof->name = $filename;
-        $newProof->url = $url;
-        $newProof->responsible = auth()->user()->id;
-        
+        $collect = collect([
+            'project_id' => $newProof->getProjectBpin(),
+            'folder_id' => $newProof->getFolderId(),
+        ]);
+        $document = $this->documentInterface->createNewDocument($collect,$file);
+        $newProof->document_id = $document['id'];
         $newProof->save();
 
         return collect($newProof);
@@ -65,27 +65,9 @@ class ProofService implements ProofInterface
     {
         $proof = Proof::findOrFail($id);
 
-        $originalFilePath = parse_url($proof->url, PHP_URL_PATH);
+        $this->documentInterface->updateDocument($proof->document_id,$newName);
 
-        if (Storage::disk('spaces')->exists($originalFilePath)) {
-            $extension = pathinfo($originalFilePath, PATHINFO_EXTENSION);
-
-            $newFileName = $this->getUniqueFilename(dirname($originalFilePath), $newName) . '.' . $extension;
-
-            $newFilePath = dirname($originalFilePath) . '/' . $newFileName;
-
-            if (Storage::disk('spaces')->copy($originalFilePath, $newFilePath)) {
-                Storage::disk('spaces')->delete($originalFilePath);
-
-                $proof->name = $newFileName;
-                $proof->url = Storage::disk('spaces')->url($newFilePath);
-                $proof->save();
-
-                return collect($proof);
-            }
-            throw new Exception('Error al copiar el archivo con el nuevo nombre');
-        }
-        throw new Exception('Prueba no encontrada en el sistema de archivos');
+        return Proof::findOrFail($id);
     }
 
     /**
@@ -94,9 +76,9 @@ class ProofService implements ProofInterface
      * @param int $productId El identificador del producto.
      * @return Collection Collection de Collections representando las pruebas asociadas al producto.
      */
-    public function getAllProofsByReport(int $reportId): Collection
+    public function getAllProofsByProgress(int $progressId): Collection
     {
-        $proofs = Proof::where('report_id', $reportId)->get();
+        $proofs = Proof::where('progress_id', $progressId)->get();
 
         $proofGot = $proofs->map(function ($proof) {
             return collect($proof);
@@ -130,32 +112,10 @@ class ProofService implements ProofInterface
     {
         $proof = Proof::findOrFail($proofId);
 
-        $filePath = parse_url($proof->url, PHP_URL_PATH);
+        $this->documentInterface->deleteForceDocument($proof->document_id);
 
-        if (Storage::disk('spaces')->exists($filePath)) {
-            Storage::disk('spaces')->delete($filePath);
-        }
         $proof->delete();
 
         return collect($proof);
-    }
-
-    /**
-     * Genera un nombre único para un archivo en una carpeta específica.
-     *
-     * @param string $folderPath La ruta de la carpeta donde se guarda el archivo.
-     * @param string $originalFilename El nombre original del archivo.
-     * @return string El nombre único generado.
-     */
-    private function getUniqueFilename($folderPath, $originalFilename)
-    {
-        $filename = $originalFilename;
-        $counter = 1;
-
-        while (Storage::disk('spaces')->exists("{$folderPath}/{$filename}")) {
-            $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . "({$counter})" . '.' . pathinfo($originalFilename, PATHINFO_EXTENSION);
-            $counter++;
-        }
-        return $filename;
     }
 }

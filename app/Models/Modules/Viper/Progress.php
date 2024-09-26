@@ -26,7 +26,6 @@ class Progress extends Model
         'summary',
         'conclusions',
         'recommendations',
-        'progress_of_term',
         'actual_physical_progress',
         'financial_progress_on_site',
         'billed_financial_progress'
@@ -35,5 +34,10 @@ class Progress extends Model
     public function activity()
     {
         return $this->belongsTo(Activity::class);
+    }
+
+    public function proofs()
+    {
+        return $this->hasMany(Proof::class);
     }
 }

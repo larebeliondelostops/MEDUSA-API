@@ -115,10 +115,6 @@ class ProgressService implements ProgressInterface {
         if ($this->totalActualPhysicalProgress($activity['id'],$id) + $progressUpdate->actual_physical_progress > 100) {
             throw new \Exception('La suma del avance físico no puede exceder el 100%.');
         }
-
-        if ($this->totalProgressOfTerm($activity['id'],$id) + $progressUpdate->progress_of_term > 100) {
-            throw new \Exception('La suma del avance de plazo no puede exceder el 100%.');
-        }
         
         $progressUpdate->save();
 
@@ -151,13 +147,6 @@ class ProgressService implements ProgressInterface {
         return Progress::where('activity_id', $activityId)
             ->where('id', '!=', $id)
             ->sum('actual_physical_progress'); 
-    }
-
-    private function totalProgressOfTerm(int $activityId, int $id)
-    {
-        return Progress::where('activity_id', $activityId)
-            ->where('id', '!=', $id)
-            ->sum('progress_of_term'); 
     }
 
     public function update(Collection $progress, int $id): Collection
@@ -214,7 +203,7 @@ class ProgressService implements ProgressInterface {
 
     public function getProgressesByActivityAndWeek(int $activityId, String $week): Collection
     {
-        $progresses = Progress::where('activity_id', $activityId)->where('week',$week)->get();
+        $progresses = Progress::where('activity_id', $activityId)->where('week',$week)->with('proofs.document') ->get();
 
         $progresses = $progresses->transform(function ($progress) {
             return collect($progress);
@@ -239,8 +228,6 @@ class ProgressService implements ProgressInterface {
                 'totalFinancialProgressOnSite' => $progresses->sum('billed_financial_progress'),
                 'totalBilledFinancialProgress' => $progresses->sum('billed_financial_progress') / $activity->total_value*100,
                 'totalActualPhysicalProgress' => $progresses->sum('actual_physical_progress'),
-                'totalProgressOfTerm' => $progresses->sum('progress_of_term'),
-
             ];
         }
 

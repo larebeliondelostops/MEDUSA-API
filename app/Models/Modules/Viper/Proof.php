@@ -45,8 +45,7 @@ class Proof extends Model
      */
     protected $hidden = [
         'created_at', 
-        'updated_at', 
-        'deleted_at'
+        'updated_at'
     ];
 
     /**
@@ -55,20 +54,23 @@ class Proof extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'url', 
-        'responsible',
-        'report_id',
+        'document_id',
+        'progress_id',
     ];
 
     /**
-     * Obtiene el Reporte asociada a la prueba.
+     * Obtiene el Progreso asociada a la prueba.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function report()
+    public function progress()
     {
-        return $this->belongsTo(Report::class);
+        return $this->belongsTo(Progress::class);
+    }
+
+    public function document()
+    {
+        return $this->belongsTo(Document::class);
     }
 
     /**
@@ -80,11 +82,18 @@ class Proof extends Model
     {
         return Project::whereHas('scope', function ($query) {
             $query->whereHas('specificObjectives', function ($query) {
-                $query->whereHas('products.deliverables.activities.report',function($query)
+                $query->whereHas('products.deliverables.activities.progresses',function($query)
                 {
-                    $query->where('id', $this->report_id);
+                    $query->where('id', $this->progress_id);
                 });          
             });
         })->value('bpin');
+    }
+
+    public function getFolderId()
+    {
+        return Activity::whereHas('progresses', function ($query) {
+                $query->where('id', $this->progress_id);
+            })->value('folder_id');
     }
 }

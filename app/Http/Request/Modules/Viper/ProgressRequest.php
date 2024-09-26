@@ -19,7 +19,6 @@ class ProgressRequest extends FormRequest
                 'summary' => 'required|string',
                 'conclusions' => 'required|string',
                 'recommendations' => 'required|string',
-                'progress_of_term' => 'required|numeric|between:0,100',
                 'actual_physical_progress' => 'required|numeric|between:0,100',
                 'billed_financial_progress' => 'required|numeric',
             ],
@@ -33,7 +32,6 @@ class ProgressRequest extends FormRequest
                 'summary' => 'nullable|string',
                 'conclusions' => 'nullable|string',
                 'recommendations' => 'nullable|string',
-                'progress_of_term' => 'required|numeric|between:0,100',
                 'actual_physical_progress' => 'required|numeric|between:0,100',
                 'billed_financial_progress' => 'required|numeric',
             ]

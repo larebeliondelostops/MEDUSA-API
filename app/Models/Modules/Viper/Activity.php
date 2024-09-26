@@ -42,7 +42,6 @@ class Activity extends Model
         'folder_id',
         'measurement_unit_id',
         'number',
-        'report_id',
         'status_id'
     ];
 
@@ -84,14 +83,6 @@ class Activity extends Model
     public function lowerPrecedences()
     {
         return $this->hasMany(Precedence::class, 'lower_id');
-    }
-
-    /**
-     *  Obtener el reporte a la que pertenece la actividad.
-     */
-    public function report()
-    {
-        return $this->belongsTo(Report::class, 'report_id');
     }
 
     public function progresses()

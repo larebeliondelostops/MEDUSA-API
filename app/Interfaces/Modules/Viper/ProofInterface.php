@@ -41,7 +41,7 @@ interface ProofInterface {
      * @param int $reportId El identificador del report.
      * @return Collection Collection de Collection que contiene las pruebas asociadas al reporte.
      */
-    public function getAllProofsByReport(int $reportId): Collection;
+    public function getAllProofsByProgress(int $progressId): Collection;
 
     /**
      * Obtiene una prueba específica por su identificador.

@@ -5,6 +5,7 @@ namespace App\Http\Request\Modules\Viper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Arr;
 /**
  * Request personalizado para la validación de datos de Pruebas.
  *
@@ -18,6 +19,22 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  */
 class ProofRequest extends FormRequest
 {
+    private static array $rules = [
+        "POST"=> [
+            "create" => [
+                'files.*' => 'required|file',
+                'progress_id' => 'required|exists:progresses,id|integer',
+            ]
+        ],
+        "PUT" => [
+            "update" => [
+                'new_name' => 'required|string',
+            ]
+        ]
+    ];
+
+    public string $lastSlugPath;
+
     /**
      * Determina si el usuario está autorizado para realizar esta solicitud.
      *
@@ -29,16 +46,30 @@ class ProofRequest extends FormRequest
     }
 
     /**
+     * Prepara la instancia antes de la validación.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $path = $this->path();
+        if ($this->method() == 'PUT') {
+            $segments = explode('/', $path);
+            array_pop($segments);
+            $path = implode('/', $segments);
+        }
+        $this->lastSlugPath = Arr::last(explode('/', $path));
+    }
+
+
+    /**
      * Reglas de validación que se aplican a la solicitud.
      *
      * @return array
      */
     public function rules()
     {
-        return [
-            'files.*' => 'required|file',
-            'report_id' => 'required|exists:reports,id|integer',
-        ];
+        return self::$rules[$this->method()][$this->lastSlugPath];
     }
 
     /**

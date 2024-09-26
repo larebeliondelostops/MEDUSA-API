@@ -124,13 +124,6 @@ class ActivityService implements ActivityInterface
         return collect($activityUpdate);
     }
 
-    public function assignToReport(int $activityId, int $reportId)
-    {
-        $activity = Activity::findOrFail($activityId);
-        $activity->report_id = $reportId;
-        $activity->save();
-    }
-
     public function deleteActivity(int $activityId)
     {
         // Encontrar la actividad por su ID
@@ -151,12 +144,11 @@ class ActivityService implements ActivityInterface
         return collect($activity);
     }
 
-    public function getActivityByProductoWithReportNull(int $productId):Collection
+    public function getActivityByProducto(int $productId):Collection
     {
         $activityGod = Activity::whereHas('deliverable', function ($query) use ($productId) {
             $query->where('product_id', $productId);
         })
-        ->whereNull('report_id')
         ->get();
     
         $activities = $activityGod->transform(

@@ -40,7 +40,6 @@ class ActivityRequest extends FormRequest
             'deliverable_id' => 'required|exists:deliverables,id',
             // 'folder_id' => 'required|exists:folders,id',
             'measurement_unit_id' => 'required|exists:measurement_units,id',
-            'report_id' => 'numeric|exists:reports,id',
             'status_id' => 'numeric|default:1'
         ];
     }

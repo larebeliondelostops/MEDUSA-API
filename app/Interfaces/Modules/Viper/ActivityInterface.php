@@ -12,13 +12,11 @@ interface ActivityInterface {
 
     public function updateActivity(int $activityId, Collection $activity): Collection;
 
-    public function assignToReport(int $activityId, int $reportId);
-
     public function deleteActivity(int $activityId);
 
     public function getActivity(int $activityId): Collection;
 
-    public function getActivityByProductoWithReportNull(int $productId):Collection;
+    public function getActivityByProducto(int $productId):Collection;
 
     public function getActivityByProject(String $projectId):Collection;
 

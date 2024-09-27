@@ -53,6 +53,7 @@ use App\Interfaces\Modules\Viper\StageControlInterface;
 use App\Interfaces\Modules\Viper\ControlPanelInterface;
 use App\Interfaces\Modules\Viper\ControlPanelProjectInterface;
 use App\Interfaces\Modules\Viper\StatusInterface;
+use App\Interfaces\Modules\Viper\CommentInterface;
 // Services
 use App\Services\Modules\Viper\Alert\PartialComplianceAlertService;
 use App\Services\Modules\Viper\AlertService;
@@ -101,6 +102,7 @@ use App\Services\Modules\Viper\ActivityControlService;
 use App\Services\Modules\Viper\StageControlService;
 use App\Services\Modules\Viper\ControlPanelService;
 use App\Services\Modules\Viper\ControlPanelProjectService;
+use App\Services\Modules\Viper\CommentService;
 // Observers
 use App\Services\Modules\Viper\Activity\ActivityObserver;
 use App\Services\Modules\Viper\Project\ProjectObserver;
@@ -163,6 +165,7 @@ class ViperServiceProvider extends ServiceProvider
         $this->app->bind(StageControlInterface::class, StageControlService::class);
         $this->app->bind(ControlPanelInterface::class, ControlPanelService::class);
         $this->app->bind(ControlPanelProjectInterface::class, ControlPanelProjectService::class);
+        $this->app->bind(CommentInterface::class, CommentService::class);
 
         $this->app->bind(ActivityAlertInterface::class, ActivityAlertService::class); 
         $this->app->bind(DeadlineActivityAlertInterface::class, DeadlineActivityAlertService::class);

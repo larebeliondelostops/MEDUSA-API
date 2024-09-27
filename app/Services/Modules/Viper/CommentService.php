@@ -23,7 +23,7 @@ class CommentService implements CommentInterface
         if (auth()->user()->id !== $commentUpdate->user_id) {
             throw new HttpResponseException(response()->json([
                 'message' => 'No tienes permiso para actualizar este comentario.'
-            ], 403)); // Código de estado 403: Forbidden
+            ], 403));
         }
 
         $commentUpdate->fill($comment->toArray());

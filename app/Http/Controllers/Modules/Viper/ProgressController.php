@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Modules\Viper;
 
 use App\Http\Controllers\Controller;
 use App\Http\Request\Modules\Viper\ProgressRequest;
+use App\Http\Request\Modules\Viper\ProgressStatusRequest;
 use App\Interfaces\Modules\Viper\ProgressInterface;
 
 use Illuminate\Http\Request;
@@ -35,6 +36,20 @@ class ProgressController extends BaseController
     {
         try {
             $progressUpdated = $this->progressInterface->updateProgress(collect($request->validated()), $id);
+
+            return response()->json([
+                'message' => 'Progress updated successfully.',
+                'data'    => $progressUpdated,
+            ], 200);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    public function updateStatus(ProgressStatusRequest $request, int $id)
+    {
+        try {
+            $progressUpdated = $this->progressInterface->updateStatus(collect($request->validated()), $id);
 
             return response()->json([
                 'message' => 'Progress updated successfully.',

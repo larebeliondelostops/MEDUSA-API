@@ -21,6 +21,7 @@ class ProgressRequest extends FormRequest
                 'recommendations' => 'required|string',
                 'actual_physical_progress' => 'required|numeric|between:0,100',
                 'billed_financial_progress' => 'required|numeric',
+                'status' => 'nullable|string|in:Aprobado,No Aprobado,Pendiente de revisión',
             ],
         ],
         "PUT" => [
@@ -34,6 +35,7 @@ class ProgressRequest extends FormRequest
                 'recommendations' => 'nullable|string',
                 'actual_physical_progress' => 'required|numeric|between:0,100',
                 'billed_financial_progress' => 'required|numeric',
+                'status' => 'nullable|string|in:Aprobado,No Aprobado,Pendiente de revisión',
             ]
         ]
     ];

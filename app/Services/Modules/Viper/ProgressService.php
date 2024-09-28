@@ -104,6 +104,11 @@ class ProgressService implements ProgressInterface {
     {
         $progressUpdate = Progress::findOrFail($id);
         $progressUpdate->fill($progress->toArray());
+
+        if($progressUpdate->status == null && !$progress->has('status')){
+            $progressUpdate->status = 'Pendiente de revisión';
+        }
+
         $activity = $this->activityInterface->getActivity($progressUpdate->activity_id);
 
         $progressUpdate->financial_progress_on_site = $progressUpdate->billed_financial_progress /  $activity['total_value']  * 100;
@@ -189,6 +194,11 @@ class ProgressService implements ProgressInterface {
             }
         }
     }    
+
+    public function updateStatus(Collection $progress, int $id): Collection
+    {
+        return $this->update($progress, $id);
+    }
 
     public function getAllProgressesByActivity(int $activityId): Collection
     {

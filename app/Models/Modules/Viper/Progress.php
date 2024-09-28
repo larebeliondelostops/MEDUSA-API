@@ -28,7 +28,8 @@ class Progress extends Model
         'recommendations',
         'actual_physical_progress',
         'financial_progress_on_site',
-        'billed_financial_progress'
+        'billed_financial_progress',
+        'status'
     ];
 
     public function activity()

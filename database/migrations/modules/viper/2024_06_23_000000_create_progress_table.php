@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('actual_physical_progress', 8, 2)->nullable(); 
             $table->decimal('financial_progress_on_site', 15, 2)->nullable(); 
             $table->decimal('billed_financial_progress', 15, 2)->nullable(); 
+            $table->string('status',255)->nullable();
             $table->unsignedBigInteger('activity_id');
             $table->timestamps();
         

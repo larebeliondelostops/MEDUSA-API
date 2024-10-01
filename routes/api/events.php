@@ -46,6 +46,8 @@ Route::middleware(['jwt.verify'/* , 'role:Administrador' */])->group(function() 
     Route::get('modeloprobabilistico/tabs', [ProbabilisticController::class, 'getTaps']);
     Route::post('modeloprobabilistico/type', [ProbabilisticController::class, 'type']);
 
+    Route::get('criminalacts/all', [ProbabilisticController::class, 'getCriminalActs']);
+
     //endpoints temporales para modelo probabilisito de movilidad IPATS
     // Route::get('modeloprobabilistico/ProbabilisticGridIpats', [ProbabilisticController::class, 'obtenerCuadriculaProbabilisticaGeneralMovilidad']);
     // Route::get('modeloprobabilistico/ProbabilisticGridIpats/{id}', [ProbabilisticController::class, 'obtenerEstadisticasPorCuadricula']);

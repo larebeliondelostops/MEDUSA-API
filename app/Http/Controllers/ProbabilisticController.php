@@ -8,6 +8,7 @@ use App\Strategies\StrategiesProbabilistic\Villavicencio\StrategyProbabilisticCr
 use App\Values\ProbabilisticValuesDitra;
 use App\Values\ProbabilisticValuesVillavicencio;
 use Illuminate\Support\Facades\Response;
+use App\Models\Villavicencio\CriminalActs;
 
 class ProbabilisticController extends Controller
 {
@@ -149,5 +150,12 @@ class ProbabilisticController extends Controller
         // $data = $Probabilistic->getProbabilisticData($gridId);
 
         // return $data;
+    }
+
+    public function getCriminalActs(Request $request)
+    {
+        $criminal_acts = CriminalActs::all();
+
+        return $criminal_acts;
     }
 }

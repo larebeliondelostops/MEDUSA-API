@@ -78,7 +78,7 @@ class ProofService implements ProofInterface
      */
     public function getAllProofsByProgress(int $progressId): Collection
     {
-        $proofs = Proof::where('progress_id', $progressId)->get();
+        $proofs = Proof::where('progress_id', $progressId)->with('document')->get();
 
         $proofGot = $proofs->map(function ($proof) {
             return collect($proof);
@@ -96,7 +96,7 @@ class ProofService implements ProofInterface
      */
     public function getProof(int $id): Collection
     {
-        $proof = Proof::findOrFail($id);
+        $proof = Proof::with('document')->findOrFail($id);
 
         return collect($proof);
     }

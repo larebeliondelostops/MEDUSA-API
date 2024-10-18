@@ -50,7 +50,7 @@ class IncidentService implements IncidentInterface
             $imagePath = $data['image']->store('', 'public');
             $incidentCreated = Incident::create([
                 'uuid' => Uuid::uuid4()->toString(),
-                'indicator' => $data['indicator'],
+                'indicator_id' => $data['indicator'],
                 'address' => $data['address'] ?? '',
                 'description' => $data['description'] ?? '',
                 'latitude' => $data['latitude'],

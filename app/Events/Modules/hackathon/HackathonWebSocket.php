@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Modules\Hackathon;
+namespace App\Events\Modules\hackathon;
 
 use App\Models\Modules\Viper\Alert;
 use Illuminate\Broadcasting\Channel;

@@ -18,22 +18,34 @@ class CreateCriminalActJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
+    private int $indicatorId;
+    private string $address;
+    private string $day;
+    private string $month;
+    private string $year;
+    private string $description;
+    private float $latitude;
+    private float $longitude;
+
     public function __construct(
-        private int $indicatorId,
-        private string $address,
-        private string $day,
-        private string $month,
-        private string $year,
-        private string $description,
-        private float $latitude,
-        private float $longitude,
-    )
-    {}
+        int $indicatorId,
+        string $address,
+        string $day,
+        string $month,
+        string $year,
+        string $description,
+        float $latitude,
+        float $longitude
+    ) {
+        $this->indicatorId = $indicatorId;
+        $this->address = $address;
+        $this->day = $day;
+        $this->month = $month;
+        $this->year = $year;
+        $this->description = $description;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+    }
 
     /**
      * Execute the job.

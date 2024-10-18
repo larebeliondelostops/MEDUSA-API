@@ -70,6 +70,10 @@ class CreateCriminalActJob implements ShouldQueue
         {
             DB::beginTransaction();
             $gridId = IncidentGrid::getGridIdByCoordinates($this->latitude, $this->longitude);
+            if (is_null($gridId))
+            {
+                throw new Exception('Grid not found');
+            }
             CriminalActs::create([
                 'indicator_id' => $this->indicatorId,
                 'probabilistic_grid_id' => $gridId,

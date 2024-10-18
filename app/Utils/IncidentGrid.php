@@ -10,15 +10,17 @@ class IncidentGrid
         $gridId = null;
         ProbabilisticGrid::chunk(53, function ($grids) use ($latitude, $longitude, &$gridId) {
             foreach ($grids as $grid) {
-                $coordinateA = $grid->coordinates[0];
-                $coordinateB = $grid->coordinates[2];
-                if ( $latitude > $coordinateB[0] )
+                $coordinates = json_decode($grid->coordinates, true);
+                $coordinateA = $coordinates[0];
+                $coordinateB = $coordinates[2];
+
+                if ( $longitude > $coordinateB[0] )
                 {
                     return;
                 }
                 
-                if ($latitude > $coordinateA[0] && $longitude > $coordinateA[0] &&
-                    $latitude <= $coordinateB[0] && $longitude <= $coordinateB[1]) {
+                if ($longitude > $coordinateA[0] && $latitude > $coordinateA[0] &&
+                    $longitude <= $coordinateB[0] && $latitude <= $coordinateB[1]) {
                    
                     $gridId = $grid->id;
                     

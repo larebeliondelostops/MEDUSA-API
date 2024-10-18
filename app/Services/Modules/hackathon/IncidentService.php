@@ -3,7 +3,6 @@
 namespace App\Services\Modules\hackathon;
 use App\Interfaces\Modules\hackathon\IncidentInterface;
 use App\Jobs\modules\hackathon\CreateCriminalActJob;
-use App\Models\Villavicencio\CriminalActs;
 use App\Models\Villavicencio\Incident;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -61,7 +60,6 @@ class IncidentService implements IncidentInterface
                 'image' => $imagePath,
                 'reviewed' => false
             ]);
-            $incidentCreated->saveOrFail();
 
             CreateCriminalActJob::dispatch(
                 $data['indicator'],

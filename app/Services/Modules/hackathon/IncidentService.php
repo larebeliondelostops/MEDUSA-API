@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class IncidentService implements IncidentInterface
 {
-    public function getAllIncidents() : Collection | null
+    public function getAllIncidents() : Collection 
     {
         try
         {
@@ -24,11 +24,11 @@ class IncidentService implements IncidentInterface
         catch(Exception $exception)
         {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return null;
+            throw $exception;
         }
     }
 
-    public function getIncidentById(int $id) : Collection | null
+    public function getIncidentById(int $id) : Collection 
     {
         try
         {
@@ -38,11 +38,11 @@ class IncidentService implements IncidentInterface
         catch(Exception $exception)
         {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return null;
+            throw $exception;
         }
     }
 
-    public function createIncident(array $data) : Collection | null
+    public function createIncident(array $data) : Collection 
     {
         try
         {   
@@ -80,11 +80,11 @@ class IncidentService implements IncidentInterface
         {
             DB::rollBack();
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return null;
+            throw $exception;
         }
     }
 
-    public function updateIncident($data, $id) : Collection | null
+    public function updateIncident($data, $id) : Collection 
     {
         try
         {
@@ -95,11 +95,11 @@ class IncidentService implements IncidentInterface
         catch (Exception $exception)
         {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return null;
+            throw $exception;
         }
     }
 
-    public function deleteIncident(int $id) : Collection | null
+    public function deleteIncident(int $id) : Collection 
     {
         try
         {
@@ -110,7 +110,7 @@ class IncidentService implements IncidentInterface
         catch (Exception $exception)
         {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return null;
+            throw $exception;
         }
     }
 }

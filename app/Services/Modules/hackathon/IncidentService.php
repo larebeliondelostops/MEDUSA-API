@@ -2,7 +2,7 @@
 
 namespace App\Services\Modules\hackathon;
 use App\Interfaces\Modules\hackathon\IncidentInterface;
-use App\Jobs\CreateCriminalActJob;
+use App\Jobs\modules\hackathon\CreateCriminalActJob;
 use App\Models\Villavicencio\CriminalActs;
 use App\Models\Villavicencio\Incident;
 use Exception;

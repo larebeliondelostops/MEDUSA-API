@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\modules\hackathon;
 
 use App\Models\Villavicencio\CriminalActs;
 use App\Utils\IncidentGrid;

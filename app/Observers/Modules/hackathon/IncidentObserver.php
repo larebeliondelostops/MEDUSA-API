@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Observers\Modules\hackathon;
-use App\Events\Modules\Hackathon\HackathonWebSocket;
+use App\Events\Modules\hackathon\HackathonWebSocket;
+use App\Models\User;
 use App\Models\Villavicencio\Incident;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class IncidentObserver
@@ -13,9 +13,13 @@ class IncidentObserver
     {
         try
         {
-            $userAuthenticated = Auth::user();
-            $socket = new HackathonWebSocket($userAuthenticated->email);
-            event($socket);
+            User::chunk(250, function($users)  {
+                foreach($users as $user)
+                {
+                    $socket = new HackathonWebSocket($user->email);
+                    event($socket);
+                }
+            });
         }
         catch(Exception $exception)
         {

@@ -14,6 +14,8 @@ class CriminalActs extends Model
 
     protected $table = 'criminal_acts';
 
+    protected $guarded = [];
+
     public function Indicator()
     {
         return $this->belongsTo(Indicator::class, 'indicator_id');

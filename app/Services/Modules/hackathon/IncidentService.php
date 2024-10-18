@@ -68,7 +68,7 @@ class IncidentService implements IncidentInterface
                 $data['description'],
                 $data['latitude'],
                 $data['longitude'],
-                $data['hour24'],
+                $data['hour_24'],
                 $data['crime'],
                 $data['week'],
                 $data['zone'],

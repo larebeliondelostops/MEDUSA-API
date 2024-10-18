@@ -65,10 +65,14 @@ class IncidentService implements IncidentInterface
                 $data['address'],
                 $data['day'],
                 $data['month'],
-                $data['year'],
                 $data['description'],
                 $data['latitude'],
-                $data['longitude']
+                $data['longitude'],
+                $data['hour24'],
+                $data['crime'],
+                $data['week'],
+                $data['zone'],
+                $data['modality']
             );
             DB::Commit();
             return collect($incidentCreated);

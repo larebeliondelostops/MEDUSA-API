@@ -17,6 +17,11 @@ class StoreIncidentRequest extends FormRequest
             'month' => 'required|string',
             'year' => 'required|string',
             'image' => 'required|image',
+            'hour_24' => 'sometimes|string',
+            'crime' => 'sometimes|string',
+            'week' => 'sometimes|string',
+            'zone' => 'sometimes|string',
+            'modality' => 'sometimes|string',
         ];
     }
 }

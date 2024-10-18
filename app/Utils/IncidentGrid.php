@@ -8,7 +8,7 @@ class IncidentGrid
     public static function getGridIdByCoordinates(float $latitude, float $longitude) : int | null
     {
         $gridId = null;
-        ProbabilisticGrid::chunk(53, function ($grids) use ($latitude, $longitude, $gridId) {
+        ProbabilisticGrid::chunk(53, function ($grids) use ($latitude, $longitude, &$gridId) {
             foreach ($grids as $grid) {
                 $coordinateA = $grid->coordinates[0];
                 $coordinateB = $grid->coordinates[2];

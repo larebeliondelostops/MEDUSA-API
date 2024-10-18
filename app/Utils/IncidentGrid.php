@@ -12,7 +12,7 @@ class IncidentGrid
             foreach ($grids as $grid) {
                 $coordinateA = $grid->coordinates[0];
                 $coordinateB = $grid->coordinates[2];
-                if ( $latitude > $coordinateB[0][0] )
+                if ( $latitude > $coordinateB[0] )
                 {
                     return;
                 }

@@ -47,7 +47,7 @@ class IncidentService implements IncidentInterface
         try
         {   
             DB::beginTransaction();
-            $imagePath = Storage::disk('public')->put('', $data['image']->file('image'));
+            $imagePath = $data['image']->store('', 'public');
             $incidentCreated = Incident::create([
                 'uuid' => Uuid::uuid4()->toString(),
                 'indicator' => $data['indicator'],

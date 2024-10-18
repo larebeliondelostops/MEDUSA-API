@@ -92,4 +92,7 @@ Route::middleware([
     // Import KMZ Route
     require base_path('routes/api/kmz.php');
 
+    // hackathon Routes
+    require base_path('routes/Modules/hackathon/IncidentRoutes.php');
+
 });

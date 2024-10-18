@@ -5,15 +5,14 @@ use App\Interfaces\Modules\hackathon\IncidentInterface;
 use App\Jobs\modules\hackathon\CreateCriminalActJob;
 use App\Models\Villavicencio\Incident;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
-use Illuminate\Support\Facades\Storage;
 
 class IncidentService implements IncidentInterface
 {
-    public function getAllIncidents() : Collection 
+    public function getAllIncidents() : Collection
     {
         try
         {

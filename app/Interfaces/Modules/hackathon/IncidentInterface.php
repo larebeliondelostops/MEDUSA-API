@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Interfaces\Modules\hackathon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 interface IncidentInterface
 {

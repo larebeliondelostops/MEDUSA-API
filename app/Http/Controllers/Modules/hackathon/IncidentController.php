@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Modules\hackathon;
+use App\Http\Controllers\Controller;
 use App\Http\Request\Modules\hackathon\StoreIncidentRequest;
 use App\Http\Request\Modules\hackathon\UpdateIncidentRequest;
 use App\Interfaces\Modules\hackathon\IncidentInterface;

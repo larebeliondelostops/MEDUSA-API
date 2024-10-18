@@ -30,6 +30,7 @@ class CreateCriminalActJob implements ShouldQueue
     private string $week;
     private string $zone;
     private string $modality;
+    private string $date;
 
     public function __construct(
         int $indicatorId,
@@ -43,7 +44,8 @@ class CreateCriminalActJob implements ShouldQueue
         string $crime,
         string $week,
         string $zone,
-        string $modality
+        string $modality,
+        string $date
     ) {
         $this->indicatorId = $indicatorId;
         $this->address = $address;
@@ -57,6 +59,7 @@ class CreateCriminalActJob implements ShouldQueue
         $this->week = $week;
         $this->zone = $zone;
         $this->modality = $modality;
+        $this->date = $date;
     }
 
     /**
@@ -87,7 +90,8 @@ class CreateCriminalActJob implements ShouldQueue
                 'crime' => $this->crime,
                 'week' => $this->week,
                 'zone' => $this->zone,
-                'modality' => $this->modality
+                'modality' => $this->modality,
+                'date' => $this->date
             ]);
             DB::commit();
         }

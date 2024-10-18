@@ -22,6 +22,7 @@ class UpdateIncidentRequest extends FormRequest
             'week' => 'sometimes|string',
             'zone' => 'sometimes|string',
             'modality' => 'sometimes|string',
+            'date' => 'sometimes|string',
         ];
     }
 }

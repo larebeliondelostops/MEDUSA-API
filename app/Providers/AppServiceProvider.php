@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Interfaces\Modules\hackathon\IncidentInterface;
+use App\Models\Villavicencio\Incident;
+use App\Observers\Modules\hackathon\IncidentObserver;
 use App\Services\Cruds\CrudService;
 use App\Services\Modules\hackathon\IncidentService;
 use Illuminate\Pagination\Paginator;
@@ -40,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
+        Incident::observe(IncidentObserver::class);
     }
 }

@@ -86,6 +86,31 @@ class HeatmapController extends Controller
 
                     return $geojson;     
                 break;
+            case 'hackaton':
+                    $data = CriminalActs::select('latitude', 'longitude')->get();
+                    $features = [];
+                    foreach ($data as $row) {
+
+                        $feature = [
+                            "type" => "Feature",
+                            "geometry" => [
+                                "type" => "Point",
+                                "coordinates" => [
+                                    $row->latitude,
+                                    $row->longitude
+                                ]
+                            ]
+                        ];
+                        $features[] = $feature;
+                    }
+                
+                    $geojson = [
+                        "type" => "FeatureCollection",
+                        "features" => $features
+                    ];
+
+                    return $geojson;     
+                break;
             case 'ditra':
                 $data = DataDitra::whereNotNull('latitude')->get();
                 $features = [];

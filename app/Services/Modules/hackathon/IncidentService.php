@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
+use Carbon\Carbon;
 
 class IncidentService implements IncidentInterface
 {
@@ -46,6 +47,8 @@ class IncidentService implements IncidentInterface
         {   
             DB::beginTransaction();
             $imagePath = $data['image']->store('', 'public');
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $data['date']);
+
             $incidentCreated = Incident::create([
                 'uuid' => Uuid::uuid4()->toString(),
                 'indicator_id' => $data['indicator'],
@@ -53,29 +56,29 @@ class IncidentService implements IncidentInterface
                 'description' => $data['description'] ?? '',
                 'latitude' => $data['latitude'],
                 'longitude' => $data['longitude'],
-                'day' => $data['day'],
-                'month' => $data['month'],
-                'year' => $data['year'],
                 'image' => $imagePath,
+                'day' => $date->day,
+                'month' => $date->month,
+                'year' => $date->year,
                 'reviewed' => false
             ]);
 
             CreateCriminalActJob::dispatch(
                 $data['indicator'],
                 $data['address'],
-                $data['day'],
-                $data['month'],
+                $date->day,
+                $date->month,
                 $data['description'],
                 $data['latitude'],
                 $data['longitude'],
-                $data['hour_24'],
+                $date->format('H'),
                 $data['crime'],
-                $data['week'],
+                $date->weekOfYear,
                 $data['zone'],
                 $data['modality'],
                 $data['date']
             );
-            DB::Commit();
+            DB::commit();
             return collect($incidentCreated);
         }
         catch (Exception $exception)
@@ -85,6 +88,7 @@ class IncidentService implements IncidentInterface
             throw $exception;
         }
     }
+
 
     public function updateIncident($data, $id) : Collection 
     {

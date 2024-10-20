@@ -203,7 +203,6 @@ class IncidentController extends Controller
     public function show($incident)
     {
         try {
-
             $incident = Incident::with('Indicator')->where('uuid', $incident)->first();
 
             return Response::json([

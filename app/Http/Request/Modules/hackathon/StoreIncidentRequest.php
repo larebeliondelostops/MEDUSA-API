@@ -13,16 +13,16 @@ class StoreIncidentRequest extends FormRequest
             'description' => 'sometimes|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric', 
-            'day' => 'required|string',
-            'month' => 'required|string',
-            'year' => 'required|string',
+            //'day' => 'required|string',
+            //'month' => 'required|string',
+            //'year' => 'required|string',
             'image' => 'required|image',
-            'hour_24' => 'sometimes|string',
+            //'hour_24' => 'sometimes|string',
             'crime' => 'sometimes|string',
-            'week' => 'sometimes|string',
+            //'week' => 'sometimes|string',
             'zone' => 'sometimes|string',
             'modality' => 'sometimes|string',
-            'date' => 'sometimes|string',
+            'date' => 'required|date_format:Y-m-d H:i:s',
         ];
     }
 }

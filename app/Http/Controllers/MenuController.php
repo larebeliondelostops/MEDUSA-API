@@ -291,6 +291,60 @@ class MenuController extends Controller
                         'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
                         'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
+                case 'villavicencio':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+
+                    $defaultRequest = ['incidents', 'indicators'];
+
+                    $mapRequest = $this->parseMapRequest();
+
+                    $defaultZoom = 14;
+
+                    $mapZoom = Setting::get('main_zoom');
+
+                    $defaultDensity = 100;
+
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;
+                case 'hackaton':
+                    $defaultCoordinates = [
+                        'lat' => 4.132543365663997,
+                        'lng' => -73.62534265307882
+                    ];
+    
+                    $mapCenter = $this->parsePosition();
+    
+                    $defaultRequest = ['incidents', 'indicators'];
+    
+                    $mapRequest = $this->parseMapRequest();
+    
+                    $defaultZoom = 14;
+    
+                    $mapZoom = Setting::get('main_zoom');
+    
+                    $defaultDensity = 100;
+    
+                    $heatmapDensity = Setting::get('heatmap_density');
+    
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom :  $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;        
                 case 'bucarest':
 
                     $defaultCoordinates = [

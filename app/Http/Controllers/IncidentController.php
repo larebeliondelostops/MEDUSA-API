@@ -35,7 +35,7 @@ class IncidentController extends Controller
     {
         try {
 
-            $incidents = Incident::all();
+            $incidents = Incident::all()->orderByDesc('id');
 
             $transformedData = [];
             foreach ($incidents as $incident) {
@@ -73,10 +73,10 @@ class IncidentController extends Controller
             $end = $request->end;
             // Aplicar la restricción whereBetween en la consulta
             if ($start && $end) {
-            $incidents = Incident::whereBetween('created_at', [$start, $end])
+            $incidents = Incident::orderByDesc('id')->whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }else{
-                $incidents = Incident::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                $incidents = Incident::orderByDesc('id')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }
 
             $transformedData = [];
@@ -203,7 +203,6 @@ class IncidentController extends Controller
     public function show($incident)
     {
         try {
-
             $incident = Incident::with('Indicator')->where('uuid', $incident)->first();
 
             return Response::json([

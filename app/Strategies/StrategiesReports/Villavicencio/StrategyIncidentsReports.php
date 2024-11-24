@@ -193,6 +193,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $indicadores = Indicator::whereBetween('id', [1, 10])->orderBy('id', 'DESC')->get();
 
+
         foreach ($indicadores as $indicardor) {
             if (!$tabsIncidents->pluck('indicator_id')->contains($indicardor->id)) {
                 $tabsIncidents->push((object) [

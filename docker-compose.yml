@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     build:
@@ -53,10 +51,26 @@ services:
       - redis-data:/data
     networks:
       - medusa
+    
+  postgres:
+    image: postgres:14.2
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ignicion
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: medusa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - medusa
 
 networks:
   medusa:
     driver: bridge
 
 volumes:
+  postgres_data:
   redis-data:

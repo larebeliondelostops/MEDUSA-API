@@ -261,6 +261,17 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
     //reportes de actos delictivos
     public function getProbabilisticData(Request $request)
     {
+        // Definir todos los días de la semana en español y su traducción al inglés
+        $diasSemana = [
+            'LUNES' => 'LUNES',
+            'MARTES' => 'MARTES',
+            'MIERCOLES' => 'MIERCOLES',
+            'JUEVES' => 'JUEVES',
+            'VIERNES' => 'VIERNES',
+            'SABADO' => 'SABADO',
+            'DOMINGO' => 'DOMINGO'
+        ];
+
 
         // Obtener la hora con más ocurrencias de delitos históricamente por indicador y cuadrícula
         $horaMasOcurrencias = CriminalActs::where('indicator_id', '=', $request->indicatorId)
@@ -277,9 +288,8 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
             ->orderByRaw('COUNT(*) DESC')
             ->pluck('day')
             ->first();
-
-        // Definir todos los días de la semana
-        $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
+        
+        $diaSemanaMasOcurrencias = $diasSemana[$diaSemanaMasOcurrencias] ?? $diaSemanaMasOcurrencias;
 
         // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('indicator_id', '=', $request->indicatorId)
@@ -293,11 +303,12 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
         $porcentajePorDiaSemana = collect();
 
         // Iterar sobre todos los días de la semana
-        foreach ($diasSemana as $dia) {
-            $delitos = $delitosPorDiaSemana->firstWhere('day', $dia);
+        foreach ($diasSemana as $diaEsp => $diaIng) {
+            // Buscar delitos para el día en español
+            $delitos = $delitosPorDiaSemana->firstWhere('day', $diaEsp);
 
             $porcentaje = [
-                'day' => $dia,
+                'day' => $diaIng, // Usar el nombre del día en inglés
                 'percentage' => $delitos ? ($delitos->count / $delitosPorDiaSemana->sum('count')) * 100 : 0,
             ];
 

@@ -32,7 +32,6 @@ class FormsController extends Controller
     {
         try{
             $slug = Slug::where('name', $slug)->first();
-
             if (!isset($slug->id)) {
                 throw new Exception('El slug no existe');
             }

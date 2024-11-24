@@ -263,13 +263,13 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
     {
         // Definir todos los días de la semana en español y su traducción al inglés
         $diasSemana = [
-            'LUNES' => 'MONDAY',
-            'MARTES' => 'TUESDAY',
-            'MIERCOLES' => 'WEDNESDAY',
-            'JUEVES' => 'THURSDAY',
-            'VIERNES' => 'FRIDAY',
-            'SABADO' => 'SATURDAY',
-            'DOMINGO' => 'SUNDAY'
+            'LUNES' => 'LUNES',
+            'MARTES' => 'MARTES',
+            'MIERCOLES' => 'MIERCOLES',
+            'JUEVES' => 'JUEVES',
+            'VIERNES' => 'VIERNES',
+            'SABADO' => 'SABADO',
+            'DOMINGO' => 'DOMINGO'
         ];
 
 

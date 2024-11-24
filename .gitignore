@@ -5,6 +5,7 @@
 /public/villavicencio
 /storage/*.key
 /storage/ditra
+/storage/hackaton/*
 /storage/villavicencio
 /vendor
 .env

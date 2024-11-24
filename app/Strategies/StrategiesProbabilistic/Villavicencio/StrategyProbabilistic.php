@@ -279,7 +279,7 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
             ->first();
 
         // Definir todos los días de la semana
-        $diasSemana = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+        $diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
         // Obtener cantidad de delitos por día de la semana
         $delitosPorDiaSemana = CriminalActs::where('indicator_id', '=', $request->indicatorId)

@@ -643,7 +643,7 @@ class IncidentTableSeeder extends Seeder
             DB::table('incident')->insert([
                 'id' => $Data['id'],
                 'uuid' => $Data['uuid'],
-                'indicator_id' => $Data['indicator'],
+                'indicator' => $Data['indicator'],
                 'address' => $Data['address'],
                 'description' => $Data['description'],
                 'latitude' => explode(',', $Data['position'])[0],

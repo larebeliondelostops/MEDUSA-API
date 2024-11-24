@@ -61,7 +61,6 @@ class MarkersService implements MarkersInterface
     public function allPolygons()
     {
         $polygonsMarkers = Marker::where('marker_type', 3)->pluck('slug')->toArray();
-
         $polygons = [];
 
         foreach ($polygonsMarkers as $key) {

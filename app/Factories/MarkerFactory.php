@@ -26,9 +26,9 @@ class MarkerFactory
     }
 
     public function getStrategyPolygons($slug_id) : PolygonsInterface
-    {
+    { 
         $markerClass = Marker::where('marker_type', 3)->where('slug', $slug_id)->firstOrFail();
-
+       // dd($markerClass->namespace);
         return app($markerClass->namespace);
     }
 }

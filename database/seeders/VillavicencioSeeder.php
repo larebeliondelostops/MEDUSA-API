@@ -36,6 +36,8 @@ use Database\Seeders\Villavicencio\SettingsTableSeeder;
 use Database\Seeders\Villavicencio\UsersTableSeeder;
 use Database\Seeders\Villavicencio\MenuBarSeeder;
 use Database\Seeders\Villavicencio\UnitsHistoryCoordinatesSeeder;
+use Database\Seeders\Villavicencio\DistrictTableSeeder;
+use Database\Seeders\Villavicencio\NeighborhoodTableSeeder;
 
 class VillavicencioSeeder extends Seeder
 {
@@ -77,7 +79,9 @@ class VillavicencioSeeder extends Seeder
             TrafficLightsTableSeeder::class,
             CamerasTableSeeder::class,
             CaiTableSeeder::class,
-            UnitsHistoryCoordinatesSeeder::class,
+            //UnitsHistoryCoordinatesSeeder::class,
+            DistrictTableSeeder::class,
+            NeighborhoodTableSeeder::class,
         ]);
     }
 }

@@ -38,6 +38,7 @@ use Database\Seeders\Villavicencio\MenuBarSeeder;
 use Database\Seeders\Villavicencio\UnitsHistoryCoordinatesSeeder;
 use Database\Seeders\Villavicencio\DistrictTableSeeder;
 use Database\Seeders\Villavicencio\NeighborhoodTableSeeder;
+use Database\Seeders\Villavicencio\EducationalCentersTableSeeder;
 
 class VillavicencioSeeder extends Seeder
 {
@@ -82,6 +83,7 @@ class VillavicencioSeeder extends Seeder
             //UnitsHistoryCoordinatesSeeder::class,
             DistrictTableSeeder::class,
             NeighborhoodTableSeeder::class,
+            EducationalCentersTableSeeder::class,
         ]);
     }
 }

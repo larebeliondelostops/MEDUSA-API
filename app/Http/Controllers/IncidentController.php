@@ -159,9 +159,17 @@ class IncidentController extends Controller
                 ], 400, [], JSON_PRETTY_PRINT);
             }
 
-            $photo = Storage::disk('public')->put('', $request->file('image'));
+            $photo = $request->hasFile('image')
+                ? Storage::disk('public')->put('', $request->file('image'))
+                : null;
 
-            $coordenadas = explode(',', $request->pointCoordinates);
+            $coordenadas = $this->extractCoordinates($request->pointCoordinates);
+            if (! $coordenadas) {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'El formato de las coordenadas no es válido'
+                ], 422, [], JSON_PRETTY_PRINT);
+            }
 
             $incident = new Incident();
             $incident->uuid = Uuid::uuid4()->toString();
@@ -204,7 +212,7 @@ class IncidentController extends Controller
     public function show($incident)
     {
         try {
-            $incident = Incident::with('Indicator.parent')->where('uuid', $incident)->first();
+            $incident = $this->findIncidentByIdentifier($incident);
 
             if (! $incident) {
                 return Response::json([
@@ -277,11 +285,9 @@ class IncidentController extends Controller
             $incident->description = $request->description ?? $incident->description;
 
             if ($request->filled('pointCoordinates')) {
-                $coordinates = array_map('trim', explode(',', $request->pointCoordinates));
-
-                if (count($coordinates) === 2) {
-                    $incident->longitude = $coordinates[0];
-                    $incident->latitude = $coordinates[1];
+                $coordinates = $this->extractCoordinates($request->pointCoordinates);
+                if ($coordinates) {
+                    [$incident->longitude, $incident->latitude] = $coordinates;
                 }
             }
 
@@ -398,10 +404,15 @@ class IncidentController extends Controller
 
     private function findIncidentByIdentifier(string $identifier): ?Incident
     {
-        return Incident::query()
-            ->where('id', $identifier)
-            ->orWhere('uuid', $identifier)
-            ->first();
+        $query = Incident::query()->with('Indicator.parent');
+
+        if (ctype_digit($identifier)) {
+            return $query->whereKey((int) $identifier)->first();
+        }
+
+        return Uuid::isValid($identifier)
+            ? $query->where('uuid', $identifier)->first()
+            : null;
     }
 
     private function categoryData(Incident $incident): ?array
@@ -434,5 +445,25 @@ class IncidentController extends Controller
     private function subcategoryName(Incident $incident): ?string
     {
         return $this->subcategoryData($incident)['name'] ?? null;
+    }
+
+    private function extractCoordinates($value): ?array
+    {
+        if (is_string($value)) {
+            $coordinates = array_map('trim', explode(',', $value));
+            return count($coordinates) === 2 ? $coordinates : null;
+        }
+
+        if (is_array($value)) {
+            $coordinates = data_get($value, 'features.0.geometry.coordinates', data_get($value, 'coordinates'));
+            if (is_array($coordinates) && isset($coordinates[0]) && is_array($coordinates[0])) {
+                $coordinates = $coordinates[0];
+            }
+            if (is_array($coordinates) && count($coordinates) >= 2) {
+                return [$coordinates[0], $coordinates[1]];
+            }
+        }
+
+        return null;
     }
 }

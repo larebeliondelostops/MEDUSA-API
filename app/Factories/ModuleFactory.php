@@ -13,6 +13,10 @@ class ModuleFactory
     {
         $module = self::getNamespaceModule($slug);
 
+        if (! class_exists($module)) {
+            throw new Exception("No existe la estrategia configurada para el modulo {$slug}");
+        }
+
         return app($module);
     }
 
@@ -22,10 +26,10 @@ class ModuleFactory
 
         $module = Module::where('slug', $slug_id)->first();
 
-        if (isset($module)) {
+        if ($module && $module->namespace) {
             return $module->namespace;
         } else {
-            throw new Exception('No se encontro el modulo');
+            throw new Exception("No se encontro un modulo ejecutable para el slug {$slug}");
         }
     }
 

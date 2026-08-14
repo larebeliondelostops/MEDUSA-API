@@ -35,13 +35,13 @@ SELECT setval(
     true
 );
 
--- Incident usa controladores dedicados, por eso no necesita namespace de CRUD dinámico.
+-- El frontend consume incident mediante las rutas CRUD dinámicas.
 INSERT INTO modules (name, description, slug, namespace, created_at, updated_at)
 SELECT
     'Incidentes',
     'Módulo para la gestión de incidentes ciudadanos',
     slug.id,
-    NULL,
+    'App\Strategies\StrategiesCruds\Villavicencio\StrategyIncidents',
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
 FROM slugs AS slug
@@ -55,6 +55,7 @@ WHERE slug.name = 'incident'
 UPDATE modules AS module
 SET name = 'Incidentes',
     description = 'Módulo para la gestión de incidentes ciudadanos',
+    namespace = 'App\Strategies\StrategiesCruds\Villavicencio\StrategyIncidents',
     updated_at = CURRENT_TIMESTAMP
 FROM slugs AS slug
 WHERE module.slug = slug.id
@@ -152,6 +153,7 @@ COMMIT;
 SELECT
     module.id AS module_id,
     module.name AS module,
+    module.namespace,
     slug.name AS slug,
     form.id AS form_id,
     field.id AS field_id,

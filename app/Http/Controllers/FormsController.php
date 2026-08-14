@@ -31,25 +31,41 @@ class FormsController extends Controller
     public function getForm($slug)
     {
         try{
-            $slug = Slug::where('name', $slug)->first();
+            $slugName = $slug;
+            $slug = Slug::where('name', $slugName)->first();
             if (! $slug) {
-                throw new Exception('El slug no existe');
+                return Response::json([
+                    'status' => 'error',
+                    'message' => "El slug {$slugName} no existe",
+                ], 404, [], JSON_PRETTY_PRINT);
             }
 
             $module = Module::where('slug', $slug->id)->first();
             if (! $module) {
-                throw new Exception('No existe un modulo asociado al slug');
+                return Response::json([
+                    'status' => 'error',
+                    'message' => "No existe un modulo asociado al slug {$slugName}",
+                    'data' => ['slug_id' => $slug->id, 'slug' => $slugName],
+                ], 404, [], JSON_PRETTY_PRINT);
             }
 
             $form = Form::with('Fields')->where('module', $module->id)->orderby('field')->get();
 
             $fields = $form->map(function ($data) {
-                if ($data->fields->type == 4) {
-                    $options = $data->fields->model_select::select('id as value', 'value as label')->get();
-                    $data->fields->options = $options;
+                $field = $data->Fields;
+                if (! $field) {
+                    return null;
                 }
-                return $data->fields;
-            });
+
+                if ($field->type == 4) {
+                    $modelSelect = $field->model_select;
+                    $field->options = $modelSelect && class_exists($modelSelect)
+                        ? $modelSelect::select('id as value', 'value as label')->get()
+                        : [];
+                }
+
+                return $field;
+            })->filter()->values();
 
             return Response::json([
                 'status'=> 'succes',

@@ -9,6 +9,39 @@ use Illuminate\Support\Facades\Response;
 
 class IndicatorController extends Controller
 {
+    public function index()
+    {
+        try {
+            $indicators = Indicator::query()
+                ->whereNull('parent_indicator_id')
+                ->whereBetween('id', [1, 10])
+                ->withCount('children')
+                ->orderBy('id')
+                ->get()
+                ->map(function (Indicator $indicator) {
+                    return [
+                        'id' => $indicator->id,
+                        'name' => $indicator->name,
+                        'description' => $indicator->description,
+                        'subindicators_count' => $indicator->children_count,
+                    ];
+                });
+
+            return Response::json([
+                'status' => 'success',
+                'message' => 'Solicitud exitosa',
+                'data' => $indicators,
+            ], 200, [], JSON_PRETTY_PRINT);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Error En La Generacion De La Solicitud',
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
     public function subindicators($indicatorId)
     {
         try {

@@ -55,7 +55,7 @@
         "properties": {
           "IndicatorId": {
             "type": "integer",
-            "description": "Id de la subcategoria obtenido desde /indicator/{indicator}/subindicators. Por compatibilidad tambien acepta el id de una categoria.",
+            "description": "Id de la subcategoria obtenido desde /indicators/{indicator}/subindicators. Por compatibilidad tambien acepta el id de una categoria.",
             "example": 16
           },
           "address": {
@@ -117,7 +117,24 @@
         }
       }
     },
-    "/indicator/{indicator}/subindicators": {
+    "/indicators": {
+      "get": {
+        "tags": ["Indicators"],
+        "summary": "Listar indicadores o categorias principales",
+        "description": "Retorna las 10 categorias principales con la cantidad de subindicadores asociados.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Indicadores encontrados"
+          }
+        }
+      }
+    },
+    "/indicators/{indicator}/subindicators": {
       "get": {
         "tags": ["Indicators"],
         "summary": "Consultar subcategorias o subindicadores por id de indicador",

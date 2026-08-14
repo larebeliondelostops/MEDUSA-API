@@ -10,6 +10,7 @@ use App\Models\Slug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Controlador Forms.
@@ -49,7 +50,7 @@ class FormsController extends Controller
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
-            $form = Form::with('Fields')->where('module', $module->id)->orderby('field')->get();
+            $form = Form::with('Fields')->where('module', $module->id)->orderBy('id')->get();
 
             $fields = $form->map(function ($data) {
                 $field = $data->Fields;
@@ -59,9 +60,19 @@ class FormsController extends Controller
 
                 if ($field->type == 4) {
                     $modelSelect = $field->model_select;
-                    $field->options = $modelSelect && class_exists($modelSelect)
-                        ? $modelSelect::select('id as value', 'value as label')->get()
-                        : [];
+                    $field->options = [];
+
+                    if ($modelSelect && class_exists($modelSelect)) {
+                        $model = new $modelSelect();
+                        $labelColumn = Schema::hasColumn($model->getTable(), 'value') ? 'value' : 'name';
+                        $columns = ['id as value', $labelColumn . ' as label'];
+
+                        if (Schema::hasColumn($model->getTable(), 'parent_indicator_id')) {
+                            $columns[] = 'parent_indicator_id';
+                        }
+
+                        $field->options = $modelSelect::select($columns)->orderBy('id')->get();
+                    }
                 }
 
                 return $field;

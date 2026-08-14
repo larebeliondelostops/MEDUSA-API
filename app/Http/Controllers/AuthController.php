@@ -206,12 +206,11 @@ class AuthController extends Controller
                 return $this->sendResponse();
             }
 
-            if ($remember) {
-                // Crear el refresh token
-                $refresh_token = auth()->setTTL(7200)->attempt($input);
-            } else {
-                $refresh_token = auth()->setTTL(540)->attempt($input);
-            }
+            $refreshTtl = $remember ? 7200 : 540;
+            $refresh_token = auth()
+                ->claims(['tenant_id' => tenant('id')])
+                ->setTTL($refreshTtl)
+                ->attempt($input);
 
             $user = Auth::user();
 
@@ -415,10 +414,22 @@ class AuthController extends Controller
     public function refresh(Request $request)
     {
         try {
-            //$token = $request->header('Authorization');
-            $token = str_replace('Bearer ', '', $request->header('Authorization'));
+            $token = $request->bearerToken();
+            if (! $token) {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'El refresh token es requerido como Bearer token.'
+                ], 401, [], JSON_PRETTY_PRINT);
+            }
             // Setear el token para trabajar con él
             $jwtAuth = JWTAuth::setToken($token);
+
+            if ($jwtAuth->getPayload()->get('tenant_id') !== tenant('id')) {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'El refresh token no pertenece a este tenant.'
+                ], 403, [], JSON_PRETTY_PRINT);
+            }
 
             // Obtener el token actual en una variable
             $currentToken = JWTAuth::getToken();
@@ -430,7 +441,10 @@ class AuthController extends Controller
             $currentTimestamp = time();
 
             // Generar un nuevo access token para el usuario
-            $newAccessToken = JWTAuth::fromUser($user, ['exp' => time() + (15 * 60)]);
+            $newAccessToken = JWTAuth::fromUser($user, [
+                'tenant_id' => tenant('id'),
+                'exp' => time() + (15 * 60),
+            ]);
 
             // Setear el token para trabajar con él
             $access_token = JWTAuth::setToken($newAccessToken);

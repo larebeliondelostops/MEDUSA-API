@@ -3,7 +3,7 @@
 namespace App\Contexts\Reports;
 
 use App\Strategies\StrategyReports\Villavicencio\StrategyEventsReports;
-use App\Strategies\StrategyReports\Villavicencio\StrategyIncidentsReports;
+use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
 use App\Strategies\StrategyReports\Villavicencio\StrategyIpatsReports;
 use App\Strategies\StrategyReports\Villavicencio\StrategyProbabilisticReports;
 

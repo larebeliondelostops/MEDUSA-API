@@ -9,7 +9,6 @@ use App\Models\Villavicencio\Incident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Http\Request\Incidents\IncidentRequest;
@@ -35,7 +34,7 @@ class IncidentController extends Controller
     {
         try {
 
-            $incidents = Incident::all()->orderByDesc('id');
+            $incidents = Incident::query()->with('Indicator.parent')->orderByDesc('id')->get();
 
             $transformedData = [];
             foreach ($incidents as $incident) {
@@ -73,10 +72,10 @@ class IncidentController extends Controller
             $end = $request->end;
             // Aplicar la restricción whereBetween en la consulta
             if ($start && $end) {
-            $incidents = Incident::orderByDesc('id')->whereBetween('created_at', [$start, $end])
+            $incidents = Incident::with('Indicator.parent')->orderByDesc('id')->whereBetween('created_at', [$start, $end])
                 ->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }else{
-                $incidents = Incident::orderByDesc('id')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
+                $incidents = Incident::with('Indicator.parent')->orderByDesc('id')->paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
             }
 
             $transformedData = [];
@@ -84,7 +83,9 @@ class IncidentController extends Controller
                 $transformedData[] = [
                     'ID' => $incident->id,
                     'Nombre' => $incident->description,
-                    'Indicador' => $incident->Indicator->name,
+                    'Indicador' => optional($incident->Indicator)->name,
+                    'Categoria' => $this->categoryName($incident),
+                    'Subcategoria' => $this->subcategoryName($incident),
                     'Direccion' => $incident->address,
                     'Fecha' => substr($incident->created_at, 0, 10),
                 ];
@@ -203,19 +204,29 @@ class IncidentController extends Controller
     public function show($incident)
     {
         try {
-            $incident = Incident::with('Indicator')->where('uuid', $incident)->first();
+            $incident = Incident::with('Indicator.parent')->where('uuid', $incident)->first();
+
+            if (! $incident) {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'No existe un incidente con el identificador enviado'
+                ], 404, [], JSON_PRETTY_PRINT);
+            }
 
             return Response::json([
                 'status' => 'succes',
                 'data' => [
                     'id' => $incident->uuid,
                     'indicator' => $incident->indicator_id,
+                    'category' => $this->categoryData($incident),
+                    'subcategory' => $this->subcategoryData($incident),
                     'date' => $incident->created_at,
                     'address' => $incident->address,
                     'description' => $incident->description,
                     'image' => tenant('id') . '/' . $incident->image,
                     'position' => $incident->position,
-                    'titile' => $incident->Indicator->name
+                    'titile' => optional($incident->Indicator)->name,
+                    'title' => optional($incident->Indicator)->name
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -248,17 +259,39 @@ class IncidentController extends Controller
                 ], 400, [], JSON_PRETTY_PRINT);
             }
 
-            $photoFile = $request->file('image');
-            $extension = $photoFile->getClientOriginalExtension();
-            $filename = Uuid::uuid4()->toString() . '.' . $extension;
-            $photoPath = $photoFile->storeAs('photos', $filename, 'public');
+            $incident = $this->findIncidentByIdentifier($id);
 
-            $incident = Incident::find($id);
-            $incident->indicator = $request->IndicatorId ?? $incident->indicator;
+            if (! $incident) {
+                return Response::json([
+                    'code' => '2004',
+                    'status' => 'error',
+                    'message' => 'No existe un incidente con el identificador enviado'
+                ], 404, [], JSON_PRETTY_PRINT);
+            }
+
+            if ($request->has('IndicatorId')) {
+                $incident->indicator_id = $request->IndicatorId;
+            }
+
             $incident->address = $request->address ?? $incident->address;
             $incident->description = $request->description ?? $incident->description;
-            $incident->image = $photoPath ?? $incident->photoPath;
-            $incident->position = $request->pointCoordinates ?? $incident->position;
+
+            if ($request->filled('pointCoordinates')) {
+                $coordinates = array_map('trim', explode(',', $request->pointCoordinates));
+
+                if (count($coordinates) === 2) {
+                    $incident->longitude = $coordinates[0];
+                    $incident->latitude = $coordinates[1];
+                }
+            }
+
+            if ($request->hasFile('image')) {
+                $photoFile = $request->file('image');
+                $extension = $photoFile->getClientOriginalExtension();
+                $filename = Uuid::uuid4()->toString() . '.' . $extension;
+                $incident->image = $photoFile->storeAs('photos', $filename, 'public');
+            }
+
             $incident->save();
 
             return Response::json([
@@ -301,16 +334,18 @@ class IncidentController extends Controller
     {
         try {
 
-            $incidents = Incident::with('Indicator')->where('reviewed', false)->orderBy('id', 'ASC')->get();
+            $incidents = Incident::with('Indicator.parent')->where('reviewed', false)->orderBy('id', 'ASC')->get();
             
             $incidents = $incidents->map(function ($incident) {
 
                 $data = [
                     'identifier' => $incident->uuid,
                     'incident' => $incident->indicator_id,
+                    'category' => $this->categoryData($incident),
+                    'subcategory' => $this->subcategoryData($incident),
                     'date' => $incident->created_at,
                     'position' => $incident->longitude . ', ' .$incident->latitude,
-                    'title' => $incident->Indicator->name
+                    'title' => optional($incident->Indicator)->name
                 ];
 
                 return $data;
@@ -359,5 +394,45 @@ class IncidentController extends Controller
                 'message' => 'Error En La Generación De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
+    }
+
+    private function findIncidentByIdentifier(string $identifier): ?Incident
+    {
+        return Incident::query()
+            ->where('id', $identifier)
+            ->orWhere('uuid', $identifier)
+            ->first();
+    }
+
+    private function categoryData(Incident $incident): ?array
+    {
+        $indicator = $incident->Indicator;
+        if (! $indicator) {
+            return null;
+        }
+
+        $category = $indicator->parent ?: $indicator;
+
+        return ['id' => $category->id, 'name' => $category->name];
+    }
+
+    private function subcategoryData(Incident $incident): ?array
+    {
+        $indicator = $incident->Indicator;
+        if (! $indicator || ! $indicator->parent_indicator_id) {
+            return null;
+        }
+
+        return ['id' => $indicator->id, 'name' => $indicator->name];
+    }
+
+    private function categoryName(Incident $incident): ?string
+    {
+        return $this->categoryData($incident)['name'] ?? null;
+    }
+
+    private function subcategoryName(Incident $incident): ?string
+    {
+        return $this->subcategoryData($incident)['name'] ?? null;
     }
 }

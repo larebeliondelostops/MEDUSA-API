@@ -31,6 +31,16 @@ Route::get('/', function () {
     return response()->json($data, 200);
 });
 
+Route::get('docs', function () {
+    return view('swagger');
+});
+
+Route::get('docs/openapi.json', function () {
+    return response()->file(public_path('docs/openapi.json'), [
+        'Content-Type' => 'application/json',
+    ]);
+});
+
 
 Route::get('/correlacionador', function (Request $request) {
     // Obtén el valor de la variable 'query' de la petición

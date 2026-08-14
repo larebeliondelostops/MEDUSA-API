@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MEDUSA API",
+    "version": "1.0.0",
+    "description": "Documentacion operativa para autenticacion JWT, consulta de subindicadores y actualizacion de incidentes. Abre Swagger desde el dominio del tenant y usa el panel superior para iniciar sesion y cargar automaticamente el JWT."
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "Base URL"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Indicators"
+    },
+    {
+      "name": "Incidents"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Usa el accessToken para endpoints protegidos. Si expira, llama auth/refresh usando el refreshToken como Bearer token."
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@medusa.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "secret"
+          },
+          "remember": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "IncidentUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "IndicatorId": {
+            "type": "integer",
+            "description": "Id de la subcategoria obtenido desde /indicator/{indicator}/subindicators. Por compatibilidad tambien acepta el id de una categoria.",
+            "example": 16
+          },
+          "address": {
+            "type": "string",
+            "example": "Calle 40 # 20-15"
+          },
+          "description": {
+            "type": "string",
+            "example": "Actualizacion del incidente"
+          },
+          "pointCoordinates": {
+            "type": "string",
+            "example": "-73.6379,4.1420"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Iniciar sesion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login exitoso"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Renovar access token",
+        "description": "Enviar el refreshToken actual en el header Authorization como Bearer token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tokens renovados"
+          }
+        }
+      }
+    },
+    "/indicator/{indicator}/subindicators": {
+      "get": {
+        "tags": ["Indicators"],
+        "summary": "Consultar subcategorias o subindicadores por id de indicador",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "indicator",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subindicadores encontrados"
+          },
+          "404": {
+            "description": "Indicador no encontrado"
+          }
+        }
+      }
+    },
+    "/incident/update/{id}": {
+      "post": {
+        "tags": ["Incidents"],
+        "summary": "Actualizar incidente",
+        "description": "Acepta id numerico o uuid del incidente. Los campos son opcionales para permitir actualizacion parcial.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Incidente actualizado"
+          },
+          "404": {
+            "description": "Incidente no encontrado"
+          }
+        }
+      }
+    }
+  }
+}

@@ -42,12 +42,14 @@ class IncidentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdate = $this->is('api/v1/incident/update/*');
+
         return [
-            'IndicatorId' => 'required|exists:indicators,id|integer',
-            //'address' => 'required|string',
-            'description' => 'required|string',
-            'pointCoordinates' => 'required',
-            //'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'IndicatorId' => ($isUpdate ? 'sometimes' : 'required') . '|exists:indicators,id|integer',
+            'address' => 'nullable|string',
+            'description' => ($isUpdate ? 'sometimes' : 'required') . '|string',
+            'pointCoordinates' => $isUpdate ? 'sometimes' : 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

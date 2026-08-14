@@ -32,13 +32,16 @@ class FormsController extends Controller
     {
         try{
             $slug = Slug::where('name', $slug)->first();
-            if (!isset($slug->id)) {
+            if (! $slug) {
                 throw new Exception('El slug no existe');
             }
 
-            $module = Module::where('slug', $slug->id)->first()->id;
+            $module = Module::where('slug', $slug->id)->first();
+            if (! $module) {
+                throw new Exception('No existe un modulo asociado al slug');
+            }
 
-            $form = Form::with('Fields')->where('module', $module)->orderby('field')->get();
+            $form = Form::with('Fields')->where('module', $module->id)->orderby('field')->get();
 
             $fields = $form->map(function ($data) {
                 if ($data->fields->type == 4) {

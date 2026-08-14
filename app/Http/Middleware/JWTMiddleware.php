@@ -29,7 +29,10 @@ class JWTMiddleware
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['status' => 'El token no es válido'], 401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['status' => 'El token ha caducado'], 401);
+                return response()->json([
+                    'status' => 'El token ha caducado',
+                    'message' => 'Utiliza el endpoint auth/refresh enviando el refresh token como Bearer token.'
+                ], 401);
             } else if ($e->getCode() == 403) {
                 return response()->json(['status' => $e->getMessage()], 403);
             } else {

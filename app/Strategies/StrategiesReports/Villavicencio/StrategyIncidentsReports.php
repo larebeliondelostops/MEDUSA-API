@@ -1,640 +1,300 @@
 <?php
 
 namespace App\Strategies\StrategiesReports\Villavicencio;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
+
 use App\Helpers\Helper;
-use App\Models\Villavicencio\Incident;
-use App\Models\Indicator;
-use Illuminate\Http\Request;
 use App\Interfaces\Reports\ReportActionsInterface;
+use App\Models\Indicator;
+use App\Models\Villavicencio\Incident;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class StrategyIncidentsReports implements ReportActionsInterface
 {
-    private $indicator;
-    private $request;
-    private $indicadores;
+    private ?int $indicator = null;
+    private Request $request;
+    private Collection $incidents;
+    private Collection $categories;
 
     public function getCacheKeyReport(): string
     {
-        return 'villavicencio_incidents_reports';
+        // Versionar la llave evita servir por diez días el reporte anterior sin jerarquía.
+        return 'villavicencio_incidents_reports_v2';
     }
 
-    public function getReportsData(Request $request) :? array
+    public function getReportsData(Request $request): ?array
     {
         $this->request = $request;
+        $this->categories = Indicator::query()
+            ->whereNull('parent_indicator_id')
+            ->whereBetween('id', [1, 10])
+            ->with('children')
+            ->orderBy('id')
+            ->get();
 
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $general = [
-                $this->cardsIncidents(),
-                $this->incidensByMonth(),
-                $this->incidentsByTypeLastTDays(),
-                $this->incidentsByWeekDay(),
-                $this->incidentsByHour()
-            ];
-        } else {
-            $general = [
-                //$this->cardsIncidents(),
-                $this->incidensByMonth(),
-                $this->incidentsByTypeLastTDays(),
-                $this->incidentsByWeekDay(),
-                $this->incidentsByHour()
-            ];
+        $query = Incident::query()->with('Indicator.parent');
+        if ($request->filled('start') && $request->filled('end')) {
+            $query->whereBetween('created_at', [$request->start, $request->end]);
         }
+        $this->incidents = $query->get();
 
-        $generalData = [];
+        $general = [];
+        if ($request->filled('start') && $request->filled('end')) {
+            $general[] = $this->cardsIncidents();
+        }
+        $general[] = $this->incidensByMonth();
+        $general[] = $this->incidentsByTypeLastTDays();
+        $general[] = $this->incidentsByWeekDay();
+        $general[] = $this->incidentsByHour();
 
-        array_push($generalData, $general);
-
-        $types = Incident::select('indicator_id')->orderBy('indicator_id', 'asc')->groupBy('indicator_id')->get()->toArray();
-
+        $reportsData = [$general];
         $tabs = $this->tabsIncidents();
 
-        if ($this->indicadores[0] == 0) {
-            unset($this->indicadores[0]);
-        }
-
-        foreach ($this->indicadores as $type) {
-            $data = [];
-            $this->indicator = $type ?? null;
-            $data = [
+        foreach ($this->categories as $category) {
+            $this->indicator = $category->id;
+            $reportsData[] = [
                 $this->incidensByMonth(),
                 $this->incidentsByWeekDay(),
                 $this->incidentsByHour(),
                 $this->incidentsByTypeHeatMap(),
-                $this->points()
+                $this->points(),
             ];
-            array_push($generalData, $data);
         }
 
-        $data = [
-            'tabs' => $tabs,
-            'reportsData' => $generalData
-        ];
+        $this->indicator = null;
 
-        return $data;
+        return ['tabs' => $tabs, 'reportsData' => $reportsData];
     }
 
-    public function cardsIncidents()
+    public function cardsIncidents(): array
     {
-        $hoy = Carbon::now();
+        $end = $this->request->filled('end') ? Carbon::parse($this->request->end) : Carbon::now();
+        $start = $this->request->filled('start') ? Carbon::parse($this->request->start) : $end->copy()->subDays(30);
+        $periodDays = max(1, $start->diffInDays($end));
+        $previousStart = $start->copy()->subDays($periodDays);
+        $previousEnd = $start->copy();
 
-        $hace_30_dias = $hoy->copy()->subDays(30);
-
-        $date = $hace_30_dias->format('d/m/y') . ' - ' . Carbon::now()->format('d/m/y');
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $hoy = Carbon::parse($this->request->end);
-            $hace_30_dias = Carbon::parse($this->request->start);
-            $date = $hace_30_dias->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
-        }
-
-        $primerDiaDelMes = $hoy->copy()->firstOfMonth();
-
-        $diasTranscurridos = $hoy->copy()->diffInDays($primerDiaDelMes);
-
-        $cardsIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
-            ->whereBetween('created_at', [$hace_30_dias, $hoy])
-            ->groupBy('indicator_id')
-            ->orderBy('count', 'desc')
-            ->take(3)
-            ->get();
-
-        $cantidadEncontrados = count($cardsIncidents);
-
-        if ($cantidadEncontrados < 3) {
-
-            $existingIndicators = $cardsIncidents->pluck('indicator_id')->toArray();
-
-            $cardsOthersIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
-                ->whereNotIn('indicator_id', $existingIndicators)
-                ->groupBy('indicator_id')
-                ->orderBy('count', 'desc')
-                ->take(3 - $cantidadEncontrados)
-                ->get();
-
-            foreach ($cardsOthersIncidents as $incident) {
-                $incident->count = 0;
+        $current = $this->categoryCounts($this->incidents)->sortDesc()->take(3);
+        foreach ($this->categories as $category) {
+            if ($current->count() >= 3) {
+                break;
             }
-
-            $cardsIncidents = $cardsIncidents->concat($cardsOthersIncidents);
-        }
-
-        $indicadores = array_column($cardsIncidents->toArray(), 'indicator_id');
-
-        $cantidadDiaInicioToDiaActualAnterior = [];
-        $cantidadDiaInicioToDiaActualActual = [];
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            foreach($indicadores as $indicador) {
-                // $hoy es end y $hace_30_dias es start
-                $primerDiaDelMes = $hoy->copy()->firstOfMonth();
-
-                $diasTranscurridos = $hoy->copy()->diffInDays($hace_30_dias);
-
-                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hoy->copy()->subDays($diasTranscurridos)])->count();
-
-                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias, $hoy])->count();
-            }
-        } else {
-            foreach($indicadores as $indicador) {
-
-                $cantidadDiaInicioToDiaActualAnterior[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$hace_30_dias->copy()->subDays($diasTranscurridos), $hace_30_dias->copy()->subDays(0)])->count();
-
-                $cantidadDiaInicioToDiaActualActual[] = Incident::with('Indicator_id')->where('indicator_id', $indicador)->whereBetween('created_at', [$primerDiaDelMes, $hoy])->count();
+            if (! $current->has($category->id)) {
+                $current->put($category->id, 0);
             }
         }
+
+        $previous = $this->categoryCounts(
+            Incident::query()->with('Indicator.parent')->whereBetween('created_at', [$previousStart, $previousEnd])->get()
+        );
 
         $series = [];
-
-        for ($i = 0; $i < $cardsIncidents->count(); $i++) {
-
-            $porcentaje = $cantidadDiaInicioToDiaActualAnterior[$i] == 0 ? $cantidadDiaInicioToDiaActualActual[$i] * 100 : (($cantidadDiaInicioToDiaActualActual[$i] - $cantidadDiaInicioToDiaActualAnterior[$i]) / $cantidadDiaInicioToDiaActualAnterior[$i]) * 100;
-
-            $porcentaje = $cantidadDiaInicioToDiaActualActual[$i] == 0 ? $cantidadDiaInicioToDiaActualAnterior[$i] * -100 : $porcentaje;
-
-            $series[] = [
-                'data' => $cardsIncidents[$i]->count,
-                'percent' => round($porcentaje, 2),
-                'type' => $porcentaje > 0 ? 'red' : 'green'
-            ];
+        $labels = [];
+        foreach ($current as $categoryId => $count) {
+            $before = (int) $previous->get($categoryId, 0);
+            $percent = $before === 0 ? ($count * 100) : (($count - $before) / $before) * 100;
+            if ($count === 0 && $before > 0) {
+                $percent = -100;
+            }
+            $series[] = ['data' => $count, 'percent' => round($percent, 2), 'type' => $percent > 0 ? 'red' : 'green'];
+            $labels[] = optional($this->categories->firstWhere('id', (int) $categoryId))->name;
         }
 
-        $labels = $cardsIncidents
-            ->map(function ($incident) {
-                return $incident->Indicator->Name;
-            });
-
-        $data = [
+        return [
             'title' => 'Cards de incidentes con sus respectivos porcentajes',
-            'date' =>  $date,
+            'date' => $start->format('d/m/y') . ' - ' . $end->format('d/m/y'),
             'series' => $series,
             'labels' => $labels,
-            'type' => 'cards'
+            'type' => 'cards',
         ];
-
-        return $data;
     }
 
-    public function tabsIncidents()
+    public function tabsIncidents(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $tabsIncidents = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->selectRaw('indicator_id, COUNT(*) as count')
-                ->groupBy('indicator_id')
-                ->orderBy('count', 'desc')
-                ->get();
-        } else {
-            $tabsIncidents = Incident::selectRaw('indicator_id, COUNT(*) as count')
-                ->groupBy('indicator_id')
-                ->orderBy('count', 'desc')
-                ->get();
+        $counts = $this->categoryCounts($this->incidents);
+        $series = [count($this->incidents)];
+        $labels = ['General'];
+        $keys = [0];
+
+        foreach ($this->categories as $category) {
+            $series[] = (int) $counts->get($category->id, 0);
+            $labels[] = $category->name;
+            $keys[] = $category->id;
         }
 
-        $indicadores = Indicator::whereBetween('id', [1, 10])->orderBy('id', 'DESC')->get();
-
-
-        foreach ($indicadores as $indicardor) {
-            if (!$tabsIncidents->pluck('indicator_id')->contains($indicardor->id)) {
-                $tabsIncidents->push((object) [
-                    'indicator_id' => $indicardor->id,
-                    'count' => 0,
-                    'Indicator' => $indicardor
-                ]);
-            }
-        }
-
-        $series = $tabsIncidents
-            ->map(function ($incident) {
-                return $incident->count;
-            });
-
-        $labels = $tabsIncidents
-            ->map(function ($incident) {
-                return $incident->Indicator->name;
-            });
-
-        $key = $tabsIncidents
-            ->map(function ($incident) {
-            return $incident->indicator_id;
-        });
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $series = $series->prepend(Incident::whereBetween('created_at', [$this->request->start, $this->request->end])->count());
-        } else {
-            $series = $series->prepend(Incident::count());
-        }
-
-        $this->indicadores = $key;
-
-        $labels = $labels->prepend('General');
-        $key = $key->prepend(0);
-
-        $data = [
-            'title' => 'Tabs',
-            'series' => $series,
-            'labels' => $labels,
-            'key' => array_keys($key->toArray()),
-            'type' => 'tabs'
-        ];
-
-        return $data;
+        return ['title' => 'Tabs', 'series' => $series, 'labels' => $labels, 'key' => $keys, 'type' => 'tabs'];
     }
 
-    public function incidensByMonth()
+    public function incidensByMonth(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            if ($this->indicator != null){
-                $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->selectRaw('month, COUNT(*) as count')
-                    ->where('indicator_id', $this->indicator)
-                    ->where('year', date('Y'))
-                    ->groupBy('month')
-                    ->orderBy('month', 'asc')
-                    ->get();
-            } else {
-                $incidentesPorMes = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->selectRaw('month, COUNT(*) as count')
-                    ->where('year', date('Y'))
-                    ->groupBy('month')
-                    ->orderBy('month', 'asc')
-                    ->get();
-            }
-        } else {
-            if ($this->indicator != null){
-                $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                    ->where('indicator_id', $this->indicator)
-                    //->where('year', date('Y'))
-                    ->groupBy('month')
-                    ->orderBy('month', 'asc')
-                    ->get();
-            } else {
-                $incidentesPorMes = Incident::selectRaw('month, COUNT(*) as count')
-                    //->where('year', date('Y'))
-                    ->groupBy('month')
-                    ->orderBy('month', 'asc')
-                    ->get();
-            }
-        }
-
+        $counts = $this->selectedIncidents()
+            ->groupBy(fn (Incident $incident) => (int) ($incident->month ?: Carbon::parse($incident->created_at)->format('n')))
+            ->map->count();
         $series = [];
         foreach (Helper::MONTH_NUMBER as $month) {
-            if ($incidentesPorMes->pluck('month')->contains($month)) {
-                $series[] = $incidentesPorMes->where('month', $month)->first()->count;
-            } else {
-                $series[] = 0;
-            }
+            $series[] = (int) $counts->get((int) $month, 0);
         }
 
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->Name . ' por mes' : '# Incidentes por mes',
-            'date' =>  $date,
+        return [
+            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por mes' : '# Incidentes por mes',
+            'date' => $this->dateLabel(),
             'series' => $series,
-            'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-            'type' => 'area'
+            'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            'type' => 'area',
         ];
-
-        return $data;
     }
 
-    public function incidentsByTypeLastTDays()
+    public function incidentsByTypeLastTDays(): array
     {
+        $counts = $this->categoryCounts($this->incidents);
 
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $hoy =  Carbon::parse($this->request->end);
-            $rango = Carbon::parse($this->request->start);
-            $date = $rango->format('d/m/y') . ' - ' . $hoy->format('d/m/y');
-            $incidentes = Incident::with('Indicator')->whereDate('created_at', '>=', $rango->toDateString())->get();
-        } else {
-            $date = 'Historico';
-            $incidentes = Incident::with('Indicator')->get();
-        }
-
-
-
-        $indicadores_usados = $incidentes->pluck('indicator_id');
-
-        $series = [];
-        $labels = [];
-
-        foreach (Indicator::all() as $indicador) {
-            if ($indicadores_usados->contains($indicador->id)) {
-                $series[] = $incidentes->where('indicator_id', $indicador->id)->count();
-                $labels[] = $incidentes->where('indicator_id', $indicador->id)->first()->Indicator->name;
-            } else {
-                $series[] = 0;
-                $labels[] = $indicador->name;
-            }
-        }
-
-        $data = [
-            'title' => '# Incidentes por tipo',
-            'date' =>  $date,
-            'series' => $series,
-            'labels' => $labels,
-            'type' => 'bar'
+        return [
+            'title' => '# Incidentes por categoría',
+            'date' => $this->dateLabel(),
+            'series' => $this->categories->map(fn (Indicator $category) => (int) $counts->get($category->id, 0))->values(),
+            'labels' => $this->categories->pluck('name')->values(),
+            'type' => 'bar',
         ];
-
-        return $data;
     }
 
-    public function incidentsByWeekDay()
+    public function incidentsByWeekDay(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator_id')
-                    ->where('indicator_id', $this->indicator)
-                    ->groupBy('indicator_id')
-                    ->get();
-            } else {
-                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator_id')
-                    ->groupBy('indicator_id')
-                    ->get();
-            }
-        } else {
-            if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::select('indicator_id')
-                    ->where('indicator_id', $this->indicator)
-                    ->groupBy('indicator_id')
-                    ->get();
-            } else {
-                $incidentes_por_tipo_incidente = Incident::select('indicator_id')
-                    ->groupBy('indicator_id')
-                    ->get();
-            }
-        }
-
-        $series = [];
-
-        foreach ($incidentes_por_tipo_incidente as $incidente_por_tipo_incidente) {
-            if (isset($this->request->start) && isset($this->request->end)) {
-                $incidentes_por_dia = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->where('indicator_id', $incidente_por_tipo_incidente->indicator_id)
-                    ->selectRaw('day, COUNT(*) as count')
-                    ->groupBy('day')
-                    ->get();
-            } else {
-                $incidentes_por_dia = Incident::where('indicator_id', $incidente_por_tipo_incidente->indicator_id)
-                    ->selectRaw('day, COUNT(*) as count')
-                    ->groupBy('day')
-                    ->get();
-            }
-
-            $data = [];
-            foreach (Helper::DAY_NUMBER as $day) {
-                if ($incidentes_por_dia->pluck('day')->contains($day)) {
-                    $data[] = $incidentes_por_dia->where('day', $day)->first()->count;
-                } else {
-                    $data[] = 0;
+        $series = $this->selectedIncidents()->groupBy(fn (Incident $incident) => $incident->indicator_id)
+            ->map(function ($incidents) {
+                $counts = $incidents->groupBy(fn (Incident $incident) => (int) ($incident->day ?: Carbon::parse($incident->created_at)->dayOfWeek))->map->count();
+                $data = [];
+                foreach (Helper::DAY_NUMBER as $day) {
+                    $data[] = (int) $counts->get((int) $day, 0);
                 }
-            }
 
-            $series[] = [
-                'name'  => $incidente_por_tipo_incidente->Indicator->name,
-                'data' => $data
-            ];
+                return ['name' => optional($incidents->first()->Indicator)->name ?? 'Sin indicador', 'data' => $data];
+            })->values();
 
-        }
-
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por día de la semana' : '# Incidentes por día de la semana',
-            'date' =>  $date,
+        return [
+            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por día de la semana' : '# Incidentes por día de la semana',
+            'date' => $this->dateLabel(),
             'series' => $series,
             'labels' => Helper::DAY_NAME,
-            'type' => 'column'
+            'type' => 'column',
         ];
-
-        return $data;
     }
 
-    public function incidentsByHour()
+    public function incidentsByHour(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator_id', 'created_at')
-                    ->where('indicator_id', $this->indicator)
-                    ->get();
-            } else {
-                $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                    ->select('indicator_id', 'created_at')
-                    ->get();
-            }
-        } else {
-            if ($this->indicator != null){
-                $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at')
-                    ->where('indicator_id', $this->indicator)
-                    ->get();
-            } else {
-                $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at')
-                    ->get();
-            }
-        }
-
-        // Definir los límites de los intervalos (en horas)
-        $intervalLimits = [
-            ['start' => 0, 'end' => 4],
-            ['start' => 4, 'end' => 8],
-            ['start' => 8, 'end' => 12],
-            ['start' => 12, 'end' => 16],
-            ['start' => 16, 'end' => 20],
-            ['start' => 20, 'end' => 24],
-        ];
-
-        $series = [];
-        $labels = [];
-
-        foreach ($incidentes_por_tipo_incidente->groupBy('indicator_id') as $incidentes) {
-            $countByInterval = [0, 0, 0, 0, 0, 0];
-            foreach ($incidentes as $incidente) {
-                // Obtener la hora de creación de la instancia de Incident
-                $createdAt = strtotime($incidente->created_at);
-                $hour = date('G', $createdAt);
-
-                // Verificar en qué intervalo cae la hora y aumentar el conteo correspondiente
-                foreach ($intervalLimits as $index => $limit) {
-                    if ($hour >= $limit['start'] && $hour < $limit['end']) {
-                        $countByInterval[$index]++;
-                        break; // Salir del bucle una vez que se ha encontrado el intervalo correcto
+        $limits = [[0, 4], [4, 8], [8, 12], [12, 16], [16, 20], [20, 24]];
+        $series = $this->selectedIncidents()->groupBy(fn (Incident $incident) => $incident->indicator_id)
+            ->map(function ($incidents) use ($limits) {
+                $data = array_fill(0, count($limits), 0);
+                foreach ($incidents as $incident) {
+                    $hour = Carbon::parse($incident->created_at)->hour;
+                    foreach ($limits as $index => [$start, $end]) {
+                        if ($hour >= $start && $hour < $end) {
+                            $data[$index]++;
+                            break;
+                        }
                     }
                 }
-            }
 
-            $series[] = [
-                'name' => $incidentes->first()->Indicator->name,
-                'data' => $countByInterval
-            ];
-        }
+                return ['name' => optional($incidents->first()->Indicator)->name ?? 'Sin indicador', 'data' => $data];
+            })->values();
 
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => $this->indicator != null ? '# ' . Indicator::find($this->indicator)->name . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
-            'date' =>  $date,
+        return [
+            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
+            'date' => $this->dateLabel(),
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'column'
+            'type' => 'column',
         ];
-
-        return $data;
     }
 
-    public function incidentsHeatMap()
+    public function incidentsHeatMap(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->select('indicator_id', 'created_at', 'month')
-                ->get();
-        } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at', 'month')
-                ->get();
-        }
-
-        $data = $incidentes_por_tipo_incidente->sortBy('month')->groupBy('month')->toArray();
-        //dd($incidentes_por_tipo_incidente->sortBy('month')->groupBy('month')->toArray());
-
-        // Transformación de datos
         $series = [];
-
-        // Definir el rango de días (1-31)
-        $rangoDias = range(1, 31);
-
-        foreach (Helper::MONTH_NUMBER_DB as $mes) {
-
-            $monthData = ['name' => Helper::mesNombre($mes), 'data' => []];
-
-            foreach ($rangoDias as $day) {
-                // Verificar si hay datos para el mes y día actual
-                $monthAndDayData = $data[$mes] ?? [];
-                $dayIncidents = array_filter($monthAndDayData, function ($incident) use ($day) {
-                    return (int)date('d', strtotime($incident['created_at'])) === $day;
-                });
-
-                $monthData['data'][] = ['x' => str_pad($day, 2, '0', STR_PAD_LEFT), 'y' => count($dayIncidents)];
+        foreach (Helper::MONTH_NUMBER_DB as $month) {
+            $monthData = ['name' => Helper::mesNombre($month), 'data' => []];
+            foreach (range(1, 31) as $day) {
+                $count = $this->incidents->filter(function (Incident $incident) use ($month, $day) {
+                    $date = Carbon::parse($incident->created_at);
+                    return $date->month === (int) $month && $date->day === $day;
+                })->count();
+                $monthData['data'][] = ['x' => str_pad((string) $day, 2, '0', STR_PAD_LEFT), 'y' => $count];
             }
-
             $series[] = $monthData;
         }
 
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => 'Incidentes Mediante Mapa de Calor',
-            'date' =>  $date,
-            'series' => $series,
-            //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'matrix'
-        ];
-
-        return $data;
+        return ['title' => 'Incidentes mediante mapa de calor', 'date' => $this->dateLabel(), 'series' => $series, 'type' => 'matrix'];
     }
 
-    public function incidentsByTypeHeatMap()
+    public function incidentsByTypeHeatMap(): array
     {
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $incidentes_por_tipo_incidente = Incident::whereBetween('created_at', [$this->request->start, $this->request->end])
-                ->select('indicator_id', 'created_at', 'day')
-                ->where('indicator_id', $this->indicator)
-                ->get();
-        } else {
-            $incidentes_por_tipo_incidente = Incident::select('indicator_id', 'created_at', 'day')
-                ->where('indicator_id', $this->indicator)
-                ->get();
-        }
-
-        $data = $incidentes_por_tipo_incidente->toArray();
-
-        // Definir los rangos de horas específicos
-        $intervalLimits = [
-            ['start' => 0, 'end' => 4],
-            ['start' => 4, 'end' => 8],
-            ['start' => 8, 'end' => 12],
-            ['start' => 12, 'end' => 16],
-            ['start' => 16, 'end' => 20],
-            ['start' => 20, 'end' => 24],
-        ];
-
-        // Transformación de datos
+        $limits = [[0, 4], [4, 8], [8, 12], [12, 16], [16, 20], [20, 24]];
+        $incidents = $this->selectedIncidents();
         $series = [];
 
-        // Iterar sobre todos los días de la semana
-        foreach (Helper::DAY_NUMBER as $diaSemana) {
-            $dayData = ['name' => Helper::diaNombre($diaSemana), 'data' => []];
-
-            // Iterar sobre los rangos de horas específicos
-            foreach ($intervalLimits as $interval) {
-                // Filtrar datos para el día de la semana y el rango de hora actual
-                $dayAndIntervalData = array_filter($data, function ($incident) use ($diaSemana, $interval) {
-                    $dayNumber = (int)$incident['day'];
-                    $hour = (int)date('G', strtotime($incident['created_at']));
-
-                    return $diaSemana == $dayNumber && $hour >= $interval['start'] && $hour < $interval['end'];
-                });
-
-                // Contar la cantidad de incidentes en el rango de horas
-                $incidentCount = count($dayAndIntervalData);
-
-                $dayData['data'][] = ['x' => "{$interval['start']}-{$interval['end']}", 'y' => $incidentCount];
+        foreach (Helper::DAY_NUMBER as $day) {
+            $dayData = ['name' => Helper::diaNombre($day), 'data' => []];
+            foreach ($limits as [$start, $end]) {
+                $count = $incidents->filter(function (Incident $incident) use ($day, $start, $end) {
+                    $date = Carbon::parse($incident->created_at);
+                    $incidentDay = (int) ($incident->day ?: $date->dayOfWeek);
+                    return $incidentDay === (int) $day && $date->hour >= $start && $date->hour < $end;
+                })->count();
+                $dayData['data'][] = ['x' => "$start-$end", 'y' => $count];
             }
-
             $series[] = $dayData;
         }
 
-        if (isset($this->request->start) && isset($this->request->end)) {
-            $date = Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
-        } else {
-            $date = 'Historico';
-        }
-
-        $data = [
-            'title' => Indicator::find($this->indicator)->name . ' por día de la semana y rango de horas',
-            'date' =>  $date,
+        return [
+            'title' => $this->selectedCategoryName() . ' por día de la semana y rango de horas',
+            'date' => $this->dateLabel(),
             'series' => $series,
-            //'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
-            'type' => 'matrix'
+            'type' => 'matrix',
         ];
-
-        return $data;
     }
 
-    public function points()
+    public function points(): array
     {
-        $incidents = Incident::where('indicator_id', $this->indicator)->get();
-
-        $incidents = $incidents->map(function ($incident) {
-
-            return [(float)$incident->latitude , (float)$incident->longitude];
-
-        });
-
-        $incidents = [
+        return [
             'type' => 'heatmap',
-            'points' => $incidents,
+            'points' => $this->selectedIncidents()
+                ->filter(fn (Incident $incident) => $incident->latitude !== null && $incident->longitude !== null)
+                ->map(fn (Incident $incident) => [(float) $incident->latitude, (float) $incident->longitude])
+                ->values(),
         ];
+    }
 
-        return $incidents;
+    private function selectedIncidents(): Collection
+    {
+        if ($this->indicator === null) {
+            return $this->incidents;
+        }
+
+        return $this->incidents->filter(fn (Incident $incident) => $this->categoryIdFor($incident) === $this->indicator)->values();
+    }
+
+    private function categoryCounts(Collection $incidents)
+    {
+        return $incidents->map(fn (Incident $incident) => $this->categoryIdFor($incident))->filter()->countBy();
+    }
+
+    private function categoryIdFor(Incident $incident): ?int
+    {
+        $indicator = $incident->Indicator;
+        return $indicator ? (int) ($indicator->parent_indicator_id ?: $indicator->id) : null;
+    }
+
+    private function selectedCategoryName(): string
+    {
+        return optional($this->categories->firstWhere('id', $this->indicator))->name ?? 'Categoría';
+    }
+
+    private function dateLabel(): string
+    {
+        if ($this->request->filled('start') && $this->request->filled('end')) {
+            return Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
+        }
+
+        return 'Histórico';
     }
 }

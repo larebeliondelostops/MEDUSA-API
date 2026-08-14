@@ -5,7 +5,6 @@ namespace App\Strategies\StrategiesProbabilistic\Villavicencio;
 use Illuminate\Http\Request;
 use App\Models\Villavicencio\ProbabilisticGrid;
 use App\Models\Villavicencio\CriminalActs;
-use App\Models\Indicator;
 use App\Strategies\Interface\Villavicencio\ProbabilisticInterface;
 
 class StrategyProbabilisticCrimes implements ProbabilisticInterface
@@ -13,18 +12,24 @@ class StrategyProbabilisticCrimes implements ProbabilisticInterface
 
     public function GetIndicators()
     {
-        $indicators = Indicator::where('id','<',11)->get();
+        // Estas etiquetas pertenecen al modelo probabilístico histórico. Sus IDs
+        // no deben tomar los nuevos nombres de categorías usados por incidentes.
+        $crimeIndicators = [
+            1 => 'Lesiones personales',
+            2 => 'Robo residencial',
+            3 => 'Hurto en tiendas',
+            4 => 'Robo de vehículos motorizados',
+            5 => 'Robo de motocicletas',
+            6 => 'Robo en instituciones financieras',
+            7 => 'Homicidio',
+            8 => 'Sustracción de personas',
+            9 => 'Extorsión',
+            10 => 'Terrorismo',
+        ];
 
-        $dataIndicators = [];
-
-        foreach ($indicators as $indicator) {
-            $dataIndicators[] = [
-                "id" => $indicator->id,
-                "name" => $indicator->name,
-                "description" => $indicator->description,
-            ];
-        }
-
+        $dataIndicators = collect($crimeIndicators)->map(function ($name, $id) {
+            return ['id' => $id, 'name' => $name, 'description' => null];
+        })->values();
 
         return response()->json($dataIndicators, 200, [], JSON_NUMERIC_CHECK);
     }

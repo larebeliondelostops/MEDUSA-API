@@ -82,16 +82,17 @@ class GetEventCoordinate implements GetEventInterface
 
             return [
                 'markerType' => 55,
+                'id' => $evento->id,
+                'title' => $evento->name,
                 'properties' => [
-                    'ID' => $evento->id,
-                    'idEventType' => $evento->event_type_id,
-                    'eventTypeName' => $evento['eventType']->value,
-                    'name' => $evento->name,
-                    'startDate' => $evento->start_date,
-                    'endDate' => $evento->end_date,
-                    'capacity' => $evento->capacity,
-                    'address' => $evento->place,
-                    'authorizingEntity' => $evento->authorizing_entity,
+                    // 'id_event_type' => $evento->event_type_id,
+                    // 'event_type_name' => $evento['eventType']->value,
+                    // 'name' => $evento->name,
+                    'Inicio' => $evento->start_date,
+                    'Final' => $evento->end_date,
+                    'Capacidad' => $evento->capacity,
+                    'Dirección' => $evento->place,
+                    'Organiza' => $evento->authorizing_entity,
                 ],
                 'position' => json_decode($evento['eventCoordinate']->coordinates)
 

@@ -28,19 +28,19 @@ class StrategyDistrict implements PolygonsInterface
        
         $districtsOrganized = $districts->map(function ($district) {
             return [
-                'markerType' => 58, 
+                'markerType' => 58,
+                'id' => $district->id, 
+                'title' => $district->name,
                 'properties' => [
-                    'id' => $district->id,
-                    'uuid' => $district->uuid,
-                    'name' => $district->name,
-                    'neighborhoods' => $district->neighborhoods->map(function ($neighborhood) {
-                        return [
-                            'id' => $neighborhood->id,
-                            'name' => $neighborhood->name,
-                        ];
-                    }),
-                    'createdAt' => $district->created_at,
-                    'updatedAt' => $district->updated_at,
+                    // 'uuid' => $district->uuid,
+                    // 'neighborhoods' => $district->neighborhoods->map(function ($neighborhood) {
+                    //     return [
+                    //         'id' => $neighborhood->id,
+                    //         'name' => $neighborhood->name,
+                    //     ];
+                    // }),
+                    // 'createdAt' => $district->created_at,
+                    // 'updatedAt' => $district->updated_at,
                 ],
                 'position' => json_decode($district->coordinates), 
             ];

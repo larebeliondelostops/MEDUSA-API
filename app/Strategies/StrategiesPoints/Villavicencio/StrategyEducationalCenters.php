@@ -3,12 +3,13 @@
 namespace App\Strategies\StrategiesPoints\Villavicencio;
 
 use App\Interfaces\Markers\PointsInterface;
-use App\Models\Villavicencio\educationalCenters;
+use App\Models\Villavicencio\EducationalCenters;
+use Illuminate\Support\Facades\Log;
 
 class StrategyEducationalCenters implements PointsInterface
 {
     public function __construct(
-        private educationalCenters $model
+        private EducationalCenters $model
     ) {}
 
     public function getModel() : EducationalCenters

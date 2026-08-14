@@ -76,7 +76,7 @@ class SaveIpats extends Command
                         ]);
                     } else {
                         // Logear el error de coordenadas no válidas
-                        Log::error('Coordenadas no válidas: ' . $data->georeferencia);
+                        //Log::error('Coordenadas no válidas: ' . $data->georeferencia);
                     }
                 } else {
                     // Normalizar las coordenadas y crear el registro en la base de datos si no existe
@@ -97,7 +97,7 @@ class SaveIpats extends Command
                         ]);
                     } else {
                         // Logear el error de coordenadas no válidas
-                        Log::error('Coordenadas no válidas: ' . $data->georeferencia);
+                        //Log::error('Coordenadas no válidas: ' . $data->georeferencia);
                     }
                 }
             }

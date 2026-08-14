@@ -2,18 +2,19 @@
 
 namespace App\Models\Villavicencio;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Points\HasPoints;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class educationalCenters extends Model
+class EducationalCenters extends Model
 {
-    use HasFactory;
+    use HasFactory, HasPoints;
 
     /**
 	 * Defines the table associated with the model.
 	 * @var string
 	 */
-    protected $table = 'educationalC_centers';
+    protected $table = 'educational_centers';
 
 	/**
 	 * Defines the primary key of the model.
@@ -39,5 +40,17 @@ class educationalCenters extends Model
 	 */
 	protected $hidden = [];
 
+	private $slug = 'educational_centers';
+
+    private $cacheKeyMarker = 'educational_centers_villavicencio_marker';
+
+    private function pointProperties()
+    {
+        return [];
+    }
+
+    public function getCacheKeyMarker()
+    {
+	}
 }
 

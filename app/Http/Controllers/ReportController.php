@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Values\ReportsValues;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -36,6 +37,11 @@ class ReportController extends Controller
 
             return $this->service->getReportsData($request, $method, $slug);
 
+        } catch (ModelNotFoundException $exception) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'No existe la subcategoria solicitada'
+            ], 404, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);

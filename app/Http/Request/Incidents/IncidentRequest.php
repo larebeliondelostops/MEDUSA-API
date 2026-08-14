@@ -2,6 +2,7 @@
 
 namespace App\Http\Request\Incidents;
 
+use App\Rules\Subindicator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -45,7 +46,11 @@ class IncidentRequest extends FormRequest
         $isUpdate = $this->is('api/v1/incident/update/*');
 
         return [
-            'IndicatorId' => ($isUpdate ? 'sometimes' : 'required') . '|exists:indicators,id|integer',
+            'IndicatorId' => [
+                $isUpdate ? 'sometimes' : 'required',
+                'integer',
+                new Subindicator(),
+            ],
             'address' => 'nullable|string',
             'description' => ($isUpdate ? 'sometimes' : 'required') . '|string',
             'pointCoordinates' => $isUpdate ? 'sometimes' : 'required',
@@ -79,7 +84,7 @@ class IncidentRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'IndicatorId' => 'Indicador',
+            'IndicatorId' => 'Subcategoria',
             'address' => 'Dirección',
             'description' => 'Descripción',
             'pointCoordinates' => 'Coordenadas',

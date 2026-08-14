@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use App\Services\Cruds\CrudService;
 use Illuminate\Support\Facades\Log;
 use App\Interfaces\Cruds\CrudInterface;
@@ -53,9 +54,15 @@ class CrudController extends Controller
 
             return $this->service->store($request, $slug);
 
+        } catch (ValidationException $exception) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Datos Recibidos Incorrectos',
+                'errors' => $exception->errors(),
+            ], 422, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => $exception->getMessage()], $exception->getCode() ?? 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => $exception->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -94,6 +101,12 @@ class CrudController extends Controller
 
             return $this->service->update($request, $slug, $id);
 
+        } catch (ValidationException $exception) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Datos Recibidos Incorrectos',
+                'errors' => $exception->errors(),
+            ], 422, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);

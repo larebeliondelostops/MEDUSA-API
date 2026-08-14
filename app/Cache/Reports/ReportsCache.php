@@ -25,7 +25,8 @@ class ReportsCache implements ReportActionsInterface
 
     public function getReportsData($request)
     {
-        if (isset($request->start)) {
+        // Los reportes con fechas o subcategoria no comparten la respuesta general cacheada.
+        if (isset($request->start) || $request->filled('IndicatorId')) {
             return $this->strategyReport->getReportsData($request);
         }
 

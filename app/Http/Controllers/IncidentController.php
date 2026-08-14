@@ -6,7 +6,9 @@ use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use App\Models\Villavicencio\Incident;
+use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -83,7 +85,6 @@ class IncidentController extends Controller
                 $transformedData[] = [
                     'ID' => $incident->id,
                     'Nombre' => $incident->description,
-                    'Indicador' => optional($incident->Indicator)->name,
                     'Categoria' => $this->categoryName($incident),
                     'Subcategoria' => $this->subcategoryName($incident),
                     'Direccion' => $incident->address,
@@ -184,6 +185,8 @@ class IncidentController extends Controller
             $incident->year = date('Y');
 
             $incident->save();
+            $incident->load('Indicator.parent');
+            Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
             // Incrementar el contador del límite de tasa por usuario
             if ($user) {
@@ -191,7 +194,7 @@ class IncidentController extends Controller
             }
             return Response::json([
                 'status' => 'succes',
-                'data' => $incident,
+                'data' => $this->incidentResponseData($incident),
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -299,10 +302,12 @@ class IncidentController extends Controller
             }
 
             $incident->save();
+            $incident->load('Indicator.parent');
+            Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $incident
+                'data' => $this->incidentResponseData($incident)
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -323,8 +328,12 @@ class IncidentController extends Controller
     public function destroy($id)
     {
         try {
+            $deleted = Incident::destroy($id);
+            if ($deleted) {
+                Cache::forget(StrategyIncidentsReports::CACHE_KEY);
+            }
 
-            return Incident::destroy($id);
+            return $deleted;
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -445,6 +454,22 @@ class IncidentController extends Controller
     private function subcategoryName(Incident $incident): ?string
     {
         return $this->subcategoryData($incident)['name'] ?? null;
+    }
+
+    private function incidentResponseData(Incident $incident): array
+    {
+        // Conserva los atributos historicos y agrega la clasificacion normalizada.
+        $data = $incident->toArray();
+        $category = $this->categoryData($incident);
+        $subcategory = $this->subcategoryData($incident);
+
+        $data['CategoryId'] = $category['id'] ?? null;
+        $data['IndicatorId'] = $subcategory['id'] ?? null;
+        $data['category'] = $category;
+        $data['subcategory'] = $subcategory;
+        $data['pointCoordinates'] = $incident->position;
+
+        return $data;
     }
 
     private function extractCoordinates($value): ?array

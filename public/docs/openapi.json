@@ -3,7 +3,7 @@
   "info": {
     "title": "MEDUSA API",
     "version": "1.0.0",
-    "description": "Documentacion operativa para autenticacion JWT, consulta de subindicadores y actualizacion de incidentes. Abre Swagger desde el dominio del tenant y usa el panel superior para iniciar sesion y cargar automaticamente el JWT."
+    "description": "Documentacion operativa para autenticacion JWT, categorias, subcategorias, incidentes y reportes. Abre Swagger desde el dominio del tenant y usa el panel superior para iniciar sesion y cargar automaticamente el JWT."
   },
   "servers": [
     {
@@ -20,6 +20,9 @@
     },
     {
       "name": "Incidents"
+    },
+    {
+      "name": "Reports"
     }
   ],
   "components": {
@@ -55,7 +58,7 @@
         "properties": {
           "IndicatorId": {
             "type": "integer",
-            "description": "Id de la subcategoria obtenido desde /indicators/{indicator}/subindicators. Por compatibilidad tambien acepta el id de una categoria.",
+            "description": "Id de la subcategoria obtenido desde /indicators/{indicator}/subindicators. No acepta una categoria padre.",
             "example": 16
           },
           "address": {
@@ -73,6 +76,133 @@
           "image": {
             "type": "string",
             "format": "binary"
+          }
+        }
+      },
+      "IncidentStoreRequest": {
+        "type": "object",
+        "required": ["IndicatorId", "description", "pointCoordinates"],
+        "properties": {
+          "IndicatorId": {
+            "type": "integer",
+            "description": "Id real de la subcategoria seleccionada. Debe provenir de GET /indicators/{indicator}/subindicators.",
+            "example": 16
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "description": "Direccion legible del incidente.",
+            "example": "Calle 40 # 20-15"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descripcion ciudadana de la afectacion o necesidad.",
+            "example": "Se observan grietas visibles en una pared exterior."
+          },
+          "pointCoordinates": {
+            "type": "string",
+            "description": "Coordenadas en orden longitud,latitud. Tambien se acepta la estructura GeoJSON historica cuando se envia como JSON.",
+            "example": "-73.6379,4.1420"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true,
+            "description": "Imagen opcional jpeg, png, jpg o gif de maximo 2 MB."
+          }
+        }
+      },
+      "IncidentReportRequest": {
+        "type": "object",
+        "description": "Todos los campos son opcionales. IndicatorId filtra el payload completo por una subcategoria.",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Inicio del periodo. El filtro de fechas se aplica cuando tambien se envia end.",
+            "example": "2026-01-01T00:00:00-05:00"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fin del periodo. El filtro de fechas se aplica cuando tambien se envia start.",
+            "example": "2026-08-14T23:59:59-05:00"
+          },
+          "IndicatorId": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Id real de una subcategoria obtenido desde GET /indicators/{indicator}/subindicators. No acepta el id de una categoria padre.",
+            "example": 16
+          }
+        }
+      },
+      "ReportTabs": {
+        "type": "object",
+        "required": ["title", "series", "labels", "key", "type"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Tabs"
+          },
+          "series": {
+            "type": "array",
+            "description": "Conteo general seguido del conteo de cada categoria. Con IndicatorId, las categorias ajenas quedan en cero.",
+            "items": {
+              "type": "integer"
+            },
+            "example": [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["General", "Vivienda o edificacion", "Via o acceso"]
+          },
+          "key": {
+            "type": "array",
+            "description": "El primer valor, 0, identifica la pestana General. Los demas valores son IDs reales de categorias y nunca posiciones del arreglo.",
+            "items": {
+              "type": "integer"
+            },
+            "example": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["tabs"]
+          }
+        }
+      },
+      "IncidentReportResponse": {
+        "type": "object",
+        "required": ["tabs", "reportsData"],
+        "properties": {
+          "tabs": {
+            "$ref": "#/components/schemas/ReportTabs"
+          },
+          "reportsData": {
+            "type": "array",
+            "description": "Una entrada por cada elemento de tabs.key. Conserva la estructura historica de graficas area, bar, column, matrix, cards y heatmap.",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "No existe la subcategoria solicitada"
           }
         }
       }
@@ -160,6 +290,230 @@
           },
           "404": {
             "description": "Indicador no encontrado"
+          }
+        }
+      }
+    },
+    "/report/getReportsData/incident": {
+      "post": {
+        "tags": ["Reports"],
+        "summary": "Consultar reportes de incidentes",
+        "description": "Genera el mismo payload historico de reportes. Si se envia IndicatorId, todos los conteos, graficas, matrices, puntos y tabs.series incluyen exclusivamente incidentes de esa subcategoria. Si se omite, la respuesta conserva el comportamiento general anterior.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentReportRequest"
+              },
+              "examples": {
+                "general": {
+                  "summary": "Reporte general historico",
+                  "value": {}
+                },
+                "dateRange": {
+                  "summary": "Reporte general por fechas",
+                  "value": {
+                    "start": "2026-01-01T00:00:00-05:00",
+                    "end": "2026-08-14T23:59:59-05:00"
+                  }
+                },
+                "subcategory": {
+                  "summary": "Reporte completo filtrado por subcategoria",
+                  "value": {
+                    "start": "2026-01-01T00:00:00-05:00",
+                    "end": "2026-08-14T23:59:59-05:00",
+                    "IndicatorId": 16
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reporte generado. Sin IndicatorId mantiene la respuesta existente; con IndicatorId conserva la estructura y modifica solamente los datos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentReportResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente, invalido o expirado"
+          },
+          "404": {
+            "description": "IndicatorId no corresponde a una subcategoria existente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incident/allTable": {
+      "get": {
+        "tags": ["Incidents"],
+        "summary": "Listar incidentes para tabla",
+        "description": "Retorna Categoria y Subcategoria como columnas separadas. Indicador fue retirado porque duplicaba uno de esos valores.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "Inicio del periodo; debe enviarse junto con end.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "description": "Fin del periodo; debe enviarse junto con start.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad de filas por pagina.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Numero de pagina.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listado paginado de incidentes",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "ID": 34,
+                      "Nombre": "Descripcion test",
+                      "Categoria": "Vivienda o edificacion",
+                      "Subcategoria": "Grietas visibles",
+                      "Direccion": "Calle 40",
+                      "Fecha": "2026-08-13"
+                    }
+                  ],
+                  "meta": {
+                    "title": "Incidentes App",
+                    "pagination": {
+                      "total": 29,
+                      "perPage": 10,
+                      "currentPage": 1,
+                      "lastPage": 3,
+                      "from": 1,
+                      "to": 10
+                    },
+                    "filterDate": true,
+                    "ableCreate": true
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JWT ausente, invalido o expirado"
+          }
+        }
+      }
+    },
+    "/incident/store": {
+      "post": {
+        "tags": ["Incidents"],
+        "summary": "Crear incidente con subcategoria",
+        "description": "Crea un incidente asociado directamente a una subcategoria. La categoria se deriva en el servidor a partir del parent_indicator_id, por lo que el front no debe enviar CategoryId. Al guardar se invalida la cache del reporte de incidentes.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Incidente creado. data conserva los atributos historicos y agrega CategoryId, IndicatorId, category, subcategory y pointCoordinates.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "succes",
+                  "data": {
+                    "id": 35,
+                    "uuid": "3bb53717-64b9-4a18-aa24-70a206122bfd",
+                    "CategoryId": 1,
+                    "IndicatorId": 16,
+                    "category": {
+                      "id": 1,
+                      "name": "Vivienda o edificacion"
+                    },
+                    "subcategory": {
+                      "id": 16,
+                      "name": "Grietas visibles"
+                    },
+                    "address": "Calle 40 # 20-15",
+                    "description": "Se observan grietas visibles en una pared exterior.",
+                    "pointCoordinates": "-73.6379, 4.1420"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campos requeridos ausentes o subcategoria invalida en el controlador dedicado"
+          },
+          "401": {
+            "description": "JWT ausente, invalido o expirado"
+          },
+          "422": {
+            "description": "Coordenadas invalidas o error de validacion del flujo CRUD"
+          },
+          "429": {
+            "description": "Limite de solicitudes alcanzado"
           }
         }
       }

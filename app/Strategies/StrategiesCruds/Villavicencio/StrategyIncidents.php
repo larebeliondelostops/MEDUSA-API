@@ -3,10 +3,14 @@
 namespace App\Strategies\StrategiesCruds\Villavicencio;
 
 use App\Models\Villavicencio\Incident;
+use App\Rules\Subindicator;
 use App\Strategies\StrategiesCruds\BaseCrud;
+use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
 
 class StrategyIncidents extends BaseCrud
@@ -34,7 +38,6 @@ class StrategyIncidents extends BaseCrud
                 return [
                     'ID' => $incident->id,
                     'Nombre' => $incident->description,
-                    'Indicador' => optional($incident->Indicator)->name,
                     'Categoria' => $this->categoryName($incident),
                     'Subcategoria' => $this->subcategoryName($incident),
                     'Direccion' => $incident->address,
@@ -69,6 +72,14 @@ class StrategyIncidents extends BaseCrud
 
     public function store($request): array
     {
+        Validator::make($request->all(), [
+            'IndicatorId' => ['required', 'integer', new Subindicator()],
+            'description' => ['required', 'string'],
+            'pointCoordinates' => ['required'],
+            'address' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ])->validate();
+
         $incident = new Incident();
         $incident->uuid = Uuid::uuid4()->toString();
         $this->fillIncident($incident, $request);
@@ -76,6 +87,7 @@ class StrategyIncidents extends BaseCrud
         $incident->month = date('m');
         $incident->year = date('Y');
         $incident->save();
+        Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
         return $this->incidentData($incident->load('Indicator.parent'));
     }
@@ -89,6 +101,7 @@ class StrategyIncidents extends BaseCrud
 
         $this->fillIncident($incident, $request);
         $incident->save();
+        Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
         return $this->incidentData($incident->load('Indicator.parent'));
     }
@@ -96,8 +109,12 @@ class StrategyIncidents extends BaseCrud
     public function destroy($id): int
     {
         $incident = $this->findIncident($id);
+        $deleted = $incident ? (int) $incident->delete() : 0;
+        if ($deleted) {
+            Cache::forget(StrategyIncidentsReports::CACHE_KEY);
+        }
 
-        return $incident ? (int) $incident->delete() : 0;
+        return $deleted;
     }
 
     private function fillIncident(Incident $incident, Request $request): void

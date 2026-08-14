@@ -33,7 +33,7 @@ https://villavicencio.back.centralspike.com/api/v1/docs
 GET /indicators
 ```
 
-Retorna solamente indicadores padre. Sus IDs son los mismos usados en `tabs.key` del reporte.
+Retorna las 10 categorias ciudadanas (`1..10`). Sus IDs son los mismos usados en `tabs.key` del reporte. Los indicadores historicos de accidentalidad `11..15` no forman parte de este flujo.
 
 ## Consultar subcategorias
 
@@ -137,6 +137,8 @@ Cada fila contiene:
 
 La llave duplicada `Indicador` fue eliminada. Los incidentes historicos deben tener ejecutado el backfill para que `Subcategoria` no sea `null`.
 
+`meta.ableCreate` retorna `true`, por lo que la web puede mostrar la accion de creacion y enviar el formulario a `POST /incident/store`.
+
 ## Reportes por subcategoria
 
 ```http
@@ -165,7 +167,7 @@ Con filtro:
 
 El filtro afecta todo el payload: `tabs.series`, tarjetas, graficas, matrices y puntos. Las categorias diferentes a la subcategoria elegida quedan con conteo cero.
 
-En `tabs.key`, `0` identifica la pestana General. Los demas valores son IDs reales de categorias, no posiciones del arreglo.
+En `tabs.key`, `0` identifica la pestana General. Los otros diez valores son los IDs reales de las categorias ciudadanas retornadas por `GET /indicators`, no posiciones del arreglo. Los indicadores historicos `11..15` se excluyen tambien del conteo general.
 
 ## Errores relevantes
 

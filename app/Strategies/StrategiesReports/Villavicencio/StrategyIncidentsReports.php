@@ -4,6 +4,7 @@ namespace App\Strategies\StrategiesReports\Villavicencio;
 
 use App\Helpers\Helper;
 use App\Interfaces\Reports\ReportActionsInterface;
+use App\Models\Category;
 use App\Models\Indicator;
 use App\Models\Villavicencio\Incident;
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 
 class StrategyIncidentsReports implements ReportActionsInterface
 {
-    public const CACHE_KEY = 'villavicencio_incidents_reports_v4';
+    public const CACHE_KEY = 'villavicencio_incidents_reports_v5';
 
     private ?int $indicator = null;
     private Request $request;
@@ -32,13 +33,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         $this->request = $request;
         $this->subcategoryFilter = $this->resolveSubcategoryFilter($request);
-        $this->categories = Indicator::query()
-            ->whereNull('parent_indicator_id')
+        $this->categories = Category::query()
             ->with('children')
             ->orderBy('id')
             ->get();
 
-        $query = $this->applySubcategoryFilter(Incident::query()->with('Indicator.parent'));
+        $query = $this->applyIncidentFilters(Incident::query()->with('Indicator.parent'));
         if ($request->filled('start') && $request->filled('end')) {
             $query->whereBetween('created_at', [$request->start, $request->end]);
         }
@@ -90,7 +90,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
             }
         }
 
-        $previous = $this->categoryCounts($this->applySubcategoryFilter(
+        $previous = $this->categoryCounts($this->applyIncidentFilters(
             Incident::query()->with('Indicator.parent')
         )->whereBetween('created_at', [$previousStart, $previousEnd])->get());
 
@@ -302,6 +302,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
         $subcategory = Indicator::query()
             ->whereNotNull('parent_indicator_id')
+            ->whereBetween('parent_indicator_id', [1, 10])
             ->find((int) $indicatorId);
 
         if (! $subcategory) {
@@ -311,8 +312,15 @@ class StrategyIncidentsReports implements ReportActionsInterface
         return $subcategory;
     }
 
-    private function applySubcategoryFilter(Builder $query): Builder
+    private function applyIncidentFilters(Builder $query): Builder
     {
+        $allowedIndicatorIds = $this->categories
+            ->flatMap(fn (Indicator $category) => collect([$category->id])->concat($category->children->pluck('id')))
+            ->unique()
+            ->values();
+
+        $query->whereIn((new Incident())->getIndicatorColumn(), $allowedIndicatorIds);
+
         if (! $this->subcategoryFilter) {
             return $query;
         }

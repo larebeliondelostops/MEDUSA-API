@@ -161,7 +161,7 @@
           },
           "key": {
             "type": "array",
-            "description": "El primer valor, 0, identifica la pestana General. Los demas valores son IDs reales de categorias y nunca posiciones del arreglo.",
+            "description": "El primer valor, 0, identifica la pestana General. Los otros diez valores son IDs reales de las categorias ciudadanas retornadas por GET /indicators. Los indicadores historicos 11..15 no se incluyen.",
             "items": {
               "type": "integer"
             },
@@ -298,7 +298,7 @@
       "post": {
         "tags": ["Reports"],
         "summary": "Consultar reportes de incidentes",
-        "description": "Genera el mismo payload historico de reportes. Si se envia IndicatorId, todos los conteos, graficas, matrices, puntos y tabs.series incluyen exclusivamente incidentes de esa subcategoria. Si se omite, la respuesta conserva el comportamiento general anterior.",
+        "description": "Genera el reporte para las 10 categorias ciudadanas retornadas por GET /indicators y excluye los indicadores historicos 11..15. Si se envia IndicatorId, todos los conteos, graficas, matrices, puntos y tabs.series incluyen exclusivamente incidentes de esa subcategoria.",
         "security": [
           {
             "bearerAuth": []

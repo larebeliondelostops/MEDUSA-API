@@ -12,6 +12,7 @@ class Subindicator implements Rule
         return is_numeric($value) && Indicator::query()
             ->whereKey((int) $value)
             ->whereNotNull('parent_indicator_id')
+            ->whereBetween('parent_indicator_id', [1, 10])
             ->exists();
     }
 

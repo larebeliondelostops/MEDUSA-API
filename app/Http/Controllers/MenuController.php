@@ -435,12 +435,13 @@ class MenuController extends Controller
     {
         $mapRequest = Setting::get('map_request');
 
-        if ($mapRequest != null) {
-
-            $mapRequest = explode(', ', $mapRequest);
-
+        if (! is_string($mapRequest) || trim($mapRequest) === '') {
+            return null;
         }
 
-        return $mapRequest;
+        return array_values(array_filter(
+            array_map('trim', explode(',', $mapRequest)),
+            fn (string $request) => $request !== ''
+        ));
     }
 }

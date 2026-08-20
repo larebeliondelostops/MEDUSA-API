@@ -30,14 +30,17 @@ class StrategyCologneParks implements PolygonsInterface
             ->newQuery()
             ->where('dataset', 'parks')
             ->where('geometry_type', 'Polygon')
+            ->orderBy('uuid')
             ->get()
-            ->flatMap(function (Geodata $item): array {
+            ->flatMap(function (Geodata $item, int $featureIndex): array {
                 $rings = $this->exteriorRings($item->geometry ?? []);
 
-                return array_map(function (array $ring) use ($item): array {
+                return array_map(function (array $ring) use ($item, $featureIndex): array {
                     $properties = $item->properties ?? [];
                     $properties['sourceFeatureId'] = $item->uuid;
                     $properties['ringIndex'] = $ring['index'];
+                    $color = $this->colorFor($featureIndex);
+                    $properties['color'] = $color;
 
                     return [
                         'markerType' => self::SLUG_ID,
@@ -45,6 +48,11 @@ class StrategyCologneParks implements PolygonsInterface
                             ? $item->uuid
                             : "{$item->uuid}-ring-{$ring['index']}",
                         'title' => $item->name,
+                        // Se incluyen los nombres usados por las distintas
+                        // versiones del renderizador de poligonos.
+                        'color' => $color,
+                        'fillColor' => $color,
+                        'strokeColor' => $color,
                         'properties' => $properties,
                         // El frontend espera un unico contorno en coordinates, como
                         // los poligonos de comunas, no el arreglo de anillos de ESRI.
@@ -123,5 +131,14 @@ class StrategyCologneParks implements PolygonsInterface
         }
 
         return $area > 0;
+    }
+
+    private function colorFor(int $featureIndex): string
+    {
+        // El angulo aureo distribuye parques consecutivos por todo el circulo
+        // cromatico. El orden por UUID mantiene el color estable entre cargas.
+        $hue = fmod($featureIndex * 137.507764, 360.0);
+
+        return sprintf('hsl(%.2f, 82%%, 48%%)', $hue);
     }
 }

@@ -43,16 +43,16 @@ class CologneSeeder extends Seeder
 
     private const ESRI_SOURCES = [
         'refugee_accommodation' => ['file' => 'refugee_accommodation.json', 'name' => 'strassenname'],
-        'bus_parking' => ['file' => 'bus_parking.json', 'name' => 'name'],
+        'bus_parking' => ['file' => 'bus_parking.json', 'name' => 'bezeichnun'],
         'libraries' => ['file' => 'libraries.json', 'name' => 'name'],
         'intercultural_centers' => ['file' => 'intercultural_centers.json', 'name' => 'z_name'],
-        'cemetery_entrances' => ['file' => 'cemetery_entrances.json', 'name' => 'name'],
+        'cemetery_entrances' => ['file' => 'cemetery_entrances.json', 'name' => 'friedhofsname'],
         'schools' => ['file' => 'schools.json', 'name' => 'name'],
         'hospitals' => ['file' => 'hospitals.json', 'name' => 'name'],
         'natural_monuments' => ['file' => 'natural_monuments.json', 'name' => 'beschr'],
         'museums' => ['file' => 'museums.json', 'name' => 'name'],
         'parks' => ['file' => 'parks.json', 'name' => 'name'],
-        'wifi_access_points' => ['file' => 'wifi_access_points.json', 'name' => 'name'],
+        'wifi_access_points' => ['file' => 'wifi_access_points.json', 'name' => 'ap_name'],
     ];
 
     private int $inserted = 0;

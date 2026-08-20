@@ -1,0 +1,516 @@
+{
+ "displayFieldName": "FRIEDHOFSNAME",
+ "fieldAliases": {
+  "friedhofsname": "Friedhofsname"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "friedhofsname",
+   "type": "esriFieldTypeString",
+   "alias": "Friedhofsname",
+   "length": 50
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "friedhofsname": "Esch"
+   },
+   "geometry": {
+    "x": 349706.43450000044,
+    "y": 5653902.6824999992
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Pesch"
+   },
+   "geometry": {
+    "x": 350883.06259999983,
+    "y": 5651867.4276999999
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Chorweiler"
+   },
+   "geometry": {
+    "x": 351190.77720000036,
+    "y": 5653985.9357999992
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Volkhoven-Weiler"
+   },
+   "geometry": {
+    "x": 351703.26900000032,
+    "y": 5654504.7868000008
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "DÃ¼nnwald"
+   },
+   "geometry": {
+    "x": 361917.10690000001,
+    "y": 5652303.5908000004
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Worringen"
+   },
+   "geometry": {
+    "x": 349946.34090000018,
+    "y": 5658906.2552000005
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Deutz"
+   },
+   "geometry": {
+    "x": 358577.36479999963,
+    "y": 5643190.8770000003
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Rondorf"
+   },
+   "geometry": {
+    "x": 356505.90299999993,
+    "y": 5637158.2906999998
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Steinneuerhof"
+   },
+   "geometry": {
+    "x": 354855.26360000018,
+    "y": 5637785.0171000008
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "SchÃ¶nrather Hof"
+   },
+   "geometry": {
+    "x": 360011.46289999969,
+    "y": 5650104.8136
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Stammheim alt"
+   },
+   "geometry": {
+    "x": 359188.67019999959,
+    "y": 5650206.6536999997
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Stammheim neu"
+   },
+   "geometry": {
+    "x": 358931.62880000006,
+    "y": 5650553.7519000005
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Eil"
+   },
+   "geometry": {
+    "x": 364968.62600000016,
+    "y": 5639338.7451000009
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Leidenhausen"
+   },
+   "geometry": {
+    "x": 365473.95720000006,
+    "y": 5639487.2943999991
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "WeiÃŸ"
+   },
+   "geometry": {
+    "x": 361141.10489999969,
+    "y": 5637954.4585999995
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Libur"
+   },
+   "geometry": {
+    "x": 364123.41610000003,
+    "y": 5633388.5836999994
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Rodenkirchen alt"
+   },
+   "geometry": {
+    "x": 358502.19350000005,
+    "y": 5640088.0078999996
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Rodenkirchen neu"
+   },
+   "geometry": {
+    "x": 359537.89099999983,
+    "y": 5638318.9743000008
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Flittard"
+   },
+   "geometry": {
+    "x": 357943.90419999976,
+    "y": 5651818.0221999995
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "DellbrÃ¼ck"
+   },
+   "geometry": {
+    "x": 365011.9478000002,
+    "y": 5648740.5058999993
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Ostfriedhof"
+   },
+   "geometry": {
+    "x": 364705.67750000022,
+    "y": 5647681.3432
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Westfriedhof"
+   },
+   "geometry": {
+    "x": 350963.23359999992,
+    "y": 5648421.8949999996
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Porz"
+   },
+   "geometry": {
+    "x": 363743.17329999991,
+    "y": 5639148.4361000005
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "NiederzÃ¼ndorf"
+   },
+   "geometry": {
+    "x": 362240.07679999992,
+    "y": 5637002.2322000004
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "OberzÃ¼ndorf neu"
+   },
+   "geometry": {
+    "x": 361707.15890000015,
+    "y": 5636470.5627999995
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Wahn"
+   },
+   "geometry": {
+    "x": 365673.70220000017,
+    "y": 5635244.7061999999
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "MÃ¼lheim"
+   },
+   "geometry": {
+    "x": 361161.99700000044,
+    "y": 5645774.3563000001
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Longerich"
+   },
+   "geometry": {
+    "x": 353388.80059999973,
+    "y": 5651346.1131999996
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "SÃ¼dfriedhof"
+   },
+   "geometry": {
+    "x": 355398.33330000006,
+    "y": 5640803.6096000001
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Holweide"
+   },
+   "geometry": {
+    "x": 362689.65840000007,
+    "y": 5647759.4112
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Langel"
+   },
+   "geometry": {
+    "x": 359421.6007000003,
+    "y": 5634151.9867000002
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Nordfriedhof"
+   },
+   "geometry": {
+    "x": 355419.16119999997,
+    "y": 5649676.4152000006
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Urbach"
+   },
+   "geometry": {
+    "x": 365426.13320000004,
+    "y": 5638040.3931000009
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Merkenich"
+   },
+   "geometry": {
+    "x": 356480.68530000001,
+    "y": 5654775.3082999997
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Rheinkassel"
+   },
+   "geometry": {
+    "x": 355145.75580000039,
+    "y": 5656254.7488000002
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Niehl"
+   },
+   "geometry": {
+    "x": 356656.78789999988,
+    "y": 5650704.7059000004
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "FÃ¼hlingen"
+   },
+   "geometry": {
+    "x": 353273.79849999957,
+    "y": 5655824.7443000004
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Godorf"
+   },
+   "geometry": {
+    "x": 357123.01370000001,
+    "y": 5635159.1820999999
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "SÃ¼rth"
+   },
+   "geometry": {
+    "x": 359892.04220000003,
+    "y": 5637134.7084999997
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Meschenich"
+   },
+   "geometry": {
+    "x": 354375.52670000028,
+    "y": 5636099.1585000008
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Westhoven"
+   },
+   "geometry": {
+    "x": 360395.27130000014,
+    "y": 5640381.2465000004
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Ensen"
+   },
+   "geometry": {
+    "x": 361726.69739999995,
+    "y": 5640421.1537999995
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Junkersdorf"
+   },
+   "geometry": {
+    "x": 349466.05119999964,
+    "y": 5644187.9770999998
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "BrÃ¼ck, HovenstraÃŸe"
+   },
+   "geometry": {
+    "x": 365160.63019999955,
+    "y": 5645313.4430999998
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "BrÃ¼ck, Lehmbacher Weg"
+   },
+   "geometry": {
+    "x": 365036.97070000041,
+    "y": 5644087.1468000002
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Rath"
+   },
+   "geometry": {
+    "x": 365352.46169999987,
+    "y": 5642675.0961000007
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "LÃ¶venich"
+   },
+   "geometry": {
+    "x": 346736.44639999978,
+    "y": 5645866.1017000005
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Weiden alt"
+   },
+   "geometry": {
+    "x": 347455.96360000037,
+    "y": 5645399.5269000009
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Weiden neu"
+   },
+   "geometry": {
+    "x": 346881.66199999955,
+    "y": 5645450.9141000006
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "MÃ¼ngersdorf"
+   },
+   "geometry": {
+    "x": 351178.68850000016,
+    "y": 5645307.0770999994
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Kalk"
+   },
+   "geometry": {
+    "x": 362537.94359999988,
+    "y": 5645482.2153999992
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Melaten"
+   },
+   "geometry": {
+    "x": 353575.76779999956,
+    "y": 5644926.3493000008
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Widdersdorf alt"
+   },
+   "geometry": {
+    "x": 347426.09260000009,
+    "y": 5648009.5109999999
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "Widdersdorf neu"
+   },
+   "geometry": {
+    "x": 347588.70849999972,
+    "y": 5648194.0215000007
+   }
+  },
+  {
+   "attributes": {
+    "friedhofsname": "BocklemÃ¼nd"
+   },
+   "geometry": {
+    "x": 349822.68510000035,
+    "y": 5649311.8880000003
+   }
+  }
+ ]
+}

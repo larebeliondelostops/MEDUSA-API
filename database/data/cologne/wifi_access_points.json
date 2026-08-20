@@ -1,0 +1,1821 @@
+{
+ "displayFieldName": "ap_name",
+ "fieldAliases": {
+  "ap_name": "AP Name"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "ap_name",
+   "type": "esriFieldTypeString",
+   "alias": "AP Name",
+   "length": 32
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-01"
+   },
+   "geometry": {
+    "x": 355067.00509999972,
+    "y": 5644793.9080999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-02"
+   },
+   "geometry": {
+    "x": 354954.23959999997,
+    "y": 5644799.6556000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-03"
+   },
+   "geometry": {
+    "x": 354836.98110000044,
+    "y": 5644809.4148999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-04"
+   },
+   "geometry": {
+    "x": 354718.41249999963,
+    "y": 5644814.8181999996
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-05"
+   },
+   "geometry": {
+    "x": 354588.90710000042,
+    "y": 5644822.1000999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-06"
+   },
+   "geometry": {
+    "x": 354481.33779999986,
+    "y": 5644834.3552000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-07"
+   },
+   "geometry": {
+    "x": 354371.0159,
+    "y": 5644839.4682
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-08"
+   },
+   "geometry": {
+    "x": 354273.20909999963,
+    "y": 5644845.3221000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-09"
+   },
+   "geometry": {
+    "x": 354156.0504999999,
+    "y": 5644864.0851000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-10"
+   },
+   "geometry": {
+    "x": 354067.98940000031,
+    "y": 5644855.2139999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-11"
+   },
+   "geometry": {
+    "x": 353959.65170000028,
+    "y": 5644857.3756000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-12"
+   },
+   "geometry": {
+    "x": 353812.28679999989,
+    "y": 5644833.7114000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Aachener-Str-13"
+   },
+   "geometry": {
+    "x": 353699.0577999996,
+    "y": 5644835.2374000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-A-d-Sparkasse-01"
+   },
+   "geometry": {
+    "x": 363473.62719999999,
+    "y": 5638757.3487999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Alter-Stammh-Weg-01"
+   },
+   "geometry": {
+    "x": 357500.1819000002,
+    "y": 5647111.1728000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Am-Vorgebirgstor-01"
+   },
+   "geometry": {
+    "x": 355618.24810000043,
+    "y": 5642405.4931000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Am-Vorgebirgstor-02"
+   },
+   "geometry": {
+    "x": 355514.00690000039,
+    "y": 5642430.9846000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Am-Vorgebirgstor-03"
+   },
+   "geometry": {
+    "x": 355492.56390000042,
+    "y": 5642474.3112000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Am-Vorgebirgstor-04"
+   },
+   "geometry": {
+    "x": 355387.96360000037,
+    "y": 5642552.4478999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Am-Vorgebirgstor-05"
+   },
+   "geometry": {
+    "x": 355336.57739999983,
+    "y": 5642611.6322000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bahnhofstr-01"
+   },
+   "geometry": {
+    "x": 363244.73110000044,
+    "y": 5638723.1831
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bahnhofstr-02"
+   },
+   "geometry": {
+    "x": 363356.12150000036,
+    "y": 5638689.9864000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bahnhofstr-03"
+   },
+   "geometry": {
+    "x": 363582.1557,
+    "y": 5638612.5218000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bahnhofstr-04"
+   },
+   "geometry": {
+    "x": 363650.95849999972,
+    "y": 5638590.5535000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bartholomaeus-Schink-01"
+   },
+   "geometry": {
+    "x": 353756.56190000009,
+    "y": 5646551.8529000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bartholomaeus-Schink-02"
+   },
+   "geometry": {
+    "x": 353650.18400000036,
+    "y": 5646536.8084999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Berg-Gladb-Str-01"
+   },
+   "geometry": {
+    "x": 362728.29590000026,
+    "y": 5648246.2302000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Berliner Str-01"
+   },
+   "geometry": {
+    "x": 360602.54839999974,
+    "y": 5648921.9978999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Berrischstr-01"
+   },
+   "geometry": {
+    "x": 349410.23080000002,
+    "y": 5657800.0611000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bhf-Rodenkirchen-01"
+   },
+   "geometry": {
+    "x": 358661.46719999984,
+    "y": 5639669.4267999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bhf-Rodenkirchen-02"
+   },
+   "geometry": {
+    "x": 358611.70540000033,
+    "y": 5639645.9686999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bonner-Str-01"
+   },
+   "geometry": {
+    "x": 356622.76910000015,
+    "y": 5642866.5035999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bonner-Str-02"
+   },
+   "geometry": {
+    "x": 356643.76510000043,
+    "y": 5642748.9866000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bonner-Str-03"
+   },
+   "geometry": {
+    "x": 356647.81020000018,
+    "y": 5642626.1074999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bonner-Str-04"
+   },
+   "geometry": {
+    "x": 356677.56060000043,
+    "y": 5642518.0852000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bonner-Str-05"
+   },
+   "geometry": {
+    "x": 356672.8069000002,
+    "y": 5642456.0262000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Breite-Str-03"
+   },
+   "geometry": {
+    "x": 356001.83810000028,
+    "y": 5645038.5786000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Breite-Str-04"
+   },
+   "geometry": {
+    "x": 355871.8236999996,
+    "y": 5645037.4527000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Bruchstr-01"
+   },
+   "geometry": {
+    "x": 349483.3956000004,
+    "y": 5657810.4462000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Buergerpark-Kalk-01"
+   },
+   "geometry": {
+    "x": 359340.40649999958,
+    "y": 5645044.1351999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Causemannstr-01"
+   },
+   "geometry": {
+    "x": 356450.99139999971,
+    "y": 5654551.5932999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Chlodwigplatz-01"
+   },
+   "geometry": {
+    "x": 356598.0672000004,
+    "y": 5643108.3706
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Chlodwigplatz-02"
+   },
+   "geometry": {
+    "x": 356556.90600000042,
+    "y": 5643112.8473000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-DellbrÃ¼cker-HptStr-01"
+   },
+   "geometry": {
+    "x": 364834.56869999971,
+    "y": 5648790.2974999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-01"
+   },
+   "geometry": {
+    "x": 358037.56520000007,
+    "y": 5644770.8834000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-02"
+   },
+   "geometry": {
+    "x": 358140.0270999996,
+    "y": 5644771.4604000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-03"
+   },
+   "geometry": {
+    "x": 358296.5998999998,
+    "y": 5644795.7737000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-04"
+   },
+   "geometry": {
+    "x": 358370.25250000041,
+    "y": 5644763.2941999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-05"
+   },
+   "geometry": {
+    "x": 358454.19680000003,
+    "y": 5644703.9630999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-06"
+   },
+   "geometry": {
+    "x": 358562.28560000006,
+    "y": 5644668.7880000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-07"
+   },
+   "geometry": {
+    "x": 358673.54760000017,
+    "y": 5644705.0649999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-08"
+   },
+   "geometry": {
+    "x": 358788.01240000036,
+    "y": 5644704.9046999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Kalker-Str-09"
+   },
+   "geometry": {
+    "x": 358904.77290000021,
+    "y": 5644723.2222000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-02"
+   },
+   "geometry": {
+    "x": 358135.8797000004,
+    "y": 5645324.4055000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-03"
+   },
+   "geometry": {
+    "x": 358258.44809999969,
+    "y": 5645558.7499000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-04"
+   },
+   "geometry": {
+    "x": 358195.57600000035,
+    "y": 5645438.6053999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-05"
+   },
+   "geometry": {
+    "x": 358400.9458999997,
+    "y": 5645729.7280999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-06"
+   },
+   "geometry": {
+    "x": 358400.9458999997,
+    "y": 5645729.7280999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-07"
+   },
+   "geometry": {
+    "x": 358456.71410000045,
+    "y": 5645824.5320999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Deutz-Muehlheimer-08"
+   },
+   "geometry": {
+    "x": 358075.34640000015,
+    "y": 5645207.2025000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Duerener-Str-01"
+   },
+   "geometry": {
+    "x": 354128.2220999999,
+    "y": 5644454.6506999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Duerener-Str-05"
+   },
+   "geometry": {
+    "x": 353705.64319999982,
+    "y": 5644247.4694999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Ehrenfeldguertel-01"
+   },
+   "geometry": {
+    "x": 353678.18010000046,
+    "y": 5646326.5506999996
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Ehrenfeldguertel-02"
+   },
+   "geometry": {
+    "x": 353760.94199999981,
+    "y": 5646466.7475000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Emdener-Str-01"
+   },
+   "geometry": {
+    "x": 356574.88740000036,
+    "y": 5653709.3048
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Ernst-MÃ¼hlendyck-Str-01"
+   },
+   "geometry": {
+    "x": 363324.20390000008,
+    "y": 5638635.5163000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-01"
+   },
+   "geometry": {
+    "x": 360005.66370000038,
+    "y": 5647348.5078999996
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-02"
+   },
+   "geometry": {
+    "x": 360078.2304999996,
+    "y": 5647268.5793999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-03"
+   },
+   "geometry": {
+    "x": 360160.05310000014,
+    "y": 5647171.6782000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-04"
+   },
+   "geometry": {
+    "x": 360247.70010000002,
+    "y": 5647084.2460999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-05"
+   },
+   "geometry": {
+    "x": 360317.3498999998,
+    "y": 5646982.9137999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frankfurter-Str-06"
+   },
+   "geometry": {
+    "x": 360377.98120000027,
+    "y": 5646910.6000999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Frohngasse-01"
+   },
+   "geometry": {
+    "x": 357587.91199999955,
+    "y": 5647038.4573999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Geiersbergstr-01"
+   },
+   "geometry": {
+    "x": 351577.15809999965,
+    "y": 5656064.6854999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Goethestr-01"
+   },
+   "geometry": {
+    "x": 363483.35290000029,
+    "y": 5638669.4826999996
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Hpt-Str-Rodenkirchen-08"
+   },
+   "geometry": {
+    "x": 358677.85429999977,
+    "y": 5640283.1479000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Hpt-Str-Rodenkirchen-09"
+   },
+   "geometry": {
+    "x": 358738.24849999975,
+    "y": 5640189.4498999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Josefstr-01"
+   },
+   "geometry": {
+    "x": 363381.66170000006,
+    "y": 5638800.6356000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Josefstr-02"
+   },
+   "geometry": {
+    "x": 363399.77249999996,
+    "y": 5638912.2368999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kaiserstr-01"
+   },
+   "geometry": {
+    "x": 363815.94940000027,
+    "y": 5638601.2224000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kaiserstr-02"
+   },
+   "geometry": {
+    "x": 363758.82610000018,
+    "y": 5638599.9615000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-01"
+   },
+   "geometry": {
+    "x": 359170.85749999993,
+    "y": 5644765.5560999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-02"
+   },
+   "geometry": {
+    "x": 359279.97420000006,
+    "y": 5644778.5037999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-03"
+   },
+   "geometry": {
+    "x": 359425.68659999967,
+    "y": 5644777.5203000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-04"
+   },
+   "geometry": {
+    "x": 359550.02440000046,
+    "y": 5644807.6304000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-05"
+   },
+   "geometry": {
+    "x": 359678.05350000039,
+    "y": 5644807.1666000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-06"
+   },
+   "geometry": {
+    "x": 359804.48170000035,
+    "y": 5644852.2697999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-07"
+   },
+   "geometry": {
+    "x": 359919.8152999999,
+    "y": 5644863.6272999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kalker-Hptstr-08"
+   },
+   "geometry": {
+    "x": 360029.54349999968,
+    "y": 5644911.6351999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Kyffhaeuser-Str-02"
+   },
+   "geometry": {
+    "x": 355075.27770000044,
+    "y": 5643911.0684999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Liverpooler-Pl-01"
+   },
+   "geometry": {
+    "x": 352548.03440000024,
+    "y": 5654257.0809000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Luxemburger-Str-02"
+   },
+   "geometry": {
+    "x": 355235.26420000009,
+    "y": 5643814.6967999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Luxemburger-Str-03"
+   },
+   "geometry": {
+    "x": 355320.07930000033,
+    "y": 5643934.0409999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Marienpl-01"
+   },
+   "geometry": {
+    "x": 356566.72030000016,
+    "y": 5644481.6685000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Maternus-02"
+   },
+   "geometry": {
+    "x": 358854.16119999997,
+    "y": 5639767.8874999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Mediapark-01"
+   },
+   "geometry": {
+    "x": 355651.41469999962,
+    "y": 5645976.2776999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Mediapark-02"
+   },
+   "geometry": {
+    "x": 355528.66760000028,
+    "y": 5645900.9392000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Mediapark-03"
+   },
+   "geometry": {
+    "x": 355388.8805999998,
+    "y": 5645898.2629000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Montanusstr-01"
+   },
+   "geometry": {
+    "x": 360382.46250000037,
+    "y": 5647048.9324999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-14"
+   },
+   "geometry": {
+    "x": 356161.44749999978,
+    "y": 5648725.3408000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-15"
+   },
+   "geometry": {
+    "x": 356503.75739999954,
+    "y": 5646470.8778000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-16"
+   },
+   "geometry": {
+    "x": 356525.45139999967,
+    "y": 5646590.5190999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-17"
+   },
+   "geometry": {
+    "x": 356532.25090000033,
+    "y": 5646708.3587999996
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-18"
+   },
+   "geometry": {
+    "x": 356495.82660000026,
+    "y": 5646824.1578000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Neusser-Str-19"
+   },
+   "geometry": {
+    "x": 356456.98429999966,
+    "y": 5646953.0655000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Ostheimer-Str-01"
+   },
+   "geometry": {
+    "x": 361194.07650000043,
+    "y": 5644186.0069999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Phillip-Reis-Str-01"
+   },
+   "geometry": {
+    "x": 363620.91060000006,
+    "y": 5638844.6046999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Pohlstadtsweg-01"
+   },
+   "geometry": {
+    "x": 364856.32050000038,
+    "y": 5645472.2609000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-01"
+   },
+   "geometry": {
+    "x": 356826.74849999975,
+    "y": 5645372.6862000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-02"
+   },
+   "geometry": {
+    "x": 356840.4626000002,
+    "y": 5645420.2104000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-04"
+   },
+   "geometry": {
+    "x": 356862.86209999956,
+    "y": 5645626.3925999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-05"
+   },
+   "geometry": {
+    "x": 356898.21829999983,
+    "y": 5645738.2468999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-06"
+   },
+   "geometry": {
+    "x": 356938.21100000013,
+    "y": 5645717.6697000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-07"
+   },
+   "geometry": {
+    "x": 356964.89580000006,
+    "y": 5645879.6140999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-08"
+   },
+   "geometry": {
+    "x": 356983.34009999968,
+    "y": 5645977.3590999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-09"
+   },
+   "geometry": {
+    "x": 357138.46229999978,
+    "y": 5646198.8519000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-10"
+   },
+   "geometry": {
+    "x": 357218.62579999957,
+    "y": 5646365.5539999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Ab-11"
+   },
+   "geometry": {
+    "x": 357256.12100000028,
+    "y": 5646422.8276000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Auf-02"
+   },
+   "geometry": {
+    "x": 356898.52699999977,
+    "y": 5644538.6262999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Rheinufer-Auf-05"
+   },
+   "geometry": {
+    "x": 356865.96729999967,
+    "y": 5644213.5404000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Roncalli-04"
+   },
+   "geometry": {
+    "x": 356617.97240000032,
+    "y": 5645119.3036000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-BilderstÃ¶ckchen-01"
+   },
+   "geometry": {
+    "x": 355376.79289999977,
+    "y": 5648341.7075999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Loevenich-01"
+   },
+   "geometry": {
+    "x": 347858.66810000036,
+    "y": 5645681.3358999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Longerich-01"
+   },
+   "geometry": {
+    "x": 352710.12440000009,
+    "y": 5651678.2243000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Longerich-02"
+   },
+   "geometry": {
+    "x": 352791.59260000009,
+    "y": 5651747.9907000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Nippes-01"
+   },
+   "geometry": {
+    "x": 355467.74560000002,
+    "y": 5647204.8194999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Nippes-02"
+   },
+   "geometry": {
+    "x": 355470.76900000032,
+    "y": 5647267.5720000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-SÃ¼dbahnhof-01"
+   },
+   "geometry": {
+    "x": 355102.18740000017,
+    "y": 5643706.6616999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-SÃ¼dbahnhof-02"
+   },
+   "geometry": {
+    "x": 354863.17389999982,
+    "y": 5643803.4576999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-SÃ¼dbahnhof-03"
+   },
+   "geometry": {
+    "x": 354981.0784,
+    "y": 5643906.9817999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-SÃ¼dbahnhof-04"
+   },
+   "geometry": {
+    "x": 355219.14630000014,
+    "y": 5643710.4600000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Suedbahnhof-05"
+   },
+   "geometry": {
+    "x": 355164.77479999978,
+    "y": 5643753.6510000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Suedbahnhof-06"
+   },
+   "geometry": {
+    "x": 355003.86149999965,
+    "y": 5643886.5599000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Westbahnhof-01"
+   },
+   "geometry": {
+    "x": 354921.09169999976,
+    "y": 5645481.5861000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-S-Bahn-Westbahnhof-02"
+   },
+   "geometry": {
+    "x": 354798.25329999998,
+    "y": 5645579.1658999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Schildergasse-05"
+   },
+   "geometry": {
+    "x": 355872.47520000022,
+    "y": 5644751.6941999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Schildergasse-06"
+   },
+   "geometry": {
+    "x": 355872.47520000022,
+    "y": 5644751.6941999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Severin-09"
+   },
+   "geometry": {
+    "x": 356451.58000000007,
+    "y": 5643980.1316999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Spichernstr-02"
+   },
+   "geometry": {
+    "x": 355361.80549999978,
+    "y": 5645828.8712000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Spicherstr-01"
+   },
+   "geometry": {
+    "x": 355392.70660000015,
+    "y": 5645875.6675000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Spoerkelhof-01"
+   },
+   "geometry": {
+    "x": 356124.69720000029,
+    "y": 5654999.7080000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stadtbahn-BilderstÃ¶ckchen-01"
+   },
+   "geometry": {
+    "x": 354895.57529999968,
+    "y": 5647938.7807999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stadtbahn-BilderstÃ¶ckchen-02"
+   },
+   "geometry": {
+    "x": 354916.18269999977,
+    "y": 5647897.3205999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stadtbahn-Lohsestr-01"
+   },
+   "geometry": {
+    "x": 356422.28689999972,
+    "y": 5647083.6169000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stadtbahn-Lohsestr-02"
+   },
+   "geometry": {
+    "x": 356383.80119999964,
+    "y": 5647215.0969999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stadtbahn-Lohsestr-03"
+   },
+   "geometry": {
+    "x": 356358.05370000005,
+    "y": 5647321.3211000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Stammheimer-Str-01"
+   },
+   "geometry": {
+    "x": 357600.86820000038,
+    "y": 5647208.0480000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-St-Toennis-Str-01"
+   },
+   "geometry": {
+    "x": 350365.28340000007,
+    "y": 5659147.9651999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Theo-Burauen-Platz-01"
+   },
+   "geometry": {
+    "x": 356543.54679999966,
+    "y": 5645039.0211999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Thomas-Dehler-Weg-01"
+   },
+   "geometry": {
+    "x": 363746.82969999965,
+    "y": 5644421.8116999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-01"
+   },
+   "geometry": {
+    "x": 354171.49220000021,
+    "y": 5644782.6753000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-02"
+   },
+   "geometry": {
+    "x": 354198.4495000001,
+    "y": 5644661.4498999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-03"
+   },
+   "geometry": {
+    "x": 354183.71210000012,
+    "y": 5644521.5014999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-04"
+   },
+   "geometry": {
+    "x": 354194.0932,
+    "y": 5644412.8605000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-05"
+   },
+   "geometry": {
+    "x": 354241.29870000016,
+    "y": 5644297.3975000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Universitaetsstr-06"
+   },
+   "geometry": {
+    "x": 354288.99309999961,
+    "y": 5644250.7785999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-01"
+   },
+   "geometry": {
+    "x": 355112.64699999988,
+    "y": 5645304.9965000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-02"
+   },
+   "geometry": {
+    "x": 355022.84059999976,
+    "y": 5645389.4177999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-03"
+   },
+   "geometry": {
+    "x": 354694.70629999973,
+    "y": 5645639.0306000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-04"
+   },
+   "geometry": {
+    "x": 354588.13300000038,
+    "y": 5645694.6871000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-05"
+   },
+   "geometry": {
+    "x": 354452.24729999993,
+    "y": 5645782.6159000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-06"
+   },
+   "geometry": {
+    "x": 354338.02440000046,
+    "y": 5645831.0373
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-07"
+   },
+   "geometry": {
+    "x": 354253.83019999973,
+    "y": 5645906.0460000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-08"
+   },
+   "geometry": {
+    "x": 354137.63210000005,
+    "y": 5645984.5275999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-09"
+   },
+   "geometry": {
+    "x": 354064.02880000044,
+    "y": 5646022.3311999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-10"
+   },
+   "geometry": {
+    "x": 353972.76420000009,
+    "y": 5646102.3734000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-11"
+   },
+   "geometry": {
+    "x": 353864.6838999996,
+    "y": 5646161.0814999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-12"
+   },
+   "geometry": {
+    "x": 353775.45220000017,
+    "y": 5646245.9661999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-13"
+   },
+   "geometry": {
+    "x": 353589.01709999982,
+    "y": 5646429.8199000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-14"
+   },
+   "geometry": {
+    "x": 353510.76339999959,
+    "y": 5646528.5091999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-15"
+   },
+   "geometry": {
+    "x": 353422.69479999971,
+    "y": 5646608.1153999995
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-16"
+   },
+   "geometry": {
+    "x": 353334.20760000031,
+    "y": 5646720.0055
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-17"
+   },
+   "geometry": {
+    "x": 353258.54330000002,
+    "y": 5646783.2397000007
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Venloer-Str-18"
+   },
+   "geometry": {
+    "x": 353170.35419999994,
+    "y": 5646865.7471999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Viersener-Str-01"
+   },
+   "geometry": {
+    "x": 356210.39900000021,
+    "y": 5647760.4120000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Volksgartenstr-01"
+   },
+   "geometry": {
+    "x": 355883.73550000042,
+    "y": 5643135.7193
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Volksgartenstr-02"
+   },
+   "geometry": {
+    "x": 355790.80840000045,
+    "y": 5643201.0834999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Volksgartenstr-03"
+   },
+   "geometry": {
+    "x": 355677.55449999962,
+    "y": 5643279.9674999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Volksgartenstr-04"
+   },
+   "geometry": {
+    "x": 355566.54959999956,
+    "y": 5643361.7069000006
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-01"
+   },
+   "geometry": {
+    "x": 356069.81450000033,
+    "y": 5643226.7022999991
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-02"
+   },
+   "geometry": {
+    "x": 355984.8208999997,
+    "y": 5643056.3323999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-03"
+   },
+   "geometry": {
+    "x": 355958.24590000045,
+    "y": 5642951.9058999997
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-04"
+   },
+   "geometry": {
+    "x": 355904.83169999998,
+    "y": 5642828.8191999998
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-05"
+   },
+   "geometry": {
+    "x": 355864.12069999985,
+    "y": 5642718.4767000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-06"
+   },
+   "geometry": {
+    "x": 355785.53419999965,
+    "y": 5642592.3408000004
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-07"
+   },
+   "geometry": {
+    "x": 355754.84920000006,
+    "y": 5642455.9269999992
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-08"
+   },
+   "geometry": {
+    "x": 355707.66830000002,
+    "y": 5642334.9718999993
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-09"
+   },
+   "geometry": {
+    "x": 355646.55360000022,
+    "y": 5642242.4571000002
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-10"
+   },
+   "geometry": {
+    "x": 355626.77099999972,
+    "y": 5642138.2769000009
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-11"
+   },
+   "geometry": {
+    "x": 355576.25949999969,
+    "y": 5642035.3418000005
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-12"
+   },
+   "geometry": {
+    "x": 355591.17960000038,
+    "y": 5641906.9505000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-13"
+   },
+   "geometry": {
+    "x": 355563.12930000015,
+    "y": 5641804.0467000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-14"
+   },
+   "geometry": {
+    "x": 355582.31759999972,
+    "y": 5641686.9199999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Vorgebirgsstr-15"
+   },
+   "geometry": {
+    "x": 355553.65610000025,
+    "y": 5641624.2586000003
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Weserpromenade-01"
+   },
+   "geometry": {
+    "x": 352307.57340000011,
+    "y": 5654949.4191999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Weserpromenade-02"
+   },
+   "geometry": {
+    "x": 352251.96059999987,
+    "y": 5655055.7236000001
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Wilhelmplatz-01"
+   },
+   "geometry": {
+    "x": 356213.74380000029,
+    "y": 5647701.1991000008
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Zuelpicher-Str-01"
+   },
+   "geometry": {
+    "x": 355174.18890000042,
+    "y": 5644067.9608999994
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Zuelpicher-Str-02"
+   },
+   "geometry": {
+    "x": 355128.70679999981,
+    "y": 5644045.8640999999
+   }
+  },
+  {
+   "attributes": {
+    "ap_name": "AP-Zuelpicher-Str-03"
+   },
+   "geometry": {
+    "x": 355031.2034,
+    "y": 5643964.0212999992
+   }
+  }
+ ]
+}

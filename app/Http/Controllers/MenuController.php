@@ -62,7 +62,11 @@ class MenuController extends Controller
                     "defaultActive" => $data->Marker->id == 54 ? true : false
                 ];
 
-                if ($data->Marker->name == 'Ipats') {
+                if (in_array((int) $data->Marker->slug, [209, 212], true)) {
+                    // El mapa usa specialType 1 para renderizar estos conjuntos
+                    // como nodos, igual que los marcadores de camaras.
+                    $menu_item['specialType'] = 1;
+                } else if ($data->Marker->name == 'Ipats') {
                 $menu_item['specialType'] = 8;
                 } else if ($data->Marker->name == 'Mapa de Calor') {
                     $menu_item['specialType'] = 4;

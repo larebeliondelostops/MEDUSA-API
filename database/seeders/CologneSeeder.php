@@ -64,6 +64,10 @@ class CologneSeeder extends Seeder
 
         DB::transaction(function (): void {
             $this->syncVillavicencioIdentity();
+            // Los seeders heredados usan IDs explicitos. PostgreSQL no avanza
+            // automaticamente sus secuencias, por lo que deben alinearse antes
+            // de insertar los permisos nuevos de Colonia con IDs generados.
+            $this->syncPostgresSequences(['users', 'roles', 'permissions']);
             $this->syncCatalog();
             $this->syncSettings();
 
@@ -99,13 +103,13 @@ class CologneSeeder extends Seeder
         ]);
     }
 
-    private function syncPostgresSequences(): void
+    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker']): void
     {
         if (DB::getDriverName() !== 'pgsql') {
             return;
         }
 
-        foreach (['users', 'roles', 'permissions', 'marker_type', 'marker'] as $table) {
+        foreach ($tables as $table) {
             DB::statement(
                 "SELECT setval(pg_get_serial_sequence('{$table}', 'id'), GREATEST(COALESCE((SELECT MAX(id) FROM {$table}), 1), 1), true)"
             );

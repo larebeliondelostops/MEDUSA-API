@@ -14,6 +14,25 @@ class ModelHasRolesTableSeeder extends Seeder
      */
     public function run()
     {
+        $sourceEmails = [
+            1 => 'ignicion@gmail.com',
+            2 => 'cristianrincon.ui@gmail.com',
+            7 => 'ackmilopamo@gmail.com',
+            21 => 'test@test.com',
+            24 => 'testza@test.com',
+            25 => 'llampreac@gmail.com',
+            26 => 'mferreirap24@gmail.com',
+            27 => 'usuarioprueba@gmail.com',
+            28 => 'danielxz331@gmail.com',
+            29 => 'jabella@gmail.com',
+            30 => 'fanor@gmail.com',
+            31 => 'alferez@gmail.com',
+            32 => 'torres@gmail.com',
+            43 => 'secretaria_movilidad@gmail.com',
+            44 => 'dianarincon@gmail.com',
+            47 => 'testgoogle@gmail.com',
+        ];
+
         $data = '
         {
           "array":[
@@ -112,10 +131,21 @@ class ModelHasRolesTableSeeder extends Seeder
 
         ';
 
-        $dataArray = json_decode($data, true);
+        $data = str_replace('App\\Models\\User', 'App\\\\Models\\\\User', $data);
+        $dataArray = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('model_has_roles')->insert([
+            if (! isset($sourceEmails[$Data['model_id']])
+                || $Data['model_type'] !== 'App\\Models\\User'
+                || ! DB::table('roles')->where('id', $Data['role_id'])->exists()
+                || ! DB::table('users')
+                    ->where('id', $Data['model_id'])
+                    ->where('email', $sourceEmails[$Data['model_id']])
+                    ->exists()) {
+                continue;
+            }
+
+            DB::table('model_has_roles')->insertOrIgnore([
                 'role_id' => $Data['role_id'],
                 'model_type' => $Data['model_type'],
                 'model_id' => $Data['model_id'],

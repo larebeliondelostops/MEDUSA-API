@@ -46,7 +46,7 @@ class RolesTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('roles')->insert([
+            DB::table('roles')->insertOrIgnore([
                 'id' => $Data['id'],
                 'name' => $Data['name'],
                 'guard_name' => $Data['guard_name'],

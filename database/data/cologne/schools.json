@@ -1,0 +1,3198 @@
+{
+ "displayFieldName": "name",
+ "fieldAliases": {
+  "name": "name"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "name",
+   "type": "esriFieldTypeString",
+   "alias": "name",
+   "length": 100
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "name": "Stephan-Lochner-Schule"
+   },
+   "geometry": {
+    "x": 354924.78239999991,
+    "y": 5644072.1959000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Loreleystr."
+   },
+   "geometry": {
+    "x": 356033.23759999964,
+    "y": 5642874.3857000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lindenbornschule"
+   },
+   "geometry": {
+    "x": 353483.69170000032,
+    "y": 5645861.6195999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Poller Hauptstr."
+   },
+   "geometry": {
+    "x": 358881.48610000033,
+    "y": 5641952.6568999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Garthestr."
+   },
+   "geometry": {
+    "x": 357842.23269999959,
+    "y": 5647944.8771000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Europaring"
+   },
+   "geometry": {
+    "x": 363456.27280000038,
+    "y": 5644127.8084999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heideschule"
+   },
+   "geometry": {
+    "x": 366234.65429999959,
+    "y": 5636121.3187000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Peter-Petersen-Schule"
+   },
+   "geometry": {
+    "x": 366400.1651999997,
+    "y": 5637695.3048999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hohestr."
+   },
+   "geometry": {
+    "x": 361438.50999999978,
+    "y": 5640209.7005000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hinter der Kirche"
+   },
+   "geometry": {
+    "x": 359571.79360000044,
+    "y": 5634509.2974999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Wilhelm-Leyendecker-Schule"
+   },
+   "geometry": {
+    "x": 353343.13449999969,
+    "y": 5646937.4231000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Severin-Schule"
+   },
+   "geometry": {
+    "x": 356545.68709999975,
+    "y": 5644088.1272999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Grundschule am Bildungscampus Köln-Kalk"
+   },
+   "geometry": {
+    "x": 360141.49289999995,
+    "y": 5644430.1532000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zusestr."
+   },
+   "geometry": {
+    "x": 348171.33189999964,
+    "y": 5646545.7828000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alfons-Nowak-Str."
+   },
+   "geometry": {
+    "x": 349602.14419999998,
+    "y": 5644268.7448999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Rondorf "
+   },
+   "geometry": {
+    "x": 359609.32569999993,
+    "y": 5638061.9422999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Grüneberg-Schule"
+   },
+   "geometry": {
+    "x": 359871.67219999991,
+    "y": 5644779.6648999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Offene Schule Köln"
+   },
+   "geometry": {
+    "x": 359630.55900000036,
+    "y": 5637488.6817000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Weidenpesch"
+   },
+   "geometry": {
+    "x": 354064.10929999966,
+    "y": 5648677.6482999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Friedrich-Karl-Str."
+   },
+   "geometry": {
+    "x": 356446.88860000018,
+    "y": 5648913.5504000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Gesamtschule am Bildungscampus Köln-Kalk "
+   },
+   "geometry": {
+    "x": 360162.80439999979,
+    "y": 5644480.5764000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Albertus-Magnus-Gymnasium"
+   },
+   "geometry": {
+    "x": 354455.34279999975,
+    "y": 5647185.0524000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Helios-Gesamtschule"
+   },
+   "geometry": {
+    "x": 354460.11919999961,
+    "y": 5646936.2177000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gutnickstr."
+   },
+   "geometry": {
+    "x": 349078.41760000028,
+    "y": 5657033.5527999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Ulrepforte"
+   },
+   "geometry": {
+    "x": 356131.73120000027,
+    "y": 5643567.5700000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Maternus-Grundschule"
+   },
+   "geometry": {
+    "x": 356491.42050000001,
+    "y": 5648430.7215999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Franziskus-Schule"
+   },
+   "geometry": {
+    "x": 357029.43800000008,
+    "y": 5641485.5421999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freinet-Schule Köln"
+   },
+   "geometry": {
+    "x": 355858.52190000005,
+    "y": 5645775.1294
+   }
+  },
+  {
+   "attributes": {
+    "name": "Diependahlstr."
+   },
+   "geometry": {
+    "x": 358739.37249999959,
+    "y": 5650281.1009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Südstadt"
+   },
+   "geometry": {
+    "x": 356070.60539999977,
+    "y": 5642897.5617999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schule am Engelshof"
+   },
+   "geometry": {
+    "x": 360920.70330000017,
+    "y": 5640547.1072000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erich-Gutenberg-Berufskolleg"
+   },
+   "geometry": {
+    "x": 358905.82820000034,
+    "y": 5649971.4321999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Ehrenfeld"
+   },
+   "geometry": {
+    "x": 351212.26429999992,
+    "y": 5647042.8487999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erlenweg"
+   },
+   "geometry": {
+    "x": 352116.85620000027,
+    "y": 5648024.0333999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Everhardstr."
+   },
+   "geometry": {
+    "x": 354512.21509999968,
+    "y": 5646234.6787999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hans-Christian-Andersen-Schule"
+   },
+   "geometry": {
+    "x": 352546.74239999987,
+    "y": 5643283.2617000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Friedlandstr."
+   },
+   "geometry": {
+    "x": 362436.6436999999,
+    "y": 5648300.6017000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Fußfallstr."
+   },
+   "geometry": {
+    "x": 362739.29860000033,
+    "y": 5645990.3213
+   }
+  },
+  {
+   "attributes": {
+    "name": "Michael-Ende-Schule"
+   },
+   "geometry": {
+    "x": 353482.40909999982,
+    "y": 5646683.8037999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heinrich-Böll-Gesamtschule"
+   },
+   "geometry": {
+    "x": 352738.83530000038,
+    "y": 5654840.5048999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Merianstr."
+   },
+   "geometry": {
+    "x": 352654.79569999967,
+    "y": 5654911.8631999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Höhere Fachschule für Augenoptik"
+   },
+   "geometry": {
+    "x": 357702.15780000016,
+    "y": 5641385.4043000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Neustadt/Nord "
+   },
+   "geometry": {
+    "x": 356956.85230000038,
+    "y": 5643172.0653000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gotenring"
+   },
+   "geometry": {
+    "x": 357963.26609999966,
+    "y": 5644684.8077000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lebensbaumweg"
+   },
+   "geometry": {
+    "x": 352843.8125,
+    "y": 5653007.1960000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Horststr."
+   },
+   "geometry": {
+    "x": 359433.78710000031,
+    "y": 5647061.5539999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Vietorstr."
+   },
+   "geometry": {
+    "x": 359465.64859999996,
+    "y": 5645307.4289999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Fröbel Akademie"
+   },
+   "geometry": {
+    "x": 355424.53220000025,
+    "y": 5643850.0568000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Stenzelbergstr."
+   },
+   "geometry": {
+    "x": 354471.15820000041,
+    "y": 5641946.8080000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lindenburger Allee"
+   },
+   "geometry": {
+    "x": 353541.35749999993,
+    "y": 5643788.4241000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Marienschule"
+   },
+   "geometry": {
+    "x": 354391.34949999955,
+    "y": 5651436.8308000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lohrbergstr."
+   },
+   "geometry": {
+    "x": 353991.59590000007,
+    "y": 5641901.6633000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mengenicher Str."
+   },
+   "geometry": {
+    "x": 349954.86519999988,
+    "y": 5649304.0758999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nesselrodestr."
+   },
+   "geometry": {
+    "x": 357088.52660000045,
+    "y": 5649295.4494000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Otfried-Preußler-Schule"
+   },
+   "geometry": {
+    "x": 357843.8518000003,
+    "y": 5647950.9750999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Vincenz-Statz-Schule"
+   },
+   "geometry": {
+    "x": 353482.02740000002,
+    "y": 5645855.3933000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sternsingerschule"
+   },
+   "geometry": {
+    "x": 352960.16930000018,
+    "y": 5651508.4541999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mainzer Str."
+   },
+   "geometry": {
+    "x": 356892.12060000002,
+    "y": 5642868.2932999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Kölner Domsingschule"
+   },
+   "geometry": {
+    "x": 353549.25930000003,
+    "y": 5644745.3112000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg für Medienberufe"
+   },
+   "geometry": {
+    "x": 355751.12839999981,
+    "y": 5643508.5648999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Nippes im Toni-Steingass-Park "
+   },
+   "geometry": {
+    "x": 356626.09960000031,
+    "y": 5648486.8896999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Am Wassermann "
+   },
+   "geometry": {
+    "x": 350840.51919999998,
+    "y": 5646376.3651999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Olpener Str."
+   },
+   "geometry": {
+    "x": 365028.37160000019,
+    "y": 5645459.9594999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Osterather Str."
+   },
+   "geometry": {
+    "x": 355149.4029000001,
+    "y": 5647236.4070999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Paul-Klee-Schule"
+   },
+   "geometry": {
+    "x": 354491.0279000001,
+    "y": 5647085.2700999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "KGS Dellbrück"
+   },
+   "geometry": {
+    "x": 365014.93730000034,
+    "y": 5648840.9744000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Trierer Str."
+   },
+   "geometry": {
+    "x": 355701.79480000027,
+    "y": 5643811.6959000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kardinal-Frings-Schule"
+   },
+   "geometry": {
+    "x": 351120.33239999972,
+    "y": 5646984.1859000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Volberger Weg"
+   },
+   "geometry": {
+    "x": 365782.53220000025,
+    "y": 5643287.0574999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Peter-Lustig-Schule"
+   },
+   "geometry": {
+    "x": 352630.23249999993,
+    "y": 5648732.7609999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Balthasarstr."
+   },
+   "geometry": {
+    "x": 356719.77969999984,
+    "y": 5646626.9188999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gaedestr."
+   },
+   "geometry": {
+    "x": 356639.50289999973,
+    "y": 5640588.9592000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ernstbergstr."
+   },
+   "geometry": {
+    "x": 351531.6409,
+    "y": 5656358.9770999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sankt-Nikolaus-Schule"
+   },
+   "geometry": {
+    "x": 355123.74969999958,
+    "y": 5641588.7314999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nikolaus-Groß-Schule"
+   },
+   "geometry": {
+    "x": 356154.14979999978,
+    "y": 5646887.6914000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Bachemer Str."
+   },
+   "geometry": {
+    "x": 353746.54619999975,
+    "y": 5643991.7423999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berrenrather Str."
+   },
+   "geometry": {
+    "x": 354355.15359999985,
+    "y": 5642945.0640999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sankt-Martin-Schule"
+   },
+   "geometry": {
+    "x": 353727.38350000046,
+    "y": 5653852.2157000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berthold-Otto-Schule"
+   },
+   "geometry": {
+    "x": 362377.25109999999,
+    "y": 5648369.0095000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Astrid-Lindgren-Grundschule"
+   },
+   "geometry": {
+    "x": 352979.96889999975,
+    "y": 5647144.9198000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Steinbergerstr."
+   },
+   "geometry": {
+    "x": 356041.26260000002,
+    "y": 5647561.1800999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freiligrathstr."
+   },
+   "geometry": {
+    "x": 352604.33430000022,
+    "y": 5643307.4843000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erlenweg"
+   },
+   "geometry": {
+    "x": 352095.0549999997,
+    "y": 5648065.8976000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Maria-Sibylla-Merian-Schule"
+   },
+   "geometry": {
+    "x": 357059.83359999955,
+    "y": 5641531.9558000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Andreas-Hermes Str."
+   },
+   "geometry": {
+    "x": 363793.07720000017,
+    "y": 5644699.9417000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Annastr."
+   },
+   "geometry": {
+    "x": 356554.58430000022,
+    "y": 5641195.8219000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Antwerpener Str."
+   },
+   "geometry": {
+    "x": 354446.41449999996,
+    "y": 5645593.1455000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "An St. Theresia"
+   },
+   "geometry": {
+    "x": 361278.13929999992,
+    "y": 5647690.0870999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Am Portzenacker"
+   },
+   "geometry": {
+    "x": 361679.15460000001,
+    "y": 5651797.5119000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Janusz-Korczak-Schule"
+   },
+   "geometry": {
+    "x": 358684.60960000008,
+    "y": 5642724.4684999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lukas-Schule"
+   },
+   "geometry": {
+    "x": 354555.01819999982,
+    "y": 5648615.0760999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Diesterwegstr."
+   },
+   "geometry": {
+    "x": 364884.3300999999,
+    "y": 5645797.3767000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zehnthofstr."
+   },
+   "geometry": {
+    "x": 362420.1950000003,
+    "y": 5643929.5625
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nibelungenstr."
+   },
+   "geometry": {
+    "x": 355595.64250000007,
+    "y": 5649005.1574000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Müngersdorf"
+   },
+   "geometry": {
+    "x": 351015.63360000029,
+    "y": 5645084.4519999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alzeyer Str."
+   },
+   "geometry": {
+    "x": 354612.31500000041,
+    "y": 5648609.1504999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alte Wipperfürther Str."
+   },
+   "geometry": {
+    "x": 360660.92430000007,
+    "y": 5646798.9134
+   }
+  },
+  {
+   "attributes": {
+    "name": "GGS Gartenstadt"
+   },
+   "geometry": {
+    "x": 354332.98060000036,
+    "y": 5651399.2020999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sankt-Mauritius-Schule"
+   },
+   "geometry": {
+    "x": 360647.05910000019,
+    "y": 5646826.7743999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "James-Krüss-Schule"
+   },
+   "geometry": {
+    "x": 362424.14190000016,
+    "y": 5643941.4791000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lohmarer Str."
+   },
+   "geometry": {
+    "x": 359800.74670000002,
+    "y": 5643817.3115999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Weimarer Str."
+   },
+   "geometry": {
+    "x": 361026.81680000015,
+    "y": 5645582.3587999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gotenring"
+   },
+   "geometry": {
+    "x": 357984.68450000044,
+    "y": 5644656.1589000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rosenzweigweg"
+   },
+   "geometry": {
+    "x": 355460.00970000029,
+    "y": 5641620.8194999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lustheider Str."
+   },
+   "geometry": {
+    "x": 361353.50339999981,
+    "y": 5644568.7166000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gemeinschaftsgrundschule Braunsfeld"
+   },
+   "geometry": {
+    "x": 352245.54009999987,
+    "y": 5645451.7473000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kolkrabenweg"
+   },
+   "geometry": {
+    "x": 354570.82930000033,
+    "y": 5648183.2642000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Neufelder Str."
+   },
+   "geometry": {
+    "x": 363404.69259999972,
+    "y": 5648268.6750000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "An den Kaulen"
+   },
+   "geometry": {
+    "x": 349916.29229999986,
+    "y": 5659594.8904999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kopernikusstr."
+   },
+   "geometry": {
+    "x": 360193.96219999995,
+    "y": 5646112.2780000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Friedrich-Wilhelm-Gymnasium"
+   },
+   "geometry": {
+    "x": 356536.32930000033,
+    "y": 5644294.5972000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Thusneldastr."
+   },
+   "geometry": {
+    "x": 358158.58660000004,
+    "y": 5644558.6262999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Irmgardis-Gymnasium"
+   },
+   "geometry": {
+    "x": 357157.48840000015,
+    "y": 5641183.1775000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Genoveva-Gymnasium"
+   },
+   "geometry": {
+    "x": 360114.94620000012,
+    "y": 5647746.7348999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Maximilian-Kolbe-Gymnasium"
+   },
+   "geometry": {
+    "x": 365590.27400000021,
+    "y": 5636392.1539999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zwirnerstr."
+   },
+   "geometry": {
+    "x": 356784.29899999965,
+    "y": 5643458.7785999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Von-Bodelschwingh-Str."
+   },
+   "geometry": {
+    "x": 361360.47070000041,
+    "y": 5650126.5880999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Manderscheider Platz"
+   },
+   "geometry": {
+    "x": 353871.7790000001,
+    "y": 5642449.5266999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nußbaumer Str."
+   },
+   "geometry": {
+    "x": 354064.02089999989,
+    "y": 5647262.4801000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mathilde-von-Mevissen-Grundschule"
+   },
+   "geometry": {
+    "x": 356586.43539999984,
+    "y": 5647677.1760000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "An den Kaulen"
+   },
+   "geometry": {
+    "x": 350205.87930000015,
+    "y": 5659508.2949000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Thymianweg"
+   },
+   "geometry": {
+    "x": 361797.99789999984,
+    "y": 5649461.6393999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Bendel-Realschule"
+   },
+   "geometry": {
+    "x": 359564.81259999983,
+    "y": 5647141.9868999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "An den Kaulen"
+   },
+   "geometry": {
+    "x": 349909.68819999974,
+    "y": 5659584.3424999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Regenbogenschule"
+   },
+   "geometry": {
+    "x": 364908.78039999958,
+    "y": 5648579.0997000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rheinschule"
+   },
+   "geometry": {
+    "x": 359559.00829999987,
+    "y": 5648036.1311000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Spoerkelhof"
+   },
+   "geometry": {
+    "x": 356474.15490000043,
+    "y": 5654822.2848000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Florianschule"
+   },
+   "geometry": {
+    "x": 355872.42760000005,
+    "y": 5649904.1975999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johannesschule"
+   },
+   "geometry": {
+    "x": 361897.19479999971,
+    "y": 5649755.5006000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ricarda-Huch Str. (GGS/KGS)"
+   },
+   "geometry": {
+    "x": 359046.00459999964,
+    "y": 5649929.5583999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Köln-Porz"
+   },
+   "geometry": {
+    "x": 363305.51800000016,
+    "y": 5638967.1555000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Pater-Delp-Schule"
+   },
+   "geometry": {
+    "x": 347730.42800000031,
+    "y": 5648397.6457000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Dellbrück"
+   },
+   "geometry": {
+    "x": 364341.1185999997,
+    "y": 5648298.4581000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schule Kunterbunt (ausgelagert)"
+   },
+   "geometry": {
+    "x": 350931.93460000027,
+    "y": 5648066.8028999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rheinschule"
+   },
+   "geometry": {
+    "x": 359743.0848000003,
+    "y": 5648141.1840000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Pater-Delp-Schule"
+   },
+   "geometry": {
+    "x": 347670.03139999975,
+    "y": 5648598.1974999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Ossendorf"
+   },
+   "geometry": {
+    "x": 352306.77749999985,
+    "y": 5649574.5888999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Pfälzer Str."
+   },
+   "geometry": {
+    "x": 355474.36560000014,
+    "y": 5643599.5581999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johanniter-Schule"
+   },
+   "geometry": {
+    "x": 347868.58100000024,
+    "y": 5646151.9477999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ildefons-Herwegen-Schule"
+   },
+   "geometry": {
+    "x": 349435.22020000033,
+    "y": 5644510.1566000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Albert-Schweitzer-Schule"
+   },
+   "geometry": {
+    "x": 361142.39059999958,
+    "y": 5637711.4099000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Anne-Frank-Schule"
+   },
+   "geometry": {
+    "x": 356729.06369999982,
+    "y": 5638078.8355
+   }
+  },
+  {
+   "attributes": {
+    "name": "EMAnuel-Schule"
+   },
+   "geometry": {
+    "x": 359692.14199999999,
+    "y": 5637392.7094000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Brüder-Grimm-Schule"
+   },
+   "geometry": {
+    "x": 360154.99890000001,
+    "y": 5636822.5052000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Godorfer Hauptstr."
+   },
+   "geometry": {
+    "x": 357413.9720999999,
+    "y": 5634996.8476
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schule IM Süden"
+   },
+   "geometry": {
+    "x": 356617.82540000044,
+    "y": 5635832.3202
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schule IM Süden"
+   },
+   "geometry": {
+    "x": 354439.28689999972,
+    "y": 5636242.9118000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Grüngürtelschule"
+   },
+   "geometry": {
+    "x": 359501.21380000003,
+    "y": 5638809.0584999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Konrad-Adenauer-Schule"
+   },
+   "geometry": {
+    "x": 349459.00609999988,
+    "y": 5653178.6217999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ricarda-Huch Str. (GGS/KGS)"
+   },
+   "geometry": {
+    "x": 360207.47460000031,
+    "y": 5650193.1173
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lise-Meitner-Gesamtschule"
+   },
+   "geometry": {
+    "x": 363764.84750000015,
+    "y": 5640983.3660000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Leuchterstr."
+   },
+   "geometry": {
+    "x": 362348.13910000026,
+    "y": 5651346.4387999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Anna-Langohr-Schule"
+   },
+   "geometry": {
+    "x": 351681.88750000019,
+    "y": 5654131.7893000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erich-Ohser-Schule"
+   },
+   "geometry": {
+    "x": 350663.77099999972,
+    "y": 5651628.3230000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Adolph-Kolping-Str."
+   },
+   "geometry": {
+    "x": 365595.01379999984,
+    "y": 5635924.3590999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hauptstr."
+   },
+   "geometry": {
+    "x": 363295.09020000044,
+    "y": 5639073.4224999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schmittgasse"
+   },
+   "geometry": {
+    "x": 362463.87249999959,
+    "y": 5636751.2104000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kupfergasse"
+   },
+   "geometry": {
+    "x": 365037.2165000001,
+    "y": 5638313.1468000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Konrad-Adenauer-Str."
+   },
+   "geometry": {
+    "x": 363955.88150000013,
+    "y": 5640044.9134
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kurt-Tucholsky-Hauptschule"
+   },
+   "geometry": {
+    "x": 363572.17430000007,
+    "y": 5644390.7717000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Reutlinger Str."
+   },
+   "geometry": {
+    "x": 354820.05399999954,
+    "y": 5648373.8387000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ursula-Kuhr-Schule"
+   },
+   "geometry": {
+    "x": 352555.15809999965,
+    "y": 5652849.0727999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Adolph-Kolping-Schule"
+   },
+   "geometry": {
+    "x": 359941.16150000039,
+    "y": 5645543.6414999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Großer Griechenmarkt"
+   },
+   "geometry": {
+    "x": 355996.53450000007,
+    "y": 5644296.7791000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Baadenberger Str."
+   },
+   "geometry": {
+    "x": 353840.05020000041,
+    "y": 5647945.2614999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Friedrich-List-Schule"
+   },
+   "geometry": {
+    "x": 363312.85390000045,
+    "y": 5640687.6317999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heßhofstr."
+   },
+   "geometry": {
+    "x": 361219.44199999981,
+    "y": 5643682.3357999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heinzelmännchen-Schule"
+   },
+   "geometry": {
+    "x": 361380.16229999997,
+    "y": 5643964.4221000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Christoph-Winters-Schule"
+   },
+   "geometry": {
+    "x": 357268.44809999969,
+    "y": 5647643.2410000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Tiefentalstr."
+   },
+   "geometry": {
+    "x": 360256.6660000002,
+    "y": 5648964.5260000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lessing-Gymnasium"
+   },
+   "geometry": {
+    "x": 363132.40890000015,
+    "y": 5636849.1580999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Amos-Comenius-Schule"
+   },
+   "geometry": {
+    "x": 363131.63929999992,
+    "y": 5636838.4229000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kopernikus-Schule"
+   },
+   "geometry": {
+    "x": 364334.34240000043,
+    "y": 5639157.8175000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Montessori-Grundschule Ferdinandstr."
+   },
+   "geometry": {
+    "x": 358764.64460000023,
+    "y": 5645878.9495999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Montessori-Grundschule Gilbachstr."
+   },
+   "geometry": {
+    "x": 354836.71989999991,
+    "y": 5645695.6856999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Joseph-Gronewald-Schule"
+   },
+   "geometry": {
+    "x": 353755.78830000013,
+    "y": 5644474.4381000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Spoerkelhof"
+   },
+   "geometry": {
+    "x": 355198.8498999998,
+    "y": 5656466.7413999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Montessori-Grundschule Ferdinandstr."
+   },
+   "geometry": {
+    "x": 361079.80929999985,
+    "y": 5644785.7311000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kupfergasse"
+   },
+   "geometry": {
+    "x": 364982.98639999982,
+    "y": 5638205.7744999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nelson-Mandela-Schule"
+   },
+   "geometry": {
+    "x": 361162.14599999972,
+    "y": 5647257.6502
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sieben-Brücken-Schule"
+   },
+   "geometry": {
+    "x": 348263.78600000031,
+    "y": 5646230.4910000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Christoph-Winters-Schule"
+   },
+   "geometry": {
+    "x": 353551.92899999954,
+    "y": 5643802.3133000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Eduard-Mörike-Schule"
+   },
+   "geometry": {
+    "x": 366255.77469999995,
+    "y": 5637608.4916999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Wasseramselweg"
+   },
+   "geometry": {
+    "x": 350997.50669999979,
+    "y": 5646481.4218000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Auguststr."
+   },
+   "geometry": {
+    "x": 356144.10960000008,
+    "y": 5647379.0609000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berliner Str."
+   },
+   "geometry": {
+    "x": 362545.38069999963,
+    "y": 5651870.8356999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Christoph-Winters-Schule"
+   },
+   "geometry": {
+    "x": 353594.83059999999,
+    "y": 5643385.0678000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Auf dem Sandberg"
+   },
+   "geometry": {
+    "x": 359123.85120000038,
+    "y": 5642426.5238000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zülpicher Str."
+   },
+   "geometry": {
+    "x": 354309.03789999988,
+    "y": 5643625.5210999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Don-Bosco-Schule"
+   },
+   "geometry": {
+    "x": 364264.22219999973,
+    "y": 5639085.4945
+   }
+  },
+  {
+   "attributes": {
+    "name": "Unter Birken"
+   },
+   "geometry": {
+    "x": 364925.66559999995,
+    "y": 5639699.8339000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "KHS am Rhein"
+   },
+   "geometry": {
+    "x": 356898.44859999977,
+    "y": 5646030.7445999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Redwitzstr."
+   },
+   "geometry": {
+    "x": 354054.42929999996,
+    "y": 5643227.4119000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lindweiler Hof"
+   },
+   "geometry": {
+    "x": 353003.16530000046,
+    "y": 5647129.3003000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Geschwister-Scholl-Schule"
+   },
+   "geometry": {
+    "x": 354001.77929999959,
+    "y": 5646615.5848999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ferdinand-Lassalle-Realschule"
+   },
+   "geometry": {
+    "x": 360087.78980000038,
+    "y": 5647131.9123
+   }
+  },
+  {
+   "attributes": {
+    "name": "Elly-Heuss-Knapp-Schule"
+   },
+   "geometry": {
+    "x": 360022.07070000004,
+    "y": 5647159.9629999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Im Hasental"
+   },
+   "geometry": {
+    "x": 358034.12430000026,
+    "y": 5643891.5217000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Peter-Ustinov-Schule"
+   },
+   "geometry": {
+    "x": 356146.45969999954,
+    "y": 5648664.4302999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Ursulinen-Realschule"
+   },
+   "geometry": {
+    "x": 356716.26530000009,
+    "y": 5645884.0733000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Theodor-Heuss-Schule"
+   },
+   "geometry": {
+    "x": 353496.25119999982,
+    "y": 5642752.1984999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Auf dem Sandberg"
+   },
+   "geometry": {
+    "x": 359796.85580000002,
+    "y": 5644725.8553999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Edith-Stein-Schule"
+   },
+   "geometry": {
+    "x": 356413.58370000031,
+    "y": 5648621.7853999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Pestalozzischule"
+   },
+   "geometry": {
+    "x": 359837.75549999997,
+    "y": 5644754.7274999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hans-Böckler-Berufskolleg"
+   },
+   "geometry": {
+    "x": 358346.32679999992,
+    "y": 5644461.8790000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Pestalozzischule"
+   },
+   "geometry": {
+    "x": 366442.85020000022,
+    "y": 5636531.3277000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Leonardo-da-Vinci-Gymnasium"
+   },
+   "geometry": {
+    "x": 356464.68180000037,
+    "y": 5648106.7105999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Realschule am Rhein"
+   },
+   "geometry": {
+    "x": 355868.57600000035,
+    "y": 5645823.8127999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Albert-Schweitzer-Schule"
+   },
+   "geometry": {
+    "x": 362867.50549999997,
+    "y": 5643530.9741999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Käthe-Kollwitz-Schule"
+   },
+   "geometry": {
+    "x": 364886.17310000025,
+    "y": 5645778.4905999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Bertha-von-Suttner-Realschule"
+   },
+   "geometry": {
+    "x": 350954.83770000003,
+    "y": 5647845.4167999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Eichendorff-Schule"
+   },
+   "geometry": {
+    "x": 353660.14400000032,
+    "y": 5647293.5387999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johannes-Gutenberg-Schule"
+   },
+   "geometry": {
+    "x": 357254.27819999959,
+    "y": 5635324.9389999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Wilhelm-Busch-Realschule"
+   },
+   "geometry": {
+    "x": 363204.88760000002,
+    "y": 5636870.6723999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Max-Planck-Realschule"
+   },
+   "geometry": {
+    "x": 364147.34119999968,
+    "y": 5639063.7817000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Otto-Lilienthal-Schule"
+   },
+   "geometry": {
+    "x": 365471.23819999956,
+    "y": 5636506.2064999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Blumenthalstr."
+   },
+   "geometry": {
+    "x": 356668.16459999979,
+    "y": 5646794.5340999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Rodenkirchen"
+   },
+   "geometry": {
+    "x": 359785.38480000012,
+    "y": 5637870.0516999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rhein-Gymnasium"
+   },
+   "geometry": {
+    "x": 359718.46640000027,
+    "y": 5648308.7413999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Montessori-Gymnasium"
+   },
+   "geometry": {
+    "x": 352771.34800000023,
+    "y": 5647852.8167000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Königin-Luise-Schule"
+   },
+   "geometry": {
+    "x": 355523.62119999994,
+    "y": 5645091.0344999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erich-Kästner-Gymnasium"
+   },
+   "geometry": {
+    "x": 357066.06730000023,
+    "y": 5648832.0113999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Deutzer Gymnasium"
+   },
+   "geometry": {
+    "x": 357802.87669999991,
+    "y": 5644410.1184
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kaiserin-Augusta-Schule"
+   },
+   "geometry": {
+    "x": 356541.13080000039,
+    "y": 5644189.6165999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Kreuzgasse"
+   },
+   "geometry": {
+    "x": 354345.83719999995,
+    "y": 5645299.0144999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hölderlin-Gymnasium"
+   },
+   "geometry": {
+    "x": 359981.09740000032,
+    "y": 5646964.0694999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hansa-Gymnasium"
+   },
+   "geometry": {
+    "x": 356051.85520000011,
+    "y": 5646051.2515999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Humboldt-Gymnasium"
+   },
+   "geometry": {
+    "x": 355846.78809999954,
+    "y": 5643683.5890999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Leonardo-da-Vinci-Gymnasium"
+   },
+   "geometry": {
+    "x": 356476.92379999999,
+    "y": 5648527.4364999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Köln-Porz"
+   },
+   "geometry": {
+    "x": 358468.38729999959,
+    "y": 5644600.5120000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Friedrich-Wilhelm-Gymnasium"
+   },
+   "geometry": {
+    "x": 356376.50090000033,
+    "y": 5644090.8266000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gertrud-Bollenrath-Schule"
+   },
+   "geometry": {
+    "x": 351764.71910000034,
+    "y": 5652631.3548000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kaiserin-Theophanu-Schule"
+   },
+   "geometry": {
+    "x": 360024.98280000035,
+    "y": 5644743.2212000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Gottfried-Herder-Gymnasium"
+   },
+   "geometry": {
+    "x": 361054.00370000023,
+    "y": 5646330.3280999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Ursulinen-Gymnasium"
+   },
+   "geometry": {
+    "x": 356737.12750000041,
+    "y": 5645883.3144000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Dreikönigs-Gymnasium"
+   },
+   "geometry": {
+    "x": 354584.54839999974,
+    "y": 5648157.7765999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Claudia Agrippina Privatgymnasium"
+   },
+   "geometry": {
+    "x": 352260.36349999998,
+    "y": 5645553.8794
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Brügelmannstr.  "
+   },
+   "geometry": {
+    "x": 358410.49849999975,
+    "y": 5645434.693
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zugweg"
+   },
+   "geometry": {
+    "x": 356381.95010000002,
+    "y": 5642708.6538999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Baadenberger Str."
+   },
+   "geometry": {
+    "x": 353853.85589999985,
+    "y": 5647973.2079000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "GGS Köln-Flittard"
+   },
+   "geometry": {
+    "x": 358220.73579999991,
+    "y": 5651502.9991999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Paul-Maar-Schule"
+   },
+   "geometry": {
+    "x": 356442.84769999981,
+    "y": 5644457.4122000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Henry-Ford-Realschule"
+   },
+   "geometry": {
+    "x": 353393.68709999975,
+    "y": 5654163.9330000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Helios-Gesamtschule"
+   },
+   "geometry": {
+    "x": 350897.23259999976,
+    "y": 5646358.5189999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "GGS Köln-Flittard"
+   },
+   "geometry": {
+    "x": 359023.9123999998,
+    "y": 5651438.7434
+   }
+  },
+  {
+   "attributes": {
+    "name": "Wilhelm-Leyendecke Schule"
+   },
+   "geometry": {
+    "x": 355506.8526999997,
+    "y": 5641670.0245999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Riphahnstr."
+   },
+   "geometry": {
+    "x": 352833.92389999982,
+    "y": 5654127.5986000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hilde-Domin-Schule"
+   },
+   "geometry": {
+    "x": 363478.99380000029,
+    "y": 5647872.1153999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Georg-Büchner-Gymnasium"
+   },
+   "geometry": {
+    "x": 348123.12540000025,
+    "y": 5644772.4254999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Rodenkirchen"
+   },
+   "geometry": {
+    "x": 359239.14510000031,
+    "y": 5639234.3406000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg der Landwirtschaftskammer NRW"
+   },
+   "geometry": {
+    "x": 349143.49990000017,
+    "y": 5652216.1095000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg an der Lindenstr."
+   },
+   "geometry": {
+    "x": 354803.67640000023,
+    "y": 5644392.4451000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Humboldtstr."
+   },
+   "geometry": {
+    "x": 355377.99789999984,
+    "y": 5644354.9575999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Richard-Riemerschmid-Berufskolleg"
+   },
+   "geometry": {
+    "x": 356092.7547000004,
+    "y": 5643753.2223000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Rodenkirchen"
+   },
+   "geometry": {
+    "x": 359368.37409999967,
+    "y": 5639373.6544000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Köln-Kolleg"
+   },
+   "geometry": {
+    "x": 358132.03419999965,
+    "y": 5643681.2020999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schiller-Gymnasium"
+   },
+   "geometry": {
+    "x": 354464.16789999977,
+    "y": 5643347.4471000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gereonsmühlengasse (AbR, AbG)"
+   },
+   "geometry": {
+    "x": 358135.85410000011,
+    "y": 5643626.3070999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gereonsmühlengasse (AbR, AbG) "
+   },
+   "geometry": {
+    "x": 358178.92729999963,
+    "y": 5643663.6239999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Nicolaus-August-Otto-Berufskolleg"
+   },
+   "geometry": {
+    "x": 358299.09609999973,
+    "y": 5644624.3776999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Südstadt"
+   },
+   "geometry": {
+    "x": 356302.71449999977,
+    "y": 5642677.7656999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Joseph-DuMont-Berufskolleg"
+   },
+   "geometry": {
+    "x": 354694.20110000018,
+    "y": 5648008.7389000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alfred-Müller-Armack-Berufskolleg"
+   },
+   "geometry": {
+    "x": 355027.56869999971,
+    "y": 5641281.4451000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Berufskolleg Köln"
+   },
+   "geometry": {
+    "x": 354570.20519999973,
+    "y": 5643250.2666999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rheinische Akademie Köln"
+   },
+   "geometry": {
+    "x": 352483.99210000038,
+    "y": 5646594.5653000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Fachschule des Möbelhandels"
+   },
+   "geometry": {
+    "x": 353714.48400000017,
+    "y": 5644390.8737000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Michaelshoven"
+   },
+   "geometry": {
+    "x": 359201.59100000001,
+    "y": 5638159.3631999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Clarenhofschule"
+   },
+   "geometry": {
+    "x": 347448.15369999968,
+    "y": 5645150.0464999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Willy-Brandt-Gesamtschule"
+   },
+   "geometry": {
+    "x": 362710.58999999985,
+    "y": 5649859.3718999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Belvederestr."
+   },
+   "geometry": {
+    "x": 350426.60309999995,
+    "y": 5646182.4673999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Europaschule Köln"
+   },
+   "geometry": {
+    "x": 355889.25480000023,
+    "y": 5640953.2218999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg an der Lindenstr."
+   },
+   "geometry": {
+    "x": 354814.46850000042,
+    "y": 5644661.7312000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erzb. Liebfrauenschule"
+   },
+   "geometry": {
+    "x": 353696.97240000032,
+    "y": 5644581.1066999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Apostelgymnasium"
+   },
+   "geometry": {
+    "x": 353521.50569999963,
+    "y": 5644346.9407000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Stadtgymnasium Porz"
+   },
+   "geometry": {
+    "x": 364376.10649999976,
+    "y": 5638517.9828999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freie Naturschulen Köln"
+   },
+   "geometry": {
+    "x": 359254.85570000019,
+    "y": 5637185.8921000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heinrich-Mann-Gymnasium"
+   },
+   "geometry": {
+    "x": 351524.67399999965,
+    "y": 5653971.0676000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Soldiner Str."
+   },
+   "geometry": {
+    "x": 351743.30150000006,
+    "y": 5652653.8714000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Lindenthal"
+   },
+   "geometry": {
+    "x": 350751.60869999975,
+    "y": 5645766.5629999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Georg-Simon-Ohm-Berufskolleg"
+   },
+   "geometry": {
+    "x": 359393.4271999998,
+    "y": 5644300.7435999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freie Naturschulen Köln"
+   },
+   "geometry": {
+    "x": 359256.44319999963,
+    "y": 5637232.2602999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Lindenthal"
+   },
+   "geometry": {
+    "x": 353246.52280000038,
+    "y": 5641655.5058999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "IWK gGmbH"
+   },
+   "geometry": {
+    "x": 357928.90670000017,
+    "y": 5643572.3491999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "LOGOS-Grundschule"
+   },
+   "geometry": {
+    "x": 360577.1174999997,
+    "y": 5646614.5711000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Kalk"
+   },
+   "geometry": {
+    "x": 358361.73190000001,
+    "y": 5645473.4443999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freie Waldorfschule"
+   },
+   "geometry": {
+    "x": 352377.25569999963,
+    "y": 5655255.7586000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Langemaß"
+   },
+   "geometry": {
+    "x": 360189.12359999958,
+    "y": 5648297.1647999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Westerwaldstr."
+   },
+   "geometry": {
+    "x": 359141.10929999966,
+    "y": 5643821.4265999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Halfengasse "
+   },
+   "geometry": {
+    "x": 356782.76740000024,
+    "y": 5651351.0760999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Michaeli-Schule"
+   },
+   "geometry": {
+    "x": 355502.53490000032,
+    "y": 5643074.1442000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Albert-Schweitzer-Schule"
+   },
+   "geometry": {
+    "x": 348575.34939999972,
+    "y": 5644942.3708999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Forststr."
+   },
+   "geometry": {
+    "x": 365323.07639999967,
+    "y": 5642320.1942999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rosenmaarschule"
+   },
+   "geometry": {
+    "x": 362268.67019999959,
+    "y": 5650931.8932000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Martin-Köllen-Schule"
+   },
+   "geometry": {
+    "x": 359086.37249999959,
+    "y": 5644228.3237999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Neue Sandkaul"
+   },
+   "geometry": {
+    "x": 348230.8041000003,
+    "y": 5648006.1028000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gustav-Heinemann-Schule"
+   },
+   "geometry": {
+    "x": 353176.48359999992,
+    "y": 5654534.5368000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Holweide"
+   },
+   "geometry": {
+    "x": 362277.19510000013,
+    "y": 5647371.5895000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Montessori-Schule"
+   },
+   "geometry": {
+    "x": 353198.89869999979,
+    "y": 5648010.0921999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gymnasium Köln-Pesch"
+   },
+   "geometry": {
+    "x": 350669.59889999963,
+    "y": 5651767.0077
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heinrich-Welsch-Schule"
+   },
+   "geometry": {
+    "x": 358211.91449999996,
+    "y": 5651501.1370999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Katharina-Henoth-Gesamtschule"
+   },
+   "geometry": {
+    "x": 361145.56740000006,
+    "y": 5644813.0181000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Werner-von-Siemens-Schule"
+   },
+   "geometry": {
+    "x": 358517.85840000026,
+    "y": 5644560.2561000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Max-Ernst-Gesamtschule"
+   },
+   "geometry": {
+    "x": 350542.5876000002,
+    "y": 5649617.4174000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Katharina-Henoth-Gesamtschule"
+   },
+   "geometry": {
+    "x": 361525.91820000019,
+    "y": 5644825.9907000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lise-Meitner-Gesamtschule"
+   },
+   "geometry": {
+    "x": 363792.72499999963,
+    "y": 5640654.5327000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Irisweg"
+   },
+   "geometry": {
+    "x": 363284.82330000028,
+    "y": 5637407.5080999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Brehmstr."
+   },
+   "geometry": {
+    "x": 357678.82589999959,
+    "y": 5648204.5298999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Lauder-Morijah-Schule"
+   },
+   "geometry": {
+    "x": 354359.63790000044,
+    "y": 5647052.4500999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "GGS Müngersdorf"
+   },
+   "geometry": {
+    "x": 351071.00059999991,
+    "y": 5645435.0217000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Ehrenfeld"
+   },
+   "geometry": {
+    "x": 354106.26669999957,
+    "y": 5645322.7025000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alter Mühlenweg"
+   },
+   "geometry": {
+    "x": 358074.49729999993,
+    "y": 5643685.3956000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Barbara-von-Sell-Berufskolleg"
+   },
+   "geometry": {
+    "x": 356380.12050000019,
+    "y": 5648562.9896000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freie Schule Köln"
+   },
+   "geometry": {
+    "x": 356130.75930000003,
+    "y": 5646854.8617000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hans-Böckler-Berufskolleg"
+   },
+   "geometry": {
+    "x": 357792.13360000029,
+    "y": 5644901.5734000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Innenstadt (igis)"
+   },
+   "geometry": {
+    "x": 356994.72580000013,
+    "y": 5643251.0523000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Olympia-Schule"
+   },
+   "geometry": {
+    "x": 348134.4486999996,
+    "y": 5648088.091
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ferdinand Franz Wallraf Gymnasium"
+   },
+   "geometry": {
+    "x": 360560.78369999956,
+    "y": 5646600.0254999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "BilinGO-Bilinguale Grundschule"
+   },
+   "geometry": {
+    "x": 352004.83090000041,
+    "y": 5645464.9749999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Aktive Schule Köln"
+   },
+   "geometry": {
+    "x": 350956.85819999967,
+    "y": 5646462.3774999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Carl-von-Ossietzky-Gesamtschule"
+   },
+   "geometry": {
+    "x": 354087.8953999998,
+    "y": 5650732.3367999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "BilinGo Campus"
+   },
+   "geometry": {
+    "x": 352119.4020999996,
+    "y": 5645847.1920999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Aktive Schule Köln"
+   },
+   "geometry": {
+    "x": 350961.66779999994,
+    "y": 5646519.0490000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Gesamtschule Innenstadt (igis)"
+   },
+   "geometry": {
+    "x": 355553.25910000037,
+    "y": 5644314.8653999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Hildegard-von-Bingen-Schule"
+   },
+   "geometry": {
+    "x": 354705.22790000029,
+    "y": 5642624.3063999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Deutzer Freiheit"
+   },
+   "geometry": {
+    "x": 358090.03550000023,
+    "y": 5644646.4586999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Elisabeth-von-Thüringen-Schule"
+   },
+   "geometry": {
+    "x": 354345.0560999997,
+    "y": 5643383.4309
+   }
+  },
+  {
+   "attributes": {
+    "name": "Tages-u. Abendrealschule (TAS)"
+   },
+   "geometry": {
+    "x": 360109.20069999993,
+    "y": 5647828.7890000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Georg-Simon-Ohm-Berufskolleg"
+   },
+   "geometry": {
+    "x": 359172.16089999955,
+    "y": 5643655.4715
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Kartäuserwall"
+   },
+   "geometry": {
+    "x": 356076.2407999998,
+    "y": 5643527.5909000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Anna-Freud-Schule"
+   },
+   "geometry": {
+    "x": 350733.64080000017,
+    "y": 5645888.0423000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heinrich-Heine-Gymnasium"
+   },
+   "geometry": {
+    "x": 362835.96810000017,
+    "y": 5643531.7470999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "KGS Dellbrück"
+   },
+   "geometry": {
+    "x": 364197.6456000004,
+    "y": 5649145.7862999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Janusz-Korczak-Schule"
+   },
+   "geometry": {
+    "x": 359102.75870000012,
+    "y": 5642220.3753999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Christoph-Winters-Schule"
+   },
+   "geometry": {
+    "x": 358076.22449999955,
+    "y": 5647903.5329999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Johann-Christoph-Winters-Schule"
+   },
+   "geometry": {
+    "x": 354049.48029999994,
+    "y": 5643561.8085999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Paul-Maar-Schule"
+   },
+   "geometry": {
+    "x": 355421.28969999962,
+    "y": 5643612.0047999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kolkrabenweg"
+   },
+   "geometry": {
+    "x": 348221.76150000002,
+    "y": 5646494.8505000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kolkrabenweg"
+   },
+   "geometry": {
+    "x": 350995.95380000025,
+    "y": 5648084.3420000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Martin-Köllen-Schule"
+   },
+   "geometry": {
+    "x": 360321.6557,
+    "y": 5644747.8048999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg an der Lindenstr."
+   },
+   "geometry": {
+    "x": 354958.49820000026,
+    "y": 5644107.9711000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Humboldtstr."
+   },
+   "geometry": {
+    "x": 356129.64950000029,
+    "y": 5644023.4364
+   }
+  },
+  {
+   "attributes": {
+    "name": "Berufskolleg Ulrepforte"
+   },
+   "geometry": {
+    "x": 361420.54339999985,
+    "y": 5650166.5822999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "An den Kaulen"
+   },
+   "geometry": {
+    "x": 350209.71839999966,
+    "y": 5659503.1783000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Erich-Gutenberg-Berufskolleg"
+   },
+   "geometry": {
+    "x": 360908.57720000017,
+    "y": 5646268.6559999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Offene Schule Köln"
+   },
+   "geometry": {
+    "x": 359763.37980000023,
+    "y": 5637472.5420999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Werner Heisenberg Realschule"
+   },
+   "geometry": {
+    "x": 360568.43049999978,
+    "y": 5646593.1434000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Trude-Herr-Gesamtschule"
+   },
+   "geometry": {
+    "x": 358608.26269999985,
+    "y": 5645717.9630999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heliosschule"
+   },
+   "geometry": {
+    "x": 353310.43670000043,
+    "y": 5642703.1254999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Freie Waldorfschule Köln"
+   },
+   "geometry": {
+    "x": 352380.24959999975,
+    "y": 5655208.1883000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mommsenstr."
+   },
+   "geometry": {
+    "x": 353321.47279999964,
+    "y": 5642759.8837000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kretzerstr."
+   },
+   "geometry": {
+    "x": 356991.51229999959,
+    "y": 5648269.5815999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Akademie für berufliche Bildung"
+   },
+   "geometry": {
+    "x": 352304.48510000017,
+    "y": 5645804.4370000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Trude-Herr-Gesamtschule"
+   },
+   "geometry": {
+    "x": 359696.68200000003,
+    "y": 5646871.6910999995
+   }
+  }
+ ]
+}

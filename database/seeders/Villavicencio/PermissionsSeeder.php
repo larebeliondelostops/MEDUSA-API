@@ -235,7 +235,7 @@ class PermissionsSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('permissions')->insert([
+            DB::table('permissions')->insertOrIgnore([
                 'id' => $Data['id'],
                 'name' => $Data['name'],
                 'guard_name' => $Data['guard_name'],

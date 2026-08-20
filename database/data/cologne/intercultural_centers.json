@@ -1,0 +1,472 @@
+{
+ "displayFieldName": "z_name",
+ "fieldAliases": {
+  "z_name": "z_name"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "z_name",
+   "type": "esriFieldTypeString",
+   "alias": "z_name",
+   "length": 255
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "z_name": "AWA e. V."
+   },
+   "geometry": {
+    "x": 352893.51109999977,
+    "y": 5645072.5939000007
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Deutsch-Spanischer Kulturkreis \"Antonio Machado e. V.\""
+   },
+   "geometry": {
+    "x": 356683.58980000019,
+    "y": 5643304.2336999997
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Griechische Gemeinde Köln"
+   },
+   "geometry": {
+    "x": 354823.68070000038,
+    "y": 5646915.4925999995
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Islamischer Kulturverein"
+   },
+   "geometry": {
+    "x": 357561.37449999992,
+    "y": 5644480.1512000002
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Shahrzad e. V."
+   },
+   "geometry": {
+    "x": 352226.35360000003,
+    "y": 5644869.1483999994
+   }
+  },
+  {
+   "attributes": {
+    "z_name": null
+   }
+  },
+  {
+   "attributes": {
+    "z_name": null
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Afina-Assoziation für Interkulturelle und Nachbarschaftliche\nArbeit e. V."
+   },
+   "geometry": {
+    "x": 355489.52579999994,
+    "y": 5642193.0138000008
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Shahrzad e. V. "
+   },
+   "geometry": {
+    "x": 356405.01690000016,
+    "y": 5646109.2459999993
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "FliehKraft - Kölner Flüchtlingszentrum "
+   },
+   "geometry": {
+    "x": 356127.30580000021,
+    "y": 5647888.7457999997
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Kurdisches Kultur- und Bildungszentrum Köln e. V."
+   },
+   "geometry": {
+    "x": 361470.27579999994,
+    "y": 5645044.6163999997
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Interkulturelles Zentrum am Kölnberg"
+   },
+   "geometry": {
+    "x": 353920.6612999998,
+    "y": 5636708.9772999994
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Internationales Caritas-Zentrum Sülz"
+   },
+   "geometry": {
+    "x": 353997.97589999996,
+    "y": 5643229.0720000006
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Jugendhilfe und Schule e. V."
+   },
+   "geometry": {
+    "x": 355972.79920000024,
+    "y": 5647756.4639999997
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Deutsch-Türkischer Verein Köln e. V."
+   },
+   "geometry": {
+    "x": 352855.49870000035,
+    "y": 5654231.0695999991
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Deutsch-Griechisches Kulturzentrum Porz e. V."
+   },
+   "geometry": {
+    "x": 363404.86990000028,
+    "y": 5638532.4010000005
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Raum-B"
+   },
+   "geometry": {
+    "x": 360484.15319999959,
+    "y": 5646730.9738999996
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Begegnungs-Café Querbeet"
+   },
+   "geometry": {
+    "x": 359776.25399999972,
+    "y": 5645292.3169999998
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Solibund e. V."
+   },
+   "geometry": {
+    "x": 363648.16029999964,
+    "y": 5638904.0580000002
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Dako e. V."
+   },
+   "geometry": {
+    "x": 356358.28650000039,
+    "y": 5646520.1454000007
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Kölner Appell gegen Rassismus e. V."
+   },
+   "geometry": {
+    "x": 353369.45729999989,
+    "y": 5646653.4408999998
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Rom e. V."
+   },
+   "geometry": {
+    "x": 354928.79860000033,
+    "y": 5645830.6490000002
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Zentrum Rösrather Straße"
+   },
+   "geometry": {
+    "x": 362380.14130000025,
+    "y": 5643804.2672000006
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Begegnungs- und Fortbildungszentrum muslimischer Frauen e. V."
+   },
+   "geometry": {
+    "x": 354823.68070000038,
+    "y": 5646915.4925999995
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Kommunales Integrationszentrum"
+   },
+   "geometry": {
+    "x": 356515.18420000002,
+    "y": 5644693.3664999995
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Coach e. V."
+   },
+   "geometry": {
+    "x": 352758.09460000042,
+    "y": 5645683.2904000003
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Familienwelt e. V."
+   },
+   "geometry": {
+    "x": 364610.44620000012,
+    "y": 5639369.8988000005
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Offene Welt - italienische Kultur im Dialog e. V."
+   },
+   "geometry": {
+    "x": 356493.56639999989,
+    "y": 5642799.2703000009
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Afrikanische Gemeinde Köln e. V."
+   },
+   "geometry": {
+    "x": 353152.75800000038,
+    "y": 5645835.5519999992
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "23 Nisan e. V."
+   },
+   "geometry": {
+    "x": 356186.48220000044,
+    "y": 5647606.5837999992
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Freunde des Interkulturellen Zentrums FIZ e. V."
+   },
+   "geometry": {
+    "x": 352956.21050000004,
+    "y": 5653942.3546999991
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Integrationshaus e. V."
+   },
+   "geometry": {
+    "x": 359706.1492999997,
+    "y": 5644641.2321000006
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Allerweltshaus e. V."
+   },
+   "geometry": {
+    "x": 354152.55190000031,
+    "y": 5646346.5067999996
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Dersim Gemeinde Köln e. V."
+   },
+   "geometry": {
+    "x": 359636.35769999959,
+    "y": 5647327.1396999992
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Interkultur e. V."
+   },
+   "geometry": {
+    "x": 360329.96580000035,
+    "y": 5648633.4667000007
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Zurück in die Zukunft e. V."
+   },
+   "geometry": {
+    "x": 356147.20079999976,
+    "y": 5648926.4234999996
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Vingster Treff"
+   },
+   "geometry": {
+    "x": 360794.91899999976,
+    "y": 5644535.6056999993
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Weltmusik, Klezmer und Ästhetik Akademie Integrations- und Begegnungszentrum e. V."
+   },
+   "geometry": {
+    "x": 356722.22329999972,
+    "y": 5643323.3800000008
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Synagogen-Gemeinde Köln Porz"
+   },
+   "geometry": {
+    "x": 364121.07529999968,
+    "y": 5640204.7127
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Synagogen-Gemeinde Begegnungszentrum Chorweiler"
+   },
+   "geometry": {
+    "x": 352661.38850000035,
+    "y": 5654497.9452
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Aktion Nachbarschaft"
+   },
+   "geometry": {
+    "x": 352069.29459999967,
+    "y": 5648470.9408999998
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "PHOENIX Köln e. V."
+   },
+   "geometry": {
+    "x": 354826.50829999987,
+    "y": 5646256.9072999991
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Alevitisches Kulturzentrum Porz"
+   },
+   "geometry": {
+    "x": 363414.70600000024,
+    "y": 5639025.7599999998
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Deutsch-Russisches Kultur- und Integrationszentrum MAGNET e. V."
+   },
+   "geometry": {
+    "x": 361225.62899999972,
+    "y": 5644278.1741000004
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Runder Tisch Buchforst e. V."
+   },
+   "geometry": {
+    "x": 359627.14780000038,
+    "y": 5646318.2929999996
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Mosaik e. V."
+   },
+   "geometry": {
+    "x": 360212.02369999979,
+    "y": 5646971.3944000006
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Migrafrica - Verein für junge afrikanische und\nandere Diaspora gGmbH"
+   },
+   "geometry": {
+    "x": 355282.08139999956,
+    "y": 5645680.1746999994
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "ISS-Netzwerk gGmbH"
+   },
+   "geometry": {
+    "x": 360415.36230000015,
+    "y": 5648685.3340000007
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Jama Nyeta gGmbH"
+   },
+   "geometry": {
+    "x": 355283.13970000017,
+    "y": 5645681.8680000007
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Giish e. V. Hoffnung. Mut. Perspektive. "
+   },
+   "geometry": {
+    "x": 355370.27180000022,
+    "y": 5647249.9669000003
+   }
+  },
+  {
+   "attributes": {
+    "z_name": "Europolis e. V. "
+   },
+   "geometry": {
+    "x": 356219.40759999957,
+    "y": 5643219.4481000006
+   }
+  }
+ ]
+}

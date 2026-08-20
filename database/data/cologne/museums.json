@@ -1,0 +1,426 @@
+{
+ "displayFieldName": "NAME",
+ "fieldAliases": {
+  "name": "Name"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "name",
+   "type": "esriFieldTypeString",
+   "alias": "Name",
+   "length": 26
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "name": "Kölnischer Kunstverein"
+   },
+   "geometry": {
+    "x": 355534.73830000032,
+    "y": 5644728.3016999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "4711-Museum"
+   },
+   "geometry": {
+    "x": 356124.00289999973,
+    "y": 5644977.9473000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sammlg. Kasimir Hagen"
+   },
+   "geometry": {
+    "x": 352621.17559999973,
+    "y": 5654369.3179000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Luftfahrtmuseum (Militär)"
+   },
+   "geometry": {
+    "x": 353421.54200000037,
+    "y": 5648628.4395000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mus. f. Ostasiat. Kunst"
+   },
+   "geometry": {
+    "x": 354264.83000000007,
+    "y": 5644707.9389999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "GeoMuseum"
+   },
+   "geometry": {
+    "x": 354863.2126000002,
+    "y": 5643744.3298000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Museum Schnütgen"
+   },
+   "geometry": {
+    "x": 356065.93420000002,
+    "y": 5644560.0739999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rheinisches Bildarchiv"
+   },
+   "geometry": {
+    "x": 356067.21329999994,
+    "y": 5645412.8724000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kölnisches Stadtmuseum"
+   },
+   "geometry": {
+    "x": 355979.70299999975,
+    "y": 5645298.1585000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Käthe Kollwitz Museum"
+   },
+   "geometry": {
+    "x": 355716.08150000032,
+    "y": 5644800.3131000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "EL-DE-Haus / NS-Dokument"
+   },
+   "geometry": {
+    "x": 355974.2368999999,
+    "y": 5645212.5164999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rautenstrauch-Joest-Museum"
+   },
+   "geometry": {
+    "x": 356002.63709999993,
+    "y": 5644526.2683000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mus. f. Angewandte Kunst"
+   },
+   "geometry": {
+    "x": 356312.75970000029,
+    "y": 5645127.8960999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Röm.-Germanisches Museum"
+   },
+   "geometry": {
+    "x": 356597.97090000007,
+    "y": 5645194.3292999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kolumba"
+   },
+   "geometry": {
+    "x": 356258.50019999966,
+    "y": 5644988.8246999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Breslauer Sammlung"
+   },
+   "geometry": {
+    "x": 356810.18420000002,
+    "y": 5644782.1695000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Artothek"
+   },
+   "geometry": {
+    "x": 356617.78440000024,
+    "y": 5645096.9721000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Optischer Telegraph"
+   },
+   "geometry": {
+    "x": 358425.55669999961,
+    "y": 5651329.3648000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zündorfer Wehrturm"
+   },
+   "geometry": {
+    "x": 362545.71700000018,
+    "y": 5637150.6044999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Haus des Waldes"
+   },
+   "geometry": {
+    "x": 366205.53859999962,
+    "y": 5640018.7204
+   }
+  },
+  {
+   "attributes": {
+    "name": "Theatermuseum"
+   },
+   "geometry": {
+    "x": 365100.68499999959,
+    "y": 5635650.8104999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Straßenbahn-Museum"
+   },
+   "geometry": {
+    "x": 365588.85599999968,
+    "y": 5649144.0885000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kölner Karnevalsorden"
+   },
+   "geometry": {
+    "x": 356704.66540000029,
+    "y": 5644895.2316999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mus. f. Puppengeschichte"
+   },
+   "geometry": {
+    "x": 355473.89910000004,
+    "y": 5645000.7690999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Obstmuseum"
+   },
+   "geometry": {
+    "x": 366155.57459999993,
+    "y": 5640039.7533999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "HA Schult Museum"
+   },
+   "geometry": {
+    "x": 356386.87119999994,
+    "y": 5645629.6593999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Industriebahn-Museum"
+   },
+   "geometry": {
+    "x": 353775.84200000018,
+    "y": 5650341.3125
+   }
+  },
+  {
+   "attributes": {
+    "name": "Domschatzkammer"
+   },
+   "geometry": {
+    "x": 356573.44710000046,
+    "y": 5645321.2566999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Wallraf-Richartz-Museum"
+   },
+   "geometry": {
+    "x": 356555.64099999983,
+    "y": 5644859.5593999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Schokoladen-Museum"
+   },
+   "geometry": {
+    "x": 356946.94759999961,
+    "y": 5644247.2114000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Sport & Olympia Museum"
+   },
+   "geometry": {
+    "x": 356970.21879999992,
+    "y": 5644155.6374999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Akademie kölsche Sproch"
+   },
+   "geometry": {
+    "x": 355579.90909999982,
+    "y": 5646141.0736999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Deutsches Tanzarchiv"
+   },
+   "geometry": {
+    "x": 355535.68570000026,
+    "y": 5646127.6637999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Photographische Sammlung"
+   },
+   "geometry": {
+    "x": 355539.09889999963,
+    "y": 5646138.2617000006
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kölner Karnevalsmuseum"
+   },
+   "geometry": {
+    "x": 352371.10950000025,
+    "y": 5645769.1479000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "POPDOM Museum für Pop"
+   },
+   "geometry": {
+    "x": 361652.35390000045,
+    "y": 5644980.3820999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Puppen-u. Spielzeug-Museum"
+   },
+   "geometry": {
+    "x": 355632.10280000046,
+    "y": 5645561.5221999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Duftmuseum im Farina-Haus"
+   },
+   "geometry": {
+    "x": 356519.23400000017,
+    "y": 5644890.1993000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Museum Ludwig"
+   },
+   "geometry": {
+    "x": 356688.31840000022,
+    "y": 5645233.1995999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Agfa Photo-Historama"
+   },
+   "geometry": {
+    "x": 356701.54849999957,
+    "y": 5645232.7512999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Feuerwehrmuseum"
+   },
+   "geometry": {
+    "x": 356062.82969999965,
+    "y": 5650160.8028999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Technikum"
+   },
+   "geometry": {
+    "x": 363993.71470000036,
+    "y": 5640705.8069000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Weinmuseum"
+   },
+   "geometry": {
+    "x": 357278.70550000016,
+    "y": 5646926.7430000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Fuhrwerkswaage"
+   },
+   "geometry": {
+    "x": 359548.27309999987,
+    "y": 5636614.3563000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Senfmuseum"
+   },
+   "geometry": {
+    "x": 356827.59179999959,
+    "y": 5644302.9679000005
+   }
+  }
+ ]
+}

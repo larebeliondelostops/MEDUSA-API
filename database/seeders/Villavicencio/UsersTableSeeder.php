@@ -363,7 +363,7 @@ class UsersTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('users')->insert([
+            DB::table('users')->insertOrIgnore([
                 'id' => $Data['id'],
                 'name' => $Data['name'],
                 'email' => $Data['email'],

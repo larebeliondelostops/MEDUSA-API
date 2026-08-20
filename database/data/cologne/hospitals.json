@@ -1,0 +1,336 @@
+{
+ "displayFieldName": "NAME",
+ "fieldAliases": {
+  "name": "Name"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "name",
+   "type": "esriFieldTypeString",
+   "alias": "Name",
+   "length": 26
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "name": "Eduardus-Krankenhaus"
+   },
+   "geometry": {
+    "x": 358081.62160000019,
+    "y": 5644290.6292000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ev. Krankenhaus Weyertal"
+   },
+   "geometry": {
+    "x": 354205.91050000023,
+    "y": 5643800.1213000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "MediaPark Klinik"
+   },
+   "geometry": {
+    "x": 355825.48269999959,
+    "y": 5646110.7763999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "Krankenhaus Merheim"
+   },
+   "geometry": {
+    "x": 363011.92989999987,
+    "y": 5644890.4242000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Klinik am Ring"
+   },
+   "geometry": {
+    "x": 355329.64379999973,
+    "y": 5644185.6659999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "RehaNova"
+   },
+   "geometry": {
+    "x": 363022.89639999997,
+    "y": 5644907.6383999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Universitätskliniken"
+   },
+   "geometry": {
+    "x": 353683.53789999988,
+    "y": 5643475.2810999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Krankenhaus Porz am Rhein"
+   },
+   "geometry": {
+    "x": 363005.00030000042,
+    "y": 5639674.8707999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "PAN Klinik am Neumarkt"
+   },
+   "geometry": {
+    "x": 355862.33279999997,
+    "y": 5644823.1502
+   }
+  },
+  {
+   "attributes": {
+    "name": "Alexianer Krankenhaus"
+   },
+   "geometry": {
+    "x": 362326.99619999994,
+    "y": 5640357.6568999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Antonius Krankenhaus"
+   },
+   "geometry": {
+    "x": 357034.55599999987,
+    "y": 5641850.7534999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "St.Hildegardis Krankenhaus"
+   },
+   "geometry": {
+    "x": 354091.98979999963,
+    "y": 5644230.8403999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Vinzenz-Hospital"
+   },
+   "geometry": {
+    "x": 355835.84049999993,
+    "y": 5648144.7276000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Agatha Krankenhaus"
+   },
+   "geometry": {
+    "x": 356833.56969999988,
+    "y": 5650398.0291000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Privatklinik Dr. Stettner"
+   },
+   "geometry": {
+    "x": 355084.15610000025,
+    "y": 5644640.8586999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Marien-Hospital"
+   },
+   "geometry": {
+    "x": 356858.52649999969,
+    "y": 5645944.6055999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Franziskus-Hospital"
+   },
+   "geometry": {
+    "x": 353734.63659999985,
+    "y": 5646793.0854000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Forum Klinik"
+   },
+   "geometry": {
+    "x": 355777.04530000035,
+    "y": 5646090.2034000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Mattner-Klinik"
+   },
+   "geometry": {
+    "x": 363309.81359999999,
+    "y": 5638415.9828999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "MEDECO Zahnklinik Zentrum"
+   },
+   "geometry": {
+    "x": 356294.53619999997,
+    "y": 5644843.5673999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zentrum für Zahnmedizin"
+   },
+   "geometry": {
+    "x": 355825.10869999975,
+    "y": 5645989.9549000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "CardioCliniC"
+   },
+   "geometry": {
+    "x": 360145.56460000016,
+    "y": 5645152.1281000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Dreifaltigkeits-Krankenh."
+   },
+   "geometry": {
+    "x": 352809.9852,
+    "y": 5644887.8059999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "St. Elisabeth Krankenhaus"
+   },
+   "geometry": {
+    "x": 352242.29959999956,
+    "y": 5643458.4376999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Beethoven 5.13"
+   },
+   "geometry": {
+    "x": 355183.97819999978,
+    "y": 5644340.5379000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "Kinderkrankenhaus"
+   },
+   "geometry": {
+    "x": 357189.17250000034,
+    "y": 5647619.8506000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Krkhs. der Augustinerinnen"
+   },
+   "geometry": {
+    "x": 356444.26609999966,
+    "y": 5643517.8312999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Krankenhaus Holweide"
+   },
+   "geometry": {
+    "x": 363505.06699999981,
+    "y": 5647929.0886000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Rhein. Kliniken Köln (LKH)"
+   },
+   "geometry": {
+    "x": 363133.75499999989,
+    "y": 5644403.0885000005
+   }
+  },
+  {
+   "attributes": {
+    "name": "Ev. Krkhs. Kalk"
+   },
+   "geometry": {
+    "x": 360144.38430000003,
+    "y": 5645166.1546999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Heilig-Geist-Krankenhaus"
+   },
+   "geometry": {
+    "x": 354340.90170000028,
+    "y": 5650980.1399000008
+   }
+  },
+  {
+   "attributes": {
+    "name": "links vom Rhein"
+   },
+   "geometry": {
+    "x": 358781.6604000004,
+    "y": 5639404.057
+   }
+  },
+  {
+   "attributes": {
+    "name": "Tagesklinik Alteburger Str"
+   },
+   "geometry": {
+    "x": 356701.80489999987,
+    "y": 5643162.5761999991
+   }
+  },
+  {
+   "attributes": {
+    "name": "Park-Klinik Köln"
+   },
+   "geometry": {
+    "x": 352787.76750000007,
+    "y": 5644888.7101000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "MEDECO Zahnklinik Mülheim"
+   },
+   "geometry": {
+    "x": 359950.91909999959,
+    "y": 5647577.1941
+   }
+  }
+ ]
+}

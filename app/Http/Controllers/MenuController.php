@@ -264,6 +264,27 @@ class MenuController extends Controller
                         'heatmapDensity' => $heatmapDensity ?? $defaultDensity
                     ];
                     break;
+                case 'cologne':
+                    $defaultCoordinates = [
+                        'lat' => 50.9375,
+                        'lng' => 6.9603
+                    ];
+
+                    $mapCenter = $this->parsePosition();
+                    $defaultRequest = [];
+                    $mapRequest = $this->parseMapRequest();
+                    $defaultZoom = 12;
+                    $mapZoom = Setting::get('main_zoom');
+                    $defaultDensity = 50;
+                    $heatmapDensity = Setting::get('heatmap_density');
+
+                    $data = [
+                        'mapCenter' => $mapCenter ?? $defaultCoordinates,
+                        'mapRequest' => $mapRequest ?? $defaultRequest,
+                        'mapZoom' => $mapZoom != null ? (int)$mapZoom : $defaultZoom,
+                        'heatmapDensity' => $heatmapDensity ?? $defaultDensity
+                    ];
+                    break;
                 case 'ditra':
 
                     $defaultCoordinates = [

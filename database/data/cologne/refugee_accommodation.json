@@ -1,0 +1,1164 @@
+{
+ "displayFieldName": "strassenname",
+ "fieldAliases": {
+  "strassenname": "Straße"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "strassenname",
+   "type": "esriFieldTypeString",
+   "alias": "Straße",
+   "length": 100
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "strassenname": "Schlagbaumsweg"
+   },
+   "geometry": {
+    "x": 362750.74480000045,
+    "y": 5647133.8322000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Ankerstraße"
+   },
+   "geometry": {
+    "x": 356282.05730000045,
+    "y": 5643799.7848000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Albert-Schweizer Straße"
+   },
+   "geometry": {
+    "x": 365441.6297000004,
+    "y": 5636370.3225999996
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Boltensternstraße"
+   },
+   "geometry": {
+    "x": 358444.56730000023,
+    "y": 5647793.2313000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Oskar-Jäger-Straße"
+   },
+   "geometry": {
+    "x": 353099.60030000005,
+    "y": 5645586.6614999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Genovevastraße"
+   },
+   "geometry": {
+    "x": 360011.45409999974,
+    "y": 5647630.7342000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Aachener Straße"
+   },
+   "geometry": {
+    "x": 347206.5943,
+    "y": 5645218.0447000004
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Am Springborn"
+   },
+   "geometry": {
+    "x": 361396.17779999971,
+    "y": 5649035.0416999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Bachemerstraße"
+   },
+   "geometry": {
+    "x": 353593.67219999991,
+    "y": 5643971.6854999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Loorweg"
+   },
+   "geometry": {
+    "x": 361327.54719999991,
+    "y": 5635915.9356999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Sinnersdorfer Straße"
+   },
+   "geometry": {
+    "x": 349320.43709999975,
+    "y": 5657869.9378999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Grafenmühlenweg"
+   },
+   "geometry": {
+    "x": 364602.2435999997,
+    "y": 5647749.6028000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Herkulesstraße"
+   },
+   "geometry": {
+    "x": 354858.70050000027,
+    "y": 5646560.5551999994
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Rothenburger Straße"
+   },
+   "geometry": {
+    "x": 360784.61890000012,
+    "y": 5644768.0929000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kapellenstraße"
+   },
+   "geometry": {
+    "x": 360345.5175999999,
+    "y": 5644675.8245000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Hackenbroicher Straße"
+   },
+   "geometry": {
+    "x": 350376.09910000023,
+    "y": 5659267.9004999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Auweiler Straße"
+   },
+   "geometry": {
+    "x": 349472.91349999979,
+    "y": 5652855.4017999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Dürener Straße"
+   },
+   "geometry": {
+    "x": 352775.48159999959,
+    "y": 5643780.5392000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Grafenmühlenweg"
+   },
+   "geometry": {
+    "x": 364539.51169999968,
+    "y": 5648123.8462000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Hermann-Heinrich-Gossen-Straße"
+   },
+   "geometry": {
+    "x": 349010.43780000042,
+    "y": 5642770.3146000002
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Koblenzer Straße"
+   },
+   "geometry": {
+    "x": 356920.88080000039,
+    "y": 5642311.2335000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kuckucksweg"
+   },
+   "geometry": {
+    "x": 357097.06340000033,
+    "y": 5635311.2127
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Linder Mauspfad"
+   },
+   "geometry": {
+    "x": 367121.74060000014,
+    "y": 5634256.5410999991
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Lindweiler Weg"
+   },
+   "geometry": {
+    "x": 352743.0773,
+    "y": 5651167.8739999998
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Merlinweg"
+   },
+   "geometry": {
+    "x": 356790.17459999956,
+    "y": 5637707.9857000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Merianstraße"
+   },
+   "geometry": {
+    "x": 353178.70239999983,
+    "y": 5654642.3261999991
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Urbacher Weg"
+   },
+   "geometry": {
+    "x": 362892.59669999965,
+    "y": 5639867.8443
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Otto-Gerig-Straße"
+   },
+   "geometry": {
+    "x": 357888.40990000032,
+    "y": 5643724.4265999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Mündelstraße"
+   },
+   "geometry": {
+    "x": 360564.4963999996,
+    "y": 5647485.6773000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Broichstraße"
+   },
+   "geometry": {
+    "x": 363853.02919999976,
+    "y": 5645582.9030000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Plankgasse"
+   },
+   "geometry": {
+    "x": 356142.20639999956,
+    "y": 5645903.0830000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Poller Holzweg"
+   },
+   "geometry": {
+    "x": 359755.5092000002,
+    "y": 5642534.2444000002
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Severinswall"
+   },
+   "geometry": {
+    "x": 356674.7659,
+    "y": 5643154.9006999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Posadowskystraße"
+   },
+   "geometry": {
+    "x": 361463.02660000045,
+    "y": 5649865.6960000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Äußere Kanalstraße"
+   },
+   "geometry": {
+    "x": 352889.78749999963,
+    "y": 5647369.1330999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Overbeckstraße"
+   },
+   "geometry": {
+    "x": 354299.625,
+    "y": 5646677.6502999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Rathausstraße"
+   },
+   "geometry": {
+    "x": 363182.8786000004,
+    "y": 5639014.2375000007
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Siegburger Straße"
+   },
+   "geometry": {
+    "x": 358192.31319999974,
+    "y": 5643087.2489999998
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Thessaloniki-Allee"
+   },
+   "geometry": {
+    "x": 359390.9057,
+    "y": 5645193.8761
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Xantener Straße"
+   },
+   "geometry": {
+    "x": 357243.22180000041,
+    "y": 5648011.0364999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Blaubach"
+   },
+   "geometry": {
+    "x": 356163.1651999997,
+    "y": 5644143.9367999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Rather Kirchweg"
+   },
+   "geometry": {
+    "x": 364157.54250000045,
+    "y": 5644784.5719000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Sebastianstraße"
+   },
+   "geometry": {
+    "x": 356906.14010000043,
+    "y": 5650215.0604999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Erbacher Weg"
+   },
+   "geometry": {
+    "x": 351664.29970000032,
+    "y": 5652881.7760000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Potsdamer Straße"
+   },
+   "geometry": {
+    "x": 348009.50490000006,
+    "y": 5644597.2174999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Schlehdornweg"
+   },
+   "geometry": {
+    "x": 348930.77599999961,
+    "y": 5644847.0406999998
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Alte Heide"
+   },
+   "geometry": {
+    "x": 366760.37370000035,
+    "y": 5635569.3401999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Buchfinkenstraße"
+   },
+   "geometry": {
+    "x": 357316.88030000031,
+    "y": 5635084.5626999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Eckdorferstraße"
+   },
+   "geometry": {
+    "x": 356196.5736999996,
+    "y": 5640067.9565999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Pingsdorferstraße"
+   },
+   "geometry": {
+    "x": 356108.30449999962,
+    "y": 5640093.7572000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kapellenstraße"
+   },
+   "geometry": {
+    "x": 360389.86450000014,
+    "y": 5644730.0709000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Zülpicher Straße"
+   },
+   "geometry": {
+    "x": 353935.70990000013,
+    "y": 5643268.0220999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Neusser Landstraße"
+   },
+   "geometry": {
+    "x": 352774.88509999961,
+    "y": 5656646.5986000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Dorothee-Sölle-Platz"
+   },
+   "geometry": {
+    "x": 355183.22400000039,
+    "y": 5645590.8392999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Roald-Amundsen-Straße"
+   },
+   "geometry": {
+    "x": 352416.55979999993,
+    "y": 5649537.7115000002
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kuckucksweg"
+   },
+   "geometry": {
+    "x": 357154.36319999956,
+    "y": 5635297.0801999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Aloys-Boecker-Straße"
+   },
+   "geometry": {
+    "x": 365793.93099999987,
+    "y": 5634483.2007999998
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Auf dem Acker"
+   },
+   "geometry": {
+    "x": 365304.54150000028,
+    "y": 5635216.9743000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Bergisch Gladbacher Straße"
+   },
+   "geometry": {
+    "x": 360051.51919999998,
+    "y": 5647639.9320999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Swisttalstraße"
+   },
+   "geometry": {
+    "x": 355856.35969999991,
+    "y": 5640177.0398999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Haferkamp"
+   },
+   "geometry": {
+    "x": 359065.54310000036,
+    "y": 5650989.5570999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Lindweiler Weg"
+   },
+   "geometry": {
+    "x": 352722.39340000041,
+    "y": 5651155.0032000002
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Lahnstraße"
+   },
+   "geometry": {
+    "x": 359240.95280000009,
+    "y": 5639388.0541999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Methweg"
+   },
+   "geometry": {
+    "x": 355030.49120000005,
+    "y": 5647126.0943
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Neubrücker Ring"
+   },
+   "geometry": {
+    "x": 364017.57760000043,
+    "y": 5644551.1809
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Raderberger Straße"
+   },
+   "geometry": {
+    "x": 356241.63329999987,
+    "y": 5641302.5146999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Werthmannstraße"
+   },
+   "geometry": {
+    "x": 351984.30630000029,
+    "y": 5643401.3730999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Friedrichstraße"
+   },
+   "geometry": {
+    "x": 363661.45610000007,
+    "y": 5638929.9315000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Von-Bodelschwingh-Straße"
+   },
+   "geometry": {
+    "x": 361278.04499999993,
+    "y": 5649737.2429000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Pastor-Wolff-Straße"
+   },
+   "geometry": {
+    "x": 356476.48080000002,
+    "y": 5650902.4462000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Finkenweg"
+   },
+   "geometry": {
+    "x": 366313.88470000029,
+    "y": 5636471.2780000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Heinrich-Rohlman-Straße"
+   },
+   "geometry": {
+    "x": 351273.17580000032,
+    "y": 5649715.5431999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Gelsenkirchener Straße"
+   },
+   "geometry": {
+    "x": 356858.1967000002,
+    "y": 5648694.7569999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Brandenburger Straße"
+   },
+   "geometry": {
+    "x": 356712.87310000043,
+    "y": 5645684.6556000002
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Sportplatzstraße"
+   },
+   "geometry": {
+    "x": 366410.07689999975,
+    "y": 5636555.0551999994
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Hardtgenbuscher Kirchweg"
+   },
+   "geometry": {
+    "x": 362735.03399999999,
+    "y": 5643750.6269000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Josef-Kallscheuer-Straße"
+   },
+   "geometry": {
+    "x": 359263.12189999968,
+    "y": 5637078.1899999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kalscheurer Weg"
+   },
+   "geometry": {
+    "x": 354831.4310999997,
+    "y": 5640874.2216999996
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kolibriweg"
+   },
+   "geometry": {
+    "x": 350489.92989999987,
+    "y": 5647373.1591999996
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Magazinstraße"
+   },
+   "geometry": {
+    "x": 366561.9422000004,
+    "y": 5636593.1247000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Sportplatzstraße"
+   },
+   "geometry": {
+    "x": 366403.24309999961,
+    "y": 5636423.2708000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Zum Dammfelde "
+   },
+   "geometry": {
+    "x": 347872.4952999996,
+    "y": 5648574.1160000004
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Geißbergstraße "
+   },
+   "geometry": {
+    "x": 354124.76180000044,
+    "y": 5641165.2423999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Aachener Straße"
+   },
+   "geometry": {
+    "x": 346853.25870000012,
+    "y": 5645320.8653999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Ringstraße"
+   },
+   "geometry": {
+    "x": 358919.51429999992,
+    "y": 5639258.0593999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Am Pantaleonsberg "
+   },
+   "geometry": {
+    "x": 355842.2703999998,
+    "y": 5643940.6207999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Buschdorfer Straße"
+   },
+   "geometry": {
+    "x": 356361.99120000005,
+    "y": 5640531.4115999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Am Pantaleonsberg "
+   },
+   "geometry": {
+    "x": 355808.00580000039,
+    "y": 5643961.2372999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Bergerstraße "
+   },
+   "geometry": {
+    "x": 364718.37210000027,
+    "y": 5639752.3026000001
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Boltensternstraße "
+   },
+   "geometry": {
+    "x": 358476.73089999985,
+    "y": 5647784.4112
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Bonner Straße "
+   },
+   "geometry": {
+    "x": 356884.9944000002,
+    "y": 5640949.4163000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Neuer Grüner Weg "
+   },
+   "geometry": {
+    "x": 350883.23000000045,
+    "y": 5645685.0042000003
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Ikarosstraße"
+   },
+   "geometry": {
+    "x": 352690.74230000004,
+    "y": 5649477.8050999995
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Jesuitengasse"
+   },
+   "geometry": {
+    "x": 355659.70000000019,
+    "y": 5649910.0045999996
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Josef-Broicher-Straße"
+   },
+   "geometry": {
+    "x": 365480.15770000033,
+    "y": 5638783.2506000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Langenbergstraße"
+   },
+   "geometry": {
+    "x": 351958.0652999999,
+    "y": 5655782.2019999996
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Winterberger Straße"
+   },
+   "geometry": {
+    "x": 362702.19149999972,
+    "y": 5645017.9901999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Ikarosstraße"
+   },
+   "geometry": {
+    "x": 352583.76499999966,
+    "y": 5649583.5296
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kalk-Mülheimer Straße"
+   },
+   "geometry": {
+    "x": 359625.15249999985,
+    "y": 5646576.3858000003
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Mertener Straße"
+   },
+   "geometry": {
+    "x": 356835.56340000033,
+    "y": 5640889.6132999994
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Parkstraße"
+   },
+   "geometry": {
+    "x": 366779.46800000034,
+    "y": 5636389.3637000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Clevischer Ring "
+   },
+   "geometry": {
+    "x": 360072.18400000036,
+    "y": 5648612.8983999994
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Elisabethstraße"
+   },
+   "geometry": {
+    "x": 366499.32259999961,
+    "y": 5636557.3436999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Hansaring "
+   },
+   "geometry": {
+    "x": 356370.42040000018,
+    "y": 5646284.5983000007
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Linder Weg "
+   },
+   "geometry": {
+    "x": 366483.34269999992,
+    "y": 5635800.4025999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Pallenbergstraße "
+   },
+   "geometry": {
+    "x": 355585.1986999996,
+    "y": 5649909.2705000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Vorgebirgstraße "
+   },
+   "geometry": {
+    "x": 355689.46970000025,
+    "y": 5642666.1108999997
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Methweg"
+   },
+   "geometry": {
+    "x": 355061.89410000015,
+    "y": 5647268.7232000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Steinfelder Gasse"
+   },
+   "geometry": {
+    "x": 355680.99380000029,
+    "y": 5645354.1333000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Thieboldsgasse"
+   },
+   "geometry": {
+    "x": 355786.00310000032,
+    "y": 5644418.0521000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Bonner Straße"
+   },
+   "geometry": {
+    "x": 356892.27109999955,
+    "y": 5640867.9699000008
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Boltensternstraße"
+   },
+   "geometry": {
+    "x": 358443.16779999994,
+    "y": 5647870.5749999993
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Broichstraße"
+   },
+   "geometry": {
+    "x": 363856.01669999957,
+    "y": 5645584.1901999991
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Potsdamer Straße"
+   },
+   "geometry": {
+    "x": 347969.04009999987,
+    "y": 5644613.0142999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Luzerner Weg"
+   },
+   "geometry": {
+    "x": 360299.07909999974,
+    "y": 5650235.8900000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Mathias-Brüügen-Straße"
+   },
+   "geometry": {
+    "x": 351954.0549999997,
+    "y": 5648693.8962999992
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Neusser Landstraße"
+   },
+   "geometry": {
+    "x": 355201.73959999997,
+    "y": 5651737.2157000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Schlehdornweg"
+   },
+   "geometry": {
+    "x": 348925.19689999986,
+    "y": 5644784.1020999998
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Speyerer Straße "
+   },
+   "geometry": {
+    "x": 354944.53129999992,
+    "y": 5648494.9127999991
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Raderberger Straße"
+   },
+   "geometry": {
+    "x": 356389.5186999999,
+    "y": 5641675.3100000005
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Scheuermühlenstraße"
+   },
+   "geometry": {
+    "x": 366791.64169999957,
+    "y": 5635699.3834000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Sportplatzstraße"
+   },
+   "geometry": {
+    "x": 366390.06460000016,
+    "y": 5636468.1041999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Von-Sparr-Straße"
+   },
+   "geometry": {
+    "x": 360241.82919999957,
+    "y": 5648557.7291999999
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Albert-Schweitzer-Straße"
+   },
+   "geometry": {
+    "x": 355918.5,
+    "y": 5641018.9209000003
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Berliner Straße"
+   },
+   "geometry": {
+    "x": 361587.29999999981,
+    "y": 5649920.4854000006
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Kronstädter Straße"
+   },
+   "geometry": {
+    "x": 348646.1325000003,
+    "y": 5644322.3690000009
+   }
+  },
+  {
+   "attributes": {
+    "strassenname": "Berliner Str. "
+   },
+   "geometry": {
+    "x": 361541.75310000032,
+    "y": 5649877.9375
+   }
+  }
+ ]
+}

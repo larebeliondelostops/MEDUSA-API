@@ -261,7 +261,12 @@ class RoleHasPermissionsTableSeeder extends Seeder
         $dataArray = json_decode($data, true);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('role_has_permissions')->insert([
+            if (! DB::table('permissions')->where('id', $Data['permission_id'])->exists()
+                || ! DB::table('roles')->where('id', $Data['role_id'])->exists()) {
+                continue;
+            }
+
+            DB::table('role_has_permissions')->insertOrIgnore([
                 'permission_id' => $Data['permission_id'],
                 'role_id' => $Data['role_id'],
             ]);

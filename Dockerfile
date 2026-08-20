@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libmagickwand-dev --no-install-recommends
 
-# Instalar nodejs para utilizar npm.
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+# Instalar una version LTS vigente de Node.js para utilizar npm.
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

@@ -67,10 +67,19 @@ class ModelHasPermissionsTableSeeder extends Seeder
 
         ';
 
-        $dataArray = json_decode($data, true);
+        $data = str_replace('App\\Models\\User', 'App\\\\Models\\\\User', $data);
+        $dataArray = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($dataArray['array'] as $Data) {
-            DB::table('model_has_permissions')->insert([
+            if (! DB::table('permissions')->where('id', $Data['permission_id'])->exists()
+                || ! DB::table('users')
+                    ->where('id', $Data['model_id'])
+                    ->where('email', 'secretaria_movilidad@gmail.com')
+                    ->exists()) {
+                continue;
+            }
+
+            DB::table('model_has_permissions')->insertOrIgnore([
                 'permission_id' => $Data['permission_id'],
                 'model_type' => $Data['model_type'],
                 'model_id' => $Data['model_id'],

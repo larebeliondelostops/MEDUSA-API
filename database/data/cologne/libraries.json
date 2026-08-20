@@ -1,0 +1,300 @@
+{
+ "displayFieldName": "NAME",
+ "fieldAliases": {
+  "name": "NAME"
+ },
+ "geometryType": "esriGeometryPoint",
+ "spatialReference": {
+  "wkid": 25832,
+  "latestWkid": 25832
+ },
+ "fields": [
+  {
+   "name": "name",
+   "type": "esriFieldTypeString",
+   "alias": "NAME",
+   "length": 1073741822
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "name": "StB Mülheim"
+   },
+   "geometry": {
+    "x": 359857.54480000027,
+    "y": 5647406.5086000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Nippes"
+   },
+   "geometry": {
+    "x": 356181.96300000045,
+    "y": 5648776.2841999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Rodenkirchen"
+   },
+   "geometry": {
+    "x": 358763.16540000029,
+    "y": 5639420.5997000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Sülz"
+   },
+   "geometry": {
+    "x": 354199.37480000034,
+    "y": 5642572.4342999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Chorweiler"
+   },
+   "geometry": {
+    "x": 352650.59910000023,
+    "y": 5654410.4278999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Ehrenfeld"
+   },
+   "geometry": {
+    "x": 353886.99199999962,
+    "y": 5646765.9556000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Zentralbibliothek"
+   },
+   "geometry": {
+    "x": 355910.82029999979,
+    "y": 5644552.6851000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Bocklemünd-Mengenich"
+   },
+   "geometry": {
+    "x": 350256.97840000037,
+    "y": 5649766.7295999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Kalk"
+   },
+   "geometry": {
+    "x": 360121.21210000012,
+    "y": 5644936.3642999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Neubrück"
+   },
+   "geometry": {
+    "x": 363755.90660000034,
+    "y": 5644279.2346999999
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Haus Balchem"
+   },
+   "geometry": {
+    "x": 356560.97840000037,
+    "y": 5643199.0108000003
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Meschenich"
+   },
+   "geometry": {
+    "x": 354386.49760000035,
+    "y": 5636129.0132999998
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Holweide"
+   },
+   "geometry": {
+    "x": 362320.63360000029,
+    "y": 5648318.3326999992
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Esch"
+   },
+   "geometry": {
+    "x": 349524.77500000037,
+    "y": 5653167.1668999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Brück"
+   },
+   "geometry": {
+    "x": 364949.15240000002,
+    "y": 5645328.2072000001
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Dellbrück"
+   },
+   "geometry": {
+    "x": 364298.41249999963,
+    "y": 5650081.5799000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Braunsfeld"
+   },
+   "geometry": {
+    "x": 352041.81240000017,
+    "y": 5645074.4052000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Blumenberg"
+   },
+   "geometry": {
+    "x": 351799.94450000022,
+    "y": 5656079.8049999997
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Widdersdorf"
+   },
+   "geometry": {
+    "x": 347875.69909999985,
+    "y": 5648654.6127000004
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Riehl"
+   },
+   "geometry": {
+    "x": 357838.91629999969,
+    "y": 5647738.9283000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Lövenich"
+   },
+   "geometry": {
+    "x": 347554.13370000012,
+    "y": 5646065.1087999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Ebertplatz"
+   },
+   "geometry": {
+    "x": 356882.05979999993,
+    "y": 5646245.0407999996
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Junkersdorf"
+   },
+   "geometry": {
+    "x": 349524.25459999964,
+    "y": 5644293.1859000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Worringen"
+   },
+   "geometry": {
+    "x": 349902.38360000029,
+    "y": 5659255.0492000002
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Raderthal"
+   },
+   "geometry": {
+    "x": 355556.25659999996,
+    "y": 5640781.4627
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Porz-Finkenberg"
+   },
+   "geometry": {
+    "x": 363881.61450000014,
+    "y": 5640140.9093999993
+   }
+  },
+  {
+   "attributes": {
+    "name": "Interim der Zentralbibliothek"
+   },
+   "geometry": {
+    "x": 356406.11699999962,
+    "y": 5644823.6132999994
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Höhenhaus"
+   },
+   "geometry": {
+    "x": 361876.28149999958,
+    "y": 5649606.3171999995
+   }
+  },
+  {
+   "attributes": {
+    "name": "Busbibliothek Ossendorf"
+   },
+   "geometry": {
+    "x": 353457.62440000009,
+    "y": 5648393.9545000009
+   }
+  },
+  {
+   "attributes": {
+    "name": "Porz-Wahnheide"
+   },
+   "geometry": {
+    "x": 366299.38350000046,
+    "y": 5635677.5665000007
+   }
+  },
+  {
+   "attributes": {
+    "name": "StB Porz"
+   },
+   "geometry": {
+    "x": 363132.44770000037,
+    "y": 5638881.4410999995
+   }
+  }
+ ]
+}

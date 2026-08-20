@@ -9,6 +9,11 @@ use InvalidArgumentException;
 
 class StrategyCologneGeodata implements PointsInterface
 {
+    private const NODE_DATASETS = [
+        'parking_ticket_machines',
+        'traffic_lights',
+    ];
+
     private const DATASETS = [
         200 => 'refugee_accommodation',
         201 => 'bus_parking',
@@ -46,15 +51,23 @@ class StrategyCologneGeodata implements PointsInterface
             ->where('dataset', $this->dataset)
             ->where('geometry_type', 'Point')
             ->get()
-            ->map(fn (Geodata $item) => [
-                'markerType' => $this->slugId,
-                'id' => $item->uuid,
-                'title' => $item->name,
-                'geometry' => [
-                    'type' => 'Point',
-                    'coordinates' => [$item->latitude, $item->longitude],
-                ],
-            ]);
+            ->map(function (Geodata $item): array {
+                $point = [
+                    'markerType' => $this->slugId,
+                    'id' => $item->uuid,
+                    'title' => $item->name,
+                    'geometry' => [
+                        'type' => 'Point',
+                        'coordinates' => [$item->latitude, $item->longitude],
+                    ],
+                ];
+
+                if (in_array($this->dataset, self::NODE_DATASETS, true)) {
+                    $point['specialType'] = 1;
+                }
+
+                return $point;
+            });
     }
 
     public function getInfoPoint($id): array

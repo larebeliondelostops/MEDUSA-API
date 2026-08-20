@@ -28,17 +28,17 @@ class CologneSeeder extends Seeder
     private const CATALOG = [
         200 => ['dataset' => 'refugee_accommodation', 'name' => 'Alojamiento para refugiados', 'icon' => 'home', 'color' => 'orange', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
         201 => ['dataset' => 'bus_parking', 'name' => 'Aparcamiento de autobuses', 'icon' => 'directions_bus', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        202 => ['dataset' => 'libraries', 'name' => 'Bibliotecas', 'icon' => 'local_library', 'color' => 'purple', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        203 => ['dataset' => 'intercultural_centers', 'name' => 'Centros interculturales', 'icon' => 'groups', 'color' => 'teal', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        204 => ['dataset' => 'cemetery_entrances', 'name' => 'Entradas de cementerios', 'icon' => 'door_front', 'color' => 'grey', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        202 => ['dataset' => 'libraries', 'name' => 'Bibliotecas', 'icon' => 'local_library', 'color' => 'pink', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        203 => ['dataset' => 'intercultural_centers', 'name' => 'Centros interculturales', 'icon' => 'groups', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        204 => ['dataset' => 'cemetery_entrances', 'name' => 'Entradas de cementerios', 'icon' => 'door_front', 'color' => 'purple', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
         205 => ['dataset' => 'schools', 'name' => 'Escuelas', 'icon' => 'school', 'color' => 'yellow', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
         206 => ['dataset' => 'hospitals', 'name' => 'Hospitales', 'icon' => 'local_hospital', 'color' => 'red', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
         207 => ['dataset' => 'natural_monuments', 'name' => 'Monumentos naturales', 'icon' => 'nature', 'color' => 'green', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        208 => ['dataset' => 'museums', 'name' => 'Museos', 'icon' => 'museum', 'color' => 'brown', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        209 => ['dataset' => 'parking_ticket_machines', 'name' => 'Parquimetros', 'icon' => 'local_parking', 'color' => 'indigo', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        210 => ['dataset' => 'parks', 'name' => 'Parques', 'icon' => 'park', 'color' => 'green', 'type' => 3, 'namespace' => StrategyCologneParks::class],
-        211 => ['dataset' => 'wifi_access_points', 'name' => 'Puntos de acceso WiFi', 'icon' => 'wifi', 'color' => 'cyan', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        212 => ['dataset' => 'traffic_lights', 'name' => 'Semaforos', 'icon' => 'traffic', 'color' => 'bluegreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        208 => ['dataset' => 'museums', 'name' => 'Museos', 'icon' => 'museum', 'color' => 'cyan', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        209 => ['dataset' => 'parking_ticket_machines', 'name' => 'Parquimetros', 'icon' => 'local_parking', 'color' => 'bluegreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        210 => ['dataset' => 'parks', 'name' => 'Parques', 'icon' => 'park', 'color' => 'orange', 'type' => 3, 'namespace' => StrategyCologneParks::class],
+        211 => ['dataset' => 'wifi_access_points', 'name' => 'Puntos de acceso WiFi', 'icon' => 'wifi', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        212 => ['dataset' => 'traffic_lights', 'name' => 'Semaforos', 'icon' => 'traffic', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
     ];
 
     private const ESRI_SOURCES = [

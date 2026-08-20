@@ -69,6 +69,7 @@ class CologneSeeder extends Seeder
             // de insertar los permisos nuevos de Colonia con IDs generados.
             $this->syncPostgresSequences(['users', 'roles', 'permissions']);
             $this->syncCatalog();
+            $this->syncNavigation();
             $this->syncSettings();
 
             foreach (self::ESRI_SOURCES as $dataset => $source) {
@@ -103,7 +104,7 @@ class CologneSeeder extends Seeder
         ]);
     }
 
-    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker']): void
+    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker', 'slugs', 'menu']): void
     {
         if (DB::getDriverName() !== 'pgsql') {
             return;
@@ -224,6 +225,20 @@ class CologneSeeder extends Seeder
             throw new RuntimeException(
                 "No se puede reservar {$table}.{$idColumn}={$id}: ya pertenece a '{$existing}'."
             );
+        }
+    }
+
+    private function syncNavigation(): void
+    {
+        $items = [
+            1 => ['name' => 'Mapa', 'path' => 'map', 'icon' => 'public', 'slug' => 'map', 'enabled' => true],
+            5 => ['name' => 'Marcadores', 'path' => null, 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
+            6 => ['name' => 'Usuarios', 'path' => 'users', 'icon' => 'person', 'slug' => 'users', 'enabled' => true],
+        ];
+
+        foreach ($items as $id => $item) {
+            $this->assertReservedId('menu', 'id', $id, 'name', $item['name']);
+            $this->syncRow('menu', ['id' => $id], $item);
         }
     }
 

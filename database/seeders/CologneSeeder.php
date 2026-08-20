@@ -20,6 +20,11 @@ class CologneSeeder extends Seeder
 {
     private const POINT_STRATEGY = StrategyCologneGeodata::class;
 
+    private const ADMIN_EMAILS = [
+        'jhernandez@igniciongames.com',
+        'ignicion@gmail.com',
+    ];
+
     private const CATALOG = [
         200 => ['dataset' => 'refugee_accommodation', 'name' => 'Alojamiento para refugiados', 'icon' => 'home', 'color' => 'orange', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
         201 => ['dataset' => 'bus_parking', 'name' => 'Aparcamiento de autobuses', 'icon' => 'directions_bus', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
@@ -154,7 +159,7 @@ class CologneSeeder extends Seeder
 
     private function ensureCologneAdministrator(): void
     {
-        $userId = DB::table('users')->where('email', 'ignicion@gmail.com')->value('id');
+        $userId = DB::table('users')->whereIn('email', self::ADMIN_EMAILS)->value('id');
         $roleId = DB::table('roles')
             ->where('name', 'Administrador')
             ->where('guard_name', 'api')

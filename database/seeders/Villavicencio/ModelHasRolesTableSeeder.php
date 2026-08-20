@@ -37,6 +37,9 @@ class ModelHasRolesTableSeeder extends Seeder
             2 => 'Editor',
             3 => 'Secretario De Movilidad',
         ];
+        $sourceEmailAliases = [
+            1 => ['jhernandez@igniciongames.com', 'ignicion@gmail.com'],
+        ];
 
         $data = '
         {
@@ -147,8 +150,11 @@ class ModelHasRolesTableSeeder extends Seeder
                 continue;
             }
 
+            $emailCandidates = $sourceEmailAliases[$Data['model_id']]
+                ?? [$sourceEmails[$Data['model_id']]];
+
             $userId = DB::table('users')
-                ->where('email', $sourceEmails[$Data['model_id']])
+                ->whereIn('email', $emailCandidates)
                 ->value('id');
             $roleId = DB::table('roles')
                 ->where('name', $sourceRoles[$Data['role_id']])

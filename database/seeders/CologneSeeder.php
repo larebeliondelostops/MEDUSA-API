@@ -68,6 +68,7 @@ class CologneSeeder extends Seeder
             // automaticamente sus secuencias, por lo que deben alinearse antes
             // de insertar los permisos nuevos de Colonia con IDs generados.
             $this->syncPostgresSequences(['users', 'roles', 'permissions']);
+            $this->ensureCologneAdministrator();
             $this->syncCatalog();
             $this->syncNavigation();
             $this->syncSettings();
@@ -119,8 +120,6 @@ class CologneSeeder extends Seeder
 
     private function syncCatalog(): void
     {
-        $now = now();
-
         foreach ([
             1 => ['name' => 'Point', 'description' => 'Todos los marcadores de tipo punto'],
             3 => ['name' => 'Polygon', 'description' => 'Todos los marcadores de tipo poligono'],
@@ -149,35 +148,58 @@ class CologneSeeder extends Seeder
 
             $this->syncRow('bar_menu', ['marker' => $id], ['enabled' => true]);
 
-            $permissionName = "commandbar-{$marker['name']}";
-            if (! DB::table('permissions')
-                ->where('name', $permissionName)
-                ->where('guard_name', 'api')
-                ->exists()) {
-                DB::table('permissions')->insert([
-                    'name' => $permissionName,
-                    'guard_name' => 'api',
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
-            }
-
-            $roleId = DB::table('roles')
-                ->where('name', 'Administrador')
-                ->where('guard_name', 'api')
-                ->value('id');
-            $permissionId = DB::table('permissions')
-                ->where('name', $permissionName)
-                ->where('guard_name', 'api')
-                ->value('id');
-
-            if ($roleId && $permissionId) {
-                DB::table('role_has_permissions')->insertOrIgnore([
-                    'permission_id' => $permissionId,
-                    'role_id' => $roleId,
-                ]);
-            }
+            $this->grantPermissionToRole("commandbar-{$marker['name']}", 'Administrador');
         }
+    }
+
+    private function ensureCologneAdministrator(): void
+    {
+        $userId = DB::table('users')->where('email', 'ignicion@gmail.com')->value('id');
+        $roleId = DB::table('roles')
+            ->where('name', 'Administrador')
+            ->where('guard_name', 'api')
+            ->value('id');
+
+        if (! $userId || ! $roleId) {
+            throw new RuntimeException('No fue posible localizar a Jorge Ignicion o el rol Administrador.');
+        }
+
+        DB::table('model_has_roles')->insertOrIgnore([
+            'role_id' => $roleId,
+            'model_type' => 'App\\Models\\User',
+            'model_id' => $userId,
+        ]);
+    }
+
+    private function grantPermissionToRole(string $permissionName, string $roleName): void
+    {
+        $permissionId = DB::table('permissions')
+            ->where('name', $permissionName)
+            ->where('guard_name', 'api')
+            ->value('id');
+
+        if (! $permissionId) {
+            $permissionId = DB::table('permissions')->insertGetId([
+                'name' => $permissionName,
+                'guard_name' => 'api',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        $roleId = DB::table('roles')
+            ->where('name', $roleName)
+            ->where('guard_name', 'api')
+            ->value('id');
+
+        if (! $roleId) {
+            throw new RuntimeException("No existe el rol {$roleName} para asignar {$permissionName}.");
+        }
+
+        DB::table('role_has_permissions')->insertOrIgnore([
+            'permission_id' => $permissionId,
+            'role_id' => $roleId,
+        ]);
     }
 
     /**
@@ -239,6 +261,7 @@ class CologneSeeder extends Seeder
         foreach ($items as $id => $item) {
             $this->assertReservedId('menu', 'id', $id, 'name', $item['name']);
             $this->syncRow('menu', ['id' => $id], $item);
+            $this->grantPermissionToRole("menu-{$item['name']}", 'Administrador');
         }
     }
 

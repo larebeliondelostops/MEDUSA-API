@@ -32,6 +32,11 @@ class ModelHasRolesTableSeeder extends Seeder
             44 => 'dianarincon@gmail.com',
             47 => 'testgoogle@gmail.com',
         ];
+        $sourceRoles = [
+            1 => 'Administrador',
+            2 => 'Editor',
+            3 => 'Secretario De Movilidad',
+        ];
 
         $data = '
         {
@@ -136,19 +141,28 @@ class ModelHasRolesTableSeeder extends Seeder
 
         foreach ($dataArray['array'] as $Data) {
             if (! isset($sourceEmails[$Data['model_id']])
+                || ! isset($sourceRoles[$Data['role_id']])
                 || $Data['model_type'] !== 'App\\Models\\User'
-                || ! DB::table('roles')->where('id', $Data['role_id'])->exists()
-                || ! DB::table('users')
-                    ->where('id', $Data['model_id'])
-                    ->where('email', $sourceEmails[$Data['model_id']])
-                    ->exists()) {
+            ) {
+                continue;
+            }
+
+            $userId = DB::table('users')
+                ->where('email', $sourceEmails[$Data['model_id']])
+                ->value('id');
+            $roleId = DB::table('roles')
+                ->where('name', $sourceRoles[$Data['role_id']])
+                ->where('guard_name', 'api')
+                ->value('id');
+
+            if (! $userId || ! $roleId) {
                 continue;
             }
 
             DB::table('model_has_roles')->insertOrIgnore([
-                'role_id' => $Data['role_id'],
+                'role_id' => $roleId,
                 'model_type' => $Data['model_type'],
-                'model_id' => $Data['model_id'],
+                'model_id' => $userId,
             ]);
         }
     }

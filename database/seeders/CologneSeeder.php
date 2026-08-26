@@ -13,6 +13,7 @@ use Database\Seeders\Villavicencio\UsersTableSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use RuntimeException;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -26,19 +27,19 @@ class CologneSeeder extends Seeder
     ];
 
     private const CATALOG = [
-        200 => ['dataset' => 'refugee_accommodation', 'name' => 'Alojamiento para refugiados', 'icon' => 'home', 'color' => 'orange', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        201 => ['dataset' => 'bus_parking', 'name' => 'Aparcamiento de autobuses', 'icon' => 'directions_bus', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        202 => ['dataset' => 'libraries', 'name' => 'Bibliotecas', 'icon' => 'local_library', 'color' => 'pink', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        203 => ['dataset' => 'intercultural_centers', 'name' => 'Centros interculturales', 'icon' => 'groups', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        204 => ['dataset' => 'cemetery_entrances', 'name' => 'Entradas de cementerios', 'icon' => 'door_front', 'color' => 'purple', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        205 => ['dataset' => 'schools', 'name' => 'Escuelas', 'icon' => 'school', 'color' => 'yellow', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        206 => ['dataset' => 'hospitals', 'name' => 'Hospitales', 'icon' => 'local_hospital', 'color' => 'red', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        207 => ['dataset' => 'natural_monuments', 'name' => 'Monumentos naturales', 'icon' => 'nature', 'color' => 'green', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        208 => ['dataset' => 'museums', 'name' => 'Museos', 'icon' => 'museum', 'color' => 'cyan', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        209 => ['dataset' => 'parking_ticket_machines', 'name' => 'Parquimetros', 'icon' => 'local_parking', 'color' => 'bluegreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        210 => ['dataset' => 'parks', 'name' => 'Parques', 'icon' => 'park', 'color' => 'orange', 'type' => 3, 'namespace' => StrategyCologneParks::class],
-        211 => ['dataset' => 'wifi_access_points', 'name' => 'Puntos de acceso WiFi', 'icon' => 'wifi', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
-        212 => ['dataset' => 'traffic_lights', 'name' => 'Semaforos', 'icon' => 'traffic', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        200 => ['dataset' => 'refugee_accommodation', 'name' => 'Refugee accommodation', 'icon' => 'home', 'color' => 'orange', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        201 => ['dataset' => 'bus_parking', 'name' => 'Bus parking', 'icon' => 'directions_bus', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        202 => ['dataset' => 'libraries', 'name' => 'Libraries', 'icon' => 'local_library', 'color' => 'pink', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        203 => ['dataset' => 'intercultural_centers', 'name' => 'Intercultural centers', 'icon' => 'groups', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        204 => ['dataset' => 'cemetery_entrances', 'name' => 'Cemetery entrances', 'icon' => 'door_front', 'color' => 'purple', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        205 => ['dataset' => 'schools', 'name' => 'Schools', 'icon' => 'school', 'color' => 'yellow', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        206 => ['dataset' => 'hospitals', 'name' => 'Hospitals', 'icon' => 'local_hospital', 'color' => 'red', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        207 => ['dataset' => 'natural_monuments', 'name' => 'Natural monuments', 'icon' => 'nature', 'color' => 'green', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        208 => ['dataset' => 'museums', 'name' => 'Museums', 'icon' => 'museum', 'color' => 'cyan', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        209 => ['dataset' => 'parking_ticket_machines', 'name' => 'Parking meters', 'icon' => 'local_parking', 'color' => 'bluegreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        210 => ['dataset' => 'parks', 'name' => 'Parks', 'icon' => 'park', 'color' => 'orange', 'type' => 3, 'namespace' => StrategyCologneParks::class],
+        211 => ['dataset' => 'wifi_access_points', 'name' => 'WiFi access points', 'icon' => 'wifi', 'color' => 'lightgreen', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
+        212 => ['dataset' => 'traffic_lights', 'name' => 'Traffic lights', 'icon' => 'traffic', 'color' => 'blue', 'type' => 1, 'namespace' => self::POINT_STRATEGY],
     ];
 
     private const ESRI_SOURCES = [
@@ -69,6 +70,7 @@ class CologneSeeder extends Seeder
 
         DB::transaction(function (): void {
             $this->syncVillavicencioIdentity();
+            $this->syncEnglishUiData();
             // Los seeders heredados usan IDs explicitos. PostgreSQL no avanza
             // automaticamente sus secuencias, por lo que deben alinearse antes
             // de insertar los permisos nuevos de Colonia con IDs generados.
@@ -126,8 +128,8 @@ class CologneSeeder extends Seeder
     private function syncCatalog(): void
     {
         foreach ([
-            1 => ['name' => 'Point', 'description' => 'Todos los marcadores de tipo punto'],
-            3 => ['name' => 'Polygon', 'description' => 'Todos los marcadores de tipo poligono'],
+            1 => ['name' => 'Point', 'description' => 'All point markers'],
+            3 => ['name' => 'Polygon', 'description' => 'All polygon markers'],
         ] as $id => $type) {
             $this->syncRow('marker_type', ['id' => $id], $type);
         }
@@ -153,7 +155,22 @@ class CologneSeeder extends Seeder
 
             $this->syncRow('bar_menu', ['marker' => $id], ['enabled' => true]);
 
-            $this->grantPermissionToRole("commandbar-{$marker['name']}", 'Administrador');
+            $this->grantPermissionToRole("commandbar-{$marker['name']}", 'Administrator');
+        }
+    }
+
+    private function syncEnglishUiData(): void
+    {
+        $this->syncRow('roles', ['id' => 1], ['name' => 'Administrator', 'guard_name' => 'api']);
+        $this->syncRow('roles', ['id' => 2], ['name' => 'Editor', 'guard_name' => 'api']);
+        $this->syncRow('roles', ['id' => 3], ['name' => 'Mobility Secretary', 'guard_name' => 'api']);
+
+        if (Schema::hasTable('reports_data')) {
+            $this->syncRow('reports_data', ['slug' => 6], [
+                'name' => 'Incidents',
+                'description' => 'Cologne incidents',
+                'namespace' => 'App\\Strategies\\StrategiesReports\\Villavicencio\\StrategyIncidentsReports',
+            ]);
         }
     }
 
@@ -161,12 +178,16 @@ class CologneSeeder extends Seeder
     {
         $userId = DB::table('users')->whereIn('email', self::ADMIN_EMAILS)->value('id');
         $roleId = DB::table('roles')
-            ->where('name', 'Administrador')
             ->where('guard_name', 'api')
+            ->where(function ($query): void {
+                $query->where('name', 'Administrator')
+                    ->orWhere('name', 'Administrador')
+                    ->orWhere('id', 1);
+            })
             ->value('id');
 
         if (! $userId || ! $roleId) {
-            throw new RuntimeException('No fue posible localizar a Jorge Ignicion o el rol Administrador.');
+            throw new RuntimeException('No fue posible localizar a Jorge Ignicion o el rol Administrator.');
         }
 
         DB::table('model_has_roles')->insertOrIgnore([
@@ -258,15 +279,15 @@ class CologneSeeder extends Seeder
     private function syncNavigation(): void
     {
         $items = [
-            1 => ['name' => 'Mapa', 'path' => 'map', 'icon' => 'public', 'slug' => 'map', 'enabled' => true],
-            5 => ['name' => 'Marcadores', 'path' => null, 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
-            6 => ['name' => 'Usuarios', 'path' => 'users', 'icon' => 'person', 'slug' => 'users', 'enabled' => true],
+            1 => ['name' => 'Map', 'path' => 'map', 'icon' => 'public', 'slug' => 'map', 'enabled' => true],
+            5 => ['name' => 'Markers', 'path' => 'markers', 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
+            6 => ['name' => 'Users', 'path' => 'users', 'icon' => 'person', 'slug' => 'users', 'enabled' => true],
         ];
 
         foreach ($items as $id => $item) {
             $this->assertReservedId('menu', 'id', $id, 'name', $item['name']);
             $this->syncRow('menu', ['id' => $id], $item);
-            $this->grantPermissionToRole("menu-{$item['name']}", 'Administrador');
+            $this->grantPermissionToRole("menu-{$item['name']}", 'Administrator');
         }
     }
 
@@ -303,6 +324,7 @@ class CologneSeeder extends Seeder
 
         $source = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
         $crs = 'EPSG:'.($source['spatialReference']['latestWkid'] ?? $source['spatialReference']['wkid'] ?? 'unknown');
+        $fieldAliases = $source['fieldAliases'] ?? [];
         $geometryType = $source['geometryType'] ?? null;
         $records = [];
         $sourceKeyOccurrences = [];
@@ -328,7 +350,7 @@ class CologneSeeder extends Seeder
                         null,
                         null,
                         $geometry,
-                        $attributes,
+                        $this->translateProperties($dataset, $attributes, $fieldAliases),
                         $crs
                     );
 
@@ -348,7 +370,7 @@ class CologneSeeder extends Seeder
                     $latitude,
                     $longitude,
                     ['type' => 'Point', 'coordinates' => [$latitude, $longitude]],
-                    $attributes,
+                    $this->translateProperties($dataset, $attributes, $fieldAliases),
                     $crs
                 );
             } elseif ($geometryType === 'esriGeometryPolygon') {
@@ -366,7 +388,7 @@ class CologneSeeder extends Seeder
                     null,
                     null,
                     ['type' => 'Polygon', 'coordinates' => $rings],
-                    $attributes,
+                    $this->translateProperties($dataset, $attributes, $fieldAliases),
                     $crs
                 );
             } else {
@@ -400,7 +422,7 @@ class CologneSeeder extends Seeder
                         null,
                         null,
                         [],
-                        $row,
+                        $this->translateProperties('parking_ticket_machines', $row),
                         'EPSG:4326'
                     );
                 }
@@ -419,7 +441,7 @@ class CologneSeeder extends Seeder
                         null,
                         null,
                         [],
-                        $row,
+                        $this->translateProperties('parking_ticket_machines', $row),
                         'EPSG:4326'
                     );
                 }
@@ -432,7 +454,7 @@ class CologneSeeder extends Seeder
                     $latitude,
                     $longitude,
                     ['type' => 'Point', 'coordinates' => [$latitude, $longitude]],
-                    $row,
+                    $this->translateProperties('parking_ticket_machines', $row),
                     'EPSG:4326'
                 );
             }
@@ -465,7 +487,7 @@ class CologneSeeder extends Seeder
                     $latitude,
                     $longitude,
                     ['type' => 'Point', 'coordinates' => [$latitude, $longitude]],
-                    $row,
+                    $this->translateProperties('traffic_lights', $row),
                     'EPSG:25832'
                 );
             }
@@ -588,6 +610,84 @@ class CologneSeeder extends Seeder
                 ]
             );
         }
+    }
+
+    private function translateProperties(string $dataset, array $properties, array $fieldAliases = []): array
+    {
+        $translated = [];
+
+        foreach ($properties as $key => $value) {
+            $translated[$this->propertyLabel($dataset, (string) $key, $fieldAliases)] = $this->propertyValue($value);
+        }
+
+        return $translated;
+    }
+
+    private function propertyLabel(string $dataset, string $key, array $fieldAliases = []): string
+    {
+        $labels = [
+            'refugee_accommodation' => ['strassenname' => 'Street'],
+            'bus_parking' => ['bezeichnun' => 'Name'],
+            'libraries' => ['name' => 'Name'],
+            'intercultural_centers' => ['z_name' => 'Name'],
+            'cemetery_entrances' => ['friedhofsname' => 'Cemetery'],
+            'schools' => ['name' => 'Name'],
+            'hospitals' => ['name' => 'Name'],
+            'natural_monuments' => ['beschr' => 'Description'],
+            'museums' => ['name' => 'Name'],
+            'parks' => ['name' => 'Name'],
+            'wifi_access_points' => ['ap_name' => 'Access point'],
+            'parking_ticket_machines' => [
+                'PSA-Nr' => 'Parking meter no.',
+                'Aufstellort' => 'Location',
+                'PLZ' => 'Postal code',
+                'Bezirk/Gebiet' => 'District/Area',
+                'Abschnitt von' => 'Section from',
+                'Abschnitt bis' => 'Section to',
+                'Stellplätze' => 'Parking spaces',
+                'Roter Punkt' => 'Red dot',
+                'Gebührenzeit' => 'Fee hours',
+                'Gebühr je 20 Minuten' => 'Fee per 20 minutes',
+                'Höchstparkdauer' => 'Maximum parking duration',
+                'Tagesgebühr 4,00 €' => 'Daily fee (EUR 4.00)',
+                'GeoKoordinateNord' => 'Latitude',
+                'GeoKoordinateOst' => 'Longitude',
+            ],
+            'traffic_lights' => [
+                'lsanr' => 'Traffic light no.',
+                'x' => 'Raw X',
+                'y' => 'Raw Y',
+                'standort' => 'Location',
+                'baulast' => 'Road authority',
+                'bezirk' => 'District',
+                'blindens' => 'Accessible signal for visually impaired',
+                'bemerkung' => 'Notes',
+                'locid' => 'Local ID',
+                'mapem' => 'MapEM',
+            ],
+        ];
+
+        if (isset($labels[$dataset][$key])) {
+            return $labels[$dataset][$key];
+        }
+
+        $alias = $fieldAliases[$key] ?? null;
+
+        return is_string($alias) && $alias !== '' ? $alias : $key;
+    }
+
+    private function propertyValue(mixed $value): mixed
+    {
+        if (! is_string($value)) {
+            return $value;
+        }
+
+        return match (mb_strtolower(trim($value))) {
+            'ja' => 'Yes',
+            'nein' => 'No',
+            '---' => null,
+            default => $value,
+        };
     }
 
     private function dataPath(string $file): string

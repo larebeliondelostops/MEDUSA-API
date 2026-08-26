@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use App\Models\Indicator;
+use App\Support\TenantLanguage;
 use Illuminate\Contracts\Validation\Rule;
 
 class Subindicator implements Rule
@@ -18,6 +19,9 @@ class Subindicator implements Rule
 
     public function message(): string
     {
-        return 'La subcategoria seleccionada no existe o no pertenece a una categoria.';
+        return TenantLanguage::text(
+            'La subcategoria seleccionada no existe o no pertenece a una categoria.',
+            'The selected subcategory does not exist or does not belong to a category.'
+        );
     }
 }

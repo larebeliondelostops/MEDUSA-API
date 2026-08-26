@@ -7,6 +7,7 @@ use App\Interfaces\Reports\ReportActionsInterface;
 use App\Models\Category;
 use App\Models\Indicator;
 use App\Models\Villavicencio\Incident;
+use App\Support\TenantLanguage;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,7 +26,6 @@ class StrategyIncidentsReports implements ReportActionsInterface
 
     public function getCacheKeyReport(): string
     {
-        // Versionar la llave evita servir por diez dias el reporte anterior al nuevo filtro.
         return self::CACHE_KEY;
     }
 
@@ -103,11 +103,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
                 $percent = -100;
             }
             $series[] = ['data' => $count, 'percent' => round($percent, 2), 'type' => $percent > 0 ? 'red' : 'green'];
-            $labels[] = optional($this->categories->firstWhere('id', (int) $categoryId))->name;
+            $labels[] = TenantLanguage::indicator(optional($this->categories->firstWhere('id', (int) $categoryId))->name);
         }
 
         return [
-            'title' => 'Cards de incidentes con sus respectivos porcentajes',
+            'title' => TenantLanguage::text('Cards de incidentes con sus respectivos porcentajes', 'Incident cards with their percentages'),
             'date' => $start->format('d/m/y') . ' - ' . $end->format('d/m/y'),
             'series' => $series,
             'labels' => $labels,
@@ -119,12 +119,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         $counts = $this->categoryCounts($this->incidents);
         $series = [count($this->incidents)];
-        $labels = ['General'];
+        $labels = [TenantLanguage::text('General', 'General')];
         $keys = [0];
 
         foreach ($this->categories as $category) {
             $series[] = (int) $counts->get($category->id, 0);
-            $labels[] = $category->name;
+            $labels[] = TenantLanguage::indicator($category->name);
             $keys[] = $category->id;
         }
 
@@ -136,16 +136,19 @@ class StrategyIncidentsReports implements ReportActionsInterface
         $counts = $this->selectedIncidents()
             ->groupBy(fn (Incident $incident) => (int) ($incident->month ?: Carbon::parse($incident->created_at)->format('n')))
             ->map->count();
+
         $series = [];
         foreach (Helper::MONTH_NUMBER as $month) {
             $series[] = (int) $counts->get((int) $month, 0);
         }
 
         return [
-            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por mes' : '# Incidentes por mes',
+            'title' => $this->indicator
+                ? '# ' . $this->selectedCategoryName() . TenantLanguage::text(' por mes', ' by month')
+                : TenantLanguage::text('# Incidentes por mes', '# Incidents by month'),
             'date' => $this->dateLabel(),
             'series' => $series,
-            'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            'labels' => TenantLanguage::monthNames(),
             'type' => 'area',
         ];
     }
@@ -155,10 +158,10 @@ class StrategyIncidentsReports implements ReportActionsInterface
         $counts = $this->categoryCounts($this->incidents);
 
         return [
-            'title' => '# Incidentes por categoría',
+            'title' => TenantLanguage::text('# Incidentes por categoría', '# Incidents by category'),
             'date' => $this->dateLabel(),
             'series' => $this->categories->map(fn (Indicator $category) => (int) $counts->get($category->id, 0))->values(),
-            'labels' => $this->categories->pluck('name')->values(),
+            'labels' => $this->categories->map(fn (Indicator $category) => TenantLanguage::indicator($category->name))->values(),
             'type' => 'bar',
         ];
     }
@@ -173,14 +176,19 @@ class StrategyIncidentsReports implements ReportActionsInterface
                     $data[] = (int) $counts->get((int) $day, 0);
                 }
 
-                return ['name' => optional($incidents->first()->Indicator)->name ?? 'Sin indicador', 'data' => $data];
+                return [
+                    'name' => TenantLanguage::indicator(optional($incidents->first()->Indicator)->name) ?? TenantLanguage::text('Sin indicador', 'No indicator'),
+                    'data' => $data,
+                ];
             })->values();
 
         return [
-            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por día de la semana' : '# Incidentes por día de la semana',
+            'title' => $this->indicator
+                ? '# ' . $this->selectedCategoryName() . TenantLanguage::text(' por día de la semana', ' by weekday')
+                : TenantLanguage::text('# Incidentes por día de la semana', '# Incidents by weekday'),
             'date' => $this->dateLabel(),
             'series' => $series,
-            'labels' => Helper::DAY_NAME,
+            'labels' => TenantLanguage::dayNames(),
             'type' => 'column',
         ];
     }
@@ -201,11 +209,16 @@ class StrategyIncidentsReports implements ReportActionsInterface
                     }
                 }
 
-                return ['name' => optional($incidents->first()->Indicator)->name ?? 'Sin indicador', 'data' => $data];
+                return [
+                    'name' => TenantLanguage::indicator(optional($incidents->first()->Indicator)->name) ?? TenantLanguage::text('Sin indicador', 'No indicator'),
+                    'data' => $data,
+                ];
             })->values();
 
         return [
-            'title' => $this->indicator ? '# ' . $this->selectedCategoryName() . ' por intervalos de horas' : '# Incidentes por intervalos de horas',
+            'title' => $this->indicator
+                ? '# ' . $this->selectedCategoryName() . TenantLanguage::text(' por intervalos de horas', ' by time intervals')
+                : TenantLanguage::text('# Incidentes por intervalos de horas', '# Incidents by time intervals'),
             'date' => $this->dateLabel(),
             'series' => $series,
             'labels' => ['(00:00-04:00)', '(04:00-08:00)', '(08:00-12:00)', '(12:00-16:00)', '(16:00-20:00)', '(20:00-24:00)'],
@@ -217,10 +230,11 @@ class StrategyIncidentsReports implements ReportActionsInterface
     {
         $series = [];
         foreach (Helper::MONTH_NUMBER_DB as $month) {
-            $monthData = ['name' => Helper::mesNombre($month), 'data' => []];
+            $monthData = ['name' => TenantLanguage::monthName($month), 'data' => []];
             foreach (range(1, 31) as $day) {
                 $count = $this->incidents->filter(function (Incident $incident) use ($month, $day) {
                     $date = Carbon::parse($incident->created_at);
+
                     return $date->month === (int) $month && $date->day === $day;
                 })->count();
                 $monthData['data'][] = ['x' => str_pad((string) $day, 2, '0', STR_PAD_LEFT), 'y' => $count];
@@ -228,7 +242,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
             $series[] = $monthData;
         }
 
-        return ['title' => 'Incidentes mediante mapa de calor', 'date' => $this->dateLabel(), 'series' => $series, 'type' => 'matrix'];
+        return [
+            'title' => TenantLanguage::text('Incidentes mediante mapa de calor', 'Incidents heatmap'),
+            'date' => $this->dateLabel(),
+            'series' => $series,
+            'type' => 'matrix',
+        ];
     }
 
     public function incidentsByTypeHeatMap(): array
@@ -238,11 +257,12 @@ class StrategyIncidentsReports implements ReportActionsInterface
         $series = [];
 
         foreach (Helper::DAY_NUMBER as $day) {
-            $dayData = ['name' => Helper::diaNombre($day), 'data' => []];
+            $dayData = ['name' => TenantLanguage::dayName((int) $day), 'data' => []];
             foreach ($limits as [$start, $end]) {
                 $count = $incidents->filter(function (Incident $incident) use ($day, $start, $end) {
                     $date = Carbon::parse($incident->created_at);
                     $incidentDay = (int) ($incident->day ?: $date->dayOfWeek);
+
                     return $incidentDay === (int) $day && $date->hour >= $start && $date->hour < $end;
                 })->count();
                 $dayData['data'][] = ['x' => "$start-$end", 'y' => $count];
@@ -251,7 +271,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
         }
 
         return [
-            'title' => $this->selectedCategoryName() . ' por día de la semana y rango de horas',
+            'title' => $this->selectedCategoryName() . TenantLanguage::text(' por día de la semana y rango de horas', ' by weekday and time range'),
             'date' => $this->dateLabel(),
             'series' => $series,
             'type' => 'matrix',
@@ -286,6 +306,7 @@ class StrategyIncidentsReports implements ReportActionsInterface
     private function categoryIdFor(Incident $incident): ?int
     {
         $indicator = $incident->Indicator;
+
         return $indicator ? (int) ($indicator->parent_indicator_id ?: $indicator->id) : null;
     }
 
@@ -325,15 +346,13 @@ class StrategyIncidentsReports implements ReportActionsInterface
             return $query;
         }
 
-        return $query->where(
-            (new Incident())->getIndicatorColumn(),
-            $this->subcategoryFilter->id
-        );
+        return $query->where((new Incident())->getIndicatorColumn(), $this->subcategoryFilter->id);
     }
 
     private function selectedCategoryName(): string
     {
-        return optional($this->categories->firstWhere('id', $this->indicator))->name ?? 'Categoría';
+        return TenantLanguage::indicator(optional($this->categories->firstWhere('id', $this->indicator))->name)
+            ?? TenantLanguage::text('Categoría', 'Category');
     }
 
     private function dateLabel(): string
@@ -342,6 +361,6 @@ class StrategyIncidentsReports implements ReportActionsInterface
             return Carbon::parse($this->request->start)->format('d/m/y') . ' - ' . Carbon::parse($this->request->end)->format('d/m/y');
         }
 
-        return 'Histórico';
+        return TenantLanguage::text('Histórico', 'Historical');
     }
 }

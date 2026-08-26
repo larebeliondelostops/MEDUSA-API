@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Tenant\Users\UserRequest;
-use Exception;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 use App\Http\Requests\Tenant\Users\AssignRolRequest;
 use App\Http\Requests\Tenant\Users\StoreRequest;
-use Ramsey\Uuid\Uuid;
+use App\Http\Requests\Tenant\Users\UserRequest;
+use App\Models\User;
+use App\Support\TenantLanguage;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
+use Spatie\Permission\Models\Role;
 
 /**
  * Controlador Maneja Lógica de Users.
@@ -34,15 +35,14 @@ class UserController extends Controller
     public function all(Request $request)
     {
         try {
-
             $users = User::paginate($request->count ?? 10, ['*'], 'page', $request->page ?? 1);
 
             $transformedData = [];
             foreach ($users as $user) {
                 $transformedData[] = [
-                    'ID' => $user->id,
-                    'Nombre' => $user->name,
-                    'Email' => $user->email,
+                    TenantLanguage::text('ID', 'ID') => $user->id,
+                    TenantLanguage::text('Nombre', 'Name') => $user->name,
+                    TenantLanguage::text('Email', 'Email') => $user->email,
                 ];
             }
 
@@ -61,14 +61,14 @@ class UserController extends Controller
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
 
     public function getUser($id)
     {
@@ -79,14 +79,15 @@ class UserController extends Controller
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $user
+                'data' => $user,
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -94,29 +95,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-    
-            // Guardar el avatar (si existe)
             $imageName = null;
             if ($request->has('avatar')) {
-
-                $image_64 = $request->avatar; //your base64 encoded data
-
-                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
-
-                $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
-
-                // find substring fro replace here eg: data:image/png;base64,
-
-                $image = str_replace($replace, '', $image_64); 
-
-                $image = str_replace(' ', '+', $image); 
-
-                $imageName = Uuid::uuid4()->toString().'.'.$extension;
+                $image_64 = $request->avatar;
+                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+                $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
+                $image = str_replace($replace, '', $image_64);
+                $image = str_replace(' ', '+', $image);
+                $imageName = Uuid::uuid4()->toString() . '.' . $extension;
 
                 Storage::disk('public')->put('avatar/' . $imageName, base64_decode($image));
             }
-    
-            // Crear el usuario
+
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
@@ -126,17 +116,18 @@ class UserController extends Controller
             $user->password = bcrypt($request->password);
             $user->save();
             $user->assignRole($request->role_id);
-    
+
             return response()->json([
                 'status' => 'success',
-                'message' => 'Datos almacenados exitosamente',
+                'message' => TenantLanguage::text('Datos almacenados exitosamente', 'Data stored successfully'),
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return response()->json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -153,31 +144,22 @@ class UserController extends Controller
         try {
             $user = User::find($id);
 
-            if (!$user) {
+            if (! $user) {
                 return Response::json([
                     'status' => 'error',
-                    'message' => 'Usuario no encontrado'
+                    'message' => TenantLanguage::text('Usuario no encontrado', 'User not found'),
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
             if (isset($request->avatar)) {
-
-                $image_64 = $request->avatar; //your base64 encoded data
-
-                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
-
-                $replace = substr($image_64, 0, strpos($image_64, ',')+1);
-
-                // find substring fro replace here eg: data:image/png;base64,
-
-                $image = str_replace($replace, '', $image_64); 
-
+                $image_64 = $request->avatar;
+                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+                $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
+                $image = str_replace($replace, '', $image_64);
                 $image = str_replace(' ', '+', $image);
-
-                $imageName = Uuid::uuid4()->toString().'.'.$extension;
+                $imageName = Uuid::uuid4()->toString() . '.' . $extension;
 
                 Storage::disk('public')->put('avatar/' . $imageName, base64_decode($image));
-
                 $user->avatar = $imageName;
             }
 
@@ -190,12 +172,10 @@ class UserController extends Controller
                 $user->password = bcrypt($request->input('password'));
             }
 
-            $user->save();            
+            $user->save();
 
             if ($request->has('role_id')) {
-                // Elimina todos los roles existentes antes de asignar uno nuevo.
                 $user->roles()->detach();
-                
                 $role = Role::find($request->input('role_id'));
 
                 if ($role) {
@@ -203,21 +183,22 @@ class UserController extends Controller
                 } else {
                     return Response::json([
                         'status' => 'error',
-                        'message' => 'Rol no encontrado'
+                        'message' => TenantLanguage::text('Rol no encontrado', 'Role not found'),
                     ], 404, [], JSON_PRETTY_PRINT);
                 }
             }
 
             return Response::json([
                 'status' => 'success',
-                'data' => $user
+                'data' => $user,
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error en la generación de la solicitud'
+                'message' => TenantLanguage::text('Error en la generación de la solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -231,18 +212,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-
             return User::destroy($id);
-
-            return Response::json([
-                'status' => 'succes',
-            ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -256,26 +233,24 @@ class UserController extends Controller
      */
     public function assignRol(AssignRolRequest $request)
     {
-        try{
-            // Validación
+        try {
             if (isset($request->validator) && $request->validator->fails()) {
                 return Response::json([
                     'code' => '2001',
                     'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
-                    'errors' => $request->validator->messages()
+                    'message' => TenantLanguage::text('Datos Recibidos Incorrectos', 'Invalid data received'),
+                    'errors' => $request->validator->messages(),
                 ], 400, [], JSON_PRETTY_PRINT);
             }
 
             $user = User::findOrFail($request->user_id);
-
             $role = Role::where('name', $request->rol_name)->first();
 
-            if (!$role) {
+            if (! $role) {
                 return Response::json([
                     'code' => '2001',
-                    'status'=> 'error',
-                    'message' => 'Rol no encontrado'
+                    'status' => 'error',
+                    'message' => TenantLanguage::text('Rol no encontrado', 'Role not found'),
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
@@ -283,15 +258,16 @@ class UserController extends Controller
 
             return Response::json([
                 'code' => '200',
-                'status'=> 'succes',
-                'message' => 'Rol asignado correctamente'
+                'status' => 'succes',
+                'message' => TenantLanguage::text('Rol asignado correctamente', 'Role assigned successfully'),
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
+
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generacion De La Solicitud', 'Error generating the request'),
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }

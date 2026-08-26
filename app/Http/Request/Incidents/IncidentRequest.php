@@ -3,13 +3,14 @@
 namespace App\Http\Request\Incidents;
 
 use App\Rules\Subindicator;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Support\TenantLanguage;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Validador IncidentRequest.
  *
- * Validador para el guardado de los incidentes basado en la información enviada desde la app movil.
+ * Validador para el guardado de los incidentes basado en la información enviada desde la app móvil.
  *
  * @package    Requests
  * @subpackage \Indicents
@@ -26,21 +27,11 @@ class IncidentRequest extends FormRequest
      */
     public $validator;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Validaciones para cada campo contenido en el request
-     *
-     * @return array
-     */
     public function rules(): array
     {
         $isUpdate = $this->is('api/v1/incident/update/*');
@@ -58,47 +49,31 @@ class IncidentRequest extends FormRequest
         ];
     }
 
-    /**
-     * Mensajes para las validaciones especificas de cada uno de los campos
-     *
-     * @return array
-     */
     public function messages(): array
     {
         return [
-            'required' => 'El campo :attribute es requerido',
-            'exists' => 'El :attribute no existe en el sistema',
-            'integer' => 'El valor del id de usuario debe ser de tipo entero',
-            'string' => 'El campo :attribute debe ser de tipo carácter',
-            'image' => 'El campo :attribute debe ser de tipo imagen',
-            'mimes' => 'El campo :attribute debe ser de tipo jpeg, png, jpg, gif',
-            'max' => 'El campo :attribute debe ser de máximo 2048 bytes',
+            'required' => TenantLanguage::text('El campo :attribute es requerido', 'The :attribute field is required'),
+            'exists' => TenantLanguage::text('El :attribute no existe en el sistema', 'The :attribute does not exist in the system'),
+            'integer' => TenantLanguage::text('El valor del id de usuario debe ser de tipo entero', 'The user id value must be an integer'),
+            'string' => TenantLanguage::text('El campo :attribute debe ser de tipo carácter', 'The :attribute field must be a string'),
+            'image' => TenantLanguage::text('El campo :attribute debe ser de tipo imagen', 'The :attribute field must be an image'),
+            'mimes' => TenantLanguage::text('El campo :attribute debe ser de tipo jpeg, png, jpg, gif', 'The :attribute field must be jpeg, png, jpg or gif'),
+            'max' => TenantLanguage::text('El campo :attribute debe ser de máximo 2048 bytes', 'The :attribute field must be at most 2048 bytes'),
         ];
     }
 
-    /**
-     * Asignación de alias para cada campo entrante en el request
-     *
-     * @return array
-     */
     public function attributes(): array
     {
         return [
-            'IndicatorId' => 'Subcategoria',
-            'address' => 'Dirección',
-            'description' => 'Descripción',
-            'pointCoordinates' => 'Coordenadas',
-            'image' => 'Imagen',
+            'IndicatorId' => TenantLanguage::fieldName('Subcategoria', 'IndicatorId'),
+            'address' => TenantLanguage::fieldName('Dirección', 'address'),
+            'description' => TenantLanguage::fieldName('Descripción', 'description'),
+            'pointCoordinates' => TenantLanguage::fieldName('Coordenadas', 'pointCoordinates'),
+            'image' => TenantLanguage::fieldName('Imagen', 'image'),
         ];
     }
 
-    /**
-     * Manejar un intento de validación fallido.
-     *
-     * @param \Illuminate\Contracts\Validation\Validator $validator
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function failedValidation(Validator $validator) : void
+    protected function failedValidation(Validator $validator): void
     {
         $this->validator = $validator;
     }

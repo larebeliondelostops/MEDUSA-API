@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Interfaces\Reports\ReportInterface;
+use App\Support\TenantLanguage;
 use App\Values\ReportsValues;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use App\Interfaces\Reports\ReportInterface;
 
 /**
  * Controlador manejan todo lo que tiene que ver con reportes
@@ -20,7 +21,6 @@ use App\Interfaces\Reports\ReportInterface;
  * @author     Johan Caicedo <jecg2509@gmail.com>
  * @version    v1.0.0
  */
-
 class ReportController extends Controller
 {
     /**
@@ -28,31 +28,30 @@ class ReportController extends Controller
      */
     public function __construct(
         private ReportInterface $service
-    )
-    {}
+    ) {
+    }
 
     public function index(Request $request, string $method, $slug)
     {
         try {
-
             return $this->service->getReportsData($request, $method, $slug);
-
         } catch (ModelNotFoundException $exception) {
             return Response::json([
                 'status' => 'error',
-                'message' => 'No existe la subcategoria solicitada'
+                'message' => TenantLanguage::text('No existe la subcategoria solicitada', 'The requested subcategory does not exist'),
             ], 404, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);
+
+            return Response::json([
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request'),
+            ], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
-    //Generacion de reportes de eventos
     public function getReportsData(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->getReportsData();
@@ -61,7 +60,6 @@ class ReportController extends Controller
     public function EventsForMonth(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsForMonth();
@@ -70,7 +68,6 @@ class ReportController extends Controller
     public function EventsForType(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsForType();
@@ -79,7 +76,6 @@ class ReportController extends Controller
     public function EventsByAuthorizingEntity(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsByAuthorizingEntity();
@@ -88,7 +84,6 @@ class ReportController extends Controller
     public function EventsByCapacityRange(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsByCapacityRange();
@@ -97,7 +92,6 @@ class ReportController extends Controller
     public function EventsPastAndFuture(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsPastAndFuture();
@@ -106,7 +100,6 @@ class ReportController extends Controller
     public function EventsByTypeAndAuthorizingEntity(Request $request)
     {
         $state = $request->input('state');
-
         $strategy = ReportsValues::STRATEGY[$state];
 
         return (new $strategy)->EventsByTypeAndAuthorizingEntity();
@@ -116,6 +109,7 @@ class ReportController extends Controller
     {
         $state = $request->input('state');
         $strategy = ReportsValues::STRATEGY[$state];
+
         return (new $strategy)->StatisticsByIndicatorAndGrid($request);
     }
 
@@ -123,6 +117,7 @@ class ReportController extends Controller
     {
         $state = $request->input('state');
         $strategy = ReportsValues::STRATEGY[$state];
+
         return (new $strategy)->StatisticsGeneral($request);
     }
 }

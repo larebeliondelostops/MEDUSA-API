@@ -7,6 +7,7 @@ use App\Models\Form;
 use App\Models\Field;
 use App\Models\Module;
 use App\Models\Slug;
+use App\Support\TenantLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -37,7 +38,7 @@ class FormsController extends Controller
             if (! $slug) {
                 return Response::json([
                     'status' => 'error',
-                    'message' => "El slug {$slugName} no existe",
+                    'message' => TenantLanguage::text("El slug {$slugName} no existe", "The slug {$slugName} does not exist"),
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
@@ -45,7 +46,7 @@ class FormsController extends Controller
             if (! $module) {
                 return Response::json([
                     'status' => 'error',
-                    'message' => "No existe un modulo asociado al slug {$slugName}",
+                    'message' => TenantLanguage::text("No existe un modulo asociado al slug {$slugName}", "There is no module associated with slug {$slugName}"),
                     'data' => ['slug_id' => $slug->id, 'slug' => $slugName],
                 ], 404, [], JSON_PRETTY_PRINT);
             }
@@ -71,23 +72,30 @@ class FormsController extends Controller
                             $columns[] = 'parent_indicator_id';
                         }
 
-                        $field->options = $modelSelect::select($columns)->orderBy('id')->get();
+                        $field->options = $modelSelect::select($columns)->orderBy('id')->get()->map(function ($option) use ($modelSelect) {
+                            $option->label = TenantLanguage::optionLabel($modelSelect, $option->label);
+
+                            return $option;
+                        });
                     }
                 }
+
+                $field->name = TenantLanguage::fieldName($field->name, $field->key);
+                $field->placeholder = TenantLanguage::fieldPlaceholder($field->placeholder, $field->key);
 
                 return $field;
             })->filter()->values();
 
             return Response::json([
                 'status'=> 'succes',
-                'message' => 'Solicitud exitosa',
+                'message' => TenantLanguage::text('Solicitud exitosa', 'Request completed successfully'),
                 'data' => $fields
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
             return Response::json([
                 'status' => 'error',
-                'message' => 'Error En La Generacion De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generacion De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }

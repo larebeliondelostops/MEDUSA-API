@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use App\Support\TenantLanguage;
 use App\Models\Villavicencio\Incident;
 use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class IncidentController extends Controller
                     'title' => $incident->name,
                     'geometry' => $coordinates,
                     'properties' => [
-                        'Direccion' => $incident->address
+                        TenantLanguage::text('Direccion', 'Address') => $incident->address
                     ]
                 ];
             }
@@ -61,7 +62,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -83,19 +84,19 @@ class IncidentController extends Controller
             $transformedData = [];
             foreach ($incidents as $incident) {
                 $transformedData[] = [
-                    'ID' => $incident->id,
-                    'Nombre' => $incident->description,
-                    'Categoria' => $this->categoryName($incident),
-                    'Subcategoria' => $this->subcategoryName($incident),
-                    'Direccion' => $incident->address,
-                    'Fecha' => substr($incident->created_at, 0, 10),
+                    TenantLanguage::text('ID', 'ID') => $incident->id,
+                    TenantLanguage::text('Nombre', 'Name') => $incident->description,
+                    TenantLanguage::text('Categoria', 'Category') => $this->categoryName($incident),
+                    TenantLanguage::text('Subcategoria', 'Subcategory') => $this->subcategoryName($incident),
+                    TenantLanguage::text('Direccion', 'Address') => $incident->address,
+                    TenantLanguage::text('Fecha', 'Date') => substr($incident->created_at, 0, 10),
                 ];
             }
 
             return response()->json([
                 'data' => $transformedData,
                 'meta' => [
-                    'title' => 'Incidentes App',
+                    'title' => TenantLanguage::text('Incidentes App', 'Incidents App'),
                     'pagination' => [
                         'total' => $incidents->total(),
                         'perPage' => $incidents->perPage(),
@@ -113,7 +114,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -143,7 +144,7 @@ class IncidentController extends Controller
                 return Response::json([
                     'code' => '3002',
                     'status' => 'error',
-                    'message' => 'Límite de llamadas alcanzado. Inténtalo más tarde.',
+                    'message' => TenantLanguage::text('Límite de llamadas alcanzado. Inténtalo más tarde.', 'Rate limit reached. Try again later.'),
                     'retry_after' => $timeUntilUnlock,
                 ], 429);
             }
@@ -155,7 +156,7 @@ class IncidentController extends Controller
                 return Response::json([
                     'code' => '2001',
                     'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
+                    'message' => TenantLanguage::text('Datos Recibidos Incorrectos', 'Invalid data received'),
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
@@ -168,7 +169,7 @@ class IncidentController extends Controller
             if (! $coordenadas) {
                 return Response::json([
                     'status' => 'error',
-                    'message' => 'El formato de las coordenadas no es válido'
+                    'message' => TenantLanguage::text('El formato de las coordenadas no es válido', 'The coordinates format is invalid')
                 ], 422, [], JSON_PRETTY_PRINT);
             }
 
@@ -201,7 +202,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -220,7 +221,7 @@ class IncidentController extends Controller
             if (! $incident) {
                 return Response::json([
                     'status' => 'error',
-                    'message' => 'No existe un incidente con el identificador enviado'
+                    'message' => TenantLanguage::text('No existe un incidente con el identificador enviado', 'There is no incident with the provided identifier')
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
@@ -236,8 +237,8 @@ class IncidentController extends Controller
                     'description' => $incident->description,
                     'image' => tenant('id') . '/' . $incident->image,
                     'position' => $incident->position,
-                    'titile' => optional($incident->Indicator)->name,
-                    'title' => optional($incident->Indicator)->name
+                    'titile' => TenantLanguage::indicator(optional($incident->Indicator)->name),
+                    'title' => TenantLanguage::indicator(optional($incident->Indicator)->name)
                 ]
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -245,7 +246,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -265,7 +266,7 @@ class IncidentController extends Controller
                 return Response::json([
                     'code' => '2001',
                     'status' => 'error',
-                    'message' => 'Datos Recibidos Incorrectos',
+                    'message' => TenantLanguage::text('Datos Recibidos Incorrectos', 'Invalid data received'),
                     'errors' => $request->validator->messages()
                 ], 400, [], JSON_PRETTY_PRINT);
             }
@@ -276,7 +277,7 @@ class IncidentController extends Controller
                 return Response::json([
                     'code' => '2004',
                     'status' => 'error',
-                    'message' => 'No existe un incidente con el identificador enviado'
+                    'message' => TenantLanguage::text('No existe un incidente con el identificador enviado', 'There is no incident with the provided identifier')
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 
@@ -314,7 +315,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -340,7 +341,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -375,7 +376,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -397,7 +398,7 @@ class IncidentController extends Controller
             } else {
                 return Response::json([
                     'status' => 'error',
-                    'message' => 'No existe un registro con el id' . $request->incident
+                    'message' => TenantLanguage::text('No existe un registro con el id' . $request->incident, 'No record exists with id ' . $request->incident)
                 ], 400, [], JSON_PRETTY_PRINT);
             }
             
@@ -406,7 +407,7 @@ class IncidentController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => 'Error En La Generación De La Solicitud'
+                'message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -433,7 +434,7 @@ class IncidentController extends Controller
 
         $category = $indicator->parent ?: $indicator;
 
-        return ['id' => $category->id, 'name' => $category->name];
+        return ['id' => $category->id, 'name' => TenantLanguage::indicator($category->name)];
     }
 
     private function subcategoryData(Incident $incident): ?array
@@ -443,7 +444,7 @@ class IncidentController extends Controller
             return null;
         }
 
-        return ['id' => $indicator->id, 'name' => $indicator->name];
+        return ['id' => $indicator->id, 'name' => TenantLanguage::indicator($indicator->name)];
     }
 
     private function categoryName(Incident $incident): ?string

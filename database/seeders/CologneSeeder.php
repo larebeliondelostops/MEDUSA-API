@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Support\TenantLanguage;
 use App\Strategies\StrategiesPoints\Cologne\StrategyCologneGeodata;
 use App\Strategies\StrategiesPolygons\Cologne\StrategyCologneParks;
 use Database\Seeders\Villavicencio\ModelHasPermissionsTableSeeder;
@@ -81,6 +80,33 @@ class CologneSeeder extends Seeder
         8 => ['Adulto mayor sin apoyo', 'Persona con discapacidad', 'Persona con movilidad reducida', 'Mujer gestante o en perÃ­odo de lactancia', 'Persona que requiere medicamentos o tratamiento', 'Persona dependiente de equipo mÃ©dico sin servicio elÃ©ctrico', 'NiÃ±os pequeÃ±os en condiciÃ³n de vulnerabilidad', 'Persona sin red familiar o cuidador', 'Necesidad de transporte especial', 'Otra necesidad especial'],
         9 => ['Negocio o local comercial afectado', 'Bodega o inventario daÃ±ado', 'Maquinaria, herramientas o equipos daÃ±ados', 'Cultivos o plantaciones afectadas', 'Animales de granja o aves afectados', 'Sistema de riego o abastecimiento productivo daÃ±ado', 'PÃ©rdida de acceso a zonas de producciÃ³n', 'DaÃ±o en pesca o actividad acuÃ­cola', 'PÃ©rdida de empleo o ingresos por el desastre', 'Otra afectaciÃ³n en actividades productivas'],
         10 => ['DaÃ±o no clasificado', 'Necesidad no clasificada', 'SituaciÃ³n que quiero describir con mis palabras'],
+    ];
+
+
+    private const INCIDENT_CATEGORIES_EN = [
+        1 => ['name' => 'Housing or building', 'description' => 'Damage to houses, apartments, buildings or structures.'],
+        2 => ['name' => 'Road or access', 'description' => 'Issues that prevent safe transit or access.'],
+        3 => ['name' => 'Water and sanitation', 'description' => 'Impacts on water service or the sanitation system.'],
+        4 => ['name' => 'Energy, gas and communications', 'description' => 'Disruption or damage to utility services.'],
+        5 => ['name' => 'Public infrastructure', 'description' => 'Damage to community or public-use places and facilities.'],
+        6 => ['name' => 'Visible environmental risk', 'description' => 'Threats or risk situations that may affect the community.'],
+        7 => ['name' => 'Basic family or community need', 'description' => 'Essential needs of affected families or communities.'],
+        8 => ['name' => 'Special need of a person or population', 'description' => 'People who require priority attention.'],
+        9 => ['name' => 'Business, crops or productive activity', 'description' => 'Impacts affecting livelihoods and production.'],
+        10 => ['name' => 'Other impact', 'description' => 'Situation not covered by the previous options.'],
+    ];
+
+    private const INCIDENT_SUBINDICATORS_EN = [
+        1 => ['Visible cracks', 'Damage to walls, roofs or floors', 'Structural damage (columns, beams, walls)', 'Detached elements (roof tiles, glass, plaster, etc.)', 'Partial collapse', 'Total collapse', 'Apparently uninhabitable housing', 'Blocked access', 'Damage in common areas (building/complex)', 'Building inspection request'],
+        2 => ['Blocked street', 'Damaged road', 'Landslide or falling rocks on the road', 'Bridge or culvert affected', 'Sinkhole or cracks in the road', 'Trees, poles or objects blocking the way', 'Pedestrian access affected', 'Isolated community or rural area', 'Access to a hospital, school or other service blocked', 'Other impact on road or access'],
+        3 => ['No water supply', 'Broken pipe or water leak', 'Apparently contaminated water (color, smell, taste)', 'Damage to tank or storage system', 'Overflowing sewage system', 'Exposed wastewater', 'Bathrooms or toilets out of service', 'Wastewater accumulation', 'Damage to plant or treatment system', 'Other impact on water or sanitation'],
+        4 => ['Power outage', 'Damaged pole, transformer or power line', 'Damaged electrical installations in the property (no immediate risk)', 'Gas service interruption', 'Damaged gas line or meter (no active leak)', 'Mobile service loss', 'Internet or data service loss', 'Antenna or communications infrastructure affected', 'Public lighting out of service', 'Other impact on utilities'],
+        5 => ['Hospital or health center affected', 'School or kindergarten affected', 'Fire station, police or other response entity affected', 'City hall, governor office or public office damaged', 'Shelter, coliseum or community hall affected', 'Market square or supply center affected', 'Water plant, tank or pumping system affected', 'Pedestrian bridge or other public structure affected', 'Other public infrastructure affected', 'Infrastructure status unknown'],
+        6 => ['Ground cracks', 'Unstable slope or embankment', 'Falling or potentially falling rocks', 'Retaining wall affected', 'Tree at risk of falling', 'Debris or unstable structures', 'Stream, river or canal blocked', 'Damage to channels or hydraulic structures', 'Elements at risk of detachment', 'Other environmental risk situation'],
+        7 => ['Family without a safe place to sleep', 'Lack of drinking water', 'Lack of food', 'Lack of basic items (mattresses, blankets, clothes, hygiene kits, etc.)', 'Shelter with unmet basic needs', 'Isolated community without supplies', 'Loss of cooking means', 'Overcrowding or insufficient temporary shelter', 'Several families affected in the same area', 'Other basic need'],
+        8 => ['Older adult without support', 'Person with disability', 'Person with reduced mobility', 'Pregnant or breastfeeding woman', 'Person requiring medication or treatment', 'Person dependent on medical equipment without power service', 'Young children in vulnerable conditions', 'Person without family support or caregiver', 'Need for special transportation', 'Other special need'],
+        9 => ['Affected business or commercial premises', 'Damaged warehouse or inventory', 'Damaged machinery, tools or equipment', 'Affected crops or plantations', 'Affected farm animals or birds', 'Damaged irrigation or productive supply system', 'Loss of access to production areas', 'Damage to fishing or aquaculture activity', 'Loss of jobs or income due to the disaster', 'Other impact on productive activities'],
+        10 => ['Unclassified damage', 'Unclassified need', 'Situation I want to describe in my own words'],
     ];
 
     private int $inserted = 0;
@@ -228,29 +254,30 @@ class CologneSeeder extends Seeder
             return;
         }
 
-        foreach (self::INCIDENT_CATEGORIES as $id => $category) {
+        foreach (self::INCIDENT_CATEGORIES_EN as $id => $category) {
             $this->syncRow('indicators', ['id' => $id], [
-                'name' => TenantLanguage::indicator($category['name']),
-                'description' => TenantLanguage::indicatorDescription($category['description']),
+                'name' => $category['name'],
+                'description' => $category['description'],
                 'parent_indicator_id' => null,
             ]);
         }
 
         $this->syncPostgresSequences(['indicators']);
 
-        foreach (self::INCIDENT_SUBINDICATORS as $parentId => $subindicators) {
-            foreach ($subindicators as $spanishName) {
-                $this->syncIncidentSubindicator($parentId, $spanishName);
+        foreach (self::INCIDENT_SUBINDICATORS_EN as $parentId => $subindicators) {
+            foreach ($subindicators as $index => $englishName) {
+                $legacyName = self::INCIDENT_SUBINDICATORS[$parentId][$index] ?? null;
+                $this->syncIncidentSubindicator($parentId, $englishName, $legacyName);
             }
         }
     }
 
-    private function syncIncidentSubindicator(int $parentId, string $spanishName): void
+    private function syncIncidentSubindicator(int $parentId, string $englishName, ?string $legacyName = null): void
     {
-        $englishName = TenantLanguage::indicator($spanishName) ?? $spanishName;
+        $candidateNames = array_values(array_unique(array_filter([$legacyName, $englishName])));
         $existingId = DB::table('indicators')
             ->where('parent_indicator_id', $parentId)
-            ->whereIn('name', array_values(array_unique([$spanishName, $englishName])))
+            ->whereIn('name', $candidateNames)
             ->value('id');
 
         if ($existingId !== null) {
@@ -893,3 +920,4 @@ class CologneSeeder extends Seeder
         return [round($latitude, 7), round($longitude, 7)];
     }
 }
+

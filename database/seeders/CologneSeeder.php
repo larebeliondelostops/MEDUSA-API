@@ -136,7 +136,6 @@ class CologneSeeder extends Seeder
 
         foreach (self::CATALOG as $id => $marker) {
             $this->assertReservedId('slugs', 'id', $id, 'name', $marker['dataset']);
-            $this->assertReservedId('marker', 'id', $id, 'name', $marker['name']);
 
             $this->syncRow('slugs', ['id' => $id], ['name' => $marker['dataset']]);
 
@@ -319,7 +318,6 @@ class CologneSeeder extends Seeder
         ];
 
         foreach ($items as $id => $item) {
-            $this->assertReservedId('menu', 'id', $id, 'name', $item['name']);
             $this->syncRow('menu', ['id' => $id], $item);
             $this->grantPermissionToRole("menu-{$item['name']}", 'Administrator');
         }

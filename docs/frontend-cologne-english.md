@@ -32,6 +32,9 @@ Swagger sigue disponible dentro del mismo tenant:
 https://cologne.back.centralspike.com/api/v1/docs
 ```
 
+La guia contractual actualizada para entregar al front esta en
+`docs/frontend-cologne-guide.md`.
+
 ## Que cambia para el front
 
 En `cologne`, el backend ya entrega en ingles:
@@ -101,17 +104,21 @@ Para `Markers`, el backend devuelve un padre con submenus por tipo:
 
 ```json
 {
+  "id": "5",
   "name": "Markers",
   "path": null,
+  "icon": "place",
   "submenu": [
     {
       "name": "Traffic lights",
       "path": "markers/traffic_lights",
+      "icon": "traffic",
       "slug": "traffic_lights"
     },
     {
       "name": "Parking meters",
       "path": "markers/parking_ticket_machines",
+      "icon": "local_parking",
       "slug": "parking_ticket_machines"
     }
   ]
@@ -236,16 +243,19 @@ Endpoints relacionados:
 
 ```http
 GET /menu/menuBar
-GET /markers
-GET /markers/{slug}
-GET /{slug}/allTable
+GET /menu/commandBar
+GET /allData/allPoints
+GET /allData/allPolygons
+GET /allData/getInfoPoint?id={uuid}&markerType={markerId}
+GET /traffic_lights/allTable
+GET /parking_ticket_machines/allTable
 ```
 
 Para `cologne`:
 
 - Las capas `Traffic lights` y `Parking meters` deben mostrarse ya con ese nombre.
 - La navegacion del modulo debe resolver a rutas tipo `/dashboard/markers/{slug}`.
-- La tabla de cada tipo consume `/{slug}/allTable`.
+- La tabla de cada tipo consume `/{slug}/allTable` y es de solo lectura.
 - No se debe depender de `specialType = 1` para esas dos capas.
 - El agrupamiento debe seguir funcionando con la logica por cantidad ya existente.
 
@@ -284,8 +294,8 @@ Recomendacion:
 - Ninguna opcion del menu intenta navegar a `/dashboard/markers` a secas.
 - Las tablas de markers cargan usando `/{slug}/allTable`.
 - Las capas muestran `Traffic lights` y `Parking meters`.
-- La agrupacion por cantidad se prueba con 99, 100 y 101 elementos para cubrir
-  el comportamiento exacto en el umbral de 100.
+- La agrupacion por cantidad se prueba con 99, 100 y 101 elementos: con 100
+  elementos no agrupa y comienza a agrupar desde 101 (`cantidad > 100`).
 - El formulario de incidentes muestra categorias y subcategorias en ingles.
 - Desde un dispositivo movil se puede adjuntar una foto y guardar el incidente.
 - Al guardar un incidente, la respuesta devuelve `category.name` y `subcategory.name` en ingles.

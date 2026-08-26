@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 class BroadcastServiceProvider extends ServiceProvider
 {
@@ -16,13 +14,7 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes([
-            'middleware' => [
-                InitializeTenancyByDomain::class,
-                PreventAccessFromCentralDomains::class,
-                'jwt.verify',
-            ],
-        ]);
+        Broadcast::routes();
 
         require base_path('routes/channels.php');
     }

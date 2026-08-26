@@ -25,7 +25,6 @@ Route::middleware([/* 'jwt.verify' */])->group(function() {
      * Manejo de formularios
      */
     Route::get('forms/{slug}', [FormsController::class, 'getForm']);
-    Route::get('form/{slug}', [FormsController::class, 'getForm']);
 
     /**
      * Creación de formularios

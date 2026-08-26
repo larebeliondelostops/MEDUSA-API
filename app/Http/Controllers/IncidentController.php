@@ -6,7 +6,6 @@ use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use App\Support\TenantLanguage;
-use App\Support\TenantIncidentBroadcaster;
 use App\Models\Villavicencio\Incident;
 use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
 use Illuminate\Http\Request;
@@ -189,8 +188,6 @@ class IncidentController extends Controller
             $incident->save();
             $incident->load('Indicator.parent');
             Cache::forget(StrategyIncidentsReports::CACHE_KEY);
-            $responseData = $this->incidentResponseData($incident);
-            TenantIncidentBroadcaster::broadcast('created', $responseData);
 
             // Incrementar el contador del límite de tasa por usuario
             if ($user) {
@@ -198,7 +195,7 @@ class IncidentController extends Controller
             }
             return Response::json([
                 'status' => 'succes',
-                'data' => $responseData,
+                'data' => $this->incidentResponseData($incident),
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -308,12 +305,10 @@ class IncidentController extends Controller
             $incident->save();
             $incident->load('Indicator.parent');
             Cache::forget(StrategyIncidentsReports::CACHE_KEY);
-            $responseData = $this->incidentResponseData($incident);
-            TenantIncidentBroadcaster::broadcast('updated', $responseData);
 
             return Response::json([
                 'status' => 'succes',
-                'data' => $responseData
+                'data' => $this->incidentResponseData($incident)
             ], 201, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
@@ -334,16 +329,9 @@ class IncidentController extends Controller
     public function destroy($id)
     {
         try {
-            $incident = $this->findIncidentByIdentifier((string) $id);
-            if (! $incident) {
-                return 0;
-            }
-
-            $responseData = $this->incidentResponseData($incident);
-            $deleted = (int) $incident->delete();
+            $deleted = Incident::destroy($id);
             if ($deleted) {
                 Cache::forget(StrategyIncidentsReports::CACHE_KEY);
-                TenantIncidentBroadcaster::broadcast('deleted', $responseData);
             }
 
             return $deleted;
@@ -402,8 +390,6 @@ class IncidentController extends Controller
             if (isset($incident)) {
                 
                 $incident->update(['reviewed' => true]);
-                $incident->load('Indicator.parent');
-                TenantIncidentBroadcaster::broadcast('reviewed', $this->incidentResponseData($incident));
 
                 return Response::json([
                     'status' => 'succes',

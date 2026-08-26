@@ -7,7 +7,6 @@ use App\Models\Menu;
 use App\Models\BarMenu;
 use App\Models\Marker;
 use App\Models\Setting;
-use App\Support\TenantLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -88,7 +87,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
-                'message' => TenantLanguage::text('Solicitud exitosa', 'Request completed successfully'),
+                'message' => 'Solicitud exitosa',
                 'data' => $menu
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -96,7 +95,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => TenantLanguage::text('Error En La Generacion De La Solicitud', 'Error generating the request')
+                'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -158,7 +157,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
-                'message' => TenantLanguage::text('Solicitud exitosa', 'Request completed successfully'),
+                'message' => 'Solicitud exitosa',
                 'data' => $menu
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -166,7 +165,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => TenantLanguage::text('Error En La Generacion De La Solicitud', 'Error generating the request')
+                'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }
@@ -400,7 +399,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '200',
                 'status'=> 'succes',
-                'message' => TenantLanguage::text('Solicitud exitosa', 'Request completed successfully'),
+                'message' => 'Solicitud exitosa',
                 'data' => $data
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -408,7 +407,7 @@ class MenuController extends Controller
             return Response::json([
                 'code' => '1001',
                 'status' => 'error',
-                'message' => TenantLanguage::text('Error En La Generacion De La Solicitud', 'Error generating the request')
+                'message' => 'Error En La Generacion De La Solicitud'
             ], 500, [], JSON_PRETTY_PRINT);
         }
     }

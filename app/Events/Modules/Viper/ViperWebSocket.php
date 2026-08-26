@@ -3,20 +3,18 @@
 namespace App\Events\Modules\Viper;
 
 use App\Models\Modules\Viper\Alert;
-use App\Support\TenantBroadcastChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class ViperWebSocket implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public string $tenantId;
-
-    public string $userKey;
 
     /**
      * Create a new event instance.
@@ -25,8 +23,6 @@ class ViperWebSocket implements ShouldBroadcast
      */
     public function __construct(public Alert $alert)
     {
-        $this->tenantId = TenantBroadcastChannel::tenantId();
-        $this->userKey = TenantBroadcastChannel::userKey($alert->user_email);
     }
 
     /**
@@ -36,7 +32,7 @@ class ViperWebSocket implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("tenant.{$this->tenantId}.users.{$this->userKey}.alerts");
+        return new Channel('private_channel_' . $this->alert->user_email);
     }
 
     public function broadcastAs()

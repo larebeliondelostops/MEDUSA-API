@@ -238,12 +238,21 @@ class CologneSeeder extends Seeder
             $query->where($column, $value);
         }
 
+        $hasCreatedAt = Schema::hasColumn($table, 'created_at');
+        $hasUpdatedAt = Schema::hasColumn($table, 'updated_at');
         $existing = $query->first();
         if ($existing === null) {
-            DB::table($table)->insert($key + $values + [
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $payload = $key + $values;
+
+            if ($hasCreatedAt) {
+                $payload['created_at'] = now();
+            }
+
+            if ($hasUpdatedAt) {
+                $payload['updated_at'] = now();
+            }
+
+            DB::table($table)->insert($payload);
 
             return;
         }
@@ -261,7 +270,11 @@ class CologneSeeder extends Seeder
         }
 
         if ($dirty !== []) {
-            $query->update($dirty + ['updated_at' => now()]);
+            if ($hasUpdatedAt) {
+                $dirty['updated_at'] = now();
+            }
+
+            $query->update($dirty);
         }
     }
 

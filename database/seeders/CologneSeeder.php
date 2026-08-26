@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Support\TenantLanguage;
 use App\Strategies\StrategiesPoints\Cologne\StrategyCologneGeodata;
 use App\Strategies\StrategiesPolygons\Cologne\StrategyCologneParks;
 use Database\Seeders\Villavicencio\ModelHasPermissionsTableSeeder;
@@ -56,6 +57,32 @@ class CologneSeeder extends Seeder
         'wifi_access_points' => ['file' => 'wifi_access_points.json', 'name' => 'ap_name'],
     ];
 
+    private const INCIDENT_CATEGORIES = [
+        1 => ['name' => 'Vivienda o edificaciÃ³n', 'description' => 'DaÃ±os en casas, apartamentos, edificios o estructuras.'],
+        2 => ['name' => 'VÃ­a o acceso', 'description' => 'Problemas que impiden el trÃ¡nsito o acceso seguro.'],
+        3 => ['name' => 'Agua y saneamiento', 'description' => 'Afectaciones en el servicio de agua o en el sistema de saneamiento.'],
+        4 => ['name' => 'EnergÃ­a, gas y comunicaciones', 'description' => 'InterrupciÃ³n o daÃ±os en servicios pÃºblicos.'],
+        5 => ['name' => 'Infraestructura pÃºblica', 'description' => 'DaÃ±os en lugares o instalaciones de uso comunitario o estatal.'],
+        6 => ['name' => 'Riesgo visible en el entorno', 'description' => 'Amenazas o situaciones de riesgo que pueden afectar a la comunidad.'],
+        7 => ['name' => 'Necesidad bÃ¡sica de una familia o comunidad', 'description' => 'Necesidades esenciales de familias o comunidades afectadas.'],
+        8 => ['name' => 'Necesidad especial de una persona o poblaciÃ³n', 'description' => 'Personas que requieren atenciÃ³n prioritaria.'],
+        9 => ['name' => 'Negocio, cultivo o actividad productiva', 'description' => 'Afectaciones que impactan medios de vida y producciÃ³n.'],
+        10 => ['name' => 'Otra afectaciÃ³n', 'description' => 'SituaciÃ³n no contemplada en las opciones anteriores.'],
+    ];
+
+    private const INCIDENT_SUBINDICATORS = [
+        1 => ['Grietas visibles', 'DaÃ±os en paredes, techos o pisos', 'DaÃ±o estructural (columnas, vigas, muros)', 'Desprendimientos (tejas, vidrios, revoque, etc.)', 'Colapso parcial', 'Colapso total', 'Vivienda aparentemente inhabitable', 'Acceso bloqueado', 'DaÃ±os en zonas comunes (edificio/conjunto)', 'Solicitud de revisiÃ³n de edificaciÃ³n'],
+        2 => ['Calle bloqueada', 'Carretera daÃ±ada', 'Derrumbe o caÃ­da de rocas sobre la vÃ­a', 'Puente o alcantarilla afectada', 'Hundimiento o grietas en la vÃ­a', 'Ãrboles, postes u objetos bloqueando el paso', 'Acceso peatonal afectado', 'Comunidad o vereda aislada', 'Acceso a hospital, colegio u otro servicio bloqueado', 'Otra afectaciÃ³n en vÃ­a o acceso'],
+        3 => ['Falta de agua', 'TuberÃ­a rota o fuga de agua', 'Agua aparentemente contaminada (color, olor, sabor)', 'DaÃ±o en tanque o sistema de almacenamiento', 'Alcantarillado rebosado', 'Aguas negras expuestas', 'BaÃ±os o sanitarios fuera de servicio', 'AcumulaciÃ³n de aguas residuales', 'DaÃ±o en planta o sistema de tratamiento', 'Otra afectaciÃ³n en agua o saneamiento'],
+        4 => ['Falta de energÃ­a elÃ©ctrica', 'Poste, transformador o red elÃ©ctrica daÃ±ada', 'Instalaciones elÃ©ctricas del inmueble daÃ±adas (sin riesgo inmediato)', 'InterrupciÃ³n del servicio de gas', 'Red o medidor de gas daÃ±ado (sin fuga activa)', 'PÃ©rdida de telefonÃ­a mÃ³vil', 'PÃ©rdida de internet o datos', 'Antena o infraestructura de comunicaciones afectada', 'Alumbrado pÃºblico fuera de servicio', 'Otra afectaciÃ³n en servicios'],
+        5 => ['Hospital o centro de salud afectado', 'Colegio, escuela o jardÃ­n infantil afectado', 'EstaciÃ³n de bomberos, policÃ­a u otra entidad de respuesta afectada', 'AlcaldÃ­a, gobernaciÃ³n u oficina pÃºblica daÃ±ada', 'Albergue, coliseo o salÃ³n comunal afectado', 'Plaza de mercado o centro de abastecimiento', 'Planta de agua, tanque o sistema de bombeo afectado', 'Puente peatonal u otra estructura pÃºblica', 'Otra infraestructura pÃºblica afectada', 'Desconozco el estado de la infraestructura'],
+        6 => ['Grietas en el terreno', 'Ladera o talud inestable', 'CaÃ­da o posible caÃ­da de rocas', 'Muro de contenciÃ³n afectado', 'Ãrbol con riesgo de caÃ­da', 'Escombros o estructuras inestables', 'Quebrada, rÃ­o o canal represado', 'DaÃ±o en cauces o estructuras hidrÃ¡ulicas', 'Elementos con riesgo de desprendimiento', 'Otra situaciÃ³n de riesgo en el entorno'],
+        7 => ['Familia sin lugar seguro para dormir', 'Falta de agua potable', 'Falta de alimentos', 'Falta de elementos bÃ¡sicos (colchones, cobijas, ropa, kits de higiene, etc.)', 'Albergue con necesidades bÃ¡sicas', 'Comunidad aislada sin suministros', 'PÃ©rdida de medios para cocinar', 'Hacinamiento o alojamiento temporal insuficiente', 'Varias familias afectadas en el mismo sector', 'Otra necesidad bÃ¡sica'],
+        8 => ['Adulto mayor sin apoyo', 'Persona con discapacidad', 'Persona con movilidad reducida', 'Mujer gestante o en perÃ­odo de lactancia', 'Persona que requiere medicamentos o tratamiento', 'Persona dependiente de equipo mÃ©dico sin servicio elÃ©ctrico', 'NiÃ±os pequeÃ±os en condiciÃ³n de vulnerabilidad', 'Persona sin red familiar o cuidador', 'Necesidad de transporte especial', 'Otra necesidad especial'],
+        9 => ['Negocio o local comercial afectado', 'Bodega o inventario daÃ±ado', 'Maquinaria, herramientas o equipos daÃ±ados', 'Cultivos o plantaciones afectadas', 'Animales de granja o aves afectados', 'Sistema de riego o abastecimiento productivo daÃ±ado', 'PÃ©rdida de acceso a zonas de producciÃ³n', 'DaÃ±o en pesca o actividad acuÃ­cola', 'PÃ©rdida de empleo o ingresos por el desastre', 'Otra afectaciÃ³n en actividades productivas'],
+        10 => ['DaÃ±o no clasificado', 'Necesidad no clasificada', 'SituaciÃ³n que quiero describir con mis palabras'],
+    ];
+
     private int $inserted = 0;
 
     private int $updated = 0;
@@ -71,6 +98,7 @@ class CologneSeeder extends Seeder
         DB::transaction(function (): void {
             $this->syncVillavicencioIdentity();
             $this->syncEnglishUiData();
+            $this->syncIncidentIndicators();
             // Los seeders heredados usan IDs explicitos. PostgreSQL no avanza
             // automaticamente sus secuencias, por lo que deben alinearse antes
             // de insertar los permisos nuevos de Colonia con IDs generados.
@@ -112,7 +140,7 @@ class CologneSeeder extends Seeder
         ]);
     }
 
-    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker', 'slugs', 'menu']): void
+    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker', 'slugs', 'menu', 'indicators']): void
     {
         if (DB::getDriverName() !== 'pgsql') {
             return;
@@ -192,6 +220,53 @@ class CologneSeeder extends Seeder
         $this->syncRow('slugs', ['id' => $nextId], ['name' => $name]);
 
         return $nextId;
+    }
+
+    private function syncIncidentIndicators(): void
+    {
+        if (! Schema::hasTable('indicators')) {
+            return;
+        }
+
+        foreach (self::INCIDENT_CATEGORIES as $id => $category) {
+            $this->syncRow('indicators', ['id' => $id], [
+                'name' => TenantLanguage::indicator($category['name']),
+                'description' => TenantLanguage::indicatorDescription($category['description']),
+                'parent_indicator_id' => null,
+            ]);
+        }
+
+        foreach (self::INCIDENT_SUBINDICATORS as $parentId => $subindicators) {
+            foreach ($subindicators as $spanishName) {
+                $this->syncIncidentSubindicator($parentId, $spanishName);
+            }
+        }
+    }
+
+    private function syncIncidentSubindicator(int $parentId, string $spanishName): void
+    {
+        $englishName = TenantLanguage::indicator($spanishName) ?? $spanishName;
+        $existingId = DB::table('indicators')
+            ->where('parent_indicator_id', $parentId)
+            ->whereIn('name', array_values(array_unique([$spanishName, $englishName])))
+            ->value('id');
+
+        if ($existingId !== null) {
+            $this->syncRow('indicators', ['id' => (int) $existingId], [
+                'name' => $englishName,
+                'description' => null,
+                'parent_indicator_id' => $parentId,
+            ]);
+
+            return;
+        }
+
+        $this->syncRow('indicators', [
+            'parent_indicator_id' => $parentId,
+            'name' => $englishName,
+        ], [
+            'description' => null,
+        ]);
     }
 
     private function ensureCologneAdministrator(): void

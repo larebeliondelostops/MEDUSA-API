@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Strategies\StrategiesCruds\Cologne\StrategyParkingMeters;
+use App\Strategies\StrategiesCruds\Cologne\StrategyTrafficLights;
+use App\Strategies\StrategiesCruds\Villavicencio\StrategyIncidents;
 use App\Strategies\StrategiesPoints\Cologne\StrategyCologneGeodata;
 use App\Strategies\StrategiesPolygons\Cologne\StrategyCologneParks;
 use Database\Seeders\Villavicencio\ModelHasPermissionsTableSeeder;
@@ -131,6 +134,7 @@ class CologneSeeder extends Seeder
             $this->syncPostgresSequences(['users', 'roles', 'permissions']);
             $this->ensureCologneAdministrator();
             $this->syncCatalog();
+            $this->syncDynamicModules();
             $this->syncNavigation();
             $this->syncSettings();
 
@@ -166,7 +170,7 @@ class CologneSeeder extends Seeder
         ]);
     }
 
-    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker', 'slugs', 'menu', 'indicators']): void
+    private function syncPostgresSequences(array $tables = ['users', 'roles', 'permissions', 'marker_type', 'marker', 'slugs', 'menu', 'indicators', 'select_type', 'modules', 'fields', 'forms']): void
     {
         if (DB::getDriverName() !== 'pgsql') {
             return;
@@ -270,6 +274,130 @@ class CologneSeeder extends Seeder
                 $this->syncIncidentSubindicator($parentId, $englishName, $legacyName);
             }
         }
+    }
+
+    private function syncDynamicModules(): void
+    {
+        foreach ([
+            1 => 'Input',
+            2 => 'Input Number',
+            3 => 'Input Email',
+            4 => 'Select',
+            6 => 'Map Marker',
+        ] as $id => $type) {
+            $this->syncRow('select_type', ['id' => $id], ['type' => $type]);
+        }
+
+        $incidentSlugId = $this->ensureSlugId('incident', 6);
+        $this->syncRow('modules', ['slug' => $incidentSlugId], [
+            'name' => 'Incidents',
+            'description' => 'Citizen incident management',
+            'namespace' => StrategyIncidents::class,
+        ]);
+
+        $incidentModuleId = (int) DB::table('modules')->where('slug', $incidentSlugId)->value('id');
+        $fields = [
+            [
+                'name' => 'Subcategory',
+                'placeholder' => 'Select a subcategory',
+                'key' => 'IndicatorId',
+                'type' => 4,
+                'required' => true,
+                'schema' => 'number',
+                'model_select' => 'App\\Models\\Subindicator',
+            ],
+            [
+                'name' => 'Address',
+                'placeholder' => 'Enter the address',
+                'key' => 'address',
+                'type' => 1,
+                'required' => false,
+                'schema' => 'text',
+                'model_select' => null,
+            ],
+            [
+                'name' => 'Description',
+                'placeholder' => 'Describe the impact or need',
+                'key' => 'description',
+                'type' => 1,
+                'required' => true,
+                'schema' => 'text',
+                'model_select' => null,
+            ],
+            [
+                'name' => 'Location',
+                'placeholder' => null,
+                'key' => 'pointCoordinates',
+                'type' => 6,
+                'required' => true,
+                'schema' => 'position',
+                'model_select' => null,
+            ],
+        ];
+
+        foreach ($fields as $field) {
+            $key = $field['key'];
+            unset($field['key']);
+            $this->syncRow('fields', ['key' => $key], $field);
+            $fieldId = (int) DB::table('fields')->where('key', $key)->value('id');
+            $this->syncRow('forms', ['module' => $incidentModuleId, 'field' => $fieldId], []);
+        }
+
+        $categoryFieldIds = DB::table('fields')->where('key', 'CategoryId')->pluck('id');
+        if ($categoryFieldIds->isNotEmpty()) {
+            DB::table('forms')
+                ->where('module', $incidentModuleId)
+                ->whereIn('field', $categoryFieldIds)
+                ->delete();
+        }
+
+        $userFields = [
+            ['key' => 'name', 'name' => 'Name', 'placeholder' => 'Enter the name', 'type' => 1, 'required' => true, 'schema' => 'text', 'model_select' => null],
+            ['key' => 'email', 'name' => 'Email', 'placeholder' => 'Enter the email', 'type' => 3, 'required' => true, 'schema' => 'email', 'model_select' => null],
+            ['key' => 'role_id', 'name' => 'Role', 'placeholder' => 'Select a role', 'type' => 4, 'required' => true, 'schema' => 'number', 'model_select' => 'Spatie\\Permission\\Models\\Role'],
+            ['key' => 'phone_number', 'name' => 'Phone', 'placeholder' => 'Enter the phone number', 'type' => 2, 'required' => false, 'schema' => 'phone', 'model_select' => null],
+            ['key' => 'password', 'name' => 'Password', 'placeholder' => 'Enter the password', 'type' => 1, 'required' => true, 'schema' => 'password', 'model_select' => null],
+        ];
+
+        $userFieldIds = [];
+        foreach ($userFields as $field) {
+            $key = $field['key'];
+            unset($field['key']);
+            $this->syncRow('fields', ['key' => $key], $field);
+            $userFieldIds[] = (int) DB::table('fields')->where('key', $key)->value('id');
+        }
+
+        foreach (['user' => 10, 'users' => null] as $slug => $preferredId) {
+            $slugId = $this->ensureSlugId($slug, $preferredId);
+            $this->syncRow('modules', ['slug' => $slugId], [
+                'name' => 'Users',
+                'description' => 'Tenant user management',
+                'namespace' => null,
+            ]);
+            $userModuleId = (int) DB::table('modules')->where('slug', $slugId)->value('id');
+
+            foreach ($userFieldIds as $fieldId) {
+                $this->syncRow('forms', ['module' => $userModuleId, 'field' => $fieldId], []);
+            }
+        }
+
+        foreach ([
+            'traffic_lights' => [
+                'name' => 'Traffic lights',
+                'description' => 'Read-only Cologne traffic lights',
+                'namespace' => StrategyTrafficLights::class,
+            ],
+            'parking_ticket_machines' => [
+                'name' => 'Parking meters',
+                'description' => 'Read-only Cologne parking meters',
+                'namespace' => StrategyParkingMeters::class,
+            ],
+        ] as $slug => $module) {
+            $slugId = $this->ensureSlugId($slug);
+            $this->syncRow('modules', ['slug' => $slugId], $module);
+        }
+
+        $this->syncPostgresSequences(['select_type', 'modules', 'fields', 'forms']);
     }
 
     private function syncIncidentSubindicator(int $parentId, string $englishName, ?string $legacyName = null): void

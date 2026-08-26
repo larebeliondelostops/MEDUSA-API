@@ -11,6 +11,10 @@ class IncidentObserver
 {
     public function created(Incident $incident): void
     {
+        if (! tenancy()->initialized || tenant('id') !== 'hackaton') {
+            return;
+        }
+
         try
         {
             User::chunk(250, function($users)  {

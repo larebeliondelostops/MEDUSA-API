@@ -6,6 +6,7 @@ use App\Models\Villavicencio\Incident;
 use App\Rules\Subindicator;
 use App\Strategies\StrategiesCruds\BaseCrud;
 use App\Strategies\StrategiesReports\Villavicencio\StrategyIncidentsReports;
+use App\Support\TenantIncidentBroadcaster;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -89,7 +90,10 @@ class StrategyIncidents extends BaseCrud
         $incident->save();
         Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
-        return $this->incidentData($incident->load('Indicator.parent'));
+        $data = $this->incidentData($incident->load('Indicator.parent'));
+        TenantIncidentBroadcaster::broadcast('created', $data);
+
+        return $data;
     }
 
     public function update($request, $id): ?array
@@ -103,15 +107,20 @@ class StrategyIncidents extends BaseCrud
         $incident->save();
         Cache::forget(StrategyIncidentsReports::CACHE_KEY);
 
-        return $this->incidentData($incident->load('Indicator.parent'));
+        $data = $this->incidentData($incident->load('Indicator.parent'));
+        TenantIncidentBroadcaster::broadcast('updated', $data);
+
+        return $data;
     }
 
     public function destroy($id): int
     {
         $incident = $this->findIncident($id);
+        $data = $incident ? $this->incidentData($incident) : null;
         $deleted = $incident ? (int) $incident->delete() : 0;
         if ($deleted) {
             Cache::forget(StrategyIncidentsReports::CACHE_KEY);
+            TenantIncidentBroadcaster::broadcast('deleted', $data);
         }
 
         return $deleted;

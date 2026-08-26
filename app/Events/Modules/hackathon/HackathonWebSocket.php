@@ -2,9 +2,9 @@
 
 namespace App\Events\Modules\hackathon;
 
-use App\Models\Modules\Viper\Alert;
-use Illuminate\Broadcasting\Channel;
+use App\Support\TenantBroadcastChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -13,6 +13,10 @@ class HackathonWebSocket implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private string $tenantId;
+
+    private string $userKey;
+
     /**
      * Create a new event instance.
      *
@@ -20,6 +24,8 @@ class HackathonWebSocket implements ShouldBroadcast
      */
     public function __construct(private string $userEmail)
     {
+        $this->tenantId = TenantBroadcastChannel::tenantId();
+        $this->userKey = TenantBroadcastChannel::userKey($userEmail);
     }
 
     /**
@@ -29,7 +35,7 @@ class HackathonWebSocket implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('private_channel_' . $this->userEmail);
+        return new PrivateChannel("tenant.{$this->tenantId}.users.{$this->userKey}.incidents");
     }
 
     public function broadcastAs()

@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use App\Interfaces\Markers\MarkersInterface;
+use App\Support\TenantLanguage;
 
 class MarkersController extends Controller
 {
@@ -30,7 +31,7 @@ class MarkersController extends Controller
             return Response::json($points, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud',], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -48,7 +49,7 @@ class MarkersController extends Controller
             return Response::json($lines, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud',], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -66,7 +67,7 @@ class MarkersController extends Controller
             return Response::json($polygons, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud',], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -88,7 +89,7 @@ class MarkersController extends Controller
             return Response::json($point, 200, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud',], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 }

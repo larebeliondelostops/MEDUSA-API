@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use App\Support\TenantLanguage;
 
 class JWTMiddleware
 {
@@ -27,16 +28,16 @@ class JWTMiddleware
 
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['status' => 'El token no es válido'], 401);
+                return response()->json(['status' => TenantLanguage::text('El token no es válido', 'The token is invalid')], 401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
                 return response()->json([
-                    'status' => 'El token ha caducado',
-                    'message' => 'Utiliza el endpoint auth/refresh enviando el refresh token como Bearer token.'
+                    'status' => TenantLanguage::text('El token ha caducado', 'The token has expired'),
+                    'message' => TenantLanguage::text('Utiliza el endpoint auth/refresh enviando el refresh token como Bearer token.', 'Use the auth/refresh endpoint with the refresh token as a Bearer token.')
                 ], 401);
             } else if ($e->getCode() == 403) {
                 return response()->json(['status' => $e->getMessage()], 403);
             } else {
-                return response()->json(['status' => 'Token de autorización no encontrado'], 401);
+                return response()->json(['status' => TenantLanguage::text('Token de autorización no encontrado', 'Authorization token not found')], 401);
             }
         }
         return $next($request);
@@ -47,7 +48,7 @@ class JWTMiddleware
         $tenantIdFromToken = JWTAuth::parseToken()->payload()->get('tenant_id');
 
         if ($tenantIdFromToken != tenant('id')) {
-            throw new Exception('El Token no pertenece al dominio', 403);
+            throw new Exception(TenantLanguage::text('El Token no pertenece al dominio', 'The token does not belong to this domain'), 403);
         }
     }
 }

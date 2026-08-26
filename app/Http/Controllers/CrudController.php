@@ -9,6 +9,7 @@ use App\Services\Cruds\CrudService;
 use Illuminate\Support\Facades\Log;
 use App\Interfaces\Cruds\CrudInterface;
 use Illuminate\Support\Facades\Response;
+use App\Support\TenantLanguage;
 
 class CrudController extends Controller
 {
@@ -37,7 +38,7 @@ class CrudController extends Controller
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -57,7 +58,7 @@ class CrudController extends Controller
         } catch (ValidationException $exception) {
             return Response::json([
                 'status' => 'error',
-                'message' => 'Datos Recibidos Incorrectos',
+                'message' => TenantLanguage::text('Datos Recibidos Incorrectos', 'Invalid data received'),
                 'errors' => $exception->errors(),
             ], 422, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
@@ -83,7 +84,7 @@ class CrudController extends Controller
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -104,12 +105,12 @@ class CrudController extends Controller
         } catch (ValidationException $exception) {
             return Response::json([
                 'status' => 'error',
-                'message' => 'Datos Recibidos Incorrectos',
+                'message' => TenantLanguage::text('Datos Recibidos Incorrectos', 'Invalid data received'),
                 'errors' => $exception->errors(),
             ], 422, [], JSON_PRETTY_PRINT);
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 
@@ -128,7 +129,7 @@ class CrudController extends Controller
 
         } catch (Exception $exception) {
             Log::error($exception->getMessage() . ' - ' . $exception->getLine() . ' - ' . $exception->getFile());
-            return Response::json(['message' => 'Error En La Generación De La Solicitud'], 500, [], JSON_PRETTY_PRINT);
+            return Response::json(['message' => TenantLanguage::text('Error En La Generación De La Solicitud', 'Error generating the request')], 500, [], JSON_PRETTY_PRINT);
         }
     }
 }

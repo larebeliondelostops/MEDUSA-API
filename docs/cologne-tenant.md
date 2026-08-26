@@ -6,7 +6,12 @@ heredadas de Villavicencio y carga los archivos de `database/data/cologne`.
 
 ```bash
 php artisan tenant:sync-cologne --tenant=cologne
+php artisan storage:link
 ```
+
+`storage:link` crea `public/cologne` apuntando al disco publico aislado del
+tenant en `storage/cologne/app/public`. Debe ejecutarse al menos una vez por
+servidor despues de desplegar la configuracion del enlace.
 
 Desde el entorno Docker del proyecto:
 

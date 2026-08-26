@@ -235,7 +235,8 @@ class IncidentController extends Controller
                     'date' => $incident->created_at,
                     'address' => $incident->address,
                     'description' => $incident->description,
-                    'image' => tenant('id') . '/' . $incident->image,
+                    'image' => $this->incidentImagePath($incident->image),
+                    'image_url' => $this->incidentImageUrl($incident->image),
                     'position' => $incident->position,
                     'titile' => TenantLanguage::indicator(optional($incident->Indicator)->name),
                     'title' => TenantLanguage::indicator(optional($incident->Indicator)->name)
@@ -296,10 +297,7 @@ class IncidentController extends Controller
             }
 
             if ($request->hasFile('image')) {
-                $photoFile = $request->file('image');
-                $extension = $photoFile->getClientOriginalExtension();
-                $filename = Uuid::uuid4()->toString() . '.' . $extension;
-                $incident->image = $photoFile->storeAs('photos', $filename, 'public');
+                $incident->image = Storage::disk('public')->put('', $request->file('image'));
             }
 
             $incident->save();
@@ -469,8 +467,25 @@ class IncidentController extends Controller
         $data['category'] = $category;
         $data['subcategory'] = $subcategory;
         $data['pointCoordinates'] = $incident->position;
+        $data['image_url'] = $this->incidentImageUrl($incident->image);
 
         return $data;
+    }
+
+    private function incidentImagePath(?string $image): ?string
+    {
+        if ($image === null || trim($image) === '') {
+            return null;
+        }
+
+        return tenant('id').'/'.ltrim($image, '/');
+    }
+
+    private function incidentImageUrl(?string $image): ?string
+    {
+        $path = $this->incidentImagePath($image);
+
+        return $path === null ? null : url($path);
     }
 
     private function extractCoordinates($value): ?array

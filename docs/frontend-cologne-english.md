@@ -211,6 +211,11 @@ image
 
 Solo cambia el idioma visible del formulario y de las respuestas.
 
+Las respuestas de detalle y guardado incluyen `image_url` cuando el incidente
+tiene foto. El front debe usar esa URL directamente. El campo historico `image`
+se conserva por compatibilidad y puede contener una ruta relativa como
+`cologne/{archivo}.jpg` o `cologne/photos/{archivo}.jpg`.
+
 ## Reportes de incidentes
 
 Endpoint:

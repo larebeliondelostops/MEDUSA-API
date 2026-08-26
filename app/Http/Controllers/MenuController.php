@@ -271,7 +271,7 @@ class MenuController extends Controller
                     ];
 
                     $mapCenter = $this->parsePosition();
-                    $defaultRequest = [];
+                    $defaultRequest = ['incidents'];
                     $mapRequest = $this->parseMapRequest();
                     $defaultZoom = 12;
                     $mapZoom = Setting::get('main_zoom');

@@ -459,10 +459,16 @@ class CologneSeeder extends Seeder
             'position' => '50.9375,6.9603',
             'main_zoom' => '12',
             'heatmap_density' => '50',
-            'map_request' => '',
+            'map_request' => 'incidents',
         ];
 
         foreach ($settings as $key => $value) {
+            if ($key === 'map_request') {
+                $this->syncRow('settings', ['key' => $key], ['value' => $value]);
+
+                continue;
+            }
+
             if (! DB::table('settings')->where('key', $key)->exists()) {
                 DB::table('settings')->insert([
                     'key' => $key,

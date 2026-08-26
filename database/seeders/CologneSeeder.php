@@ -165,13 +165,34 @@ class CologneSeeder extends Seeder
         $this->syncRow('roles', ['id' => 2], ['name' => 'Editor', 'guard_name' => 'api']);
         $this->syncRow('roles', ['id' => 3], ['name' => 'Mobility Secretary', 'guard_name' => 'api']);
 
-        if (Schema::hasTable('reports_data')) {
-            $this->syncRow('reports_data', ['slug' => 6], [
+        if (Schema::hasTable('reports_data') && Schema::hasTable('slugs')) {
+            $incidentSlugId = $this->ensureSlugId('incident', 6);
+
+            $this->syncRow('reports_data', ['slug' => $incidentSlugId], [
                 'name' => 'Incidents',
                 'description' => 'Cologne incidents',
                 'namespace' => 'App\\Strategies\\StrategiesReports\\Villavicencio\\StrategyIncidentsReports',
             ]);
         }
+    }
+
+    private function ensureSlugId(string $name, ?int $preferredId = null): int
+    {
+        $existingId = DB::table('slugs')->where('name', $name)->value('id');
+        if ($existingId !== null) {
+            return (int) $existingId;
+        }
+
+        if ($preferredId !== null && ! DB::table('slugs')->where('id', $preferredId)->exists()) {
+            $this->syncRow('slugs', ['id' => $preferredId], ['name' => $name]);
+
+            return $preferredId;
+        }
+
+        $nextId = ((int) DB::table('slugs')->max('id')) + 1;
+        $this->syncRow('slugs', ['id' => $nextId], ['name' => $name]);
+
+        return $nextId;
     }
 
     private function ensureCologneAdministrator(): void

@@ -417,13 +417,39 @@ class CologneSeeder extends Seeder
     {
         $items = [
             1 => ['name' => 'Map', 'path' => 'map', 'icon' => 'public', 'slug' => 'map', 'enabled' => true],
-            5 => ['name' => 'Markers', 'path' => 'markers', 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
+            5 => ['name' => 'Markers', 'path' => null, 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
             6 => ['name' => 'Users', 'path' => 'users', 'icon' => 'person', 'slug' => 'users', 'enabled' => true],
         ];
 
         foreach ($items as $id => $item) {
             $this->syncRow('menu', ['id' => $id], $item);
             $this->grantPermissionToRole("menu-{$item['name']}", 'Administrator');
+        }
+
+        $submenus = [
+            '5-traffic_lights' => [
+                'menu' => 5,
+                'level' => 2,
+                'name' => 'Traffic lights',
+                'path' => 'markers/traffic_lights',
+                'icon' => 'traffic',
+                'slug' => 'traffic_lights',
+                'enabled' => true,
+            ],
+            '5-parking_ticket_machines' => [
+                'menu' => 5,
+                'level' => 2,
+                'name' => 'Parking meters',
+                'path' => 'markers/parking_ticket_machines',
+                'icon' => 'local_parking',
+                'slug' => 'parking_ticket_machines',
+                'enabled' => true,
+            ],
+        ];
+
+        foreach ($submenus as $identifier => $submenu) {
+            $this->syncRow('sub_menu', ['identifier' => $identifier], $submenu);
+            $this->grantPermissionToRole("submenu-{$submenu['name']}", 'Administrator');
         }
     }
 

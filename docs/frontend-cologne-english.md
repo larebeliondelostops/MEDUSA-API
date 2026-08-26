@@ -50,8 +50,8 @@ Tambien se ajusto en `cologne`:
 
 - El dominio `Markers` ya expone labels en ingles, pero el front no resuelve una
   vista en `/dashboard/markers` a secas.
-- La navegacion de `Markers` debe construirse con submenus por tipo
-  (`markers/{slug}`) o apuntando directo a un slug concreto.
+- La navegacion de `Markers` se entrega en la propiedad canonica `submenu`, con
+  una entrada por tipo y rutas `markers/{slug}`.
 - `Traffic lights` y `Parking meters` ya no dependen de `specialType` para agruparse.
 
 ## Que no cambia
@@ -97,24 +97,29 @@ En `cologne`, el front debe esperar labels en ingles como:
 
 No hay que mapear `Mapa -> Map` ni `Marcadores -> Markers` en cliente.
 
-Para `Markers`, el contrato correcto para la web es uno de estos dos:
-
-1. Devolver un padre `Markers` con submenus por tipo, por ejemplo:
+Para `Markers`, el backend devuelve un padre con submenus por tipo:
 
 ```json
 {
   "name": "Markers",
   "path": null,
-  "children": [
-    { "name": "Traffic lights", "path": "markers/traffic-lights" },
-    { "name": "Parking meters", "path": "markers/parking-meters" }
+  "submenu": [
+    {
+      "name": "Traffic lights",
+      "path": "markers/traffic_lights",
+      "slug": "traffic_lights"
+    },
+    {
+      "name": "Parking meters",
+      "path": "markers/parking_ticket_machines",
+      "slug": "parking_ticket_machines"
+    }
   ]
 }
 ```
 
-2. O apuntar cada entrada del menu directo a un slug concreto.
-
-No se debe asumir que `path = "markers"` navega a una tabla valida en el front.
+`submenu` es la propiedad canonica de `GET /menu/menuBar`. No se debe asumir que
+`path = "markers"` navega a una tabla valida en el front.
 
 ## Formularios dinamicos
 
@@ -275,12 +280,14 @@ Recomendacion:
 ## Checklist de QA para `cologne`
 
 - El menu muestra `Map`, `Markers`, `Users`.
-- `Markers` aparece visible como padre con submenus, o cada opcion navega directo
-  a un slug valido.
+- `Markers` aparece visible como padre y entrega sus opciones en `submenu`.
 - Ninguna opcion del menu intenta navegar a `/dashboard/markers` a secas.
 - Las tablas de markers cargan usando `/{slug}/allTable`.
 - Las capas muestran `Traffic lights` y `Parking meters`.
+- La agrupacion por cantidad se prueba con 99, 100 y 101 elementos para cubrir
+  el comportamiento exacto en el umbral de 100.
 - El formulario de incidentes muestra categorias y subcategorias en ingles.
+- Desde un dispositivo movil se puede adjuntar una foto y guardar el incidente.
 - Al guardar un incidente, la respuesta devuelve `category.name` y `subcategory.name` en ingles.
 - La tabla de incidentes muestra columnas `Name`, `Category`, `Subcategory`, `Address`, `Date`.
 - El reporte de incidentes muestra tabs, charts, months y weekdays en ingles.

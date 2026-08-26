@@ -236,6 +236,8 @@ class CologneSeeder extends Seeder
             ]);
         }
 
+        $this->syncPostgresSequences(['indicators']);
+
         foreach (self::INCIDENT_SUBINDICATORS as $parentId => $subindicators) {
             foreach ($subindicators as $spanishName) {
                 $this->syncIncidentSubindicator($parentId, $spanishName);

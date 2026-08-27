@@ -417,6 +417,7 @@ class CologneSeeder extends Seeder
     {
         $items = [
             1 => ['name' => 'Map', 'path' => 'map', 'icon' => 'public', 'slug' => 'map', 'enabled' => true],
+            4 => ['name' => 'Incidents', 'path' => 'markers/incident', 'icon' => 'assured_workload', 'slug' => 'incident', 'enabled' => true],
             5 => ['name' => 'Markers', 'path' => null, 'icon' => 'place', 'slug' => 'markers', 'enabled' => true],
             6 => ['name' => 'Users', 'path' => 'users', 'icon' => 'person', 'slug' => 'users', 'enabled' => true],
         ];

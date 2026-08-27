@@ -91,6 +91,7 @@ En `cologne`, el front debe esperar labels en ingles como:
 ```json
 [
   { "name": "Map", "path": "map" },
+  { "name": "Incidents", "path": "markers/incident", "slug": "incident" },
   { "name": "Users", "path": "users" }
 ]
 ```
@@ -251,6 +252,8 @@ Para `cologne`:
 - Las capas `Traffic lights` y `Parking meters` deben mostrarse ya con ese nombre.
 - La navegacion del modulo debe resolver a rutas tipo `/dashboard/markers/{slug}`.
 - La tabla de cada tipo consume `/{slug}/allTable`.
+- Las tablas leen la misma fuente `cologne_geodata` usada por el mapa.
+- `meta.ableCreate`, `meta.ableEdit` y `meta.ableDelete` son `false`.
 - No se debe depender de `specialType = 1` para esas dos capas.
 - El agrupamiento debe seguir funcionando con la logica por cantidad ya existente.
 
